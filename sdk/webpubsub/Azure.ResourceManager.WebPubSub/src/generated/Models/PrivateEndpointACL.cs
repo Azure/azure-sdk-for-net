@@ -11,12 +11,12 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> ACL for a private endpoint. </summary>
-    public partial class PrivateEndpointACL : NetworkACL
+    public partial class PrivateEndpointAcl : NetworkAcl
     {
-        /// <summary> Initializes a new instance of PrivateEndpointACL. </summary>
+        /// <summary> Initializes a new instance of PrivateEndpointAcl. </summary>
         /// <param name="name"> Name of the private endpoint connection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public PrivateEndpointACL(string name)
+        public PrivateEndpointAcl(string name)
         {
             if (name == null)
             {
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.WebPubSub.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointACL. </summary>
+        /// <summary> Initializes a new instance of PrivateEndpointAcl. </summary>
         /// <param name="allow"> Allowed request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
         /// <param name="deny"> Denied request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
         /// <param name="name"> Name of the private endpoint connection. </param>
-        internal PrivateEndpointACL(IList<WebPubSubRequestType> allow, IList<WebPubSubRequestType> deny, string name) : base(allow, deny)
+        internal PrivateEndpointAcl(IList<WebPubSubRequestType> allow, IList<WebPubSubRequestType> deny, string name) : base(allow, deny)
         {
             Name = name;
         }

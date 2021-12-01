@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.WebPubSub
                 writer.WritePropertyName("resourceLogConfiguration");
                 writer.WriteObjectValue(ResourceLogConfiguration);
             }
-            if (Optional.IsDefined(NetworkACLs))
+            if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkACLs");
-                writer.WriteObjectValue(NetworkACLs);
+                writer.WriteObjectValue(NetworkAcls);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.WebPubSub
 
         internal static WebPubSubData DeserializeWebPubSubData(JsonElement element)
         {
-            Optional<WebPubSubSku> sku = default;
+            Optional<ResourceSku> sku = default;
             Optional<ManagedIdentity> identity = default;
             Optional<SystemData> systemData = default;
             IDictionary<string, string> tags = default;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.WebPubSub
             Optional<string> hostNamePrefix = default;
             Optional<LiveTraceConfiguration> liveTraceConfiguration = default;
             Optional<ResourceLogConfiguration> resourceLogConfiguration = default;
-            Optional<WebPubSubNetworkACLs> networkACLs = default;
+            Optional<WebPubSubNetworkAcls> networkACLs = default;
             Optional<string> publicNetworkAccess = default;
             Optional<bool> disableLocalAuth = default;
             Optional<bool> disableAadAuth = default;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.WebPubSub
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = WebPubSubSku.DeserializeWebPubSubSku(property.Value);
+                    sku = ResourceSku.DeserializeResourceSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"))
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.WebPubSub
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            networkACLs = WebPubSubNetworkACLs.DeserializeWebPubSubNetworkACLs(property0.Value);
+                            networkACLs = WebPubSubNetworkAcls.DeserializeWebPubSubNetworkAcls(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"))

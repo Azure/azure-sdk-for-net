@@ -10,16 +10,16 @@ using System;
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> The billing information of the resource. </summary>
-    public partial class WebPubSubSku
+    public partial class ResourceSku
     {
-        /// <summary> Initializes a new instance of WebPubSubSku. </summary>
+        /// <summary> Initializes a new instance of ResourceSku. </summary>
         /// <param name="name">
         /// The name of the SKU. Required.
         /// 
         /// Allowed values: Standard_S1, Free_F1
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public WebPubSubSku(string name)
+        public ResourceSku(string name)
         {
             if (name == null)
             {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of WebPubSubSku. </summary>
+        /// <summary> Initializes a new instance of ResourceSku. </summary>
         /// <param name="name">
         /// The name of the SKU. Required.
         /// 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         ///     Free: 1
         ///     Standard: 1,2,5,10,20,50,100
         /// </param>
-        internal WebPubSubSku(string name, WebPubSubSkuTier? tier, string size, string family, int? capacity)
+        internal ResourceSku(string name, WebPubSubSkuTier? tier, string size, string family, int? capacity)
         {
             Name = name;
             Tier = tier;

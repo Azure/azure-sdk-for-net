@@ -11,19 +11,19 @@ using Azure.Core;
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Network ACLs for the resource. </summary>
-    public partial class WebPubSubNetworkACLs
+    public partial class WebPubSubNetworkAcls
     {
-        /// <summary> Initializes a new instance of WebPubSubNetworkACLs. </summary>
-        public WebPubSubNetworkACLs()
+        /// <summary> Initializes a new instance of WebPubSubNetworkAcls. </summary>
+        public WebPubSubNetworkAcls()
         {
-            PrivateEndpoints = new ChangeTrackingList<PrivateEndpointACL>();
+            PrivateEndpoints = new ChangeTrackingList<PrivateEndpointAcl>();
         }
 
-        /// <summary> Initializes a new instance of WebPubSubNetworkACLs. </summary>
+        /// <summary> Initializes a new instance of WebPubSubNetworkAcls. </summary>
         /// <param name="defaultAction"> Default action when no other rule matches. </param>
         /// <param name="publicNetwork"> ACL for requests from public network. </param>
         /// <param name="privateEndpoints"> ACLs for requests from private endpoints. </param>
-        internal WebPubSubNetworkACLs(AclAction? defaultAction, NetworkACL publicNetwork, IList<PrivateEndpointACL> privateEndpoints)
+        internal WebPubSubNetworkAcls(AclAction? defaultAction, NetworkAcl publicNetwork, IList<PrivateEndpointAcl> privateEndpoints)
         {
             DefaultAction = defaultAction;
             PublicNetwork = publicNetwork;
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <summary> Default action when no other rule matches. </summary>
         public AclAction? DefaultAction { get; set; }
         /// <summary> ACL for requests from public network. </summary>
-        public NetworkACL PublicNetwork { get; set; }
+        public NetworkAcl PublicNetwork { get; set; }
         /// <summary> ACLs for requests from private endpoints. </summary>
-        public IList<PrivateEndpointACL> PrivateEndpoints { get; }
+        public IList<PrivateEndpointAcl> PrivateEndpoints { get; }
     }
 }

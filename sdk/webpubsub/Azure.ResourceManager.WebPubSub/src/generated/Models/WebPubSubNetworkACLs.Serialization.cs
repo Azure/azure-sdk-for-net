@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    public partial class WebPubSubNetworkACLs : IUtf8JsonSerializable
+    public partial class WebPubSubNetworkAcls : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.WebPubSub.Models
             writer.WriteEndObject();
         }
 
-        internal static WebPubSubNetworkACLs DeserializeWebPubSubNetworkACLs(JsonElement element)
+        internal static WebPubSubNetworkAcls DeserializeWebPubSubNetworkAcls(JsonElement element)
         {
             Optional<AclAction> defaultAction = default;
-            Optional<NetworkACL> publicNetwork = default;
-            Optional<IList<PrivateEndpointACL>> privateEndpoints = default;
+            Optional<NetworkAcl> publicNetwork = default;
+            Optional<IList<PrivateEndpointAcl>> privateEndpoints = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultAction"))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    publicNetwork = NetworkACL.DeserializeNetworkACL(property.Value);
+                    publicNetwork = NetworkAcl.DeserializeNetworkAcl(property.Value);
                     continue;
                 }
                 if (property.NameEquals("privateEndpoints"))
@@ -73,16 +73,16 @@ namespace Azure.ResourceManager.WebPubSub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PrivateEndpointACL> array = new List<PrivateEndpointACL>();
+                    List<PrivateEndpointAcl> array = new List<PrivateEndpointAcl>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateEndpointACL.DeserializePrivateEndpointACL(item));
+                        array.Add(PrivateEndpointAcl.DeserializePrivateEndpointAcl(item));
                     }
                     privateEndpoints = array;
                     continue;
                 }
             }
-            return new WebPubSubNetworkACLs(Optional.ToNullable(defaultAction), publicNetwork.Value, Optional.ToList(privateEndpoints));
+            return new WebPubSubNetworkAcls(Optional.ToNullable(defaultAction), publicNetwork.Value, Optional.ToList(privateEndpoints));
         }
     }
 }

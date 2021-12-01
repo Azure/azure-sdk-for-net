@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    public partial class PrivateEndpointACL : IUtf8JsonSerializable
+    public partial class PrivateEndpointAcl : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             writer.WriteEndObject();
         }
 
-        internal static PrivateEndpointACL DeserializePrivateEndpointACL(JsonElement element)
+        internal static PrivateEndpointAcl DeserializePrivateEndpointAcl(JsonElement element)
         {
             string name = default;
             Optional<IList<WebPubSubRequestType>> allow = default;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     continue;
                 }
             }
-            return new PrivateEndpointACL(Optional.ToList(allow), Optional.ToList(deny), name);
+            return new PrivateEndpointAcl(Optional.ToList(allow), Optional.ToList(deny), name);
         }
     }
 }

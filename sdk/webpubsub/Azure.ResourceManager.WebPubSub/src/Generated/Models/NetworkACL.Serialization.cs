@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    public partial class NetworkACL : IUtf8JsonSerializable
+    public partial class NetworkAcl : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             writer.WriteEndObject();
         }
 
-        internal static NetworkACL DeserializeNetworkACL(JsonElement element)
+        internal static NetworkAcl DeserializeNetworkAcl(JsonElement element)
         {
             Optional<IList<WebPubSubRequestType>> allow = default;
             Optional<IList<WebPubSubRequestType>> deny = default;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     continue;
                 }
             }
-            return new NetworkACL(Optional.ToList(allow), Optional.ToList(deny));
+            return new NetworkAcl(Optional.ToList(allow), Optional.ToList(deny));
         }
     }
 }
