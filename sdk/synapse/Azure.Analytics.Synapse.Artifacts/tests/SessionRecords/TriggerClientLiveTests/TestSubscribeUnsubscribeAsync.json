@@ -133,7 +133,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "0",
         "traceparent": "00-bb519ca5ee86c244b457b6b12fd194ad-2aef640c27bd3e4a-00",
         "User-Agent": "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "0143cb45fd592348409472e93721a572",
@@ -167,7 +166,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "0",
         "traceparent": "00-2fe2a0579f24af4f81c200cd667f8a93-08c89839ac56fe47-00",
         "User-Agent": "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "e702a0e92cb2332147bcd89f6fe020b4",

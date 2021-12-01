@@ -192,7 +192,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "0",
         "traceparent": "00-0b9b496ea3aa784fb5953563e82516c2-f813ae30ce08b141-00",
         "User-Agent": "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "12eb54bbbc1e538a92c763d105ced47f",
