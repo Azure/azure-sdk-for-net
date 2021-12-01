@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal DdosProtectionPlanCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _ddosProtectionPlansRestClient = new DdosProtectionPlansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _ddosProtectionPlansRestClient = new DdosProtectionPlansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _ddosProtectionPlansRestClient.CreateOrUpdate(Id.ResourceGroupName, ddosProtectionPlanName, parameters, cancellationToken);
-                var operation = new DdosProtectionPlanCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _ddosProtectionPlansRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, ddosProtectionPlanName, parameters).Request, response);
+                var response = _ddosProtectionPlansRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, ddosProtectionPlanName, parameters, cancellationToken);
+                var operation = new DdosProtectionPlanCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _ddosProtectionPlansRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ddosProtectionPlanName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -101,8 +101,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _ddosProtectionPlansRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, ddosProtectionPlanName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new DdosProtectionPlanCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _ddosProtectionPlansRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, ddosProtectionPlanName, parameters).Request, response);
+                var response = await _ddosProtectionPlansRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, ddosProtectionPlanName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new DdosProtectionPlanCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _ddosProtectionPlansRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ddosProtectionPlanName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _ddosProtectionPlansRestClient.Get(Id.ResourceGroupName, ddosProtectionPlanName, cancellationToken);
+                var response = _ddosProtectionPlansRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ddosProtectionPlanName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DdosProtectionPlan(Parent, response.Value), response.GetRawResponse());
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _ddosProtectionPlansRestClient.GetAsync(Id.ResourceGroupName, ddosProtectionPlanName, cancellationToken).ConfigureAwait(false);
+                var response = await _ddosProtectionPlansRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ddosProtectionPlanName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new DdosProtectionPlan(Parent, response.Value), response.GetRawResponse());
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _ddosProtectionPlansRestClient.Get(Id.ResourceGroupName, ddosProtectionPlanName, cancellationToken: cancellationToken);
+                var response = _ddosProtectionPlansRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ddosProtectionPlanName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<DdosProtectionPlan>(null, response.GetRawResponse())
                     : Response.FromValue(new DdosProtectionPlan(this, response.Value), response.GetRawResponse());
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _ddosProtectionPlansRestClient.GetAsync(Id.ResourceGroupName, ddosProtectionPlanName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _ddosProtectionPlansRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ddosProtectionPlanName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<DdosProtectionPlan>(null, response.GetRawResponse())
                     : Response.FromValue(new DdosProtectionPlan(this, response.Value), response.GetRawResponse());
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _ddosProtectionPlansRestClient.ListByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _ddosProtectionPlansRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DdosProtectionPlan(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _ddosProtectionPlansRestClient.ListByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _ddosProtectionPlansRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DdosProtectionPlan(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _ddosProtectionPlansRestClient.ListByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _ddosProtectionPlansRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DdosProtectionPlan(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _ddosProtectionPlansRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _ddosProtectionPlansRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DdosProtectionPlan(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

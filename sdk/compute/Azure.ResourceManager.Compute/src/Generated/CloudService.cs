@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Compute
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _cloudServicesRestClient = new CloudServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _cloudServicesUpdateDomainRestClient = new CloudServicesUpdateDomainRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _cloudServicesRestClient = new CloudServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _cloudServicesUpdateDomainRestClient = new CloudServicesUpdateDomainRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="CloudService"/> class. </summary>
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Compute
         internal CloudService(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _cloudServicesRestClient = new CloudServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _cloudServicesUpdateDomainRestClient = new CloudServicesUpdateDomainRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _cloudServicesRestClient = new CloudServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _cloudServicesUpdateDomainRestClient = new CloudServicesUpdateDomainRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="CloudService"/> class. </summary>
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.Compute
         internal CloudService(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _cloudServicesRestClient = new CloudServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _cloudServicesUpdateDomainRestClient = new CloudServicesUpdateDomainRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _cloudServicesRestClient = new CloudServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _cloudServicesUpdateDomainRestClient = new CloudServicesUpdateDomainRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _cloudServicesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _cloudServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new CloudService(this, response.Value), response.GetRawResponse());
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _cloudServicesRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _cloudServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CloudService(this, response.Value), response.GetRawResponse());
@@ -153,8 +153,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _cloudServicesRestClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CloudServiceDeleteOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _cloudServicesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CloudServiceDeleteOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -175,8 +175,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _cloudServicesRestClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new CloudServiceDeleteOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _cloudServicesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new CloudServiceDeleteOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Compute
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _cloudServicesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _cloudServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CloudService(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Compute
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _cloudServicesRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var originalResponse = _cloudServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new CloudService(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Compute
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _cloudServicesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _cloudServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CloudService(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Compute
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _cloudServicesRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var originalResponse = _cloudServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new CloudService(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Compute
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _cloudServicesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _cloudServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CloudService(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Compute
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _cloudServicesRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var originalResponse = _cloudServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new CloudService(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -370,8 +370,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _cloudServicesRestClient.UpdateAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CloudServiceUpdateOperation(this, _clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = await _cloudServicesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new CloudServiceUpdateOperation(this, _clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -393,8 +393,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _cloudServicesRestClient.Update(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new CloudServiceUpdateOperation(this, _clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = _cloudServicesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var operation = new CloudServiceUpdateOperation(this, _clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _cloudServicesRestClient.GetInstanceViewAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _cloudServicesRestClient.GetInstanceViewAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _cloudServicesRestClient.GetInstanceView(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _cloudServicesRestClient.GetInstanceView(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -451,8 +451,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _cloudServicesRestClient.StartAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CloudServiceStartOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateStartRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _cloudServicesRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CloudServiceStartOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -473,8 +473,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _cloudServicesRestClient.Start(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new CloudServiceStartOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateStartRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _cloudServicesRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new CloudServiceStartOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -495,8 +495,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _cloudServicesRestClient.PowerOffAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CloudServicePowerOffOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreatePowerOffRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _cloudServicesRestClient.PowerOffAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CloudServicePowerOffOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreatePowerOffRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -517,8 +517,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _cloudServicesRestClient.PowerOff(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new CloudServicePowerOffOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreatePowerOffRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _cloudServicesRestClient.PowerOff(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new CloudServicePowerOffOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreatePowerOffRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -540,8 +540,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _cloudServicesRestClient.RestartAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CloudServiceRestartOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateRestartRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = await _cloudServicesRestClient.RestartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new CloudServiceRestartOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -563,8 +563,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _cloudServicesRestClient.Restart(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new CloudServiceRestartOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateRestartRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = _cloudServicesRestClient.Restart(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var operation = new CloudServiceRestartOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -586,8 +586,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _cloudServicesRestClient.ReimageAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CloudServiceReimageOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateReimageRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = await _cloudServicesRestClient.ReimageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new CloudServiceReimageOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -609,8 +609,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _cloudServicesRestClient.Reimage(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new CloudServiceReimageOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateReimageRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = _cloudServicesRestClient.Reimage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var operation = new CloudServiceReimageOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -632,8 +632,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _cloudServicesRestClient.RebuildAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CloudServiceRebuildOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateRebuildRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = await _cloudServicesRestClient.RebuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new CloudServiceRebuildOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateRebuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -655,8 +655,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _cloudServicesRestClient.Rebuild(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new CloudServiceRebuildOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateRebuildRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = _cloudServicesRestClient.Rebuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var operation = new CloudServiceRebuildOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateRebuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -678,8 +678,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _cloudServicesRestClient.DeleteInstancesAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CloudServiceDeleteInstancesOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateDeleteInstancesRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = await _cloudServicesRestClient.DeleteInstancesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new CloudServiceDeleteInstancesOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateDeleteInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -701,8 +701,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _cloudServicesRestClient.DeleteInstances(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new CloudServiceDeleteInstancesOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateDeleteInstancesRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = _cloudServicesRestClient.DeleteInstances(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var operation = new CloudServiceDeleteInstancesOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateDeleteInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -725,8 +725,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _cloudServicesUpdateDomainRestClient.WalkUpdateDomainAsync(Id.ResourceGroupName, Id.Name, updateDomain, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CloudServicesUpdateDomainWalkUpdateDomainOperation(_clientDiagnostics, Pipeline, _cloudServicesUpdateDomainRestClient.CreateWalkUpdateDomainRequest(Id.ResourceGroupName, Id.Name, updateDomain, parameters).Request, response);
+                var response = await _cloudServicesUpdateDomainRestClient.WalkUpdateDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateDomain, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new CloudServicesUpdateDomainWalkUpdateDomainOperation(_clientDiagnostics, Pipeline, _cloudServicesUpdateDomainRestClient.CreateWalkUpdateDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateDomain, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -749,8 +749,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _cloudServicesUpdateDomainRestClient.WalkUpdateDomain(Id.ResourceGroupName, Id.Name, updateDomain, parameters, cancellationToken);
-                var operation = new CloudServicesUpdateDomainWalkUpdateDomainOperation(_clientDiagnostics, Pipeline, _cloudServicesUpdateDomainRestClient.CreateWalkUpdateDomainRequest(Id.ResourceGroupName, Id.Name, updateDomain, parameters).Request, response);
+                var response = _cloudServicesUpdateDomainRestClient.WalkUpdateDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateDomain, parameters, cancellationToken);
+                var operation = new CloudServicesUpdateDomainWalkUpdateDomainOperation(_clientDiagnostics, Pipeline, _cloudServicesUpdateDomainRestClient.CreateWalkUpdateDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateDomain, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _cloudServicesUpdateDomainRestClient.GetUpdateDomainAsync(Id.ResourceGroupName, Id.Name, updateDomain, cancellationToken).ConfigureAwait(false);
+                var response = await _cloudServicesUpdateDomainRestClient.GetUpdateDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateDomain, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -790,7 +790,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _cloudServicesUpdateDomainRestClient.GetUpdateDomain(Id.ResourceGroupName, Id.Name, updateDomain, cancellationToken);
+                var response = _cloudServicesUpdateDomainRestClient.GetUpdateDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateDomain, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -811,7 +811,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = await _cloudServicesUpdateDomainRestClient.ListUpdateDomainsAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _cloudServicesUpdateDomainRestClient.ListUpdateDomainsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -826,7 +826,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = await _cloudServicesUpdateDomainRestClient.ListUpdateDomainsNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _cloudServicesUpdateDomainRestClient.ListUpdateDomainsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -849,7 +849,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = _cloudServicesUpdateDomainRestClient.ListUpdateDomains(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _cloudServicesUpdateDomainRestClient.ListUpdateDomains(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -864,7 +864,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = _cloudServicesUpdateDomainRestClient.ListUpdateDomainsNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _cloudServicesUpdateDomainRestClient.ListUpdateDomainsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

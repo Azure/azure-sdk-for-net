@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _deploymentsRestClient = new DeploymentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _deploymentsRestClient = new DeploymentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _deploymentOperationsRestClient = new DeploymentRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources
         internal Deployment(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _deploymentsRestClient = new DeploymentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _deploymentsRestClient = new DeploymentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _deploymentOperationsRestClient = new DeploymentRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Resources
         internal Deployment(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _deploymentsRestClient = new DeploymentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _deploymentsRestClient = new DeploymentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _deploymentOperationsRestClient = new DeploymentRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
@@ -357,16 +357,16 @@ namespace Azure.ResourceManager.Resources
                 }
                 else if (Id.Parent.ResourceType == Subscription.ResourceType)
                 {
-                    var response = await _deploymentsRestClient.WhatIfAtSubscriptionScopeAsync(Id.Name, properties, location, cancellationToken).ConfigureAwait(false);
-                    var operation = new DeploymentWhatIfAtTenantScopeOperation(_clientDiagnostics, Pipeline, _deploymentsRestClient.CreateWhatIfAtSubscriptionScopeRequest(Id.Name, properties, location).Request, response);
+                    var response = await _deploymentsRestClient.WhatIfAtSubscriptionScopeAsync(Id.SubscriptionId, Id.Name, properties, location, cancellationToken).ConfigureAwait(false);
+                    var operation = new DeploymentWhatIfAtTenantScopeOperation(_clientDiagnostics, Pipeline, _deploymentsRestClient.CreateWhatIfAtSubscriptionScopeRequest(Id.SubscriptionId, Id.Name, properties, location).Request, response);
                     if (waitForCompletion)
                         await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
                 }
                 else if (Id.Parent.ResourceType == ResourceGroup.ResourceType)
                 {
-                    var response = await _deploymentsRestClient.WhatIfAsync(Id.ResourceGroupName, Id.Name, properties, location, cancellationToken).ConfigureAwait(false);
-                    var operation = new DeploymentWhatIfAtTenantScopeOperation(_clientDiagnostics, Pipeline, _deploymentsRestClient.CreateWhatIfRequest(Id.ResourceGroupName, Id.Name, properties, location).Request, response);
+                    var response = await _deploymentsRestClient.WhatIfAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, properties, location, cancellationToken).ConfigureAwait(false);
+                    var operation = new DeploymentWhatIfAtTenantScopeOperation(_clientDiagnostics, Pipeline, _deploymentsRestClient.CreateWhatIfRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, properties, location).Request, response);
                     if (waitForCompletion)
                         await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
@@ -422,16 +422,16 @@ namespace Azure.ResourceManager.Resources
                 }
                 else if (Id.Parent.ResourceType == Subscription.ResourceType)
                 {
-                    var response = _deploymentsRestClient.WhatIfAtSubscriptionScope(Id.Name, properties, location, cancellationToken);
-                    var operation = new DeploymentWhatIfAtTenantScopeOperation(_clientDiagnostics, Pipeline, _deploymentsRestClient.CreateWhatIfAtSubscriptionScopeRequest(Id.Name, properties, location).Request, response);
+                    var response = _deploymentsRestClient.WhatIfAtSubscriptionScope(Id.SubscriptionId, Id.Name, properties, location, cancellationToken);
+                    var operation = new DeploymentWhatIfAtTenantScopeOperation(_clientDiagnostics, Pipeline, _deploymentsRestClient.CreateWhatIfAtSubscriptionScopeRequest(Id.SubscriptionId, Id.Name, properties, location).Request, response);
                     if (waitForCompletion)
                         operation.WaitForCompletion(cancellationToken);
                     return operation;
                 }
                 else if (Id.Parent.ResourceType == ResourceGroup.ResourceType)
                 {
-                    var response = _deploymentsRestClient.WhatIf(Id.ResourceGroupName, Id.Name, properties, location, cancellationToken);
-                    var operation = new DeploymentWhatIfAtTenantScopeOperation(_clientDiagnostics, Pipeline, _deploymentsRestClient.CreateWhatIfRequest(Id.ResourceGroupName, Id.Name, properties, location).Request, response);
+                    var response = _deploymentsRestClient.WhatIf(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, properties, location, cancellationToken);
+                    var operation = new DeploymentWhatIfAtTenantScopeOperation(_clientDiagnostics, Pipeline, _deploymentsRestClient.CreateWhatIfRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, properties, location).Request, response);
                     if (waitForCompletion)
                         operation.WaitForCompletion(cancellationToken);
                     return operation;
