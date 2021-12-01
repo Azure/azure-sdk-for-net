@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string virtualNetworkName, string subnetName)
+        internal HttpMessage CreateListRequest(string resourceGroupName, string virtualNetworkName, string subnetName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/>, or <paramref name="subnetName"/> is null. </exception>
-        public async Task<Response<ServiceAssociationLinksListResult>> GetAllAsync(string resourceGroupName, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceAssociationLinksListResult>> ListAsync(string resourceGroupName, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(subnetName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, virtualNetworkName, subnetName);
+            using var message = CreateListRequest(resourceGroupName, virtualNetworkName, subnetName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/>, or <paramref name="subnetName"/> is null. </exception>
-        public Response<ServiceAssociationLinksListResult> GetAll(string resourceGroupName, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default)
+        public Response<ServiceAssociationLinksListResult> List(string resourceGroupName, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(subnetName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, virtualNetworkName, subnetName);
+            using var message = CreateListRequest(resourceGroupName, virtualNetworkName, subnetName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

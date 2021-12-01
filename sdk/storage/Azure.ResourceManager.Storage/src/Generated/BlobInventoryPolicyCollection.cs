@@ -20,11 +20,12 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> A class representing collection of BlobInventoryPolicy and their operations over a StorageAccount. </summary>
+    /// <summary> A class representing collection of BlobInventoryPolicy and their operations over its parent. </summary>
     public partial class BlobInventoryPolicyCollection : ArmCollection, IEnumerable<BlobInventoryPolicy>, IAsyncEnumerable<BlobInventoryPolicy>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly BlobInventoryPoliciesRestOperations _restClient;
+        private readonly BlobInventoryPoliciesRestOperations _blobInventoryPoliciesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="BlobInventoryPolicyCollection"/> class for mocking. </summary>
         protected BlobInventoryPolicyCollection()
@@ -36,22 +37,7 @@ namespace Azure.ResourceManager.Storage
         internal BlobInventoryPolicyCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new BlobInventoryPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        IEnumerator<BlobInventoryPolicy> IEnumerable<BlobInventoryPolicy>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<BlobInventoryPolicy> IAsyncEnumerable<BlobInventoryPolicy>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            _blobInventoryPoliciesRestClient = new BlobInventoryPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -76,7 +62,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, blobInventoryPolicyName, properties, cancellationToken);
+                var response = _blobInventoryPoliciesRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, blobInventoryPolicyName, properties, cancellationToken);
                 var operation = new BlobInventoryPolicyCreateOrUpdateOperation(Parent, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
@@ -106,7 +92,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, blobInventoryPolicyName, properties, cancellationToken).ConfigureAwait(false);
+                var response = await _blobInventoryPoliciesRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, blobInventoryPolicyName, properties, cancellationToken).ConfigureAwait(false);
                 var operation = new BlobInventoryPolicyCreateOrUpdateOperation(Parent, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -119,16 +105,16 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the blob inventory policy associated with the specified storage account. </summary>
         /// <param name="blobInventoryPolicyName"> The name of the storage account blob inventory policy. It should always be &apos;default&apos;. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BlobInventoryPolicy> Get(BlobInventoryPolicyName blobInventoryPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BlobInventoryPolicyCollection.Get");
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, blobInventoryPolicyName, cancellationToken: cancellationToken);
+                var response = _blobInventoryPoliciesRestClient.Get(Id.ResourceGroupName, Id.Name, blobInventoryPolicyName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new BlobInventoryPolicy(Parent, response.Value), response.GetRawResponse());
@@ -140,16 +126,16 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the blob inventory policy associated with the specified storage account. </summary>
         /// <param name="blobInventoryPolicyName"> The name of the storage account blob inventory policy. It should always be &apos;default&apos;. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<BlobInventoryPolicy>> GetAsync(BlobInventoryPolicyName blobInventoryPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BlobInventoryPolicyCollection.Get");
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, blobInventoryPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _blobInventoryPoliciesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, blobInventoryPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new BlobInventoryPolicy(Parent, response.Value), response.GetRawResponse());
@@ -163,14 +149,14 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="blobInventoryPolicyName"> The name of the storage account blob inventory policy. It should always be &apos;default&apos;. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BlobInventoryPolicy> GetIfExists(BlobInventoryPolicyName blobInventoryPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BlobInventoryPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, blobInventoryPolicyName, cancellationToken: cancellationToken);
+                var response = _blobInventoryPoliciesRestClient.Get(Id.ResourceGroupName, Id.Name, blobInventoryPolicyName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<BlobInventoryPolicy>(null, response.GetRawResponse())
                     : Response.FromValue(new BlobInventoryPolicy(this, response.Value), response.GetRawResponse());
@@ -184,14 +170,14 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="blobInventoryPolicyName"> The name of the storage account blob inventory policy. It should always be &apos;default&apos;. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<BlobInventoryPolicy>> GetIfExistsAsync(BlobInventoryPolicyName blobInventoryPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("BlobInventoryPolicyCollection.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("BlobInventoryPolicyCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, blobInventoryPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _blobInventoryPoliciesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, blobInventoryPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<BlobInventoryPolicy>(null, response.GetRawResponse())
                     : Response.FromValue(new BlobInventoryPolicy(this, response.Value), response.GetRawResponse());
@@ -205,7 +191,7 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="blobInventoryPolicyName"> The name of the storage account blob inventory policy. It should always be &apos;default&apos;. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> CheckIfExists(BlobInventoryPolicyName blobInventoryPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BlobInventoryPolicyCollection.CheckIfExists");
@@ -224,10 +210,10 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="blobInventoryPolicyName"> The name of the storage account blob inventory policy. It should always be &apos;default&apos;. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(BlobInventoryPolicyName blobInventoryPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("BlobInventoryPolicyCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("BlobInventoryPolicyCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
@@ -252,7 +238,7 @@ namespace Azure.ResourceManager.Storage
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _blobInventoryPoliciesRestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new BlobInventoryPolicy(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -275,7 +261,7 @@ namespace Azure.ResourceManager.Storage
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _blobInventoryPoliciesRestClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new BlobInventoryPolicy(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -287,7 +273,22 @@ namespace Azure.ResourceManager.Storage
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
+        IEnumerator<BlobInventoryPolicy> IEnumerable<BlobInventoryPolicy>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<BlobInventoryPolicy> IAsyncEnumerable<BlobInventoryPolicy>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, BlobInventoryPolicy, BlobInventoryPolicyData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, BlobInventoryPolicy, BlobInventoryPolicyData> Construct() { }
     }
 }
