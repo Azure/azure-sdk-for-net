@@ -79,10 +79,24 @@ function DeployStressTests(
     [string]$environment = 'test',
     [string]$repository = 'images',
     [boolean]$pushImages = $false,
-    [string]$clusterGroup = 'rg-stress-cluster-test',
+    [string]$clusterGroup = '',
     [string]$deployId = 'local',
-    [string]$subscription = 'Azure SDK Developer Playground'
+    [string]$subscription = ''
 ) {
+    if ($environment -eq 'test') {
+        if ($clusterGroup -or $subscription) {
+            Write-Warning "Overriding cluster group and subscription with defaults for 'test' environment."
+        }
+        $clusterGroup = 'rg-stress-cluster-test'
+        $subscription = 'Azure SDK Developer Playground'
+    } elseif ($environment -eq 'prod') {
+        if ($clusterGroup -or $subscription) {
+            Write-Warning "Overriding cluster group and subscription with defaults for 'prod' environment."
+        }
+        $clusterGroup = 'rg-stress-cluster-prod'
+        $subscription = 'Azure SDK Test Resources'
+    }
+
     if ($PSCmdlet.ParameterSetName -eq 'DoLogin') {
         Login $subscription $clusterGroup $pushImages
     }
