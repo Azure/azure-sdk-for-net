@@ -237,9 +237,4 @@ directive:
   - from: swagger-document
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkName}'].delete
     transform: $.operationId = "SharedPrivateLinks_Delete"
-
-
-
-
-
 ```

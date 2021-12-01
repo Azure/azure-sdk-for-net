@@ -49,50 +49,50 @@ AclAction aclAction = new AclAction("Deny");
 IList<WebPubSubRequestType> allow = new List<WebPubSubRequestType>();
 IList<WebPubSubRequestType> deny = new List<WebPubSubRequestType>();
 deny.Add(new WebPubSubRequestType("RESTAPI"));
-NetworkACL publicNetwork = new NetworkACL(allow, deny);
-IList<PrivateEndpointACL> privateEndpoints = new List<PrivateEndpointACL>();
+NetworkAcl publicNetwork = new NetworkAcl(allow, deny);
+IList<PrivateEndpointAcl> privateEndpoints = new List<PrivateEndpointAcl>();
 
 List<ResourceLogCategory> resourceLogCategory = new List<ResourceLogCategory>()
 {
     new ResourceLogCategory(){ Name = "category1", Enabled = "false" }
 };
-WebPubSubResourceData data = new WebPubSubResourceData(Location.WestUS2)
+WebPubSubData data = new WebPubSubData(Location.WestUS2)
 {
     Sku = new WebPubSubSku("Standard_S1"),
     LiveTraceConfiguration = new LiveTraceConfiguration("true", categories),
-    NetworkACLs = new WebPubSubNetworkACLs(aclAction, publicNetwork, privateEndpoints),
+    NetworkAcls = new WebPubSubNetworkAcls(aclAction, publicNetwork, privateEndpoints),
     ResourceLogConfiguration = new ResourceLogConfiguration(resourceLogCategory),
 };
 
-WebPubSubResource webPubSub = await (await webPubSubResourceCollection.CreateOrUpdateAsync(webPubSubName, data)).WaitForCompletionAsync();
+WebPubSub webPubSub = await (await WebPubSubColletion.CreateOrUpdateAsync(webPubSubName, data)).WaitForCompletionAsync();
 ```
 
 ***Get a WebPubSub***
 
 ```C# Snippet:Managing_WebPubSub_GetWebPubSub
-WebPubSubResourceCollection webPubSubResourceCollection = resourceGroup.GetWebPubSubResources();
+WebPubSubCollection WebPubSubColletion = resourceGroup.GetWebPubSubs();
 
-WebPubSubResource webPubSub = await webPubSubResourceCollection.GetAsync("myWebPubSubName");
+WebPubSub webPubSub = await WebPubSubColletion.GetAsync("myWebPubSubName");
 Console.WriteLine(webPubSub.Data.Name);
 ```
 
 ***List all WebPubSub***
 
 ```C# Snippet:Managing_WebPubSub_ListAllWebPubSub
-WebPubSubResourceCollection webPubSubResourceCollection = resourceGroup.GetWebPubSubResources();
+WebPubSubCollection WebPubSubColletion = resourceGroup.GetWebPubSubs();
 
-AsyncPageable<WebPubSubResource> response = webPubSubResourceCollection.GetAllAsync();
-await foreach (WebPubSubResource WebPubSubResource in response)
+AsyncPageable<WebPubSub> response = WebPubSubColletion.GetAllAsync();
+await foreach (WebPubSub WebPubSub in response)
 {
-    Console.WriteLine(WebPubSubResource.Data.Name);
+    Console.WriteLine(WebPubSub.Data.Name);
 }
 ```
 
 ***Delete a WebPubSub***
 
 ```C# Snippet:Managing_WebPubSub_DeleteWebPubSub
-WebPubSubResourceCollection webPubSubResourceCollection = resourceGroup.GetWebPubSubResources();
+WebPubSubCollection WebPubSubColletion = resourceGroup.GetWebPubSubs();
 
-WebPubSubResource webPubSub = await webPubSubResourceCollection.GetAsync("myWebPubSubName");
+WebPubSub webPubSub = await WebPubSubColletion.GetAsync("myWebPubSubName");
 await webPubSub.DeleteAsync();
 ```
