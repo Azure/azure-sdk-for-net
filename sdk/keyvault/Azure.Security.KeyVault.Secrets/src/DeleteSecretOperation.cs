@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -18,18 +19,18 @@ namespace Azure.Security.KeyVault.Secrets
         private readonly KeyVaultPipeline _pipeline;
         private readonly OperationInternal _operationInternal;
         private readonly DeletedSecret _value;
-        private readonly bool _completed;
 
         internal DeleteSecretOperation(KeyVaultPipeline pipeline, Response<DeletedSecret> response)
         {
             _pipeline = pipeline;
             _value = response.Value ?? throw new InvalidOperationException("The response does not contain a value.");
-            _operationInternal = new(_pipeline.Diagnostics, this, response.GetRawResponse(), nameof(DeleteSecretOperation));
+            _operationInternal = new(_pipeline.Diagnostics, this, response.GetRawResponse(), nameof(DeleteSecretOperation), new[] { new KeyValuePair<string, string>("secret", _value.Name) });
 
-            // The recoveryId is only returned if soft-delete is enabled.
+            // The recoveryId is only returned if soft delete is enabled.
             if (_value.RecoveryId is null)
             {
-                _completed = true;
+                // If soft delete is not enabled, deleting is immediate so set success accordingly.
+                _operationInternal.SetState(OperationState.Success(response.GetRawResponse()));
             }
         }
 
@@ -49,7 +50,7 @@ namespace Azure.Security.KeyVault.Secrets
         public override DeletedSecret Value => _value;
 
         /// <inheritdoc/>
-        public override bool HasCompleted => _completed || _operationInternal.HasCompleted;
+        public override bool HasCompleted => _operationInternal.HasCompleted;
 
         /// <inheritdoc/>
         public override bool HasValue => true;

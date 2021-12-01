@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,7 +24,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             _pipeline = pipeline;
             _value = response.Value ?? throw new InvalidOperationException("The response does not contain a value.");
-            _operationInternal = new(_pipeline.Diagnostics, this, response.GetRawResponse(), nameof(RecoverDeletedSecretOperation));
+            _operationInternal = new(_pipeline.Diagnostics, this, response.GetRawResponse(), nameof(RecoverDeletedSecretOperation), new[] { new KeyValuePair<string, string>("secret", _value.Name) });
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoverDeletedSecretOperation" /> for mocking. </summary>

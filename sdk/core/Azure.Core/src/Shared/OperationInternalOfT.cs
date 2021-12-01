@@ -168,6 +168,15 @@ namespace Azure.Core
             return Response.FromValue(Value, rawResponse);
         }
 
+        /// <summary>
+        /// Sets the <see cref="OperationInternal{T}"/> state immediately.
+        /// </summary>
+        /// <param name="state">The <see cref="OperationState{T}"/> used to set <see cref="OperationInternalBase.HasCompleted"/> and other members.</param>
+        public void SetState(OperationState<T> state)
+        {
+            ApplyStateAsync(false, state.RawResponse, state.HasCompleted, state.HasSucceeded, state.OperationFailedException).EnsureCompleted();
+        }
+
         protected override async ValueTask<Response> UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             OperationState<T> state = await _operation.UpdateStateAsync(async, cancellationToken).ConfigureAwait(false);
