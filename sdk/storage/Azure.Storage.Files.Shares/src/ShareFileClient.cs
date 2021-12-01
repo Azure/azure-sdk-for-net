@@ -5797,6 +5797,205 @@ namespace Azure.Storage.Files.Shares
         }
         #endregion ForceCloseHandles
 
+        #region Rename
+        /// <summary>
+        /// Renames a file.
+        /// This API does not support renaming a file from one share to another, or between storage accounts.
+        /// </summary>
+        /// <param name="destinationPath">
+        /// The destination path to rename the file to.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareFileClient}"/> pointed at the newly renamed File.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<ShareFileClient> Rename(
+            string destinationPath,
+            ShareFileRenameOptions options = default,
+            CancellationToken cancellationToken = default)
+            => RenameInternal(
+                destinationPath: destinationPath,
+                options: options,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Renames a file.
+        /// This API does not support renaming a file from one share to another, or between storage accounts.
+        /// </summary>
+        /// <param name="destinationPath">
+        /// The destination path to rename the file to.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareFileClient}"/> pointed at the newly renamed File.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareFileClient>> RenameAsync(
+            string destinationPath,
+            ShareFileRenameOptions options = default,
+            CancellationToken cancellationToken = default)
+            => await RenameInternal(
+                destinationPath: destinationPath,
+                options: options,
+                async: true,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Renames a file.
+        /// This API does not support renaming a file from one share to another, or between storage accounts.
+        /// </summary>
+        /// <param name="destinationPath">
+        /// The destination path to rename the file to.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareFileClient}"/> pointed at the newly renamed File.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<ShareFileClient>> RenameInternal(
+            string destinationPath,
+            ShareFileRenameOptions options,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(ShareFileClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(destinationPath)}: {destinationPath}\n" +
+                    $"{nameof(options)}: {options}\n");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(Rename)}");
+
+                try
+                {
+                    scope.Start();
+
+                    ShareExtensions.AssertValidFilePermissionAndKey(options?.FilePermission, options?.SmbProperties?.FilePermissionKey);
+
+                    // Build destination URI
+                    ShareUriBuilder destUriBuilder = new ShareUriBuilder(Uri)
+                    {
+                        Sas = null,
+                        Query = null
+                    };
+
+                    // ShareUriBuider will encode the DirectoryOrFilePath.  We don't want the query parameters,
+                    // especially SAS, to be encoded.
+                    string[] split = destinationPath.Split('?');
+                    if (split.Length == 2)
+                    {
+                        destUriBuilder.DirectoryOrFilePath = split[0];
+                        destUriBuilder.Query = split[1];
+                    }
+                    else
+                    {
+                        destUriBuilder.DirectoryOrFilePath = destinationPath;
+                    }
+
+                    // Build destFileClient
+                    ShareFileClient destFileClient = new ShareFileClient(destUriBuilder.ToUri(), ClientConfiguration);
+
+                    ResponseWithHeaders<FileRenameHeaders> response;
+
+                    CopyFileSmbInfo copyFileSmbInfo = new CopyFileSmbInfo
+                    {
+                        FileAttributes = options?.SmbProperties?.FileAttributes?.ToAttributesString(),
+                        FileCreationTime = options?.SmbProperties?.FileCreatedOn.ToFileDateTimeString(),
+                        FileLastWriteTime = options?.SmbProperties?.FileLastWrittenOn.ToFileDateTimeString(),
+                        IgnoreReadOnly = options?.IgnoreReadOnly
+                    };
+
+                    FileHttpHeaders fileHttpHeaders = new FileHttpHeaders
+                    {
+                        FileContentType = options?.ContentType
+                    };
+
+                    if (async)
+                    {
+                        response = await destFileClient.FileRestClient.RenameAsync(
+                            renameSource: Uri.AbsoluteUri,
+                            replaceIfExists: options?.ReplaceIfExists,
+                            ignoreReadOnly: options?.IgnoreReadOnly,
+                            sourceLeaseId: options?.SourceRequestConditions?.LeaseId,
+                            destinationLeaseId: options?.DestinationRequestConditions?.LeaseId,
+                            filePermission: options?.FilePermission,
+                            filePermissionKey: options?.SmbProperties?.FilePermissionKey,
+                            copyFileSmbInfo: copyFileSmbInfo,
+                            fileHttpHeaders: fileHttpHeaders,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = destFileClient.FileRestClient.Rename(
+                            renameSource: Uri.AbsoluteUri,
+                            replaceIfExists: options?.ReplaceIfExists,
+                            ignoreReadOnly: options?.IgnoreReadOnly,
+                            sourceLeaseId: options?.SourceRequestConditions?.LeaseId,
+                            destinationLeaseId: options?.DestinationRequestConditions?.LeaseId,
+                            filePermission: options?.FilePermission,
+                            filePermissionKey: options?.SmbProperties?.FilePermissionKey,
+                            copyFileSmbInfo: copyFileSmbInfo,
+                            fileHttpHeaders: fileHttpHeaders,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        destFileClient,
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion Rename
+
         #region OpenWrite
         /// <summary>
         /// Opens a stream for writing to the file.
