@@ -84,14 +84,14 @@ namespace Azure.ResourceManager.Network.Tests
         [TearDown]
         public async Task Teardown()
         {
-            if (_resourceGroup.GetAzureFirewalls().CheckIfExists(_firewallName))
+            if (await _resourceGroup.GetAzureFirewalls().CheckIfExistsAsync(_firewallName))
             {
                 AzureFirewall firewall = await _resourceGroup.GetAzureFirewalls().GetAsync(_firewallName);
                 await firewall.DeleteAsync();
             }
         }
 
-        public async Task<AzureFirewall> CreateFirewall()
+        public async Task<AzureFirewall> CreateFirewallAsync()
         {
             AzureFirewallData firewallData = new AzureFirewallData();
             firewallData.Location = Location.WestUS2;
@@ -107,20 +107,18 @@ namespace Azure.ResourceManager.Network.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("11/29/2021 - need to re-record this test")]
         public async Task CreateOrUpdate()
         {
-            AzureFirewall firewall = await CreateFirewall();
+            AzureFirewall firewall = await CreateFirewallAsync();
             Assert.IsNotNull(firewall.Data);
             Assert.AreEqual(_firewallName, firewall.Data.Name);
         }
 
         [Test]
         [RecordedTest]
-        [Ignore("11/29/2021 - need to re-record this test")]
         public async Task Get()
         {
-            await CreateFirewall();
+            await CreateFirewallAsync();
             var firewall = await _resourceGroup.GetAzureFirewalls().GetAsync(_firewallName);
             Assert.IsNotNull(firewall.Value.Data);
             Assert.AreEqual(_firewallName, firewall.Value.Data.Name);
@@ -128,30 +126,27 @@ namespace Azure.ResourceManager.Network.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("11/29/2021 - need to re-record this test")]
         public async Task GetAll()
         {
-            await CreateFirewall();
+            await CreateFirewallAsync();
             List<AzureFirewall> firewallList = await _resourceGroup.GetAzureFirewalls().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(1, firewallList.Count);
         }
 
         [Test]
         [RecordedTest]
-        [Ignore("11/29/2021 - need to re-record this test")]
         public async Task CheckIfExists()
         {
-            await CreateFirewall();
-            Assert.True(_resourceGroup.GetAzureFirewalls().CheckIfExists(_firewallName));
-            Assert.False(_resourceGroup.GetAzureFirewalls().CheckIfExists(_firewallName + "0"));
+            await CreateFirewallAsync();
+            Assert.True(await _resourceGroup.GetAzureFirewalls().CheckIfExistsAsync(_firewallName));
+            Assert.False(await _resourceGroup.GetAzureFirewalls().CheckIfExistsAsync(_firewallName + "0"));
         }
 
         [Test]
         [RecordedTest]
-        [Ignore("11/29/2021 - need to re-record this test")]
         public async Task Delete()
         {
-            AzureFirewall firewall = await CreateFirewall();
+            AzureFirewall firewall = await CreateFirewallAsync();
             List<AzureFirewall> firewallList = await _resourceGroup.GetAzureFirewalls().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(1, firewallList.Count);
 

@@ -75,4 +75,4 @@ await account.DeleteAsync();
 
 
 ## Next steps
-Take a look at the [Managing Device Update Instances](https://github.com/Yao725/azure-sdk-for-net/tree/feature/mgmt-track2-deviceupdate/sdk/deviceupdate/Azure.ResourceManager.DeviceUpdate/samples/Sample2_ManagingDeviceUpdateInstances.md) samples.
+Take a look at the [Managing Device Update Instances](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/deviceupdate/Azure.ResourceManager.DeviceUpdate/samples/Sample2_ManagingDeviceUpdateInstances.md) samples.

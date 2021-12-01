@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network
         internal FrontendIPConfigurationCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _loadBalancerFrontendIPConfigurationsRestClient = new LoadBalancerFrontendIPConfigurationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _loadBalancerFrontendIPConfigurationsRestClient = new LoadBalancerFrontendIPConfigurationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _loadBalancerFrontendIPConfigurationsRestClient.Get(Id.ResourceGroupName, Id.Name, frontendIPConfigurationName, cancellationToken);
+                var response = _loadBalancerFrontendIPConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendIPConfigurationName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FrontendIPConfiguration(Parent, response.Value), response.GetRawResponse());
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _loadBalancerFrontendIPConfigurationsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, frontendIPConfigurationName, cancellationToken).ConfigureAwait(false);
+                var response = await _loadBalancerFrontendIPConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendIPConfigurationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new FrontendIPConfiguration(Parent, response.Value), response.GetRawResponse());
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _loadBalancerFrontendIPConfigurationsRestClient.Get(Id.ResourceGroupName, Id.Name, frontendIPConfigurationName, cancellationToken: cancellationToken);
+                var response = _loadBalancerFrontendIPConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendIPConfigurationName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<FrontendIPConfiguration>(null, response.GetRawResponse())
                     : Response.FromValue(new FrontendIPConfiguration(this, response.Value), response.GetRawResponse());
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _loadBalancerFrontendIPConfigurationsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, frontendIPConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _loadBalancerFrontendIPConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendIPConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<FrontendIPConfiguration>(null, response.GetRawResponse())
                     : Response.FromValue(new FrontendIPConfiguration(this, response.Value), response.GetRawResponse());
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _loadBalancerFrontendIPConfigurationsRestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _loadBalancerFrontendIPConfigurationsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new FrontendIPConfiguration(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _loadBalancerFrontendIPConfigurationsRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _loadBalancerFrontendIPConfigurationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new FrontendIPConfiguration(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _loadBalancerFrontendIPConfigurationsRestClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _loadBalancerFrontendIPConfigurationsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new FrontendIPConfiguration(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _loadBalancerFrontendIPConfigurationsRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _loadBalancerFrontendIPConfigurationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new FrontendIPConfiguration(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

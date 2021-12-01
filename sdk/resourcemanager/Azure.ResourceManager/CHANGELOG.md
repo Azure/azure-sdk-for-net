@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.0.0-beta.7 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.6 (2021-11-30)
+
+### Bugs Fixed
+
+- Fixed error when parsing id with subscriptions of other resource types.
 
 ## 1.0.0-beta.5 (2021-10-28)
 

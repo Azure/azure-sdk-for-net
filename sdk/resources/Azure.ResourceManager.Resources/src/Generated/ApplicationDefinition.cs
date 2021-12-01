@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _applicationDefinitionsRestClient = new ApplicationDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _applicationDefinitionsRestClient = new ApplicationDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ApplicationDefinition"/> class. </summary>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Resources
         internal ApplicationDefinition(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _applicationDefinitionsRestClient = new ApplicationDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _applicationDefinitionsRestClient = new ApplicationDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ApplicationDefinition"/> class. </summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Resources
         internal ApplicationDefinition(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _applicationDefinitionsRestClient = new ApplicationDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _applicationDefinitionsRestClient = new ApplicationDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _applicationDefinitionsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _applicationDefinitionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ApplicationDefinition(this, response.Value), response.GetRawResponse());
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _applicationDefinitionsRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _applicationDefinitionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ApplicationDefinition(this, response.Value), response.GetRawResponse());
@@ -148,8 +148,8 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _applicationDefinitionsRestClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ApplicationDefinitionDeleteOperation(_clientDiagnostics, Pipeline, _applicationDefinitionsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _applicationDefinitionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ApplicationDefinitionDeleteOperation(_clientDiagnostics, Pipeline, _applicationDefinitionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -170,8 +170,8 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _applicationDefinitionsRestClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ApplicationDefinitionDeleteOperation(_clientDiagnostics, Pipeline, _applicationDefinitionsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _applicationDefinitionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ApplicationDefinitionDeleteOperation(_clientDiagnostics, Pipeline, _applicationDefinitionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

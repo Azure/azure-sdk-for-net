@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Storage
         internal StorageAccountCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _storageAccountsRestClient = new StorageAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _storageAccountsRestClient = new StorageAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _storageAccountsRestClient.Create(Id.ResourceGroupName, accountName, parameters, cancellationToken);
-                var operation = new StorageAccountCreateOperation(Parent, _clientDiagnostics, Pipeline, _storageAccountsRestClient.CreateCreateRequest(Id.ResourceGroupName, accountName, parameters).Request, response);
+                var response = _storageAccountsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, accountName, parameters, cancellationToken);
+                var operation = new StorageAccountCreateOperation(Parent, _clientDiagnostics, Pipeline, _storageAccountsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -101,8 +101,8 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _storageAccountsRestClient.CreateAsync(Id.ResourceGroupName, accountName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageAccountCreateOperation(Parent, _clientDiagnostics, Pipeline, _storageAccountsRestClient.CreateCreateRequest(Id.ResourceGroupName, accountName, parameters).Request, response);
+                var response = await _storageAccountsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new StorageAccountCreateOperation(Parent, _clientDiagnostics, Pipeline, _storageAccountsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _storageAccountsRestClient.GetProperties(Id.ResourceGroupName, accountName, expand, cancellationToken);
+                var response = _storageAccountsRestClient.GetProperties(Id.SubscriptionId, Id.ResourceGroupName, accountName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new StorageAccount(Parent, response.Value), response.GetRawResponse());
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _storageAccountsRestClient.GetPropertiesAsync(Id.ResourceGroupName, accountName, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _storageAccountsRestClient.GetPropertiesAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new StorageAccount(Parent, response.Value), response.GetRawResponse());
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _storageAccountsRestClient.GetProperties(Id.ResourceGroupName, accountName, expand, cancellationToken: cancellationToken);
+                var response = _storageAccountsRestClient.GetProperties(Id.SubscriptionId, Id.ResourceGroupName, accountName, expand, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<StorageAccount>(null, response.GetRawResponse())
                     : Response.FromValue(new StorageAccount(this, response.Value), response.GetRawResponse());
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _storageAccountsRestClient.GetPropertiesAsync(Id.ResourceGroupName, accountName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _storageAccountsRestClient.GetPropertiesAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<StorageAccount>(null, response.GetRawResponse())
                     : Response.FromValue(new StorageAccount(this, response.Value), response.GetRawResponse());
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Storage
                 scope.Start();
                 try
                 {
-                    var response = _storageAccountsRestClient.ListByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _storageAccountsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new StorageAccount(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Storage
                 scope.Start();
                 try
                 {
-                    var response = _storageAccountsRestClient.ListByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _storageAccountsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new StorageAccount(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Storage
                 scope.Start();
                 try
                 {
-                    var response = await _storageAccountsRestClient.ListByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _storageAccountsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new StorageAccount(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Storage
                 scope.Start();
                 try
                 {
-                    var response = await _storageAccountsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _storageAccountsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new StorageAccount(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _virtualApplianceSkusRestClient = new VirtualApplianceSkusRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _virtualApplianceSkusRestClient = new VirtualApplianceSkusRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="NetworkVirtualApplianceSku"/> class. </summary>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network
         internal NetworkVirtualApplianceSku(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _virtualApplianceSkusRestClient = new VirtualApplianceSkusRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _virtualApplianceSkusRestClient = new VirtualApplianceSkusRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="NetworkVirtualApplianceSku"/> class. </summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network
         internal NetworkVirtualApplianceSku(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _virtualApplianceSkusRestClient = new VirtualApplianceSkusRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _virtualApplianceSkusRestClient = new VirtualApplianceSkusRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _virtualApplianceSkusRestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualApplianceSkusRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new NetworkVirtualApplianceSku(this, response.Value), response.GetRawResponse());
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _virtualApplianceSkusRestClient.Get(Id.Name, cancellationToken);
+                var response = _virtualApplianceSkusRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkVirtualApplianceSku(this, response.Value), response.GetRawResponse());

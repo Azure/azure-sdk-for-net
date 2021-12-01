@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.KeyVault
         }
         #endregion
 
-        private static VaultsRestOperations GetVaultsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        private static VaultsRestOperations GetVaultsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
         {
-            return new VaultsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+            return new VaultsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
 
-        private static ManagedHsmsRestOperations GetManagedHsmsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        private static ManagedHsmsRestOperations GetManagedHsmsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
         {
-            return new ManagedHsmsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+            return new ManagedHsmsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
 
         /// <summary> Lists the Vaults for this <see cref="Subscription" />. </summary>
@@ -62,14 +62,14 @@ namespace Azure.ResourceManager.KeyVault
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetVaultsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                var restOperations = GetVaultsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 async Task<Page<Vault>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVaults");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListBySubscriptionAsync(top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListBySubscriptionAsync(subscription.Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new Vault(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.KeyVault
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListBySubscriptionNextPageAsync(nextLink, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListBySubscriptionNextPageAsync(nextLink, subscription.Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new Vault(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.KeyVault
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetVaultsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                var restOperations = GetVaultsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 Page<Vault> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVaults");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListBySubscription(top, cancellationToken: cancellationToken);
+                        var response = restOperations.ListBySubscription(subscription.Id.SubscriptionId, top, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new Vault(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.KeyVault
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListBySubscriptionNextPage(nextLink, top, cancellationToken: cancellationToken);
+                        var response = restOperations.ListBySubscriptionNextPage(nextLink, subscription.Id.SubscriptionId, top, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new Vault(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -181,14 +181,14 @@ namespace Azure.ResourceManager.KeyVault
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetVaultsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                var restOperations = GetVaultsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 async Task<Page<DeletedVaultData>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeletedVaults");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListDeletedAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListDeletedAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.KeyVault
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListDeletedNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListDeletedNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -226,14 +226,14 @@ namespace Azure.ResourceManager.KeyVault
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetVaultsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                var restOperations = GetVaultsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 Page<DeletedVaultData> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeletedVaults");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListDeleted(cancellationToken: cancellationToken);
+                        var response = restOperations.ListDeleted(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.KeyVault
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListDeletedNextPage(nextLink, cancellationToken: cancellationToken);
+                        var response = restOperations.ListDeletedNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -309,8 +309,8 @@ namespace Azure.ResourceManager.KeyVault
                 scope.Start();
                 try
                 {
-                    var restOperations = GetVaultsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = await restOperations.CheckNameAvailabilityAsync(vaultName, cancellationToken).ConfigureAwait(false);
+                    var restOperations = GetVaultsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    var response = await restOperations.CheckNameAvailabilityAsync(subscription.Id.SubscriptionId, vaultName, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
                 catch (Exception e)
@@ -341,8 +341,8 @@ namespace Azure.ResourceManager.KeyVault
                 scope.Start();
                 try
                 {
-                    var restOperations = GetVaultsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = restOperations.CheckNameAvailability(vaultName, cancellationToken);
+                    var restOperations = GetVaultsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    var response = restOperations.CheckNameAvailability(subscription.Id.SubscriptionId, vaultName, cancellationToken);
                     return response;
                 }
                 catch (Exception e)
@@ -364,14 +364,14 @@ namespace Azure.ResourceManager.KeyVault
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetManagedHsmsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                var restOperations = GetManagedHsmsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 async Task<Page<ManagedHsm>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetManagedHsms");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListBySubscriptionAsync(top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListBySubscriptionAsync(subscription.Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new ManagedHsm(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.KeyVault
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListBySubscriptionNextPageAsync(nextLink, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListBySubscriptionNextPageAsync(nextLink, subscription.Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new ManagedHsm(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -410,14 +410,14 @@ namespace Azure.ResourceManager.KeyVault
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetManagedHsmsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                var restOperations = GetManagedHsmsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 Page<ManagedHsm> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetManagedHsms");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListBySubscription(top, cancellationToken: cancellationToken);
+                        var response = restOperations.ListBySubscription(subscription.Id.SubscriptionId, top, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new ManagedHsm(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.KeyVault
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListBySubscriptionNextPage(nextLink, top, cancellationToken: cancellationToken);
+                        var response = restOperations.ListBySubscriptionNextPage(nextLink, subscription.Id.SubscriptionId, top, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new ManagedHsm(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -483,14 +483,14 @@ namespace Azure.ResourceManager.KeyVault
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetManagedHsmsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                var restOperations = GetManagedHsmsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 async Task<Page<DeletedManagedHsmData>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeletedManagedHsms");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListDeletedAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListDeletedAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.KeyVault
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListDeletedNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListDeletedNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -528,14 +528,14 @@ namespace Azure.ResourceManager.KeyVault
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetManagedHsmsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                var restOperations = GetManagedHsmsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 Page<DeletedManagedHsmData> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeletedManagedHsms");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListDeleted(cancellationToken: cancellationToken);
+                        var response = restOperations.ListDeleted(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.KeyVault
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListDeletedNextPage(nextLink, cancellationToken: cancellationToken);
+                        var response = restOperations.ListDeletedNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal WebApplicationFirewallPolicyCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webApplicationFirewallPoliciesRestClient = new WebApplicationFirewallPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _webApplicationFirewallPoliciesRestClient = new WebApplicationFirewallPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _webApplicationFirewallPoliciesRestClient.CreateOrUpdate(Id.ResourceGroupName, policyName, parameters, cancellationToken);
+                var response = _webApplicationFirewallPoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, policyName, parameters, cancellationToken);
                 var operation = new WebApplicationFirewallPolicyCreateOrUpdateOperation(Parent, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _webApplicationFirewallPoliciesRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, policyName, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _webApplicationFirewallPoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, policyName, parameters, cancellationToken).ConfigureAwait(false);
                 var operation = new WebApplicationFirewallPolicyCreateOrUpdateOperation(Parent, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _webApplicationFirewallPoliciesRestClient.Get(Id.ResourceGroupName, policyName, cancellationToken);
+                var response = _webApplicationFirewallPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, policyName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new WebApplicationFirewallPolicy(Parent, response.Value), response.GetRawResponse());
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _webApplicationFirewallPoliciesRestClient.GetAsync(Id.ResourceGroupName, policyName, cancellationToken).ConfigureAwait(false);
+                var response = await _webApplicationFirewallPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, policyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new WebApplicationFirewallPolicy(Parent, response.Value), response.GetRawResponse());
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _webApplicationFirewallPoliciesRestClient.Get(Id.ResourceGroupName, policyName, cancellationToken: cancellationToken);
+                var response = _webApplicationFirewallPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, policyName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<WebApplicationFirewallPolicy>(null, response.GetRawResponse())
                     : Response.FromValue(new WebApplicationFirewallPolicy(this, response.Value), response.GetRawResponse());
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _webApplicationFirewallPoliciesRestClient.GetAsync(Id.ResourceGroupName, policyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _webApplicationFirewallPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, policyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<WebApplicationFirewallPolicy>(null, response.GetRawResponse())
                     : Response.FromValue(new WebApplicationFirewallPolicy(this, response.Value), response.GetRawResponse());
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _webApplicationFirewallPoliciesRestClient.List(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _webApplicationFirewallPoliciesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new WebApplicationFirewallPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _webApplicationFirewallPoliciesRestClient.ListNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _webApplicationFirewallPoliciesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new WebApplicationFirewallPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _webApplicationFirewallPoliciesRestClient.ListAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _webApplicationFirewallPoliciesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new WebApplicationFirewallPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _webApplicationFirewallPoliciesRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _webApplicationFirewallPoliciesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new WebApplicationFirewallPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
