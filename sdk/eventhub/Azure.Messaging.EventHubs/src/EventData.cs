@@ -108,6 +108,13 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        /// Hidden property that indicates that the <see cref="EventData"/> is not read-only. This is part of
+        /// the <see cref="MessageWithMetadata"/> abstraction.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool IsReadOnly => false;
+
+        /// <summary>
         ///   An application-defined value that uniquely identifies the event.  The identifier is
         ///   a free-form value and can reflect a GUID or an identifier derived from the application
         ///   context.

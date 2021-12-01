@@ -373,6 +373,13 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
+        /// <summary>
+        /// Hidden property that indicates that the <see cref="ServiceBusMessage"/> is not read-only. This is part of
+        /// the <see cref="MessageWithMetadata"/> abstraction.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool IsReadOnly => false;
+
         /// <summary>Gets or sets the address of an entity to send replies to.</summary>
         /// <value>The reply entity address.</value>
         /// <remarks>

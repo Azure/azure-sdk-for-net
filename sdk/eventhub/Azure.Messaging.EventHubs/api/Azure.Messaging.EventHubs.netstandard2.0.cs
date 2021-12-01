@@ -20,6 +20,8 @@ namespace Azure.Messaging.EventHubs
         public override System.BinaryData Data { get { throw null; } set { } }
         public System.DateTimeOffset EnqueuedTime { get { throw null; } }
         public System.BinaryData EventBody { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool IsReadOnly { get { throw null; } }
         public string MessageId { get { throw null; } set { } }
         public long Offset { get { throw null; } }
         public string PartitionKey { get { throw null; } }

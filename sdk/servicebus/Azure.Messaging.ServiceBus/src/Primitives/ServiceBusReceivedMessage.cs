@@ -185,6 +185,13 @@ namespace Azure.Messaging.ServiceBus
             set => throw new NotImplementedException("Content type cannot be set on a ServiceBusReceivedMessage");
         }
 
+        /// <summary>
+        /// Hidden property that indicates that the <see cref="ServiceBusReceivedMessage"/> is read-only. This is part of
+        /// the <see cref="MessageWithMetadata"/> abstraction.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool IsReadOnly => true;
+
         /// <summary>Gets the address of an entity to send replies to.</summary>
         /// <value>The reply entity address.</value>
         /// <remarks>

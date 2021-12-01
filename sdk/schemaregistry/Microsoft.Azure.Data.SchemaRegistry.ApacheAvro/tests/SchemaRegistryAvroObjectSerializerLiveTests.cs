@@ -10,6 +10,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.ServiceBus;
 using TestSchema;
@@ -121,18 +122,19 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 #endif
             #endregion
 
+            Assert.IsFalse(((MessageWithMetadata) eventData).IsReadOnly);
             string[] contentType = eventData.ContentType.Split('+');
             Assert.AreEqual(2, contentType.Length);
             Assert.AreEqual("avro/binary", contentType[0]);
             Assert.IsNotEmpty(contentType[1]);
 
-#if SNIPPET
             #region Snippet:SchemaRegistryAvroDecodeEventData
             Employee deserialized = (Employee)await encoder.DecodeMessageDataAsync(eventData, typeof(Employee));
+#if SNIPPET
             Console.WriteLine(deserialized.Age);
             Console.WriteLine(deserialized.Name);
-            #endregion
 #endif
+            #endregion
 
             // decoding should not alter the message
             contentType = eventData.ContentType.Split('+');
@@ -186,6 +188,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 
             var employee = new Employee { Age = 42, Name = "Caketown" };
             ServiceBusMessage message = await encoder.EncodeMessageDataAsync<ServiceBusMessage>(employee);
+            Assert.IsFalse(((MessageWithMetadata) message).IsReadOnly);
 
             string[] contentType = message.ContentType.Split('+');
             Assert.AreEqual(2, contentType.Length);
@@ -194,6 +197,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 
             ServiceBusReceivedMessage receivedMessage =
                 ServiceBusModelFactory.ServiceBusReceivedMessage(body: message.Body, contentType: message.ContentType);
+            Assert.IsTrue(((MessageWithMetadata) receivedMessage).IsReadOnly);
 
             Employee deserialized = (Employee)await encoder.DecodeMessageDataAsync(receivedMessage, typeof(Employee));
 

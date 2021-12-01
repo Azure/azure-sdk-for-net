@@ -19,5 +19,10 @@ namespace Azure.Messaging
         /// Gets or sets the message content type.
         /// </summary>
         public abstract string ContentType { get; set; }
+
+        /// <summary>
+        /// Gets whether the message is read only or not.
+        /// </summary>
+        public abstract bool IsReadOnly { get; }
     }
 }
