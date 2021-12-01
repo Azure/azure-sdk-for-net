@@ -37,7 +37,7 @@ Now that we have the resource group created, we can manage the cdn origin group 
 ```C# Snippet:Managing_OriginGroups_CreateAnOriginGroup
 // Create a new cdn profile
 string profileName = "myProfile";
-var input1 = new ProfileData(Location.WestUS, new Sku { Name = SkuName.StandardMicrosoft });
+var input1 = new ProfileData(Location.WestUS, new ProfileSku { Name = SkuName.StandardMicrosoft });
 ProfileCreateOperation lro1 = await resourceGroup.GetProfiles().CreateOrUpdateAsync(profileName, input1);
 Profile profile = lro1.Value;
 // Get the cdn endpoint collection from the specific profile and create an endpoint
@@ -55,7 +55,7 @@ DeepCreatedOrigin deepCreatedOrigin = new DeepCreatedOrigin("myOrigin")
     Weight = 100
 };
 input2.Origins.Add(deepCreatedOrigin);
-EndpointCreateOperation lro2 = await profile.GetCdnEndpoints().CreateOrUpdateAsync(endpointName, input2);
+CdnEndpointCreateOperation lro2 = await profile.GetCdnEndpoints().CreateOrUpdateAsync(endpointName, input2);
 CdnEndpoint endpoint = lro2.Value;
 // Get the cdn origin group collection from the specific endpoint and create an origin group
 string originGroupName = "myOriginGroup";
@@ -64,7 +64,7 @@ input3.Origins.Add(new WritableSubResource
 {
     Id = $"{endpoint.Id}/origins/myOrigin"
 });
-OriginGroupCreateOperation lro3 = await endpoint.GetCdnOriginGroups().CreateOrUpdateAsync(originGroupName, input3);
+CdnOriginGroupCreateOperation lro3 = await endpoint.GetCdnOriginGroups().CreateOrUpdateAsync(originGroupName, input3);
 CdnOriginGroup originGroup = lro3.Value;
 ```
 
@@ -103,7 +103,7 @@ OriginGroupUpdateOptions input = new OriginGroupUpdateOptions()
         ProbeIntervalInSeconds = 60
     }
 };
-OriginGroupUpdateOperation lro = await originGroup.UpdateAsync(input);
+CdnOriginGroupUpdateOperation lro = await originGroup.UpdateAsync(input);
 originGroup = lro.Value;
 ```
 

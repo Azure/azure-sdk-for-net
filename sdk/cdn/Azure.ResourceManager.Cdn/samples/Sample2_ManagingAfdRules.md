@@ -37,12 +37,12 @@ Now that we have the resource group created, we can manage the azure front door 
 ```C# Snippet:Managing_AfdRules_CreateAnAzureFrontDoorRule
 // Create a new azure front door profile
 string AfdProfileName = "myAfdProfile";
-var input1 = new ProfileData("Global", new Sku { Name = SkuName.StandardAzureFrontDoor });
+var input1 = new ProfileData("Global", new ProfileSku { Name = SkuName.StandardAzureFrontDoor });
 ProfileCreateOperation lro1 = await resourceGroup.GetProfiles().CreateOrUpdateAsync(AfdProfileName, input1);
 Profile AfdProfile = lro1.Value;
 // Get the rule set collection from the specific azure front door profile and create a rule set
 string ruleSetName = "myAfdRuleSet";
-RuleSetCreateOperation lro2 = await AfdProfile.GetAfdRuleSets().CreateOrUpdateAsync(ruleSetName);
+AfdRuleSetCreateOperation lro2 = await AfdProfile.GetAfdRuleSets().CreateOrUpdateAsync(ruleSetName);
 AfdRuleSet ruleSet = lro2.Value;
 // Get the rule collection from the specific rule set and create a rule
 string ruleName = "myAfdRule";
@@ -55,7 +55,7 @@ input3.Actions.Add(new DeliveryRuleCacheExpirationAction(new CacheExpirationActi
 {
     CacheDuration = "00:00:20"
 }));
-RuleCreateOperation lro3 = await ruleSet.GetAfdRules().CreateOrUpdateAsync(ruleName, input3);
+AfdRuleCreateOperation lro3 = await ruleSet.GetAfdRules().CreateOrUpdateAsync(ruleName, input3);
 AfdRule rule = lro3.Value;
 ```
 
@@ -93,7 +93,7 @@ input.Actions.Add(new DeliveryRuleCacheExpirationAction(new CacheExpirationActio
 {
     CacheDuration = "00:00:30"
 }));
-RuleUpdateOperation lro = await rule.UpdateAsync(input);
+AfdRuleUpdateOperation lro = await rule.UpdateAsync(input);
 rule = lro.Value;
 ```
 
