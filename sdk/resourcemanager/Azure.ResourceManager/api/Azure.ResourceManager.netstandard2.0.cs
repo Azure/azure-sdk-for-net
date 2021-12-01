@@ -69,16 +69,16 @@ namespace Azure.ResourceManager
     public static partial class ResourceGroupExtensions
     {
     }
-    public partial class ResourceIdentifier : System.IComparable<Azure.ResourceManager.ResourceIdentifier>, System.IEquatable<Azure.ResourceManager.ResourceIdentifier>
+    public sealed partial class ResourceIdentifier : System.IComparable<Azure.ResourceManager.ResourceIdentifier>, System.IEquatable<Azure.ResourceManager.ResourceIdentifier>
     {
         public static readonly Azure.ResourceManager.ResourceIdentifier Root;
         public ResourceIdentifier(string resourceId) { }
         public Azure.ResourceManager.Resources.Models.Location Location { get { throw null; } }
-        public virtual string Name { get { throw null; } }
-        public virtual Azure.ResourceManager.ResourceIdentifier Parent { get { throw null; } }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.ResourceIdentifier Parent { get { throw null; } }
         public string Provider { get { throw null; } }
         public string ResourceGroupName { get { throw null; } }
-        public virtual Azure.ResourceManager.ResourceType ResourceType { get { throw null; } }
+        public Azure.ResourceManager.ResourceType ResourceType { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
         public int CompareTo(Azure.ResourceManager.ResourceIdentifier other) { throw null; }
         public bool Equals(Azure.ResourceManager.ResourceIdentifier other) { throw null; }
