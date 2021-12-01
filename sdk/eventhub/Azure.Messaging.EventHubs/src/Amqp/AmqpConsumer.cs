@@ -460,7 +460,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="prefetchSizeInBytes">The cache size of the prefetch queue. When set, the link makes a best effort to ensure prefetched messages fit into the specified size.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
-        /// <param name="timeout">The timeout to apply when creating the link.</param>
+        /// <param name="timeout">The timeout to apply for creating the link.</param>
         /// <param name="cancellationToken">The cancellation token to consider when creating the link.</param>
         ///
         /// <returns>The AMQP link to use for consumer-related operations.</returns>
@@ -503,6 +503,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             // Create and open the consumer link.
 
             var link = default(ReceivingAmqpLink);
+            var tryTimeout = RetryPolicy.CalculateTryTimeout(0);
 
             try
             {
@@ -510,6 +511,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     consumerGroup,
                     partitionId,
                     eventStartingPosition,
+                    tryTimeout,
                     timeout,
                     prefetchCount,
                     prefetchSizeInBytes,

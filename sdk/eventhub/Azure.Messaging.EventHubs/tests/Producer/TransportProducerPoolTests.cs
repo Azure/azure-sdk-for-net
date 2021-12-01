@@ -309,6 +309,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace,
                                                                     string eventHubName,
+                                                                    TimeSpan operationTimeout,
                                                                     EventHubTokenCredential credential,
                                                                     EventHubConnectionOptions options)
             {

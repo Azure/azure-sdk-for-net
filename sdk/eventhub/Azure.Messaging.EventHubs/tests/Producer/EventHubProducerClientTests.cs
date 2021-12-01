@@ -2749,7 +2749,9 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                         EventHubsRetryPolicy retryPolicy) => TransportProducerFactory(partitionId, producerIdentifier, requestedFeatures, partitionOptions, retryPolicy);
 
             internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace,
-                                                                    string eventHubName, EventHubTokenCredential credential,
+                                                                    string eventHubName,
+                                                                    TimeSpan operationTimeout,
+                                                                    EventHubTokenCredential credential,
                                                                     EventHubConnectionOptions options)
             {
                 InnerClientMock = new Mock<TransportClient>();

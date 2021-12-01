@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Support for cancellation tokens has been improved for AMQP operations, enabling earlier detection of cancellation requests without needing to wait for the configured timeout to elapse.
+
 ### Breaking Changes
 
 ### Bugs Fixed

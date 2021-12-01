@@ -545,7 +545,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="partitionId">The identifier of the Event Hub partition to which it is bound; if unbound, <c>null</c>.</param>
         /// <param name="producerIdentifier">The identifier associated with the producer.</param>
         /// <param name="partitionOptions">The set of options, if any, that should be considered when initializing the producer.</param>
-        /// <param name="timeout">The timeout to apply when creating the link.</param>
+        /// <param name="timeout">The timeout to apply for creating the link.</param>
         /// <param name="cancellationToken">The cancellation token to consider when creating the link.</param>
         ///
         /// <returns>The AMQP link to use for producer-related operations.</returns>
@@ -564,10 +564,11 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                                             CancellationToken cancellationToken)
         {
             var link = default(SendingAmqpLink);
+            var operationTimeout = RetryPolicy.CalculateTryTimeout(0);
 
             try
             {
-                link = await ConnectionScope.OpenProducerLinkAsync(partitionId, ActiveFeatures, partitionOptions, timeout, producerIdentifier, cancellationToken).ConfigureAwait(false);
+                link = await ConnectionScope.OpenProducerLinkAsync(partitionId, ActiveFeatures, partitionOptions, operationTimeout, timeout, producerIdentifier, cancellationToken).ConfigureAwait(false);
 
                 if (!MaximumMessageSize.HasValue)
                 {
