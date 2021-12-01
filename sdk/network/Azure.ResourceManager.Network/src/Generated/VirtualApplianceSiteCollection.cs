@@ -20,11 +20,12 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of VirtualApplianceSite and their operations over a NetworkVirtualAppliance. </summary>
+    /// <summary> A class representing collection of VirtualApplianceSite and their operations over its parent. </summary>
     public partial class VirtualApplianceSiteCollection : ArmCollection, IEnumerable<VirtualApplianceSite>, IAsyncEnumerable<VirtualApplianceSite>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly VirtualApplianceSitesRestOperations _restClient;
+        private readonly VirtualApplianceSitesRestOperations _virtualApplianceSitesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="VirtualApplianceSiteCollection"/> class for mocking. </summary>
         protected VirtualApplianceSiteCollection()
@@ -36,22 +37,7 @@ namespace Azure.ResourceManager.Network
         internal VirtualApplianceSiteCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new VirtualApplianceSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        IEnumerator<VirtualApplianceSite> IEnumerable<VirtualApplianceSite>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<VirtualApplianceSite> IAsyncEnumerable<VirtualApplianceSite>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            _virtualApplianceSitesRestClient = new VirtualApplianceSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -80,8 +66,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, siteName, parameters, cancellationToken);
-                var operation = new VirtualApplianceSiteCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, siteName, parameters).Request, response);
+                var response = _virtualApplianceSitesRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, siteName, parameters, cancellationToken);
+                var operation = new VirtualApplianceSiteCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _virtualApplianceSitesRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, siteName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -114,8 +100,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, siteName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualApplianceSiteCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, siteName, parameters).Request, response);
+                var response = await _virtualApplianceSitesRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, siteName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualApplianceSiteCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _virtualApplianceSitesRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, siteName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,21 +113,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the specified Virtual Appliance Site. </summary>
         /// <param name="siteName"> The name of the site. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         public virtual Response<VirtualApplianceSite> Get(string siteName, CancellationToken cancellationToken = default)
         {
+            if (siteName == null)
+            {
+                throw new ArgumentNullException(nameof(siteName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.Get");
             scope.Start();
             try
             {
-                if (siteName == null)
-                {
-                    throw new ArgumentNullException(nameof(siteName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, siteName, cancellationToken: cancellationToken);
+                var response = _virtualApplianceSitesRestClient.Get(Id.ResourceGroupName, Id.Name, siteName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualApplianceSite(Parent, response.Value), response.GetRawResponse());
@@ -153,21 +140,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the specified Virtual Appliance Site. </summary>
         /// <param name="siteName"> The name of the site. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         public async virtual Task<Response<VirtualApplianceSite>> GetAsync(string siteName, CancellationToken cancellationToken = default)
         {
+            if (siteName == null)
+            {
+                throw new ArgumentNullException(nameof(siteName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.Get");
             scope.Start();
             try
             {
-                if (siteName == null)
-                {
-                    throw new ArgumentNullException(nameof(siteName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, siteName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _virtualApplianceSitesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, siteName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new VirtualApplianceSite(Parent, response.Value), response.GetRawResponse());
@@ -181,19 +169,20 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="siteName"> The name of the site. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         public virtual Response<VirtualApplianceSite> GetIfExists(string siteName, CancellationToken cancellationToken = default)
         {
+            if (siteName == null)
+            {
+                throw new ArgumentNullException(nameof(siteName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (siteName == null)
-                {
-                    throw new ArgumentNullException(nameof(siteName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, siteName, cancellationToken: cancellationToken);
+                var response = _virtualApplianceSitesRestClient.Get(Id.ResourceGroupName, Id.Name, siteName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<VirtualApplianceSite>(null, response.GetRawResponse())
                     : Response.FromValue(new VirtualApplianceSite(this, response.Value), response.GetRawResponse());
@@ -207,19 +196,20 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="siteName"> The name of the site. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         public async virtual Task<Response<VirtualApplianceSite>> GetIfExistsAsync(string siteName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.GetIfExists");
+            if (siteName == null)
+            {
+                throw new ArgumentNullException(nameof(siteName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (siteName == null)
-                {
-                    throw new ArgumentNullException(nameof(siteName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, siteName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _virtualApplianceSitesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, siteName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<VirtualApplianceSite>(null, response.GetRawResponse())
                     : Response.FromValue(new VirtualApplianceSite(this, response.Value), response.GetRawResponse());
@@ -233,18 +223,19 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="siteName"> The name of the site. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string siteName, CancellationToken cancellationToken = default)
         {
+            if (siteName == null)
+            {
+                throw new ArgumentNullException(nameof(siteName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.CheckIfExists");
             scope.Start();
             try
             {
-                if (siteName == null)
-                {
-                    throw new ArgumentNullException(nameof(siteName));
-                }
-
                 var response = GetIfExists(siteName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -257,18 +248,19 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="siteName"> The name of the site. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string siteName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.CheckIfExists");
+            if (siteName == null)
+            {
+                throw new ArgumentNullException(nameof(siteName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (siteName == null)
-                {
-                    throw new ArgumentNullException(nameof(siteName));
-                }
-
                 var response = await GetIfExistsAsync(siteName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -290,7 +282,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _virtualApplianceSitesRestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualApplianceSite(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -305,7 +297,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _virtualApplianceSitesRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualApplianceSite(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -328,7 +320,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _virtualApplianceSitesRestClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualApplianceSite(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -343,7 +335,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _virtualApplianceSitesRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualApplianceSite(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -355,7 +347,22 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        IEnumerator<VirtualApplianceSite> IEnumerable<VirtualApplianceSite>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<VirtualApplianceSite> IAsyncEnumerable<VirtualApplianceSite>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, VirtualApplianceSite, VirtualApplianceSiteData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, VirtualApplianceSite, VirtualApplianceSiteData> Construct() { }
     }
 }

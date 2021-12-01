@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Internal\BinaryDataJsonConverter.cs" Link="BinaryDataJsonConverter.cs" />
     <Compile Include="..\samples\WebPubSubConnectionBindingFunction.cs" Link="WebPubSubConnectionBindingFunction.cs" />
     <Compile Include="..\samples\WebPubSubOutputBindingFunction.cs" Link="WebPubSubOutputBindingFunction.cs" />
     <Compile Include="..\samples\WebPubSubTriggerFunction.cs" Link="WebPubSubTriggerFunction.cs" />

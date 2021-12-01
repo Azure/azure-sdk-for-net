@@ -22,8 +22,7 @@ namespace Microsoft.Azure.Management.Avs
     public static partial class ScriptPackagesOperationsExtensions
     {
             /// <summary>
-            /// Return script packages available for a private cloud to run on their
-            /// Private Cloud
+            /// List script packages available to run on the private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -40,8 +39,7 @@ namespace Microsoft.Azure.Management.Avs
             }
 
             /// <summary>
-            /// Return script packages available for a private cloud to run on their
-            /// Private Cloud
+            /// List script packages available to run on the private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -64,7 +62,7 @@ namespace Microsoft.Azure.Management.Avs
             }
 
             /// <summary>
-            /// Return script package available to run on an Private Cloud
+            /// Get a script package available to run on a private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -84,7 +82,7 @@ namespace Microsoft.Azure.Management.Avs
             }
 
             /// <summary>
-            /// Return script package available to run on an Private Cloud
+            /// Get a script package available to run on a private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -110,8 +108,7 @@ namespace Microsoft.Azure.Management.Avs
             }
 
             /// <summary>
-            /// Return script packages available for a private cloud to run on their
-            /// Private Cloud
+            /// List script packages available to run on the private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -125,8 +122,7 @@ namespace Microsoft.Azure.Management.Avs
             }
 
             /// <summary>
-            /// Return script packages available for a private cloud to run on their
-            /// Private Cloud
+            /// List script packages available to run on the private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

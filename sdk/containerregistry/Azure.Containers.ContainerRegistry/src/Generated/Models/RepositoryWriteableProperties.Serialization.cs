@@ -35,11 +35,6 @@ namespace Azure.Containers.ContainerRegistry
                 writer.WritePropertyName("readEnabled");
                 writer.WriteBooleanValue(CanRead.Value);
             }
-            if (Optional.IsDefined(TeleportEnabled))
-            {
-                writer.WritePropertyName("teleportEnabled");
-                writer.WriteBooleanValue(TeleportEnabled.Value);
-            }
             writer.WriteEndObject();
         }
     }

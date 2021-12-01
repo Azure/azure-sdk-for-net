@@ -9,6 +9,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text.Json;
+using System.Text.Json.Serialization;
+
 using Microsoft.Azure.WebPubSub.Common;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
@@ -42,7 +44,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 WebPubSubEventType.User;
         }
 
-        public static HttpResponseMessage BuildResponse(UserEventResponse response)
+        public static HttpResponseMessage BuildUserEventResponse(UserEventResponse response, Dictionary<string, object> mergedStates)
         {
             HttpResponseMessage result = new();
 
@@ -50,19 +52,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             {
                 result.Content = new StreamContent(response.Data.ToStream());
             }
+
+            if (mergedStates?.Count > 0)
+            {
+                result.Headers.Add(Constants.Headers.CloudEvents.State, mergedStates.EncodeConnectionStates());
+            }
             result.Content.Headers.ContentType = GetMediaType(response.DataType);
 
             return result;
         }
 
-        public static HttpResponseMessage BuildResponse(ConnectEventResponse response)
-        {
-            return BuildResponse(JsonSerializer.Serialize(response), WebPubSubDataType.Json);
-        }
-
-        public static HttpResponseMessage BuildResponse(string response, WebPubSubDataType dataType = WebPubSubDataType.Text)
+        public static HttpResponseMessage BuildConnectEventResponse(string response, Dictionary<string, object> mergedStates, WebPubSubDataType dataType = WebPubSubDataType.Json)
         {
             HttpResponseMessage result = new();
+            if (mergedStates?.Count > 0)
+            {
+                result.Headers.Add(Constants.Headers.CloudEvents.State, mergedStates.EncodeConnectionStates());
+            }
 
             result.Content = new StringContent(response);
             result.Content.Headers.ContentType = GetMediaType(dataType);
@@ -79,7 +85,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return result;
         }
 
-        public static HttpResponseMessage BuildValidResponse(object response, RequestType requestType)
+        public static HttpResponseMessage BuildValidResponse(
+            object response, RequestType requestType,
+            WebPubSubConnectionContext context)
         {
             JsonDocument converted = null;
             string originStr = null;
@@ -112,22 +120,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 {
                     if (needConvert)
                     {
-                        return BuildResponse(originStr);
+                        var states = GetStatesFromJson(converted, originStr);
+                        var mergedStates = context.UpdateStates(states);
+                        return BuildConnectEventResponse(originStr, mergedStates);
                     }
                     else if (response is ConnectEventResponse connectResponse)
                     {
-                        return BuildResponse(connectResponse);
+                        var mergedStates = context.UpdateStates(connectResponse.States);
+                        return BuildConnectEventResponse(JsonSerializer.Serialize(response), mergedStates);
                     }
                 }
                 if (requestType == RequestType.User)
                 {
                     if (needConvert)
                     {
-                        return BuildResponse(JsonSerializer.Deserialize<UserEventResponse>(originStr));
+                        var states = GetStatesFromJson(converted, originStr);
+                        var mergedStates = context.UpdateStates(states);
+                        return BuildUserEventResponse(JsonSerializer.Deserialize<UserEventResponse>(originStr), mergedStates);
                     }
                     else if (response is UserEventResponse messageResponse)
                     {
-                        return BuildResponse(messageResponse);
+                        var mergedStates = context.UpdateStates(messageResponse.States);
+                        return BuildUserEventResponse(messageResponse, mergedStates);
                     }
                 }
             }
@@ -202,6 +216,25 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             }
             requestHosts = null;
             return false;
+        }
+
+        private static Dictionary<string, object> GetStatesFromJson(JsonDocument converted, string originStr)
+        {
+            if (converted.RootElement.TryGetProperty("states", out var val))
+            {
+                if (val.ValueKind == JsonValueKind.Object)
+                {
+                    return JsonSerializer.Deserialize<StatesEntity>(originStr).States;
+                }
+            }
+            // We don't support clear states for JS
+            return new Dictionary<string, object>();
+        }
+
+        private sealed class StatesEntity
+        {
+            [JsonPropertyName("states")]
+            public Dictionary<string, object> States { get; set; }
         }
     }
 }

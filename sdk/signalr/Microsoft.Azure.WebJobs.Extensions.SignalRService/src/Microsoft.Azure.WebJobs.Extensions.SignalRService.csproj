@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks);netcoreapp3.1</TargetFrameworks>
@@ -6,10 +6,11 @@
     <Version>1.7.0-beta.1</Version>
     <SignAssembly>true</SignAssembly>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
-    <NoWarn>$(NoWarn);CS1591;AZC0001</NoWarn>
+    <NoWarn>$(NoWarn);CS1591;AZC0001;AZC0107;</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="Microsoft.Extensions.Azure" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Connections" />
     <PackageReference Include="Microsoft.Azure.Functions.Extensions" />
@@ -18,7 +19,7 @@
     <PackageReference Include="Microsoft.Azure.SignalR.Protocols" />
     <PackageReference Include="Microsoft.Azure.SignalR.Serverless.Protocols" />
   </ItemGroup>
-
+  
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.NewtonsoftJson" />
   </ItemGroup>

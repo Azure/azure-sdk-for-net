@@ -124,14 +124,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         {
             return new WebPubSubTriggerEvent
             {
-                ConnectionContext = new WebPubSubConnectionContext
-                {
-                    ConnectionId = "000000",
-                    EventName = "message",
-                    EventType = WebPubSubEventType.User,
-                    Hub = "testhub",
-                    UserId = "user1"
-                },
+                ConnectionContext = new WebPubSubConnectionContext(WebPubSubEventType.User, "message", "testhub", "user1", "000000"),
                 Reason = "reason",
                 Data = BinaryData.FromString("message"),
                 DataType = WebPubSubDataType.Text

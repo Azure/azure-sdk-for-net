@@ -36,8 +36,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             StorageAccountCreateOperation accountCreateOperation = await accountCollection.CreateOrUpdateAsync(accountName, parameters);
             storageAccount = await accountCreateOperation.WaitForCompletionAsync();
             #region Snippet:Managing_FileShares_GetFileService
-            FileServiceCollection fileServiceCollection = storageAccount.GetFileServices();
-            FileService fileService = await fileServiceCollection.GetAsync("default");
+            FileService fileService = await storageAccount.GetFileService().GetAsync();
             #endregion
             this.fileService = fileService;
         }

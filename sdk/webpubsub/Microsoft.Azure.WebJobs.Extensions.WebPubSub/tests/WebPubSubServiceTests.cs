@@ -19,11 +19,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var clientConnection = service.GetClientConnection();
 
             Assert.NotNull(clientConnection);
-            Assert.AreEqual(expectedBaseUrl, clientConnection.BaseUrl);
+            Assert.AreEqual(expectedBaseUrl, clientConnection.BaseUri.AbsoluteUri);
             Assert.NotNull(clientConnection.AccessToken);
 
             var absoluteUrl = $"{expectedBaseUrl}?access_token={clientConnection.AccessToken}";
-            Assert.AreEqual(absoluteUrl, clientConnection.Url);
+            Assert.AreEqual(absoluteUrl, clientConnection.Uri.AbsoluteUri);
         }
 
         [TestCase]

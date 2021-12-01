@@ -237,10 +237,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public async Task GetCryptographyClientUsesSamePipeline()
         {
+            const string keyContent = @"{""attributes"":{""created"":1626299777,""enabled"":true,""exportable"":false,""updated"":1626299777},""key"":{""key_ops"":[""wrapKey"",""unwrapKey""],""kid"":""https://test.managedhsm.azure.net/keys/test/abcd1234"",""kty"":""oct-HSM""}}";
+
             // Make sure the created CryptographyClient uses the same mock transport as the KeyVault that created it.
             MockTransport transport = new(new[]
             {
-                new MockResponse(200).WithContent(@"{""attributes"":{""created"":1626299777,""enabled"":true,""exportable"":false,""updated"":1626299777},""key"":{""key_ops"":[""wrapKey"",""unwrapKey""],""kid"":""https://test.managedhsm.azure.net/keys/test/abcd1234"",""kty"":""oct-HSM""}}"),
+                new MockResponse(200).WithContent(keyContent), // Key returned after call to create the key.
+                new MockResponse(200).WithContent(keyContent), // Key returned in attempt to cache the key.
                 new MockResponse(200).WithContent(@"{""alg"":""A128KW"",""kid"":""https://test.managedhsm.azure.net/keys/test/abcd1234"",""value"":""dGVzdA""}"),
             });
 
