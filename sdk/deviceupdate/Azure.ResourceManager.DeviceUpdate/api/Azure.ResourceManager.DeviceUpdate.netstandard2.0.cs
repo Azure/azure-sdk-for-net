@@ -109,9 +109,6 @@ namespace Azure.ResourceManager.DeviceUpdate
         public System.Collections.Generic.IList<Azure.ResourceManager.DeviceUpdate.Models.IotHubSettings> IotHubs { get { throw null; } }
         public Azure.ResourceManager.DeviceUpdate.Models.ProvisioningState? ProvisioningState { get { throw null; } }
     }
-    public static partial class ManagementGroupExtensions
-    {
-    }
     public partial class PrivateEndpointConnection : Azure.ResourceManager.Core.ArmResource
     {
         public static readonly Azure.ResourceManager.ResourceType ResourceType;
@@ -241,9 +238,6 @@ namespace Azure.ResourceManager.DeviceUpdate
         public static Azure.AsyncPageable<Azure.ResourceManager.Resources.GenericResource> GetDeviceUpdateAccountByNameAsync(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccount> GetDeviceUpdateAccounts(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccount> GetDeviceUpdateAccountsAsync(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public static partial class TenantExtensions
-    {
     }
 }
 namespace Azure.ResourceManager.DeviceUpdate.Models

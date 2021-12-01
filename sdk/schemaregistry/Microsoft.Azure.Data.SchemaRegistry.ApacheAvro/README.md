@@ -1,6 +1,6 @@
 # Azure Schema Registry Apache Avro client library for .NET
 
-Azure Schema Registry is a schema repository service hosted by Azure Event Hubs, providing schema storage, versioning, and management. This package provides an Avro serializer capable of serializing and deserializing payloads containing Schema Registry schema identifiers and Avro-encoded data.
+Azure Schema Registry is a schema repository service hosted by Azure Event Hubs, providing schema storage, versioning, and management. This package provides an Avro encoder capable of encoding and decoding payloads containing Schema Registry schema identifiers and Avro-encoded data.
 
 ## Getting started
 
@@ -50,23 +50,17 @@ var schemaRegistryClient = new SchemaRegistryClient(fullyQualifiedNamespace: ful
 
 ## Key concepts
 
-### ObjectSerializer
+### Encoder
 
-This library provides a serializer, [SchemaRegistryAvroObjectSerializer][schema_registry_avro_serializer], that implements the [ObjectSerializer][object_serializer] abstract class. This allows a developer to use this serializer in any .NET Azure SDKs that utilize ObjectSerializer. The SchemaRegistryAvroObjectSerializer utilitizes a SchemaRegistryClient to construct messages using a wire format containing schema information such as a schema ID.
+This library provides an encoder, [SchemaRegistryAvroEncoder]
+[schema_registry_avro_encoder], that interacts with `EventData` events. The SchemaRegistryAvroEncoder utilizes a SchemaRegistryClient to enrich the `EventData` events with the schema ID for the schema used to encode the data.
 
-This serializer requires the [Apache Avro library][apache_avro_library]. The payload types accepted by this serializer include [GenericRecord][generic_record] and [ISpecificRecord][specific_record].
+This encoder requires the [Apache Avro library][apache_avro_library]. The payload types accepted by this encoder include [GenericRecord][generic_record] and [ISpecificRecord][specific_record].
 
-### Wire Format
 
-The serializer in this library creates messages in a wire format. The format is the following:
+### Examples
 
-- Bytes [0-3] – record format indicator – currently is \x00\x00\x00\x00
-- Bytes [4-35] – UTF-8 GUID, identifying the schema in a Schema Registry instance
-- Bytes [36-end] – serialized payload bytes
-
-## Examples
-
-The following shows examples of what is available through the SchemaRegistryAvroObjectSerializer. There are both sync and async methods available for these operations. These examples use a generated Apache Avro class [Employee.cs][employee] created using this schema:
+The following shows examples of what is available through the `SchemaRegistryAvroEncoder`. There are both sync and async methods available for these operations. These examples use a generated Apache Avro class [Employee.cs][employee] created using this schema:
 
 ```json
 {
@@ -82,30 +76,29 @@ The following shows examples of what is available through the SchemaRegistryAvro
 
 Details on generating a class using the Apache Avro library can be found in the [Avro C# Documentation][avro_csharp_documentation].
 
-* [Serialize](#serialize)
-* [Deserialize](#deserialize)
+### Encode and decode data using the Event Hub EventData model
 
-### Serialize
+In order to encode an `EventData` instance with Avro information, you can do the following:
+```C# Snippet:SchemaRegistryAvroEncodeEventData
+var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions { AutoRegisterSchemas = true });
 
-Register a schema to be stored in the Azure Schema Registry.
+var employee = new Employee { Age = 42, Name = "Caketown" };
+EventData eventData = await encoder.EncodeMessageDataAsync<EventData>(employee);
 
-```C# Snippet:SchemaRegistryAvroSerialize
-var employee = new Employee { Age = 42, Name = "John Doe" };
+// the schema Id will be included as a parameter of the content type
+Console.WriteLine(eventData.ContentType);
 
-using var memoryStream = new MemoryStream();
-var serializer = new SchemaRegistryAvroObjectSerializer(schemaRegistryClient, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
-serializer.Serialize(memoryStream, employee, typeof(Employee), CancellationToken.None);
+// the serialized Avro data will be stored in the EventBody
+Console.WriteLine(eventData.EventBody);
 ```
 
-### Deserialize
-
-Retrieve a previously registered schema ID from the Azure Schema Registry.
-
-```C# Snippet:SchemaRegistryAvroDeserialize
-var serializer = new SchemaRegistryAvroObjectSerializer(schemaRegistryClient, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
-memoryStream.Position = 0;
-Employee employee = (Employee)serializer.Deserialize(memoryStream, typeof(Employee), CancellationToken.None);
+To decode an `EventData` event that you are consuming:
+```C# Snippet:SchemaRegistryAvroDecodeEventData
+Employee deserialized = (Employee)await encoder.DecodeMessageDataAsync(eventData, typeof(Employee));
+Console.WriteLine(deserialized.Age);
+Console.WriteLine(deserialized.Name);
 ```
+
 
 ## Troubleshooting
 
@@ -139,8 +132,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [email_opencode]: mailto:opencode@microsoft.com
-[object_serializer]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/src/Serialization/ObjectSerializer.cs
-[schema_registry_avro_serializer]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/schemaregistry/Microsoft.Azure.Data.SchemaRegistry.ApacheAvro/src/SchemaRegistryAvroObjectSerializer.cs
+[schema_registry_avro_encoder]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/schemaregistry/Microsoft.Azure.Data.SchemaRegistry.ApacheAvro/src/SchemaRegistryAvroEncoder.cs
 [employee]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/schemaregistry/Microsoft.Azure.Data.SchemaRegistry.ApacheAvro/tests/Models/Employee.cs
 [avro_csharp_documentation]: https://avro.apache.org/docs/current/api/csharp/html/index.html
 [apache_avro_library]: https://www.nuget.org/packages/Apache.Avro/

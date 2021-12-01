@@ -43,9 +43,6 @@ namespace Azure.ResourceManager
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual T UseClientContext<T>(System.Func<System.Uri, Azure.Core.TokenCredential, Azure.ResourceManager.ArmClientOptions, Azure.Core.Pipeline.HttpPipeline, T> func) { throw null; }
     }
-    public static partial class ArmClientExtensions
-    {
-    }
     public sealed partial class ArmClientOptions : Azure.Core.ClientOptions
     {
         public ArmClientOptions() { }
@@ -59,9 +56,6 @@ namespace Azure.ResourceManager
         protected GenericResourceFilter() { }
         public abstract string GetFilterString();
         public override string ToString() { throw null; }
-    }
-    public static partial class ManagementGroupExtensions
-    {
     }
     public sealed partial class ResourceFilterCollection
     {
@@ -171,9 +165,6 @@ namespace Azure.ResourceManager
         public override int GetHashCode() { throw null; }
     }
     public static partial class SubscriptionExtensions
-    {
-    }
-    public static partial class TenantExtensions
     {
     }
 }

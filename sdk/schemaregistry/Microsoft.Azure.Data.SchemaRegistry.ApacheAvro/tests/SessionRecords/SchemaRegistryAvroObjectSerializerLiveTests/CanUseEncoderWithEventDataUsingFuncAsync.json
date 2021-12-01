@@ -8,8 +8,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "131",
         "Content-Type": "application/json; serialization=Avro",
-        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.0.0-alpha.20211105.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "81973e0e587452774435f602cb03e604",
+        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.1.0-alpha.20211129.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "0d15d1dcbbffe08f0834b0a18fffdcd6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -30,11 +30,11 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Sat, 06 Nov 2021 00:59:13 GMT",
+        "Date": "Tue, 30 Nov 2021 00:23:57 GMT",
         "Location": "https://jolovschemaregistry.servicebus.windows.net:443/$schemagroups/azsdk_net_test_group/schemas/TestSchema.Employee/versions/1?api-version=2021-10",
         "Schema-Group-Name": "azsdk_net_test_group",
-        "Schema-Id": "45d496c4535a44e293de07484672cbe6",
-        "Schema-Id-Location": "https://jolovschemaregistry.servicebus.windows.net:443/$schemagroups/$schemas/45d496c4535a44e293de07484672cbe6?api-version=2021-10",
+        "Schema-Id": "a2a03a64e7b6441fa09abc8891469504",
+        "Schema-Id-Location": "https://jolovschemaregistry.servicebus.windows.net:443/$schemagroups/$schemas/a2a03a64e7b6441fa09abc8891469504?api-version=2021-10",
         "Schema-Name": "TestSchema.Employee",
         "Schema-Version": "1",
         "Schema-Versions-Location": "https://jolovschemaregistry.servicebus.windows.net:443/$schemagroups/azsdk_net_test_group/schemas/TestSchema.Employee/versions?api-version=2021-10",
@@ -45,7 +45,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "349656055",
+    "RandomSeed": "1093756092",
     "SCHEMAREGISTRY_ENDPOINT": "jolovschemaregistry.servicebus.windows.net",
     "SCHEMAREGISTRY_GROUP": "azsdk_net_test_group"
   }
