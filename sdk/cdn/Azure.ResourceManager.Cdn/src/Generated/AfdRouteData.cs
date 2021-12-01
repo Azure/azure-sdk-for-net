@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Cdn
         {
             CustomDomains = new ChangeTrackingList<WritableSubResource>();
             RuleSets = new ChangeTrackingList<WritableSubResource>();
-            SupportedProtocols = new ChangeTrackingList<AFDEndpointProtocols>();
+            SupportedProtocols = new ChangeTrackingList<AfdEndpointProtocols>();
             PatternsToMatch = new ChangeTrackingList<string>();
         }
 
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
-        internal AfdRouteData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IList<WritableSubResource> customDomains, WritableSubResource originGroup, string originPath, IList<WritableSubResource> ruleSets, IList<AFDEndpointProtocols> supportedProtocols, IList<string> patternsToMatch, object compressionSettings, AfdQueryStringCachingBehavior? queryStringCachingBehavior, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus) : base(id, name, type, systemData)
+        internal AfdRouteData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IList<WritableSubResource> customDomains, WritableSubResource originGroup, string originPath, IList<WritableSubResource> ruleSets, IList<AfdEndpointProtocols> supportedProtocols, IList<string> patternsToMatch, object compressionSettings, AfdQueryStringCachingBehavior? queryStringCachingBehavior, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus) : base(id, name, type, systemData)
         {
             CustomDomains = customDomains;
             OriginGroup = originGroup;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> rule sets referenced by this endpoint. </summary>
         public IList<WritableSubResource> RuleSets { get; }
         /// <summary> List of supported protocols for this route. </summary>
-        public IList<AFDEndpointProtocols> SupportedProtocols { get; }
+        public IList<AfdEndpointProtocols> SupportedProtocols { get; }
         /// <summary> The route patterns of the rule. </summary>
         public IList<string> PatternsToMatch { get; }
         /// <summary> compression settings. </summary>

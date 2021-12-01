@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             CustomDomains = new ChangeTrackingList<WritableSubResource>();
             RuleSets = new ChangeTrackingList<WritableSubResource>();
-            SupportedProtocols = new ChangeTrackingList<AFDEndpointProtocols>();
+            SupportedProtocols = new ChangeTrackingList<AfdEndpointProtocols>();
             PatternsToMatch = new ChangeTrackingList<string>();
         }
 
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> rule sets referenced by this endpoint. </summary>
         public IList<WritableSubResource> RuleSets { get; }
         /// <summary> List of supported protocols for this route. </summary>
-        public IList<AFDEndpointProtocols> SupportedProtocols { get; }
+        public IList<AfdEndpointProtocols> SupportedProtocols { get; }
         /// <summary> The route patterns of the rule. </summary>
         public IList<string> PatternsToMatch { get; }
         /// <summary> compression settings. </summary>

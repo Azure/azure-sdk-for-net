@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Cdn
             Optional<WritableSubResource> originGroup = default;
             Optional<string> originPath = default;
             Optional<IList<WritableSubResource>> ruleSets = default;
-            Optional<IList<AFDEndpointProtocols>> supportedProtocols = default;
+            Optional<IList<AfdEndpointProtocols>> supportedProtocols = default;
             Optional<IList<string>> patternsToMatch = default;
             Optional<object> compressionSettings = default;
             Optional<AfdQueryStringCachingBehavior> queryStringCachingBehavior = default;
@@ -213,10 +213,10 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AFDEndpointProtocols> array = new List<AFDEndpointProtocols>();
+                            List<AfdEndpointProtocols> array = new List<AfdEndpointProtocols>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new AFDEndpointProtocols(item.GetString()));
+                                array.Add(new AfdEndpointProtocols(item.GetString()));
                             }
                             supportedProtocols = array;
                             continue;

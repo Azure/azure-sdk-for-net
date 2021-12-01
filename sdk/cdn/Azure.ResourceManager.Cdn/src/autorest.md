@@ -193,6 +193,13 @@ directive:
   - remove-operation: Secrets_Update
   - remove-operation: Validate_Secret
   - from: swagger-document
+    where: $.definitions.AFDEndpointProtocols
+    transform: >
+      $['x-ms-enum'] = {
+          "name": "AfdEndpointProtocols",
+          "modelAsString": true
+      }
+  - from: swagger-document
     where: $.definitions
     transform: >
       for (var key in $) {
@@ -269,7 +276,4 @@ directive:
               }
           }
       }
-  - from: swagger-document
-    where: $.definitions.AFDDomainHttpsParameters.properties.secret
-    transform: $['x-ms-client-name'] = 'AfdCustomDomainHttpsParametersSecret'
 ```
