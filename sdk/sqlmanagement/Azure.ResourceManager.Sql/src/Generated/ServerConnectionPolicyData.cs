@@ -23,20 +23,20 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="kind"> Metadata used for the Azure portal experience. </param>
         /// <param name="location"> Resource location. </param>
+        /// <param name="kind"> Metadata used for the Azure portal experience. </param>
         /// <param name="connectionType"> The server connection type. </param>
-        internal ServerConnectionPolicyData(ResourceIdentifier id, string name, ResourceType type, string kind, string location, ServerConnectionType? connectionType) : base(id, name, type)
+        internal ServerConnectionPolicyData(ResourceIdentifier id, string name, ResourceType type, string location, string kind, ServerConnectionType? connectionType) : base(id, name, type)
         {
-            Kind = kind;
             Location = location;
+            Kind = kind;
             ConnectionType = connectionType;
         }
 
-        /// <summary> Metadata used for the Azure portal experience. </summary>
-        public string Kind { get; }
         /// <summary> Resource location. </summary>
         public string Location { get; }
+        /// <summary> Metadata used for the Azure portal experience. </summary>
+        public string Kind { get; }
         /// <summary> The server connection type. </summary>
         public ServerConnectionType? ConnectionType { get; set; }
     }

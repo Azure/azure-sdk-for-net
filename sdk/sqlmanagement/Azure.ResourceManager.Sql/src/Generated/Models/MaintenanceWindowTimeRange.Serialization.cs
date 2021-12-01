@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static MaintenanceWindowTimeRange DeserializeMaintenanceWindowTimeRange(JsonElement element)
         {
-            Optional<DayOfWeek> dayOfWeek = default;
+            Optional<SqlDayOfWeek> dayOfWeek = default;
             Optional<string> startTime = default;
             Optional<string> duration = default;
             foreach (var property in element.EnumerateObject())
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dayOfWeek = new DayOfWeek(property.Value.GetString());
+                    dayOfWeek = new SqlDayOfWeek(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("startTime"))

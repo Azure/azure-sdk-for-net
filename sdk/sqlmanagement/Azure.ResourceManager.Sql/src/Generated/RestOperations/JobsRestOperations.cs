@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="jobName"> The name of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, or <paramref name="jobName"/> is null. </exception>
-        public async Task<Response<JobData>> GetAsync(string resourceGroupName, string serverName, string jobAgentName, string jobName, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlJobData>> GetAsync(string resourceGroupName, string serverName, string jobAgentName, string jobName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -194,13 +194,13 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        JobData value = default;
+                        SqlJobData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = JobData.DeserializeJobData(document.RootElement);
+                        value = SqlJobData.DeserializeSqlJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((JobData)null, message.Response);
+                    return Response.FromValue((SqlJobData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="jobName"> The name of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, or <paramref name="jobName"/> is null. </exception>
-        public Response<JobData> Get(string resourceGroupName, string serverName, string jobAgentName, string jobName, CancellationToken cancellationToken = default)
+        public Response<SqlJobData> Get(string resourceGroupName, string serverName, string jobAgentName, string jobName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -238,19 +238,19 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        JobData value = default;
+                        SqlJobData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = JobData.DeserializeJobData(document.RootElement);
+                        value = SqlJobData.DeserializeSqlJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((JobData)null, message.Response);
+                    return Response.FromValue((SqlJobData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string serverName, string jobAgentName, string jobName, JobData parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string serverName, string jobAgentName, string jobName, SqlJobData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The requested job state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<JobData>> CreateOrUpdateAsync(string resourceGroupName, string serverName, string jobAgentName, string jobName, JobData parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlJobData>> CreateOrUpdateAsync(string resourceGroupName, string serverName, string jobAgentName, string jobName, SqlJobData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -316,9 +316,9 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                 case 201:
                     {
-                        JobData value = default;
+                        SqlJobData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = JobData.DeserializeJobData(document.RootElement);
+                        value = SqlJobData.DeserializeSqlJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The requested job state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<JobData> CreateOrUpdate(string resourceGroupName, string serverName, string jobAgentName, string jobName, JobData parameters, CancellationToken cancellationToken = default)
+        public Response<SqlJobData> CreateOrUpdate(string resourceGroupName, string serverName, string jobAgentName, string jobName, SqlJobData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -364,9 +364,9 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                 case 201:
                     {
-                        JobData value = default;
+                        SqlJobData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = JobData.DeserializeJobData(document.RootElement);
+                        value = SqlJobData.DeserializeSqlJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

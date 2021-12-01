@@ -452,11 +452,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a list of inaccessible managed databases in a managed instance. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedDatabaseData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedDatabaseData> GetInaccessibleByInstanceManagedDatabasesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ManagedDatabaseData> GetInaccessibleManagedDatabasesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ManagedDatabaseData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetInaccessibleByInstanceManagedDatabases");
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetInaccessibleManagedDatabases");
                 scope.Start();
                 try
                 {
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<ManagedDatabaseData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetInaccessibleByInstanceManagedDatabases");
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetInaccessibleManagedDatabases");
                 scope.Start();
                 try
                 {
@@ -493,11 +493,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a list of inaccessible managed databases in a managed instance. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedDatabaseData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedDatabaseData> GetInaccessibleByInstanceManagedDatabases(CancellationToken cancellationToken = default)
+        public virtual Pageable<ManagedDatabaseData> GetInaccessibleManagedDatabases(CancellationToken cancellationToken = default)
         {
             Page<ManagedDatabaseData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetInaccessibleByInstanceManagedDatabases");
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetInaccessibleManagedDatabases");
                 scope.Start();
                 try
                 {
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<ManagedDatabaseData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetInaccessibleByInstanceManagedDatabases");
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetInaccessibleManagedDatabases");
                 scope.Start();
                 try
                 {
@@ -541,11 +541,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="observationMetric"> Metric to be used for ranking top queries. Default is &apos;cpu&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="TopQueries" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TopQueries> GetByManagedInstanceAsync(int? numberOfQueries = null, string databases = null, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, AggregationFunctionType? aggregationFunction = null, MetricType? observationMetric = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TopQueries> GetTopQueriesAsync(int? numberOfQueries = null, string databases = null, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, AggregationFunctionType? aggregationFunction = null, MetricType? observationMetric = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<TopQueries>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetByManagedInstance");
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetTopQueries");
                 scope.Start();
                 try
                 {
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<TopQueries>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetByManagedInstance");
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetTopQueries");
                 scope.Start();
                 try
                 {
@@ -589,11 +589,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="observationMetric"> Metric to be used for ranking top queries. Default is &apos;cpu&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TopQueries" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TopQueries> GetByManagedInstance(int? numberOfQueries = null, string databases = null, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, AggregationFunctionType? aggregationFunction = null, MetricType? observationMetric = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<TopQueries> GetTopQueries(int? numberOfQueries = null, string databases = null, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, AggregationFunctionType? aggregationFunction = null, MetricType? observationMetric = null, CancellationToken cancellationToken = default)
         {
             Page<TopQueries> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetByManagedInstance");
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetTopQueries");
                 scope.Start();
                 try
                 {
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<TopQueries> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetByManagedInstance");
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetTopQueries");
                 scope.Start();
                 try
                 {
@@ -746,11 +746,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a server trust groups by instance name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ServerTrustGroupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerTrustGroupData> GetServerTrustGroupsByInstanceAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ServerTrustGroupData> GetServerTrustGroupsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ServerTrustGroupData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetServerTrustGroupsByInstance");
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetServerTrustGroups");
                 scope.Start();
                 try
                 {
@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<ServerTrustGroupData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetServerTrustGroupsByInstance");
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetServerTrustGroups");
                 scope.Start();
                 try
                 {
@@ -787,11 +787,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a server trust groups by instance name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServerTrustGroupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerTrustGroupData> GetServerTrustGroupsByInstance(CancellationToken cancellationToken = default)
+        public virtual Pageable<ServerTrustGroupData> GetServerTrustGroups(CancellationToken cancellationToken = default)
         {
             Page<ServerTrustGroupData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetServerTrustGroupsByInstance");
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetServerTrustGroups");
                 scope.Start();
                 try
                 {
@@ -806,7 +806,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<ServerTrustGroupData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetServerTrustGroupsByInstance");
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetServerTrustGroups");
                 scope.Start();
                 try
                 {

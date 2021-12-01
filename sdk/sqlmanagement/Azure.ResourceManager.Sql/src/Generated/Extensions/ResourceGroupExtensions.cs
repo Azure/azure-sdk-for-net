@@ -40,23 +40,23 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region ResourceGroupLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackup
-        /// <summary> Gets an object representing a ResourceGroupLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackupCollection along with the instance operations that can be performed on it. </summary>
+        #region ResourceGroupLongTermRetentionBackup
+        /// <summary> Gets an object representing a ResourceGroupLongTermRetentionBackupCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ResourceGroupLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackupCollection" /> object. </returns>
-        public static ResourceGroupLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackupCollection GetResourceGroupLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackups(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="ResourceGroupLongTermRetentionBackupCollection" /> object. </returns>
+        public static ResourceGroupLongTermRetentionBackupCollection GetResourceGroupLongTermRetentionBackups(this ResourceGroup resourceGroup)
         {
-            return new ResourceGroupLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackupCollection(resourceGroup);
+            return new ResourceGroupLongTermRetentionBackupCollection(resourceGroup);
         }
         #endregion
 
-        #region ResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackup
-        /// <summary> Gets an object representing a ResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackupCollection along with the instance operations that can be performed on it. </summary>
+        #region ResourceGroupLongTermRetentionManagedInstanceBackup
+        /// <summary> Gets an object representing a ResourceGroupLongTermRetentionManagedInstanceBackupCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackupCollection" /> object. </returns>
-        public static ResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackupCollection GetResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackups(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="ResourceGroupLongTermRetentionManagedInstanceBackupCollection" /> object. </returns>
+        public static ResourceGroupLongTermRetentionManagedInstanceBackupCollection GetResourceGroupLongTermRetentionManagedInstanceBackups(this ResourceGroup resourceGroup)
         {
-            return new ResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackupCollection(resourceGroup);
+            return new ResourceGroupLongTermRetentionManagedInstanceBackupCollection(resourceGroup);
         }
         #endregion
 
@@ -90,13 +90,13 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region Server
-        /// <summary> Gets an object representing a ServerCollection along with the instance operations that can be performed on it. </summary>
+        #region SqlServer
+        /// <summary> Gets an object representing a SqlServerCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ServerCollection" /> object. </returns>
-        public static ServerCollection GetServers(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="SqlServerCollection" /> object. </returns>
+        public static SqlServerCollection GetSqlServers(this ResourceGroup resourceGroup)
         {
-            return new ServerCollection(resourceGroup);
+            return new SqlServerCollection(resourceGroup);
         }
         #endregion
 

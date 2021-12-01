@@ -453,10 +453,10 @@ namespace Azure.ResourceManager.Sql
         /// OperationId: Databases_ListByElasticPool
         /// <summary> Gets a list of databases in an elastic pool. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DatabaseData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DatabaseData> GetDatabasesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SqlDatabaseData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlDatabaseData> GetDatabasesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DatabaseData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SqlDatabaseData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetDatabases");
                 scope.Start();
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<DatabaseData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SqlDatabaseData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetDatabases");
                 scope.Start();
@@ -494,10 +494,10 @@ namespace Azure.ResourceManager.Sql
         /// OperationId: Databases_ListByElasticPool
         /// <summary> Gets a list of databases in an elastic pool. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatabaseData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DatabaseData> GetDatabases(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlDatabaseData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlDatabaseData> GetDatabases(CancellationToken cancellationToken = default)
         {
-            Page<DatabaseData> FirstPageFunc(int? pageSizeHint)
+            Page<SqlDatabaseData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetDatabases");
                 scope.Start();
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<DatabaseData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SqlDatabaseData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetDatabases");
                 scope.Start();
@@ -536,15 +536,15 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Returns elastic pool  metrics. </summary>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Metric" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Metric> GetMetricsAsync(string filter, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SqlMetric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlMetric> GetMetricsAsync(string filter, CancellationToken cancellationToken = default)
         {
             if (filter == null)
             {
                 throw new ArgumentNullException(nameof(filter));
             }
 
-            async Task<Page<Metric>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SqlMetric>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetMetrics");
                 scope.Start();
@@ -568,15 +568,15 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Returns elastic pool  metrics. </summary>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Metric" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Metric> GetMetrics(string filter, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlMetric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlMetric> GetMetrics(string filter, CancellationToken cancellationToken = default)
         {
             if (filter == null)
             {
                 throw new ArgumentNullException(nameof(filter));
             }
 
-            Page<Metric> FirstPageFunc(int? pageSizeHint)
+            Page<SqlMetric> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetMetrics");
                 scope.Start();

@@ -317,13 +317,13 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        #region ManagedInstanceRestorableDroppedDatabaseBackupShortTermRetentionPolicy
+        #region ManagedRestorableDroppedDbBackupShortTermRetentionPolicy
 
-        /// <summary> Gets a collection of ManagedInstanceRestorableDroppedDatabaseBackupShortTermRetentionPolicies in the RestorableDroppedManagedDatabase. </summary>
-        /// <returns> An object representing collection of ManagedInstanceRestorableDroppedDatabaseBackupShortTermRetentionPolicies and their operations over a RestorableDroppedManagedDatabase. </returns>
-        public ManagedInstanceRestorableDroppedDatabaseBackupShortTermRetentionPolicyCollection GetManagedInstanceRestorableDroppedDatabaseBackupShortTermRetentionPolicies()
+        /// <summary> Gets a collection of ManagedRestorableDroppedDbBackupShortTermRetentionPolicies in the RestorableDroppedManagedDatabase. </summary>
+        /// <returns> An object representing collection of ManagedRestorableDroppedDbBackupShortTermRetentionPolicies and their operations over a RestorableDroppedManagedDatabase. </returns>
+        public ManagedRestorableDroppedDbBackupShortTermRetentionPolicyCollection GetManagedRestorableDroppedDbBackupShortTermRetentionPolicies()
         {
-            return new ManagedInstanceRestorableDroppedDatabaseBackupShortTermRetentionPolicyCollection(this);
+            return new ManagedRestorableDroppedDbBackupShortTermRetentionPolicyCollection(this);
         }
         #endregion
     }

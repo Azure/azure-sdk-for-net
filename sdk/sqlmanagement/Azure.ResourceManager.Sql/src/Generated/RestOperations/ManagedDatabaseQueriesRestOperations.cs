@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="queryId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, or <paramref name="queryId"/> is null. </exception>
-        public async Task<Response<ManagedInstanceQueryData>> GetAsync(string resourceGroupName, string managedInstanceName, string databaseName, string queryId, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagedInstanceQuery>> GetAsync(string resourceGroupName, string managedInstanceName, string databaseName, string queryId, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -97,13 +97,11 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        ManagedInstanceQueryData value = default;
+                        ManagedInstanceQuery value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ManagedInstanceQueryData.DeserializeManagedInstanceQueryData(document.RootElement);
+                        value = ManagedInstanceQuery.DeserializeManagedInstanceQuery(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((ManagedInstanceQueryData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -116,7 +114,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="queryId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, or <paramref name="queryId"/> is null. </exception>
-        public Response<ManagedInstanceQueryData> Get(string resourceGroupName, string managedInstanceName, string databaseName, string queryId, CancellationToken cancellationToken = default)
+        public Response<ManagedInstanceQuery> Get(string resourceGroupName, string managedInstanceName, string databaseName, string queryId, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -141,19 +139,17 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        ManagedInstanceQueryData value = default;
+                        ManagedInstanceQuery value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ManagedInstanceQueryData.DeserializeManagedInstanceQueryData(document.RootElement);
+                        value = ManagedInstanceQuery.DeserializeManagedInstanceQuery(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((ManagedInstanceQueryData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetQueryStatisticsRequest(string resourceGroupName, string managedInstanceName, string databaseName, string queryId, string startTime, string endTime, QueryTimeGrainType? interval)
+        internal HttpMessage CreateListByQueryRequest(string resourceGroupName, string managedInstanceName, string databaseName, string queryId, string startTime, string endTime, QueryTimeGrainType? interval)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -200,7 +196,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="interval"> The time step to be used to summarize the metric values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, or <paramref name="queryId"/> is null. </exception>
-        public async Task<Response<ManagedInstanceQueryStatistics>> GetQueryStatisticsAsync(string resourceGroupName, string managedInstanceName, string databaseName, string queryId, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagedInstanceQueryStatistics>> ListByQueryAsync(string resourceGroupName, string managedInstanceName, string databaseName, string queryId, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -219,7 +215,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(queryId));
             }
 
-            using var message = CreateGetQueryStatisticsRequest(resourceGroupName, managedInstanceName, databaseName, queryId, startTime, endTime, interval);
+            using var message = CreateListByQueryRequest(resourceGroupName, managedInstanceName, databaseName, queryId, startTime, endTime, interval);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -245,7 +241,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="interval"> The time step to be used to summarize the metric values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, or <paramref name="queryId"/> is null. </exception>
-        public Response<ManagedInstanceQueryStatistics> GetQueryStatistics(string resourceGroupName, string managedInstanceName, string databaseName, string queryId, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, CancellationToken cancellationToken = default)
+        public Response<ManagedInstanceQueryStatistics> ListByQuery(string resourceGroupName, string managedInstanceName, string databaseName, string queryId, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -264,7 +260,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(queryId));
             }
 
-            using var message = CreateGetQueryStatisticsRequest(resourceGroupName, managedInstanceName, databaseName, queryId, startTime, endTime, interval);
+            using var message = CreateListByQueryRequest(resourceGroupName, managedInstanceName, databaseName, queryId, startTime, endTime, interval);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -280,7 +276,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateGetQueryStatisticsNextPageRequest(string nextLink, string resourceGroupName, string managedInstanceName, string databaseName, string queryId, string startTime, string endTime, QueryTimeGrainType? interval)
+        internal HttpMessage CreateListByQueryNextPageRequest(string nextLink, string resourceGroupName, string managedInstanceName, string databaseName, string queryId, string startTime, string endTime, QueryTimeGrainType? interval)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -305,7 +301,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="interval"> The time step to be used to summarize the metric values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, or <paramref name="queryId"/> is null. </exception>
-        public async Task<Response<ManagedInstanceQueryStatistics>> GetQueryStatisticsNextPageAsync(string nextLink, string resourceGroupName, string managedInstanceName, string databaseName, string queryId, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagedInstanceQueryStatistics>> ListByQueryNextPageAsync(string nextLink, string resourceGroupName, string managedInstanceName, string databaseName, string queryId, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -328,7 +324,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(queryId));
             }
 
-            using var message = CreateGetQueryStatisticsNextPageRequest(nextLink, resourceGroupName, managedInstanceName, databaseName, queryId, startTime, endTime, interval);
+            using var message = CreateListByQueryNextPageRequest(nextLink, resourceGroupName, managedInstanceName, databaseName, queryId, startTime, endTime, interval);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -355,7 +351,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="interval"> The time step to be used to summarize the metric values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, or <paramref name="queryId"/> is null. </exception>
-        public Response<ManagedInstanceQueryStatistics> GetQueryStatisticsNextPage(string nextLink, string resourceGroupName, string managedInstanceName, string databaseName, string queryId, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, CancellationToken cancellationToken = default)
+        public Response<ManagedInstanceQueryStatistics> ListByQueryNextPage(string nextLink, string resourceGroupName, string managedInstanceName, string databaseName, string queryId, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -378,7 +374,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(queryId));
             }
 
-            using var message = CreateGetQueryStatisticsNextPageRequest(nextLink, resourceGroupName, managedInstanceName, databaseName, queryId, startTime, endTime, interval);
+            using var message = CreateListByQueryNextPageRequest(nextLink, resourceGroupName, managedInstanceName, databaseName, queryId, startTime, endTime, interval);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

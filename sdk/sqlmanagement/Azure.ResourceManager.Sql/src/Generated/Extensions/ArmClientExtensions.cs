@@ -23,17 +23,6 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region ServerConnectionPolicy
-        /// <summary> Gets an object representing a ServerConnectionPolicy along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerConnectionPolicy" /> object. </returns>
-        public static ServerConnectionPolicy GetServerConnectionPolicy(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServerConnectionPolicy(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
         #region DataMaskingPolicy
         /// <summary> Gets an object representing a DataMaskingPolicy along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -56,14 +45,14 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region Database
-        /// <summary> Gets an object representing a Database along with the instance operations that can be performed on it but with no data. </summary>
+        #region SqlDatabase
+        /// <summary> Gets an object representing a SqlDatabase along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="Database" /> object. </returns>
-        public static Database GetDatabase(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlDatabase" /> object. </returns>
+        public static SqlDatabase GetSqlDatabase(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Database(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SqlDatabase(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -474,14 +463,14 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region Job
-        /// <summary> Gets an object representing a Job along with the instance operations that can be performed on it but with no data. </summary>
+        #region SqlJob
+        /// <summary> Gets an object representing a SqlJob along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="Job" /> object. </returns>
-        public static Job GetJob(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlJob" /> object. </returns>
+        public static SqlJob GetSqlJob(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Job(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SqlJob(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -529,47 +518,47 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region SubscriptionLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackup
-        /// <summary> Gets an object representing a SubscriptionLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackup along with the instance operations that can be performed on it but with no data. </summary>
+        #region SubscriptionLongTermRetentionBackup
+        /// <summary> Gets an object representing a SubscriptionLongTermRetentionBackup along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackup" /> object. </returns>
-        public static SubscriptionLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackup GetSubscriptionLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackup(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SubscriptionLongTermRetentionBackup" /> object. </returns>
+        public static SubscriptionLongTermRetentionBackup GetSubscriptionLongTermRetentionBackup(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SubscriptionLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackup(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SubscriptionLongTermRetentionBackup(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region ResourceGroupLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackup
-        /// <summary> Gets an object representing a ResourceGroupLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackup along with the instance operations that can be performed on it but with no data. </summary>
+        #region ResourceGroupLongTermRetentionBackup
+        /// <summary> Gets an object representing a ResourceGroupLongTermRetentionBackup along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceGroupLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackup" /> object. </returns>
-        public static ResourceGroupLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackup GetResourceGroupLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackup(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceGroupLongTermRetentionBackup" /> object. </returns>
+        public static ResourceGroupLongTermRetentionBackup GetResourceGroupLongTermRetentionBackup(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ResourceGroupLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackup(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ResourceGroupLongTermRetentionBackup(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region SubscriptionLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackup
-        /// <summary> Gets an object representing a SubscriptionLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackup along with the instance operations that can be performed on it but with no data. </summary>
+        #region SubscriptionLongTermRetentionManagedInstanceBackup
+        /// <summary> Gets an object representing a SubscriptionLongTermRetentionManagedInstanceBackup along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackup" /> object. </returns>
-        public static SubscriptionLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackup GetSubscriptionLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackup(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SubscriptionLongTermRetentionManagedInstanceBackup" /> object. </returns>
+        public static SubscriptionLongTermRetentionManagedInstanceBackup GetSubscriptionLongTermRetentionManagedInstanceBackup(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SubscriptionLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackup(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SubscriptionLongTermRetentionManagedInstanceBackup(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region ResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackup
-        /// <summary> Gets an object representing a ResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackup along with the instance operations that can be performed on it but with no data. </summary>
+        #region ResourceGroupLongTermRetentionManagedInstanceBackup
+        /// <summary> Gets an object representing a ResourceGroupLongTermRetentionManagedInstanceBackup along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackup" /> object. </returns>
-        public static ResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackup GetResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackup(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceGroupLongTermRetentionManagedInstanceBackup" /> object. </returns>
+        public static ResourceGroupLongTermRetentionManagedInstanceBackup GetResourceGroupLongTermRetentionManagedInstanceBackup(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackup(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ResourceGroupLongTermRetentionManagedInstanceBackup(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -617,25 +606,14 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region ManagedInstanceRestorableDroppedDatabaseBackupShortTermRetentionPolicy
-        /// <summary> Gets an object representing a ManagedInstanceRestorableDroppedDatabaseBackupShortTermRetentionPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedRestorableDroppedDbBackupShortTermRetentionPolicy
+        /// <summary> Gets an object representing a ManagedRestorableDroppedDbBackupShortTermRetentionPolicy along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceRestorableDroppedDatabaseBackupShortTermRetentionPolicy" /> object. </returns>
-        public static ManagedInstanceRestorableDroppedDatabaseBackupShortTermRetentionPolicy GetManagedInstanceRestorableDroppedDatabaseBackupShortTermRetentionPolicy(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedRestorableDroppedDbBackupShortTermRetentionPolicy" /> object. </returns>
+        public static ManagedRestorableDroppedDbBackupShortTermRetentionPolicy GetManagedRestorableDroppedDbBackupShortTermRetentionPolicy(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagedInstanceRestorableDroppedDatabaseBackupShortTermRetentionPolicy(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
-        #region ManagedInstanceQuery
-        /// <summary> Gets an object representing a ManagedInstanceQuery along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceQuery" /> object. </returns>
-        public static ManagedInstanceQuery GetManagedInstanceQuery(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagedInstanceQuery(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagedRestorableDroppedDbBackupShortTermRetentionPolicy(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -1024,14 +1002,14 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region TimeZone
-        /// <summary> Gets an object representing a TimeZone along with the instance operations that can be performed on it but with no data. </summary>
+        #region SqlTimeZone
+        /// <summary> Gets an object representing a SqlTimeZone along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TimeZone" /> object. </returns>
-        public static TimeZone GetTimeZone(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlTimeZone" /> object. </returns>
+        public static SqlTimeZone GetSqlTimeZone(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new TimeZone(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SqlTimeZone(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -1145,14 +1123,25 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region Server
-        /// <summary> Gets an object representing a Server along with the instance operations that can be performed on it but with no data. </summary>
+        #region SqlServer
+        /// <summary> Gets an object representing a SqlServer along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="Server" /> object. </returns>
-        public static Server GetServer(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlServer" /> object. </returns>
+        public static SqlServer GetSqlServer(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Server(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SqlServer(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region ServerConnectionPolicy
+        /// <summary> Gets an object representing a ServerConnectionPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServerConnectionPolicy" /> object. </returns>
+        public static ServerConnectionPolicy GetServerConnectionPolicy(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServerConnectionPolicy(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
     }

@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Sql
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ManagedDatabasesRestOperations _managedDatabasesRestClient;
         private readonly ManagedDatabaseColumnsRestOperations _managedDatabaseColumnsRestClient;
+        private readonly ManagedDatabaseQueriesRestOperations _managedDatabaseQueriesRestClient;
         private readonly ManagedDatabaseSecurityEventsRestOperations _managedDatabaseSecurityEventsRestClient;
         private readonly ManagedDatabaseSensitivityLabelsRestOperations _managedDatabaseSensitivityLabelsRestClient;
         private readonly ManagedDatabaseData _data;
@@ -44,6 +45,7 @@ namespace Azure.ResourceManager.Sql
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _managedDatabasesRestClient = new ManagedDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _managedDatabaseColumnsRestClient = new ManagedDatabaseColumnsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _managedDatabaseQueriesRestClient = new ManagedDatabaseQueriesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _managedDatabaseSecurityEventsRestClient = new ManagedDatabaseSecurityEventsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _managedDatabaseSensitivityLabelsRestClient = new ManagedDatabaseSensitivityLabelsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
@@ -56,6 +58,7 @@ namespace Azure.ResourceManager.Sql
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _managedDatabasesRestClient = new ManagedDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _managedDatabaseColumnsRestClient = new ManagedDatabaseColumnsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _managedDatabaseQueriesRestClient = new ManagedDatabaseQueriesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _managedDatabaseSecurityEventsRestClient = new ManagedDatabaseSecurityEventsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _managedDatabaseSensitivityLabelsRestClient = new ManagedDatabaseSensitivityLabelsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
@@ -71,6 +74,7 @@ namespace Azure.ResourceManager.Sql
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _managedDatabasesRestClient = new ManagedDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _managedDatabaseColumnsRestClient = new ManagedDatabaseColumnsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _managedDatabaseQueriesRestClient = new ManagedDatabaseQueriesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _managedDatabaseSecurityEventsRestClient = new ManagedDatabaseSecurityEventsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _managedDatabaseSensitivityLabelsRestClient = new ManagedDatabaseSensitivityLabelsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
@@ -525,6 +529,162 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _managedDatabaseColumnsRestClient.ListByDatabaseNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/queries/{queryId}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
+        /// OperationId: ManagedDatabaseQueries_Get
+        /// <summary> Get query by query id. </summary>
+        /// <param name="queryId"> The String to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="queryId"/> is null. </exception>
+        public async virtual Task<Response<ManagedInstanceQuery>> GetManagedDatabaseQueryAsync(string queryId, CancellationToken cancellationToken = default)
+        {
+            if (queryId == null)
+            {
+                throw new ArgumentNullException(nameof(queryId));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseQuery");
+            scope.Start();
+            try
+            {
+                var response = await _managedDatabaseQueriesRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/queries/{queryId}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
+        /// OperationId: ManagedDatabaseQueries_Get
+        /// <summary> Get query by query id. </summary>
+        /// <param name="queryId"> The String to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="queryId"/> is null. </exception>
+        public virtual Response<ManagedInstanceQuery> GetManagedDatabaseQuery(string queryId, CancellationToken cancellationToken = default)
+        {
+            if (queryId == null)
+            {
+                throw new ArgumentNullException(nameof(queryId));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseQuery");
+            scope.Start();
+            try
+            {
+                var response = _managedDatabaseQueriesRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/queries/{queryId}/statistics
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
+        /// OperationId: ManagedDatabaseQueries_ListByQuery
+        /// <summary> Get query execution statistics by query id. </summary>
+        /// <param name="queryId"> The String to use. </param>
+        /// <param name="startTime"> Start time for observed period. </param>
+        /// <param name="endTime"> End time for observed period. </param>
+        /// <param name="interval"> The time step to be used to summarize the metric values. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="QueryStatistics" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<QueryStatistics> GetQueryStatisticsAsync(string queryId, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, CancellationToken cancellationToken = default)
+        {
+            if (queryId == null)
+            {
+                throw new ArgumentNullException(nameof(queryId));
+            }
+
+            async Task<Page<QueryStatistics>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetQueryStatistics");
+                scope.Start();
+                try
+                {
+                    var response = await _managedDatabaseQueriesRestClient.ListByQueryAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, startTime, endTime, interval, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<QueryStatistics>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetQueryStatistics");
+                scope.Start();
+                try
+                {
+                    var response = await _managedDatabaseQueriesRestClient.ListByQueryNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, startTime, endTime, interval, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/queries/{queryId}/statistics
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
+        /// OperationId: ManagedDatabaseQueries_ListByQuery
+        /// <summary> Get query execution statistics by query id. </summary>
+        /// <param name="queryId"> The String to use. </param>
+        /// <param name="startTime"> Start time for observed period. </param>
+        /// <param name="endTime"> End time for observed period. </param>
+        /// <param name="interval"> The time step to be used to summarize the metric values. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="QueryStatistics" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<QueryStatistics> GetQueryStatistics(string queryId, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, CancellationToken cancellationToken = default)
+        {
+            if (queryId == null)
+            {
+                throw new ArgumentNullException(nameof(queryId));
+            }
+
+            Page<QueryStatistics> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetQueryStatistics");
+                scope.Start();
+                try
+                {
+                    var response = _managedDatabaseQueriesRestClient.ListByQuery(Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, startTime, endTime, interval, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<QueryStatistics> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetQueryStatistics");
+                scope.Start();
+                try
+                {
+                    var response = _managedDatabaseQueriesRestClient.ListByQueryNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, startTime, endTime, interval, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1005,16 +1165,6 @@ namespace Azure.ResourceManager.Sql
         public ManagedInstanceDatabaseBackupShortTermRetentionPolicyCollection GetManagedInstanceDatabaseBackupShortTermRetentionPolicies()
         {
             return new ManagedInstanceDatabaseBackupShortTermRetentionPolicyCollection(this);
-        }
-        #endregion
-
-        #region ManagedInstanceQuery
-
-        /// <summary> Gets a collection of ManagedInstanceQueries in the ManagedDatabase. </summary>
-        /// <returns> An object representing collection of ManagedInstanceQueries and their operations over a ManagedDatabase. </returns>
-        public ManagedInstanceQueryCollection GetManagedInstanceQueries()
-        {
-            return new ManagedInstanceQueryCollection(this);
         }
         #endregion
 

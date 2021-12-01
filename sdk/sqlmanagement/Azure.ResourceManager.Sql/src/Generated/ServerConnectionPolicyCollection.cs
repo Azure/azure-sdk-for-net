@@ -6,9 +6,13 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
@@ -17,7 +21,8 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of ServerConnectionPolicy and their operations over its parent. </summary>
-    public partial class ServerConnectionPolicyCollection : ArmCollection
+    public partial class ServerConnectionPolicyCollection : ArmCollection, IEnumerable<ServerConnectionPolicy>, IAsyncEnumerable<ServerConnectionPolicy>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ServerConnectionPoliciesRestOperations _serverConnectionPoliciesRestClient;
@@ -36,16 +41,16 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Server.ResourceType;
+        protected override ResourceType ValidResourceType => SqlServer.ResourceType;
 
         // Collection level operations.
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/connectionPolicies/{connectionPolicyName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
         /// OperationId: ServerConnectionPolicies_CreateOrUpdate
-        /// <summary> Creates or updates the server&apos;s connection policy. </summary>
+        /// <summary> Updates a server connection policy. </summary>
         /// <param name="connectionPolicyName"> The name of the connection policy. </param>
-        /// <param name="parameters"> The required parameters for updating a secure connection policy. </param>
+        /// <param name="parameters"> The required parameters for updating a server connection policy. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
@@ -61,7 +66,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _serverConnectionPoliciesRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, connectionPolicyName, parameters, cancellationToken);
-                var operation = new ServerConnectionPolicyCreateOrUpdateOperation(Parent, response);
+                var operation = new ServerConnectionPolicyCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _serverConnectionPoliciesRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, connectionPolicyName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -76,9 +81,9 @@ namespace Azure.ResourceManager.Sql
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/connectionPolicies/{connectionPolicyName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
         /// OperationId: ServerConnectionPolicies_CreateOrUpdate
-        /// <summary> Creates or updates the server&apos;s connection policy. </summary>
+        /// <summary> Updates a server connection policy. </summary>
         /// <param name="connectionPolicyName"> The name of the connection policy. </param>
-        /// <param name="parameters"> The required parameters for updating a secure connection policy. </param>
+        /// <param name="parameters"> The required parameters for updating a server connection policy. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
@@ -94,7 +99,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _serverConnectionPoliciesRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, connectionPolicyName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ServerConnectionPolicyCreateOrUpdateOperation(Parent, response);
+                var operation = new ServerConnectionPolicyCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _serverConnectionPoliciesRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, connectionPolicyName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -109,7 +114,7 @@ namespace Azure.ResourceManager.Sql
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/connectionPolicies/{connectionPolicyName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
         /// OperationId: ServerConnectionPolicies_Get
-        /// <summary> Gets the server&apos;s secure connection policy. </summary>
+        /// <summary> Gets a server connection policy. </summary>
         /// <param name="connectionPolicyName"> The name of the connection policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServerConnectionPolicy> Get(ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
@@ -133,7 +138,7 @@ namespace Azure.ResourceManager.Sql
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/connectionPolicies/{connectionPolicyName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
         /// OperationId: ServerConnectionPolicies_Get
-        /// <summary> Gets the server&apos;s secure connection policy. </summary>
+        /// <summary> Gets a server connection policy. </summary>
         /// <param name="connectionPolicyName"> The name of the connection policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ServerConnectionPolicy>> GetAsync(ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
@@ -232,6 +237,103 @@ namespace Azure.ResourceManager.Sql
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/connectionPolicies
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
+        /// OperationId: ServerConnectionPolicies_ListByServer
+        /// <summary> Lists connection policy. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ServerConnectionPolicy" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServerConnectionPolicy> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<ServerConnectionPolicy> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ServerConnectionPolicyCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _serverConnectionPoliciesRestClient.ListByServer(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerConnectionPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<ServerConnectionPolicy> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ServerConnectionPolicyCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _serverConnectionPoliciesRestClient.ListByServerNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerConnectionPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/connectionPolicies
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
+        /// OperationId: ServerConnectionPolicies_ListByServer
+        /// <summary> Lists connection policy. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ServerConnectionPolicy" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServerConnectionPolicy> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<ServerConnectionPolicy>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ServerConnectionPolicyCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _serverConnectionPoliciesRestClient.ListByServerAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerConnectionPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<ServerConnectionPolicy>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ServerConnectionPolicyCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _serverConnectionPoliciesRestClient.ListByServerNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerConnectionPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        IEnumerator<ServerConnectionPolicy> IEnumerable<ServerConnectionPolicy>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<ServerConnectionPolicy> IAsyncEnumerable<ServerConnectionPolicy>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
 
         // Builders.

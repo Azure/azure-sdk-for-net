@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="timeZoneId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="timeZoneId"/> is null. </exception>
-        public async Task<Response<TimeZoneData>> GetAsync(string locationName, string timeZoneId, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlTimeZoneData>> GetAsync(string locationName, string timeZoneId, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -156,13 +156,13 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        TimeZoneData value = default;
+                        SqlTimeZoneData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TimeZoneData.DeserializeTimeZoneData(document.RootElement);
+                        value = SqlTimeZoneData.DeserializeSqlTimeZoneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((TimeZoneData)null, message.Response);
+                    return Response.FromValue((SqlTimeZoneData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="timeZoneId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="timeZoneId"/> is null. </exception>
-        public Response<TimeZoneData> Get(string locationName, string timeZoneId, CancellationToken cancellationToken = default)
+        public Response<SqlTimeZoneData> Get(string locationName, string timeZoneId, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -190,13 +190,13 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        TimeZoneData value = default;
+                        SqlTimeZoneData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TimeZoneData.DeserializeTimeZoneData(document.RootElement);
+                        value = SqlTimeZoneData.DeserializeSqlTimeZoneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((TimeZoneData)null, message.Response);
+                    return Response.FromValue((SqlTimeZoneData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

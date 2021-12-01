@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public async Task<Response<DatabaseData>> GetAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlDatabaseData>> GetAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -386,13 +386,13 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        DatabaseData value = default;
+                        SqlDatabaseData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DatabaseData.DeserializeDatabaseData(document.RootElement);
+                        value = SqlDatabaseData.DeserializeSqlDatabaseData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DatabaseData)null, message.Response);
+                    return Response.FromValue((SqlDatabaseData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public Response<DatabaseData> Get(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default)
+        public Response<SqlDatabaseData> Get(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -425,19 +425,19 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        DatabaseData value = default;
+                        SqlDatabaseData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DatabaseData.DeserializeDatabaseData(document.RootElement);
+                        value = SqlDatabaseData.DeserializeSqlDatabaseData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DatabaseData)null, message.Response);
+                    return Response.FromValue((SqlDatabaseData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string serverName, string databaseName, DatabaseData parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string serverName, string databaseName, SqlDatabaseData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The requested database resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string serverName, string databaseName, DatabaseData parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string serverName, string databaseName, SqlDatabaseData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The requested database resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string serverName, string databaseName, DatabaseData parameters, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string serverName, string databaseName, SqlDatabaseData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

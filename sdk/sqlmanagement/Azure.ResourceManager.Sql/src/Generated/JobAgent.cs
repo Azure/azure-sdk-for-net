@@ -542,13 +542,13 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region Job
+        #region SqlJob
 
-        /// <summary> Gets a collection of Jobs in the JobAgent. </summary>
-        /// <returns> An object representing collection of Jobs and their operations over a JobAgent. </returns>
-        public JobCollection GetJobs()
+        /// <summary> Gets a collection of SqlJobs in the JobAgent. </summary>
+        /// <returns> An object representing collection of SqlJobs and their operations over a JobAgent. </returns>
+        public SqlJobCollection GetSqlJobs()
         {
-            return new JobCollection(this);
+            return new SqlJobCollection(this);
         }
         #endregion
 

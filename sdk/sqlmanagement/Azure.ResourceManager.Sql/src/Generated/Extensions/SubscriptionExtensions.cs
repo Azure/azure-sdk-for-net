@@ -33,23 +33,23 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region SubscriptionLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackup
-        /// <summary> Gets an object representing a SubscriptionLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackupCollection along with the instance operations that can be performed on it. </summary>
+        #region SubscriptionLongTermRetentionBackup
+        /// <summary> Gets an object representing a SubscriptionLongTermRetentionBackupCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="SubscriptionLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackupCollection" /> object. </returns>
-        public static SubscriptionLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackupCollection GetSubscriptionLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackups(this Subscription subscription)
+        /// <returns> Returns a <see cref="SubscriptionLongTermRetentionBackupCollection" /> object. </returns>
+        public static SubscriptionLongTermRetentionBackupCollection GetSubscriptionLongTermRetentionBackups(this Subscription subscription)
         {
-            return new SubscriptionLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackupCollection(subscription);
+            return new SubscriptionLongTermRetentionBackupCollection(subscription);
         }
         #endregion
 
-        #region SubscriptionLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackup
-        /// <summary> Gets an object representing a SubscriptionLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackupCollection along with the instance operations that can be performed on it. </summary>
+        #region SubscriptionLongTermRetentionManagedInstanceBackup
+        /// <summary> Gets an object representing a SubscriptionLongTermRetentionManagedInstanceBackupCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="SubscriptionLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackupCollection" /> object. </returns>
-        public static SubscriptionLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackupCollection GetSubscriptionLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackups(this Subscription subscription)
+        /// <returns> Returns a <see cref="SubscriptionLongTermRetentionManagedInstanceBackupCollection" /> object. </returns>
+        public static SubscriptionLongTermRetentionManagedInstanceBackupCollection GetSubscriptionLongTermRetentionManagedInstanceBackups(this Subscription subscription)
         {
-            return new SubscriptionLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackupCollection(subscription);
+            return new SubscriptionLongTermRetentionManagedInstanceBackupCollection(subscription);
         }
         #endregion
 
@@ -63,13 +63,13 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region TimeZone
-        /// <summary> Gets an object representing a TimeZoneCollection along with the instance operations that can be performed on it. </summary>
+        #region SqlTimeZone
+        /// <summary> Gets an object representing a SqlTimeZoneCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="TimeZoneCollection" /> object. </returns>
-        public static TimeZoneCollection GetTimeZones(this Subscription subscription)
+        /// <returns> Returns a <see cref="SqlTimeZoneCollection" /> object. </returns>
+        public static SqlTimeZoneCollection GetSqlTimeZones(this Subscription subscription)
         {
-            return new TimeZoneCollection(subscription);
+            return new SqlTimeZoneCollection(subscription);
         }
         #endregion
 
@@ -1392,25 +1392,25 @@ namespace Azure.ResourceManager.Sql
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/servers
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: Servers_List
-        /// <summary> Lists the Servers for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the SqlServers for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Server> GetServersAsync(this Subscription subscription, string expand = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SqlServer> GetServersAsync(this Subscription subscription, string expand = null, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetServersRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                async Task<Page<Server>> FirstPageFunc(int? pageSizeHint)
+                async Task<Page<SqlServer>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServers");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListAsync(expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new Server(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new SqlServer(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1418,14 +1418,14 @@ namespace Azure.ResourceManager.Sql
                         throw;
                     }
                 }
-                async Task<Page<Server>> NextPageFunc(string nextLink, int? pageSizeHint)
+                async Task<Page<SqlServer>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServers");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListNextPageAsync(nextLink, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new Server(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new SqlServer(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1441,25 +1441,25 @@ namespace Azure.ResourceManager.Sql
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/servers
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: Servers_List
-        /// <summary> Lists the Servers for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the SqlServers for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Server> GetServers(this Subscription subscription, string expand = null, CancellationToken cancellationToken = default)
+        public static Pageable<SqlServer> GetServers(this Subscription subscription, string expand = null, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetServersRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                Page<Server> FirstPageFunc(int? pageSizeHint)
+                Page<SqlServer> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServers");
                     scope.Start();
                     try
                     {
                         var response = restOperations.List(expand, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new Server(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new SqlServer(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1467,14 +1467,14 @@ namespace Azure.ResourceManager.Sql
                         throw;
                     }
                 }
-                Page<Server> NextPageFunc(string nextLink, int? pageSizeHint)
+                Page<SqlServer> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServers");
                     scope.Start();
                     try
                     {
                         var response = restOperations.ListNextPage(nextLink, expand, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new Server(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new SqlServer(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1487,30 +1487,30 @@ namespace Azure.ResourceManager.Sql
             );
         }
 
-        /// <summary> Filters the list of Servers for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of SqlServers for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetServerByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetSqlServerByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(Server.ResourceType);
+            ResourceFilterCollection filters = new(SqlServer.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContextAsync(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Filters the list of Servers for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of SqlServers for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetServerByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetSqlServerByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(Server.ResourceType);
+            ResourceFilterCollection filters = new(SqlServer.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }

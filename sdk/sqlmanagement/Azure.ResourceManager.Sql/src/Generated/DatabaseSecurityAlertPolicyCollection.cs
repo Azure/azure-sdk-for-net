@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Database.ResourceType;
+        protected override ResourceType ValidResourceType => SqlDatabase.ResourceType;
 
         // Collection level operations.
 
