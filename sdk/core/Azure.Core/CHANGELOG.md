@@ -7,6 +7,7 @@
 - Added `AddPolicies` method to `RequestContext`.  This allows policies to be added to the pipeline when calling protocol methods.
 - Added `IsError` property to `Response`.  This will indicate whether the message's `ResponseClassifier` considers the response to be an error.
 - Added `RequestFailedException` constructor that takes a `Response`.
+- Made `RequestContext` a subclass of `RequestOptions`.
 
 ### Breaking Changes
 
