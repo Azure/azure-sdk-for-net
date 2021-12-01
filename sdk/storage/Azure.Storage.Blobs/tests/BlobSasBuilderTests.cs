@@ -322,7 +322,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
         [TestCase("IEMFTLYXDWCAR")]
         [TestCase("racwdxyltfmei")]
         public async Task ContainerPermissionsRawPermissions(string permissionsString)
