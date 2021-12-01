@@ -16,6 +16,18 @@ parameters:
 
 steps:
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: 16.x
+      displayName: Use Node.js 16.x
+
+    # NPM version installed on some machines is very outdated and does not
+    # support `npm exec`. In some cases it may be necessary to revert the NPM
+    # upgrade after the spell check has finished by running something like:
+    # `npm install -g npm@6.14.15`
+    - pwsh: npm install -g npm
+      displayName: Upgrade NPM
+
     - task: PowerShell@2
       displayName: Check spelling (cspell)
       continueOnError: ${{ parameters.ContinueOnError }}
