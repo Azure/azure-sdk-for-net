@@ -12,9 +12,10 @@ namespace Microsoft.Azure.WebPubSub.Common
     public abstract class WebPubSubEventResponse
     {
         /// <summary>
-        ///
+        /// Reserved code for json deserilize to correct derived response.
+        /// Set to <see cref="WebPubSubStatusCode.Success"/> as default.
         /// </summary>
         [DataMember(Name = "code")]
-        public WebPubSubStatusCode StatusCode { get; set; }
+        internal WebPubSubStatusCode StatusCode { get; set; } = WebPubSubStatusCode.Success;
     }
 }

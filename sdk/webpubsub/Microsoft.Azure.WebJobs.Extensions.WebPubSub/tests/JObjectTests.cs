@@ -208,13 +208,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         }
 
         [TestCase]
-        public void ParseMessageResponse_InvalidReturnNull()
+        public void ParseMessageResponse_InvalidReturnServerError()
         {
-            var test = @"{""message"":""test"", ""dataType"":""hello""}";
+            // datatype not valid.
+            var test = @"{""data"":""test"", ""dataType"":""hello""}";
 
             var result = BuildResponse(test, RequestType.User);
 
-            Assert.Null(result);
+            Assert.NotNull(result);
+            Assert.AreEqual(HttpStatusCode.InternalServerError, result.StatusCode);
         }
 
         [TestCase]
@@ -345,9 +347,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                     { "aKey", "aValue"},
                     { "bKey", 123 },
                     { "cKey", new StateTestClass() }
-                }
-                .EncodeConnectionStates()
-                .DecodeConnectionStates();
+                };
 
             // Use the Dictionary<string, object> states .ctor overload
             var context = new WebPubSubConnectionContext(
@@ -566,10 +566,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                     new Dictionary<string, object>
                     {
                         { "testKey", BinaryData.FromString("value") }
-                    }.EncodeConnectionStates().DecodeConnectionStates(); // Required now that we enforce BinaryData
+                    };
             }
             var context = new WebPubSubConnectionContext(WebPubSubEventType.System, "connect", "testhub", "Connection-Id1", null, null, null, states, null);
-            return Utilities.BuildValidResponse(input, requestType, context);
+            return Utilities.BuildValidResponse(JObject.Parse(input), requestType, context);
         }
 
         private sealed class StateTestClass

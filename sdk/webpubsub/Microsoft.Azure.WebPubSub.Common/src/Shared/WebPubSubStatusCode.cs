@@ -4,14 +4,16 @@
 namespace Microsoft.Azure.WebPubSub.Common
 {
     /// <summary>
-    /// A general status code for <see cref="WebPubSubEventResponse"/>.
+    /// The general enum to represent response status.
+    /// DO set to Success for backward capability.
+    /// Has mapping relationship to <see cref="WebPubSubErrorCode"/>.
     /// </summary>
-    public enum WebPubSubStatusCode
+    internal enum WebPubSubStatusCode
     {
         /// <summary>
-        /// Response is success.
+        /// Start from -1 to make values map <see cref="WebPubSubErrorCode"/>.
         /// </summary>
-        Success,
+        Success = -1,
         /// <summary>
         /// Unauthorized error.
         /// </summary>

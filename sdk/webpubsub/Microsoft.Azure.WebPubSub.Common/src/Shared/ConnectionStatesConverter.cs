@@ -16,6 +16,8 @@ namespace Microsoft.Azure.WebPubSub.Common
     /// </summary>
     internal class ConnectionStatesConverter : JsonConverter<IReadOnlyDictionary<string, BinaryData>>
     {
+        public static JsonSerializerOptions Options = RegisterSerializerOptions();
+
         /// <inheritdoc/>
         public override IReadOnlyDictionary<string, BinaryData> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
@@ -43,6 +45,13 @@ namespace Microsoft.Azure.WebPubSub.Common
                 }
             }
             writer.WriteEndObject();
+        }
+
+        private static JsonSerializerOptions RegisterSerializerOptions()
+        {
+            var options = new JsonSerializerOptions();
+            options.Converters.Add(new ConnectionStatesConverter());
+            return options;
         }
     }
 }

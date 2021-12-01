@@ -23,19 +23,26 @@ namespace Microsoft.Azure.WebPubSub.Common
         public Microsoft.Azure.WebPubSub.Common.EventErrorResponse CreateErrorResponse(Microsoft.Azure.WebPubSub.Common.WebPubSubErrorCode code, string message) { throw null; }
         public Microsoft.Azure.WebPubSub.Common.ConnectEventResponse CreateResponse(string userId, System.Collections.Generic.IEnumerable<string> groups, string subprotocol, System.Collections.Generic.IEnumerable<string> roles) { throw null; }
     }
+    [System.Runtime.Serialization.DataContractAttribute]
     public partial class ConnectEventResponse : Microsoft.Azure.WebPubSub.Common.WebPubSubEventResponse
     {
         public ConnectEventResponse() { }
         public ConnectEventResponse(string userId, System.Collections.Generic.IEnumerable<string> groups, string subprotocol, System.Collections.Generic.IEnumerable<string> roles) { }
+        [System.Runtime.Serialization.IgnoreDataMemberAttribute]
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> ConnectionStates { get { throw null; } }
+        [System.Runtime.Serialization.DataMemberAttribute(Name="groups")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("groups")]
         public string[] Groups { get { throw null; } set { } }
+        [System.Runtime.Serialization.DataMemberAttribute(Name="roles")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("roles")]
         public string[] Roles { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.Runtime.Serialization.IgnoreDataMemberAttribute]
         public System.Collections.Generic.IReadOnlyDictionary<string, object> States { get { throw null; } }
+        [System.Runtime.Serialization.DataMemberAttribute(Name="subprotocol")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("subprotocol")]
         public string Subprotocol { get { throw null; } set { } }
+        [System.Runtime.Serialization.DataMemberAttribute(Name="userId")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("userId")]
         public string UserId { get { throw null; } set { } }
         public void ClearStates() { }
@@ -51,13 +58,17 @@ namespace Microsoft.Azure.WebPubSub.Common
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("reason")]
         public string Reason { get { throw null; } }
     }
+    [System.Runtime.Serialization.DataContractAttribute]
     public partial class EventErrorResponse : Microsoft.Azure.WebPubSub.Common.WebPubSubEventResponse
     {
         public EventErrorResponse() { }
         public EventErrorResponse(Microsoft.Azure.WebPubSub.Common.WebPubSubErrorCode code, string message = null) { }
+        [System.Runtime.Serialization.IgnoreDataMemberAttribute]
         [System.Text.Json.Serialization.JsonConverterAttribute(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
+        [System.Text.Json.Serialization.JsonIgnoreAttribute]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("code")]
         public Microsoft.Azure.WebPubSub.Common.WebPubSubErrorCode Code { get { throw null; } set { } }
+        [System.Runtime.Serialization.DataMemberAttribute(Name="errorMessage")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("errorMessage")]
         public string ErrorMessage { get { throw null; } set { } }
     }
@@ -84,18 +95,23 @@ namespace Microsoft.Azure.WebPubSub.Common
         public Microsoft.Azure.WebPubSub.Common.UserEventResponse CreateResponse(System.BinaryData data, Microsoft.Azure.WebPubSub.Common.WebPubSubDataType dataType) { throw null; }
         public Microsoft.Azure.WebPubSub.Common.UserEventResponse CreateResponse(string data, Microsoft.Azure.WebPubSub.Common.WebPubSubDataType dataType = Microsoft.Azure.WebPubSub.Common.WebPubSubDataType.Text) { throw null; }
     }
+    [System.Runtime.Serialization.DataContractAttribute]
     public partial class UserEventResponse : Microsoft.Azure.WebPubSub.Common.WebPubSubEventResponse
     {
         public UserEventResponse() { }
         public UserEventResponse(System.BinaryData data, Microsoft.Azure.WebPubSub.Common.WebPubSubDataType dataType) { }
         public UserEventResponse(string data, Microsoft.Azure.WebPubSub.Common.WebPubSubDataType dataType = Microsoft.Azure.WebPubSub.Common.WebPubSubDataType.Text) { }
+        [System.Runtime.Serialization.IgnoreDataMemberAttribute]
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> ConnectionStates { get { throw null; } }
+        [System.Runtime.Serialization.DataMemberAttribute(Name="data")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("data")]
         public System.BinaryData Data { get { throw null; } set { } }
+        [System.Runtime.Serialization.DataMemberAttribute(Name="dataType")]
         [System.Text.Json.Serialization.JsonConverterAttribute(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("dataType")]
         public Microsoft.Azure.WebPubSub.Common.WebPubSubDataType DataType { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.Runtime.Serialization.IgnoreDataMemberAttribute]
         public System.Collections.Generic.IReadOnlyDictionary<string, object> States { get { throw null; } }
         public void ClearStates() { }
         public void SetState(string key, System.BinaryData value) { }
@@ -167,6 +183,7 @@ namespace Microsoft.Azure.WebPubSub.Common
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("connectionContext")]
         public Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext ConnectionContext { get { throw null; } }
     }
+    [System.Runtime.Serialization.DataContractAttribute]
     public abstract partial class WebPubSubEventResponse
     {
         protected WebPubSubEventResponse() { }

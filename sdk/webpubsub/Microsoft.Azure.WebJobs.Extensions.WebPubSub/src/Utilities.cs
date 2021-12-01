@@ -77,70 +77,76 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         public static HttpResponseMessage BuildErrorResponse(EventErrorResponse error)
         {
+            return BuildErrorResponse(error.ErrorMessage, error.Code);
+        }
+
+        public static HttpResponseMessage BuildErrorResponse(string errorMessage, WebPubSubErrorCode code = WebPubSubErrorCode.ServerError)
+        {
             HttpResponseMessage result = new();
 
-            result.StatusCode = GetStatusCode(error.Code);
-            result.Content = new StringContent(error.ErrorMessage);
+            result.StatusCode = GetStatusCode(code);
+            result.Content = new StringContent(errorMessage);
             return result;
         }
 
         public static HttpResponseMessage BuildValidResponse(
-            object response, RequestType requestType,
+            WebPubSubEventResponse response, RequestType requestType,
             WebPubSubConnectionContext context)
         {
-            JObject jResponse = null;
-            string originStr = null;
-            bool needConvert = true;
-            if (response is WebPubSubEventResponse)
+            // check error as top priority.
+            if (response is EventErrorResponse errorResponse)
             {
-                needConvert = false;
-            }
-            else
-            {
-                // JObject or string type, use string to convert between NewtonsoftJson and SystemTextJson.
-                jResponse = response is JObject jObj ? jObj : throw new NotSupportedException("");
+                return BuildErrorResponse(errorResponse);
             }
 
+            if (requestType == RequestType.Connect)
+            {
+                if (response is ConnectEventResponse connectResponse)
+                {
+                    var mergedStates = context.UpdateStates(connectResponse.States);
+                    return BuildConnectEventResponse(JsonConvert.SerializeObject(response), mergedStates);
+                }
+                return BuildErrorResponse($"Invalid response type: '{response.GetType()}' in current request type '{requestType}'.");
+            }
+            if (requestType == RequestType.User)
+            {
+                if (response is UserEventResponse messageResponse)
+                {
+                    var mergedStates = context.UpdateStates(messageResponse.States);
+                    return BuildUserEventResponse(messageResponse, mergedStates);
+                }
+                return BuildErrorResponse($"Invalid response type: '{response.GetType()}' in current request type '{requestType}'.");
+            }
+            // should not hit.
+            throw new Exception($"Invalid request type, {requestType}");
+        }
+
+        public static HttpResponseMessage BuildValidResponse(
+            JObject response, RequestType requestType,
+            WebPubSubConnectionContext context)
+        {
             try
             {
-                // Check error, errorCode is required for json convert, otherwise, ignored.
-                if (response is EventErrorResponse errorResponse)
+                // check error as top priority.
+                if (response.TryGetValue("code", out var code)
+                    && code.ToObject<WebPubSubStatusCode>() != WebPubSubStatusCode.Success)
                 {
-                    return BuildErrorResponse(errorResponse);
-                }
-                if (needConvert && jResponse.TryGetValue("code", out var code) && code.Value<WebPubSubStatusCode>() != WebPubSubStatusCode.Success)
-                {
-                    var error = jResponse.ToObject<EventErrorResponse>();
+                    var error = response.ToObject<EventErrorResponse>();
                     return BuildErrorResponse(error);
                 }
 
                 if (requestType == RequestType.Connect)
                 {
-                    if (needConvert)
-                    {
-                        var states = GetStatesFromJson(jResponse);
-                        var mergedStates = context.UpdateStates(states);
-                        return BuildConnectEventResponse(originStr, mergedStates);
-                    }
-                    else if (response is ConnectEventResponse connectResponse)
-                    {
-                        var mergedStates = context.UpdateStates(connectResponse.States);
-                        return BuildConnectEventResponse(JsonConvert.SerializeObject(response), mergedStates);
-                    }
+                    var states = GetStatesFromJson(response);
+                    var mergedStates = context.UpdateStates(states);
+                    // Use original value directly to set response.
+                    return BuildConnectEventResponse(JsonConvert.SerializeObject(response), mergedStates);
                 }
                 if (requestType == RequestType.User)
                 {
-                    if (needConvert)
-                    {
-                        var states = GetStatesFromJson(jResponse);
-                        var mergedStates = context.UpdateStates(states);
-                        return BuildUserEventResponse(JsonConvert.DeserializeObject<UserEventResponse>(originStr), mergedStates);
-                    }
-                    else if (response is UserEventResponse messageResponse)
-                    {
-                        var mergedStates = context.UpdateStates(messageResponse.States);
-                        return BuildUserEventResponse(messageResponse, mergedStates);
-                    }
+                    var states = GetStatesFromJson(response);
+                    var mergedStates = context.UpdateStates(states);
+                    return BuildUserEventResponse(response.ToObject<UserEventResponse>(), mergedStates);
                 }
             }
             catch (Exception ex)
@@ -148,7 +154,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 return BuildErrorResponse(new EventErrorResponse(WebPubSubErrorCode.ServerError, ex.Message));
             }
 
-            throw new Exception($"Invalid request type, {requestType}");
+            // should not hit.
+            throw new Exception($"Invalid request type, '{requestType}'.");
         }
 
         public static HttpStatusCode GetStatusCode(WebPubSubErrorCode errorCode) =>

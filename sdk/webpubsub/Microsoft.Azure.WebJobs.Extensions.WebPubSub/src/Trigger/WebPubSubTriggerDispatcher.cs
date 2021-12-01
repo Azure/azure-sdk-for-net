@@ -13,6 +13,8 @@ using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.Logging;
 
+using NewtonsoftJsonLinq = Newtonsoft.Json.Linq;
+
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     internal class WebPubSubTriggerDispatcher : IWebPubSubTriggerDispatcher
@@ -146,12 +148,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                             // Skip no returns
                             if (response != null)
                             {
-                                var validResponse = Utilities.BuildValidResponse(response, requestType, context);
-
-                                if (validResponse != null)
+                                if (response is WebPubSubEventResponse wpsResponse)
                                 {
-                                    return validResponse;
+                                    return Utilities.BuildValidResponse(wpsResponse, requestType, context);
                                 }
+                                if (response is NewtonsoftJsonLinq.JObject jResponse)
+                                {
+                                    return Utilities.BuildValidResponse(jResponse, requestType, context);
+                                }
+
                                 _logger.LogWarning($"Invalid response type {response.GetType()} regarding current request: {requestType}");
                             }
                         }
