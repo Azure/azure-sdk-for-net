@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.Cdn
 {
     internal partial class AfdRoutesRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
@@ -30,13 +29,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public AfdRoutesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2020-09-01")
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public AfdRoutesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null, string apiVersion = "2020-09-01")
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.Cdn
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateListByEndpointRequest(string resourceGroupName, string profileName, string endpointName)
+        internal HttpMessage CreateListByEndpointRequest(string subscriptionId, string resourceGroupName, string profileName, string endpointName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -68,13 +65,18 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Lists all of the existing origins within a profile. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="endpointName"/> is null. </exception>
-        public async Task<Response<RouteListResult>> ListByEndpointAsync(string resourceGroupName, string profileName, string endpointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="endpointName"/> is null. </exception>
+        public async Task<Response<RouteListResult>> ListByEndpointAsync(string subscriptionId, string resourceGroupName, string profileName, string endpointName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -88,7 +90,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(endpointName));
             }
 
-            using var message = CreateListByEndpointRequest(resourceGroupName, profileName, endpointName);
+            using var message = CreateListByEndpointRequest(subscriptionId, resourceGroupName, profileName, endpointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -105,13 +107,18 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Lists all of the existing origins within a profile. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="endpointName"/> is null. </exception>
-        public Response<RouteListResult> ListByEndpoint(string resourceGroupName, string profileName, string endpointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="endpointName"/> is null. </exception>
+        public Response<RouteListResult> ListByEndpoint(string subscriptionId, string resourceGroupName, string profileName, string endpointName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -125,7 +132,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(endpointName));
             }
 
-            using var message = CreateListByEndpointRequest(resourceGroupName, profileName, endpointName);
+            using var message = CreateListByEndpointRequest(subscriptionId, resourceGroupName, profileName, endpointName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -141,7 +148,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string profileName, string endpointName, string routeName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string routeName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -166,14 +173,19 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Gets an existing route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="routeName"/> is null. </exception>
-        public async Task<Response<AfdRouteData>> GetAsync(string resourceGroupName, string profileName, string endpointName, string routeName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="routeName"/> is null. </exception>
+        public async Task<Response<AfdRouteData>> GetAsync(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string routeName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -191,7 +203,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(routeName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, profileName, endpointName, routeName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, profileName, endpointName, routeName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -210,14 +222,19 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Gets an existing route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="routeName"/> is null. </exception>
-        public Response<AfdRouteData> Get(string resourceGroupName, string profileName, string endpointName, string routeName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="routeName"/> is null. </exception>
+        public Response<AfdRouteData> Get(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string routeName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -235,7 +252,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(routeName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, profileName, endpointName, routeName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, profileName, endpointName, routeName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -253,7 +270,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string resourceGroupName, string profileName, string endpointName, string routeName, AfdRouteData route)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string routeName, AfdRouteData route)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -282,15 +299,20 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Creates a new route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="route"> Route properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, <paramref name="routeName"/>, or <paramref name="route"/> is null. </exception>
-        public async Task<Response> CreateAsync(string resourceGroupName, string profileName, string endpointName, string routeName, AfdRouteData route, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, <paramref name="routeName"/>, or <paramref name="route"/> is null. </exception>
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string routeName, AfdRouteData route, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -312,7 +334,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(route));
             }
 
-            using var message = CreateCreateRequest(resourceGroupName, profileName, endpointName, routeName, route);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, profileName, endpointName, routeName, route);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -326,15 +348,20 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Creates a new route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="route"> Route properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, <paramref name="routeName"/>, or <paramref name="route"/> is null. </exception>
-        public Response Create(string resourceGroupName, string profileName, string endpointName, string routeName, AfdRouteData route, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, <paramref name="routeName"/>, or <paramref name="route"/> is null. </exception>
+        public Response Create(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string routeName, AfdRouteData route, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -356,7 +383,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(route));
             }
 
-            using var message = CreateCreateRequest(resourceGroupName, profileName, endpointName, routeName, route);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, profileName, endpointName, routeName, route);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -369,7 +396,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string profileName, string endpointName, string routeName, RouteUpdateOptions routeUpdateProperties)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string routeName, RouteUpdateOptions routeUpdateProperties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -398,15 +425,20 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Updates an existing route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="routeUpdateProperties"> Route update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, <paramref name="routeName"/>, or <paramref name="routeUpdateProperties"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string resourceGroupName, string profileName, string endpointName, string routeName, RouteUpdateOptions routeUpdateProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, <paramref name="routeName"/>, or <paramref name="routeUpdateProperties"/> is null. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string routeName, RouteUpdateOptions routeUpdateProperties, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -428,7 +460,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(routeUpdateProperties));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, profileName, endpointName, routeName, routeUpdateProperties);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, profileName, endpointName, routeName, routeUpdateProperties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -441,15 +473,20 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Updates an existing route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="routeUpdateProperties"> Route update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, <paramref name="routeName"/>, or <paramref name="routeUpdateProperties"/> is null. </exception>
-        public Response Update(string resourceGroupName, string profileName, string endpointName, string routeName, RouteUpdateOptions routeUpdateProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, <paramref name="routeName"/>, or <paramref name="routeUpdateProperties"/> is null. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string routeName, RouteUpdateOptions routeUpdateProperties, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -471,7 +508,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(routeUpdateProperties));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, profileName, endpointName, routeName, routeUpdateProperties);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, profileName, endpointName, routeName, routeUpdateProperties);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -483,7 +520,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string profileName, string endpointName, string routeName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string routeName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -508,14 +545,19 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Deletes an existing route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="routeName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string profileName, string endpointName, string routeName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="routeName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string routeName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -533,7 +575,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(routeName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, profileName, endpointName, routeName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, profileName, endpointName, routeName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -547,14 +589,19 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Deletes an existing route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="routeName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string profileName, string endpointName, string routeName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="routeName"/> is null. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string routeName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -572,7 +619,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(routeName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, profileName, endpointName, routeName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, profileName, endpointName, routeName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -585,7 +632,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateListByEndpointNextPageRequest(string nextLink, string resourceGroupName, string profileName, string endpointName)
+        internal HttpMessage CreateListByEndpointNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string profileName, string endpointName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -601,16 +648,21 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Lists all of the existing origins within a profile. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="endpointName"/> is null. </exception>
-        public async Task<Response<RouteListResult>> ListByEndpointNextPageAsync(string nextLink, string resourceGroupName, string profileName, string endpointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="endpointName"/> is null. </exception>
+        public async Task<Response<RouteListResult>> ListByEndpointNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string profileName, string endpointName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -625,7 +677,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(endpointName));
             }
 
-            using var message = CreateListByEndpointNextPageRequest(nextLink, resourceGroupName, profileName, endpointName);
+            using var message = CreateListByEndpointNextPageRequest(nextLink, subscriptionId, resourceGroupName, profileName, endpointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -643,16 +695,21 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Lists all of the existing origins within a profile. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="endpointName"/> is null. </exception>
-        public Response<RouteListResult> ListByEndpointNextPage(string nextLink, string resourceGroupName, string profileName, string endpointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="endpointName"/> is null. </exception>
+        public Response<RouteListResult> ListByEndpointNextPage(string nextLink, string subscriptionId, string resourceGroupName, string profileName, string endpointName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -667,7 +724,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(endpointName));
             }
 
-            using var message = CreateListByEndpointNextPageRequest(nextLink, resourceGroupName, profileName, endpointName);
+            using var message = CreateListByEndpointNextPageRequest(nextLink, subscriptionId, resourceGroupName, profileName, endpointName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

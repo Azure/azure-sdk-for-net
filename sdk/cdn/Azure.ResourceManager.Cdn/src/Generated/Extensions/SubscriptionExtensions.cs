@@ -22,24 +22,24 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> A class to add extension methods to Subscription. </summary>
     public static partial class SubscriptionExtensions
     {
-        private static ProfilesRestOperations GetProfilesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        private static ProfilesRestOperations GetProfilesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
         {
-            return new ProfilesRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+            return new ProfilesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
 
-        private static CdnManagementRestOperations GetCdnManagementRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        private static CdnManagementRestOperations GetCdnManagementRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
         {
-            return new CdnManagementRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+            return new CdnManagementRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
 
-        private static ResourceUsageRestOperations GetResourceUsageRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        private static ResourceUsageRestOperations GetResourceUsageRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
         {
-            return new ResourceUsageRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+            return new ResourceUsageRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
 
-        private static ManagedRuleSetsRestOperations GetManagedRuleSetsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        private static ManagedRuleSetsRestOperations GetManagedRuleSetsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
         {
-            return new ManagedRuleSetsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+            return new ManagedRuleSetsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
 
         /// <summary> Lists the Profiles for this <see cref="Subscription" />. </summary>
@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.Cdn
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetProfilesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                var restOperations = GetProfilesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 async Task<Page<Profile>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetProfiles");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new Profile(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Cdn
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new Profile(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -96,14 +96,14 @@ namespace Azure.ResourceManager.Cdn
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetProfilesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                var restOperations = GetProfilesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 Page<Profile> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetProfiles");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.List(cancellationToken: cancellationToken);
+                        var response = restOperations.List(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new Profile(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Cdn
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListNextPage(nextLink, cancellationToken: cancellationToken);
+                        var response = restOperations.ListNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new Profile(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -179,8 +179,8 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var restOperations = GetCdnManagementRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = await restOperations.CheckNameAvailabilityWithSubscriptionAsync(checkNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
+                    var restOperations = GetCdnManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    var response = await restOperations.CheckNameAvailabilityWithSubscriptionAsync(subscription.Id.SubscriptionId, checkNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
                 catch (Exception e)
@@ -211,8 +211,8 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var restOperations = GetCdnManagementRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = restOperations.CheckNameAvailabilityWithSubscription(checkNameAvailabilityInput, cancellationToken);
+                    var restOperations = GetCdnManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    var response = restOperations.CheckNameAvailabilityWithSubscription(subscription.Id.SubscriptionId, checkNameAvailabilityInput, cancellationToken);
                     return response;
                 }
                 catch (Exception e)
@@ -243,8 +243,8 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var restOperations = GetCdnManagementRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = await restOperations.ValidateProbeAsync(validateProbeInput, cancellationToken).ConfigureAwait(false);
+                    var restOperations = GetCdnManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    var response = await restOperations.ValidateProbeAsync(subscription.Id.SubscriptionId, validateProbeInput, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
                 catch (Exception e)
@@ -275,8 +275,8 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var restOperations = GetCdnManagementRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = restOperations.ValidateProbe(validateProbeInput, cancellationToken);
+                    var restOperations = GetCdnManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    var response = restOperations.ValidateProbe(subscription.Id.SubscriptionId, validateProbeInput, cancellationToken);
                     return response;
                 }
                 catch (Exception e)
@@ -297,14 +297,14 @@ namespace Azure.ResourceManager.Cdn
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetResourceUsageRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                var restOperations = GetResourceUsageRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 async Task<Page<ResourceUsage>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetResourceUsages");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Cdn
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -342,14 +342,14 @@ namespace Azure.ResourceManager.Cdn
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetResourceUsageRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                var restOperations = GetResourceUsageRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 Page<ResourceUsage> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetResourceUsages");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.List(cancellationToken: cancellationToken);
+                        var response = restOperations.List(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Cdn
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListNextPage(nextLink, cancellationToken: cancellationToken);
+                        var response = restOperations.ListNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -387,14 +387,14 @@ namespace Azure.ResourceManager.Cdn
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetManagedRuleSetsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                var restOperations = GetManagedRuleSetsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 async Task<Page<ManagedRuleSetDefinition>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetManagedRuleSets");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Cdn
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -432,14 +432,14 @@ namespace Azure.ResourceManager.Cdn
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetManagedRuleSetsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                var restOperations = GetManagedRuleSetsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 Page<ManagedRuleSetDefinition> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetManagedRuleSets");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.List(cancellationToken: cancellationToken);
+                        var response = restOperations.List(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.Cdn
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListNextPage(nextLink, cancellationToken: cancellationToken);
+                        var response = restOperations.ListNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)

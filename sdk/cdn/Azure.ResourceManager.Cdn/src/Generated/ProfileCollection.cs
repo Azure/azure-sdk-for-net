@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn
         internal ProfileCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _profilesRestClient = new ProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _profilesRestClient = new ProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _profilesRestClient.Create(Id.ResourceGroupName, profileName, profile, cancellationToken);
-                var operation = new ProfileCreateOperation(Parent, _clientDiagnostics, Pipeline, _profilesRestClient.CreateCreateRequest(Id.ResourceGroupName, profileName, profile).Request, response);
+                var response = _profilesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, profileName, profile, cancellationToken);
+                var operation = new ProfileCreateOperation(Parent, _clientDiagnostics, Pipeline, _profilesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, profile).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -101,8 +101,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _profilesRestClient.CreateAsync(Id.ResourceGroupName, profileName, profile, cancellationToken).ConfigureAwait(false);
-                var operation = new ProfileCreateOperation(Parent, _clientDiagnostics, Pipeline, _profilesRestClient.CreateCreateRequest(Id.ResourceGroupName, profileName, profile).Request, response);
+                var response = await _profilesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, profileName, profile, cancellationToken).ConfigureAwait(false);
+                var operation = new ProfileCreateOperation(Parent, _clientDiagnostics, Pipeline, _profilesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, profile).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _profilesRestClient.Get(Id.ResourceGroupName, profileName, cancellationToken);
+                var response = _profilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, profileName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Profile(Parent, response.Value), response.GetRawResponse());
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _profilesRestClient.GetAsync(Id.ResourceGroupName, profileName, cancellationToken).ConfigureAwait(false);
+                var response = await _profilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, profileName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new Profile(Parent, response.Value), response.GetRawResponse());
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _profilesRestClient.Get(Id.ResourceGroupName, profileName, cancellationToken: cancellationToken);
+                var response = _profilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, profileName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<Profile>(null, response.GetRawResponse())
                     : Response.FromValue(new Profile(this, response.Value), response.GetRawResponse());
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _profilesRestClient.GetAsync(Id.ResourceGroupName, profileName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _profilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, profileName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<Profile>(null, response.GetRawResponse())
                     : Response.FromValue(new Profile(this, response.Value), response.GetRawResponse());
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = _profilesRestClient.ListByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _profilesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new Profile(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = _profilesRestClient.ListByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _profilesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new Profile(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = await _profilesRestClient.ListByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _profilesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new Profile(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = await _profilesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _profilesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new Profile(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

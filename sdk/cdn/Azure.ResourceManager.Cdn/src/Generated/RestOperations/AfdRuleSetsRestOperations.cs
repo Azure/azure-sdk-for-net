@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.Cdn
 {
     internal partial class AfdRuleSetsRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
@@ -30,13 +29,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public AfdRuleSetsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2020-09-01")
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public AfdRuleSetsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null, string apiVersion = "2020-09-01")
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.Cdn
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateListByProfileRequest(string resourceGroupName, string profileName)
+        internal HttpMessage CreateListByProfileRequest(string subscriptionId, string resourceGroupName, string profileName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -66,12 +63,17 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Lists existing AzureFrontDoor rule sets within a profile. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
-        public async Task<Response<RuleSetListResult>> ListByProfileAsync(string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="profileName"/> is null. </exception>
+        public async Task<Response<RuleSetListResult>> ListByProfileAsync(string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -81,7 +83,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(profileName));
             }
 
-            using var message = CreateListByProfileRequest(resourceGroupName, profileName);
+            using var message = CreateListByProfileRequest(subscriptionId, resourceGroupName, profileName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -98,12 +100,17 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Lists existing AzureFrontDoor rule sets within a profile. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
-        public Response<RuleSetListResult> ListByProfile(string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="profileName"/> is null. </exception>
+        public Response<RuleSetListResult> ListByProfile(string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -113,7 +120,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(profileName));
             }
 
-            using var message = CreateListByProfileRequest(resourceGroupName, profileName);
+            using var message = CreateListByProfileRequest(subscriptionId, resourceGroupName, profileName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -129,7 +136,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string profileName, string ruleSetName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -152,13 +159,18 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Gets an existing AzureFrontDoor rule set with the specified rule set name under the specified subscription, resource group and profile. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="ruleSetName"/> is null. </exception>
-        public async Task<Response<AfdRuleSetData>> GetAsync(string resourceGroupName, string profileName, string ruleSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="ruleSetName"/> is null. </exception>
+        public async Task<Response<AfdRuleSetData>> GetAsync(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -172,7 +184,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(ruleSetName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, profileName, ruleSetName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, profileName, ruleSetName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -191,13 +203,18 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Gets an existing AzureFrontDoor rule set with the specified rule set name under the specified subscription, resource group and profile. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="ruleSetName"/> is null. </exception>
-        public Response<AfdRuleSetData> Get(string resourceGroupName, string profileName, string ruleSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="ruleSetName"/> is null. </exception>
+        public Response<AfdRuleSetData> Get(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -211,7 +228,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(ruleSetName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, profileName, ruleSetName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, profileName, ruleSetName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -229,7 +246,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string resourceGroupName, string profileName, string ruleSetName)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -252,13 +269,18 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Creates a new rule set within the specified profile. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="ruleSetName"/> is null. </exception>
-        public async Task<Response> CreateAsync(string resourceGroupName, string profileName, string ruleSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="ruleSetName"/> is null. </exception>
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -272,7 +294,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(ruleSetName));
             }
 
-            using var message = CreateCreateRequest(resourceGroupName, profileName, ruleSetName);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, profileName, ruleSetName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -286,13 +308,18 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Creates a new rule set within the specified profile. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="ruleSetName"/> is null. </exception>
-        public Response Create(string resourceGroupName, string profileName, string ruleSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="ruleSetName"/> is null. </exception>
+        public Response Create(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -306,7 +333,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(ruleSetName));
             }
 
-            using var message = CreateCreateRequest(resourceGroupName, profileName, ruleSetName);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, profileName, ruleSetName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -319,7 +346,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string profileName, string ruleSetName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -342,13 +369,18 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Deletes an existing AzureFrontDoor rule set with the specified rule set name under the specified subscription, resource group and profile. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="ruleSetName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string profileName, string ruleSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="ruleSetName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -362,7 +394,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(ruleSetName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, profileName, ruleSetName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, profileName, ruleSetName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -375,13 +407,18 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Deletes an existing AzureFrontDoor rule set with the specified rule set name under the specified subscription, resource group and profile. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="ruleSetName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string profileName, string ruleSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="ruleSetName"/> is null. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -395,7 +432,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(ruleSetName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, profileName, ruleSetName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, profileName, ruleSetName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -407,7 +444,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateListResourceUsageRequest(string resourceGroupName, string profileName, string ruleSetName)
+        internal HttpMessage CreateListResourceUsageRequest(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -431,13 +468,18 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Checks the quota and actual usage of endpoints under the given CDN profile. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="ruleSetName"/> is null. </exception>
-        public async Task<Response<UsagesListResult>> ListResourceUsageAsync(string resourceGroupName, string profileName, string ruleSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="ruleSetName"/> is null. </exception>
+        public async Task<Response<UsagesListResult>> ListResourceUsageAsync(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -451,7 +493,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(ruleSetName));
             }
 
-            using var message = CreateListResourceUsageRequest(resourceGroupName, profileName, ruleSetName);
+            using var message = CreateListResourceUsageRequest(subscriptionId, resourceGroupName, profileName, ruleSetName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -468,13 +510,18 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Checks the quota and actual usage of endpoints under the given CDN profile. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="ruleSetName"/> is null. </exception>
-        public Response<UsagesListResult> ListResourceUsage(string resourceGroupName, string profileName, string ruleSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="ruleSetName"/> is null. </exception>
+        public Response<UsagesListResult> ListResourceUsage(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -488,7 +535,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(ruleSetName));
             }
 
-            using var message = CreateListResourceUsageRequest(resourceGroupName, profileName, ruleSetName);
+            using var message = CreateListResourceUsageRequest(subscriptionId, resourceGroupName, profileName, ruleSetName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -504,7 +551,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateListByProfileNextPageRequest(string nextLink, string resourceGroupName, string profileName)
+        internal HttpMessage CreateListByProfileNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string profileName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -520,15 +567,20 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Lists existing AzureFrontDoor rule sets within a profile. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="profileName"/> is null. </exception>
-        public async Task<Response<RuleSetListResult>> ListByProfileNextPageAsync(string nextLink, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="profileName"/> is null. </exception>
+        public async Task<Response<RuleSetListResult>> ListByProfileNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -539,7 +591,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(profileName));
             }
 
-            using var message = CreateListByProfileNextPageRequest(nextLink, resourceGroupName, profileName);
+            using var message = CreateListByProfileNextPageRequest(nextLink, subscriptionId, resourceGroupName, profileName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -557,15 +609,20 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Lists existing AzureFrontDoor rule sets within a profile. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="profileName"/> is null. </exception>
-        public Response<RuleSetListResult> ListByProfileNextPage(string nextLink, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="profileName"/> is null. </exception>
+        public Response<RuleSetListResult> ListByProfileNextPage(string nextLink, string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -576,7 +633,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(profileName));
             }
 
-            using var message = CreateListByProfileNextPageRequest(nextLink, resourceGroupName, profileName);
+            using var message = CreateListByProfileNextPageRequest(nextLink, subscriptionId, resourceGroupName, profileName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -592,7 +649,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateListResourceUsageNextPageRequest(string nextLink, string resourceGroupName, string profileName, string ruleSetName)
+        internal HttpMessage CreateListResourceUsageNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string profileName, string ruleSetName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -608,16 +665,21 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Checks the quota and actual usage of endpoints under the given CDN profile. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="ruleSetName"/> is null. </exception>
-        public async Task<Response<UsagesListResult>> ListResourceUsageNextPageAsync(string nextLink, string resourceGroupName, string profileName, string ruleSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="ruleSetName"/> is null. </exception>
+        public async Task<Response<UsagesListResult>> ListResourceUsageNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string profileName, string ruleSetName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -632,7 +694,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(ruleSetName));
             }
 
-            using var message = CreateListResourceUsageNextPageRequest(nextLink, resourceGroupName, profileName, ruleSetName);
+            using var message = CreateListResourceUsageNextPageRequest(nextLink, subscriptionId, resourceGroupName, profileName, ruleSetName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -650,16 +712,21 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Checks the quota and actual usage of endpoints under the given CDN profile. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="ruleSetName"/> is null. </exception>
-        public Response<UsagesListResult> ListResourceUsageNextPage(string nextLink, string resourceGroupName, string profileName, string ruleSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="ruleSetName"/> is null. </exception>
+        public Response<UsagesListResult> ListResourceUsageNextPage(string nextLink, string subscriptionId, string resourceGroupName, string profileName, string ruleSetName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -674,7 +741,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(ruleSetName));
             }
 
-            using var message = CreateListResourceUsageNextPageRequest(nextLink, resourceGroupName, profileName, ruleSetName);
+            using var message = CreateListResourceUsageNextPageRequest(nextLink, subscriptionId, resourceGroupName, profileName, ruleSetName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Cdn
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _profilesRestClient = new ProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _afdProfilesRestClient = new AfdProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _profilesRestClient = new ProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _afdProfilesRestClient = new AfdProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="Profile"/> class. </summary>
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Cdn
         internal Profile(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _profilesRestClient = new ProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _afdProfilesRestClient = new AfdProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _profilesRestClient = new ProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _afdProfilesRestClient = new AfdProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="Profile"/> class. </summary>
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.Cdn
         internal Profile(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _profilesRestClient = new ProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _afdProfilesRestClient = new AfdProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _profilesRestClient = new ProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _afdProfilesRestClient = new AfdProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _profilesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _profilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new Profile(this, response.Value), response.GetRawResponse());
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _profilesRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _profilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Profile(this, response.Value), response.GetRawResponse());
@@ -153,8 +153,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _profilesRestClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ProfileDeleteOperation(_clientDiagnostics, Pipeline, _profilesRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _profilesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ProfileDeleteOperation(_clientDiagnostics, Pipeline, _profilesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -175,8 +175,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _profilesRestClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ProfileDeleteOperation(_clientDiagnostics, Pipeline, _profilesRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _profilesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ProfileDeleteOperation(_clientDiagnostics, Pipeline, _profilesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Cdn
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _profilesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _profilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new Profile(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Cdn
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _profilesRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var originalResponse = _profilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new Profile(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Cdn
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _profilesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _profilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new Profile(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Cdn
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _profilesRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var originalResponse = _profilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new Profile(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Cdn
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _profilesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _profilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new Profile(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Cdn
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _profilesRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var originalResponse = _profilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new Profile(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -376,8 +376,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _profilesRestClient.UpdateAsync(Id.ResourceGroupName, Id.Name, profileUpdateParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ProfileUpdateOperation(this, _clientDiagnostics, Pipeline, _profilesRestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, profileUpdateParameters).Request, response);
+                var response = await _profilesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileUpdateParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ProfileUpdateOperation(this, _clientDiagnostics, Pipeline, _profilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileUpdateParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -405,8 +405,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _profilesRestClient.Update(Id.ResourceGroupName, Id.Name, profileUpdateParameters, cancellationToken);
-                var operation = new ProfileUpdateOperation(this, _clientDiagnostics, Pipeline, _profilesRestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, profileUpdateParameters).Request, response);
+                var response = _profilesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileUpdateParameters, cancellationToken);
+                var operation = new ProfileUpdateOperation(this, _clientDiagnostics, Pipeline, _profilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileUpdateParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _profilesRestClient.GenerateSsoUriAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _profilesRestClient.GenerateSsoUriAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _profilesRestClient.GenerateSsoUri(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _profilesRestClient.GenerateSsoUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _profilesRestClient.ListSupportedOptimizationTypesAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _profilesRestClient.ListSupportedOptimizationTypesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _profilesRestClient.ListSupportedOptimizationTypes(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _profilesRestClient.ListSupportedOptimizationTypes(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = await _profilesRestClient.ListResourceUsageAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _profilesRestClient.ListResourceUsageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = await _profilesRestClient.ListResourceUsageNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _profilesRestClient.ListResourceUsageNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = _profilesRestClient.ListResourceUsage(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _profilesRestClient.ListResourceUsage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = _profilesRestClient.ListResourceUsageNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _profilesRestClient.ListResourceUsageNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = await _afdProfilesRestClient.ListResourceUsageAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _afdProfilesRestClient.ListResourceUsageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = await _afdProfilesRestClient.ListResourceUsageNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _afdProfilesRestClient.ListResourceUsageNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = _afdProfilesRestClient.ListResourceUsage(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _afdProfilesRestClient.ListResourceUsage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = _afdProfilesRestClient.ListResourceUsageNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _afdProfilesRestClient.ListResourceUsageNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _afdProfilesRestClient.GetLogAnalyticsMetricsAsync(Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols, groupBy, continents, countryOrRegions, cancellationToken).ConfigureAwait(false);
+                var response = await _afdProfilesRestClient.GetLogAnalyticsMetricsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols, groupBy, continents, countryOrRegions, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _afdProfilesRestClient.GetLogAnalyticsMetrics(Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols, groupBy, continents, countryOrRegions, cancellationToken);
+                var response = _afdProfilesRestClient.GetLogAnalyticsMetrics(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols, groupBy, continents, countryOrRegions, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _afdProfilesRestClient.GetLogAnalyticsRankingsAsync(Id.ResourceGroupName, Id.Name, rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd, customDomains, cancellationToken).ConfigureAwait(false);
+                var response = await _afdProfilesRestClient.GetLogAnalyticsRankingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd, customDomains, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _afdProfilesRestClient.GetLogAnalyticsRankings(Id.ResourceGroupName, Id.Name, rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd, customDomains, cancellationToken);
+                var response = _afdProfilesRestClient.GetLogAnalyticsRankings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd, customDomains, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -800,7 +800,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _afdProfilesRestClient.GetLogAnalyticsLocationsAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _afdProfilesRestClient.GetLogAnalyticsLocationsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -818,7 +818,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _afdProfilesRestClient.GetLogAnalyticsLocations(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _afdProfilesRestClient.GetLogAnalyticsLocations(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -836,7 +836,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _afdProfilesRestClient.GetLogAnalyticsResourcesAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _afdProfilesRestClient.GetLogAnalyticsResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -854,7 +854,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _afdProfilesRestClient.GetLogAnalyticsResources(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _afdProfilesRestClient.GetLogAnalyticsResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -885,7 +885,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _afdProfilesRestClient.GetWafLogAnalyticsMetricsAsync(Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity, actions, groupBy, ruleTypes, cancellationToken).ConfigureAwait(false);
+                var response = await _afdProfilesRestClient.GetWafLogAnalyticsMetricsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity, actions, groupBy, ruleTypes, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -916,7 +916,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _afdProfilesRestClient.GetWafLogAnalyticsMetrics(Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity, actions, groupBy, ruleTypes, cancellationToken);
+                var response = _afdProfilesRestClient.GetWafLogAnalyticsMetrics(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity, actions, groupBy, ruleTypes, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -951,7 +951,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _afdProfilesRestClient.GetWafLogAnalyticsRankingsAsync(Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings, actions, ruleTypes, cancellationToken).ConfigureAwait(false);
+                var response = await _afdProfilesRestClient.GetWafLogAnalyticsRankingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings, actions, ruleTypes, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -986,7 +986,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _afdProfilesRestClient.GetWafLogAnalyticsRankings(Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings, actions, ruleTypes, cancellationToken);
+                var response = _afdProfilesRestClient.GetWafLogAnalyticsRankings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings, actions, ruleTypes, cancellationToken);
                 return response;
             }
             catch (Exception e)

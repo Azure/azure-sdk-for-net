@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.Cdn
 {
     internal partial class CdnCustomDomainsRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
@@ -30,13 +29,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CdnCustomDomainsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2020-09-01")
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public CdnCustomDomainsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null, string apiVersion = "2020-09-01")
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.Cdn
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateListByEndpointRequest(string resourceGroupName, string profileName, string endpointName)
+        internal HttpMessage CreateListByEndpointRequest(string subscriptionId, string resourceGroupName, string profileName, string endpointName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -68,13 +65,18 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Lists all of the existing custom domains within an endpoint. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="endpointName"/> is null. </exception>
-        public async Task<Response<CustomDomainListResult>> ListByEndpointAsync(string resourceGroupName, string profileName, string endpointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="endpointName"/> is null. </exception>
+        public async Task<Response<CustomDomainListResult>> ListByEndpointAsync(string subscriptionId, string resourceGroupName, string profileName, string endpointName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -88,7 +90,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(endpointName));
             }
 
-            using var message = CreateListByEndpointRequest(resourceGroupName, profileName, endpointName);
+            using var message = CreateListByEndpointRequest(subscriptionId, resourceGroupName, profileName, endpointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -105,13 +107,18 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Lists all of the existing custom domains within an endpoint. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="endpointName"/> is null. </exception>
-        public Response<CustomDomainListResult> ListByEndpoint(string resourceGroupName, string profileName, string endpointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="endpointName"/> is null. </exception>
+        public Response<CustomDomainListResult> ListByEndpoint(string subscriptionId, string resourceGroupName, string profileName, string endpointName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -125,7 +132,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(endpointName));
             }
 
-            using var message = CreateListByEndpointRequest(resourceGroupName, profileName, endpointName);
+            using var message = CreateListByEndpointRequest(subscriptionId, resourceGroupName, profileName, endpointName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -141,7 +148,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string profileName, string endpointName, string customDomainName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string customDomainName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -166,14 +173,19 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Gets an existing custom domain within an endpoint. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="customDomainName"/> is null. </exception>
-        public async Task<Response<CdnCustomDomainData>> GetAsync(string resourceGroupName, string profileName, string endpointName, string customDomainName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="customDomainName"/> is null. </exception>
+        public async Task<Response<CdnCustomDomainData>> GetAsync(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string customDomainName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -191,7 +203,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(customDomainName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, profileName, endpointName, customDomainName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, profileName, endpointName, customDomainName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -210,14 +222,19 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Gets an existing custom domain within an endpoint. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="customDomainName"/> is null. </exception>
-        public Response<CdnCustomDomainData> Get(string resourceGroupName, string profileName, string endpointName, string customDomainName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="customDomainName"/> is null. </exception>
+        public Response<CdnCustomDomainData> Get(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string customDomainName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -235,7 +252,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(customDomainName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, profileName, endpointName, customDomainName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, profileName, endpointName, customDomainName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -253,7 +270,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainOptions customDomainProperties)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainOptions customDomainProperties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -282,15 +299,20 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Creates a new custom domain within an endpoint. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
         /// <param name="customDomainProperties"> Properties required to create a new custom domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, <paramref name="customDomainName"/>, or <paramref name="customDomainProperties"/> is null. </exception>
-        public async Task<Response> CreateAsync(string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainOptions customDomainProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, <paramref name="customDomainName"/>, or <paramref name="customDomainProperties"/> is null. </exception>
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainOptions customDomainProperties, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -312,7 +334,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(customDomainProperties));
             }
 
-            using var message = CreateCreateRequest(resourceGroupName, profileName, endpointName, customDomainName, customDomainProperties);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, profileName, endpointName, customDomainName, customDomainProperties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -326,15 +348,20 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Creates a new custom domain within an endpoint. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
         /// <param name="customDomainProperties"> Properties required to create a new custom domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, <paramref name="customDomainName"/>, or <paramref name="customDomainProperties"/> is null. </exception>
-        public Response Create(string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainOptions customDomainProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, <paramref name="customDomainName"/>, or <paramref name="customDomainProperties"/> is null. </exception>
+        public Response Create(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainOptions customDomainProperties, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -356,7 +383,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(customDomainProperties));
             }
 
-            using var message = CreateCreateRequest(resourceGroupName, profileName, endpointName, customDomainName, customDomainProperties);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, profileName, endpointName, customDomainName, customDomainProperties);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -369,7 +396,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string profileName, string endpointName, string customDomainName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string customDomainName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -394,14 +421,19 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Deletes an existing custom domain within an endpoint. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="customDomainName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string profileName, string endpointName, string customDomainName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="customDomainName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string customDomainName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -419,7 +451,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(customDomainName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, profileName, endpointName, customDomainName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, profileName, endpointName, customDomainName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -433,14 +465,19 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Deletes an existing custom domain within an endpoint. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="customDomainName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string profileName, string endpointName, string customDomainName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="customDomainName"/> is null. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string customDomainName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -458,7 +495,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(customDomainName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, profileName, endpointName, customDomainName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, profileName, endpointName, customDomainName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -471,7 +508,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateDisableCustomHttpsRequest(string resourceGroupName, string profileName, string endpointName, string customDomainName)
+        internal HttpMessage CreateDisableCustomHttpsRequest(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string customDomainName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -497,14 +534,19 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Disable https delivery of the custom domain. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="customDomainName"/> is null. </exception>
-        public async Task<Response> DisableCustomHttpsAsync(string resourceGroupName, string profileName, string endpointName, string customDomainName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="customDomainName"/> is null. </exception>
+        public async Task<Response> DisableCustomHttpsAsync(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string customDomainName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -522,7 +564,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(customDomainName));
             }
 
-            using var message = CreateDisableCustomHttpsRequest(resourceGroupName, profileName, endpointName, customDomainName);
+            using var message = CreateDisableCustomHttpsRequest(subscriptionId, resourceGroupName, profileName, endpointName, customDomainName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -535,14 +577,19 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Disable https delivery of the custom domain. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="customDomainName"/> is null. </exception>
-        public Response DisableCustomHttps(string resourceGroupName, string profileName, string endpointName, string customDomainName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="customDomainName"/> is null. </exception>
+        public Response DisableCustomHttps(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string customDomainName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -560,7 +607,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(customDomainName));
             }
 
-            using var message = CreateDisableCustomHttpsRequest(resourceGroupName, profileName, endpointName, customDomainName);
+            using var message = CreateDisableCustomHttpsRequest(subscriptionId, resourceGroupName, profileName, endpointName, customDomainName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -572,7 +619,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateEnableCustomHttpsRequest(string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainHttpsOptions customDomainHttpsParameters)
+        internal HttpMessage CreateEnableCustomHttpsRequest(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainHttpsOptions customDomainHttpsParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -605,15 +652,20 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Enable https delivery of the custom domain. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
         /// <param name="customDomainHttpsParameters"> The configuration specifying how to enable HTTPS for the custom domain - using CDN managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses CDN managed certificate by default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="customDomainName"/> is null. </exception>
-        public async Task<Response> EnableCustomHttpsAsync(string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainHttpsOptions customDomainHttpsParameters = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="customDomainName"/> is null. </exception>
+        public async Task<Response> EnableCustomHttpsAsync(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainHttpsOptions customDomainHttpsParameters = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -631,7 +683,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(customDomainName));
             }
 
-            using var message = CreateEnableCustomHttpsRequest(resourceGroupName, profileName, endpointName, customDomainName, customDomainHttpsParameters);
+            using var message = CreateEnableCustomHttpsRequest(subscriptionId, resourceGroupName, profileName, endpointName, customDomainName, customDomainHttpsParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -644,15 +696,20 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Enable https delivery of the custom domain. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
         /// <param name="customDomainHttpsParameters"> The configuration specifying how to enable HTTPS for the custom domain - using CDN managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses CDN managed certificate by default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="customDomainName"/> is null. </exception>
-        public Response EnableCustomHttps(string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainHttpsOptions customDomainHttpsParameters = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, or <paramref name="customDomainName"/> is null. </exception>
+        public Response EnableCustomHttps(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainHttpsOptions customDomainHttpsParameters = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -670,7 +727,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(customDomainName));
             }
 
-            using var message = CreateEnableCustomHttpsRequest(resourceGroupName, profileName, endpointName, customDomainName, customDomainHttpsParameters);
+            using var message = CreateEnableCustomHttpsRequest(subscriptionId, resourceGroupName, profileName, endpointName, customDomainName, customDomainHttpsParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -682,7 +739,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateListByEndpointNextPageRequest(string nextLink, string resourceGroupName, string profileName, string endpointName)
+        internal HttpMessage CreateListByEndpointNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string profileName, string endpointName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -698,16 +755,21 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Lists all of the existing custom domains within an endpoint. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="endpointName"/> is null. </exception>
-        public async Task<Response<CustomDomainListResult>> ListByEndpointNextPageAsync(string nextLink, string resourceGroupName, string profileName, string endpointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="endpointName"/> is null. </exception>
+        public async Task<Response<CustomDomainListResult>> ListByEndpointNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string profileName, string endpointName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -722,7 +784,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(endpointName));
             }
 
-            using var message = CreateListByEndpointNextPageRequest(nextLink, resourceGroupName, profileName, endpointName);
+            using var message = CreateListByEndpointNextPageRequest(nextLink, subscriptionId, resourceGroupName, profileName, endpointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -740,16 +802,21 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Lists all of the existing custom domains within an endpoint. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="endpointName"/> is null. </exception>
-        public Response<CustomDomainListResult> ListByEndpointNextPage(string nextLink, string resourceGroupName, string profileName, string endpointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="endpointName"/> is null. </exception>
+        public Response<CustomDomainListResult> ListByEndpointNextPage(string nextLink, string subscriptionId, string resourceGroupName, string profileName, string endpointName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -764,7 +831,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(endpointName));
             }
 
-            using var message = CreateListByEndpointNextPageRequest(nextLink, resourceGroupName, profileName, endpointName);
+            using var message = CreateListByEndpointNextPageRequest(nextLink, subscriptionId, resourceGroupName, profileName, endpointName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn
         internal AfdRuleSetCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _afdRuleSetsRestClient = new AfdRuleSetsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _afdRuleSetsRestClient = new AfdRuleSetsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _afdRuleSetsRestClient.Create(Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken);
-                var operation = new AfdRuleSetCreateOperation(Parent, _clientDiagnostics, Pipeline, _afdRuleSetsRestClient.CreateCreateRequest(Id.ResourceGroupName, Id.Name, ruleSetName).Request, response);
+                var response = _afdRuleSetsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken);
+                var operation = new AfdRuleSetCreateOperation(Parent, _clientDiagnostics, Pipeline, _afdRuleSetsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _afdRuleSetsRestClient.CreateAsync(Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdRuleSetCreateOperation(Parent, _clientDiagnostics, Pipeline, _afdRuleSetsRestClient.CreateCreateRequest(Id.ResourceGroupName, Id.Name, ruleSetName).Request, response);
+                var response = await _afdRuleSetsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken).ConfigureAwait(false);
+                var operation = new AfdRuleSetCreateOperation(Parent, _clientDiagnostics, Pipeline, _afdRuleSetsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _afdRuleSetsRestClient.Get(Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken);
+                var response = _afdRuleSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AfdRuleSet(Parent, response.Value), response.GetRawResponse());
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _afdRuleSetsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken).ConfigureAwait(false);
+                var response = await _afdRuleSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new AfdRuleSet(Parent, response.Value), response.GetRawResponse());
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _afdRuleSetsRestClient.Get(Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken: cancellationToken);
+                var response = _afdRuleSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<AfdRuleSet>(null, response.GetRawResponse())
                     : Response.FromValue(new AfdRuleSet(this, response.Value), response.GetRawResponse());
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _afdRuleSetsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _afdRuleSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<AfdRuleSet>(null, response.GetRawResponse())
                     : Response.FromValue(new AfdRuleSet(this, response.Value), response.GetRawResponse());
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = _afdRuleSetsRestClient.ListByProfile(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _afdRuleSetsRestClient.ListByProfile(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new AfdRuleSet(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = _afdRuleSetsRestClient.ListByProfileNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _afdRuleSetsRestClient.ListByProfileNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new AfdRuleSet(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = await _afdRuleSetsRestClient.ListByProfileAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _afdRuleSetsRestClient.ListByProfileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new AfdRuleSet(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = await _afdRuleSetsRestClient.ListByProfileNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _afdRuleSetsRestClient.ListByProfileNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new AfdRuleSet(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

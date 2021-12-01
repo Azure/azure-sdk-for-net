@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.Cdn
 {
     internal partial class PoliciesRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
@@ -30,13 +29,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public PoliciesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2020-09-01")
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public PoliciesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null, string apiVersion = "2020-09-01")
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.Cdn
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateListRequest(string resourceGroupName)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -64,17 +61,22 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Lists all of the protection policies within a resource group. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<CdnWebApplicationFirewallPolicyList>> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        public async Task<Response<CdnWebApplicationFirewallPolicyList>> ListAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListRequest(resourceGroupName);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -91,17 +93,22 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Lists all of the protection policies within a resource group. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<CdnWebApplicationFirewallPolicyList> List(string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        public Response<CdnWebApplicationFirewallPolicyList> List(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListRequest(resourceGroupName);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -117,7 +124,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string policyName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string policyName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -138,12 +145,17 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Retrieve protection policy with specified name within a resource group. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="policyName"> The name of the CdnWebApplicationFirewallPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="policyName"/> is null. </exception>
-        public async Task<Response<CdnWebApplicationFirewallPolicyData>> GetAsync(string resourceGroupName, string policyName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="policyName"/> is null. </exception>
+        public async Task<Response<CdnWebApplicationFirewallPolicyData>> GetAsync(string subscriptionId, string resourceGroupName, string policyName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -153,7 +165,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(policyName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, policyName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, policyName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -172,12 +184,17 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Retrieve protection policy with specified name within a resource group. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="policyName"> The name of the CdnWebApplicationFirewallPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="policyName"/> is null. </exception>
-        public Response<CdnWebApplicationFirewallPolicyData> Get(string resourceGroupName, string policyName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="policyName"/> is null. </exception>
+        public Response<CdnWebApplicationFirewallPolicyData> Get(string subscriptionId, string resourceGroupName, string policyName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -187,7 +204,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(policyName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, policyName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, policyName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -205,7 +222,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string policyName, CdnWebApplicationFirewallPolicyData cdnWebApplicationFirewallPolicy)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string policyName, CdnWebApplicationFirewallPolicyData cdnWebApplicationFirewallPolicy)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -230,13 +247,18 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Create or update policy with specified rule set name within a resource group. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="policyName"> The name of the CdnWebApplicationFirewallPolicy. </param>
         /// <param name="cdnWebApplicationFirewallPolicy"> Policy to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="policyName"/>, or <paramref name="cdnWebApplicationFirewallPolicy"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string policyName, CdnWebApplicationFirewallPolicyData cdnWebApplicationFirewallPolicy, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="policyName"/>, or <paramref name="cdnWebApplicationFirewallPolicy"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string policyName, CdnWebApplicationFirewallPolicyData cdnWebApplicationFirewallPolicy, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -250,7 +272,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(cdnWebApplicationFirewallPolicy));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, policyName, cdnWebApplicationFirewallPolicy);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, policyName, cdnWebApplicationFirewallPolicy);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -264,13 +286,18 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Create or update policy with specified rule set name within a resource group. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="policyName"> The name of the CdnWebApplicationFirewallPolicy. </param>
         /// <param name="cdnWebApplicationFirewallPolicy"> Policy to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="policyName"/>, or <paramref name="cdnWebApplicationFirewallPolicy"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string policyName, CdnWebApplicationFirewallPolicyData cdnWebApplicationFirewallPolicy, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="policyName"/>, or <paramref name="cdnWebApplicationFirewallPolicy"/> is null. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string policyName, CdnWebApplicationFirewallPolicyData cdnWebApplicationFirewallPolicy, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -284,7 +311,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(cdnWebApplicationFirewallPolicy));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, policyName, cdnWebApplicationFirewallPolicy);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, policyName, cdnWebApplicationFirewallPolicy);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -297,7 +324,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string policyName, CdnWebApplicationFirewallPolicyPatchOptions cdnWebApplicationFirewallPolicyPatchParameters)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string policyName, CdnWebApplicationFirewallPolicyPatchOptions cdnWebApplicationFirewallPolicyPatchParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -322,13 +349,18 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Update an existing CdnWebApplicationFirewallPolicy with the specified policy name under the specified subscription and resource group. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="policyName"> The name of the CdnWebApplicationFirewallPolicy. </param>
         /// <param name="cdnWebApplicationFirewallPolicyPatchParameters"> CdnWebApplicationFirewallPolicy parameters to be patched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="policyName"/>, or <paramref name="cdnWebApplicationFirewallPolicyPatchParameters"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string resourceGroupName, string policyName, CdnWebApplicationFirewallPolicyPatchOptions cdnWebApplicationFirewallPolicyPatchParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="policyName"/>, or <paramref name="cdnWebApplicationFirewallPolicyPatchParameters"/> is null. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string policyName, CdnWebApplicationFirewallPolicyPatchOptions cdnWebApplicationFirewallPolicyPatchParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -342,7 +374,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(cdnWebApplicationFirewallPolicyPatchParameters));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, policyName, cdnWebApplicationFirewallPolicyPatchParameters);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, policyName, cdnWebApplicationFirewallPolicyPatchParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -355,13 +387,18 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Update an existing CdnWebApplicationFirewallPolicy with the specified policy name under the specified subscription and resource group. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="policyName"> The name of the CdnWebApplicationFirewallPolicy. </param>
         /// <param name="cdnWebApplicationFirewallPolicyPatchParameters"> CdnWebApplicationFirewallPolicy parameters to be patched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="policyName"/>, or <paramref name="cdnWebApplicationFirewallPolicyPatchParameters"/> is null. </exception>
-        public Response Update(string resourceGroupName, string policyName, CdnWebApplicationFirewallPolicyPatchOptions cdnWebApplicationFirewallPolicyPatchParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="policyName"/>, or <paramref name="cdnWebApplicationFirewallPolicyPatchParameters"/> is null. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string policyName, CdnWebApplicationFirewallPolicyPatchOptions cdnWebApplicationFirewallPolicyPatchParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -375,7 +412,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(cdnWebApplicationFirewallPolicyPatchParameters));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, policyName, cdnWebApplicationFirewallPolicyPatchParameters);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, policyName, cdnWebApplicationFirewallPolicyPatchParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -387,7 +424,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string policyName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string policyName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -407,12 +444,17 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Deletes Policy. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="policyName"> The name of the CdnWebApplicationFirewallPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="policyName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string policyName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="policyName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string policyName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -422,7 +464,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(policyName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, policyName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, policyName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -435,12 +477,17 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Deletes Policy. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="policyName"> The name of the CdnWebApplicationFirewallPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="policyName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string policyName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="policyName"/> is null. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string policyName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -450,7 +497,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(policyName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, policyName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, policyName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -462,7 +509,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -478,21 +525,26 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Lists all of the protection policies within a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<CdnWebApplicationFirewallPolicyList>> ListNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        public async Task<Response<CdnWebApplicationFirewallPolicyList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, resourceGroupName);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -510,21 +562,26 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Lists all of the protection policies within a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<CdnWebApplicationFirewallPolicyList> ListNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        public Response<CdnWebApplicationFirewallPolicyList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, resourceGroupName);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn
         internal AfdOriginGroupCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _afdOriginGroupsRestClient = new AfdOriginGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _afdOriginGroupsRestClient = new AfdOriginGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _afdOriginGroupsRestClient.Create(Id.ResourceGroupName, Id.Name, originGroupName, originGroup, cancellationToken);
-                var operation = new AfdOriginGroupCreateOperation(Parent, _clientDiagnostics, Pipeline, _afdOriginGroupsRestClient.CreateCreateRequest(Id.ResourceGroupName, Id.Name, originGroupName, originGroup).Request, response);
+                var response = _afdOriginGroupsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, originGroupName, originGroup, cancellationToken);
+                var operation = new AfdOriginGroupCreateOperation(Parent, _clientDiagnostics, Pipeline, _afdOriginGroupsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, originGroupName, originGroup).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _afdOriginGroupsRestClient.CreateAsync(Id.ResourceGroupName, Id.Name, originGroupName, originGroup, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdOriginGroupCreateOperation(Parent, _clientDiagnostics, Pipeline, _afdOriginGroupsRestClient.CreateCreateRequest(Id.ResourceGroupName, Id.Name, originGroupName, originGroup).Request, response);
+                var response = await _afdOriginGroupsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, originGroupName, originGroup, cancellationToken).ConfigureAwait(false);
+                var operation = new AfdOriginGroupCreateOperation(Parent, _clientDiagnostics, Pipeline, _afdOriginGroupsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, originGroupName, originGroup).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _afdOriginGroupsRestClient.Get(Id.ResourceGroupName, Id.Name, originGroupName, cancellationToken);
+                var response = _afdOriginGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, originGroupName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AfdOriginGroup(Parent, response.Value), response.GetRawResponse());
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _afdOriginGroupsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, originGroupName, cancellationToken).ConfigureAwait(false);
+                var response = await _afdOriginGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, originGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new AfdOriginGroup(Parent, response.Value), response.GetRawResponse());
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _afdOriginGroupsRestClient.Get(Id.ResourceGroupName, Id.Name, originGroupName, cancellationToken: cancellationToken);
+                var response = _afdOriginGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, originGroupName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<AfdOriginGroup>(null, response.GetRawResponse())
                     : Response.FromValue(new AfdOriginGroup(this, response.Value), response.GetRawResponse());
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _afdOriginGroupsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, originGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _afdOriginGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, originGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<AfdOriginGroup>(null, response.GetRawResponse())
                     : Response.FromValue(new AfdOriginGroup(this, response.Value), response.GetRawResponse());
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = _afdOriginGroupsRestClient.ListByProfile(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _afdOriginGroupsRestClient.ListByProfile(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new AfdOriginGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = _afdOriginGroupsRestClient.ListByProfileNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _afdOriginGroupsRestClient.ListByProfileNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new AfdOriginGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = await _afdOriginGroupsRestClient.ListByProfileAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _afdOriginGroupsRestClient.ListByProfileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new AfdOriginGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = await _afdOriginGroupsRestClient.ListByProfileNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _afdOriginGroupsRestClient.ListByProfileNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new AfdOriginGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

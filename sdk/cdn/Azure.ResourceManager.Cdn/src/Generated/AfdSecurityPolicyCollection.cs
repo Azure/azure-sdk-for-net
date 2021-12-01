@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn
         internal AfdSecurityPolicyCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _afdSecurityPoliciesRestClient = new AfdSecurityPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _afdSecurityPoliciesRestClient = new AfdSecurityPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _afdSecurityPoliciesRestClient.Create(Id.ResourceGroupName, Id.Name, securityPolicyName, securityPolicy, cancellationToken);
-                var operation = new AfdSecurityPolicyCreateOperation(Parent, _clientDiagnostics, Pipeline, _afdSecurityPoliciesRestClient.CreateCreateRequest(Id.ResourceGroupName, Id.Name, securityPolicyName, securityPolicy).Request, response);
+                var response = _afdSecurityPoliciesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, securityPolicy, cancellationToken);
+                var operation = new AfdSecurityPolicyCreateOperation(Parent, _clientDiagnostics, Pipeline, _afdSecurityPoliciesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, securityPolicy).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _afdSecurityPoliciesRestClient.CreateAsync(Id.ResourceGroupName, Id.Name, securityPolicyName, securityPolicy, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdSecurityPolicyCreateOperation(Parent, _clientDiagnostics, Pipeline, _afdSecurityPoliciesRestClient.CreateCreateRequest(Id.ResourceGroupName, Id.Name, securityPolicyName, securityPolicy).Request, response);
+                var response = await _afdSecurityPoliciesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, securityPolicy, cancellationToken).ConfigureAwait(false);
+                var operation = new AfdSecurityPolicyCreateOperation(Parent, _clientDiagnostics, Pipeline, _afdSecurityPoliciesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, securityPolicy).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _afdSecurityPoliciesRestClient.Get(Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken);
+                var response = _afdSecurityPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AfdSecurityPolicy(Parent, response.Value), response.GetRawResponse());
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _afdSecurityPoliciesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken).ConfigureAwait(false);
+                var response = await _afdSecurityPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new AfdSecurityPolicy(Parent, response.Value), response.GetRawResponse());
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _afdSecurityPoliciesRestClient.Get(Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken);
+                var response = _afdSecurityPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<AfdSecurityPolicy>(null, response.GetRawResponse())
                     : Response.FromValue(new AfdSecurityPolicy(this, response.Value), response.GetRawResponse());
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _afdSecurityPoliciesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _afdSecurityPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<AfdSecurityPolicy>(null, response.GetRawResponse())
                     : Response.FromValue(new AfdSecurityPolicy(this, response.Value), response.GetRawResponse());
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = _afdSecurityPoliciesRestClient.ListByProfile(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _afdSecurityPoliciesRestClient.ListByProfile(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new AfdSecurityPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = _afdSecurityPoliciesRestClient.ListByProfileNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _afdSecurityPoliciesRestClient.ListByProfileNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new AfdSecurityPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = await _afdSecurityPoliciesRestClient.ListByProfileAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _afdSecurityPoliciesRestClient.ListByProfileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new AfdSecurityPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = await _afdSecurityPoliciesRestClient.ListByProfileNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _afdSecurityPoliciesRestClient.ListByProfileNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new AfdSecurityPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

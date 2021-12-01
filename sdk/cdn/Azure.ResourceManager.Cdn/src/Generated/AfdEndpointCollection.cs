@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn
         internal AfdEndpointCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _afdEndpointsRestClient = new AfdEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _afdEndpointsRestClient = new AfdEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _afdEndpointsRestClient.Create(Id.ResourceGroupName, Id.Name, endpointName, endpointInput, cancellationToken);
-                var operation = new AfdEndpointCreateOperation(Parent, _clientDiagnostics, Pipeline, _afdEndpointsRestClient.CreateCreateRequest(Id.ResourceGroupName, Id.Name, endpointName, endpointInput).Request, response);
+                var response = _afdEndpointsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, endpointInput, cancellationToken);
+                var operation = new AfdEndpointCreateOperation(Parent, _clientDiagnostics, Pipeline, _afdEndpointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, endpointInput).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _afdEndpointsRestClient.CreateAsync(Id.ResourceGroupName, Id.Name, endpointName, endpointInput, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdEndpointCreateOperation(Parent, _clientDiagnostics, Pipeline, _afdEndpointsRestClient.CreateCreateRequest(Id.ResourceGroupName, Id.Name, endpointName, endpointInput).Request, response);
+                var response = await _afdEndpointsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, endpointInput, cancellationToken).ConfigureAwait(false);
+                var operation = new AfdEndpointCreateOperation(Parent, _clientDiagnostics, Pipeline, _afdEndpointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, endpointInput).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _afdEndpointsRestClient.Get(Id.ResourceGroupName, Id.Name, endpointName, cancellationToken);
+                var response = _afdEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AfdEndpoint(Parent, response.Value), response.GetRawResponse());
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _afdEndpointsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, endpointName, cancellationToken).ConfigureAwait(false);
+                var response = await _afdEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new AfdEndpoint(Parent, response.Value), response.GetRawResponse());
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _afdEndpointsRestClient.Get(Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken);
+                var response = _afdEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<AfdEndpoint>(null, response.GetRawResponse())
                     : Response.FromValue(new AfdEndpoint(this, response.Value), response.GetRawResponse());
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _afdEndpointsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _afdEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<AfdEndpoint>(null, response.GetRawResponse())
                     : Response.FromValue(new AfdEndpoint(this, response.Value), response.GetRawResponse());
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = _afdEndpointsRestClient.ListByProfile(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _afdEndpointsRestClient.ListByProfile(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new AfdEndpoint(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = _afdEndpointsRestClient.ListByProfileNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _afdEndpointsRestClient.ListByProfileNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new AfdEndpoint(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = await _afdEndpointsRestClient.ListByProfileAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _afdEndpointsRestClient.ListByProfileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new AfdEndpoint(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = await _afdEndpointsRestClient.ListByProfileNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _afdEndpointsRestClient.ListByProfileNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new AfdEndpoint(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

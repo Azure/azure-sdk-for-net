@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _afdCustomDomainsRestClient = new AfdCustomDomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _afdCustomDomainsRestClient = new AfdCustomDomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="AfdCustomDomain"/> class. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Cdn
         internal AfdCustomDomain(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _afdCustomDomainsRestClient = new AfdCustomDomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _afdCustomDomainsRestClient = new AfdCustomDomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="AfdCustomDomain"/> class. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn
         internal AfdCustomDomain(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _afdCustomDomainsRestClient = new AfdCustomDomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _afdCustomDomainsRestClient = new AfdCustomDomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _afdCustomDomainsRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _afdCustomDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new AfdCustomDomain(this, response.Value), response.GetRawResponse());
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _afdCustomDomainsRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _afdCustomDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AfdCustomDomain(this, response.Value), response.GetRawResponse());
@@ -149,8 +149,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _afdCustomDomainsRestClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdCustomDomainDeleteOperation(_clientDiagnostics, Pipeline, _afdCustomDomainsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _afdCustomDomainsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new AfdCustomDomainDeleteOperation(_clientDiagnostics, Pipeline, _afdCustomDomainsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _afdCustomDomainsRestClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AfdCustomDomainDeleteOperation(_clientDiagnostics, Pipeline, _afdCustomDomainsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _afdCustomDomainsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new AfdCustomDomainDeleteOperation(_clientDiagnostics, Pipeline, _afdCustomDomainsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -200,8 +200,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _afdCustomDomainsRestClient.UpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainUpdateProperties, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdCustomDomainUpdateOperation(this, _clientDiagnostics, Pipeline, _afdCustomDomainsRestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainUpdateProperties).Request, response);
+                var response = await _afdCustomDomainsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainUpdateProperties, cancellationToken).ConfigureAwait(false);
+                var operation = new AfdCustomDomainUpdateOperation(this, _clientDiagnostics, Pipeline, _afdCustomDomainsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainUpdateProperties).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -229,8 +229,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _afdCustomDomainsRestClient.Update(Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainUpdateProperties, cancellationToken);
-                var operation = new AfdCustomDomainUpdateOperation(this, _clientDiagnostics, Pipeline, _afdCustomDomainsRestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainUpdateProperties).Request, response);
+                var response = _afdCustomDomainsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainUpdateProperties, cancellationToken);
+                var operation = new AfdCustomDomainUpdateOperation(this, _clientDiagnostics, Pipeline, _afdCustomDomainsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainUpdateProperties).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -251,8 +251,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _afdCustomDomainsRestClient.RefreshValidationTokenAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdCustomDomainRefreshValidationTokenOperation(_clientDiagnostics, Pipeline, _afdCustomDomainsRestClient.CreateRefreshValidationTokenRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _afdCustomDomainsRestClient.RefreshValidationTokenAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new AfdCustomDomainRefreshValidationTokenOperation(_clientDiagnostics, Pipeline, _afdCustomDomainsRestClient.CreateRefreshValidationTokenRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -273,8 +273,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _afdCustomDomainsRestClient.RefreshValidationToken(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AfdCustomDomainRefreshValidationTokenOperation(_clientDiagnostics, Pipeline, _afdCustomDomainsRestClient.CreateRefreshValidationTokenRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _afdCustomDomainsRestClient.RefreshValidationToken(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new AfdCustomDomainRefreshValidationTokenOperation(_clientDiagnostics, Pipeline, _afdCustomDomainsRestClient.CreateRefreshValidationTokenRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

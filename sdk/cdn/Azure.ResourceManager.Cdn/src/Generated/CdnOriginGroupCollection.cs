@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn
         internal CdnOriginGroupCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _cdnOriginGroupsRestClient = new CdnOriginGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _cdnOriginGroupsRestClient = new CdnOriginGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _cdnOriginGroupsRestClient.Create(Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, originGroup, cancellationToken);
-                var operation = new CdnOriginGroupCreateOperation(Parent, _clientDiagnostics, Pipeline, _cdnOriginGroupsRestClient.CreateCreateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, originGroup).Request, response);
+                var response = _cdnOriginGroupsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, originGroup, cancellationToken);
+                var operation = new CdnOriginGroupCreateOperation(Parent, _clientDiagnostics, Pipeline, _cdnOriginGroupsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, originGroup).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _cdnOriginGroupsRestClient.CreateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, originGroup, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnOriginGroupCreateOperation(Parent, _clientDiagnostics, Pipeline, _cdnOriginGroupsRestClient.CreateCreateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, originGroup).Request, response);
+                var response = await _cdnOriginGroupsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, originGroup, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnOriginGroupCreateOperation(Parent, _clientDiagnostics, Pipeline, _cdnOriginGroupsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, originGroup).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _cdnOriginGroupsRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, cancellationToken);
+                var response = _cdnOriginGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CdnOriginGroup(Parent, response.Value), response.GetRawResponse());
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _cdnOriginGroupsRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, cancellationToken).ConfigureAwait(false);
+                var response = await _cdnOriginGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new CdnOriginGroup(Parent, response.Value), response.GetRawResponse());
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _cdnOriginGroupsRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, cancellationToken: cancellationToken);
+                var response = _cdnOriginGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<CdnOriginGroup>(null, response.GetRawResponse())
                     : Response.FromValue(new CdnOriginGroup(this, response.Value), response.GetRawResponse());
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _cdnOriginGroupsRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _cdnOriginGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<CdnOriginGroup>(null, response.GetRawResponse())
                     : Response.FromValue(new CdnOriginGroup(this, response.Value), response.GetRawResponse());
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = _cdnOriginGroupsRestClient.ListByEndpoint(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _cdnOriginGroupsRestClient.ListByEndpoint(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new CdnOriginGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = _cdnOriginGroupsRestClient.ListByEndpointNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _cdnOriginGroupsRestClient.ListByEndpointNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new CdnOriginGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = await _cdnOriginGroupsRestClient.ListByEndpointAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _cdnOriginGroupsRestClient.ListByEndpointAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new CdnOriginGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = await _cdnOriginGroupsRestClient.ListByEndpointNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _cdnOriginGroupsRestClient.ListByEndpointNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new CdnOriginGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

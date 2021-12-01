@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.Cdn
 {
     internal partial class AfdOriginsRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
@@ -30,13 +29,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public AfdOriginsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2020-09-01")
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public AfdOriginsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null, string apiVersion = "2020-09-01")
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.Cdn
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateListByOriginGroupRequest(string resourceGroupName, string profileName, string originGroupName)
+        internal HttpMessage CreateListByOriginGroupRequest(string subscriptionId, string resourceGroupName, string profileName, string originGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -68,13 +65,18 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Lists all of the existing origins within an origin group. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="originGroupName"> Name of the origin group which is unique within the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="originGroupName"/> is null. </exception>
-        public async Task<Response<AfdOriginListResult>> ListByOriginGroupAsync(string resourceGroupName, string profileName, string originGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="originGroupName"/> is null. </exception>
+        public async Task<Response<AfdOriginListResult>> ListByOriginGroupAsync(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -88,7 +90,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(originGroupName));
             }
 
-            using var message = CreateListByOriginGroupRequest(resourceGroupName, profileName, originGroupName);
+            using var message = CreateListByOriginGroupRequest(subscriptionId, resourceGroupName, profileName, originGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -105,13 +107,18 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Lists all of the existing origins within an origin group. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="originGroupName"> Name of the origin group which is unique within the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="originGroupName"/> is null. </exception>
-        public Response<AfdOriginListResult> ListByOriginGroup(string resourceGroupName, string profileName, string originGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="originGroupName"/> is null. </exception>
+        public Response<AfdOriginListResult> ListByOriginGroup(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -125,7 +132,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(originGroupName));
             }
 
-            using var message = CreateListByOriginGroupRequest(resourceGroupName, profileName, originGroupName);
+            using var message = CreateListByOriginGroupRequest(subscriptionId, resourceGroupName, profileName, originGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -141,7 +148,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string profileName, string originGroupName, string originName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, string originName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -166,14 +173,19 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Gets an existing origin within an origin group. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="originGroupName"> Name of the origin group which is unique within the profile. </param>
         /// <param name="originName"> Name of the origin which is unique within the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/>, or <paramref name="originName"/> is null. </exception>
-        public async Task<Response<AfdOriginData>> GetAsync(string resourceGroupName, string profileName, string originGroupName, string originName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/>, or <paramref name="originName"/> is null. </exception>
+        public async Task<Response<AfdOriginData>> GetAsync(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, string originName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -191,7 +203,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(originName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, profileName, originGroupName, originName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, profileName, originGroupName, originName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -210,14 +222,19 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Gets an existing origin within an origin group. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="originGroupName"> Name of the origin group which is unique within the profile. </param>
         /// <param name="originName"> Name of the origin which is unique within the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/>, or <paramref name="originName"/> is null. </exception>
-        public Response<AfdOriginData> Get(string resourceGroupName, string profileName, string originGroupName, string originName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/>, or <paramref name="originName"/> is null. </exception>
+        public Response<AfdOriginData> Get(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, string originName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -235,7 +252,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(originName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, profileName, originGroupName, originName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, profileName, originGroupName, originName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -253,7 +270,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string resourceGroupName, string profileName, string originGroupName, string originName, AfdOriginData origin)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, string originName, AfdOriginData origin)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -282,15 +299,20 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Creates a new origin within the specified origin group. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="originGroupName"> Name of the origin group which is unique within the profile. </param>
         /// <param name="originName"> Name of the origin that is unique within the profile. </param>
         /// <param name="origin"> Origin properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/>, <paramref name="originName"/>, or <paramref name="origin"/> is null. </exception>
-        public async Task<Response> CreateAsync(string resourceGroupName, string profileName, string originGroupName, string originName, AfdOriginData origin, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/>, <paramref name="originName"/>, or <paramref name="origin"/> is null. </exception>
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, string originName, AfdOriginData origin, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -312,7 +334,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(origin));
             }
 
-            using var message = CreateCreateRequest(resourceGroupName, profileName, originGroupName, originName, origin);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, profileName, originGroupName, originName, origin);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -326,15 +348,20 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Creates a new origin within the specified origin group. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="originGroupName"> Name of the origin group which is unique within the profile. </param>
         /// <param name="originName"> Name of the origin that is unique within the profile. </param>
         /// <param name="origin"> Origin properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/>, <paramref name="originName"/>, or <paramref name="origin"/> is null. </exception>
-        public Response Create(string resourceGroupName, string profileName, string originGroupName, string originName, AfdOriginData origin, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/>, <paramref name="originName"/>, or <paramref name="origin"/> is null. </exception>
+        public Response Create(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, string originName, AfdOriginData origin, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -356,7 +383,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(origin));
             }
 
-            using var message = CreateCreateRequest(resourceGroupName, profileName, originGroupName, originName, origin);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, profileName, originGroupName, originName, origin);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -369,7 +396,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string profileName, string originGroupName, string originName, AfdOriginUpdateOptions originUpdateProperties)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, string originName, AfdOriginUpdateOptions originUpdateProperties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -398,15 +425,20 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Updates an existing origin within an origin group. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="originGroupName"> Name of the origin group which is unique within the profile. </param>
         /// <param name="originName"> Name of the origin which is unique within the profile. </param>
         /// <param name="originUpdateProperties"> Origin properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/>, <paramref name="originName"/>, or <paramref name="originUpdateProperties"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string resourceGroupName, string profileName, string originGroupName, string originName, AfdOriginUpdateOptions originUpdateProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/>, <paramref name="originName"/>, or <paramref name="originUpdateProperties"/> is null. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, string originName, AfdOriginUpdateOptions originUpdateProperties, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -428,7 +460,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(originUpdateProperties));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, profileName, originGroupName, originName, originUpdateProperties);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, profileName, originGroupName, originName, originUpdateProperties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -441,15 +473,20 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Updates an existing origin within an origin group. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="originGroupName"> Name of the origin group which is unique within the profile. </param>
         /// <param name="originName"> Name of the origin which is unique within the profile. </param>
         /// <param name="originUpdateProperties"> Origin properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/>, <paramref name="originName"/>, or <paramref name="originUpdateProperties"/> is null. </exception>
-        public Response Update(string resourceGroupName, string profileName, string originGroupName, string originName, AfdOriginUpdateOptions originUpdateProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/>, <paramref name="originName"/>, or <paramref name="originUpdateProperties"/> is null. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, string originName, AfdOriginUpdateOptions originUpdateProperties, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -471,7 +508,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(originUpdateProperties));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, profileName, originGroupName, originName, originUpdateProperties);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, profileName, originGroupName, originName, originUpdateProperties);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -483,7 +520,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string profileName, string originGroupName, string originName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, string originName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -508,14 +545,19 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Deletes an existing origin within an origin group. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="originGroupName"> Name of the origin group which is unique within the profile. </param>
         /// <param name="originName"> Name of the origin which is unique within the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/>, or <paramref name="originName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string profileName, string originGroupName, string originName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/>, or <paramref name="originName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, string originName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -533,7 +575,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(originName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, profileName, originGroupName, originName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, profileName, originGroupName, originName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -547,14 +589,19 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Deletes an existing origin within an origin group. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="originGroupName"> Name of the origin group which is unique within the profile. </param>
         /// <param name="originName"> Name of the origin which is unique within the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/>, or <paramref name="originName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string profileName, string originGroupName, string originName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/>, or <paramref name="originName"/> is null. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, string originName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -572,7 +619,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(originName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, profileName, originGroupName, originName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, profileName, originGroupName, originName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -585,7 +632,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateListByOriginGroupNextPageRequest(string nextLink, string resourceGroupName, string profileName, string originGroupName)
+        internal HttpMessage CreateListByOriginGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string profileName, string originGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -601,16 +648,21 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Lists all of the existing origins within an origin group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="originGroupName"> Name of the origin group which is unique within the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="originGroupName"/> is null. </exception>
-        public async Task<Response<AfdOriginListResult>> ListByOriginGroupNextPageAsync(string nextLink, string resourceGroupName, string profileName, string originGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="originGroupName"/> is null. </exception>
+        public async Task<Response<AfdOriginListResult>> ListByOriginGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string profileName, string originGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -625,7 +677,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(originGroupName));
             }
 
-            using var message = CreateListByOriginGroupNextPageRequest(nextLink, resourceGroupName, profileName, originGroupName);
+            using var message = CreateListByOriginGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, profileName, originGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -643,16 +695,21 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Lists all of the existing origins within an origin group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="originGroupName"> Name of the origin group which is unique within the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="originGroupName"/> is null. </exception>
-        public Response<AfdOriginListResult> ListByOriginGroupNextPage(string nextLink, string resourceGroupName, string profileName, string originGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="originGroupName"/> is null. </exception>
+        public Response<AfdOriginListResult> ListByOriginGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string profileName, string originGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -667,7 +724,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(originGroupName));
             }
 
-            using var message = CreateListByOriginGroupNextPageRequest(nextLink, resourceGroupName, profileName, originGroupName);
+            using var message = CreateListByOriginGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, profileName, originGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

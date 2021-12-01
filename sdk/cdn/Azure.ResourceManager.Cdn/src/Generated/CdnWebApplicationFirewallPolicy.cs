@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _policiesRestClient = new PoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _policiesRestClient = new PoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="CdnWebApplicationFirewallPolicy"/> class. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Cdn
         internal CdnWebApplicationFirewallPolicy(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _policiesRestClient = new PoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _policiesRestClient = new PoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="CdnWebApplicationFirewallPolicy"/> class. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn
         internal CdnWebApplicationFirewallPolicy(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _policiesRestClient = new PoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _policiesRestClient = new PoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _policiesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _policiesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new CdnWebApplicationFirewallPolicy(this, response.Value), response.GetRawResponse());
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _policiesRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _policiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CdnWebApplicationFirewallPolicy(this, response.Value), response.GetRawResponse());
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _policiesRestClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _policiesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new PolicyDeleteOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _policiesRestClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _policiesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 var operation = new PolicyDeleteOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Cdn
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _policiesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _policiesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CdnWebApplicationFirewallPolicy(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Cdn
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _policiesRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var originalResponse = _policiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new CdnWebApplicationFirewallPolicy(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Cdn
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _policiesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _policiesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CdnWebApplicationFirewallPolicy(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Cdn
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _policiesRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var originalResponse = _policiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new CdnWebApplicationFirewallPolicy(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Cdn
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _policiesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _policiesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CdnWebApplicationFirewallPolicy(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Cdn
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _policiesRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var originalResponse = _policiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new CdnWebApplicationFirewallPolicy(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -372,8 +372,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _policiesRestClient.UpdateAsync(Id.ResourceGroupName, Id.Name, cdnWebApplicationFirewallPolicyPatchParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new PolicyUpdateOperation(this, _clientDiagnostics, Pipeline, _policiesRestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, cdnWebApplicationFirewallPolicyPatchParameters).Request, response);
+                var response = await _policiesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cdnWebApplicationFirewallPolicyPatchParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new PolicyUpdateOperation(this, _clientDiagnostics, Pipeline, _policiesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cdnWebApplicationFirewallPolicyPatchParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -401,8 +401,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _policiesRestClient.Update(Id.ResourceGroupName, Id.Name, cdnWebApplicationFirewallPolicyPatchParameters, cancellationToken);
-                var operation = new PolicyUpdateOperation(this, _clientDiagnostics, Pipeline, _policiesRestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, cdnWebApplicationFirewallPolicyPatchParameters).Request, response);
+                var response = _policiesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cdnWebApplicationFirewallPolicyPatchParameters, cancellationToken);
+                var operation = new PolicyUpdateOperation(this, _clientDiagnostics, Pipeline, _policiesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cdnWebApplicationFirewallPolicyPatchParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

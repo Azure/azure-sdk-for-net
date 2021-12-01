@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _cdnEndpointsRestClient = new CdnEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _cdnEndpointsRestClient = new CdnEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="CdnEndpoint"/> class. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Cdn
         internal CdnEndpoint(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _cdnEndpointsRestClient = new CdnEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _cdnEndpointsRestClient = new CdnEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="CdnEndpoint"/> class. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn
         internal CdnEndpoint(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _cdnEndpointsRestClient = new CdnEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _cdnEndpointsRestClient = new CdnEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _cdnEndpointsRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _cdnEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new CdnEndpoint(this, response.Value), response.GetRawResponse());
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _cdnEndpointsRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _cdnEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CdnEndpoint(this, response.Value), response.GetRawResponse());
@@ -149,8 +149,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _cdnEndpointsRestClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnEndpointDeleteOperation(_clientDiagnostics, Pipeline, _cdnEndpointsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _cdnEndpointsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnEndpointDeleteOperation(_clientDiagnostics, Pipeline, _cdnEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _cdnEndpointsRestClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CdnEndpointDeleteOperation(_clientDiagnostics, Pipeline, _cdnEndpointsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _cdnEndpointsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new CdnEndpointDeleteOperation(_clientDiagnostics, Pipeline, _cdnEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Cdn
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _cdnEndpointsRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _cdnEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CdnEndpoint(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Cdn
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _cdnEndpointsRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var originalResponse = _cdnEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new CdnEndpoint(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Cdn
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _cdnEndpointsRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _cdnEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CdnEndpoint(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Cdn
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _cdnEndpointsRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var originalResponse = _cdnEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new CdnEndpoint(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Cdn
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _cdnEndpointsRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _cdnEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CdnEndpoint(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Cdn
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _cdnEndpointsRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var originalResponse = _cdnEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new CdnEndpoint(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -372,8 +372,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _cdnEndpointsRestClient.UpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, endpointUpdateProperties, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnEndpointUpdateOperation(this, _clientDiagnostics, Pipeline, _cdnEndpointsRestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, endpointUpdateProperties).Request, response);
+                var response = await _cdnEndpointsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, endpointUpdateProperties, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnEndpointUpdateOperation(this, _clientDiagnostics, Pipeline, _cdnEndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, endpointUpdateProperties).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -401,8 +401,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _cdnEndpointsRestClient.Update(Id.ResourceGroupName, Id.Parent.Name, Id.Name, endpointUpdateProperties, cancellationToken);
-                var operation = new CdnEndpointUpdateOperation(this, _clientDiagnostics, Pipeline, _cdnEndpointsRestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, endpointUpdateProperties).Request, response);
+                var response = _cdnEndpointsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, endpointUpdateProperties, cancellationToken);
+                var operation = new CdnEndpointUpdateOperation(this, _clientDiagnostics, Pipeline, _cdnEndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, endpointUpdateProperties).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -423,8 +423,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _cdnEndpointsRestClient.StartAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnEndpointStartOperation(_clientDiagnostics, Pipeline, _cdnEndpointsRestClient.CreateStartRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _cdnEndpointsRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnEndpointStartOperation(_clientDiagnostics, Pipeline, _cdnEndpointsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -445,8 +445,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _cdnEndpointsRestClient.Start(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CdnEndpointStartOperation(_clientDiagnostics, Pipeline, _cdnEndpointsRestClient.CreateStartRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _cdnEndpointsRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new CdnEndpointStartOperation(_clientDiagnostics, Pipeline, _cdnEndpointsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -467,8 +467,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _cdnEndpointsRestClient.StopAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnEndpointStopOperation(_clientDiagnostics, Pipeline, _cdnEndpointsRestClient.CreateStopRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _cdnEndpointsRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnEndpointStopOperation(_clientDiagnostics, Pipeline, _cdnEndpointsRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -489,8 +489,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _cdnEndpointsRestClient.Stop(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CdnEndpointStopOperation(_clientDiagnostics, Pipeline, _cdnEndpointsRestClient.CreateStopRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _cdnEndpointsRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new CdnEndpointStopOperation(_clientDiagnostics, Pipeline, _cdnEndpointsRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -518,8 +518,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _cdnEndpointsRestClient.PurgeContentAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentFilePaths, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnEndpointPurgeContentOperation(_clientDiagnostics, Pipeline, _cdnEndpointsRestClient.CreatePurgeContentRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentFilePaths).Request, response);
+                var response = await _cdnEndpointsRestClient.PurgeContentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentFilePaths, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnEndpointPurgeContentOperation(_clientDiagnostics, Pipeline, _cdnEndpointsRestClient.CreatePurgeContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentFilePaths).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -547,8 +547,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _cdnEndpointsRestClient.PurgeContent(Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentFilePaths, cancellationToken);
-                var operation = new CdnEndpointPurgeContentOperation(_clientDiagnostics, Pipeline, _cdnEndpointsRestClient.CreatePurgeContentRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentFilePaths).Request, response);
+                var response = _cdnEndpointsRestClient.PurgeContent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentFilePaths, cancellationToken);
+                var operation = new CdnEndpointPurgeContentOperation(_clientDiagnostics, Pipeline, _cdnEndpointsRestClient.CreatePurgeContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentFilePaths).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -576,8 +576,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _cdnEndpointsRestClient.LoadContentAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentFilePaths, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnEndpointLoadContentOperation(_clientDiagnostics, Pipeline, _cdnEndpointsRestClient.CreateLoadContentRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentFilePaths).Request, response);
+                var response = await _cdnEndpointsRestClient.LoadContentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentFilePaths, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnEndpointLoadContentOperation(_clientDiagnostics, Pipeline, _cdnEndpointsRestClient.CreateLoadContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentFilePaths).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -605,8 +605,8 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _cdnEndpointsRestClient.LoadContent(Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentFilePaths, cancellationToken);
-                var operation = new CdnEndpointLoadContentOperation(_clientDiagnostics, Pipeline, _cdnEndpointsRestClient.CreateLoadContentRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentFilePaths).Request, response);
+                var response = _cdnEndpointsRestClient.LoadContent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentFilePaths, cancellationToken);
+                var operation = new CdnEndpointLoadContentOperation(_clientDiagnostics, Pipeline, _cdnEndpointsRestClient.CreateLoadContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentFilePaths).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = await _cdnEndpointsRestClient.ValidateCustomDomainAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainProperties, cancellationToken).ConfigureAwait(false);
+                var response = await _cdnEndpointsRestClient.ValidateCustomDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainProperties, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                var response = _cdnEndpointsRestClient.ValidateCustomDomain(Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainProperties, cancellationToken);
+                var response = _cdnEndpointsRestClient.ValidateCustomDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainProperties, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = await _cdnEndpointsRestClient.ListResourceUsageAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _cdnEndpointsRestClient.ListResourceUsageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = await _cdnEndpointsRestClient.ListResourceUsageNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _cdnEndpointsRestClient.ListResourceUsageNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = _cdnEndpointsRestClient.ListResourceUsage(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _cdnEndpointsRestClient.ListResourceUsage(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -732,7 +732,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var response = _cdnEndpointsRestClient.ListResourceUsageNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _cdnEndpointsRestClient.ListResourceUsageNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
