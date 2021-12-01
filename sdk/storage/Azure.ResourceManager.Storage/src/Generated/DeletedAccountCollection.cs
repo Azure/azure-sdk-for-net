@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Storage
         internal DeletedAccountCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _deletedAccountsRestClient = new DeletedAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _deletedAccountsRestClient = new DeletedAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _deletedAccountsRestClient.Get(location, deletedAccountName, cancellationToken);
+                var response = _deletedAccountsRestClient.Get(Id.SubscriptionId, location, deletedAccountName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeletedAccount(Parent, response.Value), response.GetRawResponse());
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _deletedAccountsRestClient.GetAsync(location, deletedAccountName, cancellationToken).ConfigureAwait(false);
+                var response = await _deletedAccountsRestClient.GetAsync(Id.SubscriptionId, location, deletedAccountName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new DeletedAccount(Parent, response.Value), response.GetRawResponse());
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _deletedAccountsRestClient.Get(location, deletedAccountName, cancellationToken: cancellationToken);
+                var response = _deletedAccountsRestClient.Get(Id.SubscriptionId, location, deletedAccountName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<DeletedAccount>(null, response.GetRawResponse())
                     : Response.FromValue(new DeletedAccount(this, response.Value), response.GetRawResponse());
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _deletedAccountsRestClient.GetAsync(location, deletedAccountName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _deletedAccountsRestClient.GetAsync(Id.SubscriptionId, location, deletedAccountName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<DeletedAccount>(null, response.GetRawResponse())
                     : Response.FromValue(new DeletedAccount(this, response.Value), response.GetRawResponse());

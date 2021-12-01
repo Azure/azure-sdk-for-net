@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources
         internal TemplateSpecCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _templateSpecsRestClient = new TemplateSpecsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _templateSpecsRestClient = new TemplateSpecsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _templateSpecsRestClient.CreateOrUpdate(Id.ResourceGroupName, templateSpecName, templateSpec, cancellationToken);
+                var response = _templateSpecsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, templateSpecName, templateSpec, cancellationToken);
                 var operation = new TemplateSpecCreateOrUpdateOperation(Parent, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _templateSpecsRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, templateSpecName, templateSpec, cancellationToken).ConfigureAwait(false);
+                var response = await _templateSpecsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, templateSpecName, templateSpec, cancellationToken).ConfigureAwait(false);
                 var operation = new TemplateSpecCreateOrUpdateOperation(Parent, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _templateSpecsRestClient.Get(Id.ResourceGroupName, templateSpecName, expand, cancellationToken);
+                var response = _templateSpecsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, templateSpecName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new TemplateSpec(Parent, response.Value), response.GetRawResponse());
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _templateSpecsRestClient.GetAsync(Id.ResourceGroupName, templateSpecName, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _templateSpecsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, templateSpecName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new TemplateSpec(Parent, response.Value), response.GetRawResponse());
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _templateSpecsRestClient.Get(Id.ResourceGroupName, templateSpecName, expand, cancellationToken: cancellationToken);
+                var response = _templateSpecsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, templateSpecName, expand, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<TemplateSpec>(null, response.GetRawResponse())
                     : Response.FromValue(new TemplateSpec(this, response.Value), response.GetRawResponse());
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _templateSpecsRestClient.GetAsync(Id.ResourceGroupName, templateSpecName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _templateSpecsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, templateSpecName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<TemplateSpec>(null, response.GetRawResponse())
                     : Response.FromValue(new TemplateSpec(this, response.Value), response.GetRawResponse());
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = _templateSpecsRestClient.ListByResourceGroup(Id.ResourceGroupName, expand, cancellationToken: cancellationToken);
+                    var response = _templateSpecsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new TemplateSpec(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = _templateSpecsRestClient.ListByResourceGroupNextPage(nextLink, Id.ResourceGroupName, expand, cancellationToken: cancellationToken);
+                    var response = _templateSpecsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new TemplateSpec(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = await _templateSpecsRestClient.ListByResourceGroupAsync(Id.ResourceGroupName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _templateSpecsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new TemplateSpec(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = await _templateSpecsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _templateSpecsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new TemplateSpec(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

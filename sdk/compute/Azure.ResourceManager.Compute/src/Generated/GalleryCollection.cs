@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute
         internal GalleryCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _galleriesRestClient = new GalleriesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _galleriesRestClient = new GalleriesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _galleriesRestClient.CreateOrUpdate(Id.ResourceGroupName, galleryName, gallery, cancellationToken);
-                var operation = new GalleryCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _galleriesRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, galleryName, gallery).Request, response);
+                var response = _galleriesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, galleryName, gallery, cancellationToken);
+                var operation = new GalleryCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _galleriesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, galleryName, gallery).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -101,8 +101,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _galleriesRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, galleryName, gallery, cancellationToken).ConfigureAwait(false);
-                var operation = new GalleryCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _galleriesRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, galleryName, gallery).Request, response);
+                var response = await _galleriesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, galleryName, gallery, cancellationToken).ConfigureAwait(false);
+                var operation = new GalleryCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _galleriesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, galleryName, gallery).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _galleriesRestClient.Get(Id.ResourceGroupName, galleryName, select, cancellationToken);
+                var response = _galleriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, galleryName, select, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Gallery(Parent, response.Value), response.GetRawResponse());
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _galleriesRestClient.GetAsync(Id.ResourceGroupName, galleryName, select, cancellationToken).ConfigureAwait(false);
+                var response = await _galleriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, galleryName, select, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new Gallery(Parent, response.Value), response.GetRawResponse());
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _galleriesRestClient.Get(Id.ResourceGroupName, galleryName, select, cancellationToken: cancellationToken);
+                var response = _galleriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, galleryName, select, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<Gallery>(null, response.GetRawResponse())
                     : Response.FromValue(new Gallery(this, response.Value), response.GetRawResponse());
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _galleriesRestClient.GetAsync(Id.ResourceGroupName, galleryName, select, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _galleriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, galleryName, select, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<Gallery>(null, response.GetRawResponse())
                     : Response.FromValue(new Gallery(this, response.Value), response.GetRawResponse());
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = _galleriesRestClient.ListByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _galleriesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new Gallery(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = _galleriesRestClient.ListByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _galleriesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new Gallery(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = await _galleriesRestClient.ListByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _galleriesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new Gallery(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = await _galleriesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _galleriesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new Gallery(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

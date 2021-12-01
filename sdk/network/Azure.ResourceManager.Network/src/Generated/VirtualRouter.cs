@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _virtualRoutersRestClient = new VirtualRoutersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _virtualRoutersRestClient = new VirtualRoutersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="VirtualRouter"/> class. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network
         internal VirtualRouter(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _virtualRoutersRestClient = new VirtualRoutersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _virtualRoutersRestClient = new VirtualRoutersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="VirtualRouter"/> class. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network
         internal VirtualRouter(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _virtualRoutersRestClient = new VirtualRoutersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _virtualRoutersRestClient = new VirtualRoutersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _virtualRoutersRestClient.GetAsync(Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualRoutersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new VirtualRouter(this, response.Value), response.GetRawResponse());
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _virtualRoutersRestClient.Get(Id.ResourceGroupName, Id.Name, expand, cancellationToken);
+                var response = _virtualRoutersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualRouter(this, response.Value), response.GetRawResponse());
@@ -151,8 +151,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _virtualRoutersRestClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualRouterDeleteOperation(_clientDiagnostics, Pipeline, _virtualRoutersRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _virtualRoutersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualRouterDeleteOperation(_clientDiagnostics, Pipeline, _virtualRoutersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -173,8 +173,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _virtualRoutersRestClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new VirtualRouterDeleteOperation(_clientDiagnostics, Pipeline, _virtualRoutersRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _virtualRoutersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new VirtualRouterDeleteOperation(_clientDiagnostics, Pipeline, _virtualRoutersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

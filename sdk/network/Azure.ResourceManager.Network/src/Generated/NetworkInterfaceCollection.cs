@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal NetworkInterfaceCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _networkInterfacesRestClient = new NetworkInterfacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _networkInterfacesRestClient = new NetworkInterfacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _networkInterfacesRestClient.CreateOrUpdate(Id.ResourceGroupName, networkInterfaceName, parameters, cancellationToken);
-                var operation = new NetworkInterfaceCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _networkInterfacesRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, networkInterfaceName, parameters).Request, response);
+                var response = _networkInterfacesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, parameters, cancellationToken);
+                var operation = new NetworkInterfaceCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _networkInterfacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -101,8 +101,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _networkInterfacesRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, networkInterfaceName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkInterfaceCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _networkInterfacesRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, networkInterfaceName, parameters).Request, response);
+                var response = await _networkInterfacesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkInterfaceCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _networkInterfacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _networkInterfacesRestClient.Get(Id.ResourceGroupName, networkInterfaceName, expand, cancellationToken);
+                var response = _networkInterfacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkInterface(Parent, response.Value), response.GetRawResponse());
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _networkInterfacesRestClient.GetAsync(Id.ResourceGroupName, networkInterfaceName, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _networkInterfacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new NetworkInterface(Parent, response.Value), response.GetRawResponse());
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _networkInterfacesRestClient.Get(Id.ResourceGroupName, networkInterfaceName, expand, cancellationToken: cancellationToken);
+                var response = _networkInterfacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, expand, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<NetworkInterface>(null, response.GetRawResponse())
                     : Response.FromValue(new NetworkInterface(this, response.Value), response.GetRawResponse());
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _networkInterfacesRestClient.GetAsync(Id.ResourceGroupName, networkInterfaceName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _networkInterfacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<NetworkInterface>(null, response.GetRawResponse())
                     : Response.FromValue(new NetworkInterface(this, response.Value), response.GetRawResponse());
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _networkInterfacesRestClient.List(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _networkInterfacesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _networkInterfacesRestClient.ListNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _networkInterfacesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _networkInterfacesRestClient.ListAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _networkInterfacesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _networkInterfacesRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _networkInterfacesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

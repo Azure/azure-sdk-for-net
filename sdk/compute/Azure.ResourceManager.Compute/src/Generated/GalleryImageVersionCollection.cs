@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute
         internal GalleryImageVersionCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _galleryImageVersionsRestClient = new GalleryImageVersionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _galleryImageVersionsRestClient = new GalleryImageVersionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _galleryImageVersionsRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, galleryImageVersion, cancellationToken);
-                var operation = new GalleryImageVersionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _galleryImageVersionsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, galleryImageVersion).Request, response);
+                var response = _galleryImageVersionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, galleryImageVersion, cancellationToken);
+                var operation = new GalleryImageVersionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _galleryImageVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, galleryImageVersion).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _galleryImageVersionsRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, galleryImageVersion, cancellationToken).ConfigureAwait(false);
-                var operation = new GalleryImageVersionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _galleryImageVersionsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, galleryImageVersion).Request, response);
+                var response = await _galleryImageVersionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, galleryImageVersion, cancellationToken).ConfigureAwait(false);
+                var operation = new GalleryImageVersionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _galleryImageVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, galleryImageVersion).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _galleryImageVersionsRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, expand, cancellationToken);
+                var response = _galleryImageVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GalleryImageVersion(Parent, response.Value), response.GetRawResponse());
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _galleryImageVersionsRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _galleryImageVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new GalleryImageVersion(Parent, response.Value), response.GetRawResponse());
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _galleryImageVersionsRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, expand, cancellationToken: cancellationToken);
+                var response = _galleryImageVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, expand, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<GalleryImageVersion>(null, response.GetRawResponse())
                     : Response.FromValue(new GalleryImageVersion(this, response.Value), response.GetRawResponse());
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _galleryImageVersionsRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _galleryImageVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<GalleryImageVersion>(null, response.GetRawResponse())
                     : Response.FromValue(new GalleryImageVersion(this, response.Value), response.GetRawResponse());
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = _galleryImageVersionsRestClient.ListByGalleryImage(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _galleryImageVersionsRestClient.ListByGalleryImage(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new GalleryImageVersion(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = _galleryImageVersionsRestClient.ListByGalleryImageNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _galleryImageVersionsRestClient.ListByGalleryImageNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new GalleryImageVersion(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = await _galleryImageVersionsRestClient.ListByGalleryImageAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _galleryImageVersionsRestClient.ListByGalleryImageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new GalleryImageVersion(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = await _galleryImageVersionsRestClient.ListByGalleryImageNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _galleryImageVersionsRestClient.ListByGalleryImageNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new GalleryImageVersion(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

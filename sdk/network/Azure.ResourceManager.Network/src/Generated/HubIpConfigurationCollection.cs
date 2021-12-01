@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         internal HubIpConfigurationCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _virtualHubIpConfigurationRestClient = new VirtualHubIpConfigurationRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _virtualHubIpConfigurationRestClient = new VirtualHubIpConfigurationRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _virtualHubIpConfigurationRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, ipConfigName, parameters, cancellationToken);
-                var operation = new VirtualHubIpConfigurationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _virtualHubIpConfigurationRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, ipConfigName, parameters).Request, response);
+                var response = _virtualHubIpConfigurationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, parameters, cancellationToken);
+                var operation = new VirtualHubIpConfigurationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _virtualHubIpConfigurationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _virtualHubIpConfigurationRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, ipConfigName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualHubIpConfigurationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _virtualHubIpConfigurationRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, ipConfigName, parameters).Request, response);
+                var response = await _virtualHubIpConfigurationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualHubIpConfigurationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _virtualHubIpConfigurationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _virtualHubIpConfigurationRestClient.Get(Id.ResourceGroupName, Id.Name, ipConfigName, cancellationToken);
+                var response = _virtualHubIpConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HubIpConfiguration(Parent, response.Value), response.GetRawResponse());
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _virtualHubIpConfigurationRestClient.GetAsync(Id.ResourceGroupName, Id.Name, ipConfigName, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualHubIpConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new HubIpConfiguration(Parent, response.Value), response.GetRawResponse());
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _virtualHubIpConfigurationRestClient.Get(Id.ResourceGroupName, Id.Name, ipConfigName, cancellationToken: cancellationToken);
+                var response = _virtualHubIpConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<HubIpConfiguration>(null, response.GetRawResponse())
                     : Response.FromValue(new HubIpConfiguration(this, response.Value), response.GetRawResponse());
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _virtualHubIpConfigurationRestClient.GetAsync(Id.ResourceGroupName, Id.Name, ipConfigName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _virtualHubIpConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<HubIpConfiguration>(null, response.GetRawResponse())
                     : Response.FromValue(new HubIpConfiguration(this, response.Value), response.GetRawResponse());
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _virtualHubIpConfigurationRestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _virtualHubIpConfigurationRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new HubIpConfiguration(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _virtualHubIpConfigurationRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _virtualHubIpConfigurationRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new HubIpConfiguration(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _virtualHubIpConfigurationRestClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _virtualHubIpConfigurationRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new HubIpConfiguration(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _virtualHubIpConfigurationRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _virtualHubIpConfigurationRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new HubIpConfiguration(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

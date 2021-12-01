@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.KeyVault
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managedHsmsRestClient = new ManagedHsmsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _mHSMPrivateLinkResourcesRestClient = new MhsmPrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _managedHsmsRestClient = new ManagedHsmsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _mHSMPrivateLinkResourcesRestClient = new MhsmPrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ManagedHsm"/> class. </summary>
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.KeyVault
         internal ManagedHsm(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managedHsmsRestClient = new ManagedHsmsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _mHSMPrivateLinkResourcesRestClient = new MhsmPrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _managedHsmsRestClient = new ManagedHsmsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _mHSMPrivateLinkResourcesRestClient = new MhsmPrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ManagedHsm"/> class. </summary>
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.KeyVault
         internal ManagedHsm(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managedHsmsRestClient = new ManagedHsmsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _mHSMPrivateLinkResourcesRestClient = new MhsmPrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _managedHsmsRestClient = new ManagedHsmsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _mHSMPrivateLinkResourcesRestClient = new MhsmPrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.KeyVault
             scope.Start();
             try
             {
-                var response = await _managedHsmsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _managedHsmsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ManagedHsm(this, response.Value), response.GetRawResponse());
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.KeyVault
             scope.Start();
             try
             {
-                var response = _managedHsmsRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _managedHsmsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ManagedHsm(this, response.Value), response.GetRawResponse());
@@ -153,8 +153,8 @@ namespace Azure.ResourceManager.KeyVault
             scope.Start();
             try
             {
-                var response = await _managedHsmsRestClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedHsmDeleteOperation(_clientDiagnostics, Pipeline, _managedHsmsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _managedHsmsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedHsmDeleteOperation(_clientDiagnostics, Pipeline, _managedHsmsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -175,8 +175,8 @@ namespace Azure.ResourceManager.KeyVault
             scope.Start();
             try
             {
-                var response = _managedHsmsRestClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ManagedHsmDeleteOperation(_clientDiagnostics, Pipeline, _managedHsmsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _managedHsmsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ManagedHsmDeleteOperation(_clientDiagnostics, Pipeline, _managedHsmsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -204,8 +204,8 @@ namespace Azure.ResourceManager.KeyVault
             scope.Start();
             try
             {
-                var response = await _managedHsmsRestClient.UpdateAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedHsmUpdateOperation(this, _clientDiagnostics, Pipeline, _managedHsmsRestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = await _managedHsmsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedHsmUpdateOperation(this, _clientDiagnostics, Pipeline, _managedHsmsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -233,8 +233,8 @@ namespace Azure.ResourceManager.KeyVault
             scope.Start();
             try
             {
-                var response = _managedHsmsRestClient.Update(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new ManagedHsmUpdateOperation(this, _clientDiagnostics, Pipeline, _managedHsmsRestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = _managedHsmsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var operation = new ManagedHsmUpdateOperation(this, _clientDiagnostics, Pipeline, _managedHsmsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.KeyVault
             scope.Start();
             try
             {
-                var response = await _mHSMPrivateLinkResourcesRestClient.ListByMhsmResourceAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _mHSMPrivateLinkResourcesRestClient.ListByMhsmResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value.Value, response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.KeyVault
             scope.Start();
             try
             {
-                var response = _mHSMPrivateLinkResourcesRestClient.ListByMhsmResource(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _mHSMPrivateLinkResourcesRestClient.ListByMhsmResource(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(response.Value.Value, response.GetRawResponse());
             }
             catch (Exception e)

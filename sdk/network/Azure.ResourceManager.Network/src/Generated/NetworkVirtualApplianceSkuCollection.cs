@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         internal NetworkVirtualApplianceSkuCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _virtualApplianceSkusRestClient = new VirtualApplianceSkusRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _virtualApplianceSkusRestClient = new VirtualApplianceSkusRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _virtualApplianceSkusRestClient.Get(skuName, cancellationToken);
+                var response = _virtualApplianceSkusRestClient.Get(Id.SubscriptionId, skuName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkVirtualApplianceSku(Parent, response.Value), response.GetRawResponse());
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _virtualApplianceSkusRestClient.GetAsync(skuName, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualApplianceSkusRestClient.GetAsync(Id.SubscriptionId, skuName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new NetworkVirtualApplianceSku(Parent, response.Value), response.GetRawResponse());
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _virtualApplianceSkusRestClient.Get(skuName, cancellationToken: cancellationToken);
+                var response = _virtualApplianceSkusRestClient.Get(Id.SubscriptionId, skuName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<NetworkVirtualApplianceSku>(null, response.GetRawResponse())
                     : Response.FromValue(new NetworkVirtualApplianceSku(this, response.Value), response.GetRawResponse());
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _virtualApplianceSkusRestClient.GetAsync(skuName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _virtualApplianceSkusRestClient.GetAsync(Id.SubscriptionId, skuName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<NetworkVirtualApplianceSku>(null, response.GetRawResponse())
                     : Response.FromValue(new NetworkVirtualApplianceSku(this, response.Value), response.GetRawResponse());
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _virtualApplianceSkusRestClient.List(cancellationToken: cancellationToken);
+                    var response = _virtualApplianceSkusRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualApplianceSku(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _virtualApplianceSkusRestClient.ListNextPage(nextLink, cancellationToken: cancellationToken);
+                    var response = _virtualApplianceSkusRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualApplianceSku(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _virtualApplianceSkusRestClient.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _virtualApplianceSkusRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualApplianceSku(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _virtualApplianceSkusRestClient.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _virtualApplianceSkusRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualApplianceSku(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

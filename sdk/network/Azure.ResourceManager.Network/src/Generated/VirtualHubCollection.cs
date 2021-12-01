@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal VirtualHubCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _virtualHubsRestClient = new VirtualHubsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _virtualHubsRestClient = new VirtualHubsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _virtualHubsRestClient.CreateOrUpdate(Id.ResourceGroupName, virtualHubName, virtualHubParameters, cancellationToken);
-                var operation = new VirtualHubCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _virtualHubsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, virtualHubName, virtualHubParameters).Request, response);
+                var response = _virtualHubsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, virtualHubName, virtualHubParameters, cancellationToken);
+                var operation = new VirtualHubCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _virtualHubsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualHubName, virtualHubParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -101,8 +101,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _virtualHubsRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, virtualHubName, virtualHubParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualHubCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _virtualHubsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, virtualHubName, virtualHubParameters).Request, response);
+                var response = await _virtualHubsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualHubName, virtualHubParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualHubCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _virtualHubsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualHubName, virtualHubParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _virtualHubsRestClient.Get(Id.ResourceGroupName, virtualHubName, cancellationToken);
+                var response = _virtualHubsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualHubName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualHub(Parent, response.Value), response.GetRawResponse());
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _virtualHubsRestClient.GetAsync(Id.ResourceGroupName, virtualHubName, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualHubsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualHubName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new VirtualHub(Parent, response.Value), response.GetRawResponse());
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _virtualHubsRestClient.Get(Id.ResourceGroupName, virtualHubName, cancellationToken: cancellationToken);
+                var response = _virtualHubsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualHubName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<VirtualHub>(null, response.GetRawResponse())
                     : Response.FromValue(new VirtualHub(this, response.Value), response.GetRawResponse());
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _virtualHubsRestClient.GetAsync(Id.ResourceGroupName, virtualHubName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _virtualHubsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualHubName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<VirtualHub>(null, response.GetRawResponse())
                     : Response.FromValue(new VirtualHub(this, response.Value), response.GetRawResponse());
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _virtualHubsRestClient.ListByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _virtualHubsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualHub(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _virtualHubsRestClient.ListByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _virtualHubsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualHub(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _virtualHubsRestClient.ListByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _virtualHubsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualHub(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _virtualHubsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _virtualHubsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualHub(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

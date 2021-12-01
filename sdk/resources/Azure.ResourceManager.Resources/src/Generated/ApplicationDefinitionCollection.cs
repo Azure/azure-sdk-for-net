@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources
         internal ApplicationDefinitionCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _applicationDefinitionsRestClient = new ApplicationDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _applicationDefinitionsRestClient = new ApplicationDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _applicationDefinitionsRestClient.CreateOrUpdate(Id.ResourceGroupName, applicationDefinitionName, parameters, cancellationToken);
-                var operation = new ApplicationDefinitionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _applicationDefinitionsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, applicationDefinitionName, parameters).Request, response);
+                var response = _applicationDefinitionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, parameters, cancellationToken);
+                var operation = new ApplicationDefinitionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _applicationDefinitionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _applicationDefinitionsRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, applicationDefinitionName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ApplicationDefinitionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _applicationDefinitionsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, applicationDefinitionName, parameters).Request, response);
+                var response = await _applicationDefinitionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ApplicationDefinitionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _applicationDefinitionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _applicationDefinitionsRestClient.Get(Id.ResourceGroupName, applicationDefinitionName, cancellationToken);
+                var response = _applicationDefinitionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ApplicationDefinition(Parent, response.Value), response.GetRawResponse());
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _applicationDefinitionsRestClient.GetAsync(Id.ResourceGroupName, applicationDefinitionName, cancellationToken).ConfigureAwait(false);
+                var response = await _applicationDefinitionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ApplicationDefinition(Parent, response.Value), response.GetRawResponse());
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _applicationDefinitionsRestClient.Get(Id.ResourceGroupName, applicationDefinitionName, cancellationToken: cancellationToken);
+                var response = _applicationDefinitionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<ApplicationDefinition>(null, response.GetRawResponse())
                     : Response.FromValue(new ApplicationDefinition(this, response.Value), response.GetRawResponse());
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _applicationDefinitionsRestClient.GetAsync(Id.ResourceGroupName, applicationDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _applicationDefinitionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<ApplicationDefinition>(null, response.GetRawResponse())
                     : Response.FromValue(new ApplicationDefinition(this, response.Value), response.GetRawResponse());
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = _applicationDefinitionsRestClient.ListByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _applicationDefinitionsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ApplicationDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = _applicationDefinitionsRestClient.ListByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _applicationDefinitionsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ApplicationDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = await _applicationDefinitionsRestClient.ListByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _applicationDefinitionsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ApplicationDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = await _applicationDefinitionsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _applicationDefinitionsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ApplicationDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

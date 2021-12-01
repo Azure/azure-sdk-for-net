@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal NetworkVirtualApplianceCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _networkVirtualAppliancesRestClient = new NetworkVirtualAppliancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _networkVirtualAppliancesRestClient = new NetworkVirtualAppliancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _networkVirtualAppliancesRestClient.CreateOrUpdate(Id.ResourceGroupName, networkVirtualApplianceName, parameters, cancellationToken);
-                var operation = new NetworkVirtualApplianceCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _networkVirtualAppliancesRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, networkVirtualApplianceName, parameters).Request, response);
+                var response = _networkVirtualAppliancesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, networkVirtualApplianceName, parameters, cancellationToken);
+                var operation = new NetworkVirtualApplianceCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _networkVirtualAppliancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkVirtualApplianceName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -101,8 +101,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _networkVirtualAppliancesRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, networkVirtualApplianceName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkVirtualApplianceCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _networkVirtualAppliancesRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, networkVirtualApplianceName, parameters).Request, response);
+                var response = await _networkVirtualAppliancesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, networkVirtualApplianceName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkVirtualApplianceCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _networkVirtualAppliancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkVirtualApplianceName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _networkVirtualAppliancesRestClient.Get(Id.ResourceGroupName, networkVirtualApplianceName, expand, cancellationToken);
+                var response = _networkVirtualAppliancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkVirtualApplianceName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkVirtualAppliance(Parent, response.Value), response.GetRawResponse());
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _networkVirtualAppliancesRestClient.GetAsync(Id.ResourceGroupName, networkVirtualApplianceName, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _networkVirtualAppliancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkVirtualApplianceName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new NetworkVirtualAppliance(Parent, response.Value), response.GetRawResponse());
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _networkVirtualAppliancesRestClient.Get(Id.ResourceGroupName, networkVirtualApplianceName, expand, cancellationToken: cancellationToken);
+                var response = _networkVirtualAppliancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkVirtualApplianceName, expand, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<NetworkVirtualAppliance>(null, response.GetRawResponse())
                     : Response.FromValue(new NetworkVirtualAppliance(this, response.Value), response.GetRawResponse());
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _networkVirtualAppliancesRestClient.GetAsync(Id.ResourceGroupName, networkVirtualApplianceName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _networkVirtualAppliancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkVirtualApplianceName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<NetworkVirtualAppliance>(null, response.GetRawResponse())
                     : Response.FromValue(new NetworkVirtualAppliance(this, response.Value), response.GetRawResponse());
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _networkVirtualAppliancesRestClient.ListByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _networkVirtualAppliancesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualAppliance(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _networkVirtualAppliancesRestClient.ListByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _networkVirtualAppliancesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualAppliance(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _networkVirtualAppliancesRestClient.ListByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _networkVirtualAppliancesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualAppliance(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _networkVirtualAppliancesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _networkVirtualAppliancesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualAppliance(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

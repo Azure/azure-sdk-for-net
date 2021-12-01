@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Network
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _loadBalancersRestClient = new LoadBalancersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _loadBalancerNetworkInterfacesRestClient = new LoadBalancerNetworkInterfacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _loadBalancersRestClient = new LoadBalancersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _loadBalancerNetworkInterfacesRestClient = new LoadBalancerNetworkInterfacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="LoadBalancer"/> class. </summary>
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Network
         internal LoadBalancer(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _loadBalancersRestClient = new LoadBalancersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _loadBalancerNetworkInterfacesRestClient = new LoadBalancerNetworkInterfacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _loadBalancersRestClient = new LoadBalancersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _loadBalancerNetworkInterfacesRestClient = new LoadBalancerNetworkInterfacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="LoadBalancer"/> class. </summary>
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.Network
         internal LoadBalancer(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _loadBalancersRestClient = new LoadBalancersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _loadBalancerNetworkInterfacesRestClient = new LoadBalancerNetworkInterfacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _loadBalancersRestClient = new LoadBalancersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _loadBalancerNetworkInterfacesRestClient = new LoadBalancerNetworkInterfacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _loadBalancersRestClient.GetAsync(Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _loadBalancersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new LoadBalancer(this, response.Value), response.GetRawResponse());
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _loadBalancersRestClient.Get(Id.ResourceGroupName, Id.Name, expand, cancellationToken);
+                var response = _loadBalancersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new LoadBalancer(this, response.Value), response.GetRawResponse());
@@ -155,8 +155,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _loadBalancersRestClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new LoadBalancerDeleteOperation(_clientDiagnostics, Pipeline, _loadBalancersRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _loadBalancersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new LoadBalancerDeleteOperation(_clientDiagnostics, Pipeline, _loadBalancersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -177,8 +177,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _loadBalancersRestClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new LoadBalancerDeleteOperation(_clientDiagnostics, Pipeline, _loadBalancersRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _loadBalancersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new LoadBalancerDeleteOperation(_clientDiagnostics, Pipeline, _loadBalancersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _loadBalancersRestClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _loadBalancersRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new LoadBalancer(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _loadBalancersRestClient.UpdateTags(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var response = _loadBalancersRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
                 return Response.FromValue(new LoadBalancer(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _loadBalancerNetworkInterfacesRestClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _loadBalancerNetworkInterfacesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _loadBalancerNetworkInterfacesRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _loadBalancerNetworkInterfacesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _loadBalancerNetworkInterfacesRestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _loadBalancerNetworkInterfacesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _loadBalancerNetworkInterfacesRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _loadBalancerNetworkInterfacesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

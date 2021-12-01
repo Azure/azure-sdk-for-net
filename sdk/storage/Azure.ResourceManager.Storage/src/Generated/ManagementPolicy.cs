@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Storage
             _data = resource;
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managementPoliciesRestClient = new ManagementPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _managementPoliciesRestClient = new ManagementPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ManagementPolicy"/> class. </summary>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage
         {
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managementPoliciesRestClient = new ManagementPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _managementPoliciesRestClient = new ManagementPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ManagementPolicy"/> class. </summary>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Storage
         internal ManagementPolicy(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managementPoliciesRestClient = new ManagementPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _managementPoliciesRestClient = new ManagementPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _managementPoliciesRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _managementPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ManagementPolicy(this, response.Value), response.GetRawResponse());
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _managementPoliciesRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _managementPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ManagementPolicy(this, response.Value), response.GetRawResponse());
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _managementPoliciesRestClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _managementPoliciesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new ManagementPolicyDeleteOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _managementPoliciesRestClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _managementPoliciesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new ManagementPolicyDeleteOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _managementPoliciesRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, properties, cancellationToken).ConfigureAwait(false);
+                var response = await _managementPoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, properties, cancellationToken).ConfigureAwait(false);
                 var operation = new ManagementPolicyCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _managementPoliciesRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Parent.Name, Id.Name, properties, cancellationToken);
+                var response = _managementPoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, properties, cancellationToken);
                 var operation = new ManagementPolicyCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
