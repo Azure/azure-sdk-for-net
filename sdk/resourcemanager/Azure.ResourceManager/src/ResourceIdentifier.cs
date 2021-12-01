@@ -18,12 +18,10 @@ namespace Azure.ResourceManager
     public class ResourceIdentifier : IEquatable<ResourceIdentifier>, IComparable<ResourceIdentifier>
     {
         private const string RootStringValue = "/";
-
-        internal const string ProvidersKey = "providers";
-        internal const string SubscriptionsKey = "subscriptions";
-        internal const string LocationsKey = "locations";
-        internal const string ResourceGroupsLowerKey = "resourcegroups";
-        internal const string BuiltInResourceNamespace = "Microsoft.Resources";
+        private const string ProvidersKey = "providers";
+        private const string SubscriptionsKey = "subscriptions";
+        private const string LocationsKey = "locations";
+        private const string ResourceGroupsLowerKey = "resourcegroups";
 
         /// <summary>
         /// The root of the resource hierarchy.
@@ -82,7 +80,7 @@ namespace Azure.ResourceManager
             {
                 Guid output;
                 if (!Guid.TryParse(name, out output))
-                    throw new ArgumentOutOfRangeException("resourceId", "Invalid resource id.");
+                    throw new ArgumentOutOfRangeException(nameof(name), $"The GUID for subscription is invalid {name}.");
                 SubscriptionId = name;
             }
 
@@ -116,15 +114,15 @@ namespace Azure.ResourceManager
                 throw new ArgumentNullException(nameof(resourceId));
 
             if (!resourceId.StartsWith("/", StringComparison.InvariantCultureIgnoreCase))
-                throw new ArgumentOutOfRangeException(nameof(resourceId), "Invalid resource id.");
+                throw new ArgumentOutOfRangeException(nameof(resourceId), "The ResourceIdentifier must start with '/'.");
 
             var parts = resourceId.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries).ToList();
             if (parts.Count < 2)
-                throw new ArgumentOutOfRangeException(nameof(resourceId), "Invalid resource id.");
+                throw new ArgumentOutOfRangeException(nameof(resourceId), "The ResourceIdentifier is too short it must have at least 2 path segments.");
 
             var firstToLower = parts[0].ToLowerInvariant();
             if (firstToLower != SubscriptionsKey && firstToLower != ProvidersKey)
-                throw new ArgumentOutOfRangeException(nameof(resourceId), "Invalid resource id.");
+                throw new ArgumentOutOfRangeException(nameof(resourceId), $"The ResourceIdentifier must start with either '/{SubscriptionsKey}' or '/{ProvidersKey}'.");
 
             return AppendNext(Root, parts);
         }
@@ -140,11 +138,11 @@ namespace Azure.ResourceManager
             {
                 //subscriptions and resourceGroups aren't valid ids without their name
                 if (lowerFirstPart == SubscriptionsKey || lowerFirstPart == ResourceGroupsLowerKey)
-                    throw new ArgumentOutOfRangeException("resourceId", "Invalid resource id.");
+                    throw new ArgumentOutOfRangeException(nameof(parts), $"The ResourceIdentifier is missing the key for {lowerFirstPart}.");
 
                 //resourceGroup must contain either child or provider resource type
                 if (parent.ResourceType == ResourceGroup.ResourceType)
-                    throw new ArgumentOutOfRangeException("resourceId", "Invalid resource id.");
+                    throw new ArgumentOutOfRangeException(nameof(parts), $"Expected {ProvidersKey} path segment after {ResourceGroupsLowerKey}.");
 
                 return new ResourceIdentifier(parent, parts[0], string.Empty);
             }
@@ -153,7 +151,7 @@ namespace Azure.ResourceManager
             {
                 //provider resource can only be on a tenant or a subscription parent
                 if (parent.ResourceType != Subscription.ResourceType && parent.ResourceType != Tenant.ResourceType)
-                    throw new ArgumentOutOfRangeException("resourceId", "Invalid resource id.");
+                    throw new ArgumentOutOfRangeException(nameof(parts), $"Provider resource can only come after the root or {SubscriptionsKey}.");
 
                 return AppendNext(new ResourceIdentifier(parent, Resources.Provider.ResourceType, parts[1]), parts.Trim(2));
             }
@@ -164,7 +162,7 @@ namespace Azure.ResourceManager
             if (parts.Count > 1 && !string.Equals(parts[0], ProvidersKey, StringComparison.InvariantCultureIgnoreCase))
                 return AppendNext(new ResourceIdentifier(parent, parts[0], parts[1]), parts.Trim(2));
 
-            throw new ArgumentOutOfRangeException("resourceId", "Invalid resource id.");
+            throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource id.");
         }
 
         private object lockObject = new object();
