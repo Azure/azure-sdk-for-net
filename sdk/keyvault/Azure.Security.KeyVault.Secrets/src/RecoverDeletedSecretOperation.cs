@@ -90,7 +90,7 @@ namespace Azure.Security.KeyVault.Secrets
             switch (response.Status)
             {
                 case 200:
-                case 403: // Access denied but proof the secret was deleted.
+                case 403: // Access denied but proof the secret was recovered.
                     return OperationState.Success(response);
 
                 case 404:
