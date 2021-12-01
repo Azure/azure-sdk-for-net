@@ -23,12 +23,6 @@ namespace Azure
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RequestOptions"/> class using the given <see cref="ErrorOptions"/>.
-        /// </summary>
-        /// <param name="options"></param>
-        public static implicit operator RequestOptions(ErrorOptions options) => new RequestOptions { ErrorOptions = options };
-
-        /// <summary>
         /// Controls under what conditions the operation raises an exception if the underlying response indicates a failure.
         /// </summary>
         public ErrorOptions ErrorOptions { get; set; } = ErrorOptions.Default;

@@ -193,7 +193,7 @@ namespace Azure
     {
         public RequestContext() { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
-        public static new implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
+        public static implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
     }
     public partial class RequestFailedException : System.Exception, System.Runtime.Serialization.ISerializable
     {
@@ -213,7 +213,6 @@ namespace Azure
         public RequestOptions() { }
         public Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
         public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
-        public static implicit operator Azure.RequestOptions (Azure.ErrorOptions options) { throw null; }
     }
     public abstract partial class Response : System.IDisposable
     {
@@ -772,7 +771,7 @@ namespace Azure.Core.Pipeline
         public static System.IDisposable CreateClientRequestIdScope(string? clientRequestId) { throw null; }
         public static System.IDisposable CreateHttpMessagePropertiesScope(System.Collections.Generic.IDictionary<string, object?> messageProperties) { throw null; }
         public Azure.Core.HttpMessage CreateMessage() { throw null; }
-        public Azure.Core.HttpMessage CreateMessage(Azure.RequestOptions options) { throw null; }
+        public Azure.Core.HttpMessage CreateMessage(Azure.RequestContext context) { throw null; }
         public Azure.Core.Request CreateRequest() { throw null; }
         public void Send(Azure.Core.HttpMessage message, System.Threading.CancellationToken cancellationToken) { }
         public System.Threading.Tasks.ValueTask SendAsync(Azure.Core.HttpMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }

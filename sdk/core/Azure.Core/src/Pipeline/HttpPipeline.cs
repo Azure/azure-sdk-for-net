@@ -99,12 +99,12 @@ namespace Azure.Core.Pipeline
         /// <summary>
         /// Creates a new <see cref="HttpMessage"/> instance.
         /// </summary>
-        /// <param name="options">The message options.</param>
+        /// <param name="context">Context specifying the message options.</param>
         /// <returns>The message.</returns>
-        public HttpMessage CreateMessage(RequestOptions options)
+        public HttpMessage CreateMessage(RequestContext context)
         {
             var message = CreateMessage();
-            message.AddPolicies(options);
+            message.AddPolicies(context);
             return message;
         }
 
