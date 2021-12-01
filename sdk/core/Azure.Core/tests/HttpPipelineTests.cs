@@ -228,10 +228,10 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CreateMessage_ThrowsOnNullContext()
+        public void CreateMessage_AllowsNullContext()
         {
             var pipeline = new HttpPipeline(new MockTransport());
-            Assert.Throws<ArgumentNullException>(() => pipeline.CreateMessage(null));
+            Assert.DoesNotThrow(() => pipeline.CreateMessage(null));
         }
 
         [Test]
