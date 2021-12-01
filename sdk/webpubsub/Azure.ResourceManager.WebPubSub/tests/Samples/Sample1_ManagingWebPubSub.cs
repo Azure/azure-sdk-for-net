@@ -21,17 +21,17 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
         [SetUp]
         protected async Task initialize()
         {
-            #region Snippet:Readme_DefaultSubscription
+            #region Snippet:Managing_Resource_Groups_DefaultSubscription
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.GetDefaultSubscription();
+            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             #endregion
 
-            #region Snippet:Readme_GetResourceGroupColletion
-            ResourceGroupCollection rgColletion = subscription.GetResourceGroups();
+            #region Snippet:Managing_Resource_Groups_GetResourceGroupCollection
+            ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
             // With the Colletion, we can create a new resource group with an specific name
             string rgName = "myRgName";
             Location location = Location.WestUS2;
-            ResourceGroup resourceGroup = await rgColletion.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+            ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
             #endregion
 
             this.resourceGroup = resourceGroup;

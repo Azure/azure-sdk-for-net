@@ -26,7 +26,7 @@ This is a scoped operations object, and any operations you perform will be done 
 
 ```C# Snippet:Managing_Resource_Groups_GetResourceGroupCollection
 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
-// With the collection, we can create a new resource group with an specific name
+// With the Colletion, we can create a new resource group with an specific name
 string rgName = "myRgName";
 Location location = Location.WestUS2;
 ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
