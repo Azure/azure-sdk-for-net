@@ -16,7 +16,7 @@ namespace Azure.Maps.Search.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type");
-            writer.WriteStringValue(Type.ToSerialString());
+            writer.WriteStringValue(Type);
             writer.WriteEndObject();
         }
 
@@ -26,16 +26,19 @@ namespace Azure.Maps.Search.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "Feature": return GeoJsonFeature.DeserializeGeoJsonFeature(element);
                     case "GeoJsonGeometry": return GeoJsonGeometry.DeserializeGeoJsonGeometry(element);
                     case "LineString": return GeoJsonLineString.DeserializeGeoJsonLineString(element);
+                    case "Polygon": return GeoJsonPolygon.DeserializeGeoJsonPolygon(element);
+                    case "FeatureCollection": return GeoJsonFeatureCollection.DeserializeGeoJsonFeatureCollection(element);
                 }
             }
-            GeoJsonObjectType type = default;
+            string type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString().ToGeoJsonObjectType();
+                    type = property.Value.GetString();
                     continue;
                 }
             }

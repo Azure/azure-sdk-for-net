@@ -792,13 +792,13 @@ namespace Azure.Maps.Search
         /// <param name="geometry"> This represents the geometry for one or more geographical features (parks, state boundary etc.) to search in and should be a GeoJSON compliant type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. </param>
         /// <param name="options"> additional options </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> SearchInsideGeometryAsync(string query, SearchInsideGeometryRequest geometry, SearchInsideGeometryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressResult>> SearchInsideGeometryAsync(string query, PolygonOrGeometryCollectionOrFeatureCollection geometry, SearchInsideGeometryOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchInsideGeometry");
             scope.Start();
             try
             {
-                return await RestClient.SearchInsideGeometryAsync(query, geometry, ResponseFormat.Json, options?.Top, options?.Language, options?.CategoryFilter, options?.ExtendedPostalCodesFor, options?.IndexFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SearchInsideGeometryAsync(query, new SearchInsideGeometryRequest { Geometry = geometry }, ResponseFormat.Json, options?.Top, options?.Language, options?.CategoryFilter, options?.ExtendedPostalCodesFor, options?.IndexFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -816,13 +816,13 @@ namespace Azure.Maps.Search
         /// <param name="geometry"> This represents the geometry for one or more geographical features (parks, state boundary etc.) to search in and should be a GeoJSON compliant type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. </param>
         /// <param name="options"> additional options </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> SearchInsideGeometry(string query, SearchInsideGeometryRequest geometry, SearchInsideGeometryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressResult> SearchInsideGeometry(string query, PolygonOrGeometryCollectionOrFeatureCollection geometry, SearchInsideGeometryOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchInsideGeometry");
             scope.Start();
             try
             {
-                return RestClient.SearchInsideGeometry(query, geometry, ResponseFormat.Json, options?.Top, options?.Language, options?.CategoryFilter, options?.ExtendedPostalCodesFor, options?.IndexFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken);
+                return RestClient.SearchInsideGeometry(query, new SearchInsideGeometryRequest { Geometry = geometry }, ResponseFormat.Json, options?.Top, options?.Language, options?.CategoryFilter, options?.ExtendedPostalCodesFor, options?.IndexFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken);
             }
             catch (Exception e)
             {
@@ -842,13 +842,13 @@ namespace Azure.Maps.Search
         /// <param name="route"> This represents the route to search along and should be a valid `GeoJSON LineString` type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.4) for details. </param>
         /// <param name="options"> additional options </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestAlongRouteAsync(string query, int maxDetourTime, SearchAlongRouteRequest route, SearchAlongRouteOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestAlongRouteAsync(string query, int maxDetourTime, GeoJsonLineString route, SearchAlongRouteOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchAlongRoute");
             scope.Start();
             try
             {
-                return await RestClient.SearchAlongRouteAsync(query, maxDetourTime, route, ResponseFormat.Json, options?.Top, options?.BrandFilter, options?.CategoryFilter, options?.ElectricVehicleConnectorFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SearchAlongRouteAsync(query, maxDetourTime, new SearchAlongRouteRequest { Route = route }, ResponseFormat.Json, options?.Top, options?.BrandFilter, options?.CategoryFilter, options?.ElectricVehicleConnectorFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -868,13 +868,13 @@ namespace Azure.Maps.Search
         /// <param name="route"> This represents the route to search along and should be a valid `GeoJSON LineString` type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.4) for details. </param>
         /// <param name="options"> additional options </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> SearchPointOfInterestAlongRoute(string query, int maxDetourTime, SearchAlongRouteRequest route, SearchAlongRouteOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressResult> SearchPointOfInterestAlongRoute(string query, int maxDetourTime, GeoJsonLineString route, SearchAlongRouteOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchAlongRoute");
             scope.Start();
             try
             {
-                return RestClient.SearchAlongRoute(query, maxDetourTime, route, ResponseFormat.Json, options?.Top, options?.BrandFilter, options?.CategoryFilter, options?.ElectricVehicleConnectorFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken);
+                return RestClient.SearchAlongRoute(query, maxDetourTime, new SearchAlongRouteRequest { Route = route }, ResponseFormat.Json, options?.Top, options?.BrandFilter, options?.CategoryFilter, options?.ElectricVehicleConnectorFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken);
             }
             catch (Exception e)
             {

@@ -11,21 +11,16 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class GeoJsonLineString : IUtf8JsonSerializable
+    public partial class GeoJsonFeatureCollection : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("coordinates");
+            writer.WritePropertyName("features");
             writer.WriteStartArray();
-            foreach (var item in Coordinates)
+            foreach (var item in Features)
             {
-                writer.WriteStartArray();
-                foreach (var item0 in item)
-                {
-                    writer.WriteNumberValue(item0);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("type");
@@ -33,25 +28,20 @@ namespace Azure.Maps.Search.Models
             writer.WriteEndObject();
         }
 
-        internal static GeoJsonLineString DeserializeGeoJsonLineString(JsonElement element)
+        internal static GeoJsonFeatureCollection DeserializeGeoJsonFeatureCollection(JsonElement element)
         {
-            IList<IList<double>> coordinates = default;
+            IList<GeoJsonFeature> features = default;
             string type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("coordinates"))
+                if (property.NameEquals("features"))
                 {
-                    List<IList<double>> array = new List<IList<double>>();
+                    List<GeoJsonFeature> array = new List<GeoJsonFeature>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        List<double> array0 = new List<double>();
-                        foreach (var item0 in item.EnumerateArray())
-                        {
-                            array0.Add(item0.GetDouble());
-                        }
-                        array.Add(array0);
+                        array.Add(GeoJsonFeature.DeserializeGeoJsonFeature(item));
                     }
-                    coordinates = array;
+                    features = array;
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -60,7 +50,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new GeoJsonLineString(type, coordinates);
+            return new GeoJsonFeatureCollection(type, features);
         }
     }
 }

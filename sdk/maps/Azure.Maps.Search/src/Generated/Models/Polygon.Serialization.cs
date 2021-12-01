@@ -15,7 +15,7 @@ namespace Azure.Maps.Search.Models
         internal static Polygon DeserializePolygon(JsonElement element)
         {
             Optional<string> providerID = default;
-            Optional<GeoJsonObject> geometryData = default;
+            Optional<GeoJsonFeatureCollection> geometryData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("providerID"))
@@ -30,7 +30,7 @@ namespace Azure.Maps.Search.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    geometryData = GeoJsonObject.DeserializeGeoJsonObject(property.Value);
+                    geometryData = GeoJsonFeatureCollection.DeserializeGeoJsonFeatureCollection(property.Value);
                     continue;
                 }
             }

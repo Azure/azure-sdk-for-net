@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class GeoJsonLineString : IUtf8JsonSerializable
+    public partial class GeoJsonPolygon : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,12 @@ namespace Azure.Maps.Search.Models
                 writer.WriteStartArray();
                 foreach (var item0 in item)
                 {
-                    writer.WriteNumberValue(item0);
+                    writer.WriteStartArray();
+                    foreach (var item1 in item0)
+                    {
+                        writer.WriteNumberValue(item1);
+                    }
+                    writer.WriteEndArray();
                 }
                 writer.WriteEndArray();
             }
@@ -33,21 +38,26 @@ namespace Azure.Maps.Search.Models
             writer.WriteEndObject();
         }
 
-        internal static GeoJsonLineString DeserializeGeoJsonLineString(JsonElement element)
+        internal static GeoJsonPolygon DeserializeGeoJsonPolygon(JsonElement element)
         {
-            IList<IList<double>> coordinates = default;
+            IList<IList<IList<double>>> coordinates = default;
             string type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("coordinates"))
                 {
-                    List<IList<double>> array = new List<IList<double>>();
+                    List<IList<IList<double>>> array = new List<IList<IList<double>>>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        List<double> array0 = new List<double>();
+                        List<IList<double>> array0 = new List<IList<double>>();
                         foreach (var item0 in item.EnumerateArray())
                         {
-                            array0.Add(item0.GetDouble());
+                            List<double> array1 = new List<double>();
+                            foreach (var item1 in item0.EnumerateArray())
+                            {
+                                array1.Add(item1.GetDouble());
+                            }
+                            array0.Add(array1);
                         }
                         array.Add(array0);
                     }
@@ -60,7 +70,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new GeoJsonLineString(type, coordinates);
+            return new GeoJsonPolygon(type, coordinates);
         }
     }
 }
