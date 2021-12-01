@@ -15,7 +15,7 @@ namespace Azure.ResourceManager
     /// <summary>
     /// An Azure Resource Manager resource identifier.
     /// </summary>
-    public class ResourceIdentifier : IEquatable<ResourceIdentifier>, IComparable<ResourceIdentifier>
+    public sealed class ResourceIdentifier : IEquatable<ResourceIdentifier>, IComparable<ResourceIdentifier>
     {
         private const string RootStringValue = "/";
         private const string ProvidersKey = "providers";
@@ -198,22 +198,22 @@ namespace Azure.ResourceManager
         /// <summary>
         /// The resource type of the resource.
         /// </summary>
-        public virtual ResourceType ResourceType { get; private set; }
+        public ResourceType ResourceType { get; private set; }
 
         /// <summary>
         /// The name of the resource.
         /// </summary>
-        public virtual string Name { get; private set; }
+        public string Name { get; private set; }
 
         /// <summary>
         /// The immediate parent containing this resource.
         /// </summary>
-        public virtual ResourceIdentifier Parent { get; private set; }
+        public ResourceIdentifier Parent { get; private set; }
 
         /// <summary>
         /// Determines whether this resource is in the same namespace as its parent.
         /// </summary>
-        internal virtual bool IsChild { get; private set; }
+        internal bool IsChild { get; private set; }
 
         /// <summary>
         /// Gets the subscription id if it exists otherwise null.
