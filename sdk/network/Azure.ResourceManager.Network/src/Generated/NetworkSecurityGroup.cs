@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of SecurityRules in the NetworkSecurityGroup. </summary>
         /// <returns> An object representing collection of SecurityRules and their operations over a NetworkSecurityGroup. </returns>
-        public SecurityRuleCollection GetSecurityRules()
+        public virtual SecurityRuleCollection GetSecurityRules()
         {
             return new SecurityRuleCollection(this);
         }
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of DefaultSecurityRules in the NetworkSecurityGroup. </summary>
         /// <returns> An object representing collection of DefaultSecurityRules and their operations over a NetworkSecurityGroup. </returns>
-        public DefaultSecurityRuleCollection GetDefaultSecurityRules()
+        public virtual DefaultSecurityRuleCollection GetDefaultSecurityRules()
         {
             return new DefaultSecurityRuleCollection(this);
         }

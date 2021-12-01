@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of Routes in the RouteTable. </summary>
         /// <returns> An object representing collection of Routes and their operations over a RouteTable. </returns>
-        public RouteCollection GetRoutes()
+        public virtual RouteCollection GetRoutes()
         {
             return new RouteCollection(this);
         }

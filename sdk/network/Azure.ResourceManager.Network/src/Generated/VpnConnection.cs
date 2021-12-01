@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of VpnSiteLinkConnections in the VpnConnection. </summary>
         /// <returns> An object representing collection of VpnSiteLinkConnections and their operations over a VpnConnection. </returns>
-        public VpnSiteLinkConnectionCollection GetVpnSiteLinkConnections()
+        public virtual VpnSiteLinkConnectionCollection GetVpnSiteLinkConnections()
         {
             return new VpnSiteLinkConnectionCollection(this);
         }

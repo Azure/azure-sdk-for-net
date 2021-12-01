@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of VpnSiteLinks in the VpnSite. </summary>
         /// <returns> An object representing collection of VpnSiteLinks and their operations over a VpnSite. </returns>
-        public VpnSiteLinkCollection GetVpnSiteLinks()
+        public virtual VpnSiteLinkCollection GetVpnSiteLinks()
         {
             return new VpnSiteLinkCollection(this);
         }

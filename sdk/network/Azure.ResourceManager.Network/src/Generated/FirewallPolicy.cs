@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of FirewallPolicyRuleCollectionGroups in the FirewallPolicy. </summary>
         /// <returns> An object representing collection of FirewallPolicyRuleCollectionGroups and their operations over a FirewallPolicy. </returns>
-        public FirewallPolicyRuleCollectionGroupCollection GetFirewallPolicyRuleCollectionGroups()
+        public virtual FirewallPolicyRuleCollectionGroupCollection GetFirewallPolicyRuleCollectionGroups()
         {
             return new FirewallPolicyRuleCollectionGroupCollection(this);
         }

@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of ExpressRouteConnections in the ExpressRouteGateway. </summary>
         /// <returns> An object representing collection of ExpressRouteConnections and their operations over a ExpressRouteGateway. </returns>
-        public ExpressRouteConnectionCollection GetExpressRouteConnections()
+        public virtual ExpressRouteConnectionCollection GetExpressRouteConnections()
         {
             return new ExpressRouteConnectionCollection(this);
         }

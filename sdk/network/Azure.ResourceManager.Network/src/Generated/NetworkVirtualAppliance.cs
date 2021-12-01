@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of VirtualApplianceSites in the NetworkVirtualAppliance. </summary>
         /// <returns> An object representing collection of VirtualApplianceSites and their operations over a NetworkVirtualAppliance. </returns>
-        public VirtualApplianceSiteCollection GetVirtualApplianceSites()
+        public virtual VirtualApplianceSiteCollection GetVirtualApplianceSites()
         {
             return new VirtualApplianceSiteCollection(this);
         }

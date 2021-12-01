@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of ExpressRouteCircuitAuthorizations in the ExpressRouteCircuit. </summary>
         /// <returns> An object representing collection of ExpressRouteCircuitAuthorizations and their operations over a ExpressRouteCircuit. </returns>
-        public ExpressRouteCircuitAuthorizationCollection GetExpressRouteCircuitAuthorizations()
+        public virtual ExpressRouteCircuitAuthorizationCollection GetExpressRouteCircuitAuthorizations()
         {
             return new ExpressRouteCircuitAuthorizationCollection(this);
         }
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of ExpressRouteCircuitPeerings in the ExpressRouteCircuit. </summary>
         /// <returns> An object representing collection of ExpressRouteCircuitPeerings and their operations over a ExpressRouteCircuit. </returns>
-        public ExpressRouteCircuitPeeringCollection GetExpressRouteCircuitPeerings()
+        public virtual ExpressRouteCircuitPeeringCollection GetExpressRouteCircuitPeerings()
         {
             return new ExpressRouteCircuitPeeringCollection(this);
         }

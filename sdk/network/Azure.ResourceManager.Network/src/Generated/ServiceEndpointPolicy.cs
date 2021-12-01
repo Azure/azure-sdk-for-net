@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of ServiceEndpointPolicyDefinitions in the ServiceEndpointPolicy. </summary>
         /// <returns> An object representing collection of ServiceEndpointPolicyDefinitions and their operations over a ServiceEndpointPolicy. </returns>
-        public ServiceEndpointPolicyDefinitionCollection GetServiceEndpointPolicyDefinitions()
+        public virtual ServiceEndpointPolicyDefinitionCollection GetServiceEndpointPolicyDefinitions()
         {
             return new ServiceEndpointPolicyDefinitionCollection(this);
         }

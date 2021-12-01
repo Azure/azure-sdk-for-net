@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of Subnets in the VirtualNetwork. </summary>
         /// <returns> An object representing collection of Subnets and their operations over a VirtualNetwork. </returns>
-        public SubnetCollection GetSubnets()
+        public virtual SubnetCollection GetSubnets()
         {
             return new SubnetCollection(this);
         }
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of VirtualNetworkPeerings in the VirtualNetwork. </summary>
         /// <returns> An object representing collection of VirtualNetworkPeerings and their operations over a VirtualNetwork. </returns>
-        public VirtualNetworkPeeringCollection GetVirtualNetworkPeerings()
+        public virtual VirtualNetworkPeeringCollection GetVirtualNetworkPeerings()
         {
             return new VirtualNetworkPeeringCollection(this);
         }

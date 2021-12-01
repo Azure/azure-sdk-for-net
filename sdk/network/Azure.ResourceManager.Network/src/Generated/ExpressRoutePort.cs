@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of ExpressRouteLinks in the ExpressRoutePort. </summary>
         /// <returns> An object representing collection of ExpressRouteLinks and their operations over a ExpressRoutePort. </returns>
-        public ExpressRouteLinkCollection GetExpressRouteLinks()
+        public virtual ExpressRouteLinkCollection GetExpressRouteLinks()
         {
             return new ExpressRouteLinkCollection(this);
         }

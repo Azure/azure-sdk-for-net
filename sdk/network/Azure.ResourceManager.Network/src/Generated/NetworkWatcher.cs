@@ -926,7 +926,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of PacketCaptures in the NetworkWatcher. </summary>
         /// <returns> An object representing collection of PacketCaptures and their operations over a NetworkWatcher. </returns>
-        public PacketCaptureCollection GetPacketCaptures()
+        public virtual PacketCaptureCollection GetPacketCaptures()
         {
             return new PacketCaptureCollection(this);
         }
@@ -936,7 +936,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of ConnectionMonitors in the NetworkWatcher. </summary>
         /// <returns> An object representing collection of ConnectionMonitors and their operations over a NetworkWatcher. </returns>
-        public ConnectionMonitorCollection GetConnectionMonitors()
+        public virtual ConnectionMonitorCollection GetConnectionMonitors()
         {
             return new ConnectionMonitorCollection(this);
         }
@@ -946,7 +946,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of FlowLogs in the NetworkWatcher. </summary>
         /// <returns> An object representing collection of FlowLogs and their operations over a NetworkWatcher. </returns>
-        public FlowLogCollection GetFlowLogs()
+        public virtual FlowLogCollection GetFlowLogs()
         {
             return new FlowLogCollection(this);
         }

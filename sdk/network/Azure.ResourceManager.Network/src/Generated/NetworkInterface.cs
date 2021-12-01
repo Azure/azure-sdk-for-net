@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of NetworkInterfaceIPConfigurations in the NetworkInterface. </summary>
         /// <returns> An object representing collection of NetworkInterfaceIPConfigurations and their operations over a NetworkInterface. </returns>
-        public NetworkInterfaceIPConfigurationCollection GetNetworkInterfaceIPConfigurations()
+        public virtual NetworkInterfaceIPConfigurationCollection GetNetworkInterfaceIPConfigurations()
         {
             return new NetworkInterfaceIPConfigurationCollection(this);
         }
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of NetworkInterfaceTapConfigurations in the NetworkInterface. </summary>
         /// <returns> An object representing collection of NetworkInterfaceTapConfigurations and their operations over a NetworkInterface. </returns>
-        public NetworkInterfaceTapConfigurationCollection GetNetworkInterfaceTapConfigurations()
+        public virtual NetworkInterfaceTapConfigurationCollection GetNetworkInterfaceTapConfigurations()
         {
             return new NetworkInterfaceTapConfigurationCollection(this);
         }

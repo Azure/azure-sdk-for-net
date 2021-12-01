@@ -1064,7 +1064,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of VirtualNetworkGatewayNatRules in the VirtualNetworkGateway. </summary>
         /// <returns> An object representing collection of VirtualNetworkGatewayNatRules and their operations over a VirtualNetworkGateway. </returns>
-        public VirtualNetworkGatewayNatRuleCollection GetVirtualNetworkGatewayNatRules()
+        public virtual VirtualNetworkGatewayNatRuleCollection GetVirtualNetworkGatewayNatRules()
         {
             return new VirtualNetworkGatewayNatRuleCollection(this);
         }

@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of ExpressRouteCircuitConnections in the ExpressRouteCircuitPeering. </summary>
         /// <returns> An object representing collection of ExpressRouteCircuitConnections and their operations over a ExpressRouteCircuitPeering. </returns>
-        public ExpressRouteCircuitConnectionCollection GetExpressRouteCircuitConnections()
+        public virtual ExpressRouteCircuitConnectionCollection GetExpressRouteCircuitConnections()
         {
             return new ExpressRouteCircuitConnectionCollection(this);
         }
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of PeerExpressRouteCircuitConnections in the ExpressRouteCircuitPeering. </summary>
         /// <returns> An object representing collection of PeerExpressRouteCircuitConnections and their operations over a ExpressRouteCircuitPeering. </returns>
-        public PeerExpressRouteCircuitConnectionCollection GetPeerExpressRouteCircuitConnections()
+        public virtual PeerExpressRouteCircuitConnectionCollection GetPeerExpressRouteCircuitConnections()
         {
             return new PeerExpressRouteCircuitConnectionCollection(this);
         }

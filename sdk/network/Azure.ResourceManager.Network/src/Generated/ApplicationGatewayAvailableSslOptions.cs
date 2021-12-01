@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of ApplicationGatewaySslPredefinedPolicies in the ApplicationGatewayAvailableSslOptions. </summary>
         /// <returns> An object representing collection of ApplicationGatewaySslPredefinedPolicies and their operations over a ApplicationGatewayAvailableSslOptions. </returns>
-        public ApplicationGatewaySslPredefinedPolicyCollection GetApplicationGatewaySslPredefinedPolicies()
+        public virtual ApplicationGatewaySslPredefinedPolicyCollection GetApplicationGatewaySslPredefinedPolicies()
         {
             return new ApplicationGatewaySslPredefinedPolicyCollection(this);
         }

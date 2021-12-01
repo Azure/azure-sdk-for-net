@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of ExpressRouteCrossConnectionPeerings in the ExpressRouteCrossConnection. </summary>
         /// <returns> An object representing collection of ExpressRouteCrossConnectionPeerings and their operations over a ExpressRouteCrossConnection. </returns>
-        public ExpressRouteCrossConnectionPeeringCollection GetExpressRouteCrossConnectionPeerings()
+        public virtual ExpressRouteCrossConnectionPeeringCollection GetExpressRouteCrossConnectionPeerings()
         {
             return new ExpressRouteCrossConnectionPeeringCollection(this);
         }

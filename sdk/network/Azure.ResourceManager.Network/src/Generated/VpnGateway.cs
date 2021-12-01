@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of VpnConnections in the VpnGateway. </summary>
         /// <returns> An object representing collection of VpnConnections and their operations over a VpnGateway. </returns>
-        public VpnConnectionCollection GetVpnConnections()
+        public virtual VpnConnectionCollection GetVpnConnections()
         {
             return new VpnConnectionCollection(this);
         }
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of VpnGatewayNatRules in the VpnGateway. </summary>
         /// <returns> An object representing collection of VpnGatewayNatRules and their operations over a VpnGateway. </returns>
-        public VpnGatewayNatRuleCollection GetVpnGatewayNatRules()
+        public virtual VpnGatewayNatRuleCollection GetVpnGatewayNatRules()
         {
             return new VpnGatewayNatRuleCollection(this);
         }

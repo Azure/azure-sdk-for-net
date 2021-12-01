@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of PrivateEndpointConnections in the PrivateLinkService. </summary>
         /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a PrivateLinkService. </returns>
-        public PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
+        public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
         {
             return new PrivateEndpointConnectionCollection(this);
         }

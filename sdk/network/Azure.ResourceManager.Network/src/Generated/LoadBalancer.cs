@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of BackendAddressPools in the LoadBalancer. </summary>
         /// <returns> An object representing collection of BackendAddressPools and their operations over a LoadBalancer. </returns>
-        public BackendAddressPoolCollection GetBackendAddressPools()
+        public virtual BackendAddressPoolCollection GetBackendAddressPools()
         {
             return new BackendAddressPoolCollection(this);
         }
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of FrontendIPConfigurations in the LoadBalancer. </summary>
         /// <returns> An object representing collection of FrontendIPConfigurations and their operations over a LoadBalancer. </returns>
-        public FrontendIPConfigurationCollection GetFrontendIPConfigurations()
+        public virtual FrontendIPConfigurationCollection GetFrontendIPConfigurations()
         {
             return new FrontendIPConfigurationCollection(this);
         }
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of InboundNatRules in the LoadBalancer. </summary>
         /// <returns> An object representing collection of InboundNatRules and their operations over a LoadBalancer. </returns>
-        public InboundNatRuleCollection GetInboundNatRules()
+        public virtual InboundNatRuleCollection GetInboundNatRules()
         {
             return new InboundNatRuleCollection(this);
         }
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of LoadBalancingRules in the LoadBalancer. </summary>
         /// <returns> An object representing collection of LoadBalancingRules and their operations over a LoadBalancer. </returns>
-        public LoadBalancingRuleCollection GetLoadBalancingRules()
+        public virtual LoadBalancingRuleCollection GetLoadBalancingRules()
         {
             return new LoadBalancingRuleCollection(this);
         }
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of OutboundRules in the LoadBalancer. </summary>
         /// <returns> An object representing collection of OutboundRules and their operations over a LoadBalancer. </returns>
-        public OutboundRuleCollection GetOutboundRules()
+        public virtual OutboundRuleCollection GetOutboundRules()
         {
             return new OutboundRuleCollection(this);
         }
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of Probes in the LoadBalancer. </summary>
         /// <returns> An object representing collection of Probes and their operations over a LoadBalancer. </returns>
-        public ProbeCollection GetProbes()
+        public virtual ProbeCollection GetProbes()
         {
             return new ProbeCollection(this);
         }
