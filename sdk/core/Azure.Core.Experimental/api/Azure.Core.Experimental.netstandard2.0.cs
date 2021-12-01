@@ -88,11 +88,6 @@ namespace Azure.Core
 }
 namespace Azure.Messaging
 {
-    public partial interface IMessageWithContentType
-    {
-        string ContentType { get; set; }
-        System.BinaryData Data { get; set; }
-    }
     public abstract partial class MessageWithMetadata
     {
         protected MessageWithMetadata() { }
