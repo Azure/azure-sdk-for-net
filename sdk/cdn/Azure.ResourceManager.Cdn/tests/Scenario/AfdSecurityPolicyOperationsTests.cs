@@ -11,9 +11,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Cdn.Tests
 {
-    public class afdSecurityPolicyOperationsTests : CdnManagementTestBase
+    public class AfdSecurityPolicyOperationsTests : CdnManagementTestBase
     {
-        public afdSecurityPolicyOperationsTests(bool isAsync)
+        public AfdSecurityPolicyOperationsTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
