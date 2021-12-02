@@ -1,7 +1,5 @@
 # Checks spelling of files that changed between the current state of the repo
 # and some ref (branch, tag, etc.) or commit hash. Only runs on PRs.
-# These steps require that NPM is upgraded to include a version of NPM which
-# supports `npm exec`
 # ContinueOnError   - true: Pipeline warns on spelling error
 #                     false: Pipeline fails on spelling error
 # TargetBranch      - Target ref (e.g. main) to compare to create file change
