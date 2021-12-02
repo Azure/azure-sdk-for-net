@@ -124,8 +124,8 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceBus.Models.AccessKeys> GetKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.Models.AccessKeys>> GetKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ServiceBus.Models.AccessKeys> RegenerateKeys(Azure.ResourceManager.ServiceBus.Models.RegenerateAccessKeyParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.Models.AccessKeys>> RegenerateKeysAsync(Azure.ResourceManager.ServiceBus.Models.RegenerateAccessKeyParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceBus.Models.AccessKeys> RegenerateKeys(Azure.ResourceManager.ServiceBus.Models.RegenerateAccessKeyOptions parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.Models.AccessKeys>> RegenerateKeysAsync(Azure.ResourceManager.ServiceBus.Models.RegenerateAccessKeyOptions parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class NamespaceAuthorizationRuleCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceBus.NamespaceAuthorizationRule>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.NamespaceAuthorizationRule>, System.Collections.IEnumerable
     {
@@ -190,8 +190,8 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceBus.Models.AccessKeys> GetKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.Models.AccessKeys>> GetKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ServiceBus.Models.AccessKeys> RegenerateKeys(Azure.ResourceManager.ServiceBus.Models.RegenerateAccessKeyParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.Models.AccessKeys>> RegenerateKeysAsync(Azure.ResourceManager.ServiceBus.Models.RegenerateAccessKeyParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceBus.Models.AccessKeys> RegenerateKeys(Azure.ResourceManager.ServiceBus.Models.RegenerateAccessKeyOptions parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.Models.AccessKeys>> RegenerateKeysAsync(Azure.ResourceManager.ServiceBus.Models.RegenerateAccessKeyOptions parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class NamespaceQueueAuthorizationRuleCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceBus.NamespaceQueueAuthorizationRule>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.NamespaceQueueAuthorizationRule>, System.Collections.IEnumerable
     {
@@ -226,8 +226,8 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceBus.Models.AccessKeys> GetKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.Models.AccessKeys>> GetKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ServiceBus.Models.AccessKeys> RegenerateKeys(Azure.ResourceManager.ServiceBus.Models.RegenerateAccessKeyParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.Models.AccessKeys>> RegenerateKeysAsync(Azure.ResourceManager.ServiceBus.Models.RegenerateAccessKeyParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceBus.Models.AccessKeys> RegenerateKeys(Azure.ResourceManager.ServiceBus.Models.RegenerateAccessKeyOptions parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.Models.AccessKeys>> RegenerateKeysAsync(Azure.ResourceManager.ServiceBus.Models.RegenerateAccessKeyOptions parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class NamespaceTopicAuthorizationRuleCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceBus.NamespaceTopicAuthorizationRule>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.NamespaceTopicAuthorizationRule>, System.Collections.IEnumerable
     {
@@ -352,8 +352,8 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusNamespace>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusNamespace> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusNamespace>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusNamespace> Update(Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespaceUpdateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusNamespace>> UpdateAsync(Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespaceUpdateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusNamespace> Update(Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespaceUpdateOptions parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusNamespace>> UpdateAsync(Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespaceUpdateOptions parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ServiceBusNamespaceCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusNamespace>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusNamespace>, System.Collections.IEnumerable
     {
@@ -1097,9 +1097,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class RegenerateAccessKeyParameters
+    public partial class RegenerateAccessKeyOptions
     {
-        public RegenerateAccessKeyParameters(Azure.ResourceManager.ServiceBus.Models.KeyType keyType) { }
+        public RegenerateAccessKeyOptions(Azure.ResourceManager.ServiceBus.Models.KeyType keyType) { }
         public string Key { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.KeyType KeyType { get { throw null; } }
     }
@@ -1140,9 +1140,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public bool? IsDurable { get { throw null; } set { } }
         public bool? IsShared { get { throw null; } set { } }
     }
-    public partial class ServiceBusNamespaceUpdateParameters : Azure.ResourceManager.Models.TrackedResource
+    public partial class ServiceBusNamespaceUpdateOptions : Azure.ResourceManager.Models.TrackedResource
     {
-        public ServiceBusNamespaceUpdateParameters(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        public ServiceBusNamespaceUpdateOptions(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
         public System.DateTimeOffset? CreatedAt { get { throw null; } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.EncryptionProperties Encryption { get { throw null; } set { } }
