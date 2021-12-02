@@ -118,7 +118,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 return BuildErrorResponse($"Invalid response type: '{response.GetType()}' in current request type '{requestType}'.");
             }
             // should not hit.
-            throw new Exception($"Invalid request type, {requestType}");
+            throw new ArgumentException($"Invalid request type, {requestType}");
         }
 
         public static HttpResponseMessage BuildValidResponse(
@@ -127,8 +127,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         {
             try
             {
-                // Accepts JObject response or stringified, otherwise return ServerError.
-                JObject response = jResponse is JObject jObj ? jObj : JObject.Parse(jResponse.ToString());
+                JObject response = jResponse is JObject jObj ? jObj : throw new ArgumentException("Response should be a JObject.");
 
                 // check error as top priority.
                 if (response.TryGetValue("code", out var code)
@@ -142,8 +141,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 {
                     var states = GetStatesFromJson(response);
                     var mergedStates = context.UpdateStates(states);
+                    var formattedResponse = JsonConvert.SerializeObject(response.ToObject<ConnectEventResponse>());
                     // Use original value directly to set response.
-                    return BuildConnectEventResponse(JsonConvert.SerializeObject(response), mergedStates);
+                    return BuildConnectEventResponse(formattedResponse, mergedStates);
                 }
                 if (requestType == RequestType.User)
                 {
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             }
 
             // should not hit.
-            throw new Exception($"Invalid request type, '{requestType}'.");
+            throw new ArgumentException($"Invalid request type, '{requestType}'.");
         }
 
         public static HttpStatusCode GetStatusCode(WebPubSubErrorCode errorCode) =>

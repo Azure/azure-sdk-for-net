@@ -18,6 +18,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 {
     public class JObjectTests
     {
+        public JObjectTests()
+        {
+            WebPubSubConfigProvider.RegisterJsonConverter();
+        }
+
         [TestCase(nameof(SendToAllAction))]
         [TestCase(nameof(SendToConnectionAction))]
         [TestCase(nameof(SendToGroupAction))]
@@ -34,8 +39,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase(nameof(RevokePermissionAction))]
         public void TestOutputConvert(string actionName)
         {
-            WebPubSubConfigProvider.RegisterJsonConverter();
-
             var input = @"{ ""actionName"":""{0}"",""userId"":""user"", ""group"":""group1"",""connectionId"":""connection"",""data"":""test"",""dataType"":""text"", ""reason"":""close"", ""excluded"":[""aa"",""bb""]}";
 
             var replacedInput = input.Replace("{0}", actionName.Substring(0, actionName.IndexOf("Action")));
@@ -53,8 +56,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase(nameof(SendToUserAction))]
         public void TestInvalidSendConvert(string actionName)
         {
-            WebPubSubConfigProvider.RegisterJsonConverter();
-
             var input = @"{ ""actionName"":""{0}"",""userId"":""user"", ""group"":""group1"",""connectionId"":""connection"",""data"": {""type"":""binary"", ""data"": [66, 105, 110, 97, 114, 121, 68, 97, 116, 97]} ,""dataType"":""binary"", ""reason"":""close"", ""excluded"":[""aa"",""bb""]}";
 
             var replacedInput = input.Replace("{0}", actionName);
@@ -70,8 +71,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase(typeof(SendToUserAction))]
         public void TestValidSendBinaryConvert(Type actionName)
         {
-            WebPubSubConfigProvider.RegisterJsonConverter();
-
             var input = @"{ ""actionName"":""{0}"",""userId"":""user"", ""group"":""group1"",""connectionId"":""connection"",""data"": {""type"":""Buffer"", ""data"": [66, 105, 110, 97, 114, 121, 68, 97, 116, 97]} ,""dataType"":""binary"", ""reason"":""close"", ""excluded"":[""aa"",""bb""]}";
 
             var replacedInput = input.Replace("{0}", actionName.Name.Substring(0, actionName.Name.IndexOf("Action")));
@@ -88,8 +87,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase("unknown")]
         public void TestInvalidWebPubSubOperationConvert(string actionName)
         {
-            WebPubSubConfigProvider.RegisterJsonConverter();
-
             var input = @"{ ""actionName"":""{0}"",""userId"":""user"", ""group"":""group1"",""connectionId"":""connection"",""data"":""test"",""dataType"":""text"", ""reason"":""close"", ""excluded"":[""aa"",""bb""]}";
 
             var replacedInput = input.Replace("{0}", actionName);
@@ -104,8 +101,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase]
         public void TestBinaryDataConverter_String()
         {
-            WebPubSubConfigProvider.RegisterJsonConverter();
-
             var input = @"{ actionName : ""sendToAll"", dataType: ""text"", data: ""2""}";
 
             var converted = JObject.Parse(input).ToObject<SendToAllAction>();
@@ -116,8 +111,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase]
         public void TestBinaryDataConverter_NonStringThrows()
         {
-            WebPubSubConfigProvider.RegisterJsonConverter();
-
             var input = @"{ actionName : ""sendToAll"", dataType: ""text"", data: 2}";
 
             Assert.Throws<ArgumentException>(() => JObject.Parse(input).ToObject<SendToAllAction>(), "Message data should be string, please stringify object.");
@@ -126,7 +119,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase]
         public void TestBinaryDataConvertFromByteArray_Newtonsoft()
         {
-            WebPubSubConfigProvider.RegisterJsonConverter();
             var testData = @"{""type"":""Buffer"", ""data"": [66, 105, 110, 97, 114, 121, 68, 97, 116, 97]}";
 
             var converted = JObject.Parse(testData).ToObject<BinaryData>();
@@ -174,7 +166,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase]
         public async Task ParseConnectResponseWithValidStates()
         {
-            WebPubSubConfigProvider.RegisterJsonConverter();
             var test = @"{""userId"":""aaa"", ""states"": { ""a"": ""b"", ""a"": ""c"" }}";
 
             var result = BuildResponse(test, RequestType.Connect, false);
@@ -195,25 +186,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase]
         public async Task ParseMessageResponse()
         {
-            WebPubSubConfigProvider.RegisterJsonConverter();
             var test = @"{""data"":""test"", ""dataType"":""text""}";
-
-            var result = BuildResponse(test, RequestType.User);
-
-            Assert.NotNull(result);
-            Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
-
-            var message = await result.Content.ReadAsStringAsync();
-            Assert.AreEqual("test", message);
-            Assert.AreEqual(Constants.ContentTypes.PlainTextContentType, result.Content.Headers.ContentType.MediaType);
-        }
-
-        [TestCase]
-        public async Task ParseMessageResponse_StringifiedResponse()
-        {
-            WebPubSubConfigProvider.RegisterJsonConverter();
-            // serialize agagin to stringify.
-            var test = JsonConvert.SerializeObject(@"{""data"":""test"", ""dataType"":""text""}");
 
             var result = BuildResponse(test, RequestType.User);
 
@@ -253,7 +226,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         public async Task ParseConnectResponse_ContentMatches()
         {
             var test = @"{""test"":""test"",""errorMessage"":""not valid user.""}";
-            var expected = JObject.Parse(test);
+            var expected = JObject.FromObject(JsonConvert.DeserializeObject<ConnectEventResponse>(test));
+
+            // Will be formated to controlled class.
+            Assert.AreEqual("Success", expected["code"].Value<string>());
 
             var result = BuildResponse(test, RequestType.Connect);
             var content = await result.Content.ReadAsStringAsync();
@@ -370,7 +346,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase]
         public void TestWebPubSubContext_UserEventStates_Legacy()
         {
-            WebPubSubConfigProvider.RegisterJsonConverter();
             var states =
                 new Dictionary<string, object>
                 {
@@ -414,7 +389,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase]
         public void TestWebPubSubContext_UserEventStates()
         {
-            WebPubSubConfigProvider.RegisterJsonConverter();
             var states =
                 new Dictionary<string, object>
                 {
@@ -490,7 +464,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase]
         public void TestWebPubSubContext_UserEventStates_NotDoubleSerialized()
         {
-            WebPubSubConfigProvider.RegisterJsonConverter();
             var states =
                 new Dictionary<string, object>
                 {
@@ -519,7 +492,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase]
         public void TestWebPubSubContext_UserEventStates_CollectionsInSync()
         {
-            WebPubSubConfigProvider.RegisterJsonConverter();
             var states =
                 new Dictionary<string, object>
                 {
