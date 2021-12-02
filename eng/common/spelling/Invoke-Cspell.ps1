@@ -170,9 +170,10 @@ try {
   npm install | Out-Null
 
   # Use the mutated configuration file when calling cspell
-  $command = "npm exec -- cspell $JobType --config $CSpellConfigPath --no-must-find-files --root $SpellCheckRoot --relative"
+  $command = "npx --no-install cspell $JobType --config $CSpellConfigPath --no-must-find-files --root $SpellCheckRoot --relative"
   Write-Host $command
-  $cspellOutput = npm exec -- `
+  $cspellOutput = npx  `
+    --no-install `
     cspell `
     $JobType `
     --config $CSpellConfigPath `
