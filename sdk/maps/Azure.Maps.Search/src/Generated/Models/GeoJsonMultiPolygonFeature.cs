@@ -13,7 +13,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of GeoJsonMultiPolygonFeature. </summary>
         internal GeoJsonMultiPolygonFeature()
         {
-            Type = "Polygon";
+            Type = "MultiPolygon";
         }
 
         /// <summary> Specifies the `GeoJSON` type. Polygon. </summary>
