@@ -26,7 +26,12 @@ parameters:
     type: object
     default:
       - '**'
-
+  - name: PackageSourceOverride
+    type: string
+    default: ''
+  - name: DocValidationImageId
+    type: string
+    default: ''
 steps:
 - template: /eng/common/pipelines/templates/steps/enable-long-path-support.yml
 
@@ -73,7 +78,13 @@ steps:
     parameters:
       WorkingDirectory: $(DocRepoLocation)
       DefaultBranchVariableName: TargetBranchName
-
+# Pull and build the docker image.
+- ${{ if ne(parameters.DocValidationImageId, '') }}:
+- template: /eng/common/pipelines/templates/steps/docker-pull-image.yml
+  parameters:
+    ContainerRegistryClientId: $(azuresdkimages-cr-clientid)
+    ContainerRegistryClientSecret: $(azuresdkimages-cr-clientsecret)
+    ImageId: '${{ parameters.DocValidationImageId }}'
 - pwsh: |
     $packageInfoJson = '${{ convertToJson(parameters.PackageInfoLocations) }}'.Trim('"').Replace("\\", "/")
     $packageInfoLocations = ConvertFrom-Json $packageInfoJson
@@ -81,7 +92,9 @@ steps:
       -PackageInfoJsonLocations $packageInfoLocations `
       -DocRepoLocation "$(DocRepoLocation)" `
       -Language '${{parameters.Language}}' `
-      -RepoId '${{ parameters.RepoId }}'
+      -RepoId '${{ parameters.RepoId }}' `
+      -DocValidationImageId '${{ parameters.DocValidationImageId }}' `
+      -PackageSourceOverride '${{ parameters.PackageSourceOverride }}'
   displayName: Apply Documentation Updates
 
 - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
