@@ -138,4 +138,20 @@ directive:
     - rename-model:
         from: Encryption
         to: EncryptionProperties
+    - from: swagger-document
+      where: $.definitions.PrivateEndpointConnectionProperties.properties.provisioningState
+      transform: >
+        $['x-ms-enum'] = {
+            "name": "EndpointProvisioningState",
+            "modelAsString": true
+        }
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/privateEndpointConnections/{privateEndpointConnectionName}'].put.parameters[5]
+      transform: $['description'] = 'Parameters supplied to update Status of PrivateEndpoint Connection to namespace resource.'
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/privateEndpointConnections/{privateEndpointConnectionName}'].put.responses.200
+      transform: $['description'] = 'Status of PrivateEndpoint Connection Created successfully.'
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/privateEndpointConnections/{privateEndpointConnectionName}'].put.responses.201
+      transform: $['description'] = 'Request to update Status of PrivateEndpoint Connection accepted.'
 ```
