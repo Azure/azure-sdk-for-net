@@ -42,7 +42,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private readonly string _functionId;
         private CancellationTokenRegistration _batchReceiveRegistration;
         private Task _batchLoop;
-        private string _details;
+        private Lazy<string> _details;
 
         public ServiceBusListener(
             string functionId,
@@ -109,8 +109,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             _singleDispatch = singleDispatch;
             _serviceBusOptions = options;
 
-            _details = $"namespace='{_client.Value?.FullyQualifiedNamespace}', enityPath='{_entityPath}', singleDispatch='{_singleDispatch}', " +
-                $"isSessionsEnabled='{_isSessionsEnabled}', functionId='{_functionId}'";
+            _details = new Lazy<string>(() => $"namespace='{_client.Value?.FullyQualifiedNamespace}', enityPath='{_entityPath}', singleDispatch='{_singleDispatch}', " +
+                $"isSessionsEnabled='{_isSessionsEnabled}', functionId='{_functionId}'");
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
