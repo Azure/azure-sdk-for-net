@@ -142,7 +142,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                     var states = GetStatesFromJson(response);
                     var mergedStates = context.UpdateStates(states);
                     var formattedResponse = JsonConvert.SerializeObject(response.ToObject<ConnectEventResponse>());
-                    // Use original value directly to set response.
                     return BuildConnectEventResponse(formattedResponse, mergedStates);
                 }
                 if (requestType == RequestType.User)
