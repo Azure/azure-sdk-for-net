@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _serverConnectionPoliciesRestClient = new ServerConnectionPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _serverConnectionPoliciesRestClient = new ServerConnectionPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ServerConnectionPolicy"/> class. </summary>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql
         internal ServerConnectionPolicy(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _serverConnectionPoliciesRestClient = new ServerConnectionPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _serverConnectionPoliciesRestClient = new ServerConnectionPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ServerConnectionPolicy"/> class. </summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql
         internal ServerConnectionPolicy(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _serverConnectionPoliciesRestClient = new ServerConnectionPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _serverConnectionPoliciesRestClient = new ServerConnectionPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Sql
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/connectionPolicies/{connectionPolicyName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/connectionPolicies/{connectionPolicyName}
         /// OperationId: ServerConnectionPolicies_Get
-        /// <summary> Gets the server&apos;s secure connection policy. </summary>
+        /// <summary> Gets a server connection policy. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ServerConnectionPolicy>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _serverConnectionPoliciesRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _serverConnectionPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ServerConnectionPolicy(this, response.Value), response.GetRawResponse());
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Sql
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/connectionPolicies/{connectionPolicyName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/connectionPolicies/{connectionPolicyName}
         /// OperationId: ServerConnectionPolicies_Get
-        /// <summary> Gets the server&apos;s secure connection policy. </summary>
+        /// <summary> Gets a server connection policy. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServerConnectionPolicy> Get(CancellationToken cancellationToken = default)
         {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _serverConnectionPoliciesRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _serverConnectionPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerConnectionPolicy(this, response.Value), response.GetRawResponse());

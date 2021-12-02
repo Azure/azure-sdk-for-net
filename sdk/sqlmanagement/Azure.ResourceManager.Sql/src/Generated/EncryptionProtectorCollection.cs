@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Sql
         internal EncryptionProtectorCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _encryptionProtectorsRestClient = new EncryptionProtectorsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _encryptionProtectorsRestClient = new EncryptionProtectorsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Server.ResourceType;
+        protected override ResourceType ValidResourceType => SqlServer.ResourceType;
 
         // Collection level operations.
 
@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _encryptionProtectorsRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, encryptionProtectorName, parameters, cancellationToken);
-                var operation = new EncryptionProtectorCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _encryptionProtectorsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, encryptionProtectorName, parameters).Request, response);
+                var response = _encryptionProtectorsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, parameters, cancellationToken);
+                var operation = new EncryptionProtectorCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _encryptionProtectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -98,8 +98,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _encryptionProtectorsRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, encryptionProtectorName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new EncryptionProtectorCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _encryptionProtectorsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, encryptionProtectorName, parameters).Request, response);
+                var response = await _encryptionProtectorsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new EncryptionProtectorCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _encryptionProtectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _encryptionProtectorsRestClient.Get(Id.ResourceGroupName, Id.Name, encryptionProtectorName, cancellationToken);
+                var response = _encryptionProtectorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new EncryptionProtector(Parent, response.Value), response.GetRawResponse());
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _encryptionProtectorsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, encryptionProtectorName, cancellationToken).ConfigureAwait(false);
+                var response = await _encryptionProtectorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new EncryptionProtector(Parent, response.Value), response.GetRawResponse());
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _encryptionProtectorsRestClient.Get(Id.ResourceGroupName, Id.Name, encryptionProtectorName, cancellationToken: cancellationToken);
+                var response = _encryptionProtectorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<EncryptionProtector>(null, response.GetRawResponse())
                     : Response.FromValue(new EncryptionProtector(this, response.Value), response.GetRawResponse());
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _encryptionProtectorsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, encryptionProtectorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _encryptionProtectorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<EncryptionProtector>(null, response.GetRawResponse())
                     : Response.FromValue(new EncryptionProtector(this, response.Value), response.GetRawResponse());
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = _encryptionProtectorsRestClient.ListByServer(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _encryptionProtectorsRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new EncryptionProtector(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = _encryptionProtectorsRestClient.ListByServerNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _encryptionProtectorsRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new EncryptionProtector(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = await _encryptionProtectorsRestClient.ListByServerAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _encryptionProtectorsRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new EncryptionProtector(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = await _encryptionProtectorsRestClient.ListByServerNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _encryptionProtectorsRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new EncryptionProtector(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

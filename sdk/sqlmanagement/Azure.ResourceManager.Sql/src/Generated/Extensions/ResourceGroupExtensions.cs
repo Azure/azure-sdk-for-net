@@ -40,23 +40,23 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region ResourceGroupLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackup
-        /// <summary> Gets an object representing a ResourceGroupLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackupCollection along with the instance operations that can be performed on it. </summary>
+        #region ResourceGroupLongTermRetentionBackup
+        /// <summary> Gets an object representing a ResourceGroupLongTermRetentionBackupCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ResourceGroupLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackupCollection" /> object. </returns>
-        public static ResourceGroupLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackupCollection GetResourceGroupLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackups(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="ResourceGroupLongTermRetentionBackupCollection" /> object. </returns>
+        public static ResourceGroupLongTermRetentionBackupCollection GetResourceGroupLongTermRetentionBackups(this ResourceGroup resourceGroup)
         {
-            return new ResourceGroupLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackupCollection(resourceGroup);
+            return new ResourceGroupLongTermRetentionBackupCollection(resourceGroup);
         }
         #endregion
 
-        #region ResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackup
-        /// <summary> Gets an object representing a ResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackupCollection along with the instance operations that can be performed on it. </summary>
+        #region ResourceGroupLongTermRetentionManagedInstanceBackup
+        /// <summary> Gets an object representing a ResourceGroupLongTermRetentionManagedInstanceBackupCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackupCollection" /> object. </returns>
-        public static ResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackupCollection GetResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackups(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="ResourceGroupLongTermRetentionManagedInstanceBackupCollection" /> object. </returns>
+        public static ResourceGroupLongTermRetentionManagedInstanceBackupCollection GetResourceGroupLongTermRetentionManagedInstanceBackups(this ResourceGroup resourceGroup)
         {
-            return new ResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackupCollection(resourceGroup);
+            return new ResourceGroupLongTermRetentionManagedInstanceBackupCollection(resourceGroup);
         }
         #endregion
 
@@ -90,24 +90,24 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region Server
-        /// <summary> Gets an object representing a ServerCollection along with the instance operations that can be performed on it. </summary>
+        #region SqlServer
+        /// <summary> Gets an object representing a SqlServerCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ServerCollection" /> object. </returns>
-        public static ServerCollection GetServers(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="SqlServerCollection" /> object. </returns>
+        public static SqlServerCollection GetSqlServers(this ResourceGroup resourceGroup)
         {
-            return new ServerCollection(resourceGroup);
+            return new SqlServerCollection(resourceGroup);
         }
         #endregion
 
-        private static LongTermRetentionBackupsRestOperations GetLongTermRetentionBackupsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        private static LongTermRetentionBackupsRestOperations GetLongTermRetentionBackupsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
         {
-            return new LongTermRetentionBackupsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+            return new LongTermRetentionBackupsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
 
-        private static LongTermRetentionManagedInstanceBackupsRestOperations GetLongTermRetentionManagedInstanceBackupsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        private static LongTermRetentionManagedInstanceBackupsRestOperations GetLongTermRetentionManagedInstanceBackupsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
         {
-            return new LongTermRetentionManagedInstanceBackupsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+            return new LongTermRetentionManagedInstanceBackupsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionBackups
@@ -131,14 +131,14 @@ namespace Azure.ResourceManager.Sql
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetLongTermRetentionBackupsRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
+                var restOperations = GetLongTermRetentionBackupsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 async Task<Page<LongTermRetentionBackupData>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetLongTermRetentionBackupsByResourceGroupLocation");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListByResourceGroupLocationAsync(resourceGroup.Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListByResourceGroupLocationAsync(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Sql
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListByResourceGroupLocationNextPageAsync(nextLink, resourceGroup.Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListByResourceGroupLocationNextPageAsync(nextLink, resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -188,14 +188,14 @@ namespace Azure.ResourceManager.Sql
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetLongTermRetentionBackupsRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
+                var restOperations = GetLongTermRetentionBackupsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 Page<LongTermRetentionBackupData> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetLongTermRetentionBackupsByResourceGroupLocation");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListByResourceGroupLocation(resourceGroup.Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
+                        var response = restOperations.ListByResourceGroupLocation(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Sql
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListByResourceGroupLocationNextPage(nextLink, resourceGroup.Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
+                        var response = restOperations.ListByResourceGroupLocationNextPage(nextLink, resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.Sql
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetLongTermRetentionBackupsRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
+                var restOperations = GetLongTermRetentionBackupsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 async Task<Page<LongTermRetentionBackupData>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetLongTermRetentionBackupsByResourceGroupServer");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListByResourceGroupServerAsync(resourceGroup.Id.ResourceGroupName, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListByResourceGroupServerAsync(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Sql
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListByResourceGroupServerNextPageAsync(nextLink, resourceGroup.Id.ResourceGroupName, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListByResourceGroupServerNextPageAsync(nextLink, resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -312,14 +312,14 @@ namespace Azure.ResourceManager.Sql
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetLongTermRetentionBackupsRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
+                var restOperations = GetLongTermRetentionBackupsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 Page<LongTermRetentionBackupData> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetLongTermRetentionBackupsByResourceGroupServer");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListByResourceGroupServer(resourceGroup.Id.ResourceGroupName, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
+                        var response = restOperations.ListByResourceGroupServer(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Sql
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListByResourceGroupServerNextPage(nextLink, resourceGroup.Id.ResourceGroupName, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
+                        var response = restOperations.ListByResourceGroupServerNextPage(nextLink, resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -374,14 +374,14 @@ namespace Azure.ResourceManager.Sql
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetLongTermRetentionManagedInstanceBackupsRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
+                var restOperations = GetLongTermRetentionManagedInstanceBackupsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 async Task<Page<ManagedInstanceLongTermRetentionBackupData>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstance");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListByResourceGroupInstanceAsync(resourceGroup.Id.ResourceGroupName, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListByResourceGroupInstanceAsync(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Sql
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListByResourceGroupInstanceNextPageAsync(nextLink, resourceGroup.Id.ResourceGroupName, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListByResourceGroupInstanceNextPageAsync(nextLink, resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -436,14 +436,14 @@ namespace Azure.ResourceManager.Sql
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetLongTermRetentionManagedInstanceBackupsRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
+                var restOperations = GetLongTermRetentionManagedInstanceBackupsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 Page<ManagedInstanceLongTermRetentionBackupData> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstance");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListByResourceGroupInstance(resourceGroup.Id.ResourceGroupName, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
+                        var response = restOperations.ListByResourceGroupInstance(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.Sql
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListByResourceGroupInstanceNextPage(nextLink, resourceGroup.Id.ResourceGroupName, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
+                        var response = restOperations.ListByResourceGroupInstanceNextPage(nextLink, resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -493,14 +493,14 @@ namespace Azure.ResourceManager.Sql
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetLongTermRetentionManagedInstanceBackupsRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
+                var restOperations = GetLongTermRetentionManagedInstanceBackupsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 async Task<Page<ManagedInstanceLongTermRetentionBackupData>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocation");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListByResourceGroupLocationAsync(resourceGroup.Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListByResourceGroupLocationAsync(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.Sql
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListByResourceGroupLocationNextPageAsync(nextLink, resourceGroup.Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListByResourceGroupLocationNextPageAsync(nextLink, resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -550,14 +550,14 @@ namespace Azure.ResourceManager.Sql
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetLongTermRetentionManagedInstanceBackupsRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
+                var restOperations = GetLongTermRetentionManagedInstanceBackupsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 Page<ManagedInstanceLongTermRetentionBackupData> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocation");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListByResourceGroupLocation(resourceGroup.Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
+                        var response = restOperations.ListByResourceGroupLocation(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.Sql
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListByResourceGroupLocationNextPage(nextLink, resourceGroup.Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
+                        var response = restOperations.ListByResourceGroupLocationNextPage(nextLink, resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)

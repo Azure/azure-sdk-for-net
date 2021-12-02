@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(ConnectionType))
             {
                 writer.WritePropertyName("connectionType");
-                writer.WriteStringValue(ConnectionType.Value.ToSerialString());
+                writer.WriteStringValue(ConnectionType.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -30,27 +30,27 @@ namespace Azure.ResourceManager.Sql
 
         internal static ServerConnectionPolicyData DeserializeServerConnectionPolicyData(JsonElement element)
         {
-            Optional<string> kind = default;
             Optional<string> location = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<ServerConnectionType> connectionType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
-                {
-                    kind = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("location"))
                 {
                     location = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("kind"))
+                {
+                    kind = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -79,14 +79,14 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            connectionType = property0.Value.GetString().ToServerConnectionType();
+                            connectionType = new ServerConnectionType(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ServerConnectionPolicyData(id, name, type, kind.Value, location.Value, Optional.ToNullable(connectionType));
+            return new ServerConnectionPolicyData(id, name, type, location.Value, kind.Value, Optional.ToNullable(connectionType));
         }
     }
 }

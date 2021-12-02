@@ -22,8 +22,8 @@ namespace Microsoft.Azure.Management.Avs
     public static partial class ScriptCmdletsOperationsExtensions
     {
             /// <summary>
-            /// Return script cmdlet resources available for a private cloud to create a
-            /// script execution resource on their Private Cloud
+            /// List script cmdlet resources available for a private cloud to create a
+            /// script execution resource on a private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -43,8 +43,8 @@ namespace Microsoft.Azure.Management.Avs
             }
 
             /// <summary>
-            /// Return script cmdlet resources available for a private cloud to create a
-            /// script execution resource on their Private Cloud
+            /// List script cmdlet resources available for a private cloud to create a
+            /// script execution resource on a private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -126,8 +126,8 @@ namespace Microsoft.Azure.Management.Avs
             }
 
             /// <summary>
-            /// Return script cmdlet resources available for a private cloud to create a
-            /// script execution resource on their Private Cloud
+            /// List script cmdlet resources available for a private cloud to create a
+            /// script execution resource on a private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -141,8 +141,8 @@ namespace Microsoft.Azure.Management.Avs
             }
 
             /// <summary>
-            /// Return script cmdlet resources available for a private cloud to create a
-            /// script execution resource on their Private Cloud
+            /// List script cmdlet resources available for a private cloud to create a
+            /// script execution resource on a private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

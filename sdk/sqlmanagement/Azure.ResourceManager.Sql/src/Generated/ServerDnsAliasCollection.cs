@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Sql
         internal ServerDnsAliasCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _serverDnsAliasesRestClient = new ServerDnsAliasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _serverDnsAliasesRestClient = new ServerDnsAliasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Server.ResourceType;
+        protected override ResourceType ValidResourceType => SqlServer.ResourceType;
 
         // Collection level operations.
 
@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _serverDnsAliasesRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken);
-                var operation = new ServerDnsAliasCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _serverDnsAliasesRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, dnsAliasName).Request, response);
+                var response = _serverDnsAliasesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken);
+                var operation = new ServerDnsAliasCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _serverDnsAliasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _serverDnsAliasesRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken).ConfigureAwait(false);
-                var operation = new ServerDnsAliasCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _serverDnsAliasesRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, dnsAliasName).Request, response);
+                var response = await _serverDnsAliasesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken).ConfigureAwait(false);
+                var operation = new ServerDnsAliasCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _serverDnsAliasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _serverDnsAliasesRestClient.Get(Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken);
+                var response = _serverDnsAliasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerDnsAlias(Parent, response.Value), response.GetRawResponse());
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _serverDnsAliasesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken).ConfigureAwait(false);
+                var response = await _serverDnsAliasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ServerDnsAlias(Parent, response.Value), response.GetRawResponse());
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _serverDnsAliasesRestClient.Get(Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken: cancellationToken);
+                var response = _serverDnsAliasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<ServerDnsAlias>(null, response.GetRawResponse())
                     : Response.FromValue(new ServerDnsAlias(this, response.Value), response.GetRawResponse());
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _serverDnsAliasesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serverDnsAliasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<ServerDnsAlias>(null, response.GetRawResponse())
                     : Response.FromValue(new ServerDnsAlias(this, response.Value), response.GetRawResponse());
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = _serverDnsAliasesRestClient.ListByServer(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _serverDnsAliasesRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ServerDnsAlias(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = _serverDnsAliasesRestClient.ListByServerNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _serverDnsAliasesRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ServerDnsAlias(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = await _serverDnsAliasesRestClient.ListByServerAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _serverDnsAliasesRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ServerDnsAlias(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = await _serverDnsAliasesRestClient.ListByServerNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _serverDnsAliasesRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ServerDnsAlias(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

@@ -16,10 +16,10 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ## Synchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPrediction
+ConversationsProject orchestrationProject = new ConversationsProject("DomainOrchestrator", "production");
 Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-    "DomainOrchestrator",
-    "production",
-    "Where are the calories per recipe?");
+    "Where are the calories per recipe?",
+    orchestrationProject);
 
 OrchestratorPrediction orchestratorPrediction = response.Value.Prediction as OrchestratorPrediction;
 ```
@@ -27,10 +27,10 @@ OrchestratorPrediction orchestratorPrediction = response.Value.Prediction as Orc
 ## Asynchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionAsync
+ConversationsProject orchestrationProject = new ConversationsProject("DomainOrchestrator", "production");
 Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
-    "DomainOrchestrator",
-    "production",
-    "Where are the calories per recipe?");
+    "Where are the calories per recipe?",
+    orchestrationProject);
 
 OrchestratorPrediction orchestratorPrediction = response.Value.Prediction as OrchestratorPrediction;
 ```
@@ -55,7 +55,7 @@ if (targetIntentResult.TargetKind == TargetKind.QuestionAnswering)
     foreach (KnowledgeBaseAnswer answer in qnaAnswers.Answers)
     {
         Console.WriteLine($"Answer: {answer.Answer}");
-        Console.WriteLine($"Confidence Score: {answer.ConfidenceScore}");
+        Console.WriteLine($"Confidence: {answer.Confidence}");
         Console.WriteLine($"Source: {answer.Source}");
         Console.WriteLine();
     }
@@ -83,7 +83,7 @@ if (targetIntentResult.TargetKind == TargetKind.Conversation)
     foreach (ConversationIntent intent in conversationPrediction.Intents)
     {
         Console.WriteLine($"Intent Category: {intent.Category}");
-        Console.WriteLine($"Confidence Score: {intent.ConfidenceScore}");
+        Console.WriteLine($"Confidence: {intent.Confidence}");
         Console.WriteLine();
     }
 
@@ -92,7 +92,7 @@ if (targetIntentResult.TargetKind == TargetKind.Conversation)
     {
         Console.WriteLine($"Entity Text: {entitiy.Text}");
         Console.WriteLine($"Entity Category: {entitiy.Category}");
-        Console.WriteLine($"Confidence Score: {entitiy.ConfidenceScore}");
+        Console.WriteLine($"Confidence: {entitiy.Confidence}");
         Console.WriteLine($"Starting Position: {entitiy.Offset}");
         Console.WriteLine($"Length: {entitiy.Length}");
         Console.WriteLine();

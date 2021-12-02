@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The max size of the database expressed in bytes. </summary>
         public long? MaxSizeBytes { get; set; }
         /// <summary> The name of the sample schema to apply when creating this database. </summary>
-        public SampleName? SampleName { get; set; }
+        public SampleSchemaName? SampleName { get; set; }
         /// <summary> The resource identifier of the elastic pool containing this database. </summary>
         public string ElasticPoolId { get; set; }
         /// <summary> The resource identifier of the source database associated with create operation of this database. </summary>

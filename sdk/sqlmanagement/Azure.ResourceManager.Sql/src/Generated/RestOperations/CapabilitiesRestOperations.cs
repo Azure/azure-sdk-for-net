@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.Sql
 {
     internal partial class CapabilitiesRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -29,19 +28,16 @@ namespace Azure.ResourceManager.Sql
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public CapabilitiesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null)
+        public CapabilitiesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null)
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateListByLocationRequest(string locationName, CapabilityGroup? include)
+        internal HttpMessage CreateListByLocationRequest(string subscriptionId, string locationName, CapabilityGroup? include)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -65,18 +61,23 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets the subscription capabilities available for the specified location. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="locationName"> The location name whose capabilities are retrieved. </param>
         /// <param name="include"> If specified, restricts the response to only include the selected item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public async Task<Response<LocationCapabilities>> ListByLocationAsync(string locationName, CapabilityGroup? include = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is null. </exception>
+        public async Task<Response<LocationCapabilities>> ListByLocationAsync(string subscriptionId, string locationName, CapabilityGroup? include = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (locationName == null)
             {
                 throw new ArgumentNullException(nameof(locationName));
             }
 
-            using var message = CreateListByLocationRequest(locationName, include);
+            using var message = CreateListByLocationRequest(subscriptionId, locationName, include);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -93,18 +94,23 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets the subscription capabilities available for the specified location. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="locationName"> The location name whose capabilities are retrieved. </param>
         /// <param name="include"> If specified, restricts the response to only include the selected item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public Response<LocationCapabilities> ListByLocation(string locationName, CapabilityGroup? include = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is null. </exception>
+        public Response<LocationCapabilities> ListByLocation(string subscriptionId, string locationName, CapabilityGroup? include = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (locationName == null)
             {
                 throw new ArgumentNullException(nameof(locationName));
             }
 
-            using var message = CreateListByLocationRequest(locationName, include);
+            using var message = CreateListByLocationRequest(subscriptionId, locationName, include);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

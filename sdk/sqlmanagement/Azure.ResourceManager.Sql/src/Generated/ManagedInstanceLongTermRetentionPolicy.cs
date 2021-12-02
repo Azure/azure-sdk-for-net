@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managedInstanceLongTermRetentionPoliciesRestClient = new ManagedInstanceLongTermRetentionPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _managedInstanceLongTermRetentionPoliciesRestClient = new ManagedInstanceLongTermRetentionPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ManagedInstanceLongTermRetentionPolicy"/> class. </summary>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql
         internal ManagedInstanceLongTermRetentionPolicy(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managedInstanceLongTermRetentionPoliciesRestClient = new ManagedInstanceLongTermRetentionPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _managedInstanceLongTermRetentionPoliciesRestClient = new ManagedInstanceLongTermRetentionPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ManagedInstanceLongTermRetentionPolicy"/> class. </summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql
         internal ManagedInstanceLongTermRetentionPolicy(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managedInstanceLongTermRetentionPoliciesRestClient = new ManagedInstanceLongTermRetentionPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _managedInstanceLongTermRetentionPoliciesRestClient = new ManagedInstanceLongTermRetentionPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _managedInstanceLongTermRetentionPoliciesRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _managedInstanceLongTermRetentionPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ManagedInstanceLongTermRetentionPolicy(this, response.Value), response.GetRawResponse());
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _managedInstanceLongTermRetentionPoliciesRestClient.Get(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _managedInstanceLongTermRetentionPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ManagedInstanceLongTermRetentionPolicy(this, response.Value), response.GetRawResponse());

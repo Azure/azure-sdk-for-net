@@ -6,28 +6,33 @@
 #nullable disable
 
 using System;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> Creates or updates the server&apos;s connection policy. </summary>
-    public partial class ServerConnectionPolicyCreateOrUpdateOperation : Operation<ServerConnectionPolicy>
+    /// <summary> Updates a server connection policy. </summary>
+    public partial class ServerConnectionPolicyCreateOrUpdateOperation : Operation<ServerConnectionPolicy>, IOperationSource<ServerConnectionPolicy>
     {
-        private readonly OperationOrResponseInternals<ServerConnectionPolicy> _operation;
+        private readonly OperationInternals<ServerConnectionPolicy> _operation;
+
+        private readonly ArmResource _operationBase;
 
         /// <summary> Initializes a new instance of ServerConnectionPolicyCreateOrUpdateOperation for mocking. </summary>
         protected ServerConnectionPolicyCreateOrUpdateOperation()
         {
         }
 
-        internal ServerConnectionPolicyCreateOrUpdateOperation(ArmResource operationsBase, Response<ServerConnectionPolicyData> response)
+        internal ServerConnectionPolicyCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals<ServerConnectionPolicy>(Response.FromValue(new ServerConnectionPolicy(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationInternals<ServerConnectionPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ServerConnectionPolicyCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
 
         /// <inheritdoc />
@@ -56,5 +61,17 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <inheritdoc />
         public override ValueTask<Response<ServerConnectionPolicy>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+
+        ServerConnectionPolicy IOperationSource<ServerConnectionPolicy>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using var document = JsonDocument.Parse(response.ContentStream);
+            return new ServerConnectionPolicy(_operationBase, ServerConnectionPolicyData.DeserializeServerConnectionPolicyData(document.RootElement));
+        }
+
+        async ValueTask<ServerConnectionPolicy> IOperationSource<ServerConnectionPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        {
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return new ServerConnectionPolicy(_operationBase, ServerConnectionPolicyData.DeserializeServerConnectionPolicyData(document.RootElement));
+        }
     }
 }

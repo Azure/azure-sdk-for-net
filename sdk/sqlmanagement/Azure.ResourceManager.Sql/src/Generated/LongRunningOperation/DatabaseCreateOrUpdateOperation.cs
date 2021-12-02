@@ -18,9 +18,9 @@ using Azure.ResourceManager.Sql;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Creates a new database or updates an existing database. </summary>
-    public partial class DatabaseCreateOrUpdateOperation : Operation<Database>, IOperationSource<Database>
+    public partial class DatabaseCreateOrUpdateOperation : Operation<SqlDatabase>, IOperationSource<SqlDatabase>
     {
-        private readonly OperationInternals<Database> _operation;
+        private readonly OperationInternals<SqlDatabase> _operation;
 
         private readonly ArmResource _operationBase;
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal DatabaseCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<Database>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DatabaseCreateOrUpdateOperation");
+            _operation = new OperationInternals<SqlDatabase>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DatabaseCreateOrUpdateOperation");
             _operationBase = operationsBase;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override Database Value => _operation.Value;
+        public override SqlDatabase Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.Sql.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Database>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<SqlDatabase>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Database>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<SqlDatabase>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        Database IOperationSource<Database>.CreateResult(Response response, CancellationToken cancellationToken)
+        SqlDatabase IOperationSource<SqlDatabase>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new Database(_operationBase, DatabaseData.DeserializeDatabaseData(document.RootElement));
+            return new SqlDatabase(_operationBase, SqlDatabaseData.DeserializeSqlDatabaseData(document.RootElement));
         }
 
-        async ValueTask<Database> IOperationSource<Database>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SqlDatabase> IOperationSource<SqlDatabase>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new Database(_operationBase, DatabaseData.DeserializeDatabaseData(document.RootElement));
+            return new SqlDatabase(_operationBase, SqlDatabaseData.DeserializeSqlDatabaseData(document.RootElement));
         }
     }
 }

@@ -16,25 +16,25 @@ using Azure.ResourceManager.Sql;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Creates or updates a job. </summary>
-    public partial class JobCreateOrUpdateOperation : Operation<Job>
+    public partial class JobCreateOrUpdateOperation : Operation<SqlJob>
     {
-        private readonly OperationOrResponseInternals<Job> _operation;
+        private readonly OperationOrResponseInternals<SqlJob> _operation;
 
         /// <summary> Initializes a new instance of JobCreateOrUpdateOperation for mocking. </summary>
         protected JobCreateOrUpdateOperation()
         {
         }
 
-        internal JobCreateOrUpdateOperation(ArmResource operationsBase, Response<JobData> response)
+        internal JobCreateOrUpdateOperation(ArmResource operationsBase, Response<SqlJobData> response)
         {
-            _operation = new OperationOrResponseInternals<Job>(Response.FromValue(new Job(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<SqlJob>(Response.FromValue(new SqlJob(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override Job Value => _operation.Value;
+        public override SqlJob Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Sql.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Job>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<SqlJob>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Job>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<SqlJob>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

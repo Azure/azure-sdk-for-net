@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.Sql
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managedInstancesRestClient = new ManagedInstancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _managedDatabasesRestClient = new ManagedDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _managedInstanceTdeCertificatesRestClient = new ManagedInstanceTdeCertificatesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _serverTrustGroupsRestClient = new ServerTrustGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _managedInstancesRestClient = new ManagedInstancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _managedDatabasesRestClient = new ManagedDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _managedInstanceTdeCertificatesRestClient = new ManagedInstanceTdeCertificatesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _serverTrustGroupsRestClient = new ServerTrustGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ManagedInstance"/> class. </summary>
@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.Sql
         internal ManagedInstance(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managedInstancesRestClient = new ManagedInstancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _managedDatabasesRestClient = new ManagedDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _managedInstanceTdeCertificatesRestClient = new ManagedInstanceTdeCertificatesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _serverTrustGroupsRestClient = new ServerTrustGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _managedInstancesRestClient = new ManagedInstancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _managedDatabasesRestClient = new ManagedDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _managedInstanceTdeCertificatesRestClient = new ManagedInstanceTdeCertificatesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _serverTrustGroupsRestClient = new ServerTrustGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ManagedInstance"/> class. </summary>
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Sql
         internal ManagedInstance(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managedInstancesRestClient = new ManagedInstancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _managedDatabasesRestClient = new ManagedDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _managedInstanceTdeCertificatesRestClient = new ManagedInstanceTdeCertificatesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _serverTrustGroupsRestClient = new ServerTrustGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _managedInstancesRestClient = new ManagedInstancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _managedDatabasesRestClient = new ManagedDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _managedInstanceTdeCertificatesRestClient = new ManagedInstanceTdeCertificatesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _serverTrustGroupsRestClient = new ServerTrustGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _managedInstancesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _managedInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ManagedInstance(this, response.Value), response.GetRawResponse());
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _managedInstancesRestClient.Get(Id.ResourceGroupName, Id.Name, expand, cancellationToken);
+                var response = _managedInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ManagedInstance(this, response.Value), response.GetRawResponse());
@@ -172,8 +172,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _managedInstancesRestClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedInstanceDeleteOperation(_clientDiagnostics, Pipeline, _managedInstancesRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _managedInstancesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedInstanceDeleteOperation(_clientDiagnostics, Pipeline, _managedInstancesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -197,8 +197,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _managedInstancesRestClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ManagedInstanceDeleteOperation(_clientDiagnostics, Pipeline, _managedInstancesRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _managedInstancesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ManagedInstanceDeleteOperation(_clientDiagnostics, Pipeline, _managedInstancesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Sql
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _managedInstancesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _managedInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ManagedInstance(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Sql
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _managedInstancesRestClient.Get(Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                var originalResponse = _managedInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new ManagedInstance(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Sql
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _managedInstancesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _managedInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ManagedInstance(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Sql
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _managedInstancesRestClient.Get(Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                var originalResponse = _managedInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new ManagedInstance(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Sql
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _managedInstancesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _managedInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ManagedInstance(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Sql
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _managedInstancesRestClient.Get(Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                var originalResponse = _managedInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new ManagedInstance(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -401,8 +401,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _managedInstancesRestClient.UpdateAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedInstanceUpdateOperation(this, _clientDiagnostics, Pipeline, _managedInstancesRestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = await _managedInstancesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedInstanceUpdateOperation(this, _clientDiagnostics, Pipeline, _managedInstancesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -433,8 +433,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _managedInstancesRestClient.Update(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new ManagedInstanceUpdateOperation(this, _clientDiagnostics, Pipeline, _managedInstancesRestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = _managedInstancesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var operation = new ManagedInstanceUpdateOperation(this, _clientDiagnostics, Pipeline, _managedInstancesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -452,15 +452,15 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a list of inaccessible managed databases in a managed instance. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedDatabaseData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedDatabaseData> GetInaccessibleByInstanceManagedDatabasesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ManagedDatabaseData> GetInaccessibleManagedDatabasesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ManagedDatabaseData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetInaccessibleByInstanceManagedDatabases");
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetInaccessibleManagedDatabases");
                 scope.Start();
                 try
                 {
-                    var response = await _managedDatabasesRestClient.ListInaccessibleByInstanceAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _managedDatabasesRestClient.ListInaccessibleByInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -471,11 +471,11 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<ManagedDatabaseData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetInaccessibleByInstanceManagedDatabases");
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetInaccessibleManagedDatabases");
                 scope.Start();
                 try
                 {
-                    var response = await _managedDatabasesRestClient.ListInaccessibleByInstanceNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _managedDatabasesRestClient.ListInaccessibleByInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -493,15 +493,15 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a list of inaccessible managed databases in a managed instance. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedDatabaseData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedDatabaseData> GetInaccessibleByInstanceManagedDatabases(CancellationToken cancellationToken = default)
+        public virtual Pageable<ManagedDatabaseData> GetInaccessibleManagedDatabases(CancellationToken cancellationToken = default)
         {
             Page<ManagedDatabaseData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetInaccessibleByInstanceManagedDatabases");
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetInaccessibleManagedDatabases");
                 scope.Start();
                 try
                 {
-                    var response = _managedDatabasesRestClient.ListInaccessibleByInstance(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _managedDatabasesRestClient.ListInaccessibleByInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -512,11 +512,11 @@ namespace Azure.ResourceManager.Sql
             }
             Page<ManagedDatabaseData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetInaccessibleByInstanceManagedDatabases");
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetInaccessibleManagedDatabases");
                 scope.Start();
                 try
                 {
-                    var response = _managedDatabasesRestClient.ListInaccessibleByInstanceNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _managedDatabasesRestClient.ListInaccessibleByInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -541,15 +541,15 @@ namespace Azure.ResourceManager.Sql
         /// <param name="observationMetric"> Metric to be used for ranking top queries. Default is &apos;cpu&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="TopQueries" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TopQueries> GetByManagedInstanceAsync(int? numberOfQueries = null, string databases = null, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, AggregationFunctionType? aggregationFunction = null, MetricType? observationMetric = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TopQueries> GetTopQueriesAsync(int? numberOfQueries = null, string databases = null, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, AggregationFunctionType? aggregationFunction = null, MetricType? observationMetric = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<TopQueries>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetByManagedInstance");
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetTopQueries");
                 scope.Start();
                 try
                 {
-                    var response = await _managedInstancesRestClient.ListByManagedInstanceAsync(Id.ResourceGroupName, Id.Name, numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _managedInstancesRestClient.ListByManagedInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -560,11 +560,11 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<TopQueries>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetByManagedInstance");
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetTopQueries");
                 scope.Start();
                 try
                 {
-                    var response = await _managedInstancesRestClient.ListByManagedInstanceNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _managedInstancesRestClient.ListByManagedInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -589,15 +589,15 @@ namespace Azure.ResourceManager.Sql
         /// <param name="observationMetric"> Metric to be used for ranking top queries. Default is &apos;cpu&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TopQueries" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TopQueries> GetByManagedInstance(int? numberOfQueries = null, string databases = null, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, AggregationFunctionType? aggregationFunction = null, MetricType? observationMetric = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<TopQueries> GetTopQueries(int? numberOfQueries = null, string databases = null, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, AggregationFunctionType? aggregationFunction = null, MetricType? observationMetric = null, CancellationToken cancellationToken = default)
         {
             Page<TopQueries> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetByManagedInstance");
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetTopQueries");
                 scope.Start();
                 try
                 {
-                    var response = _managedInstancesRestClient.ListByManagedInstance(Id.ResourceGroupName, Id.Name, numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric, cancellationToken: cancellationToken);
+                    var response = _managedInstancesRestClient.ListByManagedInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -608,11 +608,11 @@ namespace Azure.ResourceManager.Sql
             }
             Page<TopQueries> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetByManagedInstance");
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetTopQueries");
                 scope.Start();
                 try
                 {
-                    var response = _managedInstancesRestClient.ListByManagedInstanceNextPage(nextLink, Id.ResourceGroupName, Id.Name, numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric, cancellationToken: cancellationToken);
+                    var response = _managedInstancesRestClient.ListByManagedInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -637,8 +637,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _managedInstancesRestClient.FailoverAsync(Id.ResourceGroupName, Id.Name, replicaType, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedInstanceFailoverOperation(_clientDiagnostics, Pipeline, _managedInstancesRestClient.CreateFailoverRequest(Id.ResourceGroupName, Id.Name, replicaType).Request, response);
+                var response = await _managedInstancesRestClient.FailoverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaType, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedInstanceFailoverOperation(_clientDiagnostics, Pipeline, _managedInstancesRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaType).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -663,8 +663,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _managedInstancesRestClient.Failover(Id.ResourceGroupName, Id.Name, replicaType, cancellationToken);
-                var operation = new ManagedInstanceFailoverOperation(_clientDiagnostics, Pipeline, _managedInstancesRestClient.CreateFailoverRequest(Id.ResourceGroupName, Id.Name, replicaType).Request, response);
+                var response = _managedInstancesRestClient.Failover(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaType, cancellationToken);
+                var operation = new ManagedInstanceFailoverOperation(_clientDiagnostics, Pipeline, _managedInstancesRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaType).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -695,8 +695,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _managedInstanceTdeCertificatesRestClient.CreateAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedInstanceTdeCertificateCreateOperation(_clientDiagnostics, Pipeline, _managedInstanceTdeCertificatesRestClient.CreateCreateRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = await _managedInstanceTdeCertificatesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedInstanceTdeCertificateCreateOperation(_clientDiagnostics, Pipeline, _managedInstanceTdeCertificatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -727,8 +727,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _managedInstanceTdeCertificatesRestClient.Create(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new ManagedInstanceTdeCertificateCreateOperation(_clientDiagnostics, Pipeline, _managedInstanceTdeCertificatesRestClient.CreateCreateRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = _managedInstanceTdeCertificatesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var operation = new ManagedInstanceTdeCertificateCreateOperation(_clientDiagnostics, Pipeline, _managedInstanceTdeCertificatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -746,15 +746,15 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a server trust groups by instance name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ServerTrustGroupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerTrustGroupData> GetServerTrustGroupsByInstanceAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ServerTrustGroupData> GetServerTrustGroupsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ServerTrustGroupData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetServerTrustGroupsByInstance");
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetServerTrustGroups");
                 scope.Start();
                 try
                 {
-                    var response = await _serverTrustGroupsRestClient.ListByInstanceAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _serverTrustGroupsRestClient.ListByInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -765,11 +765,11 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<ServerTrustGroupData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetServerTrustGroupsByInstance");
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetServerTrustGroups");
                 scope.Start();
                 try
                 {
-                    var response = await _serverTrustGroupsRestClient.ListByInstanceNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _serverTrustGroupsRestClient.ListByInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -787,15 +787,15 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a server trust groups by instance name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServerTrustGroupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerTrustGroupData> GetServerTrustGroupsByInstance(CancellationToken cancellationToken = default)
+        public virtual Pageable<ServerTrustGroupData> GetServerTrustGroups(CancellationToken cancellationToken = default)
         {
             Page<ServerTrustGroupData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetServerTrustGroupsByInstance");
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetServerTrustGroups");
                 scope.Start();
                 try
                 {
-                    var response = _serverTrustGroupsRestClient.ListByInstance(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _serverTrustGroupsRestClient.ListByInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -806,11 +806,11 @@ namespace Azure.ResourceManager.Sql
             }
             Page<ServerTrustGroupData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetServerTrustGroupsByInstance");
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetServerTrustGroups");
                 scope.Start();
                 try
                 {
-                    var response = _serverTrustGroupsRestClient.ListByInstanceNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _serverTrustGroupsRestClient.ListByInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

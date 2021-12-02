@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ServerListResult. </summary>
         internal ServerListResult()
         {
-            Value = new ChangeTrackingList<ServerData>();
+            Value = new ChangeTrackingList<SqlServerData>();
         }
 
         /// <summary> Initializes a new instance of ServerListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal ServerListResult(IReadOnlyList<ServerData> value, string nextLink)
+        internal ServerListResult(IReadOnlyList<SqlServerData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<ServerData> Value { get; }
+        public IReadOnlyList<SqlServerData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

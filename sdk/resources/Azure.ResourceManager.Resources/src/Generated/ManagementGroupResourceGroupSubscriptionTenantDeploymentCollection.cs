@@ -21,7 +21,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of Deployment and their operations over its parent. </summary>
-    public partial class ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection : ArmCollection, IEnumerable<ManagementGroupResourceGroupSubscriptionTenantDeployment>, IAsyncEnumerable<ManagementGroupResourceGroupSubscriptionTenantDeployment>
+    public partial class DeploymentCollection : ArmCollection, IEnumerable<Deployment>, IAsyncEnumerable<Deployment>
 
     {
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources
         internal ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _deploymentsRestClient = new DeploymentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _deploymentsRestClient = new DeploymentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
-        public virtual Response<ManagementGroupResourceGroupSubscriptionTenantDeployment> Get(string deploymentName, CancellationToken cancellationToken = default)
+        public virtual Response<Deployment> Get(string deploymentName, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
             {
                 throw new ArgumentNullException(nameof(deploymentName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection.Get");
+            using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.Get");
             scope.Start();
             try
             {
@@ -150,14 +150,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
-        public async virtual Task<Response<ManagementGroupResourceGroupSubscriptionTenantDeployment>> GetAsync(string deploymentName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<Deployment>> GetAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
             {
                 throw new ArgumentNullException(nameof(deploymentName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection.Get");
+            using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.Get");
             scope.Start();
             try
             {
@@ -177,14 +177,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
-        public virtual Response<ManagementGroupResourceGroupSubscriptionTenantDeployment> GetIfExists(string deploymentName, CancellationToken cancellationToken = default)
+        public virtual Response<Deployment> GetIfExists(string deploymentName, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
             {
                 throw new ArgumentNullException(nameof(deploymentName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -204,14 +204,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
-        public async virtual Task<Response<ManagementGroupResourceGroupSubscriptionTenantDeployment>> GetIfExistsAsync(string deploymentName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<Deployment>> GetIfExistsAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
             {
                 throw new ArgumentNullException(nameof(deploymentName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(deploymentName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(deploymentName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = _deploymentsRestClient.ListAtScope(Id, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupResourceGroupSubscriptionTenantDeployment(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Deployment(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = _deploymentsRestClient.ListAtScopeNextPage(nextLink, Id, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupResourceGroupSubscriptionTenantDeployment(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Deployment(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await _deploymentsRestClient.ListAtScopeAsync(Id, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupResourceGroupSubscriptionTenantDeployment(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Deployment(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await _deploymentsRestClient.ListAtScopeNextPageAsync(nextLink, Id, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupResourceGroupSubscriptionTenantDeployment(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Deployment(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        IEnumerator<ManagementGroupResourceGroupSubscriptionTenantDeployment> IEnumerable<ManagementGroupResourceGroupSubscriptionTenantDeployment>.GetEnumerator()
+        IEnumerator<Deployment> IEnumerable<Deployment>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -367,12 +367,12 @@ namespace Azure.ResourceManager.Resources
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ManagementGroupResourceGroupSubscriptionTenantDeployment> IAsyncEnumerable<ManagementGroupResourceGroupSubscriptionTenantDeployment>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<Deployment> IAsyncEnumerable<Deployment>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ManagementGroupResourceGroupSubscriptionTenantDeployment, DeploymentData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, Deployment, DeploymentData> Construct() { }
     }
 }

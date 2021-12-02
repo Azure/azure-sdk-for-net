@@ -4,7 +4,7 @@
       "RequestUri": "/subscriptions/c909e979-ef71-4def-a970-bc7c154db8c5/resourceGroups/TestHubRG/providers/Microsoft.CustomerInsights/hubs/sdktestbn3/authorizationPolicies/testPolicy700?api-version=2017-01-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzkwOWU5NzktZWY3MS00ZGVmLWE5NzAtYmM3YzE1NGRiOGM1L3Jlc291cmNlR3JvdXBzL1Rlc3RIdWJSRy9wcm92aWRlcnMvTWljcm9zb2Z0LkN1c3RvbWVySW5zaWdodHMvaHVicy9zZGt0ZXN0Ym4zL2F1dGhvcml6YXRpb25Qb2xpY2llcy90ZXN0UG9saWN5NzAwP2FwaS12ZXJzaW9uPTIwMTctMDEtMDE=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"permissions\": [\r\n      \"Read\",\r\n      \"Write\",\r\n      \"Manage\"\r\n    ],\r\n    \"primaryKey\": \"cHJpbWFyeVRlc3RSZWFk\",\r\n    \"secondaryKey\": \"c2Vjb25kYXJ5VGVzdFJlYWQ=\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"permissions\": [\r\n      \"Read\",\r\n      \"Write\",\r\n      \"Manage\"\r\n    ],\r\n    \"primaryKey\": \"Sanitized\",\r\n    \"secondaryKey\": \"Sanitized\"\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -23,7 +23,7 @@
           "Microsoft.Azure.Management.CustomerInsights.CustomerInsightsManagementClient/0.0.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c909e979-ef71-4def-a970-bc7c154db8c5/resourceGroups/TestHubRG/providers/Microsoft.CustomerInsights/hubs/sdktestbn3/AuthorizationPolicies/testPolicy700\",\r\n  \"name\": \"sdktestbn3/testPolicy700\",\r\n  \"properties\": {\r\n    \"permissions\": [\r\n      \"Read\",\r\n      \"Write\",\r\n      \"Manage\"\r\n    ],\r\n    \"policyName\": \"testPolicy700\",\r\n    \"primaryKey\": \"cHJpbWFyeVRlc3RSZWFk\",\r\n    \"secondaryKey\": \"c2Vjb25kYXJ5VGVzdFJlYWQ=\"\r\n  },\r\n  \"type\": \"Microsoft.CustomerInsights/hubs/AuthorizationPolicies\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c909e979-ef71-4def-a970-bc7c154db8c5/resourceGroups/TestHubRG/providers/Microsoft.CustomerInsights/hubs/sdktestbn3/AuthorizationPolicies/testPolicy700\",\r\n  \"name\": \"sdktestbn3/testPolicy700\",\r\n  \"properties\": {\r\n    \"permissions\": [\r\n      \"Read\",\r\n      \"Write\",\r\n      \"Manage\"\r\n    ],\r\n    \"policyName\": \"testPolicy700\",\r\n    \"primaryKey\": \"Sanitized\",\r\n    \"secondaryKey\": \"Sanitized\"\r\n  },\r\n  \"type\": \"Microsoft.CustomerInsights/hubs/AuthorizationPolicies\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "433"
@@ -86,7 +86,7 @@
           "Microsoft.Azure.Management.CustomerInsights.CustomerInsightsManagementClient/0.0.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"permissions\": [\r\n    \"Read\",\r\n    \"Write\",\r\n    \"Manage\"\r\n  ],\r\n  \"policyName\": \"testPolicy700\",\r\n  \"primaryKey\": \"cHJpbWFyeVRlc3RSZWFk\",\r\n  \"secondaryKey\": \"ABK5UhTXE/VzWN0CkKmpU45lU3CKXkmbTaqB8yw/+U4=\"\r\n}",
+      "ResponseBody": "{\r\n  \"permissions\": [\r\n    \"Read\",\r\n    \"Write\",\r\n    \"Manage\"\r\n  ],\r\n  \"policyName\": \"testPolicy700\",\r\n  \"primaryKey\": \"Sanitized\",\r\n  \"secondaryKey\": \"Sanitized\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"

@@ -24,8 +24,7 @@ namespace Microsoft.Azure.Management.Avs
     public partial interface IScriptPackagesOperations
     {
         /// <summary>
-        /// Return script packages available for a private cloud to run on
-        /// their Private Cloud
+        /// List script packages available to run on the private cloud
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -50,7 +49,7 @@ namespace Microsoft.Azure.Management.Avs
         /// </exception>
         Task<AzureOperationResponse<IPage<ScriptPackage>>> ListWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Return script package available to run on an Private Cloud
+        /// Get a script package available to run on a private cloud
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -78,8 +77,7 @@ namespace Microsoft.Azure.Management.Avs
         /// </exception>
         Task<AzureOperationResponse<ScriptPackage>> GetWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string scriptPackageName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Return script packages available for a private cloud to run on
-        /// their Private Cloud
+        /// List script packages available to run on the private cloud
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

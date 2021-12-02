@@ -1,12 +1,10 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
-
+## 1.7.0-beta.1 (2021-12-07)
 ### Features Added
-
-### Breaking Changes
+* Added strongly typed serverless hub. See [sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/signalr/Microsoft.Azure.WebJobs.Extensions.SignalRService/samples/Sample01_StronglyTypedHub.md) for more details.
+* Enabled SignalR trigger to use identity-based connection.
 
 ### Bugs Fixed
-
-### Other Changes
+* Fixed the bug that the function host could not be shutdown locally on Functions V3 runtime.
 

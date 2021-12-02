@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.Sql
 {
     internal partial class WorkloadClassifiersRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -29,19 +28,16 @@ namespace Azure.ResourceManager.Sql
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public WorkloadClassifiersRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null)
+        public WorkloadClassifiersRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null)
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string serverName, string databaseName, string workloadGroupName, string workloadClassifierName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string workloadGroupName, string workloadClassifierName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -68,15 +64,20 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets a workload classifier. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="workloadGroupName"> The name of the workload group from which to receive the classifier from. </param>
         /// <param name="workloadClassifierName"> The name of the workload classifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="workloadGroupName"/>, or <paramref name="workloadClassifierName"/> is null. </exception>
-        public async Task<Response<WorkloadClassifierData>> GetAsync(string resourceGroupName, string serverName, string databaseName, string workloadGroupName, string workloadClassifierName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="workloadGroupName"/>, or <paramref name="workloadClassifierName"/> is null. </exception>
+        public async Task<Response<WorkloadClassifierData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string workloadGroupName, string workloadClassifierName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(workloadClassifierName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, serverName, databaseName, workloadGroupName, workloadClassifierName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, serverName, databaseName, workloadGroupName, workloadClassifierName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -117,15 +118,20 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets a workload classifier. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="workloadGroupName"> The name of the workload group from which to receive the classifier from. </param>
         /// <param name="workloadClassifierName"> The name of the workload classifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="workloadGroupName"/>, or <paramref name="workloadClassifierName"/> is null. </exception>
-        public Response<WorkloadClassifierData> Get(string resourceGroupName, string serverName, string databaseName, string workloadGroupName, string workloadClassifierName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="workloadGroupName"/>, or <paramref name="workloadClassifierName"/> is null. </exception>
+        public Response<WorkloadClassifierData> Get(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string workloadGroupName, string workloadClassifierName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -147,7 +153,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(workloadClassifierName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, serverName, databaseName, workloadGroupName, workloadClassifierName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, serverName, databaseName, workloadGroupName, workloadClassifierName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -165,7 +171,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string serverName, string databaseName, string workloadGroupName, string workloadClassifierName, WorkloadClassifierData parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string workloadGroupName, string workloadClassifierName, WorkloadClassifierData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -196,6 +202,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Creates or updates a workload classifier. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
@@ -203,9 +210,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="workloadClassifierName"> The name of the workload classifier to create/update. </param>
         /// <param name="parameters"> The properties of the workload classifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="workloadGroupName"/>, <paramref name="workloadClassifierName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string serverName, string databaseName, string workloadGroupName, string workloadClassifierName, WorkloadClassifierData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="workloadGroupName"/>, <paramref name="workloadClassifierName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string workloadGroupName, string workloadClassifierName, WorkloadClassifierData parameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -231,7 +242,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, serverName, databaseName, workloadGroupName, workloadClassifierName, parameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serverName, databaseName, workloadGroupName, workloadClassifierName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -245,6 +256,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Creates or updates a workload classifier. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
@@ -252,9 +264,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="workloadClassifierName"> The name of the workload classifier to create/update. </param>
         /// <param name="parameters"> The properties of the workload classifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="workloadGroupName"/>, <paramref name="workloadClassifierName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string serverName, string databaseName, string workloadGroupName, string workloadClassifierName, WorkloadClassifierData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="workloadGroupName"/>, <paramref name="workloadClassifierName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string workloadGroupName, string workloadClassifierName, WorkloadClassifierData parameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -280,7 +296,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, serverName, databaseName, workloadGroupName, workloadClassifierName, parameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serverName, databaseName, workloadGroupName, workloadClassifierName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -293,7 +309,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string serverName, string databaseName, string workloadGroupName, string workloadClassifierName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string workloadGroupName, string workloadClassifierName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -319,15 +335,20 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Deletes a workload classifier. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="workloadGroupName"> The name of the workload group from which to receive the classifier from. </param>
         /// <param name="workloadClassifierName"> The name of the workload classifier to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="workloadGroupName"/>, or <paramref name="workloadClassifierName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string serverName, string databaseName, string workloadGroupName, string workloadClassifierName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="workloadGroupName"/>, or <paramref name="workloadClassifierName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string workloadGroupName, string workloadClassifierName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -349,7 +370,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(workloadClassifierName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, serverName, databaseName, workloadGroupName, workloadClassifierName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, serverName, databaseName, workloadGroupName, workloadClassifierName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -363,15 +384,20 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Deletes a workload classifier. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="workloadGroupName"> The name of the workload group from which to receive the classifier from. </param>
         /// <param name="workloadClassifierName"> The name of the workload classifier to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="workloadGroupName"/>, or <paramref name="workloadClassifierName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string serverName, string databaseName, string workloadGroupName, string workloadClassifierName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="workloadGroupName"/>, or <paramref name="workloadClassifierName"/> is null. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string workloadGroupName, string workloadClassifierName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -393,7 +419,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(workloadClassifierName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, serverName, databaseName, workloadGroupName, workloadClassifierName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, serverName, databaseName, workloadGroupName, workloadClassifierName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -406,7 +432,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateListByWorkloadGroupRequest(string resourceGroupName, string serverName, string databaseName, string workloadGroupName)
+        internal HttpMessage CreateListByWorkloadGroupRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string workloadGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -432,14 +458,19 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets the list of workload classifiers for a workload group. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="workloadGroupName"> The name of the workload group from which to receive the classifiers from. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="workloadGroupName"/> is null. </exception>
-        public async Task<Response<WorkloadClassifierListResult>> ListByWorkloadGroupAsync(string resourceGroupName, string serverName, string databaseName, string workloadGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="workloadGroupName"/> is null. </exception>
+        public async Task<Response<WorkloadClassifierListResult>> ListByWorkloadGroupAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string workloadGroupName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -457,7 +488,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(workloadGroupName));
             }
 
-            using var message = CreateListByWorkloadGroupRequest(resourceGroupName, serverName, databaseName, workloadGroupName);
+            using var message = CreateListByWorkloadGroupRequest(subscriptionId, resourceGroupName, serverName, databaseName, workloadGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -474,14 +505,19 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets the list of workload classifiers for a workload group. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="workloadGroupName"> The name of the workload group from which to receive the classifiers from. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="workloadGroupName"/> is null. </exception>
-        public Response<WorkloadClassifierListResult> ListByWorkloadGroup(string resourceGroupName, string serverName, string databaseName, string workloadGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="workloadGroupName"/> is null. </exception>
+        public Response<WorkloadClassifierListResult> ListByWorkloadGroup(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string workloadGroupName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -499,7 +535,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(workloadGroupName));
             }
 
-            using var message = CreateListByWorkloadGroupRequest(resourceGroupName, serverName, databaseName, workloadGroupName);
+            using var message = CreateListByWorkloadGroupRequest(subscriptionId, resourceGroupName, serverName, databaseName, workloadGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -515,7 +551,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateListByWorkloadGroupNextPageRequest(string nextLink, string resourceGroupName, string serverName, string databaseName, string workloadGroupName)
+        internal HttpMessage CreateListByWorkloadGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string databaseName, string workloadGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -531,17 +567,22 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets the list of workload classifiers for a workload group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="workloadGroupName"> The name of the workload group from which to receive the classifiers from. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="workloadGroupName"/> is null. </exception>
-        public async Task<Response<WorkloadClassifierListResult>> ListByWorkloadGroupNextPageAsync(string nextLink, string resourceGroupName, string serverName, string databaseName, string workloadGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="workloadGroupName"/> is null. </exception>
+        public async Task<Response<WorkloadClassifierListResult>> ListByWorkloadGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string databaseName, string workloadGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -560,7 +601,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(workloadGroupName));
             }
 
-            using var message = CreateListByWorkloadGroupNextPageRequest(nextLink, resourceGroupName, serverName, databaseName, workloadGroupName);
+            using var message = CreateListByWorkloadGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName, databaseName, workloadGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -578,17 +619,22 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets the list of workload classifiers for a workload group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="workloadGroupName"> The name of the workload group from which to receive the classifiers from. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="workloadGroupName"/> is null. </exception>
-        public Response<WorkloadClassifierListResult> ListByWorkloadGroupNextPage(string nextLink, string resourceGroupName, string serverName, string databaseName, string workloadGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="workloadGroupName"/> is null. </exception>
+        public Response<WorkloadClassifierListResult> ListByWorkloadGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string databaseName, string workloadGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -607,7 +653,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(workloadGroupName));
             }
 
-            using var message = CreateListByWorkloadGroupNextPageRequest(nextLink, resourceGroupName, serverName, databaseName, workloadGroupName);
+            using var message = CreateListByWorkloadGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName, databaseName, workloadGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

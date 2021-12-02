@@ -116,6 +116,8 @@ jobs:
         # ComponentGovernance is currently unable to run on pull requests of public projects.  Running on
         # scheduled builds should be good enough.
         condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
+        inputs:
+          ignoreDirectories: '.nuget'
 
   - job: "Analyze"
     condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
@@ -149,7 +151,7 @@ jobs:
           SourceDirectory: $(Build.SourcesDirectory)
       - task: NodeTool@0
         inputs:
-          versionSpec: '14.x'
+          versionSpec: '16.x'
         displayName: 'Install NodeJS'
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
       - task: DotNetCoreCLI@2

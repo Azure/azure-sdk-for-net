@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Sql
         internal ServerTrustGroupCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _serverTrustGroupsRestClient = new ServerTrustGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _serverTrustGroupsRestClient = new ServerTrustGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -72,8 +72,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _serverTrustGroupsRestClient.CreateOrUpdate(Id.ResourceGroupName, locationName, serverTrustGroupName, parameters, cancellationToken);
-                var operation = new ServerTrustGroupCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _serverTrustGroupsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, locationName, serverTrustGroupName, parameters).Request, response);
+                var response = _serverTrustGroupsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, locationName, serverTrustGroupName, parameters, cancellationToken);
+                var operation = new ServerTrustGroupCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _serverTrustGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, locationName, serverTrustGroupName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _serverTrustGroupsRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, locationName, serverTrustGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ServerTrustGroupCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _serverTrustGroupsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, locationName, serverTrustGroupName, parameters).Request, response);
+                var response = await _serverTrustGroupsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, locationName, serverTrustGroupName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ServerTrustGroupCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _serverTrustGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, locationName, serverTrustGroupName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _serverTrustGroupsRestClient.Get(Id.ResourceGroupName, locationName, serverTrustGroupName, cancellationToken);
+                var response = _serverTrustGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, locationName, serverTrustGroupName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerTrustGroup(Parent, response.Value), response.GetRawResponse());
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _serverTrustGroupsRestClient.GetAsync(Id.ResourceGroupName, locationName, serverTrustGroupName, cancellationToken).ConfigureAwait(false);
+                var response = await _serverTrustGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, locationName, serverTrustGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ServerTrustGroup(Parent, response.Value), response.GetRawResponse());
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _serverTrustGroupsRestClient.Get(Id.ResourceGroupName, locationName, serverTrustGroupName, cancellationToken: cancellationToken);
+                var response = _serverTrustGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, locationName, serverTrustGroupName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<ServerTrustGroup>(null, response.GetRawResponse())
                     : Response.FromValue(new ServerTrustGroup(this, response.Value), response.GetRawResponse());
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _serverTrustGroupsRestClient.GetAsync(Id.ResourceGroupName, locationName, serverTrustGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serverTrustGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, locationName, serverTrustGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<ServerTrustGroup>(null, response.GetRawResponse())
                     : Response.FromValue(new ServerTrustGroup(this, response.Value), response.GetRawResponse());
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = _serverTrustGroupsRestClient.ListByLocation(Id.ResourceGroupName, locationName, cancellationToken: cancellationToken);
+                    var response = _serverTrustGroupsRestClient.ListByLocation(Id.SubscriptionId, Id.ResourceGroupName, locationName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = _serverTrustGroupsRestClient.ListByLocationNextPage(nextLink, Id.ResourceGroupName, locationName, cancellationToken: cancellationToken);
+                    var response = _serverTrustGroupsRestClient.ListByLocationNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, locationName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = await _serverTrustGroupsRestClient.ListByLocationAsync(Id.ResourceGroupName, locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _serverTrustGroupsRestClient.ListByLocationAsync(Id.SubscriptionId, Id.ResourceGroupName, locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = await _serverTrustGroupsRestClient.ListByLocationNextPageAsync(nextLink, Id.ResourceGroupName, locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _serverTrustGroupsRestClient.ListByLocationNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

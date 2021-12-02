@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.Sql
 {
     internal partial class JobStepsRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -29,19 +28,16 @@ namespace Azure.ResourceManager.Sql
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public JobStepsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null)
+        public JobStepsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null)
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateListByVersionRequest(string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion)
+        internal HttpMessage CreateListByVersionRequest(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -69,15 +65,20 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets all job steps in the specified job version. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="jobAgentName"> The name of the job agent. </param>
         /// <param name="jobName"> The name of the job to get. </param>
         /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, or <paramref name="jobName"/> is null. </exception>
-        public async Task<Response<JobStepListResult>> ListByVersionAsync(string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, or <paramref name="jobName"/> is null. </exception>
+        public async Task<Response<JobStepListResult>> ListByVersionAsync(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(jobName));
             }
 
-            using var message = CreateListByVersionRequest(resourceGroupName, serverName, jobAgentName, jobName, jobVersion);
+            using var message = CreateListByVersionRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, jobVersion);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -112,15 +113,20 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets all job steps in the specified job version. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="jobAgentName"> The name of the job agent. </param>
         /// <param name="jobName"> The name of the job to get. </param>
         /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, or <paramref name="jobName"/> is null. </exception>
-        public Response<JobStepListResult> ListByVersion(string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, or <paramref name="jobName"/> is null. </exception>
+        public Response<JobStepListResult> ListByVersion(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -138,7 +144,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(jobName));
             }
 
-            using var message = CreateListByVersionRequest(resourceGroupName, serverName, jobAgentName, jobName, jobVersion);
+            using var message = CreateListByVersionRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, jobVersion);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -154,7 +160,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateGetByVersionRequest(string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, string stepName)
+        internal HttpMessage CreateGetByVersionRequest(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, string stepName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -183,6 +189,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets the specified version of a job step. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="jobAgentName"> The name of the job agent. </param>
@@ -190,9 +197,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="stepName"> The name of the job step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/>, or <paramref name="stepName"/> is null. </exception>
-        public async Task<Response<JobStepData>> GetByVersionAsync(string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, string stepName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/>, or <paramref name="stepName"/> is null. </exception>
+        public async Task<Response<JobStepData>> GetByVersionAsync(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, string stepName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -214,7 +225,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(stepName));
             }
 
-            using var message = CreateGetByVersionRequest(resourceGroupName, serverName, jobAgentName, jobName, jobVersion, stepName);
+            using var message = CreateGetByVersionRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, jobVersion, stepName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -233,6 +244,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets the specified version of a job step. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="jobAgentName"> The name of the job agent. </param>
@@ -240,9 +252,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="stepName"> The name of the job step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/>, or <paramref name="stepName"/> is null. </exception>
-        public Response<JobStepData> GetByVersion(string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, string stepName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/>, or <paramref name="stepName"/> is null. </exception>
+        public Response<JobStepData> GetByVersion(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, string stepName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -264,7 +280,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(stepName));
             }
 
-            using var message = CreateGetByVersionRequest(resourceGroupName, serverName, jobAgentName, jobName, jobVersion, stepName);
+            using var message = CreateGetByVersionRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, jobVersion, stepName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -282,7 +298,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateListByJobRequest(string resourceGroupName, string serverName, string jobAgentName, string jobName)
+        internal HttpMessage CreateListByJobRequest(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -308,14 +324,19 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets all job steps for a job&apos;s current version. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="jobAgentName"> The name of the job agent. </param>
         /// <param name="jobName"> The name of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, or <paramref name="jobName"/> is null. </exception>
-        public async Task<Response<JobStepListResult>> ListByJobAsync(string resourceGroupName, string serverName, string jobAgentName, string jobName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, or <paramref name="jobName"/> is null. </exception>
+        public async Task<Response<JobStepListResult>> ListByJobAsync(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -333,7 +354,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(jobName));
             }
 
-            using var message = CreateListByJobRequest(resourceGroupName, serverName, jobAgentName, jobName);
+            using var message = CreateListByJobRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, jobName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -350,14 +371,19 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets all job steps for a job&apos;s current version. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="jobAgentName"> The name of the job agent. </param>
         /// <param name="jobName"> The name of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, or <paramref name="jobName"/> is null. </exception>
-        public Response<JobStepListResult> ListByJob(string resourceGroupName, string serverName, string jobAgentName, string jobName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, or <paramref name="jobName"/> is null. </exception>
+        public Response<JobStepListResult> ListByJob(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -375,7 +401,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(jobName));
             }
 
-            using var message = CreateListByJobRequest(resourceGroupName, serverName, jobAgentName, jobName);
+            using var message = CreateListByJobRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, jobName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -391,7 +417,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string serverName, string jobAgentName, string jobName, string stepName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, string stepName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -418,15 +444,20 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets a job step in a job&apos;s current version. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="jobAgentName"> The name of the job agent. </param>
         /// <param name="jobName"> The name of the job. </param>
         /// <param name="stepName"> The name of the job step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/>, or <paramref name="stepName"/> is null. </exception>
-        public async Task<Response<JobStepData>> GetAsync(string resourceGroupName, string serverName, string jobAgentName, string jobName, string stepName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/>, or <paramref name="stepName"/> is null. </exception>
+        public async Task<Response<JobStepData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, string stepName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -448,7 +479,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(stepName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, serverName, jobAgentName, jobName, stepName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, stepName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -467,15 +498,20 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets a job step in a job&apos;s current version. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="jobAgentName"> The name of the job agent. </param>
         /// <param name="jobName"> The name of the job. </param>
         /// <param name="stepName"> The name of the job step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/>, or <paramref name="stepName"/> is null. </exception>
-        public Response<JobStepData> Get(string resourceGroupName, string serverName, string jobAgentName, string jobName, string stepName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/>, or <paramref name="stepName"/> is null. </exception>
+        public Response<JobStepData> Get(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, string stepName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -497,7 +533,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(stepName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, serverName, jobAgentName, jobName, stepName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, stepName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -515,7 +551,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string serverName, string jobAgentName, string jobName, string stepName, JobStepData parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, string stepName, JobStepData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -546,6 +582,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Creates or updates a job step. This will implicitly create a new job version. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="jobAgentName"> The name of the job agent. </param>
@@ -553,9 +590,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="stepName"> The name of the job step. </param>
         /// <param name="parameters"> The requested state of the job step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/>, <paramref name="stepName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<JobStepData>> CreateOrUpdateAsync(string resourceGroupName, string serverName, string jobAgentName, string jobName, string stepName, JobStepData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/>, <paramref name="stepName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response<JobStepData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, string stepName, JobStepData parameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -581,7 +622,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, serverName, jobAgentName, jobName, stepName, parameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, stepName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -599,6 +640,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Creates or updates a job step. This will implicitly create a new job version. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="jobAgentName"> The name of the job agent. </param>
@@ -606,9 +648,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="stepName"> The name of the job step. </param>
         /// <param name="parameters"> The requested state of the job step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/>, <paramref name="stepName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<JobStepData> CreateOrUpdate(string resourceGroupName, string serverName, string jobAgentName, string jobName, string stepName, JobStepData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/>, <paramref name="stepName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response<JobStepData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, string stepName, JobStepData parameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -634,7 +680,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, serverName, jobAgentName, jobName, stepName, parameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, stepName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -651,7 +697,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string serverName, string jobAgentName, string jobName, string stepName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, string stepName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -677,15 +723,20 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Deletes a job step. This will implicitly create a new job version. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="jobAgentName"> The name of the job agent. </param>
         /// <param name="jobName"> The name of the job. </param>
         /// <param name="stepName"> The name of the job step to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/>, or <paramref name="stepName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string serverName, string jobAgentName, string jobName, string stepName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/>, or <paramref name="stepName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, string stepName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -707,7 +758,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(stepName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, serverName, jobAgentName, jobName, stepName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, stepName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -720,15 +771,20 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Deletes a job step. This will implicitly create a new job version. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="jobAgentName"> The name of the job agent. </param>
         /// <param name="jobName"> The name of the job. </param>
         /// <param name="stepName"> The name of the job step to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/>, or <paramref name="stepName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string serverName, string jobAgentName, string jobName, string stepName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/>, or <paramref name="stepName"/> is null. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, string stepName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -750,7 +806,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(stepName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, serverName, jobAgentName, jobName, stepName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, stepName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -762,7 +818,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateListByVersionNextPageRequest(string nextLink, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion)
+        internal HttpMessage CreateListByVersionNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -778,18 +834,23 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets all job steps in the specified job version. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="jobAgentName"> The name of the job agent. </param>
         /// <param name="jobName"> The name of the job to get. </param>
         /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, or <paramref name="jobName"/> is null. </exception>
-        public async Task<Response<JobStepListResult>> ListByVersionNextPageAsync(string nextLink, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, or <paramref name="jobName"/> is null. </exception>
+        public async Task<Response<JobStepListResult>> ListByVersionNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -808,7 +869,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(jobName));
             }
 
-            using var message = CreateListByVersionNextPageRequest(nextLink, resourceGroupName, serverName, jobAgentName, jobName, jobVersion);
+            using var message = CreateListByVersionNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, jobVersion);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -826,18 +887,23 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets all job steps in the specified job version. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="jobAgentName"> The name of the job agent. </param>
         /// <param name="jobName"> The name of the job to get. </param>
         /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, or <paramref name="jobName"/> is null. </exception>
-        public Response<JobStepListResult> ListByVersionNextPage(string nextLink, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, or <paramref name="jobName"/> is null. </exception>
+        public Response<JobStepListResult> ListByVersionNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -856,7 +922,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(jobName));
             }
 
-            using var message = CreateListByVersionNextPageRequest(nextLink, resourceGroupName, serverName, jobAgentName, jobName, jobVersion);
+            using var message = CreateListByVersionNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, jobVersion);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -872,7 +938,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateListByJobNextPageRequest(string nextLink, string resourceGroupName, string serverName, string jobAgentName, string jobName)
+        internal HttpMessage CreateListByJobNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -888,17 +954,22 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets all job steps for a job&apos;s current version. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="jobAgentName"> The name of the job agent. </param>
         /// <param name="jobName"> The name of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, or <paramref name="jobName"/> is null. </exception>
-        public async Task<Response<JobStepListResult>> ListByJobNextPageAsync(string nextLink, string resourceGroupName, string serverName, string jobAgentName, string jobName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, or <paramref name="jobName"/> is null. </exception>
+        public async Task<Response<JobStepListResult>> ListByJobNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -917,7 +988,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(jobName));
             }
 
-            using var message = CreateListByJobNextPageRequest(nextLink, resourceGroupName, serverName, jobAgentName, jobName);
+            using var message = CreateListByJobNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName, jobAgentName, jobName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -935,17 +1006,22 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets all job steps for a job&apos;s current version. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="jobAgentName"> The name of the job agent. </param>
         /// <param name="jobName"> The name of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, or <paramref name="jobName"/> is null. </exception>
-        public Response<JobStepListResult> ListByJobNextPage(string nextLink, string resourceGroupName, string serverName, string jobAgentName, string jobName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, or <paramref name="jobName"/> is null. </exception>
+        public Response<JobStepListResult> ListByJobNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -964,7 +1040,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(jobName));
             }
 
-            using var message = CreateListByJobNextPageRequest(nextLink, resourceGroupName, serverName, jobAgentName, jobName);
+            using var message = CreateListByJobNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName, jobAgentName, jobName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

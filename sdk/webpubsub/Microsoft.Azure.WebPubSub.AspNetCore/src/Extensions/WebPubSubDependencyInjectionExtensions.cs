@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-#if NETCOREAPP3_0_OR_GREATER
 using System;
 using Microsoft.Azure.WebPubSub.AspNetCore;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -54,4 +52,3 @@ namespace Microsoft.Extensions.DependencyInjection
         }
     }
 }
-#endif

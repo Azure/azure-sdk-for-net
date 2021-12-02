@@ -18,9 +18,9 @@ using Azure.ResourceManager.Sql;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Sets a database&apos;s short term retention policy. </summary>
-    public partial class ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicyUpdateOperation : Operation<ManagedInstanceRestorableDroppedDatabaseBackupShortTermRetentionPolicy>, IOperationSource<ManagedInstanceRestorableDroppedDatabaseBackupShortTermRetentionPolicy>
+    public partial class ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicyUpdateOperation : Operation<ManagedRestorableDroppedDbBackupShortTermRetentionPolicy>, IOperationSource<ManagedRestorableDroppedDbBackupShortTermRetentionPolicy>
     {
-        private readonly OperationInternals<ManagedInstanceRestorableDroppedDatabaseBackupShortTermRetentionPolicy> _operation;
+        private readonly OperationInternals<ManagedRestorableDroppedDbBackupShortTermRetentionPolicy> _operation;
 
         private readonly ArmResource _operationBase;
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicyUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<ManagedInstanceRestorableDroppedDatabaseBackupShortTermRetentionPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicyUpdateOperation");
+            _operation = new OperationInternals<ManagedRestorableDroppedDbBackupShortTermRetentionPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicyUpdateOperation");
             _operationBase = operationsBase;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override ManagedInstanceRestorableDroppedDatabaseBackupShortTermRetentionPolicy Value => _operation.Value;
+        public override ManagedRestorableDroppedDbBackupShortTermRetentionPolicy Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.Sql.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<ManagedInstanceRestorableDroppedDatabaseBackupShortTermRetentionPolicy>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<ManagedRestorableDroppedDbBackupShortTermRetentionPolicy>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<ManagedInstanceRestorableDroppedDatabaseBackupShortTermRetentionPolicy>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<ManagedRestorableDroppedDbBackupShortTermRetentionPolicy>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        ManagedInstanceRestorableDroppedDatabaseBackupShortTermRetentionPolicy IOperationSource<ManagedInstanceRestorableDroppedDatabaseBackupShortTermRetentionPolicy>.CreateResult(Response response, CancellationToken cancellationToken)
+        ManagedRestorableDroppedDbBackupShortTermRetentionPolicy IOperationSource<ManagedRestorableDroppedDbBackupShortTermRetentionPolicy>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ManagedInstanceRestorableDroppedDatabaseBackupShortTermRetentionPolicy(_operationBase, ManagedBackupShortTermRetentionPolicyData.DeserializeManagedBackupShortTermRetentionPolicyData(document.RootElement));
+            return new ManagedRestorableDroppedDbBackupShortTermRetentionPolicy(_operationBase, ManagedBackupShortTermRetentionPolicyData.DeserializeManagedBackupShortTermRetentionPolicyData(document.RootElement));
         }
 
-        async ValueTask<ManagedInstanceRestorableDroppedDatabaseBackupShortTermRetentionPolicy> IOperationSource<ManagedInstanceRestorableDroppedDatabaseBackupShortTermRetentionPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagedRestorableDroppedDbBackupShortTermRetentionPolicy> IOperationSource<ManagedRestorableDroppedDbBackupShortTermRetentionPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ManagedInstanceRestorableDroppedDatabaseBackupShortTermRetentionPolicy(_operationBase, ManagedBackupShortTermRetentionPolicyData.DeserializeManagedBackupShortTermRetentionPolicyData(document.RootElement));
+            return new ManagedRestorableDroppedDbBackupShortTermRetentionPolicy(_operationBase, ManagedBackupShortTermRetentionPolicyData.DeserializeManagedBackupShortTermRetentionPolicyData(document.RootElement));
         }
     }
 }

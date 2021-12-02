@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.Sql
 {
     internal partial class TimeZonesRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -29,19 +28,16 @@ namespace Azure.ResourceManager.Sql
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public TimeZonesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null)
+        public TimeZonesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null)
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateListByLocationRequest(string locationName)
+        internal HttpMessage CreateListByLocationRequest(string subscriptionId, string locationName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -61,17 +57,22 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets a list of managed instance time zones by location. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="locationName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public async Task<Response<TimeZoneListResult>> ListByLocationAsync(string locationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is null. </exception>
+        public async Task<Response<TimeZoneListResult>> ListByLocationAsync(string subscriptionId, string locationName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (locationName == null)
             {
                 throw new ArgumentNullException(nameof(locationName));
             }
 
-            using var message = CreateListByLocationRequest(locationName);
+            using var message = CreateListByLocationRequest(subscriptionId, locationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -88,17 +89,22 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets a list of managed instance time zones by location. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="locationName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public Response<TimeZoneListResult> ListByLocation(string locationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is null. </exception>
+        public Response<TimeZoneListResult> ListByLocation(string subscriptionId, string locationName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (locationName == null)
             {
                 throw new ArgumentNullException(nameof(locationName));
             }
 
-            using var message = CreateListByLocationRequest(locationName);
+            using var message = CreateListByLocationRequest(subscriptionId, locationName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -114,7 +120,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateGetRequest(string locationName, string timeZoneId)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string locationName, string timeZoneId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -135,12 +141,17 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets a managed instance time zone. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="locationName"> The String to use. </param>
         /// <param name="timeZoneId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="timeZoneId"/> is null. </exception>
-        public async Task<Response<TimeZoneData>> GetAsync(string locationName, string timeZoneId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationName"/>, or <paramref name="timeZoneId"/> is null. </exception>
+        public async Task<Response<SqlTimeZoneData>> GetAsync(string subscriptionId, string locationName, string timeZoneId, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (locationName == null)
             {
                 throw new ArgumentNullException(nameof(locationName));
@@ -150,31 +161,36 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(timeZoneId));
             }
 
-            using var message = CreateGetRequest(locationName, timeZoneId);
+            using var message = CreateGetRequest(subscriptionId, locationName, timeZoneId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        TimeZoneData value = default;
+                        SqlTimeZoneData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TimeZoneData.DeserializeTimeZoneData(document.RootElement);
+                        value = SqlTimeZoneData.DeserializeSqlTimeZoneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((TimeZoneData)null, message.Response);
+                    return Response.FromValue((SqlTimeZoneData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Gets a managed instance time zone. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="locationName"> The String to use. </param>
         /// <param name="timeZoneId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="timeZoneId"/> is null. </exception>
-        public Response<TimeZoneData> Get(string locationName, string timeZoneId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationName"/>, or <paramref name="timeZoneId"/> is null. </exception>
+        public Response<SqlTimeZoneData> Get(string subscriptionId, string locationName, string timeZoneId, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (locationName == null)
             {
                 throw new ArgumentNullException(nameof(locationName));
@@ -184,25 +200,25 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(timeZoneId));
             }
 
-            using var message = CreateGetRequest(locationName, timeZoneId);
+            using var message = CreateGetRequest(subscriptionId, locationName, timeZoneId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        TimeZoneData value = default;
+                        SqlTimeZoneData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TimeZoneData.DeserializeTimeZoneData(document.RootElement);
+                        value = SqlTimeZoneData.DeserializeSqlTimeZoneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((TimeZoneData)null, message.Response);
+                    return Response.FromValue((SqlTimeZoneData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateListByLocationNextPageRequest(string nextLink, string locationName)
+        internal HttpMessage CreateListByLocationNextPageRequest(string nextLink, string subscriptionId, string locationName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -218,21 +234,26 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a list of managed instance time zones by location. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="locationName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="locationName"/> is null. </exception>
-        public async Task<Response<TimeZoneListResult>> ListByLocationNextPageAsync(string nextLink, string locationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="locationName"/> is null. </exception>
+        public async Task<Response<TimeZoneListResult>> ListByLocationNextPageAsync(string nextLink, string subscriptionId, string locationName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (locationName == null)
             {
                 throw new ArgumentNullException(nameof(locationName));
             }
 
-            using var message = CreateListByLocationNextPageRequest(nextLink, locationName);
+            using var message = CreateListByLocationNextPageRequest(nextLink, subscriptionId, locationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -250,21 +271,26 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a list of managed instance time zones by location. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="locationName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="locationName"/> is null. </exception>
-        public Response<TimeZoneListResult> ListByLocationNextPage(string nextLink, string locationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="locationName"/> is null. </exception>
+        public Response<TimeZoneListResult> ListByLocationNextPage(string nextLink, string subscriptionId, string locationName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (locationName == null)
             {
                 throw new ArgumentNullException(nameof(locationName));
             }
 
-            using var message = CreateListByLocationNextPageRequest(nextLink, locationName);
+            using var message = CreateListByLocationNextPageRequest(nextLink, subscriptionId, locationName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

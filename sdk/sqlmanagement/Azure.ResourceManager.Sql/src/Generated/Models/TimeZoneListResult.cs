@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of TimeZoneListResult. </summary>
         internal TimeZoneListResult()
         {
-            Value = new ChangeTrackingList<TimeZoneData>();
+            Value = new ChangeTrackingList<SqlTimeZoneData>();
         }
 
         /// <summary> Initializes a new instance of TimeZoneListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal TimeZoneListResult(IReadOnlyList<TimeZoneData> value, string nextLink)
+        internal TimeZoneListResult(IReadOnlyList<SqlTimeZoneData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<TimeZoneData> Value { get; }
+        public IReadOnlyList<SqlTimeZoneData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

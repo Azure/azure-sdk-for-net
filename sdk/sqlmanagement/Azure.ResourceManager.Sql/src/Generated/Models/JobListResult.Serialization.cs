@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static JobListResult DeserializeJobListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<JobData>> value = default;
+            Optional<IReadOnlyList<SqlJobData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<JobData> array = new List<JobData>();
+                    List<SqlJobData> array = new List<SqlJobData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JobData.DeserializeJobData(item));
+                        array.Add(SqlJobData.DeserializeSqlJobData(item));
                     }
                     value = array;
                     continue;

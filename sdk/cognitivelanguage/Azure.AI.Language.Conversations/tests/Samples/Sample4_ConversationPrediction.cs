@@ -19,15 +19,14 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #region Snippet:ConversationAnalysis_AnalyzeConversationWithConversationPrediction
 
 #if SNIPPET
+            ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
             Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-                "Menu",
-                "production",
-                "We'll have 2 plates of seared salmon nigiri.");
+                "We'll have 2 plates of seared salmon nigiri.",
+                conversationsProject);
 #else
             Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-                TestEnvironment.ProjectName,
-                TestEnvironment.DeploymentName,
-                "We'll have 2 plates of seared salmon nigiri.");
+                "We'll have 2 plates of seared salmon nigiri.",
+                TestEnvironment.Project);
 #endif
 
             ConversationPrediction conversationPrediction = response.Value.Prediction as ConversationPrediction;
@@ -36,7 +35,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             foreach (ConversationIntent intent in conversationPrediction.Intents)
             {
                 Console.WriteLine($"Category:{intent.Category}");
-                Console.WriteLine($"Confidence Score:{intent.ConfidenceScore}");
+                Console.WriteLine($"Confidence:{intent.Confidence}");
                 Console.WriteLine();
             }
 
@@ -47,7 +46,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 Console.WriteLine($"Text: {entity.Text}");
                 Console.WriteLine($"Offset: {entity.Offset}");
                 Console.WriteLine($"Length: {entity.Length}");
-                Console.WriteLine($"Confidence Score: {entity.ConfidenceScore}");
+                Console.WriteLine($"Confidence: {entity.Confidence}");
                 Console.WriteLine();
             }
             #endregion
@@ -65,15 +64,14 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #region Snippet:ConversationAnalysis_AnalyzeConversationWithConversationPredictionAsync
 
 #if SNIPPET
+            ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
             Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
-                "Menu",
-                "production",
-                "We'll have 2 plates of seared salmon nigiri.");
+                "We'll have 2 plates of seared salmon nigiri.",
+                conversationsProject);
 #else
             Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
-                TestEnvironment.ProjectName,
-                TestEnvironment.DeploymentName,
-                "We'll have 2 plates of seared salmon nigiri.");
+                "We'll have 2 plates of seared salmon nigiri.",
+                TestEnvironment.Project);
 #endif
 
             ConversationPrediction conversationPrediction = response.Value.Prediction as ConversationPrediction;
@@ -82,7 +80,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             foreach (ConversationIntent intent in conversationPrediction.Intents)
             {
                 Console.WriteLine($"Category:{intent.Category}");
-                Console.WriteLine($"Confidence Score:{intent.ConfidenceScore}");
+                Console.WriteLine($"Confidence:{intent.Confidence}");
                 Console.WriteLine();
             }
 
@@ -93,7 +91,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 Console.WriteLine($"Text: {entity.Text}");
                 Console.WriteLine($"Offset: {entity.Offset}");
                 Console.WriteLine($"Length: {entity.Length}");
-                Console.WriteLine($"Confidence Score: {entity.ConfidenceScore}");
+                Console.WriteLine($"Confidence: {entity.Confidence}");
                 Console.WriteLine();
             }
             #endregion

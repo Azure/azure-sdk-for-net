@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static TimeZoneListResult DeserializeTimeZoneListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<TimeZoneData>> value = default;
+            Optional<IReadOnlyList<SqlTimeZoneData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TimeZoneData> array = new List<TimeZoneData>();
+                    List<SqlTimeZoneData> array = new List<SqlTimeZoneData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TimeZoneData.DeserializeTimeZoneData(item));
+                        array.Add(SqlTimeZoneData.DeserializeSqlTimeZoneData(item));
                     }
                     value = array;
                     continue;
