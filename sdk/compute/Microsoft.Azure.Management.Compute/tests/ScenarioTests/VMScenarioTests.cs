@@ -247,7 +247,7 @@ namespace Compute.Tests
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             try
             {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "southcentralus");
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus");
                 TestVMScenarioOperationsInternal("TestVMScenarioOperations_UsingCapacityReservationGroup",
                     hasManagedDisks: true, vmSize: VirtualMachineSizeTypes.StandardDS1V2, associateWithCapacityReservation: true);
             }
