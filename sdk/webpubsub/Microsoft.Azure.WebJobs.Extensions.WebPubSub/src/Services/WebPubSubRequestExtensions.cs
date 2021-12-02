@@ -141,22 +141,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return false;
         }
 
-        internal static Dictionary<string, object> DecodeConnectionStates(this string connectionStates)
+        internal static Dictionary<string, BinaryData> DecodeConnectionStates(this string connectionStates)
         {
             if (!string.IsNullOrEmpty(connectionStates))
             {
                 var states = new Dictionary<string, object>();
-                var rawValue = JsonSerializer.Deserialize<IReadOnlyDictionary<string, BinaryData>>(Convert.FromBase64String(connectionStates), ConnectionStatesConverter.Options);
-                foreach (var item in rawValue)
-                {
-                    states.Add(item.Key, item.Value);
-                }
-                return states;
+                return JsonSerializer.Deserialize<IReadOnlyDictionary<string, BinaryData>>(Convert.FromBase64String(connectionStates), ConnectionStatesConverter.Options)
+                    .ToDictionary(k => k.Key, v => v.Value);
             }
             return null;
         }
 
-        internal static Dictionary<string, object> UpdateStates(this WebPubSubConnectionContext connectionContext, IReadOnlyDictionary<string, object> newStates)
+        internal static Dictionary<string, object> UpdateStates(this WebPubSubConnectionContext connectionContext, IReadOnlyDictionary<string, BinaryData> newStates)
         {
             // states cleared.
             if (newStates == null)
@@ -164,12 +160,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 return null;
             }
 
-            if (connectionContext.States?.Count > 0 || newStates.Count > 0)
+            if (connectionContext.ConnectionStates?.Count > 0 || newStates.Count > 0)
             {
                 var states = new Dictionary<string, object>();
-                if (connectionContext.States?.Count > 0)
+                if (connectionContext.ConnectionStates?.Count > 0)
                 {
-                    states = connectionContext.States.ToDictionary(x => x.Key, y => y.Value);
+                    foreach (var state in connectionContext.ConnectionStates)
+                    {
+                        states.Add(state.Key, state.Value);
+                    }
                 }
 
                 // response states keep empty is no change.
@@ -212,7 +211,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                     userId = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.UserId);
                 }
 
-                Dictionary<string, object> states = null;
+                Dictionary<string, BinaryData> states = null;
                 // connection states.
                 if (request.Headers.ContainsKey(Constants.Headers.CloudEvents.State))
                 {

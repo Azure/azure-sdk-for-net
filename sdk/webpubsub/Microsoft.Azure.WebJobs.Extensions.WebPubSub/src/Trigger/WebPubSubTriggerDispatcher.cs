@@ -196,7 +196,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 {
                     userId = values.SingleOrDefault();
                 }
-                Dictionary<string, object> states = null;
+                Dictionary<string, BinaryData> states = null;
                 if (request.Headers.TryGetValues(Constants.Headers.CloudEvents.State, out var connectionStates))
                 {
                     states = connectionStates.SingleOrDefault().DecodeConnectionStates();

@@ -103,7 +103,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             {
                 if (response is ConnectEventResponse connectResponse)
                 {
-                    var mergedStates = context.UpdateStates(connectResponse.States);
+                    var mergedStates = context.UpdateStates(connectResponse.ConnectionStates);
                     return BuildConnectEventResponse(JsonConvert.SerializeObject(response), mergedStates);
                 }
                 return BuildErrorResponse($"Invalid response type: '{response.GetType()}' in current request type '{requestType}'.");
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             {
                 if (response is UserEventResponse messageResponse)
                 {
-                    var mergedStates = context.UpdateStates(messageResponse.States);
+                    var mergedStates = context.UpdateStates(messageResponse.ConnectionStates);
                     return BuildUserEventResponse(messageResponse, mergedStates);
                 }
                 return BuildErrorResponse($"Invalid response type: '{response.GetType()}' in current request type '{requestType}'.");
@@ -225,23 +225,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return false;
         }
 
-        private static Dictionary<string, object> GetStatesFromJson(JObject response)
+        private static Dictionary<string, BinaryData> GetStatesFromJson(JObject response)
         {
-            var states = new Dictionary<string, object>();
             if (response.TryGetValue("states", out var val))
             {
                 // val should be a JSON object of <key,value> pairs
                 if (val.Type == JTokenType.Object)
                 {
-                    var strongType = val.ToObject<IReadOnlyDictionary<string, BinaryData>>();
-                    foreach (var item in strongType)
-                    {
-                        states.Add(item.Key, item.Value);
-                    }
+                    var readonlyDict = val.ToObject<IReadOnlyDictionary<string, BinaryData>>()
+                        .ToDictionary(k => k.Key, v => v.Value);
                 }
             }
             // We don't support clear states for JS
-            return states;
+            return new Dictionary<string, BinaryData>();
         }
     }
 }
