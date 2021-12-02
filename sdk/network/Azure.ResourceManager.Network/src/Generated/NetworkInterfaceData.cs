@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of NetworkInterfaceData. </summary>
         public NetworkInterfaceData()
         {
-            IpConfigurations = new ChangeTrackingList<NetworkInterfaceIPConfiguration>();
+            IpConfigurations = new ChangeTrackingList<NetworkInterfaceIPConfigurationData>();
             TapConfigurations = new ChangeTrackingList<NetworkInterfaceTapConfigurationData>();
             HostedWorkloads = new ChangeTrackingList<string>();
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="nicType"> Type of Network Interface resource. </param>
         /// <param name="privateLinkService"> Privatelinkservice of the network interface resource. </param>
         /// <param name="migrationPhase"> Migration phase of Network Interface resource. </param>
-        internal NetworkInterfaceData(string id, string name, string type, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, string etag, WritableSubResource virtualMachine, NetworkSecurityGroupData networkSecurityGroup, PrivateEndpointData privateEndpoint, IList<NetworkInterfaceIPConfiguration> ipConfigurations, IReadOnlyList<NetworkInterfaceTapConfigurationData> tapConfigurations, NetworkInterfaceDnsSettings dnsSettings, string macAddress, bool? primary, bool? enableAcceleratedNetworking, bool? enableIPForwarding, IReadOnlyList<string> hostedWorkloads, WritableSubResource dscpConfiguration, string resourceGuid, ProvisioningState? provisioningState, string workloadType, NetworkInterfaceNicType? nicType, PrivateLinkServiceData privateLinkService, NetworkInterfaceMigrationPhase? migrationPhase) : base(id, name, type, location, tags)
+        internal NetworkInterfaceData(string id, string name, string type, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, string etag, WritableSubResource virtualMachine, NetworkSecurityGroupData networkSecurityGroup, PrivateEndpointData privateEndpoint, IList<NetworkInterfaceIPConfigurationData> ipConfigurations, IReadOnlyList<NetworkInterfaceTapConfigurationData> tapConfigurations, NetworkInterfaceDnsSettings dnsSettings, string macAddress, bool? primary, bool? enableAcceleratedNetworking, bool? enableIPForwarding, IReadOnlyList<string> hostedWorkloads, WritableSubResource dscpConfiguration, string resourceGuid, ProvisioningState? provisioningState, string workloadType, NetworkInterfaceNicType? nicType, PrivateLinkServiceData privateLinkService, NetworkInterfaceMigrationPhase? migrationPhase) : base(id, name, type, location, tags)
         {
             ExtendedLocation = extendedLocation;
             Etag = etag;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> A reference to the private endpoint to which the network interface is linked. </summary>
         public PrivateEndpointData PrivateEndpoint { get; }
         /// <summary> A list of IPConfigurations of the network interface. </summary>
-        public IList<NetworkInterfaceIPConfiguration> IpConfigurations { get; }
+        public IList<NetworkInterfaceIPConfigurationData> IpConfigurations { get; }
         /// <summary> A list of TapConfigurations of the network interface. </summary>
         public IReadOnlyList<NetworkInterfaceTapConfigurationData> TapConfigurations { get; }
         /// <summary> The DNS settings in network interface. </summary>

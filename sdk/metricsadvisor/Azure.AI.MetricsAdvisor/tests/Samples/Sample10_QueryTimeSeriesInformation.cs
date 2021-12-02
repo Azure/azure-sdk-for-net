@@ -24,7 +24,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             string metricId = MetricId;
 
-            string dimensionName = "city";
+            string dimensionName = "region";
             var options = new GetMetricDimensionValuesOptions() { MaxPageSize = 10 };
 
             Console.WriteLine($"The dimension '{dimensionName}' can assume the following values (limited to 10):");
@@ -55,7 +55,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             string detectionConfigurationId = DetectionConfigurationId;
 
-            string dimensionName = "city";
+            string dimensionName = "region";
 
             var startsOn = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
             var endsOn = DateTimeOffset.UtcNow;
@@ -169,15 +169,15 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var dimensions = new Dictionary<string, string>()
             {
-                { "city", "Belo Horizonte" },
+                { "region", "Karachi" },
                 { "category", "__SUM__" }
             };
             var seriesKey1 = new DimensionKey(dimensions);
 
             dimensions = new Dictionary<string, string>()
             {
-                { "city", "Hong Kong" },
-                { "category", "Industrial & Scientific" }
+                { "region", "Cairo" },
+                { "category", "Shoes Handbags & Sunglasses" }
             };
             var seriesKey2 = new DimensionKey(dimensions);
 
@@ -197,7 +197,9 @@ namespace Azure.AI.MetricsAdvisor.Samples
                 Console.WriteLine("Data points:");
 
                 // Print at most 3 points per time series.
-                for (int pointIndex = 0; pointIndex < 3; pointIndex++)
+                int totalPoints = seriesData.Timestamps.Count < 3 ? seriesData.Timestamps.Count : 3;
+
+                for (int pointIndex = 0; pointIndex < totalPoints; pointIndex++)
                 {
                     Console.WriteLine($"  Point {pointIndex}:");
                     Console.WriteLine($"   - Timestamp: {seriesData.Timestamps[pointIndex]}");
@@ -224,15 +226,15 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var dimensions = new Dictionary<string, string>()
             {
-                { "city", "Belo Horizonte" },
+                { "region", "Karachi" },
                 { "category", "__SUM__" }
             };
             var seriesKey1 = new DimensionKey(dimensions);
 
             dimensions = new Dictionary<string, string>()
             {
-                { "city", "Hong Kong" },
-                { "category", "Industrial & Scientific" }
+                { "region", "Cairo" },
+                { "category", "Shoes Handbags & Sunglasses" }
             };
             var seriesKey2 = new DimensionKey(dimensions);
 
@@ -253,7 +255,9 @@ namespace Azure.AI.MetricsAdvisor.Samples
                 Console.WriteLine("Data points:");
 
                 // Print at most 2 points per time series.
-                for (int pointIndex = 0; pointIndex < 2; pointIndex++)
+                int totalPoints = seriesData.Timestamps.Count < 2 ? seriesData.Timestamps.Count : 2;
+
+                for (int pointIndex = 0; pointIndex < totalPoints; pointIndex++)
                 {
                     Console.WriteLine($"  Point {pointIndex}:");
                     Console.WriteLine($"   - Timestamp: {seriesData.Timestamps[pointIndex]}");

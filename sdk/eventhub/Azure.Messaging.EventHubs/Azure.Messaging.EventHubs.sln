@@ -11,6 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External", "External", "{2DB233D3-E757-423C-8F8D-742B0AFF4713}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Experimental", "..\..\core\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj", "{FB10A6B3-88DD-4296-9241-53ECDF942842}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{79B7DF40-239D-4360-A1C3-D4F92A2E75EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,12 +61,58 @@ Global
 		{2CFDB3D6-5CFB-428C-9C89-29DD169B5433}.Release|x64.Build.0 = Release|Any CPU
 		{2CFDB3D6-5CFB-428C-9C89-29DD169B5433}.Release|x86.ActiveCfg = Release|Any CPU
 		{2CFDB3D6-5CFB-428C-9C89-29DD169B5433}.Release|x86.Build.0 = Release|Any CPU
+		{6C67B4C6-0ABF-4E10-8BAF-FCF2AD053DE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C67B4C6-0ABF-4E10-8BAF-FCF2AD053DE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C67B4C6-0ABF-4E10-8BAF-FCF2AD053DE3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6C67B4C6-0ABF-4E10-8BAF-FCF2AD053DE3}.Debug|x64.Build.0 = Debug|Any CPU
+		{6C67B4C6-0ABF-4E10-8BAF-FCF2AD053DE3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6C67B4C6-0ABF-4E10-8BAF-FCF2AD053DE3}.Debug|x86.Build.0 = Debug|Any CPU
+		{6C67B4C6-0ABF-4E10-8BAF-FCF2AD053DE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C67B4C6-0ABF-4E10-8BAF-FCF2AD053DE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C67B4C6-0ABF-4E10-8BAF-FCF2AD053DE3}.Release|x64.ActiveCfg = Release|Any CPU
+		{6C67B4C6-0ABF-4E10-8BAF-FCF2AD053DE3}.Release|x64.Build.0 = Release|Any CPU
+		{6C67B4C6-0ABF-4E10-8BAF-FCF2AD053DE3}.Release|x86.ActiveCfg = Release|Any CPU
+		{6C67B4C6-0ABF-4E10-8BAF-FCF2AD053DE3}.Release|x86.Build.0 = Release|Any CPU
+		{FB10A6B3-88DD-4296-9241-53ECDF942842}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB10A6B3-88DD-4296-9241-53ECDF942842}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB10A6B3-88DD-4296-9241-53ECDF942842}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FB10A6B3-88DD-4296-9241-53ECDF942842}.Debug|x64.Build.0 = Debug|Any CPU
+		{FB10A6B3-88DD-4296-9241-53ECDF942842}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FB10A6B3-88DD-4296-9241-53ECDF942842}.Debug|x86.Build.0 = Debug|Any CPU
+		{FB10A6B3-88DD-4296-9241-53ECDF942842}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB10A6B3-88DD-4296-9241-53ECDF942842}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB10A6B3-88DD-4296-9241-53ECDF942842}.Release|x64.ActiveCfg = Release|Any CPU
+		{FB10A6B3-88DD-4296-9241-53ECDF942842}.Release|x64.Build.0 = Release|Any CPU
+		{FB10A6B3-88DD-4296-9241-53ECDF942842}.Release|x86.ActiveCfg = Release|Any CPU
+<<<<<<< HEAD
+		{FB10A6B3-88DD-4296-9241-53ECDF942842}.Release|x86.Build.0 = Release|Any CPU		
+=======
+		{FB10A6B3-88DD-4296-9241-53ECDF942842}.Release|x86.Build.0 = Release|Any CPU
+		{79B7DF40-239D-4360-A1C3-D4F92A2E75EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79B7DF40-239D-4360-A1C3-D4F92A2E75EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79B7DF40-239D-4360-A1C3-D4F92A2E75EA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{79B7DF40-239D-4360-A1C3-D4F92A2E75EA}.Debug|x64.Build.0 = Debug|Any CPU
+		{79B7DF40-239D-4360-A1C3-D4F92A2E75EA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{79B7DF40-239D-4360-A1C3-D4F92A2E75EA}.Debug|x86.Build.0 = Debug|Any CPU
+		{79B7DF40-239D-4360-A1C3-D4F92A2E75EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79B7DF40-239D-4360-A1C3-D4F92A2E75EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79B7DF40-239D-4360-A1C3-D4F92A2E75EA}.Release|x64.ActiveCfg = Release|Any CPU
+		{79B7DF40-239D-4360-A1C3-D4F92A2E75EA}.Release|x64.Build.0 = Release|Any CPU
+		{79B7DF40-239D-4360-A1C3-D4F92A2E75EA}.Release|x86.ActiveCfg = Release|Any CPU
+		{79B7DF40-239D-4360-A1C3-D4F92A2E75EA}.Release|x86.Build.0 = Release|Any CPU
+>>>>>>> b3d9d8605d ([Event Hubs Client] Idempotent Error Handling)
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2CFDB3D6-5CFB-428C-9C89-29DD169B5433} = {2DB233D3-E757-423C-8F8D-742B0AFF4713}
+<<<<<<< HEAD
+		{6C67B4C6-0ABF-4E10-8BAF-FCF2AD053DE3} = {2DB233D3-E757-423C-8F8D-742B0AFF4713}
+=======
+		{FB10A6B3-88DD-4296-9241-53ECDF942842} = {2DB233D3-E757-423C-8F8D-742B0AFF4713}
+		{79B7DF40-239D-4360-A1C3-D4F92A2E75EA} = {2DB233D3-E757-423C-8F8D-742B0AFF4713}
+>>>>>>> b3d9d8605d ([Event Hubs Client] Idempotent Error Handling)
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {509F2EE0-3348-4506-8AC7-9945B602CB43}
