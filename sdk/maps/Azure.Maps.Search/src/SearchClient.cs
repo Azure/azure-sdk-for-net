@@ -958,16 +958,16 @@ namespace Azure.Maps.Search
         /// The Search Geometry endpoint allows you to perform a free form search inside a single geometry or many of them. The search results that fall inside the geometry/geometries will be returned.&lt;br&gt;&lt;br&gt;To send the geometry you will use a `POST` request where the request body will contain the `geometry` object represented as a `GeoJSON` type and the `Content-Type` header will be set to `application/json`. The geographical features to be searched can be modeled as Polygon and/or Circle geometries represented using any one of the following `GeoJSON` types:&lt;ul&gt;&lt;li&gt;**GeoJSON FeatureCollection** &lt;br&gt;The `geometry` can be represented as a `GeoJSON FeatureCollection` object. This is the recommended option if the geometry contains both Polygons and Circles. The `FeatureCollection` can contain a max of 50 `GeoJSON Feature` objects. Each `Feature` object should represent either a Polygon or a Circle with the following conditions:&lt;ul style=&quot;list-style-type:none&quot;&gt;&lt;li&gt;A `Feature` object for the Polygon geometry can have a max of 50 coordinates and it&apos;s properties must be empty.&lt;/li&gt;&lt;li&gt;A `Feature` object for the Circle geometry is composed of a _center_ represented using a `GeoJSON Point` type and a _radius_ value (in meters) which must be specified in the object&apos;s properties along with the _subType_ property whose value should be &apos;Circle&apos;.&lt;/li&gt;&lt;/ul&gt;&lt;br&gt; Please see the Examples section below for a sample `FeatureCollection` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;li&gt;**GeoJSON GeometryCollection**&lt;br&gt;The `geometry` can be represented as a `GeoJSON GeometryCollection` object. This is the recommended option if the geometry contains a list of Polygons only. The `GeometryCollection` can contain a max of 50 `GeoJSON Polygon` objects. Each `Polygon` object can have a max of 50 coordinates. Please see the Examples section below for a sample `GeometryCollection` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;li&gt;**GeoJSON Polygon**&lt;br&gt;The `geometry` can be represented as a `GeoJSON Polygon` object. This is the recommended option if the geometry contains a single Polygon. The `Polygon` object can have a max of 50 coordinates. Please see the Examples section below for a sample `Polygon` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;/ul&gt;.&lt;br&gt;&lt;br&gt;
         /// </summary>
         /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;, &quot;pizza&quot;). Must be properly URL encoded. </param>
-        /// <param name="geometry"> This represents the geometry for one or more geographical features (parks, state boundary etc.) to search in and should be a GeoJSON compliant type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. </param>
+        /// <param name="polygon"> This represents the geometry for one or more geographical features (parks, state boundary etc.) to search in and should be a GeoJSON compliant type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. </param>
         /// <param name="options"> additional options </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> SearchInsideGeometryAsync(string query, PolygonOrGeometryCollectionOrFeatureCollection geometry, SearchInsideGeometryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressResult>> SearchInsideGeometryAsync(string query, GeoJsonPolygon polygon, SearchInsideGeometryOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchInsideGeometry");
             scope.Start();
             try
             {
-                return await RestClient.SearchInsideGeometryAsync(query, new SearchInsideGeometryRequest { Geometry = geometry }, ResponseFormat.Json, options?.Top, options?.Language, options?.CategoryFilter, options?.ExtendedPostalCodesFor, options?.IndexFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SearchInsideGeometryAsync(query, new SearchInsideGeometryRequest { Geometry = new SearchInsidePolygon(polygon.Coordinates) }, ResponseFormat.Json, options?.Top, options?.Language, options?.CategoryFilter, options?.ExtendedPostalCodesFor, options?.IndexFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -982,16 +982,112 @@ namespace Azure.Maps.Search
         /// The Search Geometry endpoint allows you to perform a free form search inside a single geometry or many of them. The search results that fall inside the geometry/geometries will be returned.&lt;br&gt;&lt;br&gt;To send the geometry you will use a `POST` request where the request body will contain the `geometry` object represented as a `GeoJSON` type and the `Content-Type` header will be set to `application/json`. The geographical features to be searched can be modeled as Polygon and/or Circle geometries represented using any one of the following `GeoJSON` types:&lt;ul&gt;&lt;li&gt;**GeoJSON FeatureCollection** &lt;br&gt;The `geometry` can be represented as a `GeoJSON FeatureCollection` object. This is the recommended option if the geometry contains both Polygons and Circles. The `FeatureCollection` can contain a max of 50 `GeoJSON Feature` objects. Each `Feature` object should represent either a Polygon or a Circle with the following conditions:&lt;ul style=&quot;list-style-type:none&quot;&gt;&lt;li&gt;A `Feature` object for the Polygon geometry can have a max of 50 coordinates and it&apos;s properties must be empty.&lt;/li&gt;&lt;li&gt;A `Feature` object for the Circle geometry is composed of a _center_ represented using a `GeoJSON Point` type and a _radius_ value (in meters) which must be specified in the object&apos;s properties along with the _subType_ property whose value should be &apos;Circle&apos;.&lt;/li&gt;&lt;/ul&gt;&lt;br&gt; Please see the Examples section below for a sample `FeatureCollection` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;li&gt;**GeoJSON GeometryCollection**&lt;br&gt;The `geometry` can be represented as a `GeoJSON GeometryCollection` object. This is the recommended option if the geometry contains a list of Polygons only. The `GeometryCollection` can contain a max of 50 `GeoJSON Polygon` objects. Each `Polygon` object can have a max of 50 coordinates. Please see the Examples section below for a sample `GeometryCollection` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;li&gt;**GeoJSON Polygon**&lt;br&gt;The `geometry` can be represented as a `GeoJSON Polygon` object. This is the recommended option if the geometry contains a single Polygon. The `Polygon` object can have a max of 50 coordinates. Please see the Examples section below for a sample `Polygon` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;/ul&gt;.&lt;br&gt;&lt;br&gt;
         /// </summary>
         /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;, &quot;pizza&quot;). Must be properly URL encoded. </param>
-        /// <param name="geometry"> This represents the geometry for one or more geographical features (parks, state boundary etc.) to search in and should be a GeoJSON compliant type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. </param>
+        /// <param name="featureCollection"> This represents the geometry for one or more geographical features (parks, state boundary etc.) to search in and should be a GeoJSON compliant type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. </param>
         /// <param name="options"> additional options </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> SearchInsideGeometry(string query, PolygonOrGeometryCollectionOrFeatureCollection geometry, SearchInsideGeometryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressResult>> SearchInsideGeometryAsync(string query, SearchInsideFeatureCollection featureCollection, SearchInsideGeometryOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchInsideGeometry");
             scope.Start();
             try
             {
-                return RestClient.SearchInsideGeometry(query, new SearchInsideGeometryRequest { Geometry = geometry }, ResponseFormat.Json, options?.Top, options?.Language, options?.CategoryFilter, options?.ExtendedPostalCodesFor, options?.IndexFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken);
+                return await RestClient.SearchInsideGeometryAsync(query, new SearchInsideGeometryRequest { Geometry = featureCollection }, ResponseFormat.Json, options?.Top, options?.Language, options?.CategoryFilter, options?.ExtendedPostalCodesFor, options?.IndexFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// **Applies to**: S0 and S1 pricing tiers.
+        /// 
+        /// The Search Geometry endpoint allows you to perform a free form search inside a single geometry or many of them. The search results that fall inside the geometry/geometries will be returned.&lt;br&gt;&lt;br&gt;To send the geometry you will use a `POST` request where the request body will contain the `geometry` object represented as a `GeoJSON` type and the `Content-Type` header will be set to `application/json`. The geographical features to be searched can be modeled as Polygon and/or Circle geometries represented using any one of the following `GeoJSON` types:&lt;ul&gt;&lt;li&gt;**GeoJSON FeatureCollection** &lt;br&gt;The `geometry` can be represented as a `GeoJSON FeatureCollection` object. This is the recommended option if the geometry contains both Polygons and Circles. The `FeatureCollection` can contain a max of 50 `GeoJSON Feature` objects. Each `Feature` object should represent either a Polygon or a Circle with the following conditions:&lt;ul style=&quot;list-style-type:none&quot;&gt;&lt;li&gt;A `Feature` object for the Polygon geometry can have a max of 50 coordinates and it&apos;s properties must be empty.&lt;/li&gt;&lt;li&gt;A `Feature` object for the Circle geometry is composed of a _center_ represented using a `GeoJSON Point` type and a _radius_ value (in meters) which must be specified in the object&apos;s properties along with the _subType_ property whose value should be &apos;Circle&apos;.&lt;/li&gt;&lt;/ul&gt;&lt;br&gt; Please see the Examples section below for a sample `FeatureCollection` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;li&gt;**GeoJSON GeometryCollection**&lt;br&gt;The `geometry` can be represented as a `GeoJSON GeometryCollection` object. This is the recommended option if the geometry contains a list of Polygons only. The `GeometryCollection` can contain a max of 50 `GeoJSON Polygon` objects. Each `Polygon` object can have a max of 50 coordinates. Please see the Examples section below for a sample `GeometryCollection` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;li&gt;**GeoJSON Polygon**&lt;br&gt;The `geometry` can be represented as a `GeoJSON Polygon` object. This is the recommended option if the geometry contains a single Polygon. The `Polygon` object can have a max of 50 coordinates. Please see the Examples section below for a sample `Polygon` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;/ul&gt;.&lt;br&gt;&lt;br&gt;
+        /// </summary>
+        /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;, &quot;pizza&quot;). Must be properly URL encoded. </param>
+        /// <param name="geometryCollection"> This represents the geometry for one or more geographical features (parks, state boundary etc.) to search in and should be a GeoJSON compliant type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. </param>
+        /// <param name="options"> additional options </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SearchAddressResult>> SearchInsideGeometryAsync(string query, SearchInsideGeometryCollection geometryCollection, SearchInsideGeometryOptions options = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchInsideGeometry");
+            scope.Start();
+            try
+            {
+                return await RestClient.SearchInsideGeometryAsync(query, new SearchInsideGeometryRequest { Geometry = geometryCollection }, ResponseFormat.Json, options?.Top, options?.Language, options?.CategoryFilter, options?.ExtendedPostalCodesFor, options?.IndexFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// **Applies to**: S0 and S1 pricing tiers.
+        /// 
+        /// The Search Geometry endpoint allows you to perform a free form search inside a single geometry or many of them. The search results that fall inside the geometry/geometries will be returned.&lt;br&gt;&lt;br&gt;To send the geometry you will use a `POST` request where the request body will contain the `geometry` object represented as a `GeoJSON` type and the `Content-Type` header will be set to `application/json`. The geographical features to be searched can be modeled as Polygon and/or Circle geometries represented using any one of the following `GeoJSON` types:&lt;ul&gt;&lt;li&gt;**GeoJSON FeatureCollection** &lt;br&gt;The `geometry` can be represented as a `GeoJSON FeatureCollection` object. This is the recommended option if the geometry contains both Polygons and Circles. The `FeatureCollection` can contain a max of 50 `GeoJSON Feature` objects. Each `Feature` object should represent either a Polygon or a Circle with the following conditions:&lt;ul style=&quot;list-style-type:none&quot;&gt;&lt;li&gt;A `Feature` object for the Polygon geometry can have a max of 50 coordinates and it&apos;s properties must be empty.&lt;/li&gt;&lt;li&gt;A `Feature` object for the Circle geometry is composed of a _center_ represented using a `GeoJSON Point` type and a _radius_ value (in meters) which must be specified in the object&apos;s properties along with the _subType_ property whose value should be &apos;Circle&apos;.&lt;/li&gt;&lt;/ul&gt;&lt;br&gt; Please see the Examples section below for a sample `FeatureCollection` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;li&gt;**GeoJSON GeometryCollection**&lt;br&gt;The `geometry` can be represented as a `GeoJSON GeometryCollection` object. This is the recommended option if the geometry contains a list of Polygons only. The `GeometryCollection` can contain a max of 50 `GeoJSON Polygon` objects. Each `Polygon` object can have a max of 50 coordinates. Please see the Examples section below for a sample `GeometryCollection` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;li&gt;**GeoJSON Polygon**&lt;br&gt;The `geometry` can be represented as a `GeoJSON Polygon` object. This is the recommended option if the geometry contains a single Polygon. The `Polygon` object can have a max of 50 coordinates. Please see the Examples section below for a sample `Polygon` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;/ul&gt;.&lt;br&gt;&lt;br&gt;
+        /// </summary>
+        /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;, &quot;pizza&quot;). Must be properly URL encoded. </param>
+        /// <param name="polygon"> This represents the geometry for one or more geographical features (parks, state boundary etc.) to search in and should be a GeoJSON compliant type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. </param>
+        /// <param name="options"> additional options </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SearchAddressResult> SearchInsideGeometry(string query, GeoJsonPolygon polygon, SearchInsideGeometryOptions options = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchInsideGeometry");
+            scope.Start();
+            try
+            {
+                return RestClient.SearchInsideGeometry(query, new SearchInsideGeometryRequest { Geometry = new SearchInsidePolygon(polygon.Coordinates) }, ResponseFormat.Json, options?.Top, options?.Language, options?.CategoryFilter, options?.ExtendedPostalCodesFor, options?.IndexFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// **Applies to**: S0 and S1 pricing tiers.
+        /// 
+        /// The Search Geometry endpoint allows you to perform a free form search inside a single geometry or many of them. The search results that fall inside the geometry/geometries will be returned.&lt;br&gt;&lt;br&gt;To send the geometry you will use a `POST` request where the request body will contain the `geometry` object represented as a `GeoJSON` type and the `Content-Type` header will be set to `application/json`. The geographical features to be searched can be modeled as Polygon and/or Circle geometries represented using any one of the following `GeoJSON` types:&lt;ul&gt;&lt;li&gt;**GeoJSON FeatureCollection** &lt;br&gt;The `geometry` can be represented as a `GeoJSON FeatureCollection` object. This is the recommended option if the geometry contains both Polygons and Circles. The `FeatureCollection` can contain a max of 50 `GeoJSON Feature` objects. Each `Feature` object should represent either a Polygon or a Circle with the following conditions:&lt;ul style=&quot;list-style-type:none&quot;&gt;&lt;li&gt;A `Feature` object for the Polygon geometry can have a max of 50 coordinates and it&apos;s properties must be empty.&lt;/li&gt;&lt;li&gt;A `Feature` object for the Circle geometry is composed of a _center_ represented using a `GeoJSON Point` type and a _radius_ value (in meters) which must be specified in the object&apos;s properties along with the _subType_ property whose value should be &apos;Circle&apos;.&lt;/li&gt;&lt;/ul&gt;&lt;br&gt; Please see the Examples section below for a sample `FeatureCollection` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;li&gt;**GeoJSON GeometryCollection**&lt;br&gt;The `geometry` can be represented as a `GeoJSON GeometryCollection` object. This is the recommended option if the geometry contains a list of Polygons only. The `GeometryCollection` can contain a max of 50 `GeoJSON Polygon` objects. Each `Polygon` object can have a max of 50 coordinates. Please see the Examples section below for a sample `GeometryCollection` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;li&gt;**GeoJSON Polygon**&lt;br&gt;The `geometry` can be represented as a `GeoJSON Polygon` object. This is the recommended option if the geometry contains a single Polygon. The `Polygon` object can have a max of 50 coordinates. Please see the Examples section below for a sample `Polygon` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;/ul&gt;.&lt;br&gt;&lt;br&gt;
+        /// </summary>
+        /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;, &quot;pizza&quot;). Must be properly URL encoded. </param>
+        /// <param name="featureCollection"> This represents the geometry for one or more geographical features (parks, state boundary etc.) to search in and should be a GeoJSON compliant type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. </param>
+        /// <param name="options"> additional options </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SearchAddressResult> SearchInsideGeometry(string query, SearchInsideFeatureCollection featureCollection, SearchInsideGeometryOptions options = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchInsideGeometry");
+            scope.Start();
+            try
+            {
+                return RestClient.SearchInsideGeometry(query, new SearchInsideGeometryRequest { Geometry = featureCollection }, ResponseFormat.Json, options?.Top, options?.Language, options?.CategoryFilter, options?.ExtendedPostalCodesFor, options?.IndexFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// **Applies to**: S0 and S1 pricing tiers.
+        /// 
+        /// The Search Geometry endpoint allows you to perform a free form search inside a single geometry or many of them. The search results that fall inside the geometry/geometries will be returned.&lt;br&gt;&lt;br&gt;To send the geometry you will use a `POST` request where the request body will contain the `geometry` object represented as a `GeoJSON` type and the `Content-Type` header will be set to `application/json`. The geographical features to be searched can be modeled as Polygon and/or Circle geometries represented using any one of the following `GeoJSON` types:&lt;ul&gt;&lt;li&gt;**GeoJSON FeatureCollection** &lt;br&gt;The `geometry` can be represented as a `GeoJSON FeatureCollection` object. This is the recommended option if the geometry contains both Polygons and Circles. The `FeatureCollection` can contain a max of 50 `GeoJSON Feature` objects. Each `Feature` object should represent either a Polygon or a Circle with the following conditions:&lt;ul style=&quot;list-style-type:none&quot;&gt;&lt;li&gt;A `Feature` object for the Polygon geometry can have a max of 50 coordinates and it&apos;s properties must be empty.&lt;/li&gt;&lt;li&gt;A `Feature` object for the Circle geometry is composed of a _center_ represented using a `GeoJSON Point` type and a _radius_ value (in meters) which must be specified in the object&apos;s properties along with the _subType_ property whose value should be &apos;Circle&apos;.&lt;/li&gt;&lt;/ul&gt;&lt;br&gt; Please see the Examples section below for a sample `FeatureCollection` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;li&gt;**GeoJSON GeometryCollection**&lt;br&gt;The `geometry` can be represented as a `GeoJSON GeometryCollection` object. This is the recommended option if the geometry contains a list of Polygons only. The `GeometryCollection` can contain a max of 50 `GeoJSON Polygon` objects. Each `Polygon` object can have a max of 50 coordinates. Please see the Examples section below for a sample `GeometryCollection` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;li&gt;**GeoJSON Polygon**&lt;br&gt;The `geometry` can be represented as a `GeoJSON Polygon` object. This is the recommended option if the geometry contains a single Polygon. The `Polygon` object can have a max of 50 coordinates. Please see the Examples section below for a sample `Polygon` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;/ul&gt;.&lt;br&gt;&lt;br&gt;
+        /// </summary>
+        /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;, &quot;pizza&quot;). Must be properly URL encoded. </param>
+        /// <param name="geometryCollection"> This represents the geometry for one or more geographical features (parks, state boundary etc.) to search in and should be a GeoJSON compliant type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. </param>
+        /// <param name="options"> additional options </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SearchAddressResult> SearchInsideGeometry(string query, SearchInsideGeometryCollection geometryCollection, SearchInsideGeometryOptions options = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchInsideGeometry");
+            scope.Start();
+            try
+            {
+                return RestClient.SearchInsideGeometry(query, new SearchInsideGeometryRequest { Geometry = geometryCollection }, ResponseFormat.Json, options?.Top, options?.Language, options?.CategoryFilter, options?.ExtendedPostalCodesFor, options?.IndexFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken);
             }
             catch (Exception e)
             {

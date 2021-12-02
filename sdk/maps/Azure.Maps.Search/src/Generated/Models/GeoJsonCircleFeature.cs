@@ -9,13 +9,13 @@ using System;
 
 namespace Azure.Maps.Search.Models
 {
-    /// <summary> A valid `GeoJSON Polygon` feature type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.6) for details. </summary>
-    public partial class GeoJsonPolygonFeature : GeoJsonFeature
+    /// <summary> A valid `GeoJSON Point` geometry type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.2) for details. </summary>
+    public partial class GeoJsonCircleFeature : GeoJsonFeature
     {
-        /// <summary> Initializes a new instance of GeoJsonPolygonFeature. </summary>
+        /// <summary> Initializes a new instance of GeoJsonCircleFeature. </summary>
         /// <param name="geometry"> A valid `GeoJSON` geometry object. The type must be one of the seven valid GeoJSON geometry types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon and GeometryCollection. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1) for details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="geometry"/> is null. </exception>
-        public GeoJsonPolygonFeature(GeoJsonGeometry geometry) : base(geometry)
+        public GeoJsonCircleFeature(GeoJsonGeometry geometry) : base(geometry)
         {
             if (geometry == null)
             {
@@ -25,13 +25,13 @@ namespace Azure.Maps.Search.Models
             Type = "Feature";
         }
 
-        /// <summary> Initializes a new instance of GeoJsonPolygonFeature. </summary>
+        /// <summary> Initializes a new instance of GeoJsonCircleFeature. </summary>
         /// <param name="type"> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </param>
         /// <param name="geometry"> A valid `GeoJSON` geometry object. The type must be one of the seven valid GeoJSON geometry types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon and GeometryCollection. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1) for details. </param>
         /// <param name="properties"> Properties can contain any additional metadata about the `Feature`. Value can be any JSON object or a JSON null value. </param>
         /// <param name="id"> Identifier for the feature. </param>
         /// <param name="featureType"> The type of the feature. The value depends on the data model the current feature is part of. Some data models may have an empty value. </param>
-        internal GeoJsonPolygonFeature(string type, GeoJsonGeometry geometry, object properties, string id, string featureType) : base(type, geometry, properties, id, featureType)
+        internal GeoJsonCircleFeature(string type, GeoJsonGeometry geometry, object properties, string id, string featureType) : base(type, geometry, properties, id, featureType)
         {
             Type = type ?? "Feature";
         }

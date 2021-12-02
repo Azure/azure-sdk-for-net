@@ -12,12 +12,12 @@ using System.Linq;
 namespace Azure.Maps.Search.Models
 {
     /// <summary> A valid `GeoJSON Polygon` geometry type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.6) for details. </summary>
-    public partial class SearchInsideGeometryPolygon : PolygonOrGeometryCollectionOrFeatureCollection
+    public partial class SearchInsidePolygon : PolygonOrGeometryCollectionOrFeatureCollection
     {
-        /// <summary> Initializes a new instance of SearchInsideGeometryPolygon. </summary>
+        /// <summary> Initializes a new instance of SearchInsidePolygon. </summary>
         /// <param name="coordinates"> Coordinates for the `GeoJson Polygon` geometry type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public SearchInsideGeometryPolygon(IEnumerable<IList<IList<double>>> coordinates)
+        public SearchInsidePolygon(IEnumerable<IList<IList<double>>> coordinates)
         {
             if (coordinates == null)
             {

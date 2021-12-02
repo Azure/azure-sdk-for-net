@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class SearchInsideGeometryFeatureCollectionCircle : IUtf8JsonSerializable
+    public partial class SearchInsidePolygon : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -19,14 +19,19 @@ namespace Azure.Maps.Search.Models
             writer.WriteStartArray();
             foreach (var item in Coordinates)
             {
-                writer.WriteNumberValue(item);
+                writer.WriteStartArray();
+                foreach (var item0 in item)
+                {
+                    writer.WriteStartArray();
+                    foreach (var item1 in item0)
+                    {
+                        writer.WriteNumberValue(item1);
+                    }
+                    writer.WriteEndArray();
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties");
-                writer.WriteObjectValue(Properties);
-            }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type.ToSerialString());
             writer.WriteEndObject();

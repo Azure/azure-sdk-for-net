@@ -12,12 +12,12 @@ using System.Linq;
 namespace Azure.Maps.Search.Models
 {
     /// <summary> A valid `GeoJSON FeatureCollection` object type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.3) for details. </summary>
-    public partial class SearchInsideGeometryFeatureCollection : PolygonOrGeometryCollectionOrFeatureCollection
+    public partial class SearchInsideFeatureCollection : PolygonOrGeometryCollectionOrFeatureCollection
     {
-        /// <summary> Initializes a new instance of SearchInsideGeometryFeatureCollection. </summary>
+        /// <summary> Initializes a new instance of SearchInsideFeatureCollection. </summary>
         /// <param name="features"> Contains a list of valid `GeoJSON Feature` objects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="features"/> is null. </exception>
-        public SearchInsideGeometryFeatureCollection(IEnumerable<PolygonOrCirclePointExtension> features)
+        public SearchInsideFeatureCollection(IEnumerable<GeoJsonFeature> features)
         {
             if (features == null)
             {
@@ -29,6 +29,6 @@ namespace Azure.Maps.Search.Models
         }
 
         /// <summary> Contains a list of valid `GeoJSON Feature` objects. </summary>
-        public IList<PolygonOrCirclePointExtension> Features { get; }
+        public IList<GeoJsonFeature> Features { get; }
     }
 }

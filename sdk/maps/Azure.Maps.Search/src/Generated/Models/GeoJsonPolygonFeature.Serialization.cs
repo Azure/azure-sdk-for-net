@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class GeoJsonFeature : IUtf8JsonSerializable
+    public partial class GeoJsonPolygonFeature : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -37,15 +37,8 @@ namespace Azure.Maps.Search.Models
             writer.WriteEndObject();
         }
 
-        internal static GeoJsonFeature DeserializeGeoJsonFeature(JsonElement element)
+        internal static GeoJsonPolygonFeature DeserializeGeoJsonPolygonFeature(JsonElement element)
         {
-            if (element.TryGetProperty("type", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "Feature": return GeoJsonCircleFeature.DeserializeGeoJsonCircleFeature(element);
-                }
-            }
             GeoJsonGeometry geometry = default;
             Optional<object> properties = default;
             Optional<string> id = default;
@@ -84,7 +77,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new GeoJsonFeature(type, geometry, properties.Value, id.Value, featureType.Value);
+            return new GeoJsonPolygonFeature(type, geometry, properties.Value, id.Value, featureType.Value);
         }
     }
 }

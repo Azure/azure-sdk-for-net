@@ -26,9 +26,11 @@ namespace Azure.Maps.Search.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Feature": return GeoJsonFeature.DeserializeGeoJsonFeature(element);
+                    case "Feature": return GeoJsonCircleFeature.DeserializeGeoJsonCircleFeature(element);
                     case "GeoJsonGeometry": return GeoJsonGeometry.DeserializeGeoJsonGeometry(element);
                     case "LineString": return GeoJsonLineString.DeserializeGeoJsonLineString(element);
+                    case "MultiPolygon": return GeoJsonMultiPolygon.DeserializeGeoJsonMultiPolygon(element);
+                    case "Point": return GeoJsonPoint.DeserializeGeoJsonPoint(element);
                     case "Polygon": return GeoJsonPolygon.DeserializeGeoJsonPolygon(element);
                     case "FeatureCollection": return GeoJsonFeatureCollection.DeserializeGeoJsonFeatureCollection(element);
                 }
