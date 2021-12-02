@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    public partial class Encryption : IUtf8JsonSerializable
+    public partial class EncryptionProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             writer.WriteEndObject();
         }
 
-        internal static Encryption DeserializeEncryption(JsonElement element)
+        internal static EncryptionProperties DeserializeEncryptionProperties(JsonElement element)
         {
             Optional<IList<KeyVaultProperties>> keyVaultProperties = default;
             Optional<string> keySource = default;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     continue;
                 }
             }
-            return new Encryption(Optional.ToList(keyVaultProperties), keySource.Value, Optional.ToNullable(requireInfrastructureEncryption));
+            return new EncryptionProperties(Optional.ToList(keyVaultProperties), keySource.Value, Optional.ToNullable(requireInfrastructureEncryption));
         }
     }
 }

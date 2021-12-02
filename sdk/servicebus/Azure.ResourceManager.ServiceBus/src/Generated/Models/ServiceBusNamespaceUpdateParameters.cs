@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="encryption"> Properties of BYOK Encryption description. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="disableLocalAuth"> This property disables SAS authentication for the Service Bus namespace. </param>
-        internal ServiceBusNamespaceUpdateParameters(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, ServiceBusSku sku, Identity identity, string provisioningState, string status, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, string serviceBusEndpoint, string metricId, bool? zoneRedundant, Encryption encryption, IList<PrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth) : base(id, name, type, tags, location)
+        internal ServiceBusNamespaceUpdateParameters(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, ServiceBusSku sku, Identity identity, string provisioningState, string status, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, string serviceBusEndpoint, string metricId, bool? zoneRedundant, EncryptionProperties encryption, IList<PrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth) : base(id, name, type, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <summary> Enabling this property creates a Premium Service Bus Namespace in regions supported availability zones. </summary>
         public bool? ZoneRedundant { get; set; }
         /// <summary> Properties of BYOK Encryption description. </summary>
-        public Encryption Encryption { get; set; }
+        public EncryptionProperties Encryption { get; set; }
         /// <summary> List of private endpoint connections. </summary>
         public IList<PrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> This property disables SAS authentication for the Service Bus namespace. </summary>

@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Represents the filter actions which are allowed for the transformation of a message that have been matched by a filter expression. </summary>
-    public partial class Action
+    public partial class FilterAction
     {
-        /// <summary> Initializes a new instance of Action. </summary>
-        public Action()
+        /// <summary> Initializes a new instance of FilterAction. </summary>
+        public FilterAction()
         {
         }
 
-        /// <summary> Initializes a new instance of Action. </summary>
+        /// <summary> Initializes a new instance of FilterAction. </summary>
         /// <param name="sqlExpression"> SQL expression. e.g. MyProperty=&apos;ABC&apos;. </param>
         /// <param name="compatibilityLevel"> This property is reserved for future use. An integer value showing the compatibility level, currently hard-coded to 20. </param>
         /// <param name="requiresPreprocessing"> Value that indicates whether the rule action requires preprocessing. </param>
-        internal Action(string sqlExpression, int? compatibilityLevel, bool? requiresPreprocessing)
+        internal FilterAction(string sqlExpression, int? compatibilityLevel, bool? requiresPreprocessing)
         {
             SqlExpression = sqlExpression;
             CompatibilityLevel = compatibilityLevel;

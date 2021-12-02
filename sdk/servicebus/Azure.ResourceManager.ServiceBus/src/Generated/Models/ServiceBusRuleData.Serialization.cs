@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceBus
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<Action> action = default;
+            Optional<FilterAction> action = default;
             Optional<FilterType> filterType = default;
             Optional<SqlFilter> sqlFilter = default;
             Optional<CorrelationFilter> correlationFilter = default;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ServiceBus
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            action = Action.DeserializeAction(property0.Value);
+                            action = FilterAction.DeserializeFilterAction(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("filterType"))

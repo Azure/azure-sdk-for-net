@@ -132,4 +132,10 @@ directive:
     - rename-model:
         from: ArmDisasterRecoveryListResult
         to: DisasterRecoveryListResult
+    - rename-model:
+        from: Action
+        to: FilterAction
+    - rename-model:
+        from: Encryption
+        to: EncryptionProperties
 ```

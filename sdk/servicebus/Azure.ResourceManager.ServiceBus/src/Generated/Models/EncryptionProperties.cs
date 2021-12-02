@@ -11,20 +11,20 @@ using Azure.Core;
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Properties to configure Encryption. </summary>
-    public partial class Encryption
+    public partial class EncryptionProperties
     {
-        /// <summary> Initializes a new instance of Encryption. </summary>
-        public Encryption()
+        /// <summary> Initializes a new instance of EncryptionProperties. </summary>
+        public EncryptionProperties()
         {
             KeyVaultProperties = new ChangeTrackingList<KeyVaultProperties>();
             KeySource = "Microsoft.KeyVault";
         }
 
-        /// <summary> Initializes a new instance of Encryption. </summary>
+        /// <summary> Initializes a new instance of EncryptionProperties. </summary>
         /// <param name="keyVaultProperties"> Properties of KeyVault. </param>
         /// <param name="keySource"> Enumerates the possible value of keySource for Encryption. </param>
         /// <param name="requireInfrastructureEncryption"> Enable Infrastructure Encryption (Double Encryption). </param>
-        internal Encryption(IList<KeyVaultProperties> keyVaultProperties, string keySource, bool? requireInfrastructureEncryption)
+        internal EncryptionProperties(IList<KeyVaultProperties> keyVaultProperties, string keySource, bool? requireInfrastructureEncryption)
         {
             KeyVaultProperties = keyVaultProperties;
             KeySource = keySource;
