@@ -4,6 +4,7 @@ parameters:
    default: ""
 
 steps:
+  - pwsh: tree
   - pwsh: |
       $packages = Get-Item *.json
       

@@ -32,7 +32,7 @@ jobs:
       - ${{ if eq(parameters.Daily, false) }}:
         - template: /eng/pipelines/templates/steps/BuildSmokeTestProject.yml
           parameters:
-            PackageInfoDir: $(Build.ArtifactStagingDirectory)/PackageInfo
+            PackageInfoDir: $(Build.ArtifactStagingDirectory)/packages/PackageInfo
 
       - template: /eng/common/TestResources/remove-test-resources.yml
         parameters:
