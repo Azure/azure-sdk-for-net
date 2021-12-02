@@ -167,6 +167,7 @@ namespace Azure.Storage.Sas
             Constants.Sas.Permissions.Write,
             Constants.Sas.Permissions.Delete,
             Constants.Sas.Permissions.DeleteBlobVersion,
+            Constants.Sas.Permissions.PermanentDelete,
             Constants.Sas.Permissions.List,
             Constants.Sas.Permissions.Add,
             Constants.Sas.Permissions.Create,
@@ -174,6 +175,7 @@ namespace Azure.Storage.Sas
             Constants.Sas.Permissions.Process,
             Constants.Sas.Permissions.Tag,
             Constants.Sas.Permissions.FilterByTags,
+            Constants.Sas.Permissions.SetImmutabilityPolicy,
         };
 
         /// <summary>

@@ -93,10 +93,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             }
             endpoint = endpoint.TrimEnd('/');
 
-            if (!dict.TryGetValue(AccessKeyPropertyName, out var accessKey))
-            {
-                throw new ArgumentException($"Required property not found in connection string: {AccessKeyPropertyName}.");
-            }
+            // AccessKey is optional when connection string is disabled.
+            dict.TryGetValue(AccessKeyPropertyName, out var accessKey);
 
             int? port = null;
             if (dict.TryGetValue(PortPropertyName, out var rawPort))

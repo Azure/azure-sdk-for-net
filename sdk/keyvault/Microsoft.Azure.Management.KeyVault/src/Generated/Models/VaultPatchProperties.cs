@@ -72,7 +72,13 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// - that is, the property does not accept false as its value.</param>
         /// <param name="networkAcls">A collection of rules governing the
         /// accessibility of the vault from specific network locations.</param>
-        public VaultPatchProperties(System.Guid? tenantId = default(System.Guid?), Sku sku = default(Sku), IList<AccessPolicyEntry> accessPolicies = default(IList<AccessPolicyEntry>), bool? enabledForDeployment = default(bool?), bool? enabledForDiskEncryption = default(bool?), bool? enabledForTemplateDeployment = default(bool?), bool? enableSoftDelete = default(bool?), bool? enableRbacAuthorization = default(bool?), int? softDeleteRetentionInDays = default(int?), CreateMode? createMode = default(CreateMode?), bool? enablePurgeProtection = default(bool?), NetworkRuleSet networkAcls = default(NetworkRuleSet))
+        /// <param name="publicNetworkAccess">Property to specify whether the
+        /// vault will accept traffic from public internet. If set to
+        /// 'disabled' all traffic except private endpoint traffic and that
+        /// that originates from trusted services will be blocked. This will
+        /// override the set firewall rules, meaning that even if the firewall
+        /// rules are present we will not honor the rules.</param>
+        public VaultPatchProperties(System.Guid? tenantId = default(System.Guid?), Sku sku = default(Sku), IList<AccessPolicyEntry> accessPolicies = default(IList<AccessPolicyEntry>), bool? enabledForDeployment = default(bool?), bool? enabledForDiskEncryption = default(bool?), bool? enabledForTemplateDeployment = default(bool?), bool? enableSoftDelete = default(bool?), bool? enableRbacAuthorization = default(bool?), int? softDeleteRetentionInDays = default(int?), CreateMode? createMode = default(CreateMode?), bool? enablePurgeProtection = default(bool?), NetworkRuleSet networkAcls = default(NetworkRuleSet), string publicNetworkAccess = default(string))
         {
             TenantId = tenantId;
             Sku = sku;
@@ -86,6 +92,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
             CreateMode = createMode;
             EnablePurgeProtection = enablePurgeProtection;
             NetworkAcls = networkAcls;
+            PublicNetworkAccess = publicNetworkAccess;
             CustomInit();
         }
 
@@ -191,6 +198,17 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// </summary>
         [JsonProperty(PropertyName = "networkAcls")]
         public NetworkRuleSet NetworkAcls { get; set; }
+
+        /// <summary>
+        /// Gets or sets property to specify whether the vault will accept
+        /// traffic from public internet. If set to 'disabled' all traffic
+        /// except private endpoint traffic and that that originates from
+        /// trusted services will be blocked. This will override the set
+        /// firewall rules, meaning that even if the firewall rules are present
+        /// we will not honor the rules.
+        /// </summary>
+        [JsonProperty(PropertyName = "publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
 
         /// <summary>
         /// Validate the object.

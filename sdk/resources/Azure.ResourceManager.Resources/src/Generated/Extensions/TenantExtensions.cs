@@ -19,29 +19,19 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class to add extension methods to Tenant. </summary>
     public static partial class TenantExtensions
     {
-        #region ManagementGroupResourceGroupSubscriptionTenantDeployment
-        /// <summary> Gets an object representing a ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection along with the instance operations that can be performed on it. </summary>
+        #region Deployment
+        /// <summary> Gets an object representing a DeploymentCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection" /> object. </returns>
-        public static ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection GetManagementGroupResourceGroupSubscriptionTenantDeployments(this Tenant tenant)
+        /// <returns> Returns a <see cref="DeploymentCollection" /> object. </returns>
+        public static DeploymentCollection GetDeployments(this Tenant tenant)
         {
-            return new ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection(tenant);
+            return new DeploymentCollection(tenant);
         }
         #endregion
 
-        #region TenantDeployment
-        /// <summary> Gets an object representing a TenantDeploymentCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="TenantDeploymentCollection" /> object. </returns>
-        public static TenantDeploymentCollection GetTenantDeployments(this Tenant tenant)
+        private static DeploymentsRestOperations GetDeploymentsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
         {
-            return new TenantDeploymentCollection(tenant);
-        }
-        #endregion
-
-        private static DeploymentsRestOperations GetDeploymentsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
-        {
-            return new DeploymentsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+            return new DeploymentsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
 
         /// <summary> Calculate the hash of the given template. </summary>
@@ -63,7 +53,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var restOperations = GetDeploymentsRestOperations(clientDiagnostics, credential, options, pipeline, tenant.Id.SubscriptionId, baseUri);
+                    var restOperations = GetDeploymentsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                     var response = await restOperations.CalculateTemplateHashAsync(template, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
@@ -95,7 +85,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var restOperations = GetDeploymentsRestOperations(clientDiagnostics, credential, options, pipeline, tenant.Id.SubscriptionId, baseUri);
+                    var restOperations = GetDeploymentsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                     var response = restOperations.CalculateTemplateHash(template, cancellationToken);
                     return response;
                 }

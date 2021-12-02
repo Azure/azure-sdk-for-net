@@ -78,53 +78,57 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
             var adminUsername = Recording.GenerateAssetName("admin");
             var vmId = $"{resourceGroup.Id}/providers/Microsoft.Compute/virtualMachines/{vmName}";
-            return (await subscription.GetGenericResources().CreateOrUpdateAsync(vmId, new GenericResourceData(location)
+            var genericResouces = subscription.GetGenericResources();
+            var data = new GenericResourceData(location)
             {
                 Properties = new Dictionary<string, object>
                 {
-                    { "hardwareProfile", new Dictionary<string, object>
+                    { "hardwareProfile", new Dictionary<string, object> { { "vmSize", "Standard_F2" } } },
+                    {
+                        "storageProfile",
+                        new Dictionary<string, object>
                         {
-                            { "vmSize", "Standard_F2" }
-                        }
-                    },
-                    { "storageProfile", new Dictionary<string, object>
-                        {
-                            { "imageReference", new Dictionary<string, object>
+                            {
+                                "imageReference",
+                                new Dictionary<string, object>
                                 {
-                                    { "sku", "16.04-LTS" },
-                                    { "publisher", "Canonical" },
-                                    { "version", "latest" },
-                                    { "offer", "UbuntuServer" }
+                                    { "sku", "16.04-LTS" }, { "publisher", "Canonical" }, { "version", "latest" }, { "offer", "UbuntuServer" }
                                 }
                             },
-                            { "osDisk", new Dictionary<string, object>
+                            {
+                                "osDisk",
+                                new Dictionary<string, object>
                                 {
                                     { "name", $"{vmName}_os_disk" },
                                     { "osType", "Linux" },
                                     { "caching", "ReadWrite" },
                                     { "createOption", "FromImage" },
-                                    { "managedDisk", new Dictionary<string, object>
-                                        {
-                                            { "storageAccountType", "Standard_LRS" }
-                                        }
-                                    }
+                                    { "managedDisk", new Dictionary<string, object> { { "storageAccountType", "Standard_LRS" } } }
                                 }
                             }
                         }
                     },
-                    { "osProfile", new Dictionary<string, object>
+                    {
+                        "osProfile",
+                        new Dictionary<string, object>
                         {
-                            { "adminUsername",  adminUsername },
+                            { "adminUsername", adminUsername },
                             { "computerName", vmName },
-                            { "linuxConfiguration", new Dictionary<string, object>
+                            {
+                                "linuxConfiguration",
+                                new Dictionary<string, object>
                                 {
-                                    { "ssh", new Dictionary<string, object>
+                                    {
+                                        "ssh",
+                                        new Dictionary<string, object>
                                         {
-                                            { "publicKeys", new List<object>
-                                                { new Dictionary<string, object>
+                                            {
+                                                "publicKeys",
+                                                new List<object>
+                                                {
+                                                    new Dictionary<string, object>
                                                     {
-                                                        { "path", $"/home/{adminUsername}/.ssh/authorized_keys" },
-                                                        { "keyData", dummySSHKey }
+                                                        { "path", $"/home/{adminUsername}/.ssh/authorized_keys" }, { "keyData", dummySSHKey }
                                                     }
                                                 }
                                             }
@@ -135,34 +139,38 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                             },
                         }
                     },
-                    { "networkProfile", new Dictionary<string, object>
+                    {
+                        "networkProfile",
+                        new Dictionary<string, object>
                         {
-                            { "networkInterfaces", new List<object>
-                                { new Dictionary<string, object>
+                            {
+                                "networkInterfaces",
+                                new List<object>
+                                {
+                                    new Dictionary<string, object>
                                     {
                                         { "id", networkInterface.Id.ToString() },
-                                        { "properties", new Dictionary<string, object>
-                                            {
-                                                { "primary", true }
-                                            }
-                                        }
+                                        { "properties", new Dictionary<string, object> { { "primary", true } } }
                                     }
                                 }
                             }
                         }
                     }
                 }
-            })).Value;
+            };
+            var operation = InstrumentOperation(await genericResouces.CreateOrUpdateAsync(vmId, data, waitForCompletion: false));
+            await operation.WaitForCompletionAsync();
+            return operation.Value;
         }
 
         public async Task<GenericResource> CreateLinuxVM(string vmName, string networkInterfaceName, string location, ResourceGroup resourceGroup, VirtualNetwork vnet)
         {
             Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
             var networkInterface = await CreateNetworkInterface(networkInterfaceName, null, vnet.Data.Subnets[0].Id, location, Recording.GenerateAssetName("ipconfig_"), resourceGroup.GetNetworkInterfaces());
-
+            var genericResouces = subscription.GetGenericResources();
             var adminUsername = Recording.GenerateAssetName("admin");
             var vmId = $"{resourceGroup.Id}/providers/Microsoft.Compute/virtualMachines/{vmName}";
-            return (await subscription.GetGenericResources().CreateOrUpdateAsync(vmId, new GenericResourceData(location)
+            GenericResourceData data = new(location)
             {
                 Properties = new Dictionary<string, object>
                 {
@@ -236,7 +244,10 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                         }
                     }
                 }
-            })).Value;
+            };
+            var operation = InstrumentOperation(await genericResouces.CreateOrUpdateAsync(vmId, data, waitForCompletion: false));
+            await operation.WaitForCompletionAsync();
+            return operation.Value;
         }
 
         public async Task<GenericResource> CreateWindowsVM(string vmName, string networkInterfaceName, string location, ResourceGroup resourceGroup)
@@ -246,7 +257,8 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
             var vmId = $"{resourceGroup.Id}/providers/Microsoft.Compute/virtualMachines/{vmName}";
             Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
-            return (await subscription.GetGenericResources().CreateOrUpdateAsync(vmId, new GenericResourceData(location)
+            var genericResouces = subscription.GetGenericResources();
+            GenericResourceData data = new GenericResourceData(location)
             {
                 Properties = new Dictionary<string, object>
                 {
@@ -304,7 +316,10 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                         }
                     }
                 }
-            })).Value;
+            };
+            var operation = InstrumentOperation(await genericResouces.CreateOrUpdateAsync(vmId, data, waitForCompletion: false));
+            await operation.WaitForCompletionAsync();
+            return operation.Value;
         }
 
         protected async Task<GenericResource> deployWindowsNetworkAgent(string virtualMachineName, string location, ResourceGroup resourceGroup)
@@ -562,7 +577,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 Location = location,
                 Tags = { { "key", "value" } },
                 IpConfigurations = {
-                    new NetworkInterfaceIPConfiguration()
+                    new NetworkInterfaceIPConfigurationData()
                     {
                          Name = ipConfigName,
                          PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
@@ -598,7 +613,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 Location = location,
                 Tags = { { "key", "value" } },
                 IpConfigurations = {
-                    new NetworkInterfaceIPConfiguration()
+                    new NetworkInterfaceIPConfigurationData()
                     {
                          Name = ipConfigName,
                          PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,

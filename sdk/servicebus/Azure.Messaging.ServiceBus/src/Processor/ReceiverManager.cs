@@ -233,7 +233,6 @@ namespace Azure.Messaging.ServiceBus
             finally
             {
                 await CancelTask(renewLockCancellationTokenSource, renewLock).ConfigureAwait(false);
-                renewLockCancellationTokenSource?.Dispose();
             }
         }
 
@@ -303,6 +302,7 @@ namespace Azure.Messaging.ServiceBus
                 if (cancellationSource != null)
                 {
                     cancellationSource.Cancel();
+                    cancellationSource.Dispose();
                     await task.ConfigureAwait(false);
                 }
             }

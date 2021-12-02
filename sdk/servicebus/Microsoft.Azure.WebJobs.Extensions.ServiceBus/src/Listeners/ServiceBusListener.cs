@@ -343,7 +343,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                                 foreach (ServiceBusReceivedMessage message in messagesArray)
                                 {
                                     // skip messages that were settled in the user's function
-                                    if (input.MessageActions.SettledMessages.Contains(message))
+                                    if (input.MessageActions.SettledMessages.ContainsKey(message))
                                     {
                                         continue;
                                     }
@@ -360,7 +360,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                                 foreach (ServiceBusReceivedMessage message in messagesArray)
                                 {
                                     // skip messages that were settled in the user's function
-                                    if (input.MessageActions.SettledMessages.Contains(message))
+                                    if (input.MessageActions.SettledMessages.ContainsKey(message))
                                     {
                                         continue;
                                     }

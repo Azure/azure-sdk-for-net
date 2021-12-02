@@ -8,8 +8,12 @@ namespace Microsoft.Azure.WebPubSub.Common
     /// </summary>
     public sealed class ConnectedEventRequest : WebPubSubEventRequest
     {
-        internal ConnectedEventRequest(WebPubSubConnectionContext connectionContext)
-            : base(connectionContext)
+        /// <summary>
+        /// The connected event request
+        /// </summary>
+        /// <param name="context"></param>
+        public ConnectedEventRequest(WebPubSubConnectionContext context)
+            : base(context)
         { }
     }
 }

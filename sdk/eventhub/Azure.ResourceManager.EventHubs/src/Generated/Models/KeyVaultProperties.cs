@@ -19,11 +19,13 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="keyName"> Name of the Key from KeyVault. </param>
         /// <param name="keyVaultUri"> Uri of KeyVault. </param>
         /// <param name="keyVersion"> Key Version. </param>
-        internal KeyVaultProperties(string keyName, string keyVaultUri, string keyVersion)
+        /// <param name="identity"></param>
+        internal KeyVaultProperties(string keyName, string keyVaultUri, string keyVersion, UserAssignedIdentityProperties identity)
         {
             KeyName = keyName;
             KeyVaultUri = keyVaultUri;
             KeyVersion = keyVersion;
+            Identity = identity;
         }
 
         /// <summary> Name of the Key from KeyVault. </summary>
@@ -32,5 +34,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         public string KeyVaultUri { get; set; }
         /// <summary> Key Version. </summary>
         public string KeyVersion { get; set; }
+        /// <summary> Gets or sets the identity. </summary>
+        public UserAssignedIdentityProperties Identity { get; set; }
     }
 }

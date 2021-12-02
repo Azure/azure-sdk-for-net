@@ -469,6 +469,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         case AmqpMessageConstants.DeadLetterSourceName:
                             annotatedMessage.MessageAnnotations[AmqpMessageConstants.DeadLetterSourceName] = pair.Value;
                             break;
+                        case AmqpMessageConstants.MessageStateName:
+                            int enumValue = (int)pair.Value;
+                            if (Enum.IsDefined(typeof(ServiceBusMessageState), enumValue))
+                            {
+                                annotatedMessage.MessageAnnotations[AmqpMessageConstants.MessageStateName] = (ServiceBusMessageState)enumValue;
+                            }
+                            break;
                         default:
                             if (TryGetNetObjectFromAmqpObject(pair.Value, MappingType.ApplicationProperty, out var netObject))
                             {

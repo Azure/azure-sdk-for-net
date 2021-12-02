@@ -35,5 +35,15 @@ namespace Azure.AI.Language.Conversations.Tests
         /// Gets the endpoint.
         /// </summary>
         public Uri Endpoint => new(GetRecordedVariable("CONVERSATIONS_URI"), UriKind.Absolute);
+
+        /// <summary>
+        /// Gets a <see cref="ConversationsProject"/> using the <see cref="ProjectName"/> and <see cref="DeploymentName"/>.
+        /// </summary>
+        public ConversationsProject Project => new ConversationsProject(ProjectName, DeploymentName);
+
+        /// <summary>
+        /// Gets an orchestration <see cref="ConversationsProject"/> using the <see cref="OrchestrationProjectName"/> and <see cref="DeploymentName"/>.
+        /// </summary>
+        public ConversationsProject OrchestrationProject => new ConversationsProject(OrchestrationProjectName, DeploymentName);
     }
 }

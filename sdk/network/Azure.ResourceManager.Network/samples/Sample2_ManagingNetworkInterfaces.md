@@ -55,7 +55,7 @@ NetworkInterfaceData networkInterfaceInput = new NetworkInterfaceData()
 {
     Location = resourceGroup.Data.Location,
     IpConfigurations = {
-        new NetworkInterfaceIPConfiguration()
+        new NetworkInterfaceIPConfigurationData()
         {
             Name = "ipConfig",
             PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,

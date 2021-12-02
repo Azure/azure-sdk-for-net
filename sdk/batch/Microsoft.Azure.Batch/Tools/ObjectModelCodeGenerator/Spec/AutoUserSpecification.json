@@ -2,7 +2,7 @@
   "Name": "AutoUserSpecification",
   "ProtocolName": "Models.AutoUserSpecification",
   "SummaryComment": "Specifies the parameters for the auto user that runs a task on the Batch service",
-  "IsConstructorPublic": true,
+  "ConstructorAccess": "public",
   "Properties": [
     {
       "Key": {

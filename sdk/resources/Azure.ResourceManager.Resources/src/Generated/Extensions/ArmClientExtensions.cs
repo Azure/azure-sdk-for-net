@@ -23,50 +23,6 @@ namespace Azure.ResourceManager.Resources
         }
         #endregion
 
-        #region TenantDeployment
-        /// <summary> Gets an object representing a TenantDeployment along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantDeployment" /> object. </returns>
-        public static TenantDeployment GetTenantDeployment(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new TenantDeployment(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
-        #region ManagementGroupDeployment
-        /// <summary> Gets an object representing a ManagementGroupDeployment along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagementGroupDeployment" /> object. </returns>
-        public static ManagementGroupDeployment GetManagementGroupDeployment(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagementGroupDeployment(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
-        #region SubscriptionDeployment
-        /// <summary> Gets an object representing a SubscriptionDeployment along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionDeployment" /> object. </returns>
-        public static SubscriptionDeployment GetSubscriptionDeployment(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SubscriptionDeployment(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
-        #region ResourceGroupDeployment
-        /// <summary> Gets an object representing a ResourceGroupDeployment along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceGroupDeployment" /> object. </returns>
-        public static ResourceGroupDeployment GetResourceGroupDeployment(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ResourceGroupDeployment(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
         #region Application
         /// <summary> Gets an object representing a Application along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>

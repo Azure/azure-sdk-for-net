@@ -61,6 +61,14 @@ namespace Microsoft.Azure.Batch
             this.Type = type;
         }
 
+        /// <summary>
+        /// Default constructor to support mocking the <see cref="BatchPoolIdentity"/> class.
+        /// </summary>
+        protected BatchPoolIdentity()
+        {
+            this.propertyContainer = new PropertyContainer();
+        }
+
         internal BatchPoolIdentity(Models.BatchPoolIdentity protocolObject)
         {
             this.propertyContainer = new PropertyContainer(protocolObject);
