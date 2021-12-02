@@ -11,26 +11,6 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
     lenient-model-deduplication: true
-operation-group-to-resource-type:
-    PrivateLinkResources: Microsoft.ServiceBus/namespaces/privateLinkResources
-    NamespaceName: nonresourcetype1
-    DisasterRecoveryConfigName: nonresourcetype2
-    DisasterRecoveryConfigAuthorizationRules: Microsoft.ServiceBus/namespaces/disasterRecoveryConfigs/authorizationRules
-operation-group-to-resource:
-    PrivateLinkResources: NonResource
-    NamespaceName: NonResource
-    DisasterRecoveryConfigName: NonResource
-    DisasterRecoveryConfigAuthorizationRules: ServiceBusAuthorizationRule
-operation-group-to-parent:
-    Queues: Microsoft.ServiceBus/namespaces
-    Topics: Microsoft.ServiceBus/namespaces
-    QueueAuthorizationRules: Microsoft.ServiceBus/namespaces/queues
-    TopicAuthorizationRules: Microsoft.ServiceBus/namespaces/topics
-    NamespaceAuthorizationRules: Microsoft.ServiceBus/namespaces
-    DisasterRecoveryConfigAuthorizationRules: Microsoft.ServiceBus/namespaces/disasterRecoveryConfigs
-    NamespaceName: subscriptions
-    DisasterRecoveryConfigName: Microsoft.ServiceBus/namespaces
-operation-group-is-extension: NamespaceAuthorizationRules;QueueAuthorizationRules;TopicAuthorizationRules;DisasterRecoveryConfigAuthorizationRules
 directive:
     - rename-model:
         from: SBNamespace
@@ -146,10 +126,10 @@ directive:
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}/listKeys'].post.operationId
       transform: return "DisasterRecoveryConfigAuthorizationRules_ListKeys"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/CheckNameAvailability'].post.operationId
-      transform: return "NamespaceName_CheckAvailability"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/CheckNameAvailability'].post.operationId
-      transform: return "DisasterRecoveryConfigName_CheckAvailability"
+    - remame-model:
+        from: ArmDisasterRecovery
+        to: DisasterRecovery
+    - remame-model:
+        from: ArmDisasterRecoveryListResult
+        to: DisasterRecoveryListResult
 ```

@@ -27,11 +27,6 @@ namespace Azure.ResourceManager.ServiceBus
             return new NamespacesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
 
-        private static NamespaceNameRestOperations GetNamespaceNameRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
-        {
-            return new NamespaceNameRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
-        }
-
         /// <summary> Lists the ServiceBusNamespaces for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -155,7 +150,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="parameters"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResult>> CheckAvailabilityNamespaceNameAsync(this Subscription subscription, CheckNameAvailability parameters, CancellationToken cancellationToken = default)
+        public static async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityNamespaceAsync(this Subscription subscription, CheckNameAvailability parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -165,12 +160,12 @@ namespace Azure.ResourceManager.ServiceBus
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckAvailabilityNamespaceName");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNameAvailabilityNamespace");
                 scope.Start();
                 try
                 {
-                    var restOperations = GetNamespaceNameRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                    var response = await restOperations.CheckAvailabilityAsync(subscription.Id.SubscriptionId, parameters, cancellationToken).ConfigureAwait(false);
+                    var restOperations = GetNamespacesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    var response = await restOperations.CheckNameAvailabilityAsync(subscription.Id.SubscriptionId, parameters, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
                 catch (Exception e)
@@ -187,7 +182,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="parameters"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResult> CheckAvailabilityNamespaceName(this Subscription subscription, CheckNameAvailability parameters, CancellationToken cancellationToken = default)
+        public static Response<CheckNameAvailabilityResult> CheckNameAvailabilityNamespace(this Subscription subscription, CheckNameAvailability parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -197,12 +192,12 @@ namespace Azure.ResourceManager.ServiceBus
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckAvailabilityNamespaceName");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNameAvailabilityNamespace");
                 scope.Start();
                 try
                 {
-                    var restOperations = GetNamespaceNameRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                    var response = restOperations.CheckAvailability(subscription.Id.SubscriptionId, parameters, cancellationToken);
+                    var restOperations = GetNamespacesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    var response = restOperations.CheckNameAvailability(subscription.Id.SubscriptionId, parameters, cancellationToken);
                     return response;
                 }
                 catch (Exception e)

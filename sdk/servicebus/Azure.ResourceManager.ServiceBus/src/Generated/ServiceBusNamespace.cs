@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ServiceBus
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly NamespacesRestOperations _namespacesRestClient;
         private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
-        private readonly DisasterRecoveryConfigNameRestOperations _disasterRecoveryConfigNameRestClient;
+        private readonly DisasterRecoveryConfigsRestOperations _disasterRecoveryConfigsRestClient;
         private readonly ServiceBusNamespaceData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ServiceBusNamespace"/> class for mocking. </summary>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ServiceBus
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _namespacesRestClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _disasterRecoveryConfigNameRestClient = new DisasterRecoveryConfigNameRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _disasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ServiceBusNamespace"/> class. </summary>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ServiceBus
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _namespacesRestClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _disasterRecoveryConfigNameRestClient = new DisasterRecoveryConfigNameRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _disasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ServiceBusNamespace"/> class. </summary>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ServiceBus
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _namespacesRestClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _disasterRecoveryConfigNameRestClient = new DisasterRecoveryConfigNameRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _disasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -454,18 +454,18 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="parameters"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<CheckNameAvailabilityResult>> CheckAvailabilityDisasterRecoveryConfigNameAsync(CheckNameAvailability parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityDisasterRecoveryConfigAsync(CheckNameAvailability parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespace.CheckAvailabilityDisasterRecoveryConfigName");
+            using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespace.CheckNameAvailabilityDisasterRecoveryConfig");
             scope.Start();
             try
             {
-                var response = await _disasterRecoveryConfigNameRestClient.CheckAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _disasterRecoveryConfigsRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -479,18 +479,18 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="parameters"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<CheckNameAvailabilityResult> CheckAvailabilityDisasterRecoveryConfigName(CheckNameAvailability parameters, CancellationToken cancellationToken = default)
+        public virtual Response<CheckNameAvailabilityResult> CheckNameAvailabilityDisasterRecoveryConfig(CheckNameAvailability parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespace.CheckAvailabilityDisasterRecoveryConfigName");
+            using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespace.CheckNameAvailabilityDisasterRecoveryConfig");
             scope.Start();
             try
             {
-                var response = _disasterRecoveryConfigNameRestClient.CheckAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var response = _disasterRecoveryConfigsRestClient.CheckNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
                 return response;
             }
             catch (Exception e)
