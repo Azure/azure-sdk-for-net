@@ -42,7 +42,7 @@ variable is meant to be used in the domain-specific business logic in
 param(
   [Parameter(Mandatory = $true)]
   [array]$PackageInfoJsonLocations,
-  
+
   [Parameter(Mandatory = $true)]
   [string]$DocRepoLocation, 
 
