@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Sql
         internal DeletedServerCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _deletedServersRestClient = new DeletedServersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _deletedServersRestClient = new DeletedServersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _deletedServersRestClient.Get(locationName, deletedServerName, cancellationToken);
+                var response = _deletedServersRestClient.Get(Id.SubscriptionId, locationName, deletedServerName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeletedServer(Parent, response.Value), response.GetRawResponse());
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _deletedServersRestClient.GetAsync(locationName, deletedServerName, cancellationToken).ConfigureAwait(false);
+                var response = await _deletedServersRestClient.GetAsync(Id.SubscriptionId, locationName, deletedServerName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new DeletedServer(Parent, response.Value), response.GetRawResponse());
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _deletedServersRestClient.Get(locationName, deletedServerName, cancellationToken: cancellationToken);
+                var response = _deletedServersRestClient.Get(Id.SubscriptionId, locationName, deletedServerName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<DeletedServer>(null, response.GetRawResponse())
                     : Response.FromValue(new DeletedServer(this, response.Value), response.GetRawResponse());
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _deletedServersRestClient.GetAsync(locationName, deletedServerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _deletedServersRestClient.GetAsync(Id.SubscriptionId, locationName, deletedServerName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<DeletedServer>(null, response.GetRawResponse())
                     : Response.FromValue(new DeletedServer(this, response.Value), response.GetRawResponse());
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = _deletedServersRestClient.ListByLocation(locationName, cancellationToken: cancellationToken);
+                    var response = _deletedServersRestClient.ListByLocation(Id.SubscriptionId, locationName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DeletedServer(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = _deletedServersRestClient.ListByLocationNextPage(nextLink, locationName, cancellationToken: cancellationToken);
+                    var response = _deletedServersRestClient.ListByLocationNextPage(nextLink, Id.SubscriptionId, locationName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DeletedServer(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = await _deletedServersRestClient.ListByLocationAsync(locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _deletedServersRestClient.ListByLocationAsync(Id.SubscriptionId, locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DeletedServer(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = await _deletedServersRestClient.ListByLocationNextPageAsync(nextLink, locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _deletedServersRestClient.ListByLocationNextPageAsync(nextLink, Id.SubscriptionId, locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DeletedServer(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

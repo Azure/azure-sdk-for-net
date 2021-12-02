@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.Sql
 {
     internal partial class UsagesRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -29,19 +28,16 @@ namespace Azure.ResourceManager.Sql
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public UsagesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null)
+        public UsagesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null)
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateListByInstancePoolRequest(string resourceGroupName, string instancePoolName, bool? expandChildren)
+        internal HttpMessage CreateListByInstancePoolRequest(string subscriptionId, string resourceGroupName, string instancePoolName, bool? expandChildren)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -67,13 +63,18 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets all instance pool usage metrics. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="instancePoolName"> The name of the instance pool to be retrieved. </param>
         /// <param name="expandChildren"> Optional request parameter to include managed instance usages within the instance pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="instancePoolName"/> is null. </exception>
-        public async Task<Response<InstancePoolUsageListResult>> ListByInstancePoolAsync(string resourceGroupName, string instancePoolName, bool? expandChildren = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="instancePoolName"/> is null. </exception>
+        public async Task<Response<InstancePoolUsageListResult>> ListByInstancePoolAsync(string subscriptionId, string resourceGroupName, string instancePoolName, bool? expandChildren = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(instancePoolName));
             }
 
-            using var message = CreateListByInstancePoolRequest(resourceGroupName, instancePoolName, expandChildren);
+            using var message = CreateListByInstancePoolRequest(subscriptionId, resourceGroupName, instancePoolName, expandChildren);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -100,13 +101,18 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets all instance pool usage metrics. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="instancePoolName"> The name of the instance pool to be retrieved. </param>
         /// <param name="expandChildren"> Optional request parameter to include managed instance usages within the instance pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="instancePoolName"/> is null. </exception>
-        public Response<InstancePoolUsageListResult> ListByInstancePool(string resourceGroupName, string instancePoolName, bool? expandChildren = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="instancePoolName"/> is null. </exception>
+        public Response<InstancePoolUsageListResult> ListByInstancePool(string subscriptionId, string resourceGroupName, string instancePoolName, bool? expandChildren = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -116,7 +122,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(instancePoolName));
             }
 
-            using var message = CreateListByInstancePoolRequest(resourceGroupName, instancePoolName, expandChildren);
+            using var message = CreateListByInstancePoolRequest(subscriptionId, resourceGroupName, instancePoolName, expandChildren);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -132,7 +138,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateListByInstancePoolNextPageRequest(string nextLink, string resourceGroupName, string instancePoolName, bool? expandChildren)
+        internal HttpMessage CreateListByInstancePoolNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string instancePoolName, bool? expandChildren)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -148,16 +154,21 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets all instance pool usage metrics. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="instancePoolName"> The name of the instance pool to be retrieved. </param>
         /// <param name="expandChildren"> Optional request parameter to include managed instance usages within the instance pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="instancePoolName"/> is null. </exception>
-        public async Task<Response<InstancePoolUsageListResult>> ListByInstancePoolNextPageAsync(string nextLink, string resourceGroupName, string instancePoolName, bool? expandChildren = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="instancePoolName"/> is null. </exception>
+        public async Task<Response<InstancePoolUsageListResult>> ListByInstancePoolNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string instancePoolName, bool? expandChildren = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -168,7 +179,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(instancePoolName));
             }
 
-            using var message = CreateListByInstancePoolNextPageRequest(nextLink, resourceGroupName, instancePoolName, expandChildren);
+            using var message = CreateListByInstancePoolNextPageRequest(nextLink, subscriptionId, resourceGroupName, instancePoolName, expandChildren);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -186,16 +197,21 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets all instance pool usage metrics. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="instancePoolName"> The name of the instance pool to be retrieved. </param>
         /// <param name="expandChildren"> Optional request parameter to include managed instance usages within the instance pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="instancePoolName"/> is null. </exception>
-        public Response<InstancePoolUsageListResult> ListByInstancePoolNextPage(string nextLink, string resourceGroupName, string instancePoolName, bool? expandChildren = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="instancePoolName"/> is null. </exception>
+        public Response<InstancePoolUsageListResult> ListByInstancePoolNextPage(string nextLink, string subscriptionId, string resourceGroupName, string instancePoolName, bool? expandChildren = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -206,7 +222,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(instancePoolName));
             }
 
-            using var message = CreateListByInstancePoolNextPageRequest(nextLink, resourceGroupName, instancePoolName, expandChildren);
+            using var message = CreateListByInstancePoolNextPageRequest(nextLink, subscriptionId, resourceGroupName, instancePoolName, expandChildren);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.Sql
 {
     internal partial class DatabaseTablesRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -29,19 +28,16 @@ namespace Azure.ResourceManager.Sql
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public DatabaseTablesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null)
+        public DatabaseTablesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null)
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateListBySchemaRequest(string resourceGroupName, string serverName, string databaseName, string schemaName, string filter)
+        internal HttpMessage CreateListBySchemaRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -71,15 +67,20 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> List database tables. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="schemaName"/> is null. </exception>
-        public async Task<Response<DatabaseTableListResult>> ListBySchemaAsync(string resourceGroupName, string serverName, string databaseName, string schemaName, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="schemaName"/> is null. </exception>
+        public async Task<Response<DatabaseTableListResult>> ListBySchemaAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string filter = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(schemaName));
             }
 
-            using var message = CreateListBySchemaRequest(resourceGroupName, serverName, databaseName, schemaName, filter);
+            using var message = CreateListBySchemaRequest(subscriptionId, resourceGroupName, serverName, databaseName, schemaName, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -114,15 +115,20 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> List database tables. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="schemaName"/> is null. </exception>
-        public Response<DatabaseTableListResult> ListBySchema(string resourceGroupName, string serverName, string databaseName, string schemaName, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="schemaName"/> is null. </exception>
+        public Response<DatabaseTableListResult> ListBySchema(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string filter = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -140,7 +146,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(schemaName));
             }
 
-            using var message = CreateListBySchemaRequest(resourceGroupName, serverName, databaseName, schemaName, filter);
+            using var message = CreateListBySchemaRequest(subscriptionId, resourceGroupName, serverName, databaseName, schemaName, filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -156,7 +162,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -183,15 +189,20 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Get database table. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="tableName"> The name of the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, or <paramref name="tableName"/> is null. </exception>
-        public async Task<Response<DatabaseTableData>> GetAsync(string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, or <paramref name="tableName"/> is null. </exception>
+        public async Task<Response<DatabaseTableData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -213,7 +224,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(tableName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, serverName, databaseName, schemaName, tableName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, serverName, databaseName, schemaName, tableName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -232,15 +243,20 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Get database table. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="tableName"> The name of the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, or <paramref name="tableName"/> is null. </exception>
-        public Response<DatabaseTableData> Get(string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, or <paramref name="tableName"/> is null. </exception>
+        public Response<DatabaseTableData> Get(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -262,7 +278,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(tableName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, serverName, databaseName, schemaName, tableName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, serverName, databaseName, schemaName, tableName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -280,7 +296,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateListBySchemaNextPageRequest(string nextLink, string resourceGroupName, string serverName, string databaseName, string schemaName, string filter)
+        internal HttpMessage CreateListBySchemaNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -296,18 +312,23 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> List database tables. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="schemaName"/> is null. </exception>
-        public async Task<Response<DatabaseTableListResult>> ListBySchemaNextPageAsync(string nextLink, string resourceGroupName, string serverName, string databaseName, string schemaName, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="schemaName"/> is null. </exception>
+        public async Task<Response<DatabaseTableListResult>> ListBySchemaNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -326,7 +347,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(schemaName));
             }
 
-            using var message = CreateListBySchemaNextPageRequest(nextLink, resourceGroupName, serverName, databaseName, schemaName, filter);
+            using var message = CreateListBySchemaNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName, databaseName, schemaName, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -344,18 +365,23 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> List database tables. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="schemaName"/> is null. </exception>
-        public Response<DatabaseTableListResult> ListBySchemaNextPage(string nextLink, string resourceGroupName, string serverName, string databaseName, string schemaName, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="schemaName"/> is null. </exception>
+        public Response<DatabaseTableListResult> ListBySchemaNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -374,7 +400,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(schemaName));
             }
 
-            using var message = CreateListBySchemaNextPageRequest(nextLink, resourceGroupName, serverName, databaseName, schemaName, filter);
+            using var message = CreateListBySchemaNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName, databaseName, schemaName, filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

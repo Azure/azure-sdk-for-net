@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Sql
         internal ServerAdvisorCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _serverAdvisorsRestClient = new ServerAdvisorsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _serverAdvisorsRestClient = new ServerAdvisorsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _serverAdvisorsRestClient.Get(Id.ResourceGroupName, Id.Name, advisorName, cancellationToken);
+                var response = _serverAdvisorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advisorName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerAdvisor(Parent, response.Value), response.GetRawResponse());
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _serverAdvisorsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, advisorName, cancellationToken).ConfigureAwait(false);
+                var response = await _serverAdvisorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advisorName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ServerAdvisor(Parent, response.Value), response.GetRawResponse());
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _serverAdvisorsRestClient.Get(Id.ResourceGroupName, Id.Name, advisorName, cancellationToken: cancellationToken);
+                var response = _serverAdvisorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advisorName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<ServerAdvisor>(null, response.GetRawResponse())
                     : Response.FromValue(new ServerAdvisor(this, response.Value), response.GetRawResponse());
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _serverAdvisorsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, advisorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serverAdvisorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advisorName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<ServerAdvisor>(null, response.GetRawResponse())
                     : Response.FromValue(new ServerAdvisor(this, response.Value), response.GetRawResponse());
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _serverAdvisorsRestClient.ListByServer(Id.ResourceGroupName, Id.Name, expand, cancellationToken);
+                var response = _serverAdvisorsRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 return Response.FromValue(response.Value.Select(value => new ServerAdvisor(Parent, value)).ToArray() as IReadOnlyList<ServerAdvisor>, response.GetRawResponse());
             }
             catch (Exception e)
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _serverAdvisorsRestClient.ListByServerAsync(Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _serverAdvisorsRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value.Select(value => new ServerAdvisor(Parent, value)).ToArray() as IReadOnlyList<ServerAdvisor>, response.GetRawResponse());
             }
             catch (Exception e)

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Sql
         internal SqlTimeZoneCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _timeZonesRestClient = new TimeZonesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _timeZonesRestClient = new TimeZonesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _timeZonesRestClient.Get(locationName, timeZoneId, cancellationToken);
+                var response = _timeZonesRestClient.Get(Id.SubscriptionId, locationName, timeZoneId, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlTimeZone(Parent, response.Value), response.GetRawResponse());
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _timeZonesRestClient.GetAsync(locationName, timeZoneId, cancellationToken).ConfigureAwait(false);
+                var response = await _timeZonesRestClient.GetAsync(Id.SubscriptionId, locationName, timeZoneId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new SqlTimeZone(Parent, response.Value), response.GetRawResponse());
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _timeZonesRestClient.Get(locationName, timeZoneId, cancellationToken: cancellationToken);
+                var response = _timeZonesRestClient.Get(Id.SubscriptionId, locationName, timeZoneId, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<SqlTimeZone>(null, response.GetRawResponse())
                     : Response.FromValue(new SqlTimeZone(this, response.Value), response.GetRawResponse());
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _timeZonesRestClient.GetAsync(locationName, timeZoneId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _timeZonesRestClient.GetAsync(Id.SubscriptionId, locationName, timeZoneId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<SqlTimeZone>(null, response.GetRawResponse())
                     : Response.FromValue(new SqlTimeZone(this, response.Value), response.GetRawResponse());
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = _timeZonesRestClient.ListByLocation(locationName, cancellationToken: cancellationToken);
+                    var response = _timeZonesRestClient.ListByLocation(Id.SubscriptionId, locationName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new SqlTimeZone(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = _timeZonesRestClient.ListByLocationNextPage(nextLink, locationName, cancellationToken: cancellationToken);
+                    var response = _timeZonesRestClient.ListByLocationNextPage(nextLink, Id.SubscriptionId, locationName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new SqlTimeZone(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = await _timeZonesRestClient.ListByLocationAsync(locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _timeZonesRestClient.ListByLocationAsync(Id.SubscriptionId, locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new SqlTimeZone(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = await _timeZonesRestClient.ListByLocationNextPageAsync(nextLink, locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _timeZonesRestClient.ListByLocationNextPageAsync(nextLink, Id.SubscriptionId, locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new SqlTimeZone(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
