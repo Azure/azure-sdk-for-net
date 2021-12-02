@@ -1,23 +1,3 @@
-[CmdletBinding(DefaultParameterSetName = 'Default')]
-param(
-    [string]$SearchDirectory,
-    [hashtable]$Filters,
-    [string]$Environment,
-    [string]$Repository,
-    [switch]$PushImages,
-    [string]$ClusterGroup,
-    [string]$DeployId,
-
-    [Parameter(ParameterSetName = 'DoLogin', Mandatory = $true)]
-    [switch]$Login,
-
-    [Parameter(ParameterSetName = 'DoLogin')]
-    [string]$Subscription,
-
-    # Default to true in Azure Pipelines environments
-    [switch] $CI = ($null -ne $env:SYSTEM_TEAMPROJECTID)
-)
-
 $ErrorActionPreference = 'Stop'
 
 . $PSScriptRoot/find-all-stress-packages.ps1
@@ -81,7 +61,9 @@ function DeployStressTests(
     [boolean]$pushImages = $false,
     [string]$clusterGroup = '',
     [string]$deployId = 'local',
-    [string]$subscription = ''
+    [boolean]$login = $false,
+    [string]$subscription = '',
+    [boolean]$ci = $false
 ) {
     if ($environment -eq 'test') {
         if ($clusterGroup -or $subscription) {
@@ -97,7 +79,7 @@ function DeployStressTests(
         $subscription = 'Azure SDK Test Resources'
     }
 
-    if ($PSCmdlet.ParameterSetName -eq 'DoLogin') {
+    if ($login) {
         Login $subscription $clusterGroup $pushImages
     }
 
@@ -110,7 +92,7 @@ function DeployStressTests(
     Write-Host $pkgs.Directory ""
     foreach ($pkg in $pkgs) {
         Write-Host "Deploying stress test at '$($pkg.Directory)'"
-        DeployStressPackage $pkg $deployId $environment $repository $pushImages
+        DeployStressPackage $pkg $deployId $environment $repository $pushImages $login
     }
 
     Write-Host "Releases deployed by $deployId"
@@ -132,7 +114,8 @@ function DeployStressPackage(
     [string]$deployId,
     [string]$environment,
     [string]$repository,
-    [boolean]$pushImages
+    [boolean]$pushImages,
+    [boolean]$login
 ) {
     $registry = RunOrExitOnFailure az acr list -g $clusterGroup --subscription $subscription -o json
     $registryName = ($registry | ConvertFrom-Json).name
@@ -160,7 +143,7 @@ function DeployStressPackage(
             if ($LASTEXITCODE) { return }
             Run docker push $imageTag
             if ($LASTEXITCODE) {
-                if ($PSCmdlet.ParameterSetName -ne 'DoLogin') {
+                if ($login) {
                     Write-Warning "If docker push is failing due to authentication issues, try calling this script with '-Login'"
                 }
                 return

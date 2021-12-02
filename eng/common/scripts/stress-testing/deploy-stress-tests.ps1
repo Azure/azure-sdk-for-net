@@ -1,3 +1,4 @@
+[CmdletBinding(DefaultParameterSetName = 'Default')]
 param(
     [string]$SearchDirectory,
     [hashtable]$Filters,
