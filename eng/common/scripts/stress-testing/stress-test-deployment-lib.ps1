@@ -27,7 +27,7 @@ function RunOrExitOnFailure()
     }
 }
 
-function Login([string]$subscription, [string]$clusterGroup, [boolean]$pushImages)
+function Login([string]$subscription, [string]$clusterGroup, [switch]$pushImages)
 {
     Write-Host "Logging in to subscription, cluster and container registry"
     az account show *> $null
@@ -58,12 +58,12 @@ function DeployStressTests(
     [hashtable]$filters = @{},
     [string]$environment = 'test',
     [string]$repository = '',
-    [boolean]$pushImages = $false,
+    [switch]$pushImages,
     [string]$clusterGroup = '',
     [string]$deployId = 'local',
-    [boolean]$login = $false,
+    [switch]$login,
     [string]$subscription = '',
-    [boolean]$ci = $false
+    [switch]$ci
 ) {
     if ($environment -eq 'test') {
         if ($clusterGroup -or $subscription) {
@@ -120,8 +120,8 @@ function DeployStressPackage(
     [string]$deployId,
     [string]$environment,
     [string]$repositoryBase,
-    [boolean]$pushImages,
-    [boolean]$login
+    [switch]$pushImages,
+    [switch]$login
 ) {
     $registry = RunOrExitOnFailure az acr list -g $clusterGroup --subscription $subscription -o json
     $registryName = ($registry | ConvertFrom-Json).name
