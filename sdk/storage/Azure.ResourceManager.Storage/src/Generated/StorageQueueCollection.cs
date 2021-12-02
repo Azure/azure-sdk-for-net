@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Storage
         internal StorageQueueCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _queueRestClient = new QueueRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _queueRestClient = new QueueRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _queueRestClient.Create(Id.ResourceGroupName, Id.Parent.Name, queueName, queue, cancellationToken);
+                var response = _queueRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, queueName, queue, cancellationToken);
                 var operation = new QueueCreateOperation(Parent, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _queueRestClient.CreateAsync(Id.ResourceGroupName, Id.Parent.Name, queueName, queue, cancellationToken).ConfigureAwait(false);
+                var response = await _queueRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, queueName, queue, cancellationToken).ConfigureAwait(false);
                 var operation = new QueueCreateOperation(Parent, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _queueRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, queueName, cancellationToken);
+                var response = _queueRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, queueName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new StorageQueue(Parent, response.Value), response.GetRawResponse());
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _queueRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, queueName, cancellationToken).ConfigureAwait(false);
+                var response = await _queueRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, queueName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new StorageQueue(Parent, response.Value), response.GetRawResponse());
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _queueRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, queueName, cancellationToken: cancellationToken);
+                var response = _queueRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, queueName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<StorageQueue>(null, response.GetRawResponse())
                     : Response.FromValue(new StorageQueue(this, response.Value), response.GetRawResponse());
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _queueRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, queueName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _queueRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, queueName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<StorageQueue>(null, response.GetRawResponse())
                     : Response.FromValue(new StorageQueue(this, response.Value), response.GetRawResponse());
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Storage
                 scope.Start();
                 try
                 {
-                    var response = _queueRestClient.List(Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, cancellationToken: cancellationToken);
+                    var response = _queueRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new StorageQueue(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Storage
                 scope.Start();
                 try
                 {
-                    var response = _queueRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, cancellationToken: cancellationToken);
+                    var response = _queueRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new StorageQueue(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Storage
                 scope.Start();
                 try
                 {
-                    var response = await _queueRestClient.ListAsync(Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _queueRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new StorageQueue(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Storage
                 scope.Start();
                 try
                 {
-                    var response = await _queueRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _queueRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new StorageQueue(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

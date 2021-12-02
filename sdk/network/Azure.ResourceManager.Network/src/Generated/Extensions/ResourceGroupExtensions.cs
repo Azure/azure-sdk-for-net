@@ -451,24 +451,24 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        private static AvailableResourceGroupDelegationsRestOperations GetAvailableResourceGroupDelegationsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        private static AvailableResourceGroupDelegationsRestOperations GetAvailableResourceGroupDelegationsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
         {
-            return new AvailableResourceGroupDelegationsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+            return new AvailableResourceGroupDelegationsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
 
-        private static AvailableServiceAliasesRestOperations GetAvailableServiceAliasesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        private static AvailableServiceAliasesRestOperations GetAvailableServiceAliasesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
         {
-            return new AvailableServiceAliasesRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+            return new AvailableServiceAliasesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
 
-        private static AvailablePrivateEndpointTypesRestOperations GetAvailablePrivateEndpointTypesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        private static AvailablePrivateEndpointTypesRestOperations GetAvailablePrivateEndpointTypesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
         {
-            return new AvailablePrivateEndpointTypesRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+            return new AvailablePrivateEndpointTypesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
 
-        private static PrivateLinkServicesRestOperations GetPrivateLinkServicesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        private static PrivateLinkServicesRestOperations GetPrivateLinkServicesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
         {
-            return new PrivateLinkServicesRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+            return new PrivateLinkServicesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
 
         /// <summary> Lists the AvailableDelegations for this <see cref="ResourceGroup" />. </summary>
@@ -487,14 +487,14 @@ namespace Azure.ResourceManager.Network
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAvailableResourceGroupDelegationsRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
+                var restOperations = GetAvailableResourceGroupDelegationsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 async Task<Page<AvailableDelegation>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAvailableResourceGroupDelegations");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListAsync(resourceGroup.Id.ResourceGroupName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAsync(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.Network
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListNextPageAsync(nextLink, resourceGroup.Id.ResourceGroupName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListNextPageAsync(nextLink, resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -539,14 +539,14 @@ namespace Azure.ResourceManager.Network
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAvailableResourceGroupDelegationsRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
+                var restOperations = GetAvailableResourceGroupDelegationsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 Page<AvailableDelegation> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAvailableResourceGroupDelegations");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.List(resourceGroup.Id.ResourceGroupName, location, cancellationToken: cancellationToken);
+                        var response = restOperations.List(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, location, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.Network
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListNextPage(nextLink, resourceGroup.Id.ResourceGroupName, location, cancellationToken: cancellationToken);
+                        var response = restOperations.ListNextPage(nextLink, resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, location, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -591,14 +591,14 @@ namespace Azure.ResourceManager.Network
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAvailableServiceAliasesRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
+                var restOperations = GetAvailableServiceAliasesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 async Task<Page<AvailableServiceAlias>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAvailableServiceAliases");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListByResourceGroupAsync(resourceGroup.Id.ResourceGroupName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListByResourceGroupAsync(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.Network
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListByResourceGroupNextPageAsync(nextLink, resourceGroup.Id.ResourceGroupName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListByResourceGroupNextPageAsync(nextLink, resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -643,14 +643,14 @@ namespace Azure.ResourceManager.Network
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAvailableServiceAliasesRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
+                var restOperations = GetAvailableServiceAliasesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 Page<AvailableServiceAlias> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAvailableServiceAliases");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListByResourceGroup(resourceGroup.Id.ResourceGroupName, location, cancellationToken: cancellationToken);
+                        var response = restOperations.ListByResourceGroup(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, location, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.Network
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListByResourceGroupNextPage(nextLink, resourceGroup.Id.ResourceGroupName, location, cancellationToken: cancellationToken);
+                        var response = restOperations.ListByResourceGroupNextPage(nextLink, resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, location, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -695,14 +695,14 @@ namespace Azure.ResourceManager.Network
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAvailablePrivateEndpointTypesRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
+                var restOperations = GetAvailablePrivateEndpointTypesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 async Task<Page<AvailablePrivateEndpointType>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAvailablePrivateEndpointTypes");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListByResourceGroupAsync(resourceGroup.Id.ResourceGroupName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListByResourceGroupAsync(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.Network
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListByResourceGroupNextPageAsync(nextLink, resourceGroup.Id.ResourceGroupName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListByResourceGroupNextPageAsync(nextLink, resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -747,14 +747,14 @@ namespace Azure.ResourceManager.Network
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAvailablePrivateEndpointTypesRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
+                var restOperations = GetAvailablePrivateEndpointTypesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 Page<AvailablePrivateEndpointType> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAvailablePrivateEndpointTypes");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListByResourceGroup(resourceGroup.Id.ResourceGroupName, location, cancellationToken: cancellationToken);
+                        var response = restOperations.ListByResourceGroup(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, location, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.Network
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListByResourceGroupNextPage(nextLink, resourceGroup.Id.ResourceGroupName, location, cancellationToken: cancellationToken);
+                        var response = restOperations.ListByResourceGroupNextPage(nextLink, resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, location, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -808,9 +808,9 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
-                    var response = await restOperations.CheckPrivateLinkServiceVisibilityByResourceGroupAsync(resourceGroup.Id.ResourceGroupName, location, parameters, cancellationToken).ConfigureAwait(false);
-                    var operation = new PrivateLinkServiceCheckPrivateLinkServiceVisibilityByResourceGroupOperation(clientDiagnostics, pipeline, restOperations.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(resourceGroup.Id.ResourceGroupName, location, parameters).Request, response);
+                    var restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    var response = await restOperations.CheckPrivateLinkServiceVisibilityByResourceGroupAsync(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, location, parameters, cancellationToken).ConfigureAwait(false);
+                    var operation = new PrivateLinkServiceCheckPrivateLinkServiceVisibilityByResourceGroupOperation(clientDiagnostics, pipeline, restOperations.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, location, parameters).Request, response);
                     if (waitForCompletion)
                         await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
@@ -849,9 +849,9 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
-                    var response = restOperations.CheckPrivateLinkServiceVisibilityByResourceGroup(resourceGroup.Id.ResourceGroupName, location, parameters, cancellationToken);
-                    var operation = new PrivateLinkServiceCheckPrivateLinkServiceVisibilityByResourceGroupOperation(clientDiagnostics, pipeline, restOperations.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(resourceGroup.Id.ResourceGroupName, location, parameters).Request, response);
+                    var restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    var response = restOperations.CheckPrivateLinkServiceVisibilityByResourceGroup(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, location, parameters, cancellationToken);
+                    var operation = new PrivateLinkServiceCheckPrivateLinkServiceVisibilityByResourceGroupOperation(clientDiagnostics, pipeline, restOperations.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, location, parameters).Request, response);
                     if (waitForCompletion)
                         operation.WaitForCompletion(cancellationToken);
                     return operation;
@@ -881,14 +881,14 @@ namespace Azure.ResourceManager.Network
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
+                var restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 async Task<Page<AutoApprovedPrivateLinkService>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAutoApprovedPrivateLinkServicesPrivateLinkServices");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListAutoApprovedPrivateLinkServicesByResourceGroupAsync(resourceGroup.Id.ResourceGroupName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAutoApprovedPrivateLinkServicesByResourceGroupAsync(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -903,7 +903,7 @@ namespace Azure.ResourceManager.Network
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListAutoApprovedPrivateLinkServicesByResourceGroupNextPageAsync(nextLink, resourceGroup.Id.ResourceGroupName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAutoApprovedPrivateLinkServicesByResourceGroupNextPageAsync(nextLink, resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -933,14 +933,14 @@ namespace Azure.ResourceManager.Network
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
+                var restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 Page<AutoApprovedPrivateLinkService> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAutoApprovedPrivateLinkServicesPrivateLinkServices");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListAutoApprovedPrivateLinkServicesByResourceGroup(resourceGroup.Id.ResourceGroupName, location, cancellationToken: cancellationToken);
+                        var response = restOperations.ListAutoApprovedPrivateLinkServicesByResourceGroup(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, location, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -955,7 +955,7 @@ namespace Azure.ResourceManager.Network
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListAutoApprovedPrivateLinkServicesByResourceGroupNextPage(nextLink, resourceGroup.Id.ResourceGroupName, location, cancellationToken: cancellationToken);
+                        var response = restOperations.ListAutoApprovedPrivateLinkServicesByResourceGroupNextPage(nextLink, resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, location, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
