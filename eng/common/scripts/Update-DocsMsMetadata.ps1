@@ -26,7 +26,7 @@ path information is provided by $GetDocsMsMetadataForPackageFn
 Programming language to supply to metadata
 
 .PARAMETER RepoId
-GitHub repository ID of the SDK. Typically of the form: 'Azure/azure-sdk-for-js' 
+GitHub repository ID of the SDK. Typically of the form: 'Azure/azure-sdk-for-js'
 
 .PARAMETER DocValidationImageId
 The docker image id in format of '$containerRegistry/$imageName:$tag'
