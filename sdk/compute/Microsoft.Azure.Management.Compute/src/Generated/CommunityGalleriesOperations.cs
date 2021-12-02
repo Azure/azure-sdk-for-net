@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Compute
     using System.Threading.Tasks;
 
     /// <summary>
-    /// GallerySharingProfileOperations operations.
+    /// CommunityGalleriesOperations operations.
     /// </summary>
-    internal partial class GallerySharingProfileOperations : IServiceOperations<ComputeManagementClient>, IGallerySharingProfileOperations
+    internal partial class CommunityGalleriesOperations : IServiceOperations<ComputeManagementClient>, ICommunityGalleriesOperations
     {
         /// <summary>
-        /// Initializes a new instance of the GallerySharingProfileOperations class.
+        /// Initializes a new instance of the CommunityGalleriesOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal GallerySharingProfileOperations(ComputeManagementClient client)
+        internal CommunityGalleriesOperations(ComputeManagementClient client)
         {
             if (client == null)
             {
@@ -51,41 +51,13 @@ namespace Microsoft.Azure.Management.Compute
         public ComputeManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Update sharing profile of a gallery.
+        /// Get a community gallery by gallery public name.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// <param name='location'>
+        /// Resource location.
         /// </param>
-        /// <param name='galleryName'>
-        /// The name of the Shared Image Gallery.
-        /// </param>
-        /// <param name='sharingUpdate'>
-        /// Parameters supplied to the update gallery sharing profile.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<SharingUpdate>> UpdateWithHttpMessagesAsync(string resourceGroupName, string galleryName, SharingUpdate sharingUpdate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Send request
-            AzureOperationResponse<SharingUpdate> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, galleryName, sharingUpdate, customHeaders, cancellationToken).ConfigureAwait(false);
-            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Update sharing profile of a gallery.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='galleryName'>
-        /// The name of the Shared Image Gallery.
-        /// </param>
-        /// <param name='sharingUpdate'>
-        /// Parameters supplied to the update gallery sharing profile.
+        /// <param name='publicGalleryName'>
+        /// The public name of the community gallery.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -108,27 +80,19 @@ namespace Microsoft.Azure.Management.Compute
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SharingUpdate>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string galleryName, SharingUpdate sharingUpdate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CommunityGallery>> GetWithHttpMessagesAsync(string location, string publicGalleryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (resourceGroupName == null)
+            if (location == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "location");
             }
-            if (galleryName == null)
+            if (publicGalleryName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "galleryName");
-            }
-            if (sharingUpdate == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "sharingUpdate");
-            }
-            if (sharingUpdate != null)
-            {
-                sharingUpdate.Validate();
+                throw new ValidationException(ValidationRules.CannotBeNull, "publicGalleryName");
             }
             string apiVersion = "2021-10-01";
             // Tracing
@@ -138,19 +102,18 @@ namespace Microsoft.Azure.Management.Compute
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("galleryName", galleryName);
+                tracingParameters.Add("location", location);
+                tracingParameters.Add("publicGalleryName", publicGalleryName);
                 tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("sharingUpdate", sharingUpdate);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/share").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{galleryName}", System.Uri.EscapeDataString(galleryName));
+            _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
+            _url = _url.Replace("{publicGalleryName}", System.Uri.EscapeDataString(publicGalleryName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -163,7 +126,7 @@ namespace Microsoft.Azure.Management.Compute
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -194,12 +157,6 @@ namespace Microsoft.Azure.Management.Compute
 
             // Serialize Request
             string _requestContent = null;
-            if(sharingUpdate != null)
-            {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(sharingUpdate, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -220,7 +177,7 @@ namespace Microsoft.Azure.Management.Compute
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 202)
+            if ((int)_statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -255,7 +212,7 @@ namespace Microsoft.Azure.Management.Compute
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<SharingUpdate>();
+            var _result = new AzureOperationResponse<CommunityGallery>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -268,25 +225,7 @@ namespace Microsoft.Azure.Management.Compute
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<SharingUpdate>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 202)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<SharingUpdate>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<CommunityGallery>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
