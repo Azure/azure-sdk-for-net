@@ -195,6 +195,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase]
         public async Task ParseMessageResponse()
         {
+            WebPubSubConfigProvider.RegisterJsonConverter();
             var test = @"{""data"":""test"", ""dataType"":""text""}";
 
             var result = BuildResponse(test, RequestType.User);
@@ -208,7 +209,36 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         }
 
         [TestCase]
-        public void ParseMessageResponse_InvalidReturnServerError()
+        public async Task ParseMessageResponse_StringifiedResponse()
+        {
+            WebPubSubConfigProvider.RegisterJsonConverter();
+            // serialize agagin to stringify.
+            var test = JsonConvert.SerializeObject(@"{""data"":""test"", ""dataType"":""text""}");
+
+            var result = BuildResponse(test, RequestType.User);
+
+            Assert.NotNull(result);
+            Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
+
+            var message = await result.Content.ReadAsStringAsync();
+            Assert.AreEqual("test", message);
+            Assert.AreEqual(Constants.ContentTypes.PlainTextContentType, result.Content.Headers.ContentType.MediaType);
+        }
+
+        [TestCase]
+        public void ParseMessageResponse_InvalidJArrayReturnServerError()
+        {
+            // serialize agagin to stringify.
+            var test = @"[""test"", ""dataType"", ""text""]";
+
+            var result = BuildResponse(test, RequestType.User);
+
+            Assert.NotNull(result);
+            Assert.AreEqual(HttpStatusCode.InternalServerError, result.StatusCode);
+        }
+
+        [TestCase]
+        public void ParseMessageResponse_InvalidEnumReturnServerError()
         {
             // datatype not valid.
             var test = @"{""data"":""test"", ""dataType"":""hello""}";
@@ -569,7 +599,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                     };
             }
             var context = new WebPubSubConnectionContext(WebPubSubEventType.System, "connect", "testhub", "Connection-Id1", null, null, null, states, null);
-            return Utilities.BuildValidResponse(JObject.Parse(input), requestType, context);
+            return Utilities.BuildValidResponse(JToken.Parse(input), requestType, context);
         }
 
         private sealed class StateTestClass

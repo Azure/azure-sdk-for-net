@@ -122,11 +122,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         }
 
         public static HttpResponseMessage BuildValidResponse(
-            JObject response, RequestType requestType,
+            JToken jResponse, RequestType requestType,
             WebPubSubConnectionContext context)
         {
             try
             {
+                // Accepts JObject response or stringified, otherwise return ServerError.
+                JObject response = jResponse is JObject jObj ? jObj : JObject.Parse(jResponse.ToString());
+
                 // check error as top priority.
                 if (response.TryGetValue("code", out var code)
                     && code.ToObject<WebPubSubStatusCode>() != WebPubSubStatusCode.Success)

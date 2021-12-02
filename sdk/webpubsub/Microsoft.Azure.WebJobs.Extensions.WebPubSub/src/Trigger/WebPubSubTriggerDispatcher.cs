@@ -152,7 +152,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                                 {
                                     return Utilities.BuildValidResponse(wpsResponse, requestType, context);
                                 }
-                                if (response is NewtonsoftJsonLinq.JObject jResponse)
+                                if (response is NewtonsoftJsonLinq.JToken jResponse)
                                 {
                                     return Utilities.BuildValidResponse(jResponse, requestType, context);
                                 }
