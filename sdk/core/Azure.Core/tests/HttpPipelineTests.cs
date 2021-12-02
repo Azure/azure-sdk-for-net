@@ -49,7 +49,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task CanAddPolicy_PerCall([Values] bool useOptions)
+        public async Task CanAddPolicy_PerCall()
         {
             var mockTransport = new MockTransport(new MockResponse(200));
             var options = new TestOptions()
@@ -58,10 +58,10 @@ namespace Azure.Core.Tests
             };
             var pipeline = HttpPipelineBuilder.Build(options);
 
-            var requestConfig = useOptions ? new RequestOptions() : new RequestContext();
-            requestConfig.AddPolicy(new AddHeaderPolicy("PerCallHeader", "Value"), HttpPipelinePosition.PerCall);
+            var context = new RequestContext();
+            context.AddPolicy(new AddHeaderPolicy("PerCallHeader", "Value"), HttpPipelinePosition.PerCall);
 
-            var message = pipeline.CreateMessage(requestConfig);
+            var message = pipeline.CreateMessage(context);
             await pipeline.SendAsync(message, message.CancellationToken);
 
             Request request = mockTransport.Requests[0];
@@ -71,7 +71,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task CanAddPolicy_PerRetry([Values] bool useOptions)
+        public async Task CanAddPolicy_PerRetry()
         {
             var retryResponse = new MockResponse(408); // Request Timeout
             var mockTransport = new MockTransport(retryResponse, retryResponse, new MockResponse(200));
@@ -82,10 +82,10 @@ namespace Azure.Core.Tests
 
             var pipeline = HttpPipelineBuilder.Build(options);
 
-            var requestConfig = useOptions ? new RequestOptions() : new RequestContext();
-            requestConfig.AddPolicy(new AddHeaderPolicy("PerRetryHeader", "Value"), HttpPipelinePosition.PerRetry);
+            var context = new RequestContext();
+            context.AddPolicy(new AddHeaderPolicy("PerRetryHeader", "Value"), HttpPipelinePosition.PerRetry);
 
-            var message = pipeline.CreateMessage(requestConfig);
+            var message = pipeline.CreateMessage(context);
             await pipeline.SendAsync(message, message.CancellationToken);
 
             Request request = mockTransport.Requests[0];
@@ -97,7 +97,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task CanAddPolicy_BeforeTransport([Values]bool useOptions)
+        public async Task CanAddPolicy_BeforeTransport()
         {
             var retryResponse = new MockResponse(408); // Request Timeout
 
@@ -110,10 +110,10 @@ namespace Azure.Core.Tests
 
             var pipeline = HttpPipelineBuilder.Build(options);
 
-            var requestConfig = useOptions ? new RequestOptions() : new RequestContext();
-            requestConfig.AddPolicy(new AddHeaderPolicy("BeforeTransportHeader", "Value"), HttpPipelinePosition.BeforeTransport);
+            var context = new RequestContext();
+            context.AddPolicy(new AddHeaderPolicy("BeforeTransportHeader", "Value"), HttpPipelinePosition.BeforeTransport);
 
-            var message = pipeline.CreateMessage(requestConfig);
+            var message = pipeline.CreateMessage(context);
             await pipeline.SendAsync(message, message.CancellationToken);
 
             Request request = mockTransport.Requests[0];
@@ -126,7 +126,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task CanAddRequestPolicies_AllPositions([Values] bool useOptions)
+        public async Task CanAddRequestPolicies_AllPositions()
         {
             var retryResponse = new MockResponse(408); // Request Timeout
 
@@ -139,13 +139,13 @@ namespace Azure.Core.Tests
 
             var pipeline = HttpPipelineBuilder.Build(options);
 
-            var requestConfig = useOptions ? new RequestOptions() : new RequestContext();
-            requestConfig.AddPolicy(new AddHeaderPolicy("PerCallHeader1", "PerCall1"), HttpPipelinePosition.PerCall);
-            requestConfig.AddPolicy(new AddHeaderPolicy("PerCallHeader2", "PerCall2"), HttpPipelinePosition.PerCall);
-            requestConfig.AddPolicy(new AddHeaderPolicy("PerRetryHeader", "PerRetry"), HttpPipelinePosition.PerRetry);
-            requestConfig.AddPolicy(new AddHeaderPolicy("BeforeTransportHeader", "BeforeTransport"), HttpPipelinePosition.BeforeTransport);
+            var context = new RequestContext();
+            context.AddPolicy(new AddHeaderPolicy("PerCallHeader1", "PerCall1"), HttpPipelinePosition.PerCall);
+            context.AddPolicy(new AddHeaderPolicy("PerCallHeader2", "PerCall2"), HttpPipelinePosition.PerCall);
+            context.AddPolicy(new AddHeaderPolicy("PerRetryHeader", "PerRetry"), HttpPipelinePosition.PerRetry);
+            context.AddPolicy(new AddHeaderPolicy("BeforeTransportHeader", "BeforeTransport"), HttpPipelinePosition.BeforeTransport);
 
-            var message = pipeline.CreateMessage(requestConfig);
+            var message = pipeline.CreateMessage(context);
             await pipeline.SendAsync(message, message.CancellationToken);
 
             Request request = mockTransport.Requests[0];
@@ -170,7 +170,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task CanAddPolicies_ThreeWays([Values] bool useOptions)
+        public async Task CanAddPolicies_ThreeWays()
         {
             var mockTransport = new MockTransport(new MockResponse(200));
             var options = new TestOptions()
@@ -187,12 +187,12 @@ namespace Azure.Core.Tests
 
             var pipeline = HttpPipelineBuilder.Build(options, perCallPolicies, perRetryPolicies, null);
 
-            var requestConfig = useOptions ? new RequestOptions() : new RequestContext();
-            requestConfig.AddPolicy(new AddHeaderPolicy("PerRetry", "RequestContext"), HttpPipelinePosition.PerRetry);
-            requestConfig.AddPolicy(new AddHeaderPolicy("PerCall", "RequestContext"), HttpPipelinePosition.PerCall);
-            requestConfig.AddPolicy(new AddHeaderPolicy("BeforeTransport", "RequestContext"), HttpPipelinePosition.BeforeTransport);
+            var context = new RequestContext();
+            context.AddPolicy(new AddHeaderPolicy("PerRetry", "RequestContext"), HttpPipelinePosition.PerRetry);
+            context.AddPolicy(new AddHeaderPolicy("PerCall", "RequestContext"), HttpPipelinePosition.PerCall);
+            context.AddPolicy(new AddHeaderPolicy("BeforeTransport", "RequestContext"), HttpPipelinePosition.BeforeTransport);
 
-            var message = pipeline.CreateMessage(requestConfig);
+            var message = pipeline.CreateMessage(context);
             await pipeline.SendAsync(message, message.CancellationToken);
 
             Request request = mockTransport.Requests[0];
