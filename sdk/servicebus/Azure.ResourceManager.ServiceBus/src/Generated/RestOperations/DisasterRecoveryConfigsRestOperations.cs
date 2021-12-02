@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="namespaceName"/> is null. </exception>
-        public async Task<Response<ArmDisasterRecoveryListResult>> ListAsync(string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<DisasterRecoveryListResult>> ListAsync(string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -198,9 +198,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        ArmDisasterRecoveryListResult value = default;
+                        DisasterRecoveryListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ArmDisasterRecoveryListResult.DeserializeArmDisasterRecoveryListResult(document.RootElement);
+                        value = DisasterRecoveryListResult.DeserializeDisasterRecoveryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="namespaceName"/> is null. </exception>
-        public Response<ArmDisasterRecoveryListResult> List(string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public Response<DisasterRecoveryListResult> List(string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -235,9 +235,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        ArmDisasterRecoveryListResult value = default;
+                        DisasterRecoveryListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ArmDisasterRecoveryListResult.DeserializeArmDisasterRecoveryListResult(document.RootElement);
+                        value = DisasterRecoveryListResult.DeserializeDisasterRecoveryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, ArmDisasterRecoveryData parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, DisasterRecoveryData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="parameters"> Parameters required to create an Alias(Disaster Recovery configuration). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="alias"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<ArmDisasterRecoveryData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, ArmDisasterRecoveryData parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<DisasterRecoveryData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, DisasterRecoveryData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -308,13 +308,13 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        ArmDisasterRecoveryData value = default;
+                        DisasterRecoveryData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ArmDisasterRecoveryData.DeserializeArmDisasterRecoveryData(document.RootElement);
+                        value = DisasterRecoveryData.DeserializeDisasterRecoveryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 201:
-                    return Response.FromValue((ArmDisasterRecoveryData)null, message.Response);
+                    return Response.FromValue((DisasterRecoveryData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="parameters"> Parameters required to create an Alias(Disaster Recovery configuration). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="alias"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<ArmDisasterRecoveryData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, ArmDisasterRecoveryData parameters, CancellationToken cancellationToken = default)
+        public Response<DisasterRecoveryData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, DisasterRecoveryData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -357,13 +357,13 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        ArmDisasterRecoveryData value = default;
+                        DisasterRecoveryData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ArmDisasterRecoveryData.DeserializeArmDisasterRecoveryData(document.RootElement);
+                        value = DisasterRecoveryData.DeserializeDisasterRecoveryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 201:
-                    return Response.FromValue((ArmDisasterRecoveryData)null, message.Response);
+                    return Response.FromValue((DisasterRecoveryData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="alias"/> is null. </exception>
-        public async Task<Response<ArmDisasterRecoveryData>> GetAsync(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
+        public async Task<Response<DisasterRecoveryData>> GetAsync(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -519,13 +519,13 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        ArmDisasterRecoveryData value = default;
+                        DisasterRecoveryData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ArmDisasterRecoveryData.DeserializeArmDisasterRecoveryData(document.RootElement);
+                        value = DisasterRecoveryData.DeserializeDisasterRecoveryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ArmDisasterRecoveryData)null, message.Response);
+                    return Response.FromValue((DisasterRecoveryData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="alias"/> is null. </exception>
-        public Response<ArmDisasterRecoveryData> Get(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
+        public Response<DisasterRecoveryData> Get(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -563,13 +563,13 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        ArmDisasterRecoveryData value = default;
+                        DisasterRecoveryData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ArmDisasterRecoveryData.DeserializeArmDisasterRecoveryData(document.RootElement);
+                        value = DisasterRecoveryData.DeserializeDisasterRecoveryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ArmDisasterRecoveryData)null, message.Response);
+                    return Response.FromValue((DisasterRecoveryData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -799,7 +799,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="namespaceName"/> is null. </exception>
-        public async Task<Response<ArmDisasterRecoveryListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<DisasterRecoveryListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -824,9 +824,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        ArmDisasterRecoveryListResult value = default;
+                        DisasterRecoveryListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ArmDisasterRecoveryListResult.DeserializeArmDisasterRecoveryListResult(document.RootElement);
+                        value = DisasterRecoveryListResult.DeserializeDisasterRecoveryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -841,7 +841,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="namespaceName"/> is null. </exception>
-        public Response<ArmDisasterRecoveryListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public Response<DisasterRecoveryListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -866,9 +866,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        ArmDisasterRecoveryListResult value = default;
+                        DisasterRecoveryListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ArmDisasterRecoveryListResult.DeserializeArmDisasterRecoveryListResult(document.RootElement);
+                        value = DisasterRecoveryListResult.DeserializeDisasterRecoveryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

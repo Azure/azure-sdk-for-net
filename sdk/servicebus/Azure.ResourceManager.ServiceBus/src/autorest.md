@@ -126,10 +126,10 @@ directive:
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}/listKeys'].post.operationId
       transform: return "DisasterRecoveryConfigAuthorizationRules_ListKeys"
-    - remame-model:
+    - rename-model:
         from: ArmDisasterRecovery
         to: DisasterRecovery
-    - remame-model:
+    - rename-model:
         from: ArmDisasterRecoveryListResult
         to: DisasterRecoveryListResult
 ```

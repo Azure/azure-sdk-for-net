@@ -520,13 +520,13 @@ namespace Azure.ResourceManager.ServiceBus
         }
         #endregion
 
-        #region ArmDisasterRecovery
+        #region DisasterRecovery
 
-        /// <summary> Gets a collection of ArmDisasterRecoveries in the ServiceBusNamespace. </summary>
-        /// <returns> An object representing collection of ArmDisasterRecoveries and their operations over a ServiceBusNamespace. </returns>
-        public ArmDisasterRecoveryCollection GetArmDisasterRecoveries()
+        /// <summary> Gets a collection of DisasterRecoveries in the ServiceBusNamespace. </summary>
+        /// <returns> An object representing collection of DisasterRecoveries and their operations over a ServiceBusNamespace. </returns>
+        public DisasterRecoveryCollection GetDisasterRecoveries()
         {
-            return new ArmDisasterRecoveryCollection(this);
+            return new DisasterRecoveryCollection(this);
         }
         #endregion
 

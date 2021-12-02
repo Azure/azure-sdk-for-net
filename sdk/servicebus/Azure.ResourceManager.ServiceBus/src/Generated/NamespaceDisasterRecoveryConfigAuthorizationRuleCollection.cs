@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ArmDisasterRecovery.ResourceType;
+        protected override ResourceType ValidResourceType => DisasterRecovery.ResourceType;
 
         // Collection level operations.
 

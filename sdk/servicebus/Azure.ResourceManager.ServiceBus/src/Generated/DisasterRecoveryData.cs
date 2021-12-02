@@ -11,15 +11,15 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary> A class representing the ArmDisasterRecovery data model. </summary>
-    public partial class ArmDisasterRecoveryData : Resource
+    /// <summary> A class representing the DisasterRecovery data model. </summary>
+    public partial class DisasterRecoveryData : Resource
     {
-        /// <summary> Initializes a new instance of ArmDisasterRecoveryData. </summary>
-        public ArmDisasterRecoveryData()
+        /// <summary> Initializes a new instance of DisasterRecoveryData. </summary>
+        public DisasterRecoveryData()
         {
         }
 
-        /// <summary> Initializes a new instance of ArmDisasterRecoveryData. </summary>
+        /// <summary> Initializes a new instance of DisasterRecoveryData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="partnerNamespace"> ARM Id of the Primary/Secondary eventhub namespace name, which is part of GEO DR pairing. </param>
         /// <param name="alternateName"> Primary/Secondary eventhub namespace name, which is part of GEO DR pairing. </param>
         /// <param name="role"> role of namespace in GEO DR - possible values &apos;Primary&apos; or &apos;PrimaryNotReplicating&apos; or &apos;Secondary&apos;. </param>
-        internal ArmDisasterRecoveryData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, ProvisioningStateDR? provisioningState, long? pendingReplicationOperationsCount, string partnerNamespace, string alternateName, RoleDisasterRecovery? role) : base(id, name, type)
+        internal DisasterRecoveryData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, ProvisioningStateDR? provisioningState, long? pendingReplicationOperationsCount, string partnerNamespace, string alternateName, RoleDisasterRecovery? role) : base(id, name, type)
         {
             SystemData = systemData;
             ProvisioningState = provisioningState;

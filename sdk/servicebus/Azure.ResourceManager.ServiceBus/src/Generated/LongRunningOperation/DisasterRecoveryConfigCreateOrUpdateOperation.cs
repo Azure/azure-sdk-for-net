@@ -16,25 +16,25 @@ using Azure.ResourceManager.ServiceBus;
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Creates or updates a new Alias(Disaster Recovery configuration). </summary>
-    public partial class DisasterRecoveryConfigCreateOrUpdateOperation : Operation<ArmDisasterRecovery>
+    public partial class DisasterRecoveryConfigCreateOrUpdateOperation : Operation<DisasterRecovery>
     {
-        private readonly OperationOrResponseInternals<ArmDisasterRecovery> _operation;
+        private readonly OperationOrResponseInternals<DisasterRecovery> _operation;
 
         /// <summary> Initializes a new instance of DisasterRecoveryConfigCreateOrUpdateOperation for mocking. </summary>
         protected DisasterRecoveryConfigCreateOrUpdateOperation()
         {
         }
 
-        internal DisasterRecoveryConfigCreateOrUpdateOperation(ArmResource operationsBase, Response<ArmDisasterRecoveryData> response)
+        internal DisasterRecoveryConfigCreateOrUpdateOperation(ArmResource operationsBase, Response<DisasterRecoveryData> response)
         {
-            _operation = new OperationOrResponseInternals<ArmDisasterRecovery>(Response.FromValue(new ArmDisasterRecovery(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<DisasterRecovery>(Response.FromValue(new DisasterRecovery(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override ArmDisasterRecovery Value => _operation.Value;
+        public override DisasterRecovery Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<ArmDisasterRecovery>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<DisasterRecovery>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<ArmDisasterRecovery>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<DisasterRecovery>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

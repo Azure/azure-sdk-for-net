@@ -13,7 +13,7 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    public partial class ArmDisasterRecoveryData : IUtf8JsonSerializable
+    public partial class DisasterRecoveryData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ServiceBus
             writer.WriteEndObject();
         }
 
-        internal static ArmDisasterRecoveryData DeserializeArmDisasterRecoveryData(JsonElement element)
+        internal static DisasterRecoveryData DeserializeDisasterRecoveryData(JsonElement element)
         {
             Optional<SystemData> systemData = default;
             ResourceIdentifier id = default;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ServiceBus
                     continue;
                 }
             }
-            return new ArmDisasterRecoveryData(id, name, type, systemData, Optional.ToNullable(provisioningState), Optional.ToNullable(pendingReplicationOperationsCount), partnerNamespace.Value, alternateName.Value, Optional.ToNullable(role));
+            return new DisasterRecoveryData(id, name, type, systemData, Optional.ToNullable(provisioningState), Optional.ToNullable(pendingReplicationOperationsCount), partnerNamespace.Value, alternateName.Value, Optional.ToNullable(role));
         }
     }
 }
