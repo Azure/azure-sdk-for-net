@@ -15,8 +15,6 @@ namespace Azure.ResourceManager.Resources.Models
     /// </summary>
     public partial class Location : IEquatable<Location>, IComparable<Location>
     {
-        private const char Space = ' ';
-
         private static Dictionary<string, Location> PublicCloudLocations { get; } = new Dictionary<string, Location>();
 
         #region Public Cloud Locations
@@ -223,13 +221,6 @@ namespace Azure.ResourceManager.Resources.Models
 
         #endregion
 
-        private static Location CreateStaticReference(string name, string displayName)
-        {
-            Location location = new Location(name, displayName);
-            PublicCloudLocations.Add(name, location);
-            return location;
-        }
-
         /// <summary> Initializes a new instance of Location. </summary>
         /// <param name="name"> The location name or the display name. </param>
         public Location(string name)
@@ -245,17 +236,22 @@ namespace Azure.ResourceManager.Resources.Models
             }
         }
 
-        private static string GetNameFromDisplayName(string name)
+        /// <summary>
+        /// Returns the instance of a known cloud by its name if it exists.
+        /// </summary>
+        /// <param name="name"> The name of the known cloud. </param>
+        /// <param name="location"> The location instance returned if found. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static bool TryGetKnownCloud(string name, out Location location)
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (char c in name)
-            {
-                if (c == Space)
-                    continue;
+            return PublicCloudLocations.TryGetValue(name, out location);
+        }
 
-                sb.Append(char.ToLowerInvariant(c));
-            }
-            return sb.ToString();
+        private static Location CreateStaticReference(string name, string displayName)
+        {
+            Location location = new Location(name, displayName);
+            PublicCloudLocations.Add(name, location);
+            return location;
         }
 
         /// <summary>
@@ -265,27 +261,6 @@ namespace Azure.ResourceManager.Resources.Models
         public override string ToString()
         {
             return Name;
-        }
-
-        /// <summary>
-        /// Creates a new location from a string.
-        /// </summary>
-        /// <param name="displayName"> String to convert to Location from. </param>
-        /// <exception cref="ArgumentNullException"> Throws if name is null. </exception>
-        /// <exception cref="ArgumentException"> Throws if name is not a known public cloud. </exception>
-        public static Location FromDisplayName(string displayName)
-        {
-            if (ReferenceEquals(displayName, null))
-                throw new ArgumentNullException(nameof(displayName));
-
-            string name = GetNameFromDisplayName(displayName);
-            Location value;
-            if (PublicCloudLocations.TryGetValue(name, out value))
-            {
-                return value;
-            }
-
-            return new Location(name, displayName);
         }
 
         /// <summary>
@@ -317,6 +292,9 @@ namespace Azure.ResourceManager.Resources.Models
         {
             if (ReferenceEquals(other, null))
                 return false;
+
+            if (ReferenceEquals(this, other))
+                return true;
 
             return Name == other.Name;
         }

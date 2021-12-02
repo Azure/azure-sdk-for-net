@@ -1,4 +1,5 @@
-﻿using Azure.ResourceManager.Resources.Models;
+﻿using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 using System;
 
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.Tests
         [TestCase("", "", "")]
         public void ConvertFromDisplayName(string input, string expectedName, string expectedDisplayName)
         {
-            Location loc = Location.FromDisplayName(input);
+            Location loc = ArmResource.ConvertDisplayNameToLocation(input);
             Assert.AreEqual(expectedName, loc.Name);
             Assert.AreEqual(expectedDisplayName, loc.DisplayName);
         }
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.Tests
         [Test]
         public void ConvertFromDisplayNameNull()
         {
-            Assert.Throws<ArgumentNullException>(() => Location.FromDisplayName(null));
+            Assert.Throws<ArgumentNullException>(() => ArmResource.ConvertDisplayNameToLocation(null));
         }
 
         [TestCase("West US", "West US", null)]
