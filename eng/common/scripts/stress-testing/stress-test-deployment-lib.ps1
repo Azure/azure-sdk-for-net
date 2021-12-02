@@ -57,7 +57,7 @@ function DeployStressTests(
     [string]$searchDirectory = '.',
     [hashtable]$filters = @{},
     [string]$environment = 'test',
-    [string]$repository = 'images',
+    [string]$repository = '',
     [boolean]$pushImages = $false,
     [string]$clusterGroup = '',
     [string]$deployId = 'local',
@@ -77,6 +77,12 @@ function DeployStressTests(
         }
         $clusterGroup = 'rg-stress-cluster-prod'
         $subscription = 'Azure SDK Test Resources'
+    }
+
+    if (!$repository) {
+        $repository = if ($env:USER) { $env:USER } else { "${env:USERNAME}" }
+        # Remove spaces, etc. that may be in $namespace
+        $repository -replace '\W'
     }
 
     if ($login) {
@@ -113,7 +119,7 @@ function DeployStressPackage(
     [object]$pkg,
     [string]$deployId,
     [string]$environment,
-    [string]$repository,
+    [string]$repositoryBase,
     [boolean]$pushImages,
     [boolean]$login
 ) {
@@ -128,26 +134,23 @@ function DeployStressPackage(
         if ($LASTEXITCODE) { return }
     }
 
+    $imageTag = "${registryName}.azurecr.io"
+    if ($repositoryBase) {
+        $imageTag += "/$repositoryBase"
+    }
+    $imageTag += "/$($pkg.Namespace)/$($pkg.ReleaseName):${deployId}"
+
     if ($pushImages) {
-        $dockerFiles = Get-ChildItem "$($pkg.Directory)/Dockerfile*"
-        foreach ($dockerFile in $dockerFiles) {
-            # Infer docker image name from parent directory name, if file is named `Dockerfile`
-            # or from suffix, is file is named like `Dockerfile.myimage` (for multiple dockerfiles).
-            $prefix, $imageName = $dockerFile.Name.Split(".")
-            if (!$imageName) {
-                $imageName = $dockerFile.Directory.Name
+        Write-Host "Building and pushing stress test docker image '$imageTag'"
+        $dockerFile = Get-ChildItem "$($pkg.Directory)/Dockerfile"
+        Run docker build -t $imageTag -f $dockerFile.FullName $dockerFile.DirectoryName
+        if ($LASTEXITCODE) { return }
+        Run docker push $imageTag
+        if ($LASTEXITCODE) {
+            if ($login) {
+                Write-Warning "If docker push is failing due to authentication issues, try calling this script with '-Login'"
             }
-            $imageTag = "${registryName}.azurecr.io/$($repository.ToLower())/$($imageName):$deployId"
-            Write-Host "Building and pushing stress test docker image '$imageTag'"
-            Run docker build -t $imageTag -f $dockerFile.FullName $dockerFile.DirectoryName
-            if ($LASTEXITCODE) { return }
-            Run docker push $imageTag
-            if ($LASTEXITCODE) {
-                if ($login) {
-                    Write-Warning "If docker push is failing due to authentication issues, try calling this script with '-Login'"
-                }
-                return
-            }
+            return
         }
     }
 
@@ -159,8 +162,7 @@ function DeployStressPackage(
     Run helm upgrade $pkg.ReleaseName $pkg.Directory `
         -n $pkg.Namespace `
         --install `
-        --set repository=$registryName.azurecr.io/$repository `
-        --set tag=$deployId `
+        --set image=$imageTag `
         --set stress-test-addons.env=$environment
     if ($LASTEXITCODE) {
         # Issues like 'UPGRADE FAILED: another operation (install/upgrade/rollback) is in progress'
