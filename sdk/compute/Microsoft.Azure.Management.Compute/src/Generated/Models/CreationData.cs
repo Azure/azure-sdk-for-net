@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Ultra disks. Supported values are 512 ad 4096. 4096 is the
         /// default.</param>
         /// <param name="securityDataUri">If createOption is ImportSecure, this
-        /// is the URI of a VM guest state blob to be imported.</param>
+        /// is the URI of a blob to be imported into VM guest state.</param>
         public CreationData(string createOption, string storageAccountId = default(string), ImageDiskReference imageReference = default(ImageDiskReference), ImageDiskReference galleryImageReference = default(ImageDiskReference), string sourceUri = default(string), string sourceResourceId = default(string), string sourceUniqueId = default(string), long? uploadSizeBytes = default(long?), int? logicalSectorSize = default(int?), string securityDataUri = default(string))
         {
             CreateOption = createOption;
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets if createOption is ImportSecure, this is the URI of a
-        /// VM guest state blob to be imported.
+        /// blob to be imported into VM guest state.
         /// </summary>
         [JsonProperty(PropertyName = "securityDataUri")]
         public string SecurityDataUri { get; set; }
