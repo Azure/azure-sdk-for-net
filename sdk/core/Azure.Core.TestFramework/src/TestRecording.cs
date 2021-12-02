@@ -225,11 +225,6 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        public void AddBodySanitizer(string regex, string replacement, string groupForReplace = default)
-        {
-            _proxy.Client.AddBodyRegexSanitizer(new BodyRegexSanitizer(replacement, regex) { GroupForReplace = groupForReplace }, RecordingId);
-        }
-
         /// <summary>
         /// The moment in time that this test is being run.
         /// </summary>

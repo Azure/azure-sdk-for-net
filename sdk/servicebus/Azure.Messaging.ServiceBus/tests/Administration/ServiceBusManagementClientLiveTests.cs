@@ -22,28 +22,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
     public class ServiceBusManagementClientLiveTests : RecordedTestBase<ServiceBusTestEnvironment>
     {
         private readonly ServiceBusAdministrationClientOptions.ServiceVersion _serviceVersion;
-        private const string SanitizedKeyValue = "SanitizedSanitizedSanitizedSanitizedSanitize";
 
         public ServiceBusManagementClientLiveTests(bool isAsync, ServiceBusAdministrationClientOptions.ServiceVersion serviceVersion) :
             base(isAsync: true)
         {
             Sanitizer = new ServiceBusRecordedTestSanitizer();
             _serviceVersion = serviceVersion;
-        }
-
-        [SetUp]
-        public void AddSanitizers()
-        {
-            Recording.AddBodySanitizer(
-                "\\u003CPrimaryKey\\u003E.*\\u003C/PrimaryKey\\u003E",
-                $"\u003CPrimaryKey\u003E{SanitizedKeyValue}\u003C/PrimaryKey\u003E");
-            Recording.AddBodySanitizer(
-                "\\u003CSecondaryKey\\u003E.*\\u003C/SecondaryKey\\u003E",
-                $"\u003CSecondaryKey\u003E{SanitizedKeyValue}\u003C/SecondaryKey\u003E");
-            Recording.AddBodySanitizer(
-                "[^\\r](?<break>\\n)",
-                "\r\n",
-                "break");
         }
 
         private string GetConnectionString(bool premium = false) => premium ? TestEnvironment.ServiceBusPremiumNamespaceConnectionString : TestEnvironment.ServiceBusConnectionString;
