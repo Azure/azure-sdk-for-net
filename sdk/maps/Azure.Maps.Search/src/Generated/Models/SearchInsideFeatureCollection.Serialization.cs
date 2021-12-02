@@ -10,26 +10,16 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class SearchInsideGeometryFeatureCollectionPolygon : IUtf8JsonSerializable
+    public partial class SearchInsideFeatureCollection : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("coordinates");
+            writer.WritePropertyName("features");
             writer.WriteStartArray();
-            foreach (var item in Coordinates)
+            foreach (var item in Features)
             {
-                writer.WriteStartArray();
-                foreach (var item0 in item)
-                {
-                    writer.WriteStartArray();
-                    foreach (var item1 in item0)
-                    {
-                        writer.WriteNumberValue(item1);
-                    }
-                    writer.WriteEndArray();
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("type");

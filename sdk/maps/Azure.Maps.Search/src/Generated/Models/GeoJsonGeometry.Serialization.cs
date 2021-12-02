@@ -27,6 +27,8 @@ namespace Azure.Maps.Search.Models
                 switch (discriminator.GetString())
                 {
                     case "LineString": return GeoJsonLineString.DeserializeGeoJsonLineString(element);
+                    case "MultiPolygon": return GeoJsonMultiPolygon.DeserializeGeoJsonMultiPolygon(element);
+                    case "Point": return GeoJsonPoint.DeserializeGeoJsonPoint(element);
                     case "Polygon": return GeoJsonPolygon.DeserializeGeoJsonPolygon(element);
                 }
             }

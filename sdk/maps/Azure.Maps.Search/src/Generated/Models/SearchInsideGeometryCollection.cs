@@ -17,7 +17,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of SearchInsideGeometryCollection. </summary>
         /// <param name="geometries"> Contains a list of valid `GeoJSON` geometry objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="geometries"/> is null. </exception>
-        public SearchInsideGeometryCollection(IEnumerable<SearchInsideGeometryPolygon> geometries)
+        public SearchInsideGeometryCollection(IEnumerable<SearchInsidePolygon> geometries)
         {
             if (geometries == null)
             {
@@ -29,6 +29,6 @@ namespace Azure.Maps.Search.Models
         }
 
         /// <summary> Contains a list of valid `GeoJSON` geometry objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude). </summary>
-        public IList<SearchInsideGeometryPolygon> Geometries { get; }
+        public IList<SearchInsidePolygon> Geometries { get; }
     }
 }
