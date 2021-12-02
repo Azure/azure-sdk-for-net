@@ -7,8 +7,8 @@ using System.ComponentModel;
 using System.IO;
 using System.Text;
 using Azure.Core;
-using Azure.Core.Serialization;
 using Azure.Core.Amqp;
+using Azure.Core.Serialization;
 using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Producer;
@@ -46,17 +46,6 @@ namespace Azure.Messaging.EventHubs
         {
             get => _amqpMessage.GetEventBody();
             set => _amqpMessage.Body = AmqpMessageBody.FromData(MessageBody.FromReadOnlyMemorySegment(value.ToMemory()));
-        }
-
-        /// <summary>
-        /// Hidden property that shadows the <see cref="EventBody"/> property. This is added
-        /// in order to inherit from <see cref="MessageWithMetadata"/>.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override BinaryData Data
-        {
-            get => EventBody;
-            set => EventBody = value;
         }
 
         /// <summary>
@@ -108,9 +97,22 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        /// Hidden property that indicates that the <see cref="EventData"/> is not read-only. This is part of
-        /// the <see cref="MessageWithMetadata"/> abstraction.
+        ///   Hidden property that shadows the <see cref="EventBody"/> property. This is added
+        ///   in order to inherit from <see cref="MessageWithMetadata"/>.
         /// </summary>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override BinaryData Data
+        {
+            get => EventBody;
+            set => EventBody = value;
+        }
+
+        /// <summary>
+        ///   Hidden property that indicates that the <see cref="EventData"/> is not read-only. This is part of
+        ///   the <see cref="MessageWithMetadata"/> abstraction.
+        /// </summary>
+        ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool IsReadOnly => false;
 

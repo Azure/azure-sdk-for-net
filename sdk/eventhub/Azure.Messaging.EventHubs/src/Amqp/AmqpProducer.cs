@@ -337,8 +337,6 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             // Initialize the properties by forcing the link to be opened.
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
             var failedAttemptCount = 0;
             var tryTimeout = RetryPolicy.CalculateTryTimeout(0);
 
@@ -392,6 +390,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 return;
             }
 
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             _closed = true;
 
             var clientId = GetHashCode().ToString(CultureInfo.InvariantCulture);
@@ -400,7 +399,6 @@ namespace Azure.Messaging.EventHubs.Amqp
             try
             {
                 EventHubsEventSource.Log.ClientCloseStart(clientType, EventHubName, clientId);
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 if (SendLink?.TryGetOpenedObject(out var _) == true)
                 {

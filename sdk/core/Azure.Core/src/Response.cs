@@ -86,9 +86,9 @@ namespace Azure
         /// Indicates whether the message's <see cref="ResponseClassifier"/> considers this
         /// response an error.
         /// </summary>
-        public bool IsError { get; internal set; }
+        public virtual bool IsError { get; internal set; }
 
-        internal HttpMessageSanitizer? Sanitizer { get; set; }
+        internal HttpMessageSanitizer? Sanitizer { get; set; } = HttpMessageSanitizer.Default;
 
         /// <summary>
         /// Returns header value if the header is stored in the collection. If header has multiple values they are going to be joined with a comma.
