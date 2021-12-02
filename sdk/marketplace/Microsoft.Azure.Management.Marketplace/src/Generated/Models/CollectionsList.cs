@@ -15,28 +15,22 @@ namespace Microsoft.Azure.Management.Marketplace.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    /// <summary>
-    /// Result of the request to list Marketplace operations. It contains a
-    /// list of operations and a URL link to get the next set of results.
-    /// </summary>
-    public partial class OperationListResult
+    public partial class CollectionsList
     {
         /// <summary>
-        /// Initializes a new instance of the OperationListResult class.
+        /// Initializes a new instance of the CollectionsList class.
         /// </summary>
-        public OperationListResult()
+        public CollectionsList()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the OperationListResult class.
+        /// Initializes a new instance of the CollectionsList class.
         /// </summary>
-        /// <param name="value">List of Microsoft.Marketplace operations
-        /// supported by the Microsoft.Marketplace resource provider.</param>
-        /// <param name="nextLink">URL to get the next set of operation list
+        /// <param name="nextLink">URL to get the next set of offer list
         /// results if there are any.</param>
-        public OperationListResult(IList<SingleOperation> value = default(IList<SingleOperation>), string nextLink = default(string))
+        public CollectionsList(IList<Collection> value = default(IList<Collection>), string nextLink = default(string))
         {
             Value = value;
             NextLink = nextLink;
@@ -49,18 +43,16 @@ namespace Microsoft.Azure.Management.Marketplace.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets list of Microsoft.Marketplace operations supported by
-        /// the Microsoft.Marketplace resource provider.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<SingleOperation> Value { get; set; }
+        public IList<Collection> Value { get; set; }
 
         /// <summary>
-        /// Gets URL to get the next set of operation list results if there are
-        /// any.
+        /// Gets or sets URL to get the next set of offer list results if there
+        /// are any.
         /// </summary>
         [JsonProperty(PropertyName = "nextLink")]
-        public string NextLink { get; private set; }
+        public string NextLink { get; set; }
 
     }
 }

@@ -10,35 +10,24 @@
 
 namespace Microsoft.Azure.Management.Marketplace.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
-    /// <summary>
-    /// The privateStore offer data structure.
-    /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class Offer : Resource
+    public partial class OfferProperties
     {
         /// <summary>
-        /// Initializes a new instance of the Offer class.
+        /// Initializes a new instance of the OfferProperties class.
         /// </summary>
-        public Offer()
+        public OfferProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Offer class.
+        /// Initializes a new instance of the OfferProperties class.
         /// </summary>
-        /// <param name="id">The resource ID.</param>
-        /// <param name="name">The name of the resource.</param>
-        /// <param name="type">The type of the resource.</param>
-        /// <param name="systemData">Metadata pertaining to creation and last
-        /// modification of the resource</param>
         /// <param name="uniqueOfferId">Offers unique id</param>
         /// <param name="offerDisplayName">It will be displayed prominently in
         /// the marketplace</param>
@@ -58,8 +47,7 @@ namespace Microsoft.Azure.Management.Marketplace.Models
         /// updated.</param>
         /// <param name="iconFileUris">Icon File Uris</param>
         /// <param name="plans">Offer plans</param>
-        public Offer(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string uniqueOfferId = default(string), string offerDisplayName = default(string), string publisherDisplayName = default(string), string eTag = default(string), string privateStoreId = default(string), string createdAt = default(string), string modifiedAt = default(string), IList<string> specificPlanIdsLimitation = default(IList<string>), bool? updateSuppressedDueIdempotence = default(bool?), IDictionary<string, string> iconFileUris = default(IDictionary<string, string>), IList<Plan> plans = default(IList<Plan>))
-            : base(id, name, type, systemData)
+        public OfferProperties(string uniqueOfferId = default(string), string offerDisplayName = default(string), string publisherDisplayName = default(string), string eTag = default(string), string privateStoreId = default(string), string createdAt = default(string), string modifiedAt = default(string), IList<string> specificPlanIdsLimitation = default(IList<string>), bool? updateSuppressedDueIdempotence = default(bool?), IDictionary<string, string> iconFileUris = default(IDictionary<string, string>), IList<Plan> plans = default(IList<Plan>))
         {
             UniqueOfferId = uniqueOfferId;
             OfferDisplayName = offerDisplayName;
@@ -83,50 +71,50 @@ namespace Microsoft.Azure.Management.Marketplace.Models
         /// <summary>
         /// Gets offers unique id
         /// </summary>
-        [JsonProperty(PropertyName = "properties.uniqueOfferId")]
+        [JsonProperty(PropertyName = "uniqueOfferId")]
         public string UniqueOfferId { get; private set; }
 
         /// <summary>
         /// Gets it will be displayed prominently in the marketplace
         /// </summary>
-        [JsonProperty(PropertyName = "properties.offerDisplayName")]
+        [JsonProperty(PropertyName = "offerDisplayName")]
         public string OfferDisplayName { get; private set; }
 
         /// <summary>
         /// Gets publisher name that will be displayed prominently in the
         /// marketplace
         /// </summary>
-        [JsonProperty(PropertyName = "properties.publisherDisplayName")]
+        [JsonProperty(PropertyName = "publisherDisplayName")]
         public string PublisherDisplayName { get; private set; }
 
         /// <summary>
         /// Gets or sets identifier for purposes of race condition
         /// </summary>
-        [JsonProperty(PropertyName = "properties.eTag")]
+        [JsonProperty(PropertyName = "eTag")]
         public string ETag { get; set; }
 
         /// <summary>
         /// Gets private store unique id
         /// </summary>
-        [JsonProperty(PropertyName = "properties.privateStoreId")]
+        [JsonProperty(PropertyName = "privateStoreId")]
         public string PrivateStoreId { get; private set; }
 
         /// <summary>
         /// Gets private store offer creation date
         /// </summary>
-        [JsonProperty(PropertyName = "properties.createdAt")]
+        [JsonProperty(PropertyName = "createdAt")]
         public string CreatedAt { get; private set; }
 
         /// <summary>
         /// Gets private store offer modification date
         /// </summary>
-        [JsonProperty(PropertyName = "properties.modifiedAt")]
+        [JsonProperty(PropertyName = "modifiedAt")]
         public string ModifiedAt { get; private set; }
 
         /// <summary>
         /// Gets or sets plan ids limitation for this offer
         /// </summary>
-        [JsonProperty(PropertyName = "properties.specificPlanIdsLimitation")]
+        [JsonProperty(PropertyName = "specificPlanIdsLimitation")]
         public IList<string> SpecificPlanIdsLimitation { get; set; }
 
         /// <summary>
@@ -134,19 +122,19 @@ namespace Microsoft.Azure.Management.Marketplace.Models
         /// (true = not updated). If the allow list is identical to the existed
         /// one in db, the offer would not be updated.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.updateSuppressedDueIdempotence")]
+        [JsonProperty(PropertyName = "updateSuppressedDueIdempotence")]
         public bool? UpdateSuppressedDueIdempotence { get; set; }
 
         /// <summary>
         /// Gets or sets icon File Uris
         /// </summary>
-        [JsonProperty(PropertyName = "properties.iconFileUris")]
+        [JsonProperty(PropertyName = "iconFileUris")]
         public IDictionary<string, string> IconFileUris { get; set; }
 
         /// <summary>
         /// Gets or sets offer plans
         /// </summary>
-        [JsonProperty(PropertyName = "properties.plans")]
+        [JsonProperty(PropertyName = "plans")]
         public IList<Plan> Plans { get; set; }
 
     }
