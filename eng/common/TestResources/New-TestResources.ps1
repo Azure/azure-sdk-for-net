@@ -79,7 +79,7 @@ param (
     [switch] $OutFile,
 
     [Parameter()]
-    [boolean] $DevopsLogging = ($null -ne $env:SYSTEM_TEAMPROJECTID)
+    [switch] $DevopsLogging = ($null -ne $env:SYSTEM_TEAMPROJECTID)
 )
 
 . $PSScriptRoot/SubConfig-Helpers.ps1
