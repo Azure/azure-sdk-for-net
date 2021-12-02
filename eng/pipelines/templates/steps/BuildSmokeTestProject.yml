@@ -4,4 +4,12 @@ parameters:
    default: ""
 
 steps:
-  
+  - pwsh: |
+      $packages = Get-Item *.json
+      
+      foreach ($pkg in $packages) {
+        $pkgData = Get-Content $pkg | ConvertFrom-Json
+        Write-Host $pkgData
+      }
+    workingDirectory: ${{ parameters.PackageInfoDir }}
+    displayName: Show SmokeTest PackageInfo

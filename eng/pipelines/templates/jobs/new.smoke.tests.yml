@@ -16,6 +16,7 @@ jobs:
   - job: SmokeTest
     steps:
       - task: PowerShell@2
+        condition: and(succeeded(), ${{ parameters.Daily }})
         displayName: Building Package Info
         inputs:
           targetType: filePath
@@ -25,8 +26,14 @@ jobs:
           pwsh: true
 
       - template: /eng/pipelines/templates/steps/BuildSmokeTestProject.yml
+        condition: and(succeeded(), ${{ parameters.Daily }})
         parameters:
           PackageInfoDir: common/SmokeTests/SmokeTest/PackageInfo
+      
+      - template: /eng/pipelines/templates/steps/BuildSmokeTestProject.yml
+        condition: and(succeeded(), eq('${{ parameters.Daily }}', 'false'))
+        parameters:
+          PackageInfoDir: $(Build.ArtifactStagingDirectory)/PackageInfo
 
       - template: /eng/common/TestResources/remove-test-resources.yml
         parameters:
