@@ -80,7 +80,7 @@ namespace Azure.Core
         /// </summary>
         public TimeSpan? NetworkTimeout { get; set; }
 
-        internal void AddPolicies(RequestContext context)
+        internal void AddPolicies(RequestContext? context)
         {
             if (context == null || context.Policies == null || context.Policies.Count == 0)
             {
