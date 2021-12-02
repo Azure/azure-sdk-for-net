@@ -79,7 +79,7 @@ param (
     [switch] $OutFile,
 
     [Parameter()]
-    [switch] $RedactLogs
+    [boolean] $DevopsLogging = ($null -ne $env:SYSTEM_TEAMPROJECTID)
 )
 
 . $PSScriptRoot/SubConfig-Helpers.ps1
@@ -227,7 +227,7 @@ function SetDeploymentOutputs([string]$serviceName, [object]$azContext, [object]
                 if (ShouldMarkValueAsSecret $serviceDirectoryPrefix $key $value $notSecretValues) {
                     # Treat all ARM template output variables as secrets since "SecureString" variables do not set values.
                     # In order to mask secrets but set environment variables for any given ARM template, we set variables twice as shown below.
-                    if (!$RedactLogs) {
+                    if ($DevopsLogging) {
                         Write-Host "##vso[task.setvariable variable=_$key;issecret=true;]$value"
                         Write-Host "Setting variable as secret '$key': $value"
                     } else {
@@ -237,7 +237,7 @@ function SetDeploymentOutputs([string]$serviceName, [object]$azContext, [object]
                     Write-Host "Setting variable '$key': $value"
                     $notSecretValues += $value
                 }
-                if (!$RedactLogs) {
+                if ($DevopsLogging) {
                     Write-Host "##vso[task.setvariable variable=$key;]$value"
                 }
             } else {
@@ -875,10 +875,10 @@ The environment file will be named for the test resources template that it was
 generated for. For ARM templates, it will be test-resources.json.env. For
 Bicep templates, test-resources.bicep.env.
 
-.PARAMETER RedactLogs
+.PARAMETER DevopsLogging
 By default, the -CI parameter will print out secrets to logs with Azure Pipelines log
 commands that cause them to be redacted. For CI environments that don't support this (like 
-stress test clusters), this flag avoids printing out these secrets to the logs.
+stress test clusters), this flag can be set to $false to avoid printing out these secrets to the logs.
 
 .EXAMPLE
 Connect-AzAccount -Subscription 'REPLACE_WITH_SUBSCRIPTION_ID'
