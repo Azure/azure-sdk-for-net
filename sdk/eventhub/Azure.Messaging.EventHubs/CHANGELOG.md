@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed an issue for publishing with idempotent retries enabled where the client and service state could become out-of-sync for error scenarios with ambiguous outcomes. When this occurred, callers had no way to detect or correct the condition and it was possible that new events would fail to publish or be incorrectly identified as duplicates by the service. 
+
 ### Other Changes
 
 - Based on a new series of profiling and testing in real-world application scenarios, the default values for `EventProcessor<T>` load balancing are being updated to provide better performance and stability.  The default load balancing interval was changed from 10 seconds to 30 seconds.  The default ownership expiration interval was changed from 30 seconds to 2 minutes.  The default load balancing strategy has been changed from balanced to greedy.
