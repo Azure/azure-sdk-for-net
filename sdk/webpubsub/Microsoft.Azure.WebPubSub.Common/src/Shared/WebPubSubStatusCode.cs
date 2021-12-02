@@ -11,9 +11,9 @@ namespace Microsoft.Azure.WebPubSub.Common
     internal enum WebPubSubStatusCode
     {
         /// <summary>
-        /// Start from -1 to make values map <see cref="WebPubSubErrorCode"/>.
+        /// Default success.
         /// </summary>
-        Success = -1,
+        Success,
         /// <summary>
         /// Unauthorized error.
         /// </summary>
