@@ -36,55 +36,5 @@ namespace Azure.Maps.Search.Models
             writer.WriteStringValue(Type);
             writer.WriteEndObject();
         }
-
-        internal static GeoJsonFeature DeserializeGeoJsonFeature(JsonElement element)
-        {
-            if (element.TryGetProperty("type", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "Feature": return GeoJsonCircleFeature.DeserializeGeoJsonCircleFeature(element);
-                }
-            }
-            GeoJsonGeometry geometry = default;
-            Optional<object> properties = default;
-            Optional<string> id = default;
-            Optional<string> featureType = default;
-            string type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("geometry"))
-                {
-                    geometry = GeoJsonGeometry.DeserializeGeoJsonGeometry(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("properties"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    properties = property.Value.GetObject();
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("featureType"))
-                {
-                    featureType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new GeoJsonFeature(type, geometry, properties.Value, id.Value, featureType.Value);
-        }
     }
 }
