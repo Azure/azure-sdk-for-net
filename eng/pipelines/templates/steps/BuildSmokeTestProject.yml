@@ -5,6 +5,7 @@ parameters:
 
 steps:
   - pwsh: tree
+    workingDirectory: $(Pipeline.Workspace)
   - pwsh: |
       $packages = Get-Item *.json
       
