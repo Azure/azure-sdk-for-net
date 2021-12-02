@@ -178,7 +178,7 @@ namespace Azure.Core
             {
                 Value = state.Value!;
             }
-            ApplyStateAsync(false, state.RawResponse, state.HasCompleted, state.HasSucceeded, state.OperationFailedException).EnsureCompleted();
+            ApplyStateAsync(false, state.RawResponse, state.HasCompleted, state.HasSucceeded, state.OperationFailedException, throwIfFailed: false).EnsureCompleted();
         }
 
         protected override async ValueTask<Response> UpdateStateAsync(bool async, CancellationToken cancellationToken)

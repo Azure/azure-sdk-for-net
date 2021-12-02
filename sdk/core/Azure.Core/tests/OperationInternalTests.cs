@@ -134,17 +134,18 @@ namespace Azure.Core.Tests
             var operationInternal = CreateOperation(isOfT, UpdateResult.Pending);
             if (operationInternal is OperationInternal oi)
             {
-                Assert.Throws<RequestFailedException>(() => oi.SetState(OperationState.Failure(mockResponse)));
+                oi.SetState(OperationState.Failure(mockResponse));
             }
             else if (operationInternal is OperationInternal<int> oit)
             {
-                Assert.Throws<RequestFailedException>(() => oit.SetState(OperationState<int>.Failure(mockResponse)));
+                oit.SetState(OperationState<int>.Failure(mockResponse));
             }
 
             Assert.IsTrue(operationInternal.HasCompleted);
             if (operationInternal is OperationInternal<int> oit2)
             {
                 Assert.IsFalse(oit2.HasValue);
+                Assert.Throws<RequestFailedException>(() => _ = oit2.Value);
             }
         }
 

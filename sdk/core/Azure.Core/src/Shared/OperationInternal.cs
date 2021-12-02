@@ -84,7 +84,7 @@ namespace Azure.Core
         /// <param name="state">The <see cref="OperationState"/> used to set <see cref="OperationInternalBase.HasCompleted"/> and other members.</param>
         public void SetState(OperationState state)
         {
-            ApplyStateAsync(false, state.RawResponse, state.HasCompleted, state.HasSucceeded, state.OperationFailedException).EnsureCompleted();
+            ApplyStateAsync(false, state.RawResponse, state.HasCompleted, state.HasSucceeded, state.OperationFailedException, throwIfFailed: false).EnsureCompleted();
         }
 
         protected override async ValueTask<Response> UpdateStateAsync(bool async, CancellationToken cancellationToken)
