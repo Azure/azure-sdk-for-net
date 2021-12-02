@@ -15,25 +15,24 @@ parameters:
 jobs:
   - job: SmokeTest
     steps:
-      - task: PowerShell@2
-        condition: and(succeeded(), ${{ parameters.Daily }})
-        displayName: Building Package Info
-        inputs:
-          targetType: filePath
-          filePath: ./eng/scripts/smoketest/Save-Package-Properties.ps1
-          arguments: -outDirectory PackageInfo
-          workingDirectory: common/SmokeTests/SmokeTest
-          pwsh: true
+      - ${{ if eq(parameters.Daily, true) }}:
+        - task: PowerShell@2
+          displayName: Building Package Info
+          inputs:
+            targetType: filePath
+            filePath: ./eng/scripts/smoketest/Save-Package-Properties.ps1
+            arguments: -outDirectory PackageInfo
+            workingDirectory: common/SmokeTests/SmokeTest
+            pwsh: true
 
-      - template: /eng/pipelines/templates/steps/BuildSmokeTestProject.yml
-        condition: and(succeeded(), ${{ parameters.Daily }})
-        parameters:
-          PackageInfoDir: common/SmokeTests/SmokeTest/PackageInfo
+        - template: /eng/pipelines/templates/steps/BuildSmokeTestProject.yml
+          parameters:
+            PackageInfoDir: common/SmokeTests/SmokeTest/PackageInfo
       
-      - template: /eng/pipelines/templates/steps/BuildSmokeTestProject.yml
-        condition: and(succeeded(), eq('${{ parameters.Daily }}', 'false'))
-        parameters:
-          PackageInfoDir: $(Build.ArtifactStagingDirectory)/PackageInfo
+      - ${{ if eq(parameters.Daily, false) }}:
+        - template: /eng/pipelines/templates/steps/BuildSmokeTestProject.yml
+          parameters:
+            PackageInfoDir: $(Build.ArtifactStagingDirectory)/PackageInfo
 
       - template: /eng/common/TestResources/remove-test-resources.yml
         parameters:
