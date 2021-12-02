@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class ProfileSku : IUtf8JsonSerializable
+    public partial class Sku : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteEndObject();
         }
 
-        internal static ProfileSku DeserializeProfileSku(JsonElement element)
+        internal static Sku DeserializeSku(JsonElement element)
         {
             Optional<SkuName> name = default;
             foreach (var property in element.EnumerateObject())
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new ProfileSku(Optional.ToNullable(name));
+            return new Sku(Optional.ToNullable(name));
         }
     }
 }

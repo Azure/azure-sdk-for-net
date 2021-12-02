@@ -8,16 +8,16 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The pricing tier (defines a CDN provider, feature list and rate) of the CDN profile. </summary>
-    public partial class ProfileSku
+    public partial class Sku
     {
-        /// <summary> Initializes a new instance of ProfileSku. </summary>
-        public ProfileSku()
+        /// <summary> Initializes a new instance of Sku. </summary>
+        public Sku()
         {
         }
 
-        /// <summary> Initializes a new instance of ProfileSku. </summary>
+        /// <summary> Initializes a new instance of Sku. </summary>
         /// <param name="name"> Name of the pricing tier. </param>
-        internal ProfileSku(SkuName? name)
+        internal Sku(SkuName? name)
         {
             Name = name;
         }

@@ -699,7 +699,7 @@ namespace Azure.ResourceManager.Cdn
     }
     public partial class CdnWebApplicationFirewallPolicyData : Azure.ResourceManager.Cdn.Models.TrackedResource
     {
-        public CdnWebApplicationFirewallPolicyData(string location, Azure.ResourceManager.Cdn.Models.ProfileSku sku) : base (default(string)) { }
+        public CdnWebApplicationFirewallPolicyData(string location, Azure.ResourceManager.Cdn.Models.Sku sku) : base (default(string)) { }
         public Azure.ResourceManager.Cdn.Models.CustomRuleList CustomRules { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> EndpointLinks { get { throw null; } }
         public string Etag { get { throw null; } set { } }
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.Cdn
         public Azure.ResourceManager.Cdn.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Cdn.Models.RateLimitRuleList RateLimitRules { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.PolicyResourceState? ResourceState { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.ProfileSku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.Sku Sku { get { throw null; } set { } }
     }
     public partial class Profile : Azure.ResourceManager.Core.ArmResource
     {
@@ -781,11 +781,11 @@ namespace Azure.ResourceManager.Cdn
     }
     public partial class ProfileData : Azure.ResourceManager.Cdn.Models.TrackedResource
     {
-        public ProfileData(string location, Azure.ResourceManager.Cdn.Models.ProfileSku sku) : base (default(string)) { }
+        public ProfileData(string location, Azure.ResourceManager.Cdn.Models.Sku sku) : base (default(string)) { }
         public string FrontdoorId { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Cdn.Models.ProfileResourceState? ResourceState { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.ProfileSku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.Sku Sku { get { throw null; } set { } }
     }
     public static partial class ResourceGroupExtensions
     {
@@ -2758,7 +2758,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Cdn.Models.ManagedRuleGroupDefinition> RuleGroups { get { throw null; } }
         public string RuleSetType { get { throw null; } }
         public string RuleSetVersion { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.ProfileSku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.Sku Sku { get { throw null; } set { } }
     }
     public partial class ManagedRuleSetList
     {
@@ -3295,11 +3295,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static implicit operator Azure.ResourceManager.Cdn.Models.ProfileResourceState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.ProfileResourceState left, Azure.ResourceManager.Cdn.Models.ProfileResourceState right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class ProfileSku
-    {
-        public ProfileSku() { }
-        public Azure.ResourceManager.Cdn.Models.SkuName? Name { get { throw null; } set { } }
     }
     public partial class ProfileUpdateOperation : Azure.Operation<Azure.ResourceManager.Cdn.Profile>
     {
@@ -4013,6 +4008,11 @@ namespace Azure.ResourceManager.Cdn.Models
         public SecurityPolicyWebApplicationFirewallParameters() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.SecurityPolicyWebApplicationFirewallAssociation> Associations { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.WritableSubResource WafPolicy { get { throw null; } set { } }
+    }
+    public partial class Sku
+    {
+        public Sku() { }
+        public Azure.ResourceManager.Cdn.Models.SkuName? Name { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SkuName : System.IEquatable<Azure.ResourceManager.Cdn.Models.SkuName>

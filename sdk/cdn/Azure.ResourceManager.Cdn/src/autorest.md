@@ -269,9 +269,6 @@ directive:
           "modelAsString": true
       }
   - from: swagger-document
-    where: $.definitions.Sku
-    transform: $['x-ms-client-name'] = 'ProfileSku'
-  - from: swagger-document
     where: $.paths
     transform: >
       for (var key in $) {

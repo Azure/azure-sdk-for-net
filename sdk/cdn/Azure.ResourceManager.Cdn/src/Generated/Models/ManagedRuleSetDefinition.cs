@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="ruleSetType"> Type of the managed rule set. </param>
         /// <param name="ruleSetVersion"> Version of the managed rule set type. </param>
         /// <param name="ruleGroups"> Rule groups of the managed rule set. </param>
-        internal ManagedRuleSetDefinition(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, ProfileSku sku, string provisioningState, string ruleSetType, string ruleSetVersion, IReadOnlyList<ManagedRuleGroupDefinition> ruleGroups) : base(id, name, type, systemData)
+        internal ManagedRuleSetDefinition(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, Sku sku, string provisioningState, string ruleSetType, string ruleSetVersion, IReadOnlyList<ManagedRuleGroupDefinition> ruleGroups) : base(id, name, type, systemData)
         {
             Sku = sku;
             ProvisioningState = provisioningState;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy. </summary>
-        public ProfileSku Sku { get; set; }
+        public Sku Sku { get; set; }
         /// <summary> Provisioning state of the managed rule set. </summary>
         public string ProvisioningState { get; }
         /// <summary> Type of the managed rule set. </summary>
