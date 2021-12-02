@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class LatLong
+    public partial class LatLon
     {
-        internal static LatLong DeserializeLatLong(JsonElement element)
+        internal static LatLon DeserializeLatLon(JsonElement element)
         {
             Optional<double> lat = default;
             Optional<double> lon = default;
@@ -39,7 +39,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new LatLong(lat, lon);
+            return new LatLon(lat, lon);
         }
     }
 }

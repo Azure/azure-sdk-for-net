@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -2556,11 +2555,6 @@ namespace Azure.Maps.Search
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(geometry);
-            content.JsonWriter.Flush();
-            
-            // string json = Encoding.UTF8.GetString(content._stream.ToArray());
-            // Console.Write(json);
-
             request.Content = content;
             return message;
         }

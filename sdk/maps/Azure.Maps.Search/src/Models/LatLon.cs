@@ -10,12 +10,12 @@ namespace Azure.Maps.Search.Models
 {
     /// <summary> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </summary>
     [CodeGenModel("LatLongPairAbbreviated")]
-    public partial class LatLong
+    public partial class LatLon
     {
         /// <summary> Initializes a new instance of LatLong. </summary>
         /// <param name="latitude"> Latitude property. </param>
         /// <param name="longitude"> Longitude property. </param>
-        public LatLong(double latitude, double longitude){
+        public LatLon(double latitude, double longitude){
             this.Lat = latitude;
             this.Lon = longitude;
         }
@@ -38,6 +38,6 @@ namespace Azure.Maps.Search.Models
         public override string ToString() => $"{this.Lat},${this.Lon}";
 
         /// <summary> LatLong representation as array </summary>
-        public static implicit operator double[](LatLong latLong) => new double[] { latLong.Lat, latLong.Lon };
+        public static implicit operator double[](LatLon latLong) => new double[] { latLong.Lat, latLong.Lon };
     }
 }

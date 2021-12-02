@@ -150,7 +150,7 @@ namespace Azure.Maps.Search
         /// <param name="coordinates"> Coordinates where results should be biased. E.g. 37.337, -121.89. </param>
         /// <param name="options"> additional options  </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> FuzzySearchAsync(string query, LatLong coordinates, FuzzySearchOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressResult>> FuzzySearchAsync(string query, LatLon coordinates, FuzzySearchOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.FuzzySearch");
             scope.Start();
@@ -205,7 +205,7 @@ namespace Azure.Maps.Search
         /// <param name="countryFilter"> Comma separated string of country codes, e.g. FR,ES. This will limit the search to the specified countries. </param>
         /// <param name="options"> additional options  </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> FuzzySearchAsync(string query, LatLong coordinates, IEnumerable<string> countryFilter, FuzzySearchOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressResult>> FuzzySearchAsync(string query, LatLon coordinates, IEnumerable<string> countryFilter, FuzzySearchOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.FuzzySearch");
             scope.Start();
@@ -232,7 +232,7 @@ namespace Azure.Maps.Search
         /// <param name="coordinates"> Coordinates where results should be biased. E.g. 37.337, -121.89. </param>
         /// <param name="options"> additional options  </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> FuzzySearch(string query, LatLong coordinates, FuzzySearchOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressResult> FuzzySearch(string query, LatLon coordinates, FuzzySearchOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.FuzzySearch");
             scope.Start();
@@ -287,7 +287,7 @@ namespace Azure.Maps.Search
         /// <param name="countryFilter"> Comma separated string of country codes, e.g. FR,ES. This will limit the search to the specified countries. </param>
         /// <param name="options"> additional options  </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> FuzzySearch(string query, LatLong coordinates, IEnumerable<string> countryFilter, FuzzySearchOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressResult> FuzzySearch(string query, LatLon coordinates, IEnumerable<string> countryFilter, FuzzySearchOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.FuzzySearch");
             scope.Start();
@@ -314,7 +314,7 @@ namespace Azure.Maps.Search
         /// <param name="coordinates"> Coordinates where results should be biased. E.g. 37.337, -121.89. </param>
         /// <param name="options"> additional options  </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestAsync(string query, LatLong coordinates, SearchPointOfInterestOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestAsync(string query, LatLon coordinates, SearchPointOfInterestOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterest");
             scope.Start();
@@ -369,7 +369,7 @@ namespace Azure.Maps.Search
         /// <param name="countryFilter"> Comma separated string of country codes, e.g. FR,ES. This will limit the search to the specified countries. </param>
         /// <param name="options"> additional options  </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestAsync(string query, LatLong coordinates, IEnumerable<string> countryFilter, SearchPointOfInterestOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestAsync(string query, LatLon coordinates, IEnumerable<string> countryFilter, SearchPointOfInterestOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterest");
             scope.Start();
@@ -396,7 +396,7 @@ namespace Azure.Maps.Search
         /// <param name="coordinates"> Coordinates where results should be biased. E.g. 37.337, -121.89. </param>
         /// <param name="options"> additional options  </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> SearchPointOfInterest(string query, LatLong coordinates, SearchPointOfInterestOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressResult> SearchPointOfInterest(string query, LatLon coordinates, SearchPointOfInterestOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterest");
             scope.Start();
@@ -451,7 +451,7 @@ namespace Azure.Maps.Search
         /// <param name="countryFilter"> Comma separated string of country codes, e.g. FR,ES. This will limit the search to the specified countries. </param>
         /// <param name="options"> additional options  </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> SearchPointOfInterest(string query, LatLong coordinates, IEnumerable<string> countryFilter, SearchPointOfInterestOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressResult> SearchPointOfInterest(string query, LatLon coordinates, IEnumerable<string> countryFilter, SearchPointOfInterestOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterest");
             scope.Start();
@@ -477,7 +477,7 @@ namespace Azure.Maps.Search
         /// <param name="coordinates"> a pair of coordinates where results should be biased. E.g. 37.337, -121.89. </param>
         /// <param name="options"> additional options  </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> SearchNearbyPointOfInterestAsync(LatLong coordinates, SearchNearbyPointOfInterestOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressResult>> SearchNearbyPointOfInterestAsync(LatLon coordinates, SearchNearbyPointOfInterestOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchNearbyPointOfInterest");
             scope.Start();
@@ -503,7 +503,7 @@ namespace Azure.Maps.Search
         /// <param name="coordinates"> a pair of coordinates where results should be biased. E.g. 37.337, -121.89. </param>
         /// <param name="options"> additional options  </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> SearchNearbyPointOfInterest(LatLong coordinates, SearchNearbyPointOfInterestOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressResult> SearchNearbyPointOfInterest(LatLon coordinates, SearchNearbyPointOfInterestOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchNearbyPointOfInterest");
             scope.Start();
@@ -530,7 +530,7 @@ namespace Azure.Maps.Search
         /// <param name="coordinates"> a pair of coordinates where results should be biased. E.g. 37.337, -121.89. </param>
         /// <param name="options"> additional options  </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestCategoryAsync(string query, LatLong coordinates, SearchPointOfInterestCategoryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestCategoryAsync(string query, LatLon coordinates, SearchPointOfInterestCategoryOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterestCategory");
             scope.Start();
@@ -586,7 +586,7 @@ namespace Azure.Maps.Search
         /// <param name="countryFilter"> Comma separated string of country codes, e.g. FR,ES. This will limit the search to the specified countries. </param>
         /// <param name="options"> additional options  </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestCategoryAsync(string query, LatLong coordinates, IEnumerable<string> countryFilter, SearchPointOfInterestCategoryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestCategoryAsync(string query, LatLon coordinates, IEnumerable<string> countryFilter, SearchPointOfInterestCategoryOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterestCategory");
             scope.Start();
@@ -614,7 +614,7 @@ namespace Azure.Maps.Search
         /// <param name="coordinates"> a pair of coordinates where results should be biased. E.g. 37.337, -121.89. </param>
         /// <param name="options"> additional options  </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> SearchPointOfInterestCategory(string query, LatLong coordinates, SearchPointOfInterestCategoryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressResult> SearchPointOfInterestCategory(string query, LatLon coordinates, SearchPointOfInterestCategoryOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterestCategory");
             scope.Start();
@@ -669,7 +669,7 @@ namespace Azure.Maps.Search
         /// <param name="countryFilter"> Comma separated string of country codes, e.g. FR,ES. This will limit the search to the specified countries. </param>
         /// <param name="options"> additional options  </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> SearchPointOfInterestCategory(string query, LatLong coordinates, IEnumerable<string> countryFilter, SearchPointOfInterestCategoryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressResult> SearchPointOfInterestCategory(string query, LatLon coordinates, IEnumerable<string> countryFilter, SearchPointOfInterestCategoryOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterestCategory");
             scope.Start();
@@ -805,7 +805,7 @@ namespace Azure.Maps.Search
         /// <param name="coordinates"> A pair of coordinates to translate. </param>
         /// <param name="options"> additional options  </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ReverseSearchAddressResult>> ReverseSearchAddressAsync(LatLong coordinates, ReverseSearchOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReverseSearchAddressResult>> ReverseSearchAddressAsync(LatLon coordinates, ReverseSearchOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.ReverseSearchAddress");
             scope.Start();
@@ -831,7 +831,7 @@ namespace Azure.Maps.Search
         /// <param name="coordinates"> A pair of coordinates to translate. </param>
         /// <param name="options"> additional options  </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ReverseSearchAddressResult> ReverseSearchAddress(LatLong coordinates, ReverseSearchOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<ReverseSearchAddressResult> ReverseSearchAddress(LatLon coordinates, ReverseSearchOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.ReverseSearchAddress");
             scope.Start();
@@ -858,7 +858,7 @@ namespace Azure.Maps.Search
         /// <param name="coordinates"> A pair of coordinates to translate. </param>
         /// <param name="options"> additional options  </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ReverseSearchCrossStreetAddressResult>> ReverseSearchCrossStreetAddressAsync(LatLong coordinates, ReverseSearchCrossStreetOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReverseSearchCrossStreetAddressResult>> ReverseSearchCrossStreetAddressAsync(LatLon coordinates, ReverseSearchCrossStreetOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.ReverseSearchCrossStreetAddress");
             scope.Start();
@@ -885,7 +885,7 @@ namespace Azure.Maps.Search
         /// <param name="coordinates"> A pair of a pair of coordinates to translate. </param>
         /// <param name="options"> additional options  </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ReverseSearchCrossStreetAddressResult> ReverseSearchCrossStreetAddress(LatLong coordinates, ReverseSearchCrossStreetOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<ReverseSearchCrossStreetAddressResult> ReverseSearchCrossStreetAddress(LatLon coordinates, ReverseSearchCrossStreetOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.ReverseSearchCrossStreetAddress");
             scope.Start();

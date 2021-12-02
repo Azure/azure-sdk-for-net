@@ -16,8 +16,8 @@ namespace Azure.Maps.Search.Models
         {
             Optional<string> rangeLeft = default;
             Optional<string> rangeRight = default;
-            Optional<LatLong> @from = default;
-            Optional<LatLong> to = default;
+            Optional<LatLon> @from = default;
+            Optional<LatLon> to = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rangeLeft"))
@@ -37,7 +37,7 @@ namespace Azure.Maps.Search.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    @from = LatLong.DeserializeLatLong(property.Value);
+                    @from = LatLon.DeserializeLatLon(property.Value);
                     continue;
                 }
                 if (property.NameEquals("to"))
@@ -47,7 +47,7 @@ namespace Azure.Maps.Search.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    to = LatLong.DeserializeLatLong(property.Value);
+                    to = LatLon.DeserializeLatLon(property.Value);
                     continue;
                 }
             }

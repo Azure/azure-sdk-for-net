@@ -33,7 +33,7 @@ namespace Azure.Maps.Search.Models
             }
             writer.WriteEndArray();
             writer.WritePropertyName("type");
-            writer.WriteStringValue("Polygon");
+            writer.WriteStringValue(Type.ToSerialString());
             writer.WriteEndObject();
         }
     }
