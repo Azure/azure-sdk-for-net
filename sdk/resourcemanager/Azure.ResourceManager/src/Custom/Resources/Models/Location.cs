@@ -234,6 +234,9 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="name"> The location name or the display name. </param>
         public Location(string name)
         {
+            if (ReferenceEquals(name, null))
+                throw new ArgumentNullException(nameof(name));
+
             Name = name;
             Location loc;
             if (PublicCloudLocations.TryGetValue(name, out loc))

@@ -2,10 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -26,6 +22,9 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="displayName"> The display name of the location. </param>
         public Location(string name, string displayName)
         {
+            if (ReferenceEquals(name, null))
+                throw new ArgumentNullException(nameof(name));
+
             Name = name;
             DisplayName = displayName;
         }
