@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ServiceBus
             ResourceType type = default;
             Optional<WritableSubResource> privateEndpoint = default;
             Optional<ConnectionState> privateLinkServiceConnectionState = default;
-            Optional<EndPointProvisioningState> provisioningState = default;
+            Optional<EndpointProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("systemData"))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ServiceBus
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new EndPointProvisioningState(property0.Value.GetString());
+                            provisioningState = new EndpointProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         }
         [Test]
         [RecordedTest]
-        [Ignore("cannot parse ServiceBusSubscription id")]
         public async Task CreateGetUpdateDeleteRule()
         {
             const string strSqlExp = "myproperty=test";

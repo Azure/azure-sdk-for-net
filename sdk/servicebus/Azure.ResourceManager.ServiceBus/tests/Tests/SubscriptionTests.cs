@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         }
         [Test]
         [RecordedTest]
-        [Ignore("cannot parse ServiceBusSubscription id")]
         public async Task CreateGetUpdateDeleteSubscription()
         {
             //create namespace

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="privateEndpoint"> The Private Endpoint resource for this Connection. </param>
         /// <param name="privateLinkServiceConnectionState"> Details about the state of the connection. </param>
         /// <param name="provisioningState"> Provisioning state of the Private Endpoint Connection. </param>
-        internal PrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, WritableSubResource privateEndpoint, ConnectionState privateLinkServiceConnectionState, EndPointProvisioningState? provisioningState) : base(id, name, type)
+        internal PrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, WritableSubResource privateEndpoint, ConnectionState privateLinkServiceConnectionState, EndpointProvisioningState? provisioningState) : base(id, name, type)
         {
             SystemData = systemData;
             PrivateEndpoint = privateEndpoint;
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Details about the state of the connection. </summary>
         public ConnectionState PrivateLinkServiceConnectionState { get; set; }
         /// <summary> Provisioning state of the Private Endpoint Connection. </summary>
-        public EndPointProvisioningState? ProvisioningState { get; set; }
+        public EndpointProvisioningState? ProvisioningState { get; set; }
     }
 }

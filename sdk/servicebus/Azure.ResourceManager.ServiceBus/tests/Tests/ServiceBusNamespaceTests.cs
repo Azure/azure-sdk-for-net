@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusNamespace namespace2 = null;
 
             //validate
-            await foreach (ServiceBusNamespace serviceBusNamespace in DefaultSubscription.GetServiceBusNamespacesAsync())
+            await foreach (ServiceBusNamespace serviceBusNamespace in DefaultSubscription.GetNamespacesAsync())
             {
                 count++;
                 if (serviceBusNamespace.Id.Name == namespaceName1)
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
             string namespaceName = await CreateValidNamespaceName(namespacePrefix);
             ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new ServiceBusNamespaceData(DefaultLocation))).Value;
-            NamespaceServiceBusAuthorizationRuleCollection ruleCollection = serviceBusNamespace.GetNamespaceServiceBusAuthorizationRules();
+            NamespaceAuthorizationRuleCollection ruleCollection = serviceBusNamespace.GetNamespaceAuthorizationRules();
 
             //create authorization rule
             string ruleName = Recording.GenerateAssetName("authorizationrule");
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             {
                 Rights = { AccessRights.Listen, AccessRights.Send }
             };
-            NamespaceServiceBusAuthorizationRule authorizationRule = (await ruleCollection.CreateOrUpdateAsync(ruleName, parameter)).Value;
+            NamespaceAuthorizationRule authorizationRule = (await ruleCollection.CreateOrUpdateAsync(ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
@@ -260,13 +260,13 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
             //get all authorization rules
-            List<NamespaceServiceBusAuthorizationRule> rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
+            List<NamespaceAuthorizationRule> rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
 
             //there should be two authorization rules
             Assert.True(rules.Count > 1);
             bool isContainAuthorizationRuleName = false;
             bool isContainDefaultRuleName = false;
-            foreach (NamespaceServiceBusAuthorizationRule rule in rules)
+            foreach (NamespaceAuthorizationRule rule in rules)
             {
                 if (rule.Id.Name == ruleName)
                 {
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
             string namespaceName = await CreateValidNamespaceName(namespacePrefix);
             ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new ServiceBusNamespaceData(DefaultLocation))).Value;
-            NamespaceServiceBusAuthorizationRuleCollection ruleCollection = serviceBusNamespace.GetNamespaceServiceBusAuthorizationRules();
+            NamespaceAuthorizationRuleCollection ruleCollection = serviceBusNamespace.GetNamespaceAuthorizationRules();
 
             //create authorization rule
             string ruleName = Recording.GenerateAssetName("authorizationrule");
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             {
                 Rights = { AccessRights.Listen, AccessRights.Send }
             };
-            NamespaceServiceBusAuthorizationRule authorizationRule = (await ruleCollection.CreateOrUpdateAsync(ruleName, parameter)).Value;
+            NamespaceAuthorizationRule authorizationRule = (await ruleCollection.CreateOrUpdateAsync(ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             string subnetId1 = subscriptionId + "/resourcegroups/" + _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/" + vnetName + "/subnets/default1";
             string subnetId2 = subscriptionId + "/resourcegroups/" + _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/" + vnetName + "/subnets/default2";
             string subnetId3 = subscriptionId + "/resourcegroups/" + _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/" + vnetName + "/subnets/default3";
-            NetworkRuleSet parameter = new NetworkRuleSet()
+            NetworkRuleSetData parameter = new NetworkRuleSetData()
             {
                 DefaultAction = DefaultAction.Deny,
                 VirtualNetworkRules =
@@ -404,15 +404,15 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                         new NetworkRuleSetIpRules() { IpMask = "1.1.1.5", Action = "Allow" }
                     }
             };
-            await serviceBusNamespace.CreateOrUpdateNetworkRuleSetAsync(parameter);
+            await serviceBusNamespace.GetNetworkRuleSet().CreateOrUpdateAsync(parameter);
 
             //get the network rule set
-            NetworkRuleSet networkRuleSet = await serviceBusNamespace.GetNetworkRuleSetAsync();
+            NetworkRuleSet networkRuleSet = await serviceBusNamespace.GetNetworkRuleSet().GetAsync();
             Assert.NotNull(networkRuleSet);
-            Assert.NotNull(networkRuleSet.IpRules);
-            Assert.NotNull(networkRuleSet.VirtualNetworkRules);
-            Assert.AreEqual(networkRuleSet.VirtualNetworkRules.Count, 3);
-            Assert.AreEqual(networkRuleSet.IpRules.Count, 5);
+            Assert.NotNull(networkRuleSet.Data.IpRules);
+            Assert.NotNull(networkRuleSet.Data.VirtualNetworkRules);
+            Assert.AreEqual(networkRuleSet.Data.VirtualNetworkRules.Count, 3);
+            Assert.AreEqual(networkRuleSet.Data.IpRules.Count, 5);
 
             //delete virtual network
             await virtualNetwork.DeleteAsync();
