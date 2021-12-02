@@ -97,12 +97,17 @@ namespace Azure.Core.TestFramework
                         RecordingId = playbackResponse.Headers.XRecordingId;
                         AddProxySanitizers();
 
-                        // temporary until Azure.Core fix is shipped
+                        // temporary until Azure.Core fix is shipped that makes HttpWebRequestTransport consistent with HttpClientTransport
                         // if (!_matcher.CompareBodies)
                         // {
                         //     _proxy.Client.AddBodilessMatcher(RecordingId);
                         // }
-                        _proxy.Client.AddCustomMatcher(new CustomDefaultMatcher("Content-Type,Content-Length", _matcher.CompareBodies), RecordingId);
+                        var excludedHeaders = new List<string>(_matcher.LegacyExcludedHeaders)
+                        {
+                            "Content-Type",
+                            "Content-Length"
+                        };
+                        _proxy.Client.AddCustomMatcher(new CustomDefaultMatcher(string.Join(",", excludedHeaders), _matcher.CompareBodies), RecordingId);
                         break;
                 }
             }
