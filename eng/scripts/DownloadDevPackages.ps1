@@ -2,7 +2,9 @@ param (
     [Parameter(Mandatory=$True)]
     [string] $WorkingDirectory,
     [Parameter(Mandatory=$True)]
-    [string] $NupkgDestination,
+    [string] $AllNupkgFilesDestination,
+    [Parameter(Mandatory=$True)]
+    [string] $AzureSDKNupkgFilesDestination,
     [string] $NugetSource="https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json",
     [string] $FallBackSource = "https://api.nuget.org/v3/index.json"
 )
@@ -10,7 +12,7 @@ param (
 . (Join-Path $PSScriptRoot ".." common scripts common.ps1)
 
 $allPackages = Get-AllPkgProperties
-$trackTwoPackages = $allPackages.Where{ $_.IsNewSdk }
+$trackTwoPackages = $allPackages.Where({ $_.IsNewSdk })
 
 Push-Location $WorkingDirectory
 $nugetPackagesPath = Join-Path $WorkingDirectory nugetPackages
@@ -23,12 +25,23 @@ foreach ($package in $trackTwoPackages)
   -Prerelease `
   -Source $NugetSource `
   -FallBackSource $FallBackSource `
-  -DependencyVersion Ignore `
   -DirectDownload `
+  -ExcludeVersion `
   -NoCache `
 }
 
-$nupkgFilesPath = Join-Path $WorkingDirectory $NupkgDestination
-New-Item -Path $WorkingDirectory -Type "directory" -Name $NupkgDestination
+$allNupkgDirPath = Join-Path $WorkingDirectory $AllNupkgFilesDestination
+New-Item -Path $WorkingDirectory -Type "directory" -Name $AllNupkgFilesDestination
 
-Get-ChildItem -Path $nugetPackagesPath -Include *.nupkg -Recurse | Copy-Item -Destination $nupkgFilesPath
+$azureSdkNupkgDirPath = Join-Path $WorkingDirectory $AzureSDKNupkgFilesDestination
+New-Item -Path $WorkingDirectory -Type "directory" -Name $AzureSDKNupkgFilesDestination
+
+$allDownloadedNupkgFiles = Get-ChildItem -Path $nugetPackagesPath -Include *.nupkg -Recurse
+foreach ($file in $allDownloadedNupkgFiles)
+{
+  Copy-Item -Path $file.FullName -Destination $allNupkgDirPath
+  if ($trackTwoPackages.Name -contains $file.BaseName)
+  {
+    Copy-Item -Path $file.FullName -Destination $azureSdkNupkgDirPath
+  }
+}
