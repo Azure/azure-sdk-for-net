@@ -183,7 +183,6 @@ namespace Microsoft.Azure.WebPubSub.Common
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("connectionContext")]
         public Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext ConnectionContext { get { throw null; } }
     }
-    [System.Runtime.Serialization.DataContractAttribute]
     public abstract partial class WebPubSubEventResponse
     {
         protected WebPubSubEventResponse() { }

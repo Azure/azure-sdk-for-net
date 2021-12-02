@@ -17,6 +17,22 @@ namespace Microsoft.Azure.WebPubSub.Common
     {
         private Dictionary<string, BinaryData> _states;
 
+        [DataMember(Name = "code")]
+        internal override WebPubSubStatusCode StatusCode
+        {
+            get
+            {
+                return WebPubSubStatusCode.Success;
+            }
+            set
+            {
+                if (value != WebPubSubStatusCode.Success)
+                {
+                    throw new ArgumentException("StatusCode shouldn't be set to errors in a normal user event.");
+                }
+            }
+        }
+
         /// <summary>
         /// The connection states.
         /// </summary>

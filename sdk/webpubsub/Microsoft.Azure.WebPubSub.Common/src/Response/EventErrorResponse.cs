@@ -13,6 +13,9 @@ namespace Microsoft.Azure.WebPubSub.Common
     [DataContract]
     public class EventErrorResponse : WebPubSubEventResponse
     {
+        [DataMember(Name = "code")]
+        internal override WebPubSubStatusCode StatusCode { get; set; }
+
         /// <summary>
         /// Error code. Required field to deserialize ErrorResponse.
         /// </summary>
