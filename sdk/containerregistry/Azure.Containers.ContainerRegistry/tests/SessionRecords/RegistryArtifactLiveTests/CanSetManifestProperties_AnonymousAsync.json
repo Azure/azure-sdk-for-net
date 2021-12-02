@@ -53,7 +53,7 @@
         "x-ms-client-request-id": "6bcd9df5bf00e8fcd1b737d6dd8ee4b1",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "service=mohitcontainerregistryanon.azurecr.io\u0026scope=repository%3alibrary%2fhello-world%3ametadata_read\u0026refresh_token=Sanitized\u0026grant_type=password",
+      "RequestBody": "service=mohitcontainerregistryanon.azurecr.io\u0026scope=repository%3Alibrary%2Fhello-world%3Ametadata_read\u0026refresh_token=Sanitized\u0026grant_type=password",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Connection": "keep-alive",
@@ -168,7 +168,7 @@
         "x-ms-client-request-id": "da499b7920ecddef921a787dfb4fd6f3",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "service=mohitcontainerregistryanon.azurecr.io\u0026scope=repository%3alibrary%2fhello-world%3ametadata_write\u0026refresh_token=Sanitized\u0026grant_type=password",
+      "RequestBody": "service=mohitcontainerregistryanon.azurecr.io\u0026scope=repository%3Alibrary%2Fhello-world%3Ametadata_write\u0026refresh_token=Sanitized\u0026grant_type=password",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Connection": "keep-alive",

@@ -124,6 +124,16 @@ namespace Azure.Core.TestFramework
             {
                 _proxy.Client.AddUriSanitizer(sanitizer, RecordingId);
             }
+
+            foreach (BodyKeySanitizer sanitizer in _sanitizer.BodyKeySanitizers)
+            {
+                _proxy.Client.AddBodyKeySanitizer(sanitizer, RecordingId);
+            }
+
+            foreach (BodyRegexSanitizer sanitizer in _sanitizer.BodyRegexSanitizers)
+            {
+                _proxy.Client.AddBodyRegexSanitizer(sanitizer, RecordingId);
+            }
         }
 
         public RecordedTestMode Mode { get; }
