@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             VerifyNamespaceProperties(serviceBusNamespace, true);
 
             //update namespace
-            ServiceBusNamespaceUpdateParameters parameters = new ServiceBusNamespaceUpdateParameters(DefaultLocation);
+            ServiceBusNamespaceUpdateOptions parameters = new ServiceBusNamespaceUpdateOptions(DefaultLocation);
             parameters.Tags.Add("key1", "value1");
             parameters.Tags.Add("key2", "value2");
             serviceBusNamespace = await serviceBusNamespace.UpdateAsync(parameters);
@@ -322,14 +322,14 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             Assert.NotNull(keys1.PrimaryConnectionString);
             Assert.NotNull(keys1.SecondaryConnectionString);
 
-            AccessKeys keys2 = await authorizationRule.RegenerateKeysAsync(new RegenerateAccessKeyParameters(KeyType.PrimaryKey));
+            AccessKeys keys2 = await authorizationRule.RegenerateKeysAsync(new RegenerateAccessKeyOptions(KeyType.PrimaryKey));
             if (Mode != RecordedTestMode.Playback)
             {
                 Assert.AreNotEqual(keys1.PrimaryKey, keys2.PrimaryKey);
                 Assert.AreEqual(keys1.SecondaryKey, keys2.SecondaryKey);
             }
 
-            AccessKeys keys3 = await authorizationRule.RegenerateKeysAsync(new RegenerateAccessKeyParameters(KeyType.SecondaryKey));
+            AccessKeys keys3 = await authorizationRule.RegenerateKeysAsync(new RegenerateAccessKeyOptions(KeyType.SecondaryKey));
             if (Mode != RecordedTestMode.Playback)
             {
                 Assert.AreEqual(keys2.PrimaryKey, keys3.PrimaryKey);

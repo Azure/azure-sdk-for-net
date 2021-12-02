@@ -154,4 +154,11 @@ directive:
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/privateEndpointConnections/{privateEndpointConnectionName}'].put.responses.201
       transform: $['description'] = 'Request to update Status of PrivateEndpoint Connection accepted.'
+    - rename-model:
+        from: RegenerateAccessKeyParameters
+        to: RegenerateAccessKeyOptions
+    - rename-model:
+        from: ServiceBusNamespaceUpdateParameters
+        to: ServiceBusNamespaceUpdateOptions
+
 ```

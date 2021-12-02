@@ -15,7 +15,7 @@ using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    public partial class ServiceBusNamespaceUpdateParameters : IUtf8JsonSerializable
+    public partial class ServiceBusNamespaceUpdateOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             writer.WriteEndObject();
         }
 
-        internal static ServiceBusNamespaceUpdateParameters DeserializeServiceBusNamespaceUpdateParameters(JsonElement element)
+        internal static ServiceBusNamespaceUpdateOptions DeserializeServiceBusNamespaceUpdateOptions(JsonElement element)
         {
             Optional<ServiceBusSku> sku = default;
             Optional<Identity> identity = default;
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     continue;
                 }
             }
-            return new ServiceBusNamespaceUpdateParameters(id, name, type, tags, location, sku.Value, identity.Value, provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, metricId.Value, Optional.ToNullable(zoneRedundant), encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(disableLocalAuth));
+            return new ServiceBusNamespaceUpdateOptions(id, name, type, tags, location, sku.Value, identity.Value, provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, metricId.Value, Optional.ToNullable(zoneRedundant), encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(disableLocalAuth));
         }
     }
 }

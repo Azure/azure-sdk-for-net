@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string namespaceName, ServiceBusNamespaceUpdateParameters parameters)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string namespaceName, ServiceBusNamespaceUpdateOptions parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="parameters"> Parameters supplied to update a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<ServiceBusNamespaceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string namespaceName, ServiceBusNamespaceUpdateParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceBusNamespaceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string namespaceName, ServiceBusNamespaceUpdateOptions parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="parameters"> Parameters supplied to update a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<ServiceBusNamespaceData> Update(string subscriptionId, string resourceGroupName, string namespaceName, ServiceBusNamespaceUpdateParameters parameters, CancellationToken cancellationToken = default)
+        public Response<ServiceBusNamespaceData> Update(string subscriptionId, string resourceGroupName, string namespaceName, ServiceBusNamespaceUpdateOptions parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {

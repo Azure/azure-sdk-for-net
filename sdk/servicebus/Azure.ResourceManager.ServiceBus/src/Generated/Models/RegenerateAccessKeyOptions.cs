@@ -8,11 +8,11 @@
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Parameters supplied to the Regenerate Authorization Rule operation, specifies which key needs to be reset. </summary>
-    public partial class RegenerateAccessKeyParameters
+    public partial class RegenerateAccessKeyOptions
     {
-        /// <summary> Initializes a new instance of RegenerateAccessKeyParameters. </summary>
+        /// <summary> Initializes a new instance of RegenerateAccessKeyOptions. </summary>
         /// <param name="keyType"> The access key to regenerate. </param>
-        public RegenerateAccessKeyParameters(KeyType keyType)
+        public RegenerateAccessKeyOptions(KeyType keyType)
         {
             KeyType = keyType;
         }

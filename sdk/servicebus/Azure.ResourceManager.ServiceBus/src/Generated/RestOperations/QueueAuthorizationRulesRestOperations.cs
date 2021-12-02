@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        internal HttpMessage CreateRegenerateKeysRequest(string subscriptionId, string resourceGroupName, string namespaceName, string queueName, string authorizationRuleName, RegenerateAccessKeyParameters parameters)
+        internal HttpMessage CreateRegenerateKeysRequest(string subscriptionId, string resourceGroupName, string namespaceName, string queueName, string authorizationRuleName, RegenerateAccessKeyOptions parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="parameters"> Parameters supplied to regenerate the authorization rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="queueName"/>, <paramref name="authorizationRuleName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<AccessKeys>> RegenerateKeysAsync(string subscriptionId, string resourceGroupName, string namespaceName, string queueName, string authorizationRuleName, RegenerateAccessKeyParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<AccessKeys>> RegenerateKeysAsync(string subscriptionId, string resourceGroupName, string namespaceName, string queueName, string authorizationRuleName, RegenerateAccessKeyOptions parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="parameters"> Parameters supplied to regenerate the authorization rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="queueName"/>, <paramref name="authorizationRuleName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<AccessKeys> RegenerateKeys(string subscriptionId, string resourceGroupName, string namespaceName, string queueName, string authorizationRuleName, RegenerateAccessKeyParameters parameters, CancellationToken cancellationToken = default)
+        public Response<AccessKeys> RegenerateKeys(string subscriptionId, string resourceGroupName, string namespaceName, string queueName, string authorizationRuleName, RegenerateAccessKeyOptions parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
