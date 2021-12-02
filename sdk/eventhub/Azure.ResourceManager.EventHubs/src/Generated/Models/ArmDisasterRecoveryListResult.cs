@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of ArmDisasterRecoveryListResult. </summary>
         internal ArmDisasterRecoveryListResult()
         {
-            Value = new ChangeTrackingList<ArmDisasterRecovery>();
+            Value = new ChangeTrackingList<DisasterRecoveryData>();
         }
 
         /// <summary> Initializes a new instance of ArmDisasterRecoveryListResult. </summary>
         /// <param name="value"> List of Alias(Disaster Recovery configurations). </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of Alias(Disaster Recovery configuration). </param>
-        internal ArmDisasterRecoveryListResult(IReadOnlyList<ArmDisasterRecovery> value, string nextLink)
+        internal ArmDisasterRecoveryListResult(IReadOnlyList<DisasterRecoveryData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of Alias(Disaster Recovery configurations). </summary>
-        public IReadOnlyList<ArmDisasterRecovery> Value { get; }
+        public IReadOnlyList<DisasterRecoveryData> Value { get; }
         /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of Alias(Disaster Recovery configuration). </summary>
         public string NextLink { get; }
     }
