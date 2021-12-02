@@ -122,4 +122,4 @@ await originGroup.DeleteAsync();
 
 
 ## Next steps
-Take a look at the [Managing Azure Front Door Rules](https://github.com/Yao725/azure-sdk-for-net/tree/feature/mgmt-track2-cdn/sdk/cdn/Azure.ResourceManager.Cdn/samples/Sample2_ManagingAfdRules.md) samples.
+Take a look at the [Managing Azure Front Door Rules](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cdn/Azure.ResourceManager.Cdn/samples/Sample2_ManagingAfdRules.md) samples.
