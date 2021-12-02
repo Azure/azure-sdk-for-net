@@ -30,9 +30,11 @@ jobs:
             PackageInfoDir: common/SmokeTests/SmokeTest/PackageInfo
       
       - ${{ if eq(parameters.Daily, false) }}:
+        - download: current
+          artifact: ${{parameters.ArtifactName}}-signed
         - template: /eng/pipelines/templates/steps/BuildSmokeTestProject.yml
           parameters:
-            PackageInfoDir: $(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo
+            PackageInfoDir: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/PackageInfo
 
       - template: /eng/common/TestResources/remove-test-resources.yml
         parameters:
