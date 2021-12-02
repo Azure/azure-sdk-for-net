@@ -8,10 +8,10 @@
 namespace Azure.Maps.Search.Models
 {
     /// <summary> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </summary>
-    public partial class LatLong
+    public partial class LatLon
     {
-        /// <summary> Initializes a new instance of LatLong. </summary>
-        internal LatLong()
+        /// <summary> Initializes a new instance of LatLon. </summary>
+        internal LatLon()
         {
         }
     }

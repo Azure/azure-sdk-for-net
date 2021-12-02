@@ -11,7 +11,7 @@ namespace Azure.Maps.Search.Models
     public class SearchAddressOptions: SearchAddressBaseOptions
     {
         /// <summary> A pair of coordinates where results should be biased. E.g. 37.337, -121.89. </summary>
-        public LatLong Coordinates { get; set; }
+        public LatLon Coordinates { get; set; }
 
         /// <summary>
         /// Indexes for which extended postal codes should be included in the results.

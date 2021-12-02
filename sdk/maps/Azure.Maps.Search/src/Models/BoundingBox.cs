@@ -13,7 +13,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of BoundingBox. </summary>
         /// <param name="northWest"> BoundingBox north-west point. </param>
         /// <param name="southEast"> BoundingBox south-east point. </param>
-        public BoundingBox(LatLong northWest, LatLong southEast)
+        public BoundingBox(LatLon northWest, LatLon southEast)
         {
             this.TopLeft = northWest;
             this.BottomRight = southEast;
@@ -26,35 +26,35 @@ namespace Azure.Maps.Search.Models
         /// <param name="west"> BoundingBox west longitude. </param>
         public BoundingBox(double north, double east, double south, double west)
         {
-            this.TopLeft = new LatLong(north, west);
-            this.BottomRight = new LatLong(south, east);
+            this.TopLeft = new LatLon(north, west);
+            this.BottomRight = new LatLon(south, east);
         }
 
         /// <summary> Latitude property. </summary>
         [CodeGenMember("TopLeft")]
-        public LatLong TopLeft { get; }
+        public LatLon TopLeft { get; }
 
         /// <summary> Longitude property. </summary>
         [CodeGenMember("BottomRight")]
-        public LatLong BottomRight { get; }
+        public LatLon BottomRight { get; }
 
         /// <summary> Bounding Box north west point </summary>
-        public LatLong NorthWest => this.TopLeft;
+        public LatLon NorthWest => this.TopLeft;
 
         /// <summary> Bounding Box north west point </summary>
-        public LatLong SouthEast => this.BottomRight;
+        public LatLon SouthEast => this.BottomRight;
 
         /// <summary> Bounding Box south west point </summary>
-        public LatLong BottomLeft => new LatLong(this.BottomRight.Lat, this.TopLeft.Lon);
+        public LatLon BottomLeft => new LatLon(this.BottomRight.Lat, this.TopLeft.Lon);
 
         /// <summary> Bounding Box top right point </summary>
-        public LatLong TopRight => new LatLong(this.TopLeft.Lat, this.BottomRight.Lon);
+        public LatLon TopRight => new LatLon(this.TopLeft.Lat, this.BottomRight.Lon);
 
         /// <summary> Bounding Box south west point </summary>
-        public LatLong SouthWest => new LatLong(this.BottomRight.Lat, this.TopLeft.Lon);
+        public LatLon SouthWest => new LatLon(this.BottomRight.Lat, this.TopLeft.Lon);
 
         /// <summary> Bounding Box north east point </summary>
-        public LatLong NorthEast => new LatLong(this.TopLeft.Lat, this.BottomRight.Lon);
+        public LatLon NorthEast => new LatLon(this.TopLeft.Lat, this.BottomRight.Lon);
 
         /// <summary> Bounding Box north latitude </summary>
         public double Top => this.TopLeft.Lat;

@@ -15,7 +15,7 @@ namespace Azure.Maps.Search.Models
         internal static EntryPoint DeserializeEntryPoint(JsonElement element)
         {
             Optional<EntryPointType> type = default;
-            Optional<LatLong> position = default;
+            Optional<LatLon> position = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -35,7 +35,7 @@ namespace Azure.Maps.Search.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    position = LatLong.DeserializeLatLong(property.Value);
+                    position = LatLon.DeserializeLatLon(property.Value);
                     continue;
                 }
             }
