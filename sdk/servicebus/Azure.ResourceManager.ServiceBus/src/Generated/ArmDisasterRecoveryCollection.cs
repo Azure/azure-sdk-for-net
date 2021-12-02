@@ -20,11 +20,12 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary> A class representing collection of ArmDisasterRecovery and their operations over a ServiceBusNamespace. </summary>
+    /// <summary> A class representing collection of ArmDisasterRecovery and their operations over its parent. </summary>
     public partial class ArmDisasterRecoveryCollection : ArmCollection, IEnumerable<ArmDisasterRecovery>, IAsyncEnumerable<ArmDisasterRecovery>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DisasterRecoveryConfigsRestOperations _restClient;
+        private readonly DisasterRecoveryConfigsRestOperations _disasterRecoveryConfigsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ArmDisasterRecoveryCollection"/> class for mocking. </summary>
         protected ArmDisasterRecoveryCollection()
@@ -36,22 +37,7 @@ namespace Azure.ResourceManager.ServiceBus
         internal ArmDisasterRecoveryCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new DisasterRecoveryConfigsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        IEnumerator<ArmDisasterRecovery> IEnumerable<ArmDisasterRecovery>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<ArmDisasterRecovery> IAsyncEnumerable<ArmDisasterRecovery>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            _disasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -80,7 +66,7 @@ namespace Azure.ResourceManager.ServiceBus
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, alias, parameters, cancellationToken);
+                var response = _disasterRecoveryConfigsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, parameters, cancellationToken);
                 var operation = new DisasterRecoveryConfigCreateOrUpdateOperation(Parent, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
@@ -114,7 +100,7 @@ namespace Azure.ResourceManager.ServiceBus
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, alias, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _disasterRecoveryConfigsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, parameters, cancellationToken).ConfigureAwait(false);
                 var operation = new DisasterRecoveryConfigCreateOrUpdateOperation(Parent, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -127,21 +113,22 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Retrieves Alias(Disaster Recovery configuration) for primary or secondary namespace. </summary>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
         public virtual Response<ArmDisasterRecovery> Get(string @alias, CancellationToken cancellationToken = default)
         {
+            if (@alias == null)
+            {
+                throw new ArgumentNullException(nameof(@alias));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryCollection.Get");
             scope.Start();
             try
             {
-                if (@alias == null)
-                {
-                    throw new ArgumentNullException(nameof(@alias));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, alias, cancellationToken: cancellationToken);
+                var response = _disasterRecoveryConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ArmDisasterRecovery(Parent, response.Value), response.GetRawResponse());
@@ -153,21 +140,22 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Retrieves Alias(Disaster Recovery configuration) for primary or secondary namespace. </summary>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
         public async virtual Task<Response<ArmDisasterRecovery>> GetAsync(string @alias, CancellationToken cancellationToken = default)
         {
+            if (@alias == null)
+            {
+                throw new ArgumentNullException(nameof(@alias));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryCollection.Get");
             scope.Start();
             try
             {
-                if (@alias == null)
-                {
-                    throw new ArgumentNullException(nameof(@alias));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, alias, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _disasterRecoveryConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ArmDisasterRecovery(Parent, response.Value), response.GetRawResponse());
@@ -181,19 +169,20 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
         public virtual Response<ArmDisasterRecovery> GetIfExists(string @alias, CancellationToken cancellationToken = default)
         {
+            if (@alias == null)
+            {
+                throw new ArgumentNullException(nameof(@alias));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (@alias == null)
-                {
-                    throw new ArgumentNullException(nameof(@alias));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, alias, cancellationToken: cancellationToken);
+                var response = _disasterRecoveryConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<ArmDisasterRecovery>(null, response.GetRawResponse())
                     : Response.FromValue(new ArmDisasterRecovery(this, response.Value), response.GetRawResponse());
@@ -207,19 +196,20 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
         public async virtual Task<Response<ArmDisasterRecovery>> GetIfExistsAsync(string @alias, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryCollection.GetIfExists");
+            if (@alias == null)
+            {
+                throw new ArgumentNullException(nameof(@alias));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (@alias == null)
-                {
-                    throw new ArgumentNullException(nameof(@alias));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, alias, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _disasterRecoveryConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<ArmDisasterRecovery>(null, response.GetRawResponse())
                     : Response.FromValue(new ArmDisasterRecovery(this, response.Value), response.GetRawResponse());
@@ -233,18 +223,19 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string @alias, CancellationToken cancellationToken = default)
         {
+            if (@alias == null)
+            {
+                throw new ArgumentNullException(nameof(@alias));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryCollection.CheckIfExists");
             scope.Start();
             try
             {
-                if (@alias == null)
-                {
-                    throw new ArgumentNullException(nameof(@alias));
-                }
-
                 var response = GetIfExists(alias, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -257,18 +248,19 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string @alias, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryCollection.CheckIfExists");
+            if (@alias == null)
+            {
+                throw new ArgumentNullException(nameof(@alias));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (@alias == null)
-                {
-                    throw new ArgumentNullException(nameof(@alias));
-                }
-
                 var response = await GetIfExistsAsync(alias, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -290,7 +282,7 @@ namespace Azure.ResourceManager.ServiceBus
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _disasterRecoveryConfigsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ArmDisasterRecovery(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -305,7 +297,7 @@ namespace Azure.ResourceManager.ServiceBus
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _disasterRecoveryConfigsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ArmDisasterRecovery(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -328,7 +320,7 @@ namespace Azure.ResourceManager.ServiceBus
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _disasterRecoveryConfigsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ArmDisasterRecovery(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -343,7 +335,7 @@ namespace Azure.ResourceManager.ServiceBus
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _disasterRecoveryConfigsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ArmDisasterRecovery(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -355,7 +347,22 @@ namespace Azure.ResourceManager.ServiceBus
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        IEnumerator<ArmDisasterRecovery> IEnumerable<ArmDisasterRecovery>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<ArmDisasterRecovery> IAsyncEnumerable<ArmDisasterRecovery>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, ArmDisasterRecovery, ArmDisasterRecoveryData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ArmDisasterRecovery, ArmDisasterRecoveryData> Construct() { }
     }
 }

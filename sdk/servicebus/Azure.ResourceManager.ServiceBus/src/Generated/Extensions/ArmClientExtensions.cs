@@ -23,6 +23,17 @@ namespace Azure.ResourceManager.ServiceBus
         }
         #endregion
 
+        #region NetworkRuleSet
+        /// <summary> Gets an object representing a NetworkRuleSet along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetworkRuleSet" /> object. </returns>
+        public static NetworkRuleSet GetNetworkRuleSet(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NetworkRuleSet(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
         #region PrivateEndpointConnection
         /// <summary> Gets an object representing a PrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -45,14 +56,47 @@ namespace Azure.ResourceManager.ServiceBus
         }
         #endregion
 
-        #region DisasterRecoveryConfigServiceBusAuthorizationRule
-        /// <summary> Gets an object representing a DisasterRecoveryConfigServiceBusAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
+        #region NamespaceDisasterRecoveryConfigAuthorizationRule
+        /// <summary> Gets an object representing a NamespaceDisasterRecoveryConfigAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DisasterRecoveryConfigServiceBusAuthorizationRule" /> object. </returns>
-        public static DisasterRecoveryConfigServiceBusAuthorizationRule GetDisasterRecoveryConfigServiceBusAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NamespaceDisasterRecoveryConfigAuthorizationRule" /> object. </returns>
+        public static NamespaceDisasterRecoveryConfigAuthorizationRule GetNamespaceDisasterRecoveryConfigAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DisasterRecoveryConfigServiceBusAuthorizationRule(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NamespaceDisasterRecoveryConfigAuthorizationRule(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region NamespaceAuthorizationRule
+        /// <summary> Gets an object representing a NamespaceAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NamespaceAuthorizationRule" /> object. </returns>
+        public static NamespaceAuthorizationRule GetNamespaceAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NamespaceAuthorizationRule(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region NamespaceQueueAuthorizationRule
+        /// <summary> Gets an object representing a NamespaceQueueAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NamespaceQueueAuthorizationRule" /> object. </returns>
+        public static NamespaceQueueAuthorizationRule GetNamespaceQueueAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NamespaceQueueAuthorizationRule(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region NamespaceTopicAuthorizationRule
+        /// <summary> Gets an object representing a NamespaceTopicAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NamespaceTopicAuthorizationRule" /> object. </returns>
+        public static NamespaceTopicAuthorizationRule GetNamespaceTopicAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NamespaceTopicAuthorizationRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -64,39 +108,6 @@ namespace Azure.ResourceManager.ServiceBus
         public static MigrationConfigProperties GetMigrationConfigProperties(this ArmClient armClient, ResourceIdentifier id)
         {
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new MigrationConfigProperties(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
-        #region NamespaceServiceBusAuthorizationRule
-        /// <summary> Gets an object representing a NamespaceServiceBusAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NamespaceServiceBusAuthorizationRule" /> object. </returns>
-        public static NamespaceServiceBusAuthorizationRule GetNamespaceServiceBusAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NamespaceServiceBusAuthorizationRule(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
-        #region QueueServiceBusAuthorizationRule
-        /// <summary> Gets an object representing a QueueServiceBusAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="QueueServiceBusAuthorizationRule" /> object. </returns>
-        public static QueueServiceBusAuthorizationRule GetQueueServiceBusAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new QueueServiceBusAuthorizationRule(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
-        #region TopicServiceBusAuthorizationRule
-        /// <summary> Gets an object representing a TopicServiceBusAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TopicServiceBusAuthorizationRule" /> object. </returns>
-        public static TopicServiceBusAuthorizationRule GetTopicServiceBusAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new TopicServiceBusAuthorizationRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 

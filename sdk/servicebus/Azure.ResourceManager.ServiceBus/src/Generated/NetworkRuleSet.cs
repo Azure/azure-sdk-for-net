@@ -19,52 +19,54 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary> A Class representing a ServiceBusRule along with the instance operations that can be performed on it. </summary>
-    public partial class ServiceBusRule : ArmResource
+    /// <summary> A Class representing a NetworkRuleSet along with the instance operations that can be performed on it. </summary>
+    public partial class NetworkRuleSet : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly RulesRestOperations _rulesRestClient;
-        private readonly ServiceBusRuleData _data;
+        private readonly NamespacesRestOperations _namespacesRestClient;
+        private readonly NetworkRuleSetData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceBusRule"/> class for mocking. </summary>
-        protected ServiceBusRule()
+        /// <summary> Initializes a new instance of the <see cref="NetworkRuleSet"/> class for mocking. </summary>
+        protected NetworkRuleSet()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ServiceBusRule"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "NetworkRuleSet"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal ServiceBusRule(ArmResource options, ServiceBusRuleData resource) : base(options, resource.Id)
+        internal NetworkRuleSet(ArmResource options, NetworkRuleSetData resource) : base(options, resource.Id)
         {
             HasData = true;
             _data = resource;
+            Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _rulesRestClient = new RulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _namespacesRestClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceBusRule"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkRuleSet"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ServiceBusRule(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal NetworkRuleSet(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
+            Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _rulesRestClient = new RulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _namespacesRestClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceBusRule"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkRuleSet"/> class. </summary>
         /// <param name="clientOptions"> The client options to build client context. </param>
         /// <param name="credential"> The credential to build client context. </param>
         /// <param name="uri"> The uri to build client context. </param>
         /// <param name="pipeline"> The pipeline to build client context. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ServiceBusRule(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        internal NetworkRuleSet(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _rulesRestClient = new RulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _namespacesRestClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/topics/subscriptions/rules";
+        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/networkRuleSets";
 
         /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
@@ -74,7 +76,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ServiceBusRuleData Data
+        public virtual NetworkRuleSetData Data
         {
             get
             {
@@ -84,18 +86,21 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> Retrieves the description for the specified rule. </summary>
+        /// <summary> Gets the parent resource of this resource. </summary>
+        public ArmResource Parent { get; }
+
+        /// <summary> Gets NetworkRuleSet for a Namespace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ServiceBusRule>> GetAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<NetworkRuleSet>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusRule.Get");
+            using var scope = _clientDiagnostics.CreateScope("NetworkRuleSet.Get");
             scope.Start();
             try
             {
-                var response = await _rulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _namespacesRestClient.GetNetworkRuleSetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServiceBusRule(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkRuleSet(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -104,18 +109,18 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> Retrieves the description for the specified rule. </summary>
+        /// <summary> Gets NetworkRuleSet for a Namespace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServiceBusRule> Get(CancellationToken cancellationToken = default)
+        public virtual Response<NetworkRuleSet> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusRule.Get");
+            using var scope = _clientDiagnostics.CreateScope("NetworkRuleSet.Get");
             scope.Start();
             try
             {
-                var response = _rulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _namespacesRestClient.GetNetworkRuleSet(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceBusRule(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkRuleSet(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -140,19 +145,26 @@ namespace Azure.ResourceManager.ServiceBus
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
-        /// <summary> Deletes an existing rule. </summary>
+        /// <summary> Create or update NetworkRuleSet for a Namespace. </summary>
+        /// <param name="parameters"> The Namespace IpFilterRule. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<RuleDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<NamespaceCreateOrUpdateNetworkRuleSetOperation> CreateOrUpdateAsync(NetworkRuleSetData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusRule.Delete");
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("NetworkRuleSet.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _rulesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new RuleDeleteOperation(response);
+                var response = await _namespacesRestClient.CreateOrUpdateNetworkRuleSetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NamespaceCreateOrUpdateNetworkRuleSetOperation(this, response);
                 if (waitForCompletion)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -162,17 +174,24 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> Deletes an existing rule. </summary>
+        /// <summary> Create or update NetworkRuleSet for a Namespace. </summary>
+        /// <param name="parameters"> The Namespace IpFilterRule. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual RuleDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual NamespaceCreateOrUpdateNetworkRuleSetOperation CreateOrUpdate(NetworkRuleSetData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusRule.Delete");
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("NetworkRuleSet.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _rulesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new RuleDeleteOperation(response);
+                var response = _namespacesRestClient.CreateOrUpdateNetworkRuleSet(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken);
+                var operation = new NamespaceCreateOrUpdateNetworkRuleSetOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

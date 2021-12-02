@@ -9,20 +9,21 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.ServiceBus.Models;
 
-namespace Azure.ResourceManager.ServiceBus.Models
+namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary> Description of NetworkRuleSet resource. </summary>
-    public partial class NetworkRuleSet : Resource
+    /// <summary> A class representing the NetworkRuleSet data model. </summary>
+    public partial class NetworkRuleSetData : Resource
     {
-        /// <summary> Initializes a new instance of NetworkRuleSet. </summary>
-        public NetworkRuleSet()
+        /// <summary> Initializes a new instance of NetworkRuleSetData. </summary>
+        public NetworkRuleSetData()
         {
             VirtualNetworkRules = new ChangeTrackingList<NetworkRuleSetVirtualNetworkRules>();
             IpRules = new ChangeTrackingList<NetworkRuleSetIpRules>();
         }
 
-        /// <summary> Initializes a new instance of NetworkRuleSet. </summary>
+        /// <summary> Initializes a new instance of NetworkRuleSetData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="virtualNetworkRules"> List VirtualNetwork Rules. </param>
         /// <param name="ipRules"> List of IpRules. </param>
         /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
-        internal NetworkRuleSet(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, bool? trustedServiceAccessEnabled, DefaultAction? defaultAction, IList<NetworkRuleSetVirtualNetworkRules> virtualNetworkRules, IList<NetworkRuleSetIpRules> ipRules, PublicNetworkAccessFlag? publicNetworkAccess) : base(id, name, type)
+        internal NetworkRuleSetData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, bool? trustedServiceAccessEnabled, DefaultAction? defaultAction, IList<NetworkRuleSetVirtualNetworkRules> virtualNetworkRules, IList<NetworkRuleSetIpRules> ipRules, PublicNetworkAccessFlag? publicNetworkAccess) : base(id, name, type)
         {
             SystemData = systemData;
             TrustedServiceAccessEnabled = trustedServiceAccessEnabled;

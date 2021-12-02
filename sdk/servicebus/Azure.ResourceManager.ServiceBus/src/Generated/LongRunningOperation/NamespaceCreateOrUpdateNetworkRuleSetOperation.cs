@@ -10,6 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Core;
+using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
@@ -23,9 +25,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
         {
         }
 
-        internal NamespaceCreateOrUpdateNetworkRuleSetOperation(Response<NetworkRuleSet> response)
+        internal NamespaceCreateOrUpdateNetworkRuleSetOperation(ArmResource operationsBase, Response<NetworkRuleSetData> response)
         {
-            _operation = new OperationOrResponseInternals<NetworkRuleSet>(response);
+            _operation = new OperationOrResponseInternals<NetworkRuleSet>(Response.FromValue(new NetworkRuleSet(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
