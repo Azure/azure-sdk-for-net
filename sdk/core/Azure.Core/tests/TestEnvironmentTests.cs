@@ -118,7 +118,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void RecordedVariableSanitized()
+        public async Task RecordedVariableSanitized()
         {
             var tempFile = Path.GetTempFileName();
             var env = new MockTestEnvironment();
@@ -131,7 +131,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual("1", env.DefaultSecret);
             Assert.AreEqual("endpoint=1;key=2", env.ConnectionStringWithSecret);
 
-            testRecording.Dispose();
+            await testRecording.DisposeAsync();
 
             testRecording = new TestRecording(RecordedTestMode.Playback, tempFile, new RecordedTestSanitizer(), new RecordMatcher(), useLegacyTransport: true);
 
@@ -142,7 +142,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void RecordedOptionalVariableNotSanitizedIfMissing()
+        public async Task RecordedOptionalVariableNotSanitizedIfMissing()
         {
             var tempFile = Path.GetTempFileName();
             var env = new MockTestEnvironment();
@@ -152,7 +152,7 @@ namespace Azure.Core.Tests
 
             Assert.IsNull(env.MissingOptionalSecret);
 
-            testRecording.Dispose();
+            await testRecording.DisposeAsync();
             testRecording = new TestRecording(RecordedTestMode.Playback, tempFile, new RecordedTestSanitizer(), new RecordMatcher(), useLegacyTransport: true);
 
             Assert.IsNull(testRecording.GetVariable(nameof(env.MissingOptionalSecret), null));
