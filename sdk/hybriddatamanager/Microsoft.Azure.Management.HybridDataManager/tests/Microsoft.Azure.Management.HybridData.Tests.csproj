@@ -9,7 +9,7 @@
     <Description>HybridData.Tests Class Library</Description>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Microsoft.Azure.Management.HybridData.csproj" />

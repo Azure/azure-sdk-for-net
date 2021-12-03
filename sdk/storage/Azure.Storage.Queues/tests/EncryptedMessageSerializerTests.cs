@@ -31,7 +31,11 @@ namespace Azure.Storage.Queues.Test
             {
                 const int keySizeBits = 256;
                 var bytes = new byte[keySizeBits >> 3];
+#if NET6_0_OR_GREATER
+                RandomNumberGenerator.Create().GetBytes(bytes);
+#else
                 new RNGCryptoServiceProvider().GetBytes(bytes);
+#endif
                 userKeyBytes = bytes;
             }
             keyId ??= Guid.NewGuid().ToString();

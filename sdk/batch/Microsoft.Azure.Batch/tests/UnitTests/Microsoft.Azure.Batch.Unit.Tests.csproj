@@ -8,20 +8,8 @@
     <NoWarn>CS1998;xUnit2002</NoWarn>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)'=='net452' ">
-    <DefineConstants>FullNetFx</DefineConstants>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-  </PropertyGroup>
-
   <PropertyGroup Condition="'$(OS)' == 'Windows_NT' ">
     <DefineConstants>Windows</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
-    <DefineConstants>netcoreapp11</DefineConstants>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
