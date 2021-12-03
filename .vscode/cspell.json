@@ -235,6 +235,13 @@
       ]
     },
     {
+      "filename": "**/sdk/synapse/**/*.md",
+      "words": [
+        "dotnetcli",
+        "abfss"
+      ]
+    },
+    {
       "filename": "**/sdk/textanalytics/**/*.cs",
       "words": [
         "Brcpf",
