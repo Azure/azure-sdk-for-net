@@ -107,6 +107,9 @@ namespace Azure.Core.TestFramework
                             "Content-Type",
                             "Content-Length"
                         };
+
+                        // temporary until custom matcher supports both excluded and ignored
+                        excludedHeaders.AddRange(_matcher.IgnoredHeaders);
                         _proxy.Client.AddCustomMatcher(new CustomDefaultMatcher(string.Join(",", excludedHeaders), _matcher.CompareBodies), RecordingId);
                         break;
                 }
