@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         internal ManagedInstanceVcoresCapability()
         {
             SupportedStorageSizes = new ChangeTrackingList<MaxSizeRangeCapability>();
+            SupportedMaintenanceConfigurations = new ChangeTrackingList<ManagedInstanceMaintenanceConfigurationCapability>();
         }
 
         /// <summary> Initializes a new instance of ManagedInstanceVcoresCapability. </summary>
@@ -26,9 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="supportedStorageSizes"> Storage size ranges. </param>
         /// <param name="instancePoolSupported"> True if this service objective is supported for managed instances in an instance pool. </param>
         /// <param name="standaloneSupported"> True if this service objective is supported for standalone managed instances. </param>
+        /// <param name="supportedMaintenanceConfigurations"> List of supported maintenance configurations. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal ManagedInstanceVcoresCapability(string name, int? value, MaxSizeCapability includedMaxSize, IReadOnlyList<MaxSizeRangeCapability> supportedStorageSizes, bool? instancePoolSupported, bool? standaloneSupported, CapabilityStatus? status, string reason)
+        internal ManagedInstanceVcoresCapability(string name, int? value, MaxSizeCapability includedMaxSize, IReadOnlyList<MaxSizeRangeCapability> supportedStorageSizes, bool? instancePoolSupported, bool? standaloneSupported, IReadOnlyList<ManagedInstanceMaintenanceConfigurationCapability> supportedMaintenanceConfigurations, CapabilityStatus? status, string reason)
         {
             Name = name;
             Value = value;
@@ -36,6 +38,7 @@ namespace Azure.ResourceManager.Sql.Models
             SupportedStorageSizes = supportedStorageSizes;
             InstancePoolSupported = instancePoolSupported;
             StandaloneSupported = standaloneSupported;
+            SupportedMaintenanceConfigurations = supportedMaintenanceConfigurations;
             Status = status;
             Reason = reason;
         }
@@ -52,6 +55,8 @@ namespace Azure.ResourceManager.Sql.Models
         public bool? InstancePoolSupported { get; }
         /// <summary> True if this service objective is supported for standalone managed instances. </summary>
         public bool? StandaloneSupported { get; }
+        /// <summary> List of supported maintenance configurations. </summary>
+        public IReadOnlyList<ManagedInstanceMaintenanceConfigurationCapability> SupportedMaintenanceConfigurations { get; }
         /// <summary> The status of the capability. </summary>
         public CapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
