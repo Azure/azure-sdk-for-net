@@ -14,27 +14,28 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Management;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A Class representing a ManagementGroupResourceGroupSubscriptionTenantDeployment along with the instance operations that can be performed on it. </summary>
-    public partial class ManagementGroupResourceGroupSubscriptionTenantDeployment : ArmResource
+    /// <summary> A Class representing a Deployment along with the instance operations that can be performed on it. </summary>
+    public partial class Deployment : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DeploymentsRestOperations _deploymentsRestClient;
         private readonly DeploymentRestOperations _deploymentOperationsRestClient;
         private readonly DeploymentData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ManagementGroupResourceGroupSubscriptionTenantDeployment"/> class for mocking. </summary>
-        protected ManagementGroupResourceGroupSubscriptionTenantDeployment()
+        /// <summary> Initializes a new instance of the <see cref="Deployment"/> class for mocking. </summary>
+        protected Deployment()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagementGroupResourceGroupSubscriptionTenantDeployment"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "Deployment"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal ManagementGroupResourceGroupSubscriptionTenantDeployment(ArmResource options, DeploymentData resource) : base(options, resource.Id)
+        internal Deployment(ArmResource options, DeploymentData resource) : base(options, resource.Id)
         {
             HasData = true;
             _data = resource;
@@ -43,23 +44,23 @@ namespace Azure.ResourceManager.Resources
             _deploymentOperationsRestClient = new DeploymentRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ManagementGroupResourceGroupSubscriptionTenantDeployment"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="Deployment"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ManagementGroupResourceGroupSubscriptionTenantDeployment(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal Deployment(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _deploymentsRestClient = new DeploymentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _deploymentOperationsRestClient = new DeploymentRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ManagementGroupResourceGroupSubscriptionTenantDeployment"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="Deployment"/> class. </summary>
         /// <param name="clientOptions"> The client options to build client context. </param>
         /// <param name="credential"> The credential to build client context. </param>
         /// <param name="uri"> The uri to build client context. </param>
         /// <param name="pipeline"> The pipeline to build client context. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ManagementGroupResourceGroupSubscriptionTenantDeployment(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        internal Deployment(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _deploymentsRestClient = new DeploymentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
@@ -89,16 +90,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets a deployment. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ManagementGroupResourceGroupSubscriptionTenantDeployment>> GetAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<Deployment>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupResourceGroupSubscriptionTenantDeployment.Get");
+            using var scope = _clientDiagnostics.CreateScope("Deployment.Get");
             scope.Start();
             try
             {
                 var response = await _deploymentsRestClient.GetAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagementGroupResourceGroupSubscriptionTenantDeployment(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Deployment(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -109,16 +110,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets a deployment. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagementGroupResourceGroupSubscriptionTenantDeployment> Get(CancellationToken cancellationToken = default)
+        public virtual Response<Deployment> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupResourceGroupSubscriptionTenantDeployment.Get");
+            using var scope = _clientDiagnostics.CreateScope("Deployment.Get");
             scope.Start();
             try
             {
                 var response = _deploymentsRestClient.GetAtScope(Id.Parent, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagementGroupResourceGroupSubscriptionTenantDeployment(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Deployment(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,7 +149,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<DeploymentDeleteAtScopeOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupResourceGroupSubscriptionTenantDeployment.Delete");
+            using var scope = _clientDiagnostics.CreateScope("Deployment.Delete");
             scope.Start();
             try
             {
@@ -170,7 +171,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual DeploymentDeleteAtScopeOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupResourceGroupSubscriptionTenantDeployment.Delete");
+            using var scope = _clientDiagnostics.CreateScope("Deployment.Delete");
             scope.Start();
             try
             {
@@ -465,22 +466,11 @@ namespace Azure.ResourceManager.Resources
                 var response = await _deploymentOperationsRestClient.GetAtScopeAsync(Id.Parent, Id.Name, operationId, cancellationToken).ConfigureAwait(false);
                 return response;
             }
-            async Task<Page<DeploymentOperation>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroupResourceGroupSubscriptionTenantDeployment.GetAtScopeDeploymentOperations");
-                scope.Start();
-                try
-                {
-                    var response = await _deploymentOperationsRestClient.ListAtScopeNextPageAsync(nextLink, Id.Parent, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Gets a deployments operation. </summary>
@@ -501,22 +491,11 @@ namespace Azure.ResourceManager.Resources
                 var response = _deploymentOperationsRestClient.GetAtScope(Id.Parent, Id.Name, operationId, cancellationToken);
                 return response;
             }
-            Page<DeploymentOperation> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroupResourceGroupSubscriptionTenantDeployment.GetAtScopeDeploymentOperations");
-                scope.Start();
-                try
-                {
-                    var response = _deploymentOperationsRestClient.ListAtScopeNextPage(nextLink, Id.Parent, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Gets all deployments operations for a deployment. </summary>

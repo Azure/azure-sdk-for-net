@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Resources
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DeploymentsRestOperations _deploymentsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection"/> class for mocking. </summary>
-        protected ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection()
+        /// <summary> Initializes a new instance of the <see cref="DeploymentCollection"/> class for mocking. </summary>
+        protected DeploymentCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection class. </summary>
+        /// <summary> Initializes a new instance of DeploymentCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection(ArmResource parent) : base(parent)
+        internal DeploymentCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _deploymentsRestClient = new DeploymentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _deploymentsRestClient.GetAtScope(Id, deploymentName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagementGroupResourceGroupSubscriptionTenantDeployment(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Deployment(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _deploymentsRestClient.GetAtScopeAsync(Id, deploymentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagementGroupResourceGroupSubscriptionTenantDeployment(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Deployment(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,8 +190,8 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _deploymentsRestClient.GetAtScope(Id, deploymentName, cancellationToken: cancellationToken);
                 return response.Value == null
-                    ? Response.FromValue<ManagementGroupResourceGroupSubscriptionTenantDeployment>(null, response.GetRawResponse())
-                    : Response.FromValue(new ManagementGroupResourceGroupSubscriptionTenantDeployment(this, response.Value), response.GetRawResponse());
+                    ? Response.FromValue<Deployment>(null, response.GetRawResponse())
+                    : Response.FromValue(new Deployment(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -217,8 +217,8 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _deploymentsRestClient.GetAtScopeAsync(Id, deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
-                    ? Response.FromValue<ManagementGroupResourceGroupSubscriptionTenantDeployment>(null, response.GetRawResponse())
-                    : Response.FromValue(new ManagementGroupResourceGroupSubscriptionTenantDeployment(this, response.Value), response.GetRawResponse());
+                    ? Response.FromValue<Deployment>(null, response.GetRawResponse())
+                    : Response.FromValue(new Deployment(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -281,12 +281,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq &apos;{state}&apos;. </param>
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagementGroupResourceGroupSubscriptionTenantDeployment" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagementGroupResourceGroupSubscriptionTenantDeployment> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="Deployment" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Deployment> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<ManagementGroupResourceGroupSubscriptionTenantDeployment> FirstPageFunc(int? pageSizeHint)
+            Page<Deployment> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -299,9 +299,9 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            Page<ManagementGroupResourceGroupSubscriptionTenantDeployment> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<Deployment> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -321,12 +321,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq &apos;{state}&apos;. </param>
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagementGroupResourceGroupSubscriptionTenantDeployment" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagementGroupResourceGroupSubscriptionTenantDeployment> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="Deployment" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Deployment> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagementGroupResourceGroupSubscriptionTenantDeployment>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<Deployment>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -339,9 +339,9 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            async Task<Page<ManagementGroupResourceGroupSubscriptionTenantDeployment>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<Deployment>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.GetAll");
                 scope.Start();
                 try
                 {
