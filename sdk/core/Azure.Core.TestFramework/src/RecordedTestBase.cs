@@ -77,8 +77,13 @@ namespace Azure.Core.TestFramework
             _useLegacyTransport = useLegacyTransport;
         }
 
-        protected TestRecording CreateTestRecording(RecordedTestMode mode, string sessionFile, RecordedTestSanitizer sanitizer, RecordMatcher matcher) =>
-            new TestRecording(mode, sessionFile, sanitizer, matcher, _proxy, _useLegacyTransport);
+        protected async Task<TestRecording> CreateTestRecordingAsync(RecordedTestMode mode, string sessionFile,
+            RecordedTestSanitizer sanitizer, RecordMatcher matcher)
+        {
+            var recording = new TestRecording(mode, sessionFile, sanitizer, matcher, _proxy, _useLegacyTransport);
+            await recording.InitializeProxySettingsAsync();
+            return recording;
+        }
 
         public T InstrumentClientOptions<T>(T clientOptions, TestRecording recording = default) where T : ClientOptions
         {
@@ -165,7 +170,7 @@ namespace Azure.Core.TestFramework
         }
 
         [SetUp]
-        public virtual void StartTestRecording()
+        public virtual async Task StartTestRecording()
         {
             // Only create test recordings for the latest version of the service
             TestContext.TestAdapter test = TestContext.CurrentContext.Test;
@@ -181,12 +186,12 @@ namespace Azure.Core.TestFramework
                 throw new IgnoreException((string) test.Properties.Get("_SkipLive"));
             }
 
-            Recording = CreateTestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
+            Recording = await CreateTestRecordingAsync(Mode, GetSessionFilePath(), Sanitizer, Matcher);
             ValidateClientInstrumentation = Recording.HasRequests;
         }
 
         [TearDown]
-        public virtual void StopTestRecording()
+        public virtual async Task StopTestRecording()
         {
             bool testPassed = TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Passed;
             if (ValidateClientInstrumentation && testPassed)
@@ -198,7 +203,11 @@ namespace Azure.Core.TestFramework
 #if DEBUG
             save |= SaveDebugRecordingsOnFailure;
 #endif
-            Recording?.Dispose(save);
+            if (Recording != null)
+            {
+                await Recording.DisposeAsync(save);
+            }
+
             _proxy?.CheckForErrors();
         }
 

@@ -10,13 +10,14 @@ using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text.Json;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework.Models;
 using Azure.Core.Tests.TestFramework;
 
 namespace Azure.Core.TestFramework
 {
-    public class TestRecording : IDisposable
+    public class TestRecording : IAsyncDisposable
     {
         private const string RandomSeedVariableKey = "RandomSeed";
         private const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -26,7 +27,7 @@ namespace Azure.Core.TestFramework
         internal const string DateTimeOffsetNowVariableKey = "DateTimeOffsetNow";
 
         public SortedDictionary<string, string> Variables => _useLegacyTransport ? Session.Variables : _variables;
-        private readonly SortedDictionary<string, string> _variables = new();
+        private SortedDictionary<string, string> _variables = new();
 
         public TestRecording(RecordedTestMode mode, string sessionFile, RecordedTestSanitizer sanitizer, RecordMatcher matcher, TestProxy proxy = default, bool useLegacyTransport = false)
         {
@@ -70,77 +71,84 @@ namespace Azure.Core.TestFramework
                         break;
                 }
             }
-            else
+        }
+
+        internal async Task InitializeProxySettingsAsync()
+        {
+            if (_useLegacyTransport)
             {
-                switch (Mode)
-                {
-                    case RecordedTestMode.Record:
-                        var recordResponse = _proxy.Client.StartRecord(_sessionFile);
-                        RecordingId = recordResponse.Headers.XRecordingId;
-                        AddProxySanitizers();
+                return;
+            }
 
-                        break;
-                    case RecordedTestMode.Playback:
-                        ResponseWithHeaders<IReadOnlyDictionary<string, string>, TestProxyStartPlaybackHeaders> playbackResponse = null;
-                        try
-                        {
-                            playbackResponse = _proxy.Client.StartPlayback(_sessionFile);
-                        }
-                        catch (RequestFailedException ex)
-                            when (ex.Status == 404)
-                        {
-                            MismatchException = new TestRecordingMismatchException(ex.Message, ex);
-                            return;
-                        }
+            switch (Mode)
+            {
+                case RecordedTestMode.Record:
+                    var recordResponse = await _proxy.Client.StartRecordAsync(_sessionFile);
+                    RecordingId = recordResponse.Headers.XRecordingId;
+                    await AddProxySanitizersAsync();
 
-                        _variables = new SortedDictionary<string, string>((Dictionary<string, string>)playbackResponse.Value);
-                        RecordingId = playbackResponse.Headers.XRecordingId;
-                        AddProxySanitizers();
+                    break;
+                case RecordedTestMode.Playback:
+                    ResponseWithHeaders<IReadOnlyDictionary<string, string>, TestProxyStartPlaybackHeaders> playbackResponse = null;
+                    try
+                    {
+                        playbackResponse = await _proxy.Client.StartPlaybackAsync(_sessionFile);
+                    }
+                    catch (RequestFailedException ex)
+                        when (ex.Status == 404)
+                    {
+                        MismatchException = new TestRecordingMismatchException(ex.Message, ex);
+                        return;
+                    }
 
-                        // temporary until Azure.Core fix is shipped that makes HttpWebRequestTransport consistent with HttpClientTransport
-                        // if (!_matcher.CompareBodies)
-                        // {
-                        //     _proxy.Client.AddBodilessMatcher(RecordingId);
-                        // }
-                        var excludedHeaders = new List<string>(_matcher.LegacyExcludedHeaders)
-                        {
-                            "Content-Type",
-                            "Content-Length"
-                        };
+                    _variables = new SortedDictionary<string, string>((Dictionary<string, string>)playbackResponse.Value);
+                    RecordingId = playbackResponse.Headers.XRecordingId;
+                    await AddProxySanitizersAsync();
 
-                        // temporary until custom matcher supports both excluded and ignored
-                        excludedHeaders.AddRange(_matcher.IgnoredHeaders);
-                        _proxy.Client.AddCustomMatcher(new CustomDefaultMatcher(string.Join(",", excludedHeaders), _matcher.CompareBodies), RecordingId);
-                        break;
-                }
+                    // temporary until Azure.Core fix is shipped that makes HttpWebRequestTransport consistent with HttpClientTransport
+                    // if (!_matcher.CompareBodies)
+                    // {
+                    //     _proxy.Client.AddBodilessMatcher(RecordingId);
+                    // }
+                    var excludedHeaders = new List<string>(_matcher.LegacyExcludedHeaders)
+                    {
+                        "Content-Type",
+                        "Content-Length"
+                    };
+
+                    // temporary until custom matcher supports both excluded and ignored
+                    excludedHeaders.AddRange(_matcher.IgnoredHeaders);
+                    await _proxy.Client.AddCustomMatcherAsync(new CustomDefaultMatcher(string.Join(",", excludedHeaders), _matcher.CompareBodies),
+                        RecordingId);
+                    break;
             }
         }
 
-        private void AddProxySanitizers()
+        private async Task AddProxySanitizersAsync()
         {
             foreach (string header in _sanitizer.SanitizedHeaders)
             {
-                _proxy.Client.AddHeaderSanitizer(new HeaderRegexSanitizer(header, Sanitized), RecordingId);
+                await _proxy.Client.AddHeaderSanitizerAsync(new HeaderRegexSanitizer(header, Sanitized), RecordingId);
             }
 
             foreach (string jsonPath in _sanitizer.JsonPathSanitizers.Select(s => s.JsonPath))
             {
-                _proxy.Client.AddBodyKeySanitizer(new BodyKeySanitizer(Sanitized) { JsonPath = jsonPath }, RecordingId);
+                await _proxy.Client.AddBodyKeySanitizerAsync(new BodyKeySanitizer(Sanitized) { JsonPath = jsonPath }, RecordingId);
             }
 
             foreach (UriRegexSanitizer sanitizer in _sanitizer.UriRegexSanitizers)
             {
-                _proxy.Client.AddUriSanitizer(sanitizer, RecordingId);
+                await _proxy.Client.AddUriSanitizerAsync(sanitizer, RecordingId);
             }
 
             foreach (BodyKeySanitizer sanitizer in _sanitizer.BodyKeySanitizers)
             {
-                _proxy.Client.AddBodyKeySanitizer(sanitizer, RecordingId);
+                await _proxy.Client.AddBodyKeySanitizerAsync(sanitizer, RecordingId);
             }
 
             foreach (BodyRegexSanitizer sanitizer in _sanitizer.BodyRegexSanitizers)
             {
-                _proxy.Client.AddBodyRegexSanitizer(sanitizer, RecordingId);
+                await _proxy.Client.AddBodyRegexSanitizerAsync(sanitizer, RecordingId);
             }
         }
 
@@ -170,7 +178,7 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        internal readonly TestRecordingMismatchException MismatchException;
+        internal TestRecordingMismatchException MismatchException;
 
         private RecordSession _previousSession;
 
@@ -237,7 +245,7 @@ namespace Azure.Core.TestFramework
 
         private readonly TestProxy _proxy;
 
-        public string RecordingId { get; }
+        public string RecordingId { get; private set; }
 
         /// <summary>
         /// Gets the moment in time that this test is being run.  This is useful
@@ -285,7 +293,7 @@ namespace Azure.Core.TestFramework
             return RecordSession.Deserialize(jsonDocument.RootElement);
         }
 
-        public void Dispose(bool save)
+        public async ValueTask DisposeAsync(bool save)
         {
             if (_useLegacyTransport)
             {
@@ -308,13 +316,13 @@ namespace Azure.Core.TestFramework
 
             else if (Mode == RecordedTestMode.Record && save)
             {
-                _proxy.Client.StopRecord(RecordingId, Variables);
+                await _proxy.Client.StopRecordAsync(RecordingId, Variables);
             }
         }
 
-        public void Dispose()
+        public async ValueTask DisposeAsync()
         {
-            Dispose(true);
+            await DisposeAsync(true);
         }
 
         public HttpPipelineTransport CreateTransport(HttpPipelineTransport currentTransport)

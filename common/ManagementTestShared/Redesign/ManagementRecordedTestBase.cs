@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.TestFramework
             }
         }
 
-        private void StartSessionRecording()
+        private async Task StartSessionRecordingAsync()
         {
             // Only create test recordings for the latest version of the service
             TestContext.TestAdapter test = TestContext.CurrentContext.Test;
@@ -139,29 +139,33 @@ namespace Azure.ResourceManager.TestFramework
             {
                 throw new IgnoreException((string)test.Properties.Get("SkipRecordings"));
             }
-            SessionRecording = CreateTestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
+            SessionRecording = await CreateTestRecordingAsync(Mode, GetSessionFilePath(), Sanitizer, Matcher);
             SessionEnvironment.SetRecording(SessionRecording);
             ValidateClientInstrumentation = SessionRecording.HasRequests;
         }
 
-        protected void StopSessionRecording()
+        protected async Task StopSessionRecordingAsync()
         {
             if (ValidateClientInstrumentation)
             {
                 throw new InvalidOperationException("The test didn't instrument any clients but had recordings. Please call InstrumentClient for the client being recorded.");
             }
 
-            SessionRecording?.Dispose(true);
+            if (SessionRecording != null)
+            {
+                await SessionRecording.DisposeAsync(true);
+            }
+
             GlobalClient = null;
         }
 
         [OneTimeSetUp]
-        public void OneTimeSetUp()
+        public async Task OneTimeSetUp()
         {
             if (!HasOneTimeSetup())
                 return;
 
-            StartSessionRecording();
+            await StartSessionRecordingAsync();
 
             var options = InstrumentClientOptions(new ArmClientOptions(), SessionRecording);
             options.AddPolicy(OneTimeResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);

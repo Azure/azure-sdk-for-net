@@ -17,12 +17,12 @@ namespace Azure.Core.TestFramework
             TestEnvironment.Mode = Mode;
         }
 
-        public override void StartTestRecording()
+        public override async Task StartTestRecording()
         {
             // Set the TestEnvironment Mode here so that any Mode changes in RecordedTestBase are picked up here also.
             TestEnvironment.Mode = Mode;
 
-            base.StartTestRecording();
+            await base.StartTestRecording();
             TestEnvironment.SetRecording(Recording);
         }
 
