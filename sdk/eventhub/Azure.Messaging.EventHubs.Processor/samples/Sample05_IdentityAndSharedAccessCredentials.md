@@ -264,13 +264,12 @@ This example illustrates parsing the fully qualified namespace and, optionally, 
 ```C# Snippet:EventHubs_Processor_Sample05_ConnectionStringParse
 var credential = new DefaultAzureCredential();
 
-var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
-var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
-
 var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
 
+var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
 var storageEndpoint = new BlobServiceClient(storageConnectionString).Uri;
 
 var blobUriBuilder = new BlobUriBuilder(storageEndpoint)

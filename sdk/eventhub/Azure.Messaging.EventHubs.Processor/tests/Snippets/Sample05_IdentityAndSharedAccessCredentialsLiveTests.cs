@@ -312,21 +312,20 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 #if SNIPPET
             var credential = new DefaultAzureCredential();
 
-            var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
-            var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
-
             var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
+
+            var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+            var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
 #else
-            var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            var blobContainerName = storageScope.ContainerName;
+            var credential = EventHubsTestEnvironment.Instance.Credential;
             var eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
             var eventHubName = eventHubScope.EventHubName;
             var consumerGroup = eventHubScope.ConsumerGroups.First();
-            var credential = EventHubsTestEnvironment.Instance.Credential;
+            var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
+            var blobContainerName = storageScope.ContainerName;
 #endif
-
             var storageEndpoint = new BlobServiceClient(storageConnectionString).Uri;
 
             var blobUriBuilder = new BlobUriBuilder(storageEndpoint)

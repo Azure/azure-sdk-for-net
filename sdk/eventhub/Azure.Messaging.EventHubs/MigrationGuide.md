@@ -312,6 +312,7 @@ In the `Microsoft.Azure.EventHubs` library, to publish events and allow the Even
 ```C# Snippet:EventHubs_Migrate_T1_PublishToSpecificPartition
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+
 var builder = new EventHubsConnectionStringBuilder(connectionString);
 builder.EntityPath = eventHubName;
 

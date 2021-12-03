@@ -227,6 +227,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Snippets
             var connectionString = TestUtility.EventHubsConnectionString;
             var eventHubName = scope.EventHubName;
 #endif
+
             var builder = new EventHubsConnectionStringBuilder(connectionString);
             builder.EntityPath = eventHubName;
 
