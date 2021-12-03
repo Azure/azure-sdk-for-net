@@ -88,6 +88,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         }
 
         [Test]
+        [Ignore("not record yet")]
         [RecordedTest]
         public async Task ServerTrustGroupsApiTests()
         {
@@ -117,6 +118,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         }
 
         [Test]
+        [Ignore("not record yet")]
         [RecordedTest]
         public async Task Delete()
         {

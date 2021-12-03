@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         }
 
         [Test]
+        [Ignore("Playback execution timeout")]
         [RecordedTest]
         public async Task ManagedInstancePrivateEndpointConnectioApiTests()
         {

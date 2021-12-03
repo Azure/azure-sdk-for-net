@@ -112,6 +112,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         }
 
         [Test]
+        [Ignore("not record yet")]
         [RecordedTest]
         public async Task InstancePoolApiTests()
         {
@@ -143,6 +144,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         }
 
         [Test]
+        [Ignore("not record yet")]
         [RecordedTest]
         public async Task Delete()
         {
