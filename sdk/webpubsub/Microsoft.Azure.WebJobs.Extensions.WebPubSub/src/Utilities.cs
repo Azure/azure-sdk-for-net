@@ -232,7 +232,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 // val should be a JSON object of <key,value> pairs
                 if (val.Type == JTokenType.Object)
                 {
-                    var readonlyDict = val.ToObject<IReadOnlyDictionary<string, BinaryData>>()
+                    return val.ToObject<IReadOnlyDictionary<string, BinaryData>>()
                         .ToDictionary(k => k.Key, v => v.Value);
                 }
             }
