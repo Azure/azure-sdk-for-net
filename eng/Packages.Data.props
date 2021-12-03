@@ -230,7 +230,7 @@
     <PackageReference Update="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Update="NSubstitute" Version="3.1.0" />
     <PackageReference Update="NUnit" Version="3.13.2" />
-    <PackageReference Update="NUnit3TestAdapter" Version="3.17.0" />
+    <PackageReference Update="NUnit3TestAdapter" Version="4.1.0" />
     <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="1.0.0-rc7" />
     <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc7" />
     <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc7" />
