@@ -63,7 +63,7 @@ await foreach (ManagedDatabase managedDatabase in response)
 
 ***Get a managed databases***
 
-```C# Snippet:Managing_Sql_GetAManagedInstance
+```C# Snippet:Managing_Sql_GetAManagedDatabases
 ManagedDatabaseCollection managedDatabaseCollection = managedInstance.GetManagedDatabases();
 
 ManagedDatabase managedDatabase = await managedDatabaseCollection.GetAsync("myManagedDatabase");
@@ -72,7 +72,7 @@ Console.WriteLine(managedDatabase.Data.Name);
 
 ***Try to get a managed databases if it exists***
 
-```C# Snippet:Managing_Sql_GetAManagedInstanceIfExists
+```C# Snippet:Managing_Sql_GetAManagedDatabasesIfExists
 ManagedDatabaseCollection managedDatabaseCollection = managedInstance.GetManagedDatabases();
 
 ManagedDatabase managedDatabase = await managedDatabaseCollection.GetIfExistsAsync("foo");
@@ -89,7 +89,7 @@ if (await managedDatabaseCollection.CheckIfExistsAsync("bar"))
 
 ***Delete a managed databases***
 
-```C# Snippet:Managing_Sql_DeleteAManagedInstance
+```C# Snippet:Managing_Sql_DeleteAManagedDatabases
 ManagedDatabaseCollection managedDatabaseCollection = managedInstance.GetManagedDatabases();
 
 ManagedDatabase managedDatabase = await managedDatabaseCollection.GetAsync("myManagedInstance");
