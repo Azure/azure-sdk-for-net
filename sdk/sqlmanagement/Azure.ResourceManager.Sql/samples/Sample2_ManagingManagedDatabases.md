@@ -5,7 +5,9 @@
 Namespaces for this example:
 ```C# Snippet:Manage_Sql_Namespaces
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
