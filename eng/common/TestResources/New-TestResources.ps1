@@ -242,6 +242,8 @@ function SetDeploymentOutputs([string]$serviceName, [object]$azContext, [object]
             $key = $null
         }
     }
+
+    return $deploymentOutputs
 }
 
 # Support actions to invoke on exit.
@@ -669,7 +671,7 @@ try {
             Write-Verbose "Successfully deployed template '$($templateFile.jsonFilePath)' to resource group '$($resourceGroup.ResourceGroupName)'"
         }
 
-        SetDeploymentOutputs $serviceName $context $deployment $templateFile
+        $deploymentOutputs = SetDeploymentOutputs $serviceName $context $deployment $templateFile
 
         $postDeploymentScript = $templateFile.originalFilePath | Split-Path | Join-Path -ChildPath 'test-resources-post.ps1'
         if (Test-Path $postDeploymentScript) {
