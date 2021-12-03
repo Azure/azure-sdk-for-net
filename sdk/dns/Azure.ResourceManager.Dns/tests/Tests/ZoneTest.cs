@@ -27,7 +27,7 @@ namespace Azure.Management.Dns.Tests
             location = "West US";
         }
 
-        [OneTimeSetUp]
+        [SetUp]
         public async Task SetupResource()
         {
             var client = GetArmClient();

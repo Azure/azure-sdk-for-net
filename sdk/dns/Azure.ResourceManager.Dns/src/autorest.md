@@ -9,6 +9,7 @@ namespace: Azure.ResourceManager.Dns
 require: https://github.com/Azure/azure-rest-api-specs/blob/48a49f06399fbdf21f17406b5042f96a5d573bf0/specification/dns/resource-manager/readme.md
 clear-output-folder: true
 skip-csproj: true
+use: C:\Users\v-runliu\autorest.csharp\artifacts\bin\AutoRest.CSharp\Debug\netcoreapp3.1
 modelerfour:
   lenient-model-deduplication: true
 
@@ -31,4 +32,10 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/SOA: RecordSetSoa
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/SRV: RecordSetSrv
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/TXT: RecordSetTxt
+# Add nullable annotations
+directive:
+  from: swagger-document
+  where: $.definitions.ZoneProperties
+  transform: >
+    $.properties.maxNumberOfRecordsPerRecordSet["x-nullable"] = true;
 ```

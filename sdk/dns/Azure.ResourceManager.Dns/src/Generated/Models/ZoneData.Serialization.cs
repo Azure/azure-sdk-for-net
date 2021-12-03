@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Dns
             string name = default;
             ResourceType type = default;
             Optional<long> maxNumberOfRecordSets = default;
-            Optional<long> maxNumberOfRecordsPerRecordSet = default;
+            Optional<long?> maxNumberOfRecordsPerRecordSet = default;
             Optional<long> numberOfRecordSets = default;
             Optional<IReadOnlyList<string>> nameServers = default;
             Optional<ZoneType> zoneType = default;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Dns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                maxNumberOfRecordsPerRecordSet = null;
                                 continue;
                             }
                             maxNumberOfRecordsPerRecordSet = property0.Value.GetInt64();
