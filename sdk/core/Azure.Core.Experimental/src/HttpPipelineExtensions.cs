@@ -9,17 +9,30 @@ using Azure.Core.Pipeline;
 namespace Azure.Core.Experimental
 {
     /// <summary>
+    /// Extensions to HttpPipeline to support RequestOptions.
     /// </summary>
     public static class HttpPipelineExtensions
     {
         /// <summary>
+        /// Creates a new <see cref="HttpMessage"/> instance.
         /// </summary>
         /// <param name="pipeline"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
+        /// <param name="options">The message options.</param>
+        /// <returns>The message.</returns>
         public static HttpMessage CreateMessage(this HttpPipeline pipeline, RequestOptions options)
         {
-            return pipeline.CreateMessage(options);
+            RequestContext context = new RequestContext();
+            context.ErrorOptions = options.ErrorOptions;
+
+            if (options.Policies != null)
+            {
+                foreach (var policy in options.Policies)
+                {
+                    context.AddPolicy(policy.Policy, policy.Position);
+                }
+            }
+
+            return pipeline.CreateMessage(context);
         }
     }
 }
