@@ -12,7 +12,7 @@ namespace Azure.DigitalTwins.Core.Tests
         public TestUrlSanitizer()
         {
             UriRegexSanitizers.Add(
-                new UriRegexSanitizer(@"^((http[s]?|ftp):\/)?\/?(?<host>[^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?$", FAKE_HOST)
+                new UriRegexSanitizer(@"https://(?<host>[^/]+)/", FAKE_HOST)
                 {
                     GroupForReplace = "host"
                 });
