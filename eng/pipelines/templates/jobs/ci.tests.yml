@@ -49,6 +49,10 @@ jobs:
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
         parameters:
           NuGetCacheKey: Test
+      - ${{ if startsWith(parameters.ServiceDirectory, 'Azure.ResourceManager.') }}:
+        - template: /eng/pipelines/templates/jobs/mgmt-mock-test.yml
+          parameters:
+            ServiceDirectory: ${{ parameters.ServiceDirectory }}
       - script: >-
           dotnet test eng/service.proj --filter "(TestCategory!=Manually) & (TestCategory!=Live)" --framework $(TestTargetFramework)
           --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"

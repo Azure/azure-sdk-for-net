@@ -1,0 +1,85 @@
+parameters:
+  ServiceDirectory: ''
+
+jobs:
+  - job: MgmtMockTest
+    displayName: Mock Test For Mgmt Plane
+    variables:
+      - template: /eng/pipelines/templates/variables/globals.yml
+    pool:
+      name: azsdk-pool-mms-ubuntu-2004-general
+    steps:
+    - script: |
+        npm install -g autorest
+      displayName: 'Install autorest'
+    - task: GoTool@0
+      inputs:
+        version: '1.17'
+      displayName: "Select Go Version"
+
+    - template: /eng/pipelines/templates/steps/create-go-workspace.yml
+
+    - task: Powershell@2
+      displayName: 'Create Mock Test'
+      continueOnError: true
+      env:
+        GO111MODULE: 'on'
+      inputs:
+        targetType: filePath
+        pwsh: true
+        filePath: $(Build.SourcesDirectory)/eng/scripts/Invoke-MgmtTestgen.ps1
+        arguments: -filter '${{ parameters.ServiceDirectory }}' -cleanGenerated -format -tidy -generateMockTest
+
+    - task: Powershell@2
+      displayName: 'Build and Vet'
+      continueOnError: true
+      env:
+        GO111MODULE: 'on'
+      inputs:
+        targetType: filePath
+        pwsh: true
+        filePath: $(Build.SourcesDirectory)/eng/scripts/Invoke-MgmtTestgen.ps1
+        arguments: -filter '${{ parameters.ServiceDirectory }}' -vet
+
+    - task: Powershell@2
+      displayName: 'Mock Test'
+      continueOnError: true
+      env:
+        GO111MODULE: 'on'
+      inputs:
+        targetType: filePath
+        pwsh: true
+        filePath: $(Build.SourcesDirectory)/eng/scripts/Invoke-MgmtMockTest.ps1
+        arguments: -filter '${{ parameters.ServiceDirectory }}'
+
+    - task: ArchiveFiles@2
+      continueOnError: true
+      inputs:
+        rootFolderOrFile: $(Build.SourcesDirectory)/sdk/${{parameters.ServiceDirectory}}/
+        includeRootFolder: true
+        archiveFile: '$(Build.ArtifactStagingDirectory)/MockTestCodeAndReport.zip'
+        
+    - task: PublishBuildArtifacts@1
+      continueOnError: true
+      displayName: 'Publish Code and Report'
+      inputs:
+        pathToPublish: '$(Build.ArtifactStagingDirectory)/MockTestCodeAndReport.zip'
+        artifactName: MockTestCodeAndReport
+
+    - task: PublishTestResults@2
+      continueOnError: true
+      condition: succeededOrFailed()
+      inputs:
+        testRunner: JUnit
+        testResultsFiles: '$(Build.SourcesDirectory)/sdk/${{parameters.ServiceDirectory}}/**/report.xml'
+        testRunTitle: 'Test result on ${{ parameters.ServiceDirectory }}'
+        failTaskOnFailedTests: true
+
+    - task: PublishCodeCoverageResults@1
+      continueOnError: true
+      condition: succeededOrFailed()
+      inputs:
+        codeCoverageTool: Cobertura
+        summaryFileLocation: '$(Build.SourcesDirectory)/sdk/${{parameters.ServiceDirectory}}/coverage.xml'
+        additionalCodeCoverageFiles: '$(Build.SourcesDirectory)/sdk/${{parameters.ServiceDirectory}}/coverage.html'
+        failIfCoverageEmpty: true
