@@ -533,6 +533,7 @@ namespace Azure.Storage.Blobs.Specialized
 
             return uploader.UploadInternal(
                 content,
+                expectedContentLength: default,
                 options,
                 options.ProgressHandler,
                 async: false,
@@ -589,6 +590,7 @@ namespace Azure.Storage.Blobs.Specialized
 
             return await uploader.UploadInternal(
                 content,
+                expectedContentLength: default,
                 options,
                 options.ProgressHandler,
                 async: true,

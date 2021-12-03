@@ -17,6 +17,8 @@ namespace Microsoft.Azure.Management.Marketplace.Models
     public static class Operation
     {
         public const string DeletePrivateStoreOffer = "DeletePrivateStoreOffer";
+        public const string DeletePrivateStoreCollection = "DeletePrivateStoreCollection";
+        public const string DeletePrivateStoreCollectionOffer = "DeletePrivateStoreCollectionOffer";
         public const string Ping = "Ping";
     }
 }

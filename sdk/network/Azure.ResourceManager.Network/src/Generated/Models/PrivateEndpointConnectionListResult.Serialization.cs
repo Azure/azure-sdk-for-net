@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static PrivateEndpointConnectionListResult DeserializePrivateEndpointConnectionListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<PrivateEndpointConnection>> value = default;
+            Optional<IReadOnlyList<PrivateEndpointConnectionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PrivateEndpointConnection> array = new List<PrivateEndpointConnection>();
+                    List<PrivateEndpointConnectionData> array = new List<PrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateEndpointConnection.DeserializePrivateEndpointConnection(item));
+                        array.Add(PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(item));
                     }
                     value = array;
                     continue;

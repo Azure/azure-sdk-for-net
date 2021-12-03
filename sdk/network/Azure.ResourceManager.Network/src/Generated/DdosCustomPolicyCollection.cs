@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -19,11 +17,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of DdosCustomPolicy and their operations over a ResourceGroup. </summary>
+    /// <summary> A class representing collection of DdosCustomPolicy and their operations over its parent. </summary>
     public partial class DdosCustomPolicyCollection : ArmCollection
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DdosCustomPoliciesRestOperations _restClient;
+        private readonly DdosCustomPoliciesRestOperations _ddosCustomPoliciesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="DdosCustomPolicyCollection"/> class for mocking. </summary>
         protected DdosCustomPolicyCollection()
@@ -35,7 +33,7 @@ namespace Azure.ResourceManager.Network
         internal DdosCustomPolicyCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new DdosCustomPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _ddosCustomPoliciesRestClient = new DdosCustomPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -64,8 +62,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, ddosCustomPolicyName, parameters, cancellationToken);
-                var operation = new DdosCustomPolicyCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, ddosCustomPolicyName, parameters).Request, response);
+                var response = _ddosCustomPoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, parameters, cancellationToken);
+                var operation = new DdosCustomPolicyCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _ddosCustomPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -98,8 +96,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, ddosCustomPolicyName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new DdosCustomPolicyCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, ddosCustomPolicyName, parameters).Request, response);
+                var response = await _ddosCustomPoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new DdosCustomPolicyCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _ddosCustomPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -111,21 +109,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets information about the specified DDoS custom policy. </summary>
         /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ddosCustomPolicyName"/> is null. </exception>
         public virtual Response<DdosCustomPolicy> Get(string ddosCustomPolicyName, CancellationToken cancellationToken = default)
         {
+            if (ddosCustomPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(ddosCustomPolicyName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("DdosCustomPolicyCollection.Get");
             scope.Start();
             try
             {
-                if (ddosCustomPolicyName == null)
-                {
-                    throw new ArgumentNullException(nameof(ddosCustomPolicyName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, ddosCustomPolicyName, cancellationToken: cancellationToken);
+                var response = _ddosCustomPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DdosCustomPolicy(Parent, response.Value), response.GetRawResponse());
@@ -137,21 +136,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets information about the specified DDoS custom policy. </summary>
         /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ddosCustomPolicyName"/> is null. </exception>
         public async virtual Task<Response<DdosCustomPolicy>> GetAsync(string ddosCustomPolicyName, CancellationToken cancellationToken = default)
         {
+            if (ddosCustomPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(ddosCustomPolicyName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("DdosCustomPolicyCollection.Get");
             scope.Start();
             try
             {
-                if (ddosCustomPolicyName == null)
-                {
-                    throw new ArgumentNullException(nameof(ddosCustomPolicyName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, ddosCustomPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _ddosCustomPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new DdosCustomPolicy(Parent, response.Value), response.GetRawResponse());
@@ -165,19 +165,20 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ddosCustomPolicyName"/> is null. </exception>
         public virtual Response<DdosCustomPolicy> GetIfExists(string ddosCustomPolicyName, CancellationToken cancellationToken = default)
         {
+            if (ddosCustomPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(ddosCustomPolicyName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("DdosCustomPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (ddosCustomPolicyName == null)
-                {
-                    throw new ArgumentNullException(nameof(ddosCustomPolicyName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, ddosCustomPolicyName, cancellationToken: cancellationToken);
+                var response = _ddosCustomPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<DdosCustomPolicy>(null, response.GetRawResponse())
                     : Response.FromValue(new DdosCustomPolicy(this, response.Value), response.GetRawResponse());
@@ -191,19 +192,20 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ddosCustomPolicyName"/> is null. </exception>
         public async virtual Task<Response<DdosCustomPolicy>> GetIfExistsAsync(string ddosCustomPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DdosCustomPolicyCollection.GetIfExists");
+            if (ddosCustomPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(ddosCustomPolicyName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DdosCustomPolicyCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (ddosCustomPolicyName == null)
-                {
-                    throw new ArgumentNullException(nameof(ddosCustomPolicyName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, ddosCustomPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _ddosCustomPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<DdosCustomPolicy>(null, response.GetRawResponse())
                     : Response.FromValue(new DdosCustomPolicy(this, response.Value), response.GetRawResponse());
@@ -217,18 +219,19 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ddosCustomPolicyName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string ddosCustomPolicyName, CancellationToken cancellationToken = default)
         {
+            if (ddosCustomPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(ddosCustomPolicyName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("DdosCustomPolicyCollection.CheckIfExists");
             scope.Start();
             try
             {
-                if (ddosCustomPolicyName == null)
-                {
-                    throw new ArgumentNullException(nameof(ddosCustomPolicyName));
-                }
-
                 var response = GetIfExists(ddosCustomPolicyName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -241,18 +244,19 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ddosCustomPolicyName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string ddosCustomPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DdosCustomPolicyCollection.CheckIfExists");
+            if (ddosCustomPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(ddosCustomPolicyName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DdosCustomPolicyCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (ddosCustomPolicyName == null)
-                {
-                    throw new ArgumentNullException(nameof(ddosCustomPolicyName));
-                }
-
                 var response = await GetIfExistsAsync(ddosCustomPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -310,6 +314,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, DdosCustomPolicy, DdosCustomPolicyData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, DdosCustomPolicy, DdosCustomPolicyData> Construct() { }
     }
 }

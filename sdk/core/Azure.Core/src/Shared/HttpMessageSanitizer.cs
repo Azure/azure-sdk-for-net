@@ -17,6 +17,8 @@ namespace Azure.Core
         private readonly string _redactedPlaceholder;
         private readonly HashSet<string> _allowedHeaders;
 
+        internal static HttpMessageSanitizer Default = new HttpMessageSanitizer(Array.Empty<string>(), Array.Empty<string>());
+
         public HttpMessageSanitizer(string[] allowedQueryParameters, string[] allowedHeaders, string redactedPlaceholder = "REDACTED")
         {
             _logAllHeaders = allowedHeaders.Contains(LogAllValue);

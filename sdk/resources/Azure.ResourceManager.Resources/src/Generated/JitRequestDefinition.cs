@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources
     public partial class JitRequestDefinition : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly JitRequestsRestOperations _restClient;
+        private readonly JitRequestsRestOperations _jitRequestsRestClient;
         private readonly JitRequestDefinitionData _data;
 
         /// <summary> Initializes a new instance of the <see cref="JitRequestDefinition"/> class for mocking. </summary>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new JitRequestsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _jitRequestsRestClient = new JitRequestsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="JitRequestDefinition"/> class. </summary>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Resources
         internal JitRequestDefinition(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new JitRequestsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _jitRequestsRestClient = new JitRequestsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="JitRequestDefinition"/> class. </summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Resources
         internal JitRequestDefinition(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new JitRequestsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _jitRequestsRestClient = new JitRequestsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _jitRequestsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new JitRequestDefinition(this, response.Value), response.GetRawResponse());
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _jitRequestsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new JitRequestDefinition(this, response.Value), response.GetRawResponse());
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _jitRequestsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new JitRequestDeleteOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _jitRequestsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 var operation = new JitRequestDeleteOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Resources
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _jitRequestsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new JitRequestDefinition(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Resources
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var originalResponse = _jitRequestsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new JitRequestDefinition(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Resources
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _jitRequestsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new JitRequestDefinition(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Resources
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var originalResponse = _jitRequestsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new JitRequestDefinition(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Resources
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _jitRequestsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new JitRequestDefinition(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Resources
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var originalResponse = _jitRequestsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new JitRequestDefinition(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -354,16 +354,17 @@ namespace Azure.ResourceManager.Resources
                 throw;
             }
         }
+
         /// <summary> Updates the JIT request. </summary>
         /// <param name="tags"> Jit request tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<JitRequestDefinition>> UpdateAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<JitRequestDefinition>> UpdateAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("JitRequestDefinition.Update");
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Name, tags, cancellationToken).ConfigureAwait(false);
+                var response = await _jitRequestsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new JitRequestDefinition(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -382,7 +383,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _restClient.Update(Id.ResourceGroupName, Id.Name, tags, cancellationToken);
+                var response = _jitRequestsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, cancellationToken);
                 return Response.FromValue(new JitRequestDefinition(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

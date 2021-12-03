@@ -21,11 +21,12 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of P2SVpnGateway and their operations over a ResourceGroup. </summary>
+    /// <summary> A class representing collection of P2SVpnGateway and their operations over its parent. </summary>
     public partial class P2SVpnGatewayCollection : ArmCollection, IEnumerable<P2SVpnGateway>, IAsyncEnumerable<P2SVpnGateway>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly P2SVpnGatewaysRestOperations _restClient;
+        private readonly P2SVpnGatewaysRestOperations _p2sVpnGatewaysRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="P2SVpnGatewayCollection"/> class for mocking. </summary>
         protected P2SVpnGatewayCollection()
@@ -37,22 +38,7 @@ namespace Azure.ResourceManager.Network
         internal P2SVpnGatewayCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new P2SVpnGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        IEnumerator<P2SVpnGateway> IEnumerable<P2SVpnGateway>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<P2SVpnGateway> IAsyncEnumerable<P2SVpnGateway>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            _p2sVpnGatewaysRestClient = new P2SVpnGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -81,8 +67,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, gatewayName, p2SVpnGatewayParameters, cancellationToken);
-                var operation = new P2SVpnGatewayCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, gatewayName, p2SVpnGatewayParameters).Request, response);
+                var response = _p2sVpnGatewaysRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, p2SVpnGatewayParameters, cancellationToken);
+                var operation = new P2SVpnGatewayCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _p2sVpnGatewaysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, p2SVpnGatewayParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -115,8 +101,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, gatewayName, p2SVpnGatewayParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new P2SVpnGatewayCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, gatewayName, p2SVpnGatewayParameters).Request, response);
+                var response = await _p2sVpnGatewaysRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, p2SVpnGatewayParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new P2SVpnGatewayCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _p2sVpnGatewaysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, p2SVpnGatewayParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -128,21 +114,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Retrieves the details of a virtual wan p2s vpn gateway. </summary>
         /// <param name="gatewayName"> The name of the gateway. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public virtual Response<P2SVpnGateway> Get(string gatewayName, CancellationToken cancellationToken = default)
         {
+            if (gatewayName == null)
+            {
+                throw new ArgumentNullException(nameof(gatewayName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("P2SVpnGatewayCollection.Get");
             scope.Start();
             try
             {
-                if (gatewayName == null)
-                {
-                    throw new ArgumentNullException(nameof(gatewayName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, gatewayName, cancellationToken: cancellationToken);
+                var response = _p2sVpnGatewaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new P2SVpnGateway(Parent, response.Value), response.GetRawResponse());
@@ -154,21 +141,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Retrieves the details of a virtual wan p2s vpn gateway. </summary>
         /// <param name="gatewayName"> The name of the gateway. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public async virtual Task<Response<P2SVpnGateway>> GetAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
+            if (gatewayName == null)
+            {
+                throw new ArgumentNullException(nameof(gatewayName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("P2SVpnGatewayCollection.Get");
             scope.Start();
             try
             {
-                if (gatewayName == null)
-                {
-                    throw new ArgumentNullException(nameof(gatewayName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, gatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _p2sVpnGatewaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new P2SVpnGateway(Parent, response.Value), response.GetRawResponse());
@@ -182,19 +170,20 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="gatewayName"> The name of the gateway. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public virtual Response<P2SVpnGateway> GetIfExists(string gatewayName, CancellationToken cancellationToken = default)
         {
+            if (gatewayName == null)
+            {
+                throw new ArgumentNullException(nameof(gatewayName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("P2SVpnGatewayCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (gatewayName == null)
-                {
-                    throw new ArgumentNullException(nameof(gatewayName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, gatewayName, cancellationToken: cancellationToken);
+                var response = _p2sVpnGatewaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<P2SVpnGateway>(null, response.GetRawResponse())
                     : Response.FromValue(new P2SVpnGateway(this, response.Value), response.GetRawResponse());
@@ -208,19 +197,20 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="gatewayName"> The name of the gateway. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public async virtual Task<Response<P2SVpnGateway>> GetIfExistsAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("P2SVpnGatewayCollection.GetIfExists");
+            if (gatewayName == null)
+            {
+                throw new ArgumentNullException(nameof(gatewayName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGatewayCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (gatewayName == null)
-                {
-                    throw new ArgumentNullException(nameof(gatewayName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, gatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _p2sVpnGatewaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<P2SVpnGateway>(null, response.GetRawResponse())
                     : Response.FromValue(new P2SVpnGateway(this, response.Value), response.GetRawResponse());
@@ -234,18 +224,19 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="gatewayName"> The name of the gateway. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string gatewayName, CancellationToken cancellationToken = default)
         {
+            if (gatewayName == null)
+            {
+                throw new ArgumentNullException(nameof(gatewayName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("P2SVpnGatewayCollection.CheckIfExists");
             scope.Start();
             try
             {
-                if (gatewayName == null)
-                {
-                    throw new ArgumentNullException(nameof(gatewayName));
-                }
-
                 var response = GetIfExists(gatewayName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -258,18 +249,19 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="gatewayName"> The name of the gateway. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("P2SVpnGatewayCollection.CheckIfExists");
+            if (gatewayName == null)
+            {
+                throw new ArgumentNullException(nameof(gatewayName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGatewayCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (gatewayName == null)
-                {
-                    throw new ArgumentNullException(nameof(gatewayName));
-                }
-
                 var response = await GetIfExistsAsync(gatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -291,7 +283,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _p2sVpnGatewaysRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new P2SVpnGateway(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -306,7 +298,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _p2sVpnGatewaysRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new P2SVpnGateway(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -329,7 +321,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _p2sVpnGatewaysRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new P2SVpnGateway(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -344,7 +336,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _p2sVpnGatewaysRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new P2SVpnGateway(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -402,7 +394,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        IEnumerator<P2SVpnGateway> IEnumerable<P2SVpnGateway>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<P2SVpnGateway> IAsyncEnumerable<P2SVpnGateway>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, P2SVpnGateway, P2SVpnGatewayData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, P2SVpnGateway, P2SVpnGatewayData> Construct() { }
     }
 }

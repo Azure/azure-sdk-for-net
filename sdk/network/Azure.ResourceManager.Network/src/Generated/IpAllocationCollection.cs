@@ -21,11 +21,12 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of IpAllocation and their operations over a ResourceGroup. </summary>
+    /// <summary> A class representing collection of IpAllocation and their operations over its parent. </summary>
     public partial class IpAllocationCollection : ArmCollection, IEnumerable<IpAllocation>, IAsyncEnumerable<IpAllocation>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly IpAllocationsRestOperations _restClient;
+        private readonly IpAllocationsRestOperations _ipAllocationsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="IpAllocationCollection"/> class for mocking. </summary>
         protected IpAllocationCollection()
@@ -37,22 +38,7 @@ namespace Azure.ResourceManager.Network
         internal IpAllocationCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new IpAllocationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        IEnumerator<IpAllocation> IEnumerable<IpAllocation>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<IpAllocation> IAsyncEnumerable<IpAllocation>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            _ipAllocationsRestClient = new IpAllocationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -81,8 +67,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, ipAllocationName, parameters, cancellationToken);
-                var operation = new IpAllocationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, ipAllocationName, parameters).Request, response);
+                var response = _ipAllocationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, parameters, cancellationToken);
+                var operation = new IpAllocationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _ipAllocationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -115,8 +101,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, ipAllocationName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new IpAllocationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, ipAllocationName, parameters).Request, response);
+                var response = await _ipAllocationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new IpAllocationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _ipAllocationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -128,22 +114,23 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the specified IpAllocation by resource group. </summary>
         /// <param name="ipAllocationName"> The name of the IpAllocation. </param>
         /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> is null. </exception>
         public virtual Response<IpAllocation> Get(string ipAllocationName, string expand = null, CancellationToken cancellationToken = default)
         {
+            if (ipAllocationName == null)
+            {
+                throw new ArgumentNullException(nameof(ipAllocationName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("IpAllocationCollection.Get");
             scope.Start();
             try
             {
-                if (ipAllocationName == null)
-                {
-                    throw new ArgumentNullException(nameof(ipAllocationName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, ipAllocationName, expand, cancellationToken: cancellationToken);
+                var response = _ipAllocationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new IpAllocation(Parent, response.Value), response.GetRawResponse());
@@ -155,22 +142,23 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the specified IpAllocation by resource group. </summary>
         /// <param name="ipAllocationName"> The name of the IpAllocation. </param>
         /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> is null. </exception>
         public async virtual Task<Response<IpAllocation>> GetAsync(string ipAllocationName, string expand = null, CancellationToken cancellationToken = default)
         {
+            if (ipAllocationName == null)
+            {
+                throw new ArgumentNullException(nameof(ipAllocationName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("IpAllocationCollection.Get");
             scope.Start();
             try
             {
-                if (ipAllocationName == null)
-                {
-                    throw new ArgumentNullException(nameof(ipAllocationName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, ipAllocationName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _ipAllocationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new IpAllocation(Parent, response.Value), response.GetRawResponse());
@@ -185,19 +173,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ipAllocationName"> The name of the IpAllocation. </param>
         /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> is null. </exception>
         public virtual Response<IpAllocation> GetIfExists(string ipAllocationName, string expand = null, CancellationToken cancellationToken = default)
         {
+            if (ipAllocationName == null)
+            {
+                throw new ArgumentNullException(nameof(ipAllocationName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("IpAllocationCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (ipAllocationName == null)
-                {
-                    throw new ArgumentNullException(nameof(ipAllocationName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, ipAllocationName, expand, cancellationToken: cancellationToken);
+                var response = _ipAllocationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, expand, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<IpAllocation>(null, response.GetRawResponse())
                     : Response.FromValue(new IpAllocation(this, response.Value), response.GetRawResponse());
@@ -212,19 +201,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ipAllocationName"> The name of the IpAllocation. </param>
         /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> is null. </exception>
         public async virtual Task<Response<IpAllocation>> GetIfExistsAsync(string ipAllocationName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("IpAllocationCollection.GetIfExists");
+            if (ipAllocationName == null)
+            {
+                throw new ArgumentNullException(nameof(ipAllocationName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("IpAllocationCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (ipAllocationName == null)
-                {
-                    throw new ArgumentNullException(nameof(ipAllocationName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, ipAllocationName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _ipAllocationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<IpAllocation>(null, response.GetRawResponse())
                     : Response.FromValue(new IpAllocation(this, response.Value), response.GetRawResponse());
@@ -239,18 +229,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ipAllocationName"> The name of the IpAllocation. </param>
         /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string ipAllocationName, string expand = null, CancellationToken cancellationToken = default)
         {
+            if (ipAllocationName == null)
+            {
+                throw new ArgumentNullException(nameof(ipAllocationName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("IpAllocationCollection.CheckIfExists");
             scope.Start();
             try
             {
-                if (ipAllocationName == null)
-                {
-                    throw new ArgumentNullException(nameof(ipAllocationName));
-                }
-
                 var response = GetIfExists(ipAllocationName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -264,18 +255,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ipAllocationName"> The name of the IpAllocation. </param>
         /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string ipAllocationName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("IpAllocationCollection.CheckIfExists");
+            if (ipAllocationName == null)
+            {
+                throw new ArgumentNullException(nameof(ipAllocationName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("IpAllocationCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (ipAllocationName == null)
-                {
-                    throw new ArgumentNullException(nameof(ipAllocationName));
-                }
-
                 var response = await GetIfExistsAsync(ipAllocationName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -297,7 +289,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _ipAllocationsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new IpAllocation(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -312,7 +304,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _ipAllocationsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new IpAllocation(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -335,7 +327,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _ipAllocationsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new IpAllocation(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -350,7 +342,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _ipAllocationsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new IpAllocation(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -408,7 +400,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        IEnumerator<IpAllocation> IEnumerable<IpAllocation>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<IpAllocation> IAsyncEnumerable<IpAllocation>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, IpAllocation, IpAllocationData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, IpAllocation, IpAllocationData> Construct() { }
     }
 }
