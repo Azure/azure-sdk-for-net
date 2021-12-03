@@ -71,4 +71,14 @@
             SkipNonexistentProjects="false"
             SkipNonexistentTargets="true" />
   </Target>
+
+  <Target Name="WriteProjectInfo" BeforeTargets="PrepareForBuild">
+    <ItemGroup>
+      <AzureProjects Include="$(RepoRoot)/sdk/**/src/*.csproj" Exclude="$(RepoRoot)/sdk/**/src/*.Management.*.csproj" ProjectPath="%(Identity)" />
+      <AzureProjectLines Include="$(RepoRoot)/sdk/**/src/*.csproj" />
+      <WriteLinesToFile Lines="@(Compile->'%(Filename).obj')" File="$(OutputPath)$(ExecutableName).link" Overwrite="true" />
+    </ItemGroup>
+
+    <WriteLinesToFile 
+  </Target>
 </Project>
