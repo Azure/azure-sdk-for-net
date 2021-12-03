@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="ScriptLog" /> object. </returns>
         public ScriptLog GetScriptLog()
         {
-            return new ScriptLog(this, Id + "/logs/default");
+            return new ScriptLog(this, new ResourceIdentifier(Id.ToString() + "/logs/default"));
         }
         #endregion
     }
