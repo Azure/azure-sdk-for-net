@@ -27,7 +27,7 @@ Subscription subscription = armClient.GetDefaultSubscription();
 This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via collection objects. Or you can access individual children by ID.
 
 ```C# Snippet:Readme_GetResourceGroupCollection
- ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with an specific name
@@ -99,7 +99,6 @@ ManagedInstanceData data = new ManagedInstanceData(Location.WestUS2)
     ZoneRedundant = false,
 };
 string managedInstanceName = "myManagedInstance";
-//MangedInstance deployment takes a lot of time(more than 4 hours)
 var managedInstanceLro = await resourceGroup.GetManagedInstances().CreateOrUpdateAsync(managedInstanceName, data);
 ManagedInstance managedInstance = managedInstanceLro.Value;
 ```
