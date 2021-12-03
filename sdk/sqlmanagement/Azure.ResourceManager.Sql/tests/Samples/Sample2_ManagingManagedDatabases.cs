@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
         {
             #region Snippet:Readme_DefaultSubscription
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.GetDefaultSubscription();
+            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             #endregion
 
-            #region Snippet:Readme_GetResourceGroupContainer
-            ResourceGroupCollection rgContainer = subscription.GetResourceGroups();
-            // With the container, we can create a new resource group with an specific name
+            #region Snippet:Readme_GetResourceGroupCollection
+            ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
+            // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
             Location location = Location.WestUS2;
-            ResourceGroup resourceGroup = await rgContainer.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+            ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
             #endregion
 
             this.resourceGroup = resourceGroup;
