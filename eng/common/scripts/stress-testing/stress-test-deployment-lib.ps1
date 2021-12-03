@@ -86,6 +86,9 @@ function DeployStressTests(
     }
 
     if ($login) {
+        if (!$clusterGroup -or !$subscription) {
+            throw "clusterGroup and subscription parameters must be specified when logging into an environment that is not test or prod."
+        }
         Login $subscription $clusterGroup $pushImages
     }
 
