@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Added `RequestOptions` for use by Gen 1 Clients.
+- Added `RequestOptions` to enable per-invocation control of the request pipeline.
 
 ### Breaking Changes
 
