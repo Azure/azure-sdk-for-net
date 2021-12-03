@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A database operation. </summary>
-    public partial class DatabaseOperation : ProxyResource
+    public partial class DatabaseOperation : Resource
     {
         /// <summary> Initializes a new instance of DatabaseOperation. </summary>
         public DatabaseOperation()
@@ -18,9 +20,9 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of DatabaseOperation. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
         /// <param name="databaseName"> The name of the database the operation is being performed on. </param>
         /// <param name="operation"> The name of operation. </param>
         /// <param name="operationFriendlyName"> The friendly name of operation. </param>
@@ -35,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="estimatedCompletionTime"> The estimated completion time of the operation. </param>
         /// <param name="description"> The operation description. </param>
         /// <param name="isCancellable"> Whether the operation can be cancelled. </param>
-        internal DatabaseOperation(string id, string name, string type, string databaseName, string operation, string operationFriendlyName, int? percentComplete, string serverName, DateTimeOffset? startTime, ManagementOperationState? state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompletionTime, string description, bool? isCancellable) : base(id, name, type)
+        internal DatabaseOperation(ResourceIdentifier id, string name, ResourceType type, string databaseName, string operation, string operationFriendlyName, int? percentComplete, string serverName, DateTimeOffset? startTime, ManagementOperationState? state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompletionTime, string description, bool? isCancellable) : base(id, name, type)
         {
             DatabaseName = databaseName;
             Operation = operation;

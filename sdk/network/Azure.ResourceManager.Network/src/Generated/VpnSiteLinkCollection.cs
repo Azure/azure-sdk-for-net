@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network
         internal VpnSiteLinkCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _vpnSiteLinksRestClient = new VpnSiteLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _vpnSiteLinksRestClient = new VpnSiteLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _vpnSiteLinksRestClient.Get(Id.ResourceGroupName, Id.Name, vpnSiteLinkName, cancellationToken);
+                var response = _vpnSiteLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnSiteLinkName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VpnSiteLink(Parent, response.Value), response.GetRawResponse());
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _vpnSiteLinksRestClient.GetAsync(Id.ResourceGroupName, Id.Name, vpnSiteLinkName, cancellationToken).ConfigureAwait(false);
+                var response = await _vpnSiteLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnSiteLinkName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new VpnSiteLink(Parent, response.Value), response.GetRawResponse());
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _vpnSiteLinksRestClient.Get(Id.ResourceGroupName, Id.Name, vpnSiteLinkName, cancellationToken: cancellationToken);
+                var response = _vpnSiteLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnSiteLinkName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<VpnSiteLink>(null, response.GetRawResponse())
                     : Response.FromValue(new VpnSiteLink(this, response.Value), response.GetRawResponse());
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _vpnSiteLinksRestClient.GetAsync(Id.ResourceGroupName, Id.Name, vpnSiteLinkName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _vpnSiteLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnSiteLinkName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<VpnSiteLink>(null, response.GetRawResponse())
                     : Response.FromValue(new VpnSiteLink(this, response.Value), response.GetRawResponse());
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _vpnSiteLinksRestClient.ListByVpnSite(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _vpnSiteLinksRestClient.ListByVpnSite(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new VpnSiteLink(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _vpnSiteLinksRestClient.ListByVpnSiteNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _vpnSiteLinksRestClient.ListByVpnSiteNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new VpnSiteLink(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _vpnSiteLinksRestClient.ListByVpnSiteAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _vpnSiteLinksRestClient.ListByVpnSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new VpnSiteLink(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _vpnSiteLinksRestClient.ListByVpnSiteNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _vpnSiteLinksRestClient.ListByVpnSiteNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new VpnSiteLink(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

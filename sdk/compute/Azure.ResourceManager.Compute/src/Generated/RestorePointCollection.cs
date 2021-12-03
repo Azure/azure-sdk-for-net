@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute
         internal RestorePointCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restorePointsRestClient = new RestorePointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _restorePointsRestClient = new RestorePointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restorePointsRestClient.Create(Id.ResourceGroupName, Id.Name, restorePointName, parameters, cancellationToken);
-                var operation = new RestorePointCreateOperation(Parent, _clientDiagnostics, Pipeline, _restorePointsRestClient.CreateCreateRequest(Id.ResourceGroupName, Id.Name, restorePointName, parameters).Request, response);
+                var response = _restorePointsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, parameters, cancellationToken);
+                var operation = new RestorePointCreateOperation(Parent, _clientDiagnostics, Pipeline, _restorePointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -95,8 +95,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restorePointsRestClient.CreateAsync(Id.ResourceGroupName, Id.Name, restorePointName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new RestorePointCreateOperation(Parent, _clientDiagnostics, Pipeline, _restorePointsRestClient.CreateCreateRequest(Id.ResourceGroupName, Id.Name, restorePointName, parameters).Request, response);
+                var response = await _restorePointsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new RestorePointCreateOperation(Parent, _clientDiagnostics, Pipeline, _restorePointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restorePointsRestClient.Get(Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken);
+                var response = _restorePointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RestorePoint(Parent, response.Value), response.GetRawResponse());
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restorePointsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken).ConfigureAwait(false);
+                var response = await _restorePointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new RestorePoint(Parent, response.Value), response.GetRawResponse());
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restorePointsRestClient.Get(Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken: cancellationToken);
+                var response = _restorePointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<RestorePoint>(null, response.GetRawResponse())
                     : Response.FromValue(new RestorePoint(this, response.Value), response.GetRawResponse());
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restorePointsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _restorePointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<RestorePoint>(null, response.GetRawResponse())
                     : Response.FromValue(new RestorePoint(this, response.Value), response.GetRawResponse());

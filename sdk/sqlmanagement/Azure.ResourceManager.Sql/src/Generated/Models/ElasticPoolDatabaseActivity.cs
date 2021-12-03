@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Represents the activity on an elastic pool. </summary>
-    public partial class ElasticPoolDatabaseActivity : ProxyResource
+    public partial class ElasticPoolDatabaseActivity : Resource
     {
         /// <summary> Initializes a new instance of ElasticPoolDatabaseActivity. </summary>
         public ElasticPoolDatabaseActivity()
@@ -18,9 +20,9 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of ElasticPoolDatabaseActivity. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="databaseName"> The database name. </param>
         /// <param name="endTime"> The time the operation finished (ISO8601 format). </param>
@@ -37,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="serverName"> The name of the server the elastic pool is in. </param>
         /// <param name="startTime"> The time the operation started (ISO8601 format). </param>
         /// <param name="state"> The current state of the operation. </param>
-        internal ElasticPoolDatabaseActivity(string id, string name, string type, string location, string databaseName, DateTimeOffset? endTime, int? errorCode, string errorMessage, int? errorSeverity, string operation, Guid? operationId, int? percentComplete, string requestedElasticPoolName, string currentElasticPoolName, string currentServiceObjective, string requestedServiceObjective, string serverName, DateTimeOffset? startTime, string state) : base(id, name, type)
+        internal ElasticPoolDatabaseActivity(ResourceIdentifier id, string name, ResourceType type, string location, string databaseName, DateTimeOffset? endTime, int? errorCode, string errorMessage, int? errorSeverity, string operation, Guid? operationId, int? percentComplete, string requestedElasticPoolName, string currentElasticPoolName, string currentServiceObjective, string requestedServiceObjective, string serverName, DateTimeOffset? startTime, string state) : base(id, name, type)
         {
             Location = location;
             DatabaseName = databaseName;

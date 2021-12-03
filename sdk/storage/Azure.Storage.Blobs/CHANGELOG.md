@@ -1,6 +1,11 @@
 # Release History
 
-## 12.11.0-beta.2 (2021-11-29)
+## 12.11.0-beta.3 (Unreleased)
+- Fixed bug where BlobSasBuilder.SetPermissions(string rawPermissions) was not properly handling the Permanent Delete ('y') and set Immutability Policy ('i') permissions.
+
+### Other Changes
+
+## 12.11.0-beta.2 (2021-11-30)
 - Added support for service version 2021-02-12
 - Added support for listing system containers with BlobServiceClient.GetBlobContainers() and .GetBlobContainersAsync().
 - Added support for blob names container invalid XML characters.

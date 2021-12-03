@@ -18,7 +18,7 @@ namespace Azure.Template.Generated.Tests.Samples
             var endpoint = TestEnvironment.Endpoint;
 
             #region Snippet:TemplateServiceAuthenticate
-            var serviceClient = new TemplateServiceClient(new DefaultAzureCredential(), new Uri(endpoint));
+            var serviceClient = new TemplateServiceClient(new Uri(endpoint), new DefaultAzureCredential());
             #endregion
 
             return serviceClient;
@@ -50,7 +50,7 @@ namespace Azure.Template.Generated.Tests.Samples
             #region Snippet:RetrieveResource
 
             var client = GetClient();
-            var response = await client.GetTemplateServiceAsync("123");
+            var response = await client.GetResourceAsync("123");
             using JsonDocument resourceJson = JsonDocument.Parse(response.Content.ToMemory());
             string resourceName = resourceJson.RootElement.GetProperty("name").ToString();
             string resourceId = resourceJson.RootElement.GetProperty("id").ToString();

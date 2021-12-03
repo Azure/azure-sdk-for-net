@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Sql.Models
             SupportedMaxSizes = new ChangeTrackingList<MaxSizeRangeCapability>();
             SupportedPerDatabaseMaxSizes = new ChangeTrackingList<MaxSizeRangeCapability>();
             SupportedPerDatabaseMaxPerformanceLevels = new ChangeTrackingList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>();
+            SupportedMaintenanceConfigurations = new ChangeTrackingList<MaintenanceConfigurationCapability>();
         }
 
         /// <summary> Initializes a new instance of ElasticPoolPerformanceLevelCapability. </summary>
@@ -32,9 +33,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="supportedPerDatabaseMaxSizes"> The list of supported per database max sizes. </param>
         /// <param name="supportedPerDatabaseMaxPerformanceLevels"> The list of supported per database max performance levels. </param>
         /// <param name="zoneRedundant"> Whether or not zone redundancy is supported for the performance level. </param>
+        /// <param name="supportedMaintenanceConfigurations"> List of supported maintenance configurations. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal ElasticPoolPerformanceLevelCapability(PerformanceLevelCapability performanceLevel, Sku sku, IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes, int? maxDatabaseCount, MaxSizeCapability includedMaxSize, IReadOnlyList<MaxSizeRangeCapability> supportedMaxSizes, IReadOnlyList<MaxSizeRangeCapability> supportedPerDatabaseMaxSizes, IReadOnlyList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability> supportedPerDatabaseMaxPerformanceLevels, bool? zoneRedundant, CapabilityStatus? status, string reason)
+        internal ElasticPoolPerformanceLevelCapability(PerformanceLevelCapability performanceLevel, Sku sku, IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes, int? maxDatabaseCount, MaxSizeCapability includedMaxSize, IReadOnlyList<MaxSizeRangeCapability> supportedMaxSizes, IReadOnlyList<MaxSizeRangeCapability> supportedPerDatabaseMaxSizes, IReadOnlyList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability> supportedPerDatabaseMaxPerformanceLevels, bool? zoneRedundant, IReadOnlyList<MaintenanceConfigurationCapability> supportedMaintenanceConfigurations, CapabilityStatus? status, string reason)
         {
             PerformanceLevel = performanceLevel;
             Sku = sku;
@@ -45,6 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
             SupportedPerDatabaseMaxSizes = supportedPerDatabaseMaxSizes;
             SupportedPerDatabaseMaxPerformanceLevels = supportedPerDatabaseMaxPerformanceLevels;
             ZoneRedundant = zoneRedundant;
+            SupportedMaintenanceConfigurations = supportedMaintenanceConfigurations;
             Status = status;
             Reason = reason;
         }
@@ -67,6 +70,8 @@ namespace Azure.ResourceManager.Sql.Models
         public IReadOnlyList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability> SupportedPerDatabaseMaxPerformanceLevels { get; }
         /// <summary> Whether or not zone redundancy is supported for the performance level. </summary>
         public bool? ZoneRedundant { get; }
+        /// <summary> List of supported maintenance configurations. </summary>
+        public IReadOnlyList<MaintenanceConfigurationCapability> SupportedMaintenanceConfigurations { get; }
         /// <summary> The status of the capability. </summary>
         public CapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>

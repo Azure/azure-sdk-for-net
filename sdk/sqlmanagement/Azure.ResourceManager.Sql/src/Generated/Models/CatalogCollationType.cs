@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="CatalogCollationType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="CatalogCollationType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CatalogCollationType(string value)
         {

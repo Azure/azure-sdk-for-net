@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network
         internal ExpressRouteGatewayCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _expressRouteGatewaysRestClient = new ExpressRouteGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _expressRouteGatewaysRestClient = new ExpressRouteGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _expressRouteGatewaysRestClient.CreateOrUpdate(Id.ResourceGroupName, expressRouteGatewayName, putExpressRouteGatewayParameters, cancellationToken);
-                var operation = new ExpressRouteGatewayCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _expressRouteGatewaysRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, expressRouteGatewayName, putExpressRouteGatewayParameters).Request, response);
+                var response = _expressRouteGatewaysRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, expressRouteGatewayName, putExpressRouteGatewayParameters, cancellationToken);
+                var operation = new ExpressRouteGatewayCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _expressRouteGatewaysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, expressRouteGatewayName, putExpressRouteGatewayParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _expressRouteGatewaysRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, expressRouteGatewayName, putExpressRouteGatewayParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ExpressRouteGatewayCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _expressRouteGatewaysRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, expressRouteGatewayName, putExpressRouteGatewayParameters).Request, response);
+                var response = await _expressRouteGatewaysRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, expressRouteGatewayName, putExpressRouteGatewayParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ExpressRouteGatewayCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _expressRouteGatewaysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, expressRouteGatewayName, putExpressRouteGatewayParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _expressRouteGatewaysRestClient.Get(Id.ResourceGroupName, expressRouteGatewayName, cancellationToken);
+                var response = _expressRouteGatewaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, expressRouteGatewayName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ExpressRouteGateway(Parent, response.Value), response.GetRawResponse());
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _expressRouteGatewaysRestClient.GetAsync(Id.ResourceGroupName, expressRouteGatewayName, cancellationToken).ConfigureAwait(false);
+                var response = await _expressRouteGatewaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, expressRouteGatewayName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ExpressRouteGateway(Parent, response.Value), response.GetRawResponse());
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _expressRouteGatewaysRestClient.Get(Id.ResourceGroupName, expressRouteGatewayName, cancellationToken: cancellationToken);
+                var response = _expressRouteGatewaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, expressRouteGatewayName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<ExpressRouteGateway>(null, response.GetRawResponse())
                     : Response.FromValue(new ExpressRouteGateway(this, response.Value), response.GetRawResponse());
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _expressRouteGatewaysRestClient.GetAsync(Id.ResourceGroupName, expressRouteGatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _expressRouteGatewaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, expressRouteGatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<ExpressRouteGateway>(null, response.GetRawResponse())
                     : Response.FromValue(new ExpressRouteGateway(this, response.Value), response.GetRawResponse());
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _expressRouteGatewaysRestClient.ListByResourceGroup(Id.ResourceGroupName, cancellationToken);
+                var response = _expressRouteGatewaysRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
                 return Response.FromValue(response.Value.Value.Select(value => new ExpressRouteGateway(Parent, value)).ToArray() as IReadOnlyList<ExpressRouteGateway>, response.GetRawResponse());
             }
             catch (Exception e)
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _expressRouteGatewaysRestClient.ListByResourceGroupAsync(Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
+                var response = await _expressRouteGatewaysRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value.Value.Select(value => new ExpressRouteGateway(Parent, value)).ToArray() as IReadOnlyList<ExpressRouteGateway>, response.GetRawResponse());
             }
             catch (Exception e)

@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -23,9 +24,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static SyncAgentLinkedDatabase DeserializeSyncAgentLinkedDatabase(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
             Optional<SyncMemberDbType> databaseType = default;
             Optional<string> databaseId = default;
             Optional<string> description = default;
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SyncAgentLinkedDatabase(id.Value, name.Value, type.Value, Optional.ToNullable(databaseType), databaseId.Value, description.Value, serverName.Value, databaseName.Value, userName.Value);
+            return new SyncAgentLinkedDatabase(id, name, type, Optional.ToNullable(databaseType), databaseId.Value, description.Value, serverName.Value, databaseName.Value, userName.Value);
         }
     }
 }

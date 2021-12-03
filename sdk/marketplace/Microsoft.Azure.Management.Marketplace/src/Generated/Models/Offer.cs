@@ -37,6 +37,8 @@ namespace Microsoft.Azure.Management.Marketplace.Models
         /// <param name="id">The resource ID.</param>
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource</param>
         /// <param name="uniqueOfferId">Offers unique id</param>
         /// <param name="offerDisplayName">It will be displayed prominently in
         /// the marketplace</param>
@@ -56,8 +58,8 @@ namespace Microsoft.Azure.Management.Marketplace.Models
         /// updated.</param>
         /// <param name="iconFileUris">Icon File Uris</param>
         /// <param name="plans">Offer plans</param>
-        public Offer(string id = default(string), string name = default(string), string type = default(string), string uniqueOfferId = default(string), string offerDisplayName = default(string), string publisherDisplayName = default(string), string eTag = default(string), string privateStoreId = default(string), string createdAt = default(string), string modifiedAt = default(string), IList<string> specificPlanIdsLimitation = default(IList<string>), bool? updateSuppressedDueIdempotence = default(bool?), IDictionary<string, string> iconFileUris = default(IDictionary<string, string>), IList<Plan> plans = default(IList<Plan>))
-            : base(id, name, type)
+        public Offer(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string uniqueOfferId = default(string), string offerDisplayName = default(string), string publisherDisplayName = default(string), string eTag = default(string), string privateStoreId = default(string), string createdAt = default(string), string modifiedAt = default(string), IList<string> specificPlanIdsLimitation = default(IList<string>), bool? updateSuppressedDueIdempotence = default(bool?), IDictionary<string, string> iconFileUris = default(IDictionary<string, string>), IList<Plan> plans = default(IList<Plan>))
+            : base(id, name, type, systemData)
         {
             UniqueOfferId = uniqueOfferId;
             OfferDisplayName = offerDisplayName;
@@ -146,5 +148,6 @@ namespace Microsoft.Azure.Management.Marketplace.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.plans")]
         public IList<Plan> Plans { get; set; }
+
     }
 }
