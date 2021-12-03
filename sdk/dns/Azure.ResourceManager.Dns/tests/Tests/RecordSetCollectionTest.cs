@@ -77,7 +77,11 @@ namespace Azure.Management.Dns.Tests
         {
             RecordSetAaaa aaaaResult = await zone.GetRecordSetAaaas().GetAsync("Aaaa");
             Assert.AreEqual("::1", aaaaResult.Data.AaaaRecords[0].Ipv6Address);
+            RecordSetCaa recordSetCaa = await zone.GetRecordSetCaas().GetAsync("CAA1");
+            Assert.AreEqual(recordSetCaa.Data.CaaRecords.Count, 1);
+            Assert.AreEqual(recordSetCaa.Data.CaaRecords[0].Value, "dummydnsrecord1.microsoft.com");
         }
+
         [TestCase]
         public async Task GetIfExists()
         {

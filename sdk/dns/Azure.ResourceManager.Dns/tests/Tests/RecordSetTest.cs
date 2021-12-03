@@ -42,6 +42,10 @@ namespace Azure.Management.Dns.Tests
             RecordSetData recordSetData = new RecordSetData() { TTL = 600 };
             recordSetData.ARecords.Add(new ARecord("127.0.0.1"));
             _ = await zone.GetRecordSetAs().CreateOrUpdateAsync("@", recordSetData);
+            //A - Get 2
+            RecordSetData recordSetData2 = new RecordSetData() { TTL = 600 };
+            recordSetData2.ARecords.Add(new ARecord("127.0.0.1"));
+            _ = await zone.GetRecordSetAs().CreateOrUpdateAsync("www2", recordSetData2);
             //AAAA - Delete
             RecordSetData recordAaaaSetData = new RecordSetData() { TTL = 600 };
             recordAaaaSetData.AaaaRecords.Add(new AaaaRecord("::1"));
@@ -82,6 +86,7 @@ namespace Azure.Management.Dns.Tests
             //A
             RecordSetA aResult = await zone.GetRecordSetAs().GetAsync("@");
             RecordSetA aGet = await aResult.GetAsync();
+            Assert.AreEqual(aGet.Data.ARecords.Count, 1);
             Assert.AreEqual("127.0.0.1", aGet.Data.ARecords[0].Ipv4Address);
             //MX
             RecordSetMx mxResult = await zone.GetRecordSetMxes().GetAsync("MX");

@@ -9,7 +9,6 @@ namespace: Azure.ResourceManager.Dns
 require: https://github.com/Azure/azure-rest-api-specs/blob/48a49f06399fbdf21f17406b5042f96a5d573bf0/specification/dns/resource-manager/readme.md
 clear-output-folder: true
 skip-csproj: true
-use: C:\Users\v-runliu\autorest.csharp\artifacts\bin\AutoRest.CSharp\Debug\netcoreapp3.1
 modelerfour:
   lenient-model-deduplication: true
 
