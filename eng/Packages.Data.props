@@ -67,15 +67,15 @@
     <PackageReference Update="System.Memory.Data" Version="1.0.2" />
     <PackageReference Update="System.Numerics.Vectors" Version="4.5.0" />
     <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.6.0" />
-    <PackageReference Update="System.Reflection.TypeExtensions" Version="4.5.1" />
+    <PackageReference Update="System.Reflection.TypeExtensions" Version="4.7.0" />
     <PackageReference Update="System.Threading.Tasks.Extensions" Version="4.5.4" />
-    <PackageReference Update="System.Threading.Channels" Version="4.6.0" />
-    <PackageReference Update="System.Security.Cryptography.ProtectedData" Version="4.5.0" />
-    <PackageReference Update="System.Text.Json" Version="4.6.0" />
+    <PackageReference Update="System.Threading.Channels" Version="4.7.1" />
+    <PackageReference Update="System.Security.Cryptography.ProtectedData" Version="4.7.0" />
+    <PackageReference Update="System.Text.Json" Version="4.7.2" />
     <PackageReference Update="System.Text.Encodings.Web" Version="4.7.2" />
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
-    <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0" />
-    <PackageReference Update="Microsoft.CSharp" Version="4.5.0" />
+    <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />
+    <PackageReference Update="Microsoft.CSharp" Version="4.7.0" />
 
     <!-- Azure SDK packages -->
     <PackageReference Update="Azure.Communication.Common" Version="1.0.1" />
@@ -218,7 +218,7 @@
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="5.0.0" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
     <PackageReference Update="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
-    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.8.0" />
+    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.0.0" />
     <PackageReference Update="Microsoft.NET.Sdk.Functions" Version="3.0.12" />
     <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="[2.4.0]" />
     <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.7.7, 2.0.0)" />
