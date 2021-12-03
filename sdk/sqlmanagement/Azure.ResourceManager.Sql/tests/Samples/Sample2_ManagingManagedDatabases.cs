@@ -25,22 +25,17 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
         [SetUp]
         protected async Task initialize()
         {
-            #region Snippet:Readme_DefaultSubscription
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
             Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
-            #endregion
 
-            #region Snippet:Readme_GetResourceGroupCollection
             ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
             // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
             Location location = Location.WestUS2;
             ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
-            #endregion
 
             this.resourceGroup = resourceGroup;
 
-            #region Snippet:Managing_Sql_CreateAManagedInstance
             //1. create NetworkSecurityGroup
             NetworkSecurityGroupData networkSecurityGroupData = new NetworkSecurityGroupData()
             {
@@ -100,7 +95,6 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
             string managedInstanceName = "myManagedInstance";
             var managedInstanceLro = await resourceGroup.GetManagedInstances().CreateOrUpdateAsync(managedInstanceName, data);
             managedInstance = managedInstanceLro.Value;
-            #endregion
         }
 
         [Test]
