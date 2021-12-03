@@ -27,9 +27,6 @@ namespace Azure.Maps.Search.Models
             Summary = summary;
             Results = results;
         }
-
-        /// <summary> Summary object for a Search API response. </summary>
-        public SearchSummary Summary { get; }
         /// <summary> A list of Search API results. </summary>
         public IReadOnlyList<SearchAddressResultItem> Results { get; }
     }
