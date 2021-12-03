@@ -57,6 +57,7 @@
     "deserializable",
     "deserializes",
     "diagnoser",
+    "dotnetcli",
     "dont",
     "dtmf",
     "epsg",
@@ -237,7 +238,6 @@
     {
       "filename": "**/sdk/synapse/**/*.md",
       "words": [
-        "dotnetcli",
         "abfss"
       ]
     },
