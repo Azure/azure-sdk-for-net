@@ -203,7 +203,7 @@ namespace Azure.Monitor.Query.Tests
             Object[] rowValues = new Object[] { "row1", "row2" };
             LogsTableRow logsTableRow = MonitorQueryModelFactory.LogsTableRow(logsTableColumns, rowValues);
             LogsTableRow[] rowArray = new LogsTableRow[] { logsTableRow };
-            LogsTable logsTable = MonitorQueryModelFactory.LogsTable("tester", rowArray.AsEnumerable(), logsTableColumns.AsEnumerable());
+            LogsTable logsTable = MonitorQueryModelFactory.LogsTable("tester", logsTableColumns.AsEnumerable(), rowArray.AsEnumerable());
 
             Assert.AreEqual(logsTable.Name, "tester");
             Assert.AreEqual(logsTable.Rows.Count, 1);
