@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
+using Azure.Monitor.Query.Models;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -38,23 +40,23 @@ namespace Azure.Monitor.Query.Models
         }
 
         /// <summary> Initializes a new instance of LogsTableRow. </summary>
-        /// <returns> A new <see cref="Models.LogsTableColumn"/> instance for mocking. </returns>
-        public static LogsTableRow LogsTableRow(IReadOnlyList<LogsTableColumn> columns, Object[] rows)
+        /// /// <param name="columns"> The list of columns. </param>
+        /// <param name="values"> An object array representing the rows of the table. </param>
+        /// <returns> A new <see cref="Models.LogsTableRow"/> instance for mocking. </returns>
+        public static LogsTableRow LogsTableRow(IEnumerable<LogsTableColumn> columns, IEnumerable<object> values)
         {
-            Dictionary<string, int> columnDictionary = new();
-
-            for (var index = 0; index < columns.Count; index++)
-            {
-                columnDictionary[columns[index].Name] = index;
-            }
-
-            JsonElement row = JsonElementFromObject(rows);
-            return new LogsTableRow(columnDictionary, columns, row);
+            var columnsList = columns.ToArray();
+            var columnMap = LogsTableColumn.GetColumnMapFromColumns(columns);
+            JsonElement row = JsonElementFromObject(values);
+            return new LogsTableRow(columnMap, columnsList, row);
         }
 
         /// <summary> Initializes a new instance of LogsTable. </summary>
+        /// <param name="name"> The name of the table. </param>
+        /// <param name="columns"> The list of columns. </param>
+        /// <param name="rows"> The list of rows. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="rows"/> is null. </exception>
-        public static LogsTable LogsTable(string name, IEnumerable<LogsTableRow> rows, IEnumerable<LogsTableColumn> columns)
+        public static LogsTable LogsTable(string name, IEnumerable<LogsTableColumn> columns, IEnumerable<LogsTableRow> rows)
         {
             JsonElement row = JsonElementFromObject(rows);
             return new LogsTable(name, columns, row);
