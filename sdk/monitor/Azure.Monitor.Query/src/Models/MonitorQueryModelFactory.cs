@@ -46,7 +46,7 @@ namespace Azure.Monitor.Query.Models
         public static LogsTableRow LogsTableRow(IEnumerable<LogsTableColumn> columns, IEnumerable<object> values)
         {
             var columnsList = columns.ToArray();
-            var columnMap = LogsTableColumn.GetColumnMapFromColumns(columns);
+            var columnMap = Models.LogsTableColumn.GetColumnMapFromColumns(columns);
             JsonElement row = JsonElementFromObject(values);
             return new LogsTableRow(columnMap, columnsList, row);
         }

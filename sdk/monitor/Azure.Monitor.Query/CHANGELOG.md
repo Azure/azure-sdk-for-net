@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.2 (2021-12-07)
+## 1.1.0 (2021-12-07)
 ### Features Added
 - Added `LogsTableRow` to `MonitorQueryModelFactory`
 - Added `LogsTable` to `MonitorQueryModelFactory`
