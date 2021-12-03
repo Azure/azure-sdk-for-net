@@ -1,0 +1,6 @@
+steps:
+    - task: Powershell@2
+      inputs:
+        filePath: $(Build.SourcesDirectory)/eng/common/scripts/Write-FileSystemMetrics.ps1
+        pwsh: true
+      displayName: Write filesystem metrics
