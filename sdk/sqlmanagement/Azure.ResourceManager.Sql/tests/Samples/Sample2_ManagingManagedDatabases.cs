@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#region Snippet:Manage_Sql_Namespaces
+#region Snippet:Manage_Databases_Namespaces
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql.Models;
 using NUnit.Framework;
-#endregion  Snippet:Manage_Sql_Namespaces
+#endregion Snippet:Manage_Databases_Namespaces
 
 namespace Azure.ResourceManager.Sql.Tests.Samples
 {
