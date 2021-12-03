@@ -1,8 +1,10 @@
 namespace Azure
 {
-    public partial class RequestOptions : Azure.RequestContext
+    public partial class RequestOptions
     {
         public RequestOptions() { }
+        public Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
+        public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
     }
 }
 namespace Azure.Core
