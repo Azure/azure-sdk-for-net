@@ -393,8 +393,9 @@ sdk/labservices/Microsoft.Azure.Management.LabServices/           @Tanmayeekamat
 # ServiceLabel: %Monitor %Service Attention
 sdk/monitor/           @SameergMS @dadunl
 
-# PRLabel: %Monitor
+# PRLabel: %Monitor - Query
 sdk/monitor/Azure.Monitor.Query            @pakrym @nisha-bhatia
+sdk/monitor/ci.yml                         @pakrym @nisha-bhatia
 
 # PRLabel: %Monitor - ApplicationInsights
 # ServiceLabel: %Monitor - ApplicationInsights %Service Attention
