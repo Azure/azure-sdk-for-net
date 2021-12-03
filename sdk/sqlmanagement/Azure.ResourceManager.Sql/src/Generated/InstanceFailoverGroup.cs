@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _instanceFailoverGroupsRestClient = new InstanceFailoverGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _instanceFailoverGroupsRestClient = new InstanceFailoverGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="InstanceFailoverGroup"/> class. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Sql
         internal InstanceFailoverGroup(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _instanceFailoverGroupsRestClient = new InstanceFailoverGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _instanceFailoverGroupsRestClient = new InstanceFailoverGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="InstanceFailoverGroup"/> class. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql
         internal InstanceFailoverGroup(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _instanceFailoverGroupsRestClient = new InstanceFailoverGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _instanceFailoverGroupsRestClient = new InstanceFailoverGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _instanceFailoverGroupsRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _instanceFailoverGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new InstanceFailoverGroup(this, response.Value), response.GetRawResponse());
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _instanceFailoverGroupsRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _instanceFailoverGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new InstanceFailoverGroup(this, response.Value), response.GetRawResponse());
@@ -149,8 +149,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _instanceFailoverGroupsRestClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new InstanceFailoverGroupDeleteOperation(_clientDiagnostics, Pipeline, _instanceFailoverGroupsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _instanceFailoverGroupsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new InstanceFailoverGroupDeleteOperation(_clientDiagnostics, Pipeline, _instanceFailoverGroupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _instanceFailoverGroupsRestClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new InstanceFailoverGroupDeleteOperation(_clientDiagnostics, Pipeline, _instanceFailoverGroupsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _instanceFailoverGroupsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new InstanceFailoverGroupDeleteOperation(_clientDiagnostics, Pipeline, _instanceFailoverGroupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -193,8 +193,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _instanceFailoverGroupsRestClient.FailoverAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new InstanceFailoverGroupFailoverOperation(_clientDiagnostics, Pipeline, _instanceFailoverGroupsRestClient.CreateFailoverRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _instanceFailoverGroupsRestClient.FailoverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new InstanceFailoverGroupFailoverOperation(_clientDiagnostics, Pipeline, _instanceFailoverGroupsRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -215,8 +215,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _instanceFailoverGroupsRestClient.Failover(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new InstanceFailoverGroupFailoverOperation(_clientDiagnostics, Pipeline, _instanceFailoverGroupsRestClient.CreateFailoverRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _instanceFailoverGroupsRestClient.Failover(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new InstanceFailoverGroupFailoverOperation(_clientDiagnostics, Pipeline, _instanceFailoverGroupsRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -237,8 +237,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _instanceFailoverGroupsRestClient.ForceFailoverAllowDataLossAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new InstanceFailoverGroupForceFailoverAllowDataLossOperation(_clientDiagnostics, Pipeline, _instanceFailoverGroupsRestClient.CreateForceFailoverAllowDataLossRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _instanceFailoverGroupsRestClient.ForceFailoverAllowDataLossAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new InstanceFailoverGroupForceFailoverAllowDataLossOperation(_clientDiagnostics, Pipeline, _instanceFailoverGroupsRestClient.CreateForceFailoverAllowDataLossRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -259,8 +259,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _instanceFailoverGroupsRestClient.ForceFailoverAllowDataLoss(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new InstanceFailoverGroupForceFailoverAllowDataLossOperation(_clientDiagnostics, Pipeline, _instanceFailoverGroupsRestClient.CreateForceFailoverAllowDataLossRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _instanceFailoverGroupsRestClient.ForceFailoverAllowDataLoss(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new InstanceFailoverGroupForceFailoverAllowDataLossOperation(_clientDiagnostics, Pipeline, _instanceFailoverGroupsRestClient.CreateForceFailoverAllowDataLossRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

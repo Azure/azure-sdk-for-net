@@ -10,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -18,13 +19,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ManagedDatabaseSecurityAlertPolicy. </summary>
     public partial class ManagedDatabaseSecurityAlertPolicyMockTests : MockTestBase
     {
-        public ManagedDatabaseSecurityAlertPolicyMockTests(bool isAsync) : base(isAsync)
+        public ManagedDatabaseSecurityAlertPolicyMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public ManagedDatabaseSecurityAlertPolicyMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.ManagedDatabaseSecurityAlertPolicyCollection> GetManagedDatabaseSecurityAlertPolicyCollectionAsync(string resourceGroupName, string managedInstanceName, string databaseName)
@@ -51,9 +49,9 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         public async Task GetAsync()
         {
             // Example: Get a database's threat detection policy
-            var resource = await GetManagedDatabaseSecurityAlertPolicyAsync();
+            var managedDatabaseSecurityAlertPolicy = await GetManagedDatabaseSecurityAlertPolicyAsync();
 
-            await resource.GetAsync();
+            await managedDatabaseSecurityAlertPolicy.GetAsync();
         }
     }
 }

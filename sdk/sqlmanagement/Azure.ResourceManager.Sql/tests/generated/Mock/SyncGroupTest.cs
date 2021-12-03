@@ -10,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.Sql.Models;
 using Azure.ResourceManager.TestFramework;
@@ -19,13 +20,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for SyncGroup. </summary>
     public partial class SyncGroupMockTests : MockTestBase
     {
-        public SyncGroupMockTests(bool isAsync) : base(isAsync)
+        public SyncGroupMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public SyncGroupMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.SyncGroupCollection> GetSyncGroupCollectionAsync(string resourceGroupName, string serverName, string databaseName)
@@ -52,26 +50,26 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         public async Task GetAsync()
         {
             // Example: Get a sync group
-            var resource = await GetSyncGroupAsync();
+            var syncGroup = await GetSyncGroupAsync();
 
-            await resource.GetAsync();
+            await syncGroup.GetAsync();
         }
 
         [RecordedTest]
         public async Task DeleteAsync()
         {
             // Example: Delete a sync group
-            var resource = await GetSyncGroupAsync();
+            var syncGroup = await GetSyncGroupAsync();
 
-            await resource.DeleteAsync();
+            await syncGroup.DeleteAsync();
         }
 
         [RecordedTest]
         public async Task UpdateAsync()
         {
             // Example: Update a sync group
-            var resource = await GetSyncGroupAsync();
-            var parameters = new Sql.SyncGroupData()
+            var syncGroup = await GetSyncGroupAsync();
+            Sql.SyncGroupData parameters = new Sql.SyncGroupData()
             {
                 Interval = -1,
                 ConflictResolutionPolicy = new Sql.Models.SyncConflictResolutionPolicy("HubWin"),
@@ -81,56 +79,56 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
                 UsePrivateLinkConnection = true,
             };
 
-            await resource.UpdateAsync(parameters);
+            await syncGroup.UpdateAsync(parameters);
         }
 
         [RecordedTest]
         public async Task RefreshHubSchemaAsync()
         {
             // Example: Refresh a hub database schema.
-            var resource = await GetSyncGroupAsync();
+            var syncGroup = await GetSyncGroupAsync();
 
-            await resource.RefreshHubSchemaAsync();
+            await syncGroup.RefreshHubSchemaAsync();
         }
 
         [RecordedTest]
         public async Task GetHubSchemasAsync()
         {
             // Example: Get a hub database schema.
-            var resource = await GetSyncGroupAsync();
+            var syncGroup = await GetSyncGroupAsync();
 
-            resource.GetHubSchemasAsync();
+            syncGroup.GetHubSchemasAsync();
         }
 
         [RecordedTest]
         public async Task GetLogsAsync()
         {
             // Example: Get sync group logs
-            var resource = await GetSyncGroupAsync();
-            var startTime = "2017-01-01T00:00:00";
-            var endTime = "2017-12-31T00:00:00";
-            var type = new Sql.Models.Enum76("All");
+            var syncGroup = await GetSyncGroupAsync();
+            string startTime = "2017-01-01T00:00:00";
+            string endTime = "2017-12-31T00:00:00";
+            Sql.Models.Enum76 type = new Sql.Models.Enum76("All");
             string continuationToken = null;
 
-            resource.GetLogsAsync(startTime, endTime, type, continuationToken);
+            syncGroup.GetLogsAsync(startTime, endTime, type, continuationToken);
         }
 
         [RecordedTest]
         public async Task CancelSyncAsync()
         {
             // Example: Cancel a sync group synchronization
-            var resource = await GetSyncGroupAsync();
+            var syncGroup = await GetSyncGroupAsync();
 
-            await resource.CancelSyncAsync();
+            await syncGroup.CancelSyncAsync();
         }
 
         [RecordedTest]
         public async Task TriggerSyncAsync()
         {
             // Example: Trigger a sync group synchronization.
-            var resource = await GetSyncGroupAsync();
+            var syncGroup = await GetSyncGroupAsync();
 
-            await resource.TriggerSyncAsync();
+            await syncGroup.TriggerSyncAsync();
         }
     }
 }

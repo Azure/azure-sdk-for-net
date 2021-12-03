@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.Sql.Models;
 using Azure.ResourceManager.TestFramework;
@@ -19,13 +21,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for Database. </summary>
     public partial class DatabaseMockTests : MockTestBase
     {
-        public DatabaseMockTests(bool isAsync) : base(isAsync)
+        public DatabaseMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public DatabaseMockTests() : this(false)
-        {
+            Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.DatabaseCollection> GetDatabaseCollectionAsync(string resourceGroupName, string serverName)
@@ -49,106 +48,106 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         public async Task GetAsync()
         {
             // Example: Gets a database.
-            var resource = await GetDatabaseAsync();
+            var database = await GetDatabaseAsync();
 
-            await resource.GetAsync();
+            await database.GetAsync();
         }
 
         [RecordedTest]
         public async Task DeleteAsync()
         {
             // Example: Deletes a database.
-            var resource = await GetDatabaseAsync();
+            var database = await GetDatabaseAsync();
 
-            await resource.DeleteAsync();
+            await database.DeleteAsync();
         }
 
         [RecordedTest]
         public async Task UpdateAsync()
         {
             // Example: Assigns maintenance window to a database.
-            var resource = await GetDatabaseAsync();
-            var parameters = new Sql.Models.DatabaseUpdate()
+            var database = await GetDatabaseAsync();
+            Sql.Models.DatabaseUpdate parameters = new Sql.Models.DatabaseUpdate()
             {
                 Sku = new Sql.Models.Sku("BC_Gen5_4"),
                 MaintenanceConfigurationId = "/subscriptions/00000000-1111-2222-3333-444444444444/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_SouthEastAsia_1",
             };
 
-            await resource.UpdateAsync(parameters);
+            await database.UpdateAsync(parameters);
         }
 
         [RecordedTest]
         public async Task GetMetricsAsync()
         {
             // Example: List database usage metrics
-            var resource = await GetDatabaseAsync();
-            var filter = "name/value eq 'cpu_percent' and timeGrain eq '00:10:00' and startTime eq '2017-06-02T18:35:00Z' and endTime eq '2017-06-02T18:55:00Z'";
+            var database = await GetDatabaseAsync();
+            string filter = "name/value eq 'cpu_percent' and timeGrain eq '00:10:00' and startTime eq '2017-06-02T18:35:00Z' and endTime eq '2017-06-02T18:55:00Z'";
 
-            resource.GetMetricsAsync(filter);
+            database.GetMetricsAsync(filter);
         }
 
         [RecordedTest]
         public async Task GetMetricDefinitionsAsync()
         {
             // Example: List database usage metrics
-            var resource = await GetDatabaseAsync();
+            var database = await GetDatabaseAsync();
 
-            resource.GetMetricDefinitionsAsync();
+            database.GetMetricDefinitionsAsync();
         }
 
         [RecordedTest]
         public async Task FailoverAsync()
         {
             // Example: Failover an database
-            var resource = await GetDatabaseAsync();
-            var replicaType = new Sql.Models.ReplicaType("Primary");
+            var database = await GetDatabaseAsync();
+            Sql.Models.ReplicaType? replicaType = new Sql.Models.ReplicaType("Primary");
 
-            await resource.FailoverAsync(replicaType);
+            await database.FailoverAsync(replicaType);
         }
 
         [RecordedTest]
         public async Task PauseAsync()
         {
             // Example: Pauses a database.
-            var resource = await GetDatabaseAsync();
+            var database = await GetDatabaseAsync();
 
-            await resource.PauseAsync();
+            await database.PauseAsync();
         }
 
         [RecordedTest]
         public async Task ResumeAsync()
         {
             // Example: Resumes a database.
-            var resource = await GetDatabaseAsync();
+            var database = await GetDatabaseAsync();
 
-            await resource.ResumeAsync();
+            await database.ResumeAsync();
         }
 
         [RecordedTest]
         public async Task UpgradeDataWarehouseAsync()
         {
             // Example: Upgrades a data warehouse.
-            var resource = await GetDatabaseAsync();
+            var database = await GetDatabaseAsync();
 
-            await resource.UpgradeDataWarehouseAsync();
+            await database.UpgradeDataWarehouseAsync();
         }
 
         [RecordedTest]
         public async Task RenameAsync()
         {
             // Example: Renames a database.
-            var resource = await GetDatabaseAsync();
-            var parameters = new Sql.Models.ResourceMoveDefinition("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/Default-SQL-SouthEastAsia/providers/Microsoft.Sql/servers/testsvr/databases/newtestdb");
+            var database = await GetDatabaseAsync();
+            Sql.Models.ResourceMoveDefinition parameters = new Sql.Models.ResourceMoveDefinition("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/Default-SQL-SouthEastAsia/providers/Microsoft.Sql/servers/testsvr/databases/newtestdb");
 
-            await resource.RenameAsync(parameters);
+            await database.RenameAsync(parameters);
         }
 
         [RecordedTest]
         public async Task ImportAsync()
         {
             // Example: Imports to an existing empty database, using private link to communicate with SQL server and storage account.
-            var resource = await GetDatabaseAsync();
-            var parameters = new Sql.Models.ImportExistingDatabaseDefinition(new Sql.Models.StorageKeyType("StorageAccessKey"), "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx==", "https://test.blob.core.windows.net/test.bacpac", "login", "password")
+            var database = await GetDatabaseAsync();
+            Sql.Models.ImportExistingDatabaseDefinition parameters = new Sql.Models.ImportExistingDatabaseDefinition(new Sql.Models.StorageKeyType("StorageAccessKey"), "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx==", "https://test.blob.core.windows.net/test.bacpac", "login", "password")
             {
                 AuthenticationType = "Sql",
                 NetworkIsolation = new Sql.Models.NetworkIsolationSettings()
@@ -158,15 +157,15 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
                 },
             };
 
-            await resource.ImportAsync(parameters);
+            await database.ImportAsync(parameters);
         }
 
         [RecordedTest]
         public async Task ExportAsync()
         {
             // Example: Exports a database, using private link to communicate with SQL server and storage account.
-            var resource = await GetDatabaseAsync();
-            var parameters = new Sql.Models.ExportDatabaseDefinition(new Sql.Models.StorageKeyType("StorageAccessKey"), "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx==", "https://test.blob.core.windows.net/test.bacpac", "login", "password")
+            var database = await GetDatabaseAsync();
+            Sql.Models.ExportDatabaseDefinition parameters = new Sql.Models.ExportDatabaseDefinition(new Sql.Models.StorageKeyType("StorageAccessKey"), "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx==", "https://test.blob.core.windows.net/test.bacpac", "login", "password")
             {
                 AuthenticationType = "Sql",
                 NetworkIsolation = new Sql.Models.NetworkIsolationSettings()
@@ -176,92 +175,92 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
                 },
             };
 
-            await resource.ExportAsync(parameters);
+            await database.ExportAsync(parameters);
         }
 
         [RecordedTest]
         public async Task GetDatabaseColumnsAsync()
         {
             // Example: Filter database columns
-            var resource = await GetDatabaseAsync();
-            var schema = new List<string>()
+            var database = await GetDatabaseAsync();
+            IEnumerable<string> schema = new List<string>()
 {
 "dbo",};
-            var table = new List<string>()
+            IEnumerable<string> table = new List<string>()
 {
 "customer","address",};
-            var column = new List<string>()
+            IEnumerable<string> column = new List<string>()
 {
 "username",};
-            var orderBy = new List<string>()
+            IEnumerable<string> orderBy = new List<string>()
 {
 "schema asc","table","column desc",};
             string skiptoken = null;
 
-            resource.GetDatabaseColumnsAsync(schema, table, column, orderBy, skiptoken);
+            database.GetDatabaseColumnsAsync(schema, table, column, orderBy, skiptoken);
         }
 
         [RecordedTest]
         public async Task CreateRestorePointAsync()
         {
             // Example: Creates datawarehouse database restore point.
-            var resource = await GetDatabaseAsync();
-            var parameters = new Sql.Models.CreateDatabaseRestorePointDefinition("mylabel");
+            var database = await GetDatabaseAsync();
+            Sql.Models.CreateDatabaseRestorePointDefinition parameters = new Sql.Models.CreateDatabaseRestorePointDefinition("mylabel");
 
-            await resource.CreateRestorePointAsync(parameters);
+            await database.CreateRestorePointAsync(parameters);
         }
 
         [RecordedTest]
         public async Task GetCurrentSensitivityLabelsAsync()
         {
             // Example: Gets the current sensitivity labels of a given database
-            var resource = await GetDatabaseAsync();
+            var database = await GetDatabaseAsync();
             string skipToken = null;
             bool? count = null;
             string filter = null;
 
-            resource.GetCurrentSensitivityLabelsAsync(skipToken, count, filter);
+            database.GetCurrentSensitivityLabelsAsync(skipToken, count, filter);
         }
 
         [RecordedTest]
         public async Task UpdateSensitivityLabelAsync()
         {
             // Example: Update sensitivity labels of a given database using an operations batch.
-            var resource = await GetDatabaseAsync();
-            var parameters = new Sql.Models.SensitivityLabelUpdateList();
+            var database = await GetDatabaseAsync();
+            Sql.Models.SensitivityLabelUpdateList parameters = new Sql.Models.SensitivityLabelUpdateList();
 
-            await resource.UpdateSensitivityLabelAsync(parameters);
+            await database.UpdateSensitivityLabelAsync(parameters);
         }
 
         [RecordedTest]
         public async Task GetRecommendedSensitivityLabelsAsync()
         {
             // Example: Gets the recommended sensitivity labels of a given database
-            var resource = await GetDatabaseAsync();
+            var database = await GetDatabaseAsync();
             string skipToken = null;
             bool? includeDisabledRecommendations = null;
             string filter = null;
 
-            resource.GetRecommendedSensitivityLabelsAsync(skipToken, includeDisabledRecommendations, filter);
+            database.GetRecommendedSensitivityLabelsAsync(skipToken, includeDisabledRecommendations, filter);
         }
 
         [RecordedTest]
         public async Task UpdateRecommendedSensitivityLabelAsync()
         {
             // Example: Update recommended sensitivity labels of a given database using an operations batch.
-            var resource = await GetDatabaseAsync();
-            var parameters = new Sql.Models.RecommendedSensitivityLabelUpdateList();
+            var database = await GetDatabaseAsync();
+            Sql.Models.RecommendedSensitivityLabelUpdateList parameters = new Sql.Models.RecommendedSensitivityLabelUpdateList();
 
-            await resource.UpdateRecommendedSensitivityLabelAsync(parameters);
+            await database.UpdateRecommendedSensitivityLabelAsync(parameters);
         }
 
         [RecordedTest]
         public async Task CreateOrUpdateDatabaseExtensionAsync()
         {
             // Example: Create or Update database extensions.
-            var resource = await GetDatabaseAsync();
-            var extensionName = "polybaseimport";
-            var parameters = new Sql.Models.DatabaseExtensions()
+            var database = await GetDatabaseAsync();
+            string extensionName = "polybaseimport";
+            Sql.Models.DatabaseExtensions parameters = new Sql.Models.DatabaseExtensions()
             {
                 OperationMode = new Sql.Models.OperationMode("PolybaseImport"),
                 StorageKeyType = new Sql.Models.StorageKeyType("StorageAccessKey"),
@@ -269,90 +268,90 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
                 StorageUri = "https://teststorage.blob.core.windows.net/testcontainer/Manifest.xml",
             };
 
-            await resource.CreateOrUpdateDatabaseExtensionAsync(extensionName, parameters);
+            await database.CreateOrUpdateDatabaseExtensionAsync(extensionName, parameters);
         }
 
         [RecordedTest]
         public async Task GetDatabaseExtensionsAsync()
         {
             // Example: List database extensions.
-            var resource = await GetDatabaseAsync();
+            var database = await GetDatabaseAsync();
 
-            resource.GetDatabaseExtensionsAsync();
+            database.GetDatabaseExtensionsAsync();
         }
 
         [RecordedTest]
         public async Task CancelDatabaseOperationAsync()
         {
             // Example: Cancel the database management operation
-            var resource = await GetDatabaseAsync();
-            var operationId = System.Guid.Parse("f779414b-e748-4925-8cfe-c8598f7660ae");
+            var database = await GetDatabaseAsync();
+            Guid operationId = Guid.Parse("f779414b-e748-4925-8cfe-c8598f7660ae");
 
-            await resource.CancelDatabaseOperationAsync(operationId);
+            await database.CancelDatabaseOperationAsync(operationId);
         }
 
         [RecordedTest]
         public async Task GetDatabaseOperationsAsync()
         {
             // Example: List the database management operations
-            var resource = await GetDatabaseAsync();
+            var database = await GetDatabaseAsync();
 
-            resource.GetDatabaseOperationsAsync();
+            database.GetDatabaseOperationsAsync();
         }
 
         [RecordedTest]
         public async Task GetDatabaseUsagesAsync()
         {
             // Example: Gets database usages.
-            var resource = await GetDatabaseAsync();
+            var database = await GetDatabaseAsync();
 
-            resource.GetDatabaseUsagesAsync();
+            database.GetDatabaseUsagesAsync();
         }
 
         [RecordedTest]
         public async Task DatabaseAutomaticTuningGetAsync()
         {
             // Example: Get a database's automatic tuning settings
-            var resource = await GetDatabaseAsync();
-            var childResource = resource.GetDatabaseAutomaticTuning();
+            var database = await GetDatabaseAsync();
+            var databaseAutomaticTuning = database.GetDatabaseAutomaticTuning();
 
-            await childResource.GetAsync();
+            await databaseAutomaticTuning.GetAsync();
         }
 
         [RecordedTest]
         public async Task DatabaseAutomaticTuningUpdateAsync()
         {
             // Example: Updates database automatic tuning settings with all properties
-            var resource = await GetDatabaseAsync();
-            var childResource = resource.GetDatabaseAutomaticTuning();
-            var parameters = new Sql.DatabaseAutomaticTuningData()
+            var database = await GetDatabaseAsync();
+            var databaseAutomaticTuning = database.GetDatabaseAutomaticTuning();
+            Sql.DatabaseAutomaticTuningData parameters = new Sql.DatabaseAutomaticTuningData()
             {
-                DesiredState = AutomaticTuningMode.Auto,
+                DesiredState = Sql.Models.AutomaticTuningMode.Auto,
             };
 
-            await childResource.UpdateAsync(parameters);
+            await databaseAutomaticTuning.UpdateAsync(parameters);
         }
 
         [RecordedTest]
         public async Task MaintenanceWindowOptionsGetAsync()
         {
             // Example: Gets a list of available maintenance windows for a selected database.
-            var resource = await GetDatabaseAsync();
-            var childResource = resource.GetMaintenanceWindowOptions();
-            var maintenanceWindowOptionsName = "current";
+            var database = await GetDatabaseAsync();
+            var maintenanceWindowOptions = database.GetMaintenanceWindowOptions();
+            string maintenanceWindowOptionsName = "current";
 
-            await childResource.GetAsync(maintenanceWindowOptionsName);
+            await maintenanceWindowOptions.GetAsync(maintenanceWindowOptionsName);
         }
 
         [RecordedTest]
         public async Task MaintenanceWindowsGetAsync()
         {
             // Example: Gets maintenance window settings for a selected database.
-            var resource = await GetDatabaseAsync();
-            var childResource = resource.GetMaintenanceWindows();
-            var maintenanceWindowName = "current";
+            var database = await GetDatabaseAsync();
+            var maintenanceWindows = database.GetMaintenanceWindows();
+            string maintenanceWindowName = "current";
 
-            await childResource.GetAsync(maintenanceWindowName);
+            await maintenanceWindows.GetAsync(maintenanceWindowName);
         }
     }
 }

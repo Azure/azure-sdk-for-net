@@ -10,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -18,13 +19,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ServerCommunicationLink. </summary>
     public partial class ServerCommunicationLinkMockTests : MockTestBase
     {
-        public ServerCommunicationLinkMockTests(bool isAsync) : base(isAsync)
+        public ServerCommunicationLinkMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public ServerCommunicationLinkMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.ServerCommunicationLinkCollection> GetServerCommunicationLinkCollectionAsync(string resourceGroupName, string serverName)
@@ -48,18 +46,18 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         public async Task GetAsync()
         {
             // Example: Get a server communication link
-            var resource = await GetServerCommunicationLinkAsync();
+            var serverCommunicationLink = await GetServerCommunicationLinkAsync();
 
-            await resource.GetAsync();
+            await serverCommunicationLink.GetAsync();
         }
 
         [RecordedTest]
         public async Task DeleteAsync()
         {
             // Example: Delete a server communication link
-            var resource = await GetServerCommunicationLinkAsync();
+            var serverCommunicationLink = await GetServerCommunicationLinkAsync();
 
-            await resource.DeleteAsync();
+            await serverCommunicationLink.DeleteAsync();
         }
     }
 }

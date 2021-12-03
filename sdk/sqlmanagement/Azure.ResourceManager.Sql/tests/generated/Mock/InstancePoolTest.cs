@@ -10,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.Sql.Models;
 using Azure.ResourceManager.TestFramework;
@@ -19,13 +20,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for InstancePool. </summary>
     public partial class InstancePoolMockTests : MockTestBase
     {
-        public InstancePoolMockTests(bool isAsync) : base(isAsync)
+        public InstancePoolMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public InstancePoolMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.InstancePoolCollection> GetInstancePoolCollectionAsync(string resourceGroupName)
@@ -46,48 +44,48 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         public async Task GetAsync()
         {
             // Example: Get an instance pool
-            var resource = await GetInstancePoolAsync();
+            var instancePool = await GetInstancePoolAsync();
 
-            await resource.GetAsync();
+            await instancePool.GetAsync();
         }
 
         [RecordedTest]
         public async Task DeleteAsync()
         {
             // Example: Delete an instance pool
-            var resource = await GetInstancePoolAsync();
+            var instancePool = await GetInstancePoolAsync();
 
-            await resource.DeleteAsync();
+            await instancePool.DeleteAsync();
         }
 
         [RecordedTest]
         public async Task UpdateAsync()
         {
             // Example: Patch an instance pool
-            var resource = await GetInstancePoolAsync();
-            var parameters = new Sql.Models.InstancePoolUpdate();
+            var instancePool = await GetInstancePoolAsync();
+            Sql.Models.InstancePoolUpdate parameters = new Sql.Models.InstancePoolUpdate();
 
-            await resource.UpdateAsync(parameters);
+            await instancePool.UpdateAsync(parameters);
         }
 
         [RecordedTest]
         public async Task GetManagedInstancesAsync()
         {
             // Example: List managed instances by instance pool
-            var resource = await GetInstancePoolAsync();
+            var instancePool = await GetInstancePoolAsync();
             string expand = null;
 
-            resource.GetManagedInstancesAsync(expand);
+            instancePool.GetManagedInstancesAsync(expand);
         }
 
         [RecordedTest]
         public async Task GetUsagesAsync()
         {
             // Example: List instance pool usages expanded with children.
-            var resource = await GetInstancePoolAsync();
-            var expandChildren = true;
+            var instancePool = await GetInstancePoolAsync();
+            bool? expandChildren = true;
 
-            resource.GetUsagesAsync(expandChildren);
+            instancePool.GetUsagesAsync(expandChildren);
         }
     }
 }

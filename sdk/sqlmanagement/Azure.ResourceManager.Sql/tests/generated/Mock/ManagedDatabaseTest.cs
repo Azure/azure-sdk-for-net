@@ -10,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.Sql.Models;
 using Azure.ResourceManager.TestFramework;
@@ -19,13 +20,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ManagedDatabase. </summary>
     public partial class ManagedDatabaseMockTests : MockTestBase
     {
-        public ManagedDatabaseMockTests(bool isAsync) : base(isAsync)
+        public ManagedDatabaseMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public ManagedDatabaseMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.ManagedDatabaseCollection> GetManagedDatabaseCollectionAsync(string resourceGroupName, string managedInstanceName)
@@ -49,117 +47,117 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         public async Task GetAsync()
         {
             // Example: Gets a managed database
-            var resource = await GetManagedDatabaseAsync();
+            var managedDatabase = await GetManagedDatabaseAsync();
 
-            await resource.GetAsync();
+            await managedDatabase.GetAsync();
         }
 
         [RecordedTest]
         public async Task DeleteAsync()
         {
             // Example: Delete managed database
-            var resource = await GetManagedDatabaseAsync();
+            var managedDatabase = await GetManagedDatabaseAsync();
 
-            await resource.DeleteAsync();
+            await managedDatabase.DeleteAsync();
         }
 
         [RecordedTest]
         public async Task UpdateAsync()
         {
             // Example: Updates a managed database with maximal properties
-            var resource = await GetManagedDatabaseAsync();
-            var parameters = new Sql.Models.ManagedDatabaseUpdate();
+            var managedDatabase = await GetManagedDatabaseAsync();
+            Sql.Models.ManagedDatabaseUpdate parameters = new Sql.Models.ManagedDatabaseUpdate();
 
-            await resource.UpdateAsync(parameters);
+            await managedDatabase.UpdateAsync(parameters);
         }
 
         [RecordedTest]
         public async Task GetManagedDatabaseColumnsByDatabaseAsync()
         {
             // Example: Filter managed database columns
-            var resource = await GetManagedDatabaseAsync();
-            var schema = new List<string>()
+            var managedDatabase = await GetManagedDatabaseAsync();
+            IEnumerable<string> schema = new List<string>()
 {
 "dbo",};
-            var table = new List<string>()
+            IEnumerable<string> table = new List<string>()
 {
 "customer","address",};
-            var column = new List<string>()
+            IEnumerable<string> column = new List<string>()
 {
 "username",};
-            var orderBy = new List<string>()
+            IEnumerable<string> orderBy = new List<string>()
 {
 "schema asc","table","column desc",};
             string skiptoken = null;
 
-            resource.GetManagedDatabaseColumnsByDatabaseAsync(schema, table, column, orderBy, skiptoken);
+            managedDatabase.GetManagedDatabaseColumnsByDatabaseAsync(schema, table, column, orderBy, skiptoken);
         }
 
         [RecordedTest]
         public async Task CompleteRestoreAsync()
         {
             // Example: Completes a managed database external backup restore.
-            var resource = await GetManagedDatabaseAsync();
-            var parameters = new Sql.Models.CompleteDatabaseRestoreDefinition("testdb1_log4");
+            var managedDatabase = await GetManagedDatabaseAsync();
+            Sql.Models.CompleteDatabaseRestoreDefinition parameters = new Sql.Models.CompleteDatabaseRestoreDefinition("testdb1_log4");
 
-            await resource.CompleteRestoreAsync(parameters);
+            await managedDatabase.CompleteRestoreAsync(parameters);
         }
 
         [RecordedTest]
         public async Task GetManagedDatabaseSecurityEventsByDatabaseAsync()
         {
             // Example: Get the managed database's security events with maximal parameters
-            var resource = await GetManagedDatabaseAsync();
-            var filter = "ShowServerRecords eq true";
-            var skip = 0;
-            var top = 1;
-            var skiptoken = "eyJCbG9iTmFtZURhdGVUaW1lIjoiXC9EYXRlKDE1MTIyODg4MTIwMTArMDIwMClcLyIsIkJsb2JOYW1lUm9sbG92ZXJJbmRleCI6IjAiLCJFbmREYXRlIjoiXC9EYXRlKDE1MTI0NjYyMDA1MjkpXC8iLCJJc1NraXBUb2tlblNldCI6ZmFsc2UsIklzVjJCbG9iVGltZUZvcm1hdCI6dHJ1ZSwiU2hvd1NlcnZlclJlY29yZHMiOmZhbHNlLCJTa2lwVmFsdWUiOjAsIlRha2VWYWx1ZSI6MTB9";
+            var managedDatabase = await GetManagedDatabaseAsync();
+            string filter = "ShowServerRecords eq true";
+            int? skip = 0;
+            int? top = 1;
+            string skiptoken = "eyJCbG9iTmFtZURhdGVUaW1lIjoiXC9EYXRlKDE1MTIyODg4MTIwMTArMDIwMClcLyIsIkJsb2JOYW1lUm9sbG92ZXJJbmRleCI6IjAiLCJFbmREYXRlIjoiXC9EYXRlKDE1MTI0NjYyMDA1MjkpXC8iLCJJc1NraXBUb2tlblNldCI6ZmFsc2UsIklzVjJCbG9iVGltZUZvcm1hdCI6dHJ1ZSwiU2hvd1NlcnZlclJlY29yZHMiOmZhbHNlLCJTa2lwVmFsdWUiOjAsIlRha2VWYWx1ZSI6MTB9";
 
-            resource.GetManagedDatabaseSecurityEventsByDatabaseAsync(filter, skip, top, skiptoken);
+            managedDatabase.GetManagedDatabaseSecurityEventsByDatabaseAsync(filter, skip, top, skiptoken);
         }
 
         [RecordedTest]
         public async Task GetCurrentByDatabaseManagedDatabaseSensitivityLabelsAsync()
         {
             // Example: Gets the current sensitivity labels of a given database in a managed database
-            var resource = await GetManagedDatabaseAsync();
+            var managedDatabase = await GetManagedDatabaseAsync();
             string skipToken = null;
             bool? count = null;
             string filter = null;
 
-            resource.GetCurrentByDatabaseManagedDatabaseSensitivityLabelsAsync(skipToken, count, filter);
+            managedDatabase.GetCurrentByDatabaseManagedDatabaseSensitivityLabelsAsync(skipToken, count, filter);
         }
 
         [RecordedTest]
         public async Task UpdateManagedDatabaseSensitivityLabelAsync()
         {
             // Example: Update sensitivity labels of a given database using an operations batch.
-            var resource = await GetManagedDatabaseAsync();
-            var parameters = new Sql.Models.SensitivityLabelUpdateList();
+            var managedDatabase = await GetManagedDatabaseAsync();
+            Sql.Models.SensitivityLabelUpdateList parameters = new Sql.Models.SensitivityLabelUpdateList();
 
-            await resource.UpdateManagedDatabaseSensitivityLabelAsync(parameters);
+            await managedDatabase.UpdateManagedDatabaseSensitivityLabelAsync(parameters);
         }
 
         [RecordedTest]
         public async Task GetRecommendedByDatabaseManagedDatabaseSensitivityLabelsAsync()
         {
             // Example: Gets the recommended sensitivity labels of a given database in a managed database
-            var resource = await GetManagedDatabaseAsync();
+            var managedDatabase = await GetManagedDatabaseAsync();
             string skipToken = null;
             bool? includeDisabledRecommendations = null;
             string filter = null;
 
-            resource.GetRecommendedByDatabaseManagedDatabaseSensitivityLabelsAsync(skipToken, includeDisabledRecommendations, filter);
+            managedDatabase.GetRecommendedByDatabaseManagedDatabaseSensitivityLabelsAsync(skipToken, includeDisabledRecommendations, filter);
         }
 
         [RecordedTest]
         public async Task UpdateRecommendedManagedDatabaseSensitivityLabelAsync()
         {
             // Example: Update recommended sensitivity labels of a given database using an operations batch.
-            var resource = await GetManagedDatabaseAsync();
-            var parameters = new Sql.Models.RecommendedSensitivityLabelUpdateList();
+            var managedDatabase = await GetManagedDatabaseAsync();
+            Sql.Models.RecommendedSensitivityLabelUpdateList parameters = new Sql.Models.RecommendedSensitivityLabelUpdateList();
 
-            await resource.UpdateRecommendedManagedDatabaseSensitivityLabelAsync(parameters);
+            await managedDatabase.UpdateRecommendedManagedDatabaseSensitivityLabelAsync(parameters);
         }
     }
 }

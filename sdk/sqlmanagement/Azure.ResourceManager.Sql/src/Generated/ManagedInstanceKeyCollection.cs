@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql
         internal ManagedInstanceKeyCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managedInstanceKeysRestClient = new ManagedInstanceKeysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _managedInstanceKeysRestClient = new ManagedInstanceKeysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _managedInstanceKeysRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, keyName, parameters, cancellationToken);
-                var operation = new ManagedInstanceKeyCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _managedInstanceKeysRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, keyName, parameters).Request, response);
+                var response = _managedInstanceKeysRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters, cancellationToken);
+                var operation = new ManagedInstanceKeyCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _managedInstanceKeysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _managedInstanceKeysRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, keyName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedInstanceKeyCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _managedInstanceKeysRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, keyName, parameters).Request, response);
+                var response = await _managedInstanceKeysRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedInstanceKeyCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _managedInstanceKeysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _managedInstanceKeysRestClient.Get(Id.ResourceGroupName, Id.Name, keyName, cancellationToken);
+                var response = _managedInstanceKeysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ManagedInstanceKey(Parent, response.Value), response.GetRawResponse());
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _managedInstanceKeysRestClient.GetAsync(Id.ResourceGroupName, Id.Name, keyName, cancellationToken).ConfigureAwait(false);
+                var response = await _managedInstanceKeysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ManagedInstanceKey(Parent, response.Value), response.GetRawResponse());
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _managedInstanceKeysRestClient.Get(Id.ResourceGroupName, Id.Name, keyName, cancellationToken: cancellationToken);
+                var response = _managedInstanceKeysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<ManagedInstanceKey>(null, response.GetRawResponse())
                     : Response.FromValue(new ManagedInstanceKey(this, response.Value), response.GetRawResponse());
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _managedInstanceKeysRestClient.GetAsync(Id.ResourceGroupName, Id.Name, keyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _managedInstanceKeysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<ManagedInstanceKey>(null, response.GetRawResponse())
                     : Response.FromValue(new ManagedInstanceKey(this, response.Value), response.GetRawResponse());
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = _managedInstanceKeysRestClient.ListByInstance(Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
+                    var response = _managedInstanceKeysRestClient.ListByInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceKey(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = _managedInstanceKeysRestClient.ListByInstanceNextPage(nextLink, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
+                    var response = _managedInstanceKeysRestClient.ListByInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceKey(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = await _managedInstanceKeysRestClient.ListByInstanceAsync(Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _managedInstanceKeysRestClient.ListByInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceKey(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = await _managedInstanceKeysRestClient.ListByInstanceNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _managedInstanceKeysRestClient.ListByInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceKey(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

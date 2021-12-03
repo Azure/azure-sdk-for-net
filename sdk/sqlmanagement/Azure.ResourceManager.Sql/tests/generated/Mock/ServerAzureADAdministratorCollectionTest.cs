@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ServerAzureADAdministrator. </summary>
     public partial class ServerAzureADAdministratorCollectionMockTests : MockTestBase
     {
-        public ServerAzureADAdministratorCollectionMockTests(bool isAsync) : base(isAsync)
+        public ServerAzureADAdministratorCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public ServerAzureADAdministratorCollectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.ServerAzureADAdministratorCollection> GetServerAzureADAdministratorCollectionAsync(string resourceGroupName, string serverName)
@@ -42,6 +40,14 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             // Example: Creates or updates an existing Azure Active Directory administrator.
             var collection = await GetServerAzureADAdministratorCollectionAsync("sqlcrudtest-4799", "sqlcrudtest-6440");
             await TestHelper.CreateOrUpdateExampleInstanceAsync(collection);
+        }
+
+        [RecordedTest]
+        public async Task GetAsync()
+        {
+            // Example: Gets a Azure Active Directory administrator.
+            var collection = await GetServerAzureADAdministratorCollectionAsync("sqlcrudtest-4799", "sqlcrudtest-6440");
+            await TestHelper.GetExampleInstanceAsync(collection);
         }
 
         [RecordedTest]

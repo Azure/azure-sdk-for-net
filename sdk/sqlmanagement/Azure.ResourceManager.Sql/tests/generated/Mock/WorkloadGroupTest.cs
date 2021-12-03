@@ -10,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -18,13 +19,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for WorkloadGroup. </summary>
     public partial class WorkloadGroupMockTests : MockTestBase
     {
-        public WorkloadGroupMockTests(bool isAsync) : base(isAsync)
+        public WorkloadGroupMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public WorkloadGroupMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.WorkloadGroupCollection> GetWorkloadGroupCollectionAsync(string resourceGroupName, string serverName, string databaseName)
@@ -51,18 +49,18 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         public async Task GetAsync()
         {
             // Example: Gets a workload group for a data warehouse
-            var resource = await GetWorkloadGroupAsync();
+            var workloadGroup = await GetWorkloadGroupAsync();
 
-            await resource.GetAsync();
+            await workloadGroup.GetAsync();
         }
 
         [RecordedTest]
         public async Task DeleteAsync()
         {
             // Example: Delete a workload group
-            var resource = await GetWorkloadGroupAsync();
+            var workloadGroup = await GetWorkloadGroupAsync();
 
-            await resource.DeleteAsync();
+            await workloadGroup.DeleteAsync();
         }
     }
 }

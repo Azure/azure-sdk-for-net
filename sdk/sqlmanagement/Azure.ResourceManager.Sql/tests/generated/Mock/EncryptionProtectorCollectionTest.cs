@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for EncryptionProtector. </summary>
     public partial class EncryptionProtectorCollectionMockTests : MockTestBase
     {
-        public EncryptionProtectorCollectionMockTests(bool isAsync) : base(isAsync)
+        public EncryptionProtectorCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public EncryptionProtectorCollectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.EncryptionProtectorCollection> GetEncryptionProtectorCollectionAsync(string resourceGroupName, string serverName)
@@ -42,6 +40,14 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             // Example: Update the encryption protector to key vault
             var collection = await GetEncryptionProtectorCollectionAsync("sqlcrudtest-7398", "sqlcrudtest-4645");
             await TestHelper.CreateOrUpdateExampleInstanceAsync(collection);
+        }
+
+        [RecordedTest]
+        public async Task GetAsync()
+        {
+            // Example: Get the encryption protector
+            var collection = await GetEncryptionProtectorCollectionAsync("sqlcrudtest-7398", "sqlcrudtest-4645");
+            await TestHelper.GetExampleInstanceAsync(collection);
         }
 
         [RecordedTest]

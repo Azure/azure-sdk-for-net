@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ServerKey. </summary>
     public partial class ServerKeyCollectionMockTests : MockTestBase
     {
-        public ServerKeyCollectionMockTests(bool isAsync) : base(isAsync)
+        public ServerKeyCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public ServerKeyCollectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.ServerKeyCollection> GetServerKeyCollectionAsync(string resourceGroupName, string serverName)
@@ -42,6 +40,14 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             // Example: Creates or updates a server key
             var collection = await GetServerKeyCollectionAsync("sqlcrudtest-7398", "sqlcrudtest-4645");
             await TestHelper.CreateOrUpdateExampleInstanceAsync(collection, "someVault_someKey_01234567890123456789012345678901");
+        }
+
+        [RecordedTest]
+        public async Task GetAsync()
+        {
+            // Example: Get the server key
+            var collection = await GetServerKeyCollectionAsync("sqlcrudtest-7398", "sqlcrudtest-4645");
+            await TestHelper.GetExampleInstanceAsync(collection, "someVault_someKey_01234567890123456789012345678901");
         }
 
         [RecordedTest]

@@ -10,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -18,13 +19,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ServerAzureADAdministrator. </summary>
     public partial class ServerAzureADAdministratorMockTests : MockTestBase
     {
-        public ServerAzureADAdministratorMockTests(bool isAsync) : base(isAsync)
+        public ServerAzureADAdministratorMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public ServerAzureADAdministratorMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.ServerAzureADAdministratorCollection> GetServerAzureADAdministratorCollectionAsync(string resourceGroupName, string serverName)
@@ -48,18 +46,18 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         public async Task GetAsync()
         {
             // Example: Gets a Azure Active Directory administrator.
-            var resource = await GetServerAzureADAdministratorAsync();
+            var serverAzureADAdministrator = await GetServerAzureADAdministratorAsync();
 
-            await resource.GetAsync();
+            await serverAzureADAdministrator.GetAsync();
         }
 
         [RecordedTest]
         public async Task DeleteAsync()
         {
             // Example: Delete Azure Active Directory administrator.
-            var resource = await GetServerAzureADAdministratorAsync();
+            var serverAzureADAdministrator = await GetServerAzureADAdministratorAsync();
 
-            await resource.DeleteAsync();
+            await serverAzureADAdministrator.DeleteAsync();
         }
     }
 }

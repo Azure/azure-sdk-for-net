@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for JobCredential. </summary>
     public partial class JobCredentialCollectionMockTests : MockTestBase
     {
-        public JobCredentialCollectionMockTests(bool isAsync) : base(isAsync)
+        public JobCredentialCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public JobCredentialCollectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.JobCredentialCollection> GetJobCredentialCollectionAsync(string resourceGroupName, string serverName, string jobAgentName)
@@ -45,6 +43,14 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             // Example: Create or update a credential
             var collection = await GetJobCredentialCollectionAsync("group1", "server1", "agent1");
             await TestHelper.CreateOrUpdateExampleInstanceAsync(collection, "cred1");
+        }
+
+        [RecordedTest]
+        public async Task GetAsync()
+        {
+            // Example: Get a credential
+            var collection = await GetJobCredentialCollectionAsync("group1", "server1", "agent1");
+            await TestHelper.GetExampleInstanceAsync(collection, "cred1");
         }
 
         [RecordedTest]

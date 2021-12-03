@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ManagedDatabase. </summary>
     public partial class ManagedDatabaseCollectionMockTests : MockTestBase
     {
-        public ManagedDatabaseCollectionMockTests(bool isAsync) : base(isAsync)
+        public ManagedDatabaseCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public ManagedDatabaseCollectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.ManagedDatabaseCollection> GetManagedDatabaseCollectionAsync(string resourceGroupName, string managedInstanceName)
@@ -42,6 +40,14 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             // Example: Creates a new managed database by restoring from an external backup
             var collection = await GetManagedDatabaseCollectionAsync("Default-SQL-SouthEastAsia", "managedInstance");
             await TestHelper.CreateOrUpdateExampleInstanceAsync(collection, "managedDatabase");
+        }
+
+        [RecordedTest]
+        public async Task GetAsync()
+        {
+            // Example: Gets a managed database
+            var collection = await GetManagedDatabaseCollectionAsync("Test1", "managedInstance");
+            await TestHelper.GetExampleInstanceAsync(collection, "managedDatabase");
         }
 
         [RecordedTest]

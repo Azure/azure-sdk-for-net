@@ -10,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -18,13 +19,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ManagedInstanceKey. </summary>
     public partial class ManagedInstanceKeyMockTests : MockTestBase
     {
-        public ManagedInstanceKeyMockTests(bool isAsync) : base(isAsync)
+        public ManagedInstanceKeyMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public ManagedInstanceKeyMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.ManagedInstanceKeyCollection> GetManagedInstanceKeyCollectionAsync(string resourceGroupName, string managedInstanceName)
@@ -48,18 +46,18 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         public async Task GetAsync()
         {
             // Example: Get the managed instance key
-            var resource = await GetManagedInstanceKeyAsync();
+            var managedInstanceKey = await GetManagedInstanceKeyAsync();
 
-            await resource.GetAsync();
+            await managedInstanceKey.GetAsync();
         }
 
         [RecordedTest]
         public async Task DeleteAsync()
         {
             // Example: Delete the managed instance key
-            var resource = await GetManagedInstanceKeyAsync();
+            var managedInstanceKey = await GetManagedInstanceKeyAsync();
 
-            await resource.DeleteAsync();
+            await managedInstanceKey.DeleteAsync();
         }
     }
 }

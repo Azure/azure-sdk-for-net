@@ -10,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -18,13 +19,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ManagedInstanceLongTermRetentionPolicy. </summary>
     public partial class ManagedInstanceLongTermRetentionPolicyMockTests : MockTestBase
     {
-        public ManagedInstanceLongTermRetentionPolicyMockTests(bool isAsync) : base(isAsync)
+        public ManagedInstanceLongTermRetentionPolicyMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public ManagedInstanceLongTermRetentionPolicyMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.ManagedInstanceLongTermRetentionPolicyCollection> GetManagedInstanceLongTermRetentionPolicyCollectionAsync(string resourceGroupName, string managedInstanceName, string databaseName)
@@ -51,9 +49,9 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         public async Task GetAsync()
         {
             // Example: Get the long term retention policy for the managed database.
-            var resource = await GetManagedInstanceLongTermRetentionPolicyAsync();
+            var managedInstanceLongTermRetentionPolicy = await GetManagedInstanceLongTermRetentionPolicyAsync();
 
-            await resource.GetAsync();
+            await managedInstanceLongTermRetentionPolicy.GetAsync();
         }
     }
 }

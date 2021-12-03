@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql
             _data = resource;
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _serverAutomaticTuningRestClient = new ServerAutomaticTuningRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _serverAutomaticTuningRestClient = new ServerAutomaticTuningRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ServerAutomaticTuning"/> class. </summary>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sql
         {
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _serverAutomaticTuningRestClient = new ServerAutomaticTuningRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _serverAutomaticTuningRestClient = new ServerAutomaticTuningRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ServerAutomaticTuning"/> class. </summary>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql
         internal ServerAutomaticTuning(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _serverAutomaticTuningRestClient = new ServerAutomaticTuningRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _serverAutomaticTuningRestClient = new ServerAutomaticTuningRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _serverAutomaticTuningRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _serverAutomaticTuningRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ServerAutomaticTuning(this, response.Value), response.GetRawResponse());
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _serverAutomaticTuningRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                var response = _serverAutomaticTuningRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerAutomaticTuning(this, response.Value), response.GetRawResponse());
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _serverAutomaticTuningRestClient.UpdateAsync(Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _serverAutomaticTuningRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ServerAutomaticTuning(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _serverAutomaticTuningRestClient.Update(Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken);
+                var response = _serverAutomaticTuningRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken);
                 return Response.FromValue(new ServerAutomaticTuning(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

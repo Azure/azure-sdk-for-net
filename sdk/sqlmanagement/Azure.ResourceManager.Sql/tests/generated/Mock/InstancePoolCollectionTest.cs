@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for InstancePool. </summary>
     public partial class InstancePoolCollectionMockTests : MockTestBase
     {
-        public InstancePoolCollectionMockTests(bool isAsync) : base(isAsync)
+        public InstancePoolCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public InstancePoolCollectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.InstancePoolCollection> GetInstancePoolCollectionAsync(string resourceGroupName)
@@ -39,6 +37,14 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             // Example: Create an instance pool with all properties.
             var collection = await GetInstancePoolCollectionAsync("group1");
             await TestHelper.CreateOrUpdateExampleInstanceAsync(collection, "testIP");
+        }
+
+        [RecordedTest]
+        public async Task GetAsync()
+        {
+            // Example: Get an instance pool
+            var collection = await GetInstancePoolCollectionAsync("group1");
+            await TestHelper.GetExampleInstanceAsync(collection, "testIP");
         }
 
         [RecordedTest]

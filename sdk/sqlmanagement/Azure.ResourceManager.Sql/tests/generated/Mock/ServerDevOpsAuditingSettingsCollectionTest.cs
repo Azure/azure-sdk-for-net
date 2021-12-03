@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ServerDevOpsAuditingSettings. </summary>
     public partial class ServerDevOpsAuditingSettingsCollectionMockTests : MockTestBase
     {
-        public ServerDevOpsAuditingSettingsCollectionMockTests(bool isAsync) : base(isAsync)
+        public ServerDevOpsAuditingSettingsCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public ServerDevOpsAuditingSettingsCollectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.ServerDevOpsAuditingSettingsCollection> GetServerDevOpsAuditingSettingsCollectionAsync(string resourceGroupName, string serverName)
@@ -42,6 +40,14 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             // Example: Update a server's DevOps audit settings with all params
             var collection = await GetServerDevOpsAuditingSettingsCollectionAsync("devAuditTestRG", "devOpsAuditTestSvr");
             await TestHelper.CreateOrUpdateExampleInstanceAsync(collection, "default");
+        }
+
+        [RecordedTest]
+        public async Task GetAsync()
+        {
+            // Example: Get a server's DevOps audit settings
+            var collection = await GetServerDevOpsAuditingSettingsCollectionAsync("devAuditTestRG", "devOpsAuditTestSvr");
+            await TestHelper.GetExampleInstanceAsync(collection, "default");
         }
 
         [RecordedTest]

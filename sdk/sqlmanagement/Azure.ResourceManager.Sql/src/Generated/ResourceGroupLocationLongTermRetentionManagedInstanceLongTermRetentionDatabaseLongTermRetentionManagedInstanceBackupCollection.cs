@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Sql
         internal ResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackupCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _longTermRetentionManagedInstanceBackupsRestClient = new LongTermRetentionManagedInstanceBackupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _longTermRetentionManagedInstanceBackupsRestClient = new LongTermRetentionManagedInstanceBackupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _longTermRetentionManagedInstanceBackupsRestClient.GetByResourceGroup(Id.ResourceGroupName, locationName, managedInstanceName, databaseName, backupName, cancellationToken);
+                var response = _longTermRetentionManagedInstanceBackupsRestClient.GetByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, locationName, managedInstanceName, databaseName, backupName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackup(Parent, response.Value), response.GetRawResponse());
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _longTermRetentionManagedInstanceBackupsRestClient.GetByResourceGroupAsync(Id.ResourceGroupName, locationName, managedInstanceName, databaseName, backupName, cancellationToken).ConfigureAwait(false);
+                var response = await _longTermRetentionManagedInstanceBackupsRestClient.GetByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, locationName, managedInstanceName, databaseName, backupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackup(Parent, response.Value), response.GetRawResponse());
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _longTermRetentionManagedInstanceBackupsRestClient.GetByResourceGroup(Id.ResourceGroupName, locationName, managedInstanceName, databaseName, backupName, cancellationToken: cancellationToken);
+                var response = _longTermRetentionManagedInstanceBackupsRestClient.GetByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, locationName, managedInstanceName, databaseName, backupName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<ResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackup>(null, response.GetRawResponse())
                     : Response.FromValue(new ResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackup(this, response.Value), response.GetRawResponse());
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _longTermRetentionManagedInstanceBackupsRestClient.GetByResourceGroupAsync(Id.ResourceGroupName, locationName, managedInstanceName, databaseName, backupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _longTermRetentionManagedInstanceBackupsRestClient.GetByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, locationName, managedInstanceName, databaseName, backupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<ResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackup>(null, response.GetRawResponse())
                     : Response.FromValue(new ResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackup(this, response.Value), response.GetRawResponse());
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = _longTermRetentionManagedInstanceBackupsRestClient.ListByResourceGroupDatabase(Id.ResourceGroupName, locationName, managedInstanceName, databaseName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
+                    var response = _longTermRetentionManagedInstanceBackupsRestClient.ListByResourceGroupDatabase(Id.SubscriptionId, Id.ResourceGroupName, locationName, managedInstanceName, databaseName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = _longTermRetentionManagedInstanceBackupsRestClient.ListByResourceGroupDatabaseNextPage(nextLink, Id.ResourceGroupName, locationName, managedInstanceName, databaseName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
+                    var response = _longTermRetentionManagedInstanceBackupsRestClient.ListByResourceGroupDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, locationName, managedInstanceName, databaseName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = await _longTermRetentionManagedInstanceBackupsRestClient.ListByResourceGroupDatabaseAsync(Id.ResourceGroupName, locationName, managedInstanceName, databaseName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _longTermRetentionManagedInstanceBackupsRestClient.ListByResourceGroupDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, locationName, managedInstanceName, databaseName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = await _longTermRetentionManagedInstanceBackupsRestClient.ListByResourceGroupDatabaseNextPageAsync(nextLink, Id.ResourceGroupName, locationName, managedInstanceName, databaseName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _longTermRetentionManagedInstanceBackupsRestClient.ListByResourceGroupDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, locationName, managedInstanceName, databaseName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

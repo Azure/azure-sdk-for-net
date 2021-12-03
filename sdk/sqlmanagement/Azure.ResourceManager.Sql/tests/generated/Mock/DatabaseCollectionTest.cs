@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for Database. </summary>
     public partial class DatabaseCollectionMockTests : MockTestBase
     {
-        public DatabaseCollectionMockTests(bool isAsync) : base(isAsync)
+        public DatabaseCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public DatabaseCollectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.DatabaseCollection> GetDatabaseCollectionAsync(string resourceGroupName, string serverName)
@@ -42,6 +40,14 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             // Example: Creates a VCore database by specifying service objective name.
             var collection = await GetDatabaseCollectionAsync("Default-SQL-SouthEastAsia", "testsvr");
             await TestHelper.CreateOrUpdateExampleInstanceAsync(collection, "testdb");
+        }
+
+        [RecordedTest]
+        public async Task GetAsync()
+        {
+            // Example: Gets a database.
+            var collection = await GetDatabaseCollectionAsync("Default-SQL-SouthEastAsia", "testsvr");
+            await TestHelper.GetExampleInstanceAsync(collection, "testdb");
         }
 
         [RecordedTest]

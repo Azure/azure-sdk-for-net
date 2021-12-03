@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for DataMaskingPolicy. </summary>
     public partial class DataMaskingPolicyCollectionMockTests : MockTestBase
     {
-        public DataMaskingPolicyCollectionMockTests(bool isAsync) : base(isAsync)
+        public DataMaskingPolicyCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public DataMaskingPolicyCollectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.DataMaskingPolicyCollection> GetDataMaskingPolicyCollectionAsync(string resourceGroupName, string serverName, string databaseName)
@@ -45,6 +43,14 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             // Example: Create or update data masking policy max
             var collection = await GetDataMaskingPolicyCollectionAsync("sqlcrudtest-6852", "sqlcrudtest-2080", "sqlcrudtest-331");
             await TestHelper.CreateOrUpdateExampleInstanceAsync(collection);
+        }
+
+        [RecordedTest]
+        public async Task GetAsync()
+        {
+            // Example: Get data masking policy
+            var collection = await GetDataMaskingPolicyCollectionAsync("sqlcrudtest-6852", "sqlcrudtest-2080", "sqlcrudtest-331");
+            await TestHelper.GetExampleInstanceAsync(collection);
         }
     }
 }

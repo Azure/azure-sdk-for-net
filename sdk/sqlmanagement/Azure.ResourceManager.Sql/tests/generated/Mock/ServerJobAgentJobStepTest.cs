@@ -10,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -18,13 +19,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for JobStep. </summary>
     public partial class ServerJobAgentJobStepMockTests : MockTestBase
     {
-        public ServerJobAgentJobStepMockTests(bool isAsync) : base(isAsync)
+        public ServerJobAgentJobStepMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public ServerJobAgentJobStepMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.ServerJobAgentJobStepCollection> GetServerJobAgentJobStepCollectionAsync(string resourceGroupName, string serverName, string jobAgentName, string jobName)
@@ -54,18 +52,18 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         public async Task GetAsync()
         {
             // Example: Get the latest version of a job step.
-            var resource = await GetServerJobAgentJobStepAsync();
+            var serverJobAgentJobStep = await GetServerJobAgentJobStepAsync();
 
-            await resource.GetAsync();
+            await serverJobAgentJobStep.GetAsync();
         }
 
         [RecordedTest]
         public async Task DeleteAsync()
         {
             // Example: Delete a job step.
-            var resource = await GetServerJobAgentJobStepAsync();
+            var serverJobAgentJobStep = await GetServerJobAgentJobStepAsync();
 
-            await resource.DeleteAsync();
+            await serverJobAgentJobStep.DeleteAsync();
         }
     }
 }

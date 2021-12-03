@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for VirtualNetworkRule. </summary>
     public partial class VirtualNetworkRuleCollectionMockTests : MockTestBase
     {
-        public VirtualNetworkRuleCollectionMockTests(bool isAsync) : base(isAsync)
+        public VirtualNetworkRuleCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public VirtualNetworkRuleCollectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.VirtualNetworkRuleCollection> GetVirtualNetworkRuleCollectionAsync(string resourceGroupName, string serverName)
@@ -42,6 +40,14 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             // Example: Create or update a virtual network rule
             var collection = await GetVirtualNetworkRuleCollectionAsync("Default", "vnet-test-svr");
             await TestHelper.CreateOrUpdateExampleInstanceAsync(collection, "vnet-firewall-rule");
+        }
+
+        [RecordedTest]
+        public async Task GetAsync()
+        {
+            // Example: Gets a virtual network rule
+            var collection = await GetVirtualNetworkRuleCollectionAsync("Default", "vnet-test-svr");
+            await TestHelper.GetExampleInstanceAsync(collection, "vnet-firewall-rule");
         }
 
         [RecordedTest]

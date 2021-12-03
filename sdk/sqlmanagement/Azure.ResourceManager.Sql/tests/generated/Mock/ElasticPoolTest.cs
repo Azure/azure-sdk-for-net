@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.Sql.Models;
 using Azure.ResourceManager.TestFramework;
@@ -19,13 +21,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ElasticPool. </summary>
     public partial class ElasticPoolMockTests : MockTestBase
     {
-        public ElasticPoolMockTests(bool isAsync) : base(isAsync)
+        public ElasticPoolMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public ElasticPoolMockTests() : this(false)
-        {
+            Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.ElasticPoolCollection> GetElasticPoolCollectionAsync(string resourceGroupName, string serverName)
@@ -49,105 +48,105 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         public async Task GetAsync()
         {
             // Example: Get an elastic pool
-            var resource = await GetElasticPoolAsync();
+            var elasticPool = await GetElasticPoolAsync();
 
-            await resource.GetAsync();
+            await elasticPool.GetAsync();
         }
 
         [RecordedTest]
         public async Task DeleteAsync()
         {
             // Example: Delete an elastic pool
-            var resource = await GetElasticPoolAsync();
+            var elasticPool = await GetElasticPoolAsync();
 
-            await resource.DeleteAsync();
+            await elasticPool.DeleteAsync();
         }
 
         [RecordedTest]
         public async Task UpdateAsync()
         {
             // Example: Assigns maintenance configuration to an elastic pool.
-            var resource = await GetElasticPoolAsync();
-            var parameters = new Sql.Models.ElasticPoolUpdate()
+            var elasticPool = await GetElasticPoolAsync();
+            Sql.Models.ElasticPoolUpdate parameters = new Sql.Models.ElasticPoolUpdate()
             {
                 MaintenanceConfigurationId = "/subscriptions/00000000-1111-2222-3333-444444444444/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_JapanEast_1",
             };
 
-            await resource.UpdateAsync(parameters);
+            await elasticPool.UpdateAsync(parameters);
         }
 
         [RecordedTest]
         public async Task GetDatabasesAsync()
         {
             // Example: Gets a list of databases in an elastic pool.
-            var resource = await GetElasticPoolAsync();
+            var elasticPool = await GetElasticPoolAsync();
 
-            resource.GetDatabasesAsync();
+            elasticPool.GetDatabasesAsync();
         }
 
         [RecordedTest]
         public async Task GetMetricsAsync()
         {
             // Example: List database usage metrics
-            var resource = await GetElasticPoolAsync();
-            var filter = "name/value eq 'cpu_percent' and timeGrain eq '00:10:00' and startTime eq '2017-06-02T18:35:00Z' and endTime eq '2017-06-02T18:55:00Z'";
+            var elasticPool = await GetElasticPoolAsync();
+            string filter = "name/value eq 'cpu_percent' and timeGrain eq '00:10:00' and startTime eq '2017-06-02T18:35:00Z' and endTime eq '2017-06-02T18:55:00Z'";
 
-            resource.GetMetricsAsync(filter);
+            elasticPool.GetMetricsAsync(filter);
         }
 
         [RecordedTest]
         public async Task GetMetricDefinitionsAsync()
         {
             // Example: List database usage metrics
-            var resource = await GetElasticPoolAsync();
+            var elasticPool = await GetElasticPoolAsync();
 
-            resource.GetMetricDefinitionsAsync();
+            elasticPool.GetMetricDefinitionsAsync();
         }
 
         [RecordedTest]
         public async Task FailoverAsync()
         {
             // Example: Failover an elastic pool
-            var resource = await GetElasticPoolAsync();
+            var elasticPool = await GetElasticPoolAsync();
 
-            await resource.FailoverAsync();
+            await elasticPool.FailoverAsync();
         }
 
         [RecordedTest]
         public async Task GetElasticPoolActivitiesAsync()
         {
             // Example: List Elastic pool activity
-            var resource = await GetElasticPoolAsync();
+            var elasticPool = await GetElasticPoolAsync();
 
-            resource.GetElasticPoolActivitiesAsync();
+            elasticPool.GetElasticPoolActivitiesAsync();
         }
 
         [RecordedTest]
         public async Task GetElasticPoolDatabaseActivitiesAsync()
         {
             // Example: List elastic pool database activity
-            var resource = await GetElasticPoolAsync();
+            var elasticPool = await GetElasticPoolAsync();
 
-            resource.GetElasticPoolDatabaseActivitiesAsync();
+            elasticPool.GetElasticPoolDatabaseActivitiesAsync();
         }
 
         [RecordedTest]
         public async Task CancelElasticPoolOperationAsync()
         {
             // Example: Cancel the elastic pool management operation
-            var resource = await GetElasticPoolAsync();
-            var operationId = System.Guid.Parse("f779414b-e748-4925-8cfe-c8598f7660ae");
+            var elasticPool = await GetElasticPoolAsync();
+            Guid operationId = Guid.Parse("f779414b-e748-4925-8cfe-c8598f7660ae");
 
-            await resource.CancelElasticPoolOperationAsync(operationId);
+            await elasticPool.CancelElasticPoolOperationAsync(operationId);
         }
 
         [RecordedTest]
         public async Task GetElasticPoolOperationsAsync()
         {
             // Example: List the elastic pool management operations
-            var resource = await GetElasticPoolAsync();
+            var elasticPool = await GetElasticPoolAsync();
 
-            resource.GetElasticPoolOperationsAsync();
+            elasticPool.GetElasticPoolOperationsAsync();
         }
     }
 }

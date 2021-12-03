@@ -10,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.Sql.Models;
 using Azure.ResourceManager.TestFramework;
@@ -19,13 +20,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for DataMaskingPolicy. </summary>
     public partial class DataMaskingPolicyMockTests : MockTestBase
     {
-        public DataMaskingPolicyMockTests(bool isAsync) : base(isAsync)
+        public DataMaskingPolicyMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public DataMaskingPolicyMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.DataMaskingPolicyCollection> GetDataMaskingPolicyCollectionAsync(string resourceGroupName, string serverName, string databaseName)
@@ -52,37 +50,37 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         public async Task GetAsync()
         {
             // Example: Get data masking policy
-            var resource = await GetDataMaskingPolicyAsync();
+            var dataMaskingPolicy = await GetDataMaskingPolicyAsync();
 
-            await resource.GetAsync();
+            await dataMaskingPolicy.GetAsync();
         }
 
         [RecordedTest]
         public async Task CreateOrUpdateDataMaskingRuleAsync()
         {
             // Example: Create/Update data masking rule for default max
-            var resource = await GetDataMaskingPolicyAsync();
-            var dataMaskingRuleName = "rule1";
-            var parameters = new Sql.Models.DataMaskingRule()
+            var dataMaskingPolicy = await GetDataMaskingPolicyAsync();
+            string dataMaskingRuleName = "rule1";
+            Sql.Models.DataMaskingRule parameters = new Sql.Models.DataMaskingRule()
             {
                 AliasName = "nickname",
-                RuleState = DataMaskingRuleState.Enabled,
+                RuleState = Sql.Models.DataMaskingRuleState.Enabled,
                 SchemaName = "dbo",
                 TableName = "Table_1",
                 ColumnName = "test1",
-                MaskingFunction = DataMaskingFunction.Default,
+                MaskingFunction = Sql.Models.DataMaskingFunction.Default,
             };
 
-            await resource.CreateOrUpdateDataMaskingRuleAsync(dataMaskingRuleName, parameters);
+            await dataMaskingPolicy.CreateOrUpdateDataMaskingRuleAsync(dataMaskingRuleName, parameters);
         }
 
         [RecordedTest]
         public async Task GetDataMaskingRulesByDatabaseAsync()
         {
             // Example: List data masking rules
-            var resource = await GetDataMaskingPolicyAsync();
+            var dataMaskingPolicy = await GetDataMaskingPolicyAsync();
 
-            resource.GetDataMaskingRulesByDatabaseAsync();
+            dataMaskingPolicy.GetDataMaskingRulesByDatabaseAsync();
         }
     }
 }

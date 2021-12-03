@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for LedgerDigestUploads. </summary>
     public partial class LedgerDigestUploadsCollectionMockTests : MockTestBase
     {
-        public LedgerDigestUploadsCollectionMockTests(bool isAsync) : base(isAsync)
+        public LedgerDigestUploadsCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public LedgerDigestUploadsCollectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.LedgerDigestUploadsCollection> GetLedgerDigestUploadsCollectionAsync(string resourceGroupName, string serverName, string databaseName)
@@ -45,6 +43,14 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             // Example: Enables ledger digest upload configuration for a database
             var collection = await GetLedgerDigestUploadsCollectionAsync("ledgertestrg", "ledgertestserver", "testdb");
             await TestHelper.CreateOrUpdateExampleInstanceAsync(collection);
+        }
+
+        [RecordedTest]
+        public async Task GetAsync()
+        {
+            // Example: Gets the current ledger digest upload configuration for a database.
+            var collection = await GetLedgerDigestUploadsCollectionAsync("ledgertestrg", "ledgertestserver", "testdb");
+            await TestHelper.GetExampleInstanceAsync(collection);
         }
 
         [RecordedTest]

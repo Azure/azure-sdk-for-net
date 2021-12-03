@@ -10,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -18,13 +19,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for EncryptionProtector. </summary>
     public partial class EncryptionProtectorMockTests : MockTestBase
     {
-        public EncryptionProtectorMockTests(bool isAsync) : base(isAsync)
+        public EncryptionProtectorMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public EncryptionProtectorMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.EncryptionProtectorCollection> GetEncryptionProtectorCollectionAsync(string resourceGroupName, string serverName)
@@ -48,18 +46,18 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         public async Task GetAsync()
         {
             // Example: Get the encryption protector
-            var resource = await GetEncryptionProtectorAsync();
+            var encryptionProtector = await GetEncryptionProtectorAsync();
 
-            await resource.GetAsync();
+            await encryptionProtector.GetAsync();
         }
 
         [RecordedTest]
         public async Task RevalidateAsync()
         {
             // Example: Revalidates the encryption protector
-            var resource = await GetEncryptionProtectorAsync();
+            var encryptionProtector = await GetEncryptionProtectorAsync();
 
-            await resource.RevalidateAsync();
+            await encryptionProtector.RevalidateAsync();
         }
     }
 }

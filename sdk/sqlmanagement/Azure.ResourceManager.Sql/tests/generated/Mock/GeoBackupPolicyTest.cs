@@ -10,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -18,13 +19,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for GeoBackupPolicy. </summary>
     public partial class GeoBackupPolicyMockTests : MockTestBase
     {
-        public GeoBackupPolicyMockTests(bool isAsync) : base(isAsync)
+        public GeoBackupPolicyMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public GeoBackupPolicyMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.GeoBackupPolicyCollection> GetGeoBackupPolicyCollectionAsync(string resourceGroupName, string serverName, string databaseName)
@@ -51,9 +49,9 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         public async Task GetAsync()
         {
             // Example: Get geo backup policy
-            var resource = await GetGeoBackupPolicyAsync();
+            var geoBackupPolicy = await GetGeoBackupPolicyAsync();
 
-            await resource.GetAsync();
+            await geoBackupPolicy.GetAsync();
         }
     }
 }

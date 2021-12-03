@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for WorkloadGroup. </summary>
     public partial class WorkloadGroupCollectionMockTests : MockTestBase
     {
-        public WorkloadGroupCollectionMockTests(bool isAsync) : base(isAsync)
+        public WorkloadGroupCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public WorkloadGroupCollectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.WorkloadGroupCollection> GetWorkloadGroupCollectionAsync(string resourceGroupName, string serverName, string databaseName)
@@ -45,6 +43,14 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             // Example: Create a workload group with all properties specified.
             var collection = await GetWorkloadGroupCollectionAsync("Default-SQL-SouthEastAsia", "testsvr", "testdb");
             await TestHelper.CreateOrUpdateExampleInstanceAsync(collection, "smallrc");
+        }
+
+        [RecordedTest]
+        public async Task GetAsync()
+        {
+            // Example: Gets a workload group for a data warehouse
+            var collection = await GetWorkloadGroupCollectionAsync("Default-SQL-SouthEastAsia", "testsvr", "testdb");
+            await TestHelper.GetExampleInstanceAsync(collection, "smallrc");
         }
 
         [RecordedTest]

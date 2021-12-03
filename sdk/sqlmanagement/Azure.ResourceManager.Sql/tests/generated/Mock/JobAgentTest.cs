@@ -11,6 +11,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.Sql.Models;
 using Azure.ResourceManager.TestFramework;
@@ -20,13 +21,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for JobAgent. </summary>
     public partial class JobAgentMockTests : MockTestBase
     {
-        public JobAgentMockTests(bool isAsync) : base(isAsync)
+        public JobAgentMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public JobAgentMockTests() : this(false)
-        {
+            Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.JobAgentCollection> GetJobAgentCollectionAsync(string resourceGroupName, string serverName)
@@ -50,44 +48,44 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         public async Task GetAsync()
         {
             // Example: Get a job agent
-            var resource = await GetJobAgentAsync();
+            var jobAgent = await GetJobAgentAsync();
 
-            await resource.GetAsync();
+            await jobAgent.GetAsync();
         }
 
         [RecordedTest]
         public async Task DeleteAsync()
         {
             // Example: Delete a job agent
-            var resource = await GetJobAgentAsync();
+            var jobAgent = await GetJobAgentAsync();
 
-            await resource.DeleteAsync();
+            await jobAgent.DeleteAsync();
         }
 
         [RecordedTest]
         public async Task UpdateAsync()
         {
             // Example: Update a job agent's tags.
-            var resource = await GetJobAgentAsync();
-            var parameters = new Sql.Models.JobAgentUpdate();
+            var jobAgent = await GetJobAgentAsync();
+            Sql.Models.JobAgentUpdate parameters = new Sql.Models.JobAgentUpdate();
 
-            await resource.UpdateAsync(parameters);
+            await jobAgent.UpdateAsync(parameters);
         }
 
         [RecordedTest]
         public async Task GetJobExecutionsByAgentAsync()
         {
             // Example: List all job executions in a job agent with filtering.
-            var resource = await GetJobAgentAsync();
-            var createTimeMin = DateTimeOffset.Parse("2017-03-21T19:00:00Z");
-            var createTimeMax = DateTimeOffset.Parse("2017-03-21T19:05:00Z");
-            var endTimeMin = DateTimeOffset.Parse("2017-03-21T19:20:00Z");
-            var endTimeMax = DateTimeOffset.Parse("2017-03-21T19:25:00Z");
-            var isActive = false;
+            var jobAgent = await GetJobAgentAsync();
+            DateTimeOffset? createTimeMin = DateTimeOffset.Parse("2017-03-21T19:00:00Z");
+            DateTimeOffset? createTimeMax = DateTimeOffset.Parse("2017-03-21T19:05:00Z");
+            DateTimeOffset? endTimeMin = DateTimeOffset.Parse("2017-03-21T19:20:00Z");
+            DateTimeOffset? endTimeMax = DateTimeOffset.Parse("2017-03-21T19:25:00Z");
+            bool? isActive = false;
             int? skip = null;
             int? top = null;
 
-            resource.GetJobExecutionsByAgentAsync(createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top);
+            jobAgent.GetJobExecutionsByAgentAsync(createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top);
         }
     }
 }

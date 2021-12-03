@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for LogicalDatabaseTransparentDataEncryption. </summary>
     public partial class LogicalDatabaseTransparentDataEncryptionCollectionMockTests : MockTestBase
     {
-        public LogicalDatabaseTransparentDataEncryptionCollectionMockTests(bool isAsync) : base(isAsync)
+        public LogicalDatabaseTransparentDataEncryptionCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public LogicalDatabaseTransparentDataEncryptionCollectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.LogicalDatabaseTransparentDataEncryptionCollection> GetLogicalDatabaseTransparentDataEncryptionCollectionAsync(string resourceGroupName, string serverName, string databaseName)
@@ -45,6 +43,14 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             // Example: Update a database's Transparent Data Encryption state with minimal parameters
             var collection = await GetLogicalDatabaseTransparentDataEncryptionCollectionAsync("securitytde-42-rg", "securitytde-42", "testdb");
             await TestHelper.CreateOrUpdateExampleInstanceAsync(collection);
+        }
+
+        [RecordedTest]
+        public async Task GetAsync()
+        {
+            // Example: Get a database's transparent data encryption
+            var collection = await GetLogicalDatabaseTransparentDataEncryptionCollectionAsync("security-tde-resourcegroup", "securitytde", "testdb");
+            await TestHelper.GetExampleInstanceAsync(collection);
         }
 
         [RecordedTest]

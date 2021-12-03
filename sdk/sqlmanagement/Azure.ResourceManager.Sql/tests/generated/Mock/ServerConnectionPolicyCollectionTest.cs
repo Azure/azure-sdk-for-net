@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ServerConnectionPolicy. </summary>
     public partial class ServerConnectionPolicyCollectionMockTests : MockTestBase
     {
-        public ServerConnectionPolicyCollectionMockTests(bool isAsync) : base(isAsync)
+        public ServerConnectionPolicyCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public ServerConnectionPolicyCollectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.ServerConnectionPolicyCollection> GetServerConnectionPolicyCollectionAsync(string resourceGroupName, string serverName)
@@ -42,6 +40,14 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             // Example: Create or update a server's secure connection policy
             var collection = await GetServerConnectionPolicyCollectionAsync("test-1234", "test-5678");
             await TestHelper.CreateOrUpdateExampleInstanceAsync(collection);
+        }
+
+        [RecordedTest]
+        public async Task GetAsync()
+        {
+            // Example: Get a server's secure connection policy
+            var collection = await GetServerConnectionPolicyCollectionAsync("test-1234", "test-5678");
+            await TestHelper.GetExampleInstanceAsync(collection);
         }
     }
 }

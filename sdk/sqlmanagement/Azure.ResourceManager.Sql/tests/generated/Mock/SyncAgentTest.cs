@@ -10,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -18,13 +19,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for SyncAgent. </summary>
     public partial class SyncAgentMockTests : MockTestBase
     {
-        public SyncAgentMockTests(bool isAsync) : base(isAsync)
+        public SyncAgentMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public SyncAgentMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.SyncAgentCollection> GetSyncAgentCollectionAsync(string resourceGroupName, string serverName)
@@ -48,36 +46,36 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         public async Task GetAsync()
         {
             // Example: Get a sync agent
-            var resource = await GetSyncAgentAsync();
+            var syncAgent = await GetSyncAgentAsync();
 
-            await resource.GetAsync();
+            await syncAgent.GetAsync();
         }
 
         [RecordedTest]
         public async Task DeleteAsync()
         {
             // Example: Delete a sync agent
-            var resource = await GetSyncAgentAsync();
+            var syncAgent = await GetSyncAgentAsync();
 
-            await resource.DeleteAsync();
+            await syncAgent.DeleteAsync();
         }
 
         [RecordedTest]
         public async Task GenerateKeyAsync()
         {
             // Example: Generate a sync agent key
-            var resource = await GetSyncAgentAsync();
+            var syncAgent = await GetSyncAgentAsync();
 
-            await resource.GenerateKeyAsync();
+            await syncAgent.GenerateKeyAsync();
         }
 
         [RecordedTest]
         public async Task GetLinkedDatabasesAsync()
         {
             // Example: Get sync agent linked databases
-            var resource = await GetSyncAgentAsync();
+            var syncAgent = await GetSyncAgentAsync();
 
-            resource.GetLinkedDatabasesAsync();
+            syncAgent.GetLinkedDatabasesAsync();
         }
     }
 }

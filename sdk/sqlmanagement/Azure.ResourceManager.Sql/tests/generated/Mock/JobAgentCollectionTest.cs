@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for JobAgent. </summary>
     public partial class JobAgentCollectionMockTests : MockTestBase
     {
-        public JobAgentCollectionMockTests(bool isAsync) : base(isAsync)
+        public JobAgentCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public JobAgentCollectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.JobAgentCollection> GetJobAgentCollectionAsync(string resourceGroupName, string serverName)
@@ -42,6 +40,14 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             // Example: Create or update a job agent
             var collection = await GetJobAgentCollectionAsync("group1", "server1");
             await TestHelper.CreateOrUpdateExampleInstanceAsync(collection, "agent1");
+        }
+
+        [RecordedTest]
+        public async Task GetAsync()
+        {
+            // Example: Get a job agent
+            var collection = await GetJobAgentCollectionAsync("group1", "server1");
+            await TestHelper.GetExampleInstanceAsync(collection, "agent1");
         }
 
         [RecordedTest]

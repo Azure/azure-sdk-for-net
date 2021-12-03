@@ -10,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.Sql.Models;
 using Azure.ResourceManager.TestFramework;
@@ -19,13 +20,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ManagedInstance. </summary>
     public partial class ManagedInstanceMockTests : MockTestBase
     {
-        public ManagedInstanceMockTests(bool isAsync) : base(isAsync)
+        public ManagedInstanceMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public ManagedInstanceMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.ManagedInstanceCollection> GetManagedInstanceCollectionAsync(string resourceGroupName)
@@ -46,99 +44,99 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         public async Task GetAsync()
         {
             // Example: Get managed instance
-            var resource = await GetManagedInstanceAsync();
+            var managedInstance = await GetManagedInstanceAsync();
             string expand = null;
 
-            await resource.GetAsync(expand);
+            await managedInstance.GetAsync(expand);
         }
 
         [RecordedTest]
         public async Task DeleteAsync()
         {
             // Example: Delete managed instance
-            var resource = await GetManagedInstanceAsync();
+            var managedInstance = await GetManagedInstanceAsync();
 
-            await resource.DeleteAsync();
+            await managedInstance.DeleteAsync();
         }
 
         [RecordedTest]
         public async Task UpdateAsync()
         {
             // Example: Remove maintenance policy from managed instance (select default maintenance policy)
-            var resource = await GetManagedInstanceAsync();
-            var parameters = new Sql.Models.ManagedInstanceUpdate()
+            var managedInstance = await GetManagedInstanceAsync();
+            Sql.Models.ManagedInstanceUpdate parameters = new Sql.Models.ManagedInstanceUpdate()
             {
                 MaintenanceConfigurationId = "/subscriptions/20d7082a-0fc7-4468-82bd-542694d5042b/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
             };
 
-            await resource.UpdateAsync(parameters);
+            await managedInstance.UpdateAsync(parameters);
         }
 
         [RecordedTest]
         public async Task GetInaccessibleByInstanceManagedDatabasesAsync()
         {
             // Example: List inaccessible managed databases by managed instances
-            var resource = await GetManagedInstanceAsync();
+            var managedInstance = await GetManagedInstanceAsync();
 
-            resource.GetInaccessibleByInstanceManagedDatabasesAsync();
+            managedInstance.GetInaccessibleByInstanceManagedDatabasesAsync();
         }
 
         [RecordedTest]
         public async Task GetByManagedInstanceAsync()
         {
             // Example: Obtain list of instance's top resource consuming queries.
-            var resource = await GetManagedInstanceAsync();
+            var managedInstance = await GetManagedInstanceAsync();
             int? numberOfQueries = null;
             string databases = null;
             string startTime = null;
             string endTime = null;
-            var interval = new Sql.Models.QueryTimeGrainType("PT1H");
+            Sql.Models.QueryTimeGrainType? interval = new Sql.Models.QueryTimeGrainType("PT1H");
             Sql.Models.AggregationFunctionType? aggregationFunction = null;
-            var observationMetric = new Sql.Models.MetricType("duration");
+            Sql.Models.MetricType? observationMetric = new Sql.Models.MetricType("duration");
 
-            resource.GetByManagedInstanceAsync(numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric);
+            managedInstance.GetByManagedInstanceAsync(numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric);
         }
 
         [RecordedTest]
         public async Task FailoverAsync()
         {
             // Example: Failover a managed instance.
-            var resource = await GetManagedInstanceAsync();
-            var replicaType = new Sql.Models.ReplicaType("Primary");
+            var managedInstance = await GetManagedInstanceAsync();
+            Sql.Models.ReplicaType? replicaType = new Sql.Models.ReplicaType("Primary");
 
-            await resource.FailoverAsync(replicaType);
+            await managedInstance.FailoverAsync(replicaType);
         }
 
         [RecordedTest]
         public async Task CreateManagedInstanceTdeCertificateAsync()
         {
             // Example: Upload a TDE certificate
-            var resource = await GetManagedInstanceAsync();
-            var parameters = new Sql.Models.TdeCertificate()
+            var managedInstance = await GetManagedInstanceAsync();
+            Sql.Models.TdeCertificate parameters = new Sql.Models.TdeCertificate()
             {
                 PrivateBlob = "MIIXXXXXXXX",
             };
 
-            await resource.CreateManagedInstanceTdeCertificateAsync(parameters);
+            await managedInstance.CreateManagedInstanceTdeCertificateAsync(parameters);
         }
 
         [RecordedTest]
         public async Task GetServerTrustGroupsByInstanceAsync()
         {
             // Example: List server trust groups by managed instance
-            var resource = await GetManagedInstanceAsync();
+            var managedInstance = await GetManagedInstanceAsync();
 
-            resource.GetServerTrustGroupsByInstanceAsync();
+            managedInstance.GetServerTrustGroupsByInstanceAsync();
         }
 
         [RecordedTest]
         public async Task SqlAgentConfigurationGetAsync()
         {
             // Example: Gets current instance sql agent configuration.
-            var resource = await GetManagedInstanceAsync();
-            var childResource = resource.GetSqlAgentConfiguration();
+            var managedInstance = await GetManagedInstanceAsync();
+            var sqlAgentConfiguration = managedInstance.GetSqlAgentConfiguration();
 
-            await childResource.GetAsync();
+            await sqlAgentConfiguration.GetAsync();
         }
     }
 }

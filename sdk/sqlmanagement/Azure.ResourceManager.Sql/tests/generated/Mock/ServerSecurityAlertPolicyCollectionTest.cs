@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ServerSecurityAlertPolicy. </summary>
     public partial class ServerSecurityAlertPolicyCollectionMockTests : MockTestBase
     {
-        public ServerSecurityAlertPolicyCollectionMockTests(bool isAsync) : base(isAsync)
+        public ServerSecurityAlertPolicyCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public ServerSecurityAlertPolicyCollectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.ServerSecurityAlertPolicyCollection> GetServerSecurityAlertPolicyCollectionAsync(string resourceGroupName, string serverName)
@@ -42,6 +40,14 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             // Example: Update a server's threat detection policy with all parameters
             var collection = await GetServerSecurityAlertPolicyCollectionAsync("securityalert-4799", "securityalert-6440");
             await TestHelper.CreateOrUpdateExampleInstanceAsync(collection);
+        }
+
+        [RecordedTest]
+        public async Task GetAsync()
+        {
+            // Example: Get a server's threat detection policy
+            var collection = await GetServerSecurityAlertPolicyCollectionAsync("securityalert-4799", "securityalert-6440");
+            await TestHelper.GetExampleInstanceAsync(collection);
         }
 
         [RecordedTest]

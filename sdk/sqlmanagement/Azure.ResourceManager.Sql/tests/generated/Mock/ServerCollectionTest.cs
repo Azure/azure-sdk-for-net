@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for Server. </summary>
     public partial class ServerCollectionMockTests : MockTestBase
     {
-        public ServerCollectionMockTests(bool isAsync) : base(isAsync)
+        public ServerCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public ServerCollectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.ServerCollection> GetServerCollectionAsync(string resourceGroupName)
@@ -39,6 +37,14 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             // Example: Create server
             var collection = await GetServerCollectionAsync("sqlcrudtest-7398");
             await TestHelper.CreateOrUpdateExampleInstanceAsync(collection, "sqlcrudtest-4645");
+        }
+
+        [RecordedTest]
+        public async Task GetAsync()
+        {
+            // Example: Get server
+            var collection = await GetServerCollectionAsync("sqlcrudtest-7398");
+            await TestHelper.GetExampleInstanceAsync(collection, "sqlcrudtest-4645");
         }
 
         [RecordedTest]

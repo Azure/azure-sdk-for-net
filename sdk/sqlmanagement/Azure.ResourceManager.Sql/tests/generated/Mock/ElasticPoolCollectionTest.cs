@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ElasticPool. </summary>
     public partial class ElasticPoolCollectionMockTests : MockTestBase
     {
-        public ElasticPoolCollectionMockTests(bool isAsync) : base(isAsync)
+        public ElasticPoolCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public ElasticPoolCollectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.ElasticPoolCollection> GetElasticPoolCollectionAsync(string resourceGroupName, string serverName)
@@ -42,6 +40,14 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             // Example: Create or update elastic pool with all parameter
             var collection = await GetElasticPoolCollectionAsync("sqlcrudtest-2369", "sqlcrudtest-8069");
             await TestHelper.CreateOrUpdateExampleInstanceAsync(collection, "sqlcrudtest-8102");
+        }
+
+        [RecordedTest]
+        public async Task GetAsync()
+        {
+            // Example: Get an elastic pool
+            var collection = await GetElasticPoolCollectionAsync("sqlcrudtest-2369", "sqlcrudtest-8069");
+            await TestHelper.GetExampleInstanceAsync(collection, "sqlcrudtest-8102");
         }
 
         [RecordedTest]

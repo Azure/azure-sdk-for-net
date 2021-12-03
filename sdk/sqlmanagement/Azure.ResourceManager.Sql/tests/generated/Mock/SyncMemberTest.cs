@@ -10,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.Sql.Models;
 using Azure.ResourceManager.TestFramework;
@@ -19,13 +20,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for SyncMember. </summary>
     public partial class SyncMemberMockTests : MockTestBase
     {
-        public SyncMemberMockTests(bool isAsync) : base(isAsync)
+        public SyncMemberMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public SyncMemberMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.SyncMemberCollection> GetSyncMemberCollectionAsync(string resourceGroupName, string serverName, string databaseName, string syncGroupName)
@@ -55,26 +53,26 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         public async Task GetAsync()
         {
             // Example: Get a sync member
-            var resource = await GetSyncMemberAsync();
+            var syncMember = await GetSyncMemberAsync();
 
-            await resource.GetAsync();
+            await syncMember.GetAsync();
         }
 
         [RecordedTest]
         public async Task DeleteAsync()
         {
             // Example: Delete a sync member
-            var resource = await GetSyncMemberAsync();
+            var syncMember = await GetSyncMemberAsync();
 
-            await resource.DeleteAsync();
+            await syncMember.DeleteAsync();
         }
 
         [RecordedTest]
         public async Task UpdateAsync()
         {
             // Example: Update an existing sync member
-            var resource = await GetSyncMemberAsync();
-            var parameters = new Sql.SyncMemberData()
+            var syncMember = await GetSyncMemberAsync();
+            Sql.SyncMemberData parameters = new Sql.SyncMemberData()
             {
                 DatabaseType = new Sql.Models.SyncMemberDbType("AzureSqlDatabase"),
                 SyncMemberAzureDatabaseResourceId = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/syncgroupcrud-65440/providers/Microsoft.Sql/servers/syncgroupcrud-8475/databases/syncgroupcrud-4328",
@@ -85,25 +83,25 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
                 SyncDirection = new Sql.Models.SyncDirection("Bidirectional"),
             };
 
-            await resource.UpdateAsync(parameters);
+            await syncMember.UpdateAsync(parameters);
         }
 
         [RecordedTest]
         public async Task GetMemberSchemasAsync()
         {
             // Example: Get a sync member schema
-            var resource = await GetSyncMemberAsync();
+            var syncMember = await GetSyncMemberAsync();
 
-            resource.GetMemberSchemasAsync();
+            syncMember.GetMemberSchemasAsync();
         }
 
         [RecordedTest]
         public async Task RefreshMemberSchemaAsync()
         {
             // Example: Refresh a sync member database schema
-            var resource = await GetSyncMemberAsync();
+            var syncMember = await GetSyncMemberAsync();
 
-            await resource.RefreshMemberSchemaAsync();
+            await syncMember.RefreshMemberSchemaAsync();
         }
     }
 }

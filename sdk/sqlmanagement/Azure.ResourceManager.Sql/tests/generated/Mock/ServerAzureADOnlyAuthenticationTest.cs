@@ -10,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -18,13 +19,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ServerAzureADOnlyAuthentication. </summary>
     public partial class ServerAzureADOnlyAuthenticationMockTests : MockTestBase
     {
-        public ServerAzureADOnlyAuthenticationMockTests(bool isAsync) : base(isAsync)
+        public ServerAzureADOnlyAuthenticationMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public ServerAzureADOnlyAuthenticationMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.ServerAzureADOnlyAuthenticationCollection> GetServerAzureADOnlyAuthenticationCollectionAsync(string resourceGroupName, string serverName)
@@ -48,18 +46,18 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         public async Task GetAsync()
         {
             // Example: Gets a Azure Active Directory only authentication property.
-            var resource = await GetServerAzureADOnlyAuthenticationAsync();
+            var serverAzureADOnlyAuthentication = await GetServerAzureADOnlyAuthenticationAsync();
 
-            await resource.GetAsync();
+            await serverAzureADOnlyAuthentication.GetAsync();
         }
 
         [RecordedTest]
         public async Task DeleteAsync()
         {
             // Example: Deletes Azure Active Directory only authentication object.
-            var resource = await GetServerAzureADOnlyAuthenticationAsync();
+            var serverAzureADOnlyAuthentication = await GetServerAzureADOnlyAuthenticationAsync();
 
-            await resource.DeleteAsync();
+            await serverAzureADOnlyAuthentication.DeleteAsync();
         }
     }
 }

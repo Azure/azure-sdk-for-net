@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for SyncAgent. </summary>
     public partial class SyncAgentCollectionMockTests : MockTestBase
     {
-        public SyncAgentCollectionMockTests(bool isAsync) : base(isAsync)
+        public SyncAgentCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public SyncAgentCollectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.SyncAgentCollection> GetSyncAgentCollectionAsync(string resourceGroupName, string serverName)
@@ -42,6 +40,14 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             // Example: Create a new sync agent
             var collection = await GetSyncAgentCollectionAsync("syncagentcrud-65440", "syncagentcrud-8475");
             await TestHelper.CreateOrUpdateExampleInstanceAsync(collection, "syncagentcrud-3187");
+        }
+
+        [RecordedTest]
+        public async Task GetAsync()
+        {
+            // Example: Get a sync agent
+            var collection = await GetSyncAgentCollectionAsync("syncagentcrud-65440", "syncagentcrud-8475");
+            await TestHelper.GetExampleInstanceAsync(collection, "syncagentcrud-3187");
         }
 
         [RecordedTest]

@@ -10,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -18,13 +19,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ManagedInstancePrivateEndpointConnection. </summary>
     public partial class ManagedInstancePrivateEndpointConnectionMockTests : MockTestBase
     {
-        public ManagedInstancePrivateEndpointConnectionMockTests(bool isAsync) : base(isAsync)
+        public ManagedInstancePrivateEndpointConnectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public ManagedInstancePrivateEndpointConnectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.ManagedInstancePrivateEndpointConnectionCollection> GetManagedInstancePrivateEndpointConnectionCollectionAsync(string resourceGroupName, string managedInstanceName)
@@ -48,18 +46,18 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         public async Task GetAsync()
         {
             // Example: Gets private endpoint connection.
-            var resource = await GetManagedInstancePrivateEndpointConnectionAsync();
+            var managedInstancePrivateEndpointConnection = await GetManagedInstancePrivateEndpointConnectionAsync();
 
-            await resource.GetAsync();
+            await managedInstancePrivateEndpointConnection.GetAsync();
         }
 
         [RecordedTest]
         public async Task DeleteAsync()
         {
             // Example: Deletes a private endpoint connection with a given name.
-            var resource = await GetManagedInstancePrivateEndpointConnectionAsync();
+            var managedInstancePrivateEndpointConnection = await GetManagedInstancePrivateEndpointConnectionAsync();
 
-            await resource.DeleteAsync();
+            await managedInstancePrivateEndpointConnection.DeleteAsync();
         }
     }
 }

@@ -10,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -18,13 +19,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ManagedInstanceAzureADOnlyAuthentication. </summary>
     public partial class ManagedInstanceAzureADOnlyAuthenticationMockTests : MockTestBase
     {
-        public ManagedInstanceAzureADOnlyAuthenticationMockTests(bool isAsync) : base(isAsync)
+        public ManagedInstanceAzureADOnlyAuthenticationMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public ManagedInstanceAzureADOnlyAuthenticationMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.ManagedInstanceAzureADOnlyAuthenticationCollection> GetManagedInstanceAzureADOnlyAuthenticationCollectionAsync(string resourceGroupName, string managedInstanceName)
@@ -48,18 +46,18 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         public async Task GetAsync()
         {
             // Example: Gets a Azure Active Directory only authentication property.
-            var resource = await GetManagedInstanceAzureADOnlyAuthenticationAsync();
+            var managedInstanceAzureADOnlyAuthentication = await GetManagedInstanceAzureADOnlyAuthenticationAsync();
 
-            await resource.GetAsync();
+            await managedInstanceAzureADOnlyAuthentication.GetAsync();
         }
 
         [RecordedTest]
         public async Task DeleteAsync()
         {
             // Example: Deletes Azure Active Directory only authentication object.
-            var resource = await GetManagedInstanceAzureADOnlyAuthenticationAsync();
+            var managedInstanceAzureADOnlyAuthentication = await GetManagedInstanceAzureADOnlyAuthenticationAsync();
 
-            await resource.DeleteAsync();
+            await managedInstanceAzureADOnlyAuthentication.DeleteAsync();
         }
     }
 }

@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for FirewallRule. </summary>
     public partial class FirewallRuleCollectionMockTests : MockTestBase
     {
-        public FirewallRuleCollectionMockTests(bool isAsync) : base(isAsync)
+        public FirewallRuleCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public FirewallRuleCollectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.FirewallRuleCollection> GetFirewallRuleCollectionAsync(string resourceGroupName, string serverName)
@@ -42,6 +40,14 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             // Example: Create a firewall rule max/min
             var collection = await GetFirewallRuleCollectionAsync("firewallrulecrudtest-12", "firewallrulecrudtest-6285");
             await TestHelper.CreateOrUpdateExampleInstanceAsync(collection, "firewallrulecrudtest-5370");
+        }
+
+        [RecordedTest]
+        public async Task GetAsync()
+        {
+            // Example: Get Firewall Rule
+            var collection = await GetFirewallRuleCollectionAsync("firewallrulecrudtest-12", "firewallrulecrudtest-6285");
+            await TestHelper.GetExampleInstanceAsync(collection, "firewallrulecrudtest-2304");
         }
 
         [RecordedTest]

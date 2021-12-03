@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for SyncMember. </summary>
     public partial class SyncMemberCollectionMockTests : MockTestBase
     {
-        public SyncMemberCollectionMockTests(bool isAsync) : base(isAsync)
+        public SyncMemberCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public SyncMemberCollectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.SyncMemberCollection> GetSyncMemberCollectionAsync(string resourceGroupName, string serverName, string databaseName, string syncGroupName)
@@ -48,6 +46,14 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             // Example: Create a new sync member
             var collection = await GetSyncMemberCollectionAsync("syncgroupcrud-65440", "syncgroupcrud-8475", "syncgroupcrud-4328", "syncgroupcrud-3187");
             await TestHelper.CreateOrUpdateExampleInstanceAsync(collection, "syncmembercrud-4879");
+        }
+
+        [RecordedTest]
+        public async Task GetAsync()
+        {
+            // Example: Get a sync member
+            var collection = await GetSyncMemberCollectionAsync("syncgroupcrud-65440", "syncgroupcrud-8475", "syncgroupcrud-4328", "syncgroupcrud-3187");
+            await TestHelper.GetExampleInstanceAsync(collection, "syncmembercrud-4879");
         }
 
         [RecordedTest]

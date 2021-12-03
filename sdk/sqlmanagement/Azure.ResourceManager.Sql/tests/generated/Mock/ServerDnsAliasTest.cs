@@ -10,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.Sql.Models;
 using Azure.ResourceManager.TestFramework;
@@ -19,13 +20,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ServerDnsAlias. </summary>
     public partial class ServerDnsAliasMockTests : MockTestBase
     {
-        public ServerDnsAliasMockTests(bool isAsync) : base(isAsync)
+        public ServerDnsAliasMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public ServerDnsAliasMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.ServerDnsAliasCollection> GetServerDnsAliasCollectionAsync(string resourceGroupName, string serverName)
@@ -49,28 +47,28 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         public async Task GetAsync()
         {
             // Example: Get server DNS alias
-            var resource = await GetServerDnsAliasAsync();
+            var serverDnsAlias = await GetServerDnsAliasAsync();
 
-            await resource.GetAsync();
+            await serverDnsAlias.GetAsync();
         }
 
         [RecordedTest]
         public async Task DeleteAsync()
         {
             // Example: Delete server DNS alias
-            var resource = await GetServerDnsAliasAsync();
+            var serverDnsAlias = await GetServerDnsAliasAsync();
 
-            await resource.DeleteAsync();
+            await serverDnsAlias.DeleteAsync();
         }
 
         [RecordedTest]
         public async Task AcquireAsync()
         {
             // Example: Acquire server DNS alias
-            var resource = await GetServerDnsAliasAsync();
-            var parameters = new Sql.Models.ServerDnsAliasAcquisition("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/Default/providers/Microsoft.Sql/servers/dns-alias-old-server/dnsAliases/dns-alias-name-1");
+            var serverDnsAlias = await GetServerDnsAliasAsync();
+            Sql.Models.ServerDnsAliasAcquisition parameters = new Sql.Models.ServerDnsAliasAcquisition("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/Default/providers/Microsoft.Sql/servers/dns-alias-old-server/dnsAliases/dns-alias-name-1");
 
-            await resource.AcquireAsync(parameters);
+            await serverDnsAlias.AcquireAsync(parameters);
         }
     }
 }

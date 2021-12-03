@@ -10,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.Sql.Models;
 using Azure.ResourceManager.TestFramework;
@@ -19,13 +20,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for Server. </summary>
     public partial class ServerMockTests : MockTestBase
     {
-        public ServerMockTests(bool isAsync) : base(isAsync)
+        public ServerMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public ServerMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.ServerCollection> GetServerCollectionAsync(string resourceGroupName)
@@ -46,27 +44,27 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         public async Task GetAsync()
         {
             // Example: Get server
-            var resource = await GetServerAsync();
+            var server = await GetServerAsync();
             string expand = null;
 
-            await resource.GetAsync(expand);
+            await server.GetAsync(expand);
         }
 
         [RecordedTest]
         public async Task DeleteAsync()
         {
             // Example: Delete server
-            var resource = await GetServerAsync();
+            var server = await GetServerAsync();
 
-            await resource.DeleteAsync();
+            await server.DeleteAsync();
         }
 
         [RecordedTest]
         public async Task UpdateAsync()
         {
             // Example: Update a server
-            var resource = await GetServerAsync();
-            var parameters = new Sql.Models.ServerUpdate()
+            var server = await GetServerAsync();
+            Sql.Models.ServerUpdate parameters = new Sql.Models.ServerUpdate()
             {
                 AdministratorLogin = "dummylogin",
                 AdministratorLoginPassword = "placeholder",
@@ -74,64 +72,64 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
                 RestrictOutboundNetworkAccess = new Sql.Models.ServerNetworkAccessFlag("Enabled"),
             };
 
-            await resource.UpdateAsync(parameters);
+            await server.UpdateAsync(parameters);
         }
 
         [RecordedTest]
         public async Task GetInaccessibleDatabasesAsync()
         {
             // Example: Gets a list of inaccessible databases in a logical server
-            var resource = await GetServerAsync();
+            var server = await GetServerAsync();
 
-            resource.GetInaccessibleDatabasesAsync();
+            server.GetInaccessibleDatabasesAsync();
         }
 
         [RecordedTest]
         public async Task GetReplicationLinksAsync()
         {
             // Example: List replication links on server
-            var resource = await GetServerAsync();
+            var server = await GetServerAsync();
 
-            resource.GetReplicationLinksAsync();
+            server.GetReplicationLinksAsync();
         }
 
         [RecordedTest]
         public async Task GetServerUsagesAsync()
         {
             // Example: List servers usages
-            var resource = await GetServerAsync();
+            var server = await GetServerAsync();
 
-            resource.GetServerUsagesAsync();
+            server.GetServerUsagesAsync();
         }
 
         [RecordedTest]
         public async Task GetServerOperationsAsync()
         {
             // Example: List the server management operations
-            var resource = await GetServerAsync();
+            var server = await GetServerAsync();
 
-            resource.GetServerOperationsAsync();
+            server.GetServerOperationsAsync();
         }
 
         [RecordedTest]
         public async Task CreateTdeCertificateAsync()
         {
             // Example: Upload a TDE certificate
-            var resource = await GetServerAsync();
-            var parameters = new Sql.Models.TdeCertificate()
+            var server = await GetServerAsync();
+            Sql.Models.TdeCertificate parameters = new Sql.Models.TdeCertificate()
             {
                 PrivateBlob = "MIIXXXXXXXX",
             };
 
-            await resource.CreateTdeCertificateAsync(parameters);
+            await server.CreateTdeCertificateAsync(parameters);
         }
 
         [RecordedTest]
         public async Task ImportDatabaseAsync()
         {
             // Example: Imports to a new database, using private link for the SQL server and storage account.
-            var resource = await GetServerAsync();
-            var parameters = new Sql.Models.ImportNewDatabaseDefinition(new Sql.Models.StorageKeyType("StorageAccessKey"), "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx==", "https://test.blob.core.windows.net/test.bacpac", "login", "password")
+            var server = await GetServerAsync();
+            Sql.Models.ImportNewDatabaseDefinition parameters = new Sql.Models.ImportNewDatabaseDefinition(new Sql.Models.StorageKeyType("StorageAccessKey"), "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx==", "https://test.blob.core.windows.net/test.bacpac", "login", "password")
             {
                 DatabaseName = "testdb",
                 AuthenticationType = "Sql",
@@ -142,31 +140,31 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
                 },
             };
 
-            await resource.ImportDatabaseAsync(parameters);
+            await server.ImportDatabaseAsync(parameters);
         }
 
         [RecordedTest]
         public async Task ServerAutomaticTuningGetAsync()
         {
             // Example: Get a server's automatic tuning settings
-            var resource = await GetServerAsync();
-            var childResource = resource.GetServerAutomaticTuning();
+            var server = await GetServerAsync();
+            var serverAutomaticTuning = server.GetServerAutomaticTuning();
 
-            await childResource.GetAsync();
+            await serverAutomaticTuning.GetAsync();
         }
 
         [RecordedTest]
         public async Task ServerAutomaticTuningUpdateAsync()
         {
             // Example: Updates server automatic tuning settings with all properties
-            var resource = await GetServerAsync();
-            var childResource = resource.GetServerAutomaticTuning();
-            var parameters = new Sql.ServerAutomaticTuningData()
+            var server = await GetServerAsync();
+            var serverAutomaticTuning = server.GetServerAutomaticTuning();
+            Sql.ServerAutomaticTuningData parameters = new Sql.ServerAutomaticTuningData()
             {
-                DesiredState = AutomaticTuningServerMode.Auto,
+                DesiredState = Sql.Models.AutomaticTuningServerMode.Auto,
             };
 
-            await childResource.UpdateAsync(parameters);
+            await serverAutomaticTuning.UpdateAsync(parameters);
         }
     }
 }

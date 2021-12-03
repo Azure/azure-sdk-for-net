@@ -10,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -18,13 +19,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for VirtualNetworkRule. </summary>
     public partial class VirtualNetworkRuleMockTests : MockTestBase
     {
-        public VirtualNetworkRuleMockTests(bool isAsync) : base(isAsync)
+        public VirtualNetworkRuleMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public VirtualNetworkRuleMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.VirtualNetworkRuleCollection> GetVirtualNetworkRuleCollectionAsync(string resourceGroupName, string serverName)
@@ -48,18 +46,18 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         public async Task GetAsync()
         {
             // Example: Gets a virtual network rule
-            var resource = await GetVirtualNetworkRuleAsync();
+            var virtualNetworkRule = await GetVirtualNetworkRuleAsync();
 
-            await resource.GetAsync();
+            await virtualNetworkRule.GetAsync();
         }
 
         [RecordedTest]
         public async Task DeleteAsync()
         {
             // Example: Delete a virtual network rule
-            var resource = await GetVirtualNetworkRuleAsync();
+            var virtualNetworkRule = await GetVirtualNetworkRuleAsync();
 
-            await resource.DeleteAsync();
+            await virtualNetworkRule.DeleteAsync();
         }
     }
 }

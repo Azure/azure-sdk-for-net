@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for WorkloadClassifier. </summary>
     public partial class WorkloadClassifierCollectionMockTests : MockTestBase
     {
-        public WorkloadClassifierCollectionMockTests(bool isAsync) : base(isAsync)
+        public WorkloadClassifierCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public WorkloadClassifierCollectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.WorkloadClassifierCollection> GetWorkloadClassifierCollectionAsync(string resourceGroupName, string serverName, string databaseName, string workloadGroupName)
@@ -48,6 +46,14 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             // Example: Create a workload group with all properties specified.
             var collection = await GetWorkloadClassifierCollectionAsync("Default-SQL-SouthEastAsia", "testsvr", "testdb", "wlm_workloadgroup");
             await TestHelper.CreateOrUpdateExampleInstanceAsync(collection, "wlm_workloadclassifier");
+        }
+
+        [RecordedTest]
+        public async Task GetAsync()
+        {
+            // Example: Gets a workload classifier for a data warehouse
+            var collection = await GetWorkloadClassifierCollectionAsync("Default-SQL-SouthEastAsia", "testsvr", "testdb", "wlm_workloadgroup");
+            await TestHelper.GetExampleInstanceAsync(collection, "wlm_classifier");
         }
 
         [RecordedTest]

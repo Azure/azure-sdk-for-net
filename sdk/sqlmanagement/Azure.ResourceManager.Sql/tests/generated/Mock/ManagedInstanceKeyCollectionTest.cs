@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ManagedInstanceKey. </summary>
     public partial class ManagedInstanceKeyCollectionMockTests : MockTestBase
     {
-        public ManagedInstanceKeyCollectionMockTests(bool isAsync) : base(isAsync)
+        public ManagedInstanceKeyCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public ManagedInstanceKeyCollectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.ManagedInstanceKeyCollection> GetManagedInstanceKeyCollectionAsync(string resourceGroupName, string managedInstanceName)
@@ -42,6 +40,14 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             // Example: Creates or updates a managed instance key
             var collection = await GetManagedInstanceKeyCollectionAsync("sqlcrudtest-7398", "sqlcrudtest-4645");
             await TestHelper.CreateOrUpdateExampleInstanceAsync(collection, "someVault_someKey_01234567890123456789012345678901");
+        }
+
+        [RecordedTest]
+        public async Task GetAsync()
+        {
+            // Example: Get the managed instance key
+            var collection = await GetManagedInstanceKeyCollectionAsync("sqlcrudtest-7398", "sqlcrudtest-4645");
+            await TestHelper.GetExampleInstanceAsync(collection, "someVault_someKey_01234567890123456789012345678901");
         }
 
         [RecordedTest]

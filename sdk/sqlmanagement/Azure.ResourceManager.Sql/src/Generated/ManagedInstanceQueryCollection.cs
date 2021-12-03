@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         internal ManagedInstanceQueryCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managedDatabaseQueriesRestClient = new ManagedDatabaseQueriesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _managedDatabaseQueriesRestClient = new ManagedDatabaseQueriesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _managedDatabaseQueriesRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, cancellationToken);
+                var response = _managedDatabaseQueriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ManagedInstanceQuery(Parent, response.Value), response.GetRawResponse());
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _managedDatabaseQueriesRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, cancellationToken).ConfigureAwait(false);
+                var response = await _managedDatabaseQueriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ManagedInstanceQuery(Parent, response.Value), response.GetRawResponse());
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _managedDatabaseQueriesRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, cancellationToken: cancellationToken);
+                var response = _managedDatabaseQueriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<ManagedInstanceQuery>(null, response.GetRawResponse())
                     : Response.FromValue(new ManagedInstanceQuery(this, response.Value), response.GetRawResponse());
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _managedDatabaseQueriesRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _managedDatabaseQueriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<ManagedInstanceQuery>(null, response.GetRawResponse())
                     : Response.FromValue(new ManagedInstanceQuery(this, response.Value), response.GetRawResponse());

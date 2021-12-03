@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ServerBlobAuditingPolicy. </summary>
     public partial class ServerBlobAuditingPolicyCollectionMockTests : MockTestBase
     {
-        public ServerBlobAuditingPolicyCollectionMockTests(bool isAsync) : base(isAsync)
+        public ServerBlobAuditingPolicyCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public ServerBlobAuditingPolicyCollectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.ServerBlobAuditingPolicyCollection> GetServerBlobAuditingPolicyCollectionAsync(string resourceGroupName, string serverName)
@@ -42,6 +40,14 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             // Example: Update a server's blob auditing policy with all parameters
             var collection = await GetServerBlobAuditingPolicyCollectionAsync("blobauditingtest-4799", "blobauditingtest-6440");
             await TestHelper.CreateOrUpdateExampleInstanceAsync(collection);
+        }
+
+        [RecordedTest]
+        public async Task GetAsync()
+        {
+            // Example: Get a server's blob auditing policy
+            var collection = await GetServerBlobAuditingPolicyCollectionAsync("blobauditingtest-4799", "blobauditingtest-6440");
+            await TestHelper.GetExampleInstanceAsync(collection);
         }
 
         [RecordedTest]

@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ManagedInstancePrivateEndpointConnection. </summary>
     public partial class ManagedInstancePrivateEndpointConnectionCollectionMockTests : MockTestBase
     {
-        public ManagedInstancePrivateEndpointConnectionCollectionMockTests(bool isAsync) : base(isAsync)
+        public ManagedInstancePrivateEndpointConnectionCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public ManagedInstancePrivateEndpointConnectionCollectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.ManagedInstancePrivateEndpointConnectionCollection> GetManagedInstancePrivateEndpointConnectionCollectionAsync(string resourceGroupName, string managedInstanceName)
@@ -42,6 +40,14 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             // Example: Approve or reject a private endpoint connection with a given name.
             var collection = await GetManagedInstancePrivateEndpointConnectionCollectionAsync("Default", "test-cl");
             await TestHelper.CreateOrUpdateExampleInstanceAsync(collection, "private-endpoint-connection-name");
+        }
+
+        [RecordedTest]
+        public async Task GetAsync()
+        {
+            // Example: Gets private endpoint connection.
+            var collection = await GetManagedInstancePrivateEndpointConnectionCollectionAsync("Default", "test-cl");
+            await TestHelper.GetExampleInstanceAsync(collection, "private-endpoint-connection-name");
         }
 
         [RecordedTest]

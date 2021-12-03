@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.Sql.Models;
 
@@ -19,6 +20,13 @@ namespace Azure.ResourceManager.Sql.Tests
     /// <summary> Test Extension for Azure.ResourceManager.Sql. </summary>
     public static partial class TestHelper
     {
+        public static async Task<Response<Sql.RecoverableDatabase>> GetExampleInstanceAsync(RecoverableDatabaseCollection collection, string databaseName)
+        {
+            // Example: Get a recoverable database
+
+            return await collection.GetAsync(databaseName);
+        }
+
         public static AsyncPageable<Sql.RecoverableDatabase> GetAllExampleInstanceAsync(RecoverableDatabaseCollection collection)
         {
             // Example: Get list of restorable dropped databases
@@ -29,34 +37,57 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.ServerConnectionPolicyCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ServerConnectionPolicyCollection collection)
         {
             // Example: Create or update a server's secure connection policy
-            var connectionPolicyName = new Sql.Models.ConnectionPolicyName("default");
-            var parameters = new Sql.ServerConnectionPolicyData()
+            Sql.Models.ConnectionPolicyName connectionPolicyName = new Sql.Models.ConnectionPolicyName("default");
+            Sql.ServerConnectionPolicyData parameters = new Sql.ServerConnectionPolicyData()
             {
-                ConnectionType = ServerConnectionType.Proxy,
+                ConnectionType = Sql.Models.ServerConnectionType.Proxy,
             };
 
             return await collection.CreateOrUpdateAsync(connectionPolicyName, parameters);
         }
 
+        public static async Task<Response<Sql.ServerConnectionPolicy>> GetExampleInstanceAsync(ServerConnectionPolicyCollection collection)
+        {
+            // Example: Get a server's secure connection policy
+            Sql.Models.ConnectionPolicyName connectionPolicyName = new Sql.Models.ConnectionPolicyName("default");
+
+            return await collection.GetAsync(connectionPolicyName);
+        }
+
         public static async Task<Sql.Models.DataMaskingPolicyCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(DataMaskingPolicyCollection collection)
         {
             // Example: Create or update data masking policy max
-            var parameters = new Sql.DataMaskingPolicyData()
+            Sql.DataMaskingPolicyData parameters = new Sql.DataMaskingPolicyData()
             {
-                DataMaskingState = DataMaskingState.Enabled,
+                DataMaskingState = Sql.Models.DataMaskingState.Enabled,
                 ExemptPrincipals = "testuser;",
             };
 
             return await collection.CreateOrUpdateAsync(parameters);
         }
 
+        public static async Task<Response<Sql.DataMaskingPolicy>> GetExampleInstanceAsync(DataMaskingPolicyCollection collection)
+        {
+            // Example: Get data masking policy
+
+            return await collection.GetAsync();
+        }
+
         public static async Task<Sql.Models.GeoBackupPolicyCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(GeoBackupPolicyCollection collection)
         {
             // Example: Update geo backup policy
-            var geoBackupPolicyName = new Sql.Models.GeoBackupPolicyName("Default");
-            var parameters = new Sql.GeoBackupPolicyData(GeoBackupPolicyState.Enabled);
+            Sql.Models.GeoBackupPolicyName geoBackupPolicyName = new Sql.Models.GeoBackupPolicyName("Default");
+            Sql.GeoBackupPolicyData parameters = new Sql.GeoBackupPolicyData(Sql.Models.GeoBackupPolicyState.Enabled);
 
             return await collection.CreateOrUpdateAsync(geoBackupPolicyName, parameters);
+        }
+
+        public static async Task<Response<Sql.GeoBackupPolicy>> GetExampleInstanceAsync(GeoBackupPolicyCollection collection)
+        {
+            // Example: Get geo backup policy
+            Sql.Models.GeoBackupPolicyName geoBackupPolicyName = new Sql.Models.GeoBackupPolicyName("Default");
+
+            return await collection.GetAsync(geoBackupPolicyName);
         }
 
         public static AsyncPageable<Sql.GeoBackupPolicy> GetAllExampleInstanceAsync(GeoBackupPolicyCollection collection)
@@ -69,7 +100,7 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.DatabaseCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(DatabaseCollection collection, string databaseName)
         {
             // Example: Creates a VCore database by specifying service objective name.
-            var parameters = new Sql.DatabaseData("southeastasia")
+            Sql.DatabaseData parameters = new Sql.DatabaseData("southeastasia")
             {
                 Sku = new Sql.Models.Sku("BC")
                 {
@@ -79,6 +110,13 @@ namespace Azure.ResourceManager.Sql.Tests
             };
 
             return await collection.CreateOrUpdateAsync(databaseName, parameters);
+        }
+
+        public static async Task<Response<Sql.Database>> GetExampleInstanceAsync(DatabaseCollection collection, string databaseName)
+        {
+            // Example: Gets a database.
+
+            return await collection.GetAsync(databaseName);
         }
 
         public static AsyncPageable<Sql.Database> GetAllExampleInstanceAsync(DatabaseCollection collection)
@@ -92,7 +130,7 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.ElasticPoolCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ElasticPoolCollection collection, string elasticPoolName)
         {
             // Example: Create or update elastic pool with all parameter
-            var parameters = new Sql.ElasticPoolData("Japan East")
+            Sql.ElasticPoolData parameters = new Sql.ElasticPoolData("Japan East")
             {
                 Sku = new Sql.Models.Sku("GP_Gen4_2")
                 {
@@ -109,12 +147,26 @@ namespace Azure.ResourceManager.Sql.Tests
             return await collection.CreateOrUpdateAsync(elasticPoolName, parameters);
         }
 
+        public static async Task<Response<Sql.ElasticPool>> GetExampleInstanceAsync(ElasticPoolCollection collection, string elasticPoolName)
+        {
+            // Example: Get an elastic pool
+
+            return await collection.GetAsync(elasticPoolName);
+        }
+
         public static AsyncPageable<Sql.ElasticPool> GetAllExampleInstanceAsync(ElasticPoolCollection collection)
         {
             // Example: Get all elastic pools in a server
             int? skip = null;
 
             return collection.GetAllAsync(skip);
+        }
+
+        public static async Task<Response<Sql.ReplicationLink>> GetExampleInstanceAsync(ReplicationLinkCollection collection, string linkId)
+        {
+            // Example: Gets the replication link.
+
+            return await collection.GetAsync(linkId);
         }
 
         public static AsyncPageable<Sql.ReplicationLink> GetAllExampleInstanceAsync(ReplicationLinkCollection collection)
@@ -127,7 +179,7 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.ServerCommunicationLinkCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ServerCommunicationLinkCollection collection, string communicationLinkName)
         {
             // Example: Create a server communication link
-            var parameters = new Sql.ServerCommunicationLinkData()
+            Sql.ServerCommunicationLinkData parameters = new Sql.ServerCommunicationLinkData()
             {
                 PartnerServer = "sqldcrudtest-test",
             };
@@ -135,11 +187,25 @@ namespace Azure.ResourceManager.Sql.Tests
             return await collection.CreateOrUpdateAsync(communicationLinkName, parameters);
         }
 
+        public static async Task<Response<Sql.ServerCommunicationLink>> GetExampleInstanceAsync(ServerCommunicationLinkCollection collection, string communicationLinkName)
+        {
+            // Example: Get a server communication link
+
+            return await collection.GetAsync(communicationLinkName);
+        }
+
         public static AsyncPageable<Sql.ServerCommunicationLink> GetAllExampleInstanceAsync(ServerCommunicationLinkCollection collection)
         {
             // Example: List server communication links
 
             return collection.GetAllAsync();
+        }
+
+        public static async Task<Response<Sql.ServiceObjective>> GetExampleInstanceAsync(ServiceObjectiveCollection collection, string serviceObjectiveName)
+        {
+            // Example: Get a service objective
+
+            return await collection.GetAsync(serviceObjectiveName);
         }
 
         public static AsyncPageable<Sql.ServiceObjective> GetAllExampleInstanceAsync(ServiceObjectiveCollection collection)
@@ -152,14 +218,22 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.ExtendedDatabaseBlobAuditingPolicyCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ExtendedDatabaseBlobAuditingPolicyCollection collection)
         {
             // Example: Create or update an extended database's azure monitor auditing policy with minimal parameters
-            var blobAuditingPolicyName = new Sql.Models.Enum5("default");
-            var parameters = new Sql.ExtendedDatabaseBlobAuditingPolicyData()
+            Sql.Models.Enum5 blobAuditingPolicyName = new Sql.Models.Enum5("default");
+            Sql.ExtendedDatabaseBlobAuditingPolicyData parameters = new Sql.ExtendedDatabaseBlobAuditingPolicyData()
             {
                 IsAzureMonitorTargetEnabled = true,
-                State = BlobAuditingPolicyState.Enabled,
+                State = Sql.Models.BlobAuditingPolicyState.Enabled,
             };
 
             return await collection.CreateOrUpdateAsync(blobAuditingPolicyName, parameters);
+        }
+
+        public static async Task<Response<Sql.ExtendedDatabaseBlobAuditingPolicy>> GetExampleInstanceAsync(ExtendedDatabaseBlobAuditingPolicyCollection collection)
+        {
+            // Example: Get an extended database's blob auditing policy
+            Sql.Models.Enum5 blobAuditingPolicyName = new Sql.Models.Enum5("default");
+
+            return await collection.GetAsync(blobAuditingPolicyName);
         }
 
         public static AsyncPageable<Sql.ExtendedDatabaseBlobAuditingPolicy> GetAllExampleInstanceAsync(ExtendedDatabaseBlobAuditingPolicyCollection collection)
@@ -172,21 +246,29 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.ExtendedServerBlobAuditingPolicyCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ExtendedServerBlobAuditingPolicyCollection collection)
         {
             // Example: Update a server's extended blob auditing policy with all parameters
-            var blobAuditingPolicyName = new Sql.Models.Enum5("default");
-            var parameters = new Sql.ExtendedServerBlobAuditingPolicyData()
+            Sql.Models.Enum5 blobAuditingPolicyName = new Sql.Models.Enum5("default");
+            Sql.ExtendedServerBlobAuditingPolicyData parameters = new Sql.ExtendedServerBlobAuditingPolicyData()
             {
                 PredicateExpression = "object_name = 'SensitiveData'",
                 RetentionDays = 6,
                 IsStorageSecondaryKeyInUse = false,
                 IsAzureMonitorTargetEnabled = true,
                 QueueDelayMs = 4000,
-                State = BlobAuditingPolicyState.Enabled,
+                State = Sql.Models.BlobAuditingPolicyState.Enabled,
                 StorageEndpoint = "https://mystorage.blob.core.windows.net",
                 StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
                 StorageAccountSubscriptionId = Guid.Parse("00000000-1234-0000-5678-000000000000"),
             };
 
             return await collection.CreateOrUpdateAsync(blobAuditingPolicyName, parameters);
+        }
+
+        public static async Task<Response<Sql.ExtendedServerBlobAuditingPolicy>> GetExampleInstanceAsync(ExtendedServerBlobAuditingPolicyCollection collection)
+        {
+            // Example: Get a server's blob extended auditing policy
+            Sql.Models.Enum5 blobAuditingPolicyName = new Sql.Models.Enum5("default");
+
+            return await collection.GetAsync(blobAuditingPolicyName);
         }
 
         public static AsyncPageable<Sql.ExtendedServerBlobAuditingPolicy> GetAllExampleInstanceAsync(ExtendedServerBlobAuditingPolicyCollection collection)
@@ -199,20 +281,28 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.ServerBlobAuditingPolicyCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ServerBlobAuditingPolicyCollection collection)
         {
             // Example: Update a server's blob auditing policy with all parameters
-            var blobAuditingPolicyName = new Sql.Models.Enum5("default");
-            var parameters = new Sql.ServerBlobAuditingPolicyData()
+            Sql.Models.Enum5 blobAuditingPolicyName = new Sql.Models.Enum5("default");
+            Sql.ServerBlobAuditingPolicyData parameters = new Sql.ServerBlobAuditingPolicyData()
             {
                 RetentionDays = 6,
                 IsStorageSecondaryKeyInUse = false,
                 IsAzureMonitorTargetEnabled = true,
                 QueueDelayMs = 4000,
-                State = BlobAuditingPolicyState.Enabled,
+                State = Sql.Models.BlobAuditingPolicyState.Enabled,
                 StorageEndpoint = "https://mystorage.blob.core.windows.net",
                 StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
                 StorageAccountSubscriptionId = Guid.Parse("00000000-1234-0000-5678-000000000000"),
             };
 
             return await collection.CreateOrUpdateAsync(blobAuditingPolicyName, parameters);
+        }
+
+        public static async Task<Response<Sql.ServerBlobAuditingPolicy>> GetExampleInstanceAsync(ServerBlobAuditingPolicyCollection collection)
+        {
+            // Example: Get a server's blob auditing policy
+            Sql.Models.Enum5 blobAuditingPolicyName = new Sql.Models.Enum5("default");
+
+            return await collection.GetAsync(blobAuditingPolicyName);
         }
 
         public static AsyncPageable<Sql.ServerBlobAuditingPolicy> GetAllExampleInstanceAsync(ServerBlobAuditingPolicyCollection collection)
@@ -225,14 +315,22 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.DatabaseBlobAuditingPolicyCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(DatabaseBlobAuditingPolicyCollection collection)
         {
             // Example: Create or update a database's azure monitor auditing policy with minimal parameters
-            var blobAuditingPolicyName = new Sql.Models.Enum5("default");
-            var parameters = new Sql.DatabaseBlobAuditingPolicyData()
+            Sql.Models.Enum5 blobAuditingPolicyName = new Sql.Models.Enum5("default");
+            Sql.DatabaseBlobAuditingPolicyData parameters = new Sql.DatabaseBlobAuditingPolicyData()
             {
                 IsAzureMonitorTargetEnabled = true,
-                State = BlobAuditingPolicyState.Enabled,
+                State = Sql.Models.BlobAuditingPolicyState.Enabled,
             };
 
             return await collection.CreateOrUpdateAsync(blobAuditingPolicyName, parameters);
+        }
+
+        public static async Task<Response<Sql.DatabaseBlobAuditingPolicy>> GetExampleInstanceAsync(DatabaseBlobAuditingPolicyCollection collection)
+        {
+            // Example: Get a database's blob auditing policy
+            Sql.Models.Enum5 blobAuditingPolicyName = new Sql.Models.Enum5("default");
+
+            return await collection.GetAsync(blobAuditingPolicyName);
         }
 
         public static AsyncPageable<Sql.DatabaseBlobAuditingPolicy> GetAllExampleInstanceAsync(DatabaseBlobAuditingPolicyCollection collection)
@@ -240,6 +338,13 @@ namespace Azure.ResourceManager.Sql.Tests
             // Example: List audit settings of a database
 
             return collection.GetAllAsync();
+        }
+
+        public static async Task<Response<Sql.ServerDatabaseAdvisor>> GetExampleInstanceAsync(ServerDatabaseAdvisorCollection collection, string advisorName)
+        {
+            // Example: Get database advisor
+
+            return await collection.GetAsync(advisorName);
         }
 
         public static async Task<Response<IReadOnlyList<Sql.ServerDatabaseAdvisor>>> GetAllExampleInstanceAsync(ServerDatabaseAdvisorCollection collection)
@@ -250,12 +355,26 @@ namespace Azure.ResourceManager.Sql.Tests
             return await collection.GetAllAsync(expand);
         }
 
+        public static async Task<Response<Sql.ServerAdvisor>> GetExampleInstanceAsync(ServerAdvisorCollection collection, string advisorName)
+        {
+            // Example: Get server advisor
+
+            return await collection.GetAsync(advisorName);
+        }
+
         public static async Task<Response<IReadOnlyList<Sql.ServerAdvisor>>> GetAllExampleInstanceAsync(ServerAdvisorCollection collection)
         {
             // Example: List of server advisors
             string expand = null;
 
             return await collection.GetAllAsync(expand);
+        }
+
+        public static async Task<Response<Sql.ServerDatabaseSchemaTableColumn>> GetExampleInstanceAsync(ServerDatabaseSchemaTableColumnCollection collection, string columnName)
+        {
+            // Example: Get database column
+
+            return await collection.GetAsync(columnName);
         }
 
         public static AsyncPageable<Sql.ServerDatabaseSchemaTableColumn> GetAllExampleInstanceAsync(ServerDatabaseSchemaTableColumnCollection collection)
@@ -266,12 +385,26 @@ namespace Azure.ResourceManager.Sql.Tests
             return collection.GetAllAsync(filter);
         }
 
+        public static async Task<Response<Sql.ManagedInstanceDatabaseSchemaTableColumn>> GetExampleInstanceAsync(ManagedInstanceDatabaseSchemaTableColumnCollection collection, string columnName)
+        {
+            // Example: Get managed database column
+
+            return await collection.GetAsync(columnName);
+        }
+
         public static AsyncPageable<Sql.ManagedInstanceDatabaseSchemaTableColumn> GetAllExampleInstanceAsync(ManagedInstanceDatabaseSchemaTableColumnCollection collection)
         {
             // Example: List managed database columns
             string filter = null;
 
             return collection.GetAllAsync(filter);
+        }
+
+        public static async Task<Response<Sql.RecommendedAction>> GetExampleInstanceAsync(RecommendedActionCollection collection, string recommendedActionName)
+        {
+            // Example: Get database recommended action
+
+            return await collection.GetAsync(recommendedActionName);
         }
 
         public static async Task<Response<IReadOnlyList<Sql.RecommendedAction>>> GetAllExampleInstanceAsync(RecommendedActionCollection collection)
@@ -281,12 +414,26 @@ namespace Azure.ResourceManager.Sql.Tests
             return await collection.GetAllAsync();
         }
 
+        public static async Task<Response<Sql.ServerDatabaseSchema>> GetExampleInstanceAsync(ServerDatabaseSchemaCollection collection, string schemaName)
+        {
+            // Example: Get database schema
+
+            return await collection.GetAsync(schemaName);
+        }
+
         public static AsyncPageable<Sql.ServerDatabaseSchema> GetAllExampleInstanceAsync(ServerDatabaseSchemaCollection collection)
         {
             // Example: List database schemas
             string filter = null;
 
             return collection.GetAllAsync(filter);
+        }
+
+        public static async Task<Response<Sql.ManagedInstanceDatabaseSchema>> GetExampleInstanceAsync(ManagedInstanceDatabaseSchemaCollection collection, string schemaName)
+        {
+            // Example: Get managed database schema
+
+            return await collection.GetAsync(schemaName);
         }
 
         public static AsyncPageable<Sql.ManagedInstanceDatabaseSchema> GetAllExampleInstanceAsync(ManagedInstanceDatabaseSchemaCollection collection)
@@ -300,10 +447,10 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.DatabaseSecurityAlertPolicyCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(DatabaseSecurityAlertPolicyCollection collection)
         {
             // Example: Update a database's threat detection policy with all parameters
-            var securityAlertPolicyName = new Sql.Models.SecurityAlertPolicyName("Default");
-            var parameters = new Sql.DatabaseSecurityAlertPolicyData()
+            Sql.Models.SecurityAlertPolicyName securityAlertPolicyName = new Sql.Models.SecurityAlertPolicyName("Default");
+            Sql.DatabaseSecurityAlertPolicyData parameters = new Sql.DatabaseSecurityAlertPolicyData()
             {
-                State = SecurityAlertsPolicyState.Enabled,
+                State = Sql.Models.SecurityAlertsPolicyState.Enabled,
                 EmailAccountAdmins = true,
                 StorageEndpoint = "https://mystorage.blob.core.windows.net",
                 StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
@@ -313,11 +460,26 @@ namespace Azure.ResourceManager.Sql.Tests
             return await collection.CreateOrUpdateAsync(securityAlertPolicyName, parameters);
         }
 
+        public static async Task<Response<Sql.DatabaseSecurityAlertPolicy>> GetExampleInstanceAsync(DatabaseSecurityAlertPolicyCollection collection)
+        {
+            // Example: Get a database's threat detection policy
+            Sql.Models.SecurityAlertPolicyName securityAlertPolicyName = new Sql.Models.SecurityAlertPolicyName("Default");
+
+            return await collection.GetAsync(securityAlertPolicyName);
+        }
+
         public static AsyncPageable<Sql.DatabaseSecurityAlertPolicy> GetAllExampleInstanceAsync(DatabaseSecurityAlertPolicyCollection collection)
         {
             // Example: Get the database's threat detection policies
 
             return collection.GetAllAsync();
+        }
+
+        public static async Task<Response<Sql.ServerDatabaseSchemaTable>> GetExampleInstanceAsync(ServerDatabaseSchemaTableCollection collection, string tableName)
+        {
+            // Example: Get database table
+
+            return await collection.GetAsync(tableName);
         }
 
         public static AsyncPageable<Sql.ServerDatabaseSchemaTable> GetAllExampleInstanceAsync(ServerDatabaseSchemaTableCollection collection)
@@ -328,6 +490,13 @@ namespace Azure.ResourceManager.Sql.Tests
             return collection.GetAllAsync(filter);
         }
 
+        public static async Task<Response<Sql.ManagedInstanceDatabaseSchemaTable>> GetExampleInstanceAsync(ManagedInstanceDatabaseSchemaTableCollection collection, string tableName)
+        {
+            // Example: Get managed database table
+
+            return await collection.GetAsync(tableName);
+        }
+
         public static AsyncPageable<Sql.ManagedInstanceDatabaseSchemaTable> GetAllExampleInstanceAsync(ManagedInstanceDatabaseSchemaTableCollection collection)
         {
             // Example: List managed database tables
@@ -336,11 +505,45 @@ namespace Azure.ResourceManager.Sql.Tests
             return collection.GetAllAsync(filter);
         }
 
+        public static async Task<Sql.Models.DatabaseVulnerabilityAssessmentRuleBaselineCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ServerDatabaseVulnerabilityAssessmentRuleBaselineCollection collection, string ruleId)
+        {
+            // Example: Creates or updates a database's vulnerability assessment rule baseline.
+            Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName = Sql.Models.VulnerabilityAssessmentPolicyBaselineName.Default;
+            Sql.DatabaseVulnerabilityAssessmentRuleBaselineData parameters = new Sql.DatabaseVulnerabilityAssessmentRuleBaselineData();
+
+            return await collection.CreateOrUpdateAsync(ruleId, baselineName, parameters);
+        }
+
+        public static async Task<Response<Sql.ServerDatabaseVulnerabilityAssessmentRuleBaseline>> GetExampleInstanceAsync(ServerDatabaseVulnerabilityAssessmentRuleBaselineCollection collection, string ruleId)
+        {
+            // Example: Gets a database's vulnerability assessment rule baseline.
+            Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName = Sql.Models.VulnerabilityAssessmentPolicyBaselineName.Master;
+
+            return await collection.GetAsync(ruleId, baselineName);
+        }
+
+        public static async Task<Sql.Models.ManagedDatabaseVulnerabilityAssessmentRuleBaselineCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineCollection collection, string ruleId)
+        {
+            // Example: Creates or updates a database's vulnerability assessment rule baseline.
+            Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName = Sql.Models.VulnerabilityAssessmentPolicyBaselineName.Default;
+            Sql.DatabaseVulnerabilityAssessmentRuleBaselineData parameters = new Sql.DatabaseVulnerabilityAssessmentRuleBaselineData();
+
+            return await collection.CreateOrUpdateAsync(ruleId, baselineName, parameters);
+        }
+
+        public static async Task<Response<Sql.ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaseline>> GetExampleInstanceAsync(ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineCollection collection, string ruleId)
+        {
+            // Example: Gets a database's vulnerability assessment rule baseline.
+            Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName = Sql.Models.VulnerabilityAssessmentPolicyBaselineName.Master;
+
+            return await collection.GetAsync(ruleId, baselineName);
+        }
+
         public static async Task<Sql.Models.DatabaseVulnerabilityAssessmentCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ServerDatabaseVulnerabilityAssessmentCollection collection)
         {
             // Example: Create a database's vulnerability assessment with all parameters
-            var vulnerabilityAssessmentName = new Sql.Models.VulnerabilityAssessmentName("default");
-            var parameters = new Sql.DatabaseVulnerabilityAssessmentData()
+            Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName = new Sql.Models.VulnerabilityAssessmentName("default");
+            Sql.DatabaseVulnerabilityAssessmentData parameters = new Sql.DatabaseVulnerabilityAssessmentData()
             {
                 StorageContainerPath = "https://myStorage.blob.core.windows.net/vulnerability-assessment/",
                 StorageContainerSasKey = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
@@ -355,6 +558,14 @@ namespace Azure.ResourceManager.Sql.Tests
             return await collection.CreateOrUpdateAsync(vulnerabilityAssessmentName, parameters);
         }
 
+        public static async Task<Response<Sql.ServerDatabaseVulnerabilityAssessment>> GetExampleInstanceAsync(ServerDatabaseVulnerabilityAssessmentCollection collection)
+        {
+            // Example: Get a database's vulnerability assessment
+            Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName = new Sql.Models.VulnerabilityAssessmentName("default");
+
+            return await collection.GetAsync(vulnerabilityAssessmentName);
+        }
+
         public static AsyncPageable<Sql.ServerDatabaseVulnerabilityAssessment> GetAllExampleInstanceAsync(ServerDatabaseVulnerabilityAssessmentCollection collection)
         {
             // Example: Get the database's vulnerability assessment policies
@@ -365,8 +576,8 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.ManagedDatabaseVulnerabilityAssessmentCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ManagedInstanceDatabaseVulnerabilityAssessmentCollection collection)
         {
             // Example: Create a database's vulnerability assessment with all parameters
-            var vulnerabilityAssessmentName = new Sql.Models.VulnerabilityAssessmentName("default");
-            var parameters = new Sql.DatabaseVulnerabilityAssessmentData()
+            Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName = new Sql.Models.VulnerabilityAssessmentName("default");
+            Sql.DatabaseVulnerabilityAssessmentData parameters = new Sql.DatabaseVulnerabilityAssessmentData()
             {
                 StorageContainerPath = "https://myStorage.blob.core.windows.net/vulnerability-assessment/",
                 StorageContainerSasKey = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
@@ -380,11 +591,26 @@ namespace Azure.ResourceManager.Sql.Tests
             return await collection.CreateOrUpdateAsync(vulnerabilityAssessmentName, parameters);
         }
 
+        public static async Task<Response<Sql.ManagedInstanceDatabaseVulnerabilityAssessment>> GetExampleInstanceAsync(ManagedInstanceDatabaseVulnerabilityAssessmentCollection collection)
+        {
+            // Example: Get a database's vulnerability assessment
+            Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName = new Sql.Models.VulnerabilityAssessmentName("default");
+
+            return await collection.GetAsync(vulnerabilityAssessmentName);
+        }
+
         public static AsyncPageable<Sql.ManagedInstanceDatabaseVulnerabilityAssessment> GetAllExampleInstanceAsync(ManagedInstanceDatabaseVulnerabilityAssessmentCollection collection)
         {
             // Example: Get a database's vulnerability assessments list
 
             return collection.GetAllAsync();
+        }
+
+        public static async Task<Response<Sql.ServerDatabaseVulnerabilityAssessmentScan>> GetExampleInstanceAsync(ServerDatabaseVulnerabilityAssessmentScanCollection collection, string scanId)
+        {
+            // Example: Gets a database vulnerability assessment scan record by scan ID
+
+            return await collection.GetAsync(scanId);
         }
 
         public static AsyncPageable<Sql.ServerDatabaseVulnerabilityAssessmentScan> GetAllExampleInstanceAsync(ServerDatabaseVulnerabilityAssessmentScanCollection collection)
@@ -394,6 +620,13 @@ namespace Azure.ResourceManager.Sql.Tests
             return collection.GetAllAsync();
         }
 
+        public static async Task<Response<Sql.ManagedInstanceDatabaseVulnerabilityAssessmentScan>> GetExampleInstanceAsync(ManagedInstanceDatabaseVulnerabilityAssessmentScanCollection collection, string scanId)
+        {
+            // Example: Gets a database vulnerability assessment scan record by scan ID
+
+            return await collection.GetAsync(scanId);
+        }
+
         public static AsyncPageable<Sql.ManagedInstanceDatabaseVulnerabilityAssessmentScan> GetAllExampleInstanceAsync(ManagedInstanceDatabaseVulnerabilityAssessmentScanCollection collection)
         {
             // Example: Gets the list of a database vulnerability assessment scan records
@@ -401,11 +634,26 @@ namespace Azure.ResourceManager.Sql.Tests
             return collection.GetAllAsync();
         }
 
+        public static async Task<Response<Sql.DataWarehouseUserActivities>> GetExampleInstanceAsync(DataWarehouseUserActivitiesCollection collection)
+        {
+            // Example: Get the list of the user activities of a data warehouse
+            Sql.Models.DataWarehouseUserActivityName dataWarehouseUserActivityName = new Sql.Models.DataWarehouseUserActivityName("current");
+
+            return await collection.GetAsync(dataWarehouseUserActivityName);
+        }
+
         public static AsyncPageable<Sql.DataWarehouseUserActivities> GetAllExampleInstanceAsync(DataWarehouseUserActivitiesCollection collection)
         {
             // Example: List of the user activities of a data warehouse
 
             return collection.GetAllAsync();
+        }
+
+        public static async Task<Response<Sql.DeletedServer>> GetExampleInstanceAsync(DeletedServerCollection collection, string locationName, string deletedServerName)
+        {
+            // Example: Get deleted server
+
+            return await collection.GetAsync(locationName, deletedServerName);
         }
 
         public static AsyncPageable<Sql.DeletedServer> GetAllExampleInstanceAsync(DeletedServerCollection collection, string locationName)
@@ -418,8 +666,8 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.EncryptionProtectorCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(EncryptionProtectorCollection collection)
         {
             // Example: Update the encryption protector to key vault
-            var encryptionProtectorName = new Sql.Models.EncryptionProtectorName("current");
-            var parameters = new Sql.EncryptionProtectorData()
+            Sql.Models.EncryptionProtectorName encryptionProtectorName = new Sql.Models.EncryptionProtectorName("current");
+            Sql.EncryptionProtectorData parameters = new Sql.EncryptionProtectorData()
             {
                 ServerKeyName = "someVault_someKey_01234567890123456789012345678901",
                 ServerKeyType = new Sql.Models.ServerKeyType("AzureKeyVault"),
@@ -429,11 +677,44 @@ namespace Azure.ResourceManager.Sql.Tests
             return await collection.CreateOrUpdateAsync(encryptionProtectorName, parameters);
         }
 
+        public static async Task<Response<Sql.EncryptionProtector>> GetExampleInstanceAsync(EncryptionProtectorCollection collection)
+        {
+            // Example: Get the encryption protector
+            Sql.Models.EncryptionProtectorName encryptionProtectorName = new Sql.Models.EncryptionProtectorName("current");
+
+            return await collection.GetAsync(encryptionProtectorName);
+        }
+
         public static AsyncPageable<Sql.EncryptionProtector> GetAllExampleInstanceAsync(EncryptionProtectorCollection collection)
         {
             // Example: List encryption protectors by server
 
             return collection.GetAllAsync();
+        }
+
+        public static async Task<Sql.Models.FailoverGroupCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(FailoverGroupCollection collection, string failoverGroupName)
+        {
+            // Example: Create failover group
+            Sql.FailoverGroupData parameters = new Sql.FailoverGroupData()
+            {
+                ReadWriteEndpoint = new Sql.Models.FailoverGroupReadWriteEndpoint(new Sql.Models.ReadWriteEndpointFailoverPolicy("Automatic"))
+                {
+                    FailoverWithDataLossGracePeriodMinutes = 480,
+                },
+                ReadOnlyEndpoint = new Sql.Models.FailoverGroupReadOnlyEndpoint()
+                {
+                    FailoverPolicy = new Sql.Models.ReadOnlyEndpointFailoverPolicy("Disabled"),
+                },
+            };
+
+            return await collection.CreateOrUpdateAsync(failoverGroupName, parameters);
+        }
+
+        public static async Task<Response<Sql.FailoverGroup>> GetExampleInstanceAsync(FailoverGroupCollection collection, string failoverGroupName)
+        {
+            // Example: Get failover group
+
+            return await collection.GetAsync(failoverGroupName);
         }
 
         public static AsyncPageable<Sql.FailoverGroup> GetAllExampleInstanceAsync(FailoverGroupCollection collection)
@@ -446,7 +727,7 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.FirewallRuleCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(FirewallRuleCollection collection, string firewallRuleName)
         {
             // Example: Create a firewall rule max/min
-            var parameters = new Sql.FirewallRuleData()
+            Sql.FirewallRuleData parameters = new Sql.FirewallRuleData()
             {
                 StartIpAddress = "0.0.0.3",
                 EndIpAddress = "0.0.0.3",
@@ -455,11 +736,43 @@ namespace Azure.ResourceManager.Sql.Tests
             return await collection.CreateOrUpdateAsync(firewallRuleName, parameters);
         }
 
+        public static async Task<Response<Sql.FirewallRule>> GetExampleInstanceAsync(FirewallRuleCollection collection, string firewallRuleName)
+        {
+            // Example: Get Firewall Rule
+
+            return await collection.GetAsync(firewallRuleName);
+        }
+
         public static AsyncPageable<Sql.FirewallRule> GetAllExampleInstanceAsync(FirewallRuleCollection collection)
         {
             // Example: List Firewall Rules
 
             return collection.GetAllAsync();
+        }
+
+        public static async Task<Sql.Models.InstanceFailoverGroupCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(InstanceFailoverGroupCollection collection, string locationName, string failoverGroupName)
+        {
+            // Example: Create failover group
+            Sql.InstanceFailoverGroupData parameters = new Sql.InstanceFailoverGroupData()
+            {
+                ReadWriteEndpoint = new Sql.Models.InstanceFailoverGroupReadWriteEndpoint(new Sql.Models.ReadWriteEndpointFailoverPolicy("Automatic"))
+                {
+                    FailoverWithDataLossGracePeriodMinutes = 480,
+                },
+                ReadOnlyEndpoint = new Sql.Models.InstanceFailoverGroupReadOnlyEndpoint()
+                {
+                    FailoverPolicy = new Sql.Models.ReadOnlyEndpointFailoverPolicy("Disabled"),
+                },
+            };
+
+            return await collection.CreateOrUpdateAsync(locationName, failoverGroupName, parameters);
+        }
+
+        public static async Task<Response<Sql.InstanceFailoverGroup>> GetExampleInstanceAsync(InstanceFailoverGroupCollection collection, string locationName, string failoverGroupName)
+        {
+            // Example: Get failover group
+
+            return await collection.GetAsync(locationName, failoverGroupName);
         }
 
         public static AsyncPageable<Sql.InstanceFailoverGroup> GetAllExampleInstanceAsync(InstanceFailoverGroupCollection collection, string locationName)
@@ -472,7 +785,7 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.InstancePoolCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(InstancePoolCollection collection, string instancePoolName)
         {
             // Example: Create an instance pool with all properties.
-            var parameters = new Sql.InstancePoolData("japaneast")
+            Sql.InstancePoolData parameters = new Sql.InstancePoolData("japaneast")
             {
                 Sku = new Sql.Models.Sku("GP_Gen5")
                 {
@@ -487,6 +800,13 @@ namespace Azure.ResourceManager.Sql.Tests
             return await collection.CreateOrUpdateAsync(instancePoolName, parameters);
         }
 
+        public static async Task<Response<Sql.InstancePool>> GetExampleInstanceAsync(InstancePoolCollection collection, string instancePoolName)
+        {
+            // Example: Get an instance pool
+
+            return await collection.GetAsync(instancePoolName);
+        }
+
         public static AsyncPageable<Sql.InstancePool> GetAllExampleInstanceAsync(InstancePoolCollection collection)
         {
             // Example: List instance pools by resource group
@@ -497,12 +817,19 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.JobAgentCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(JobAgentCollection collection, string jobAgentName)
         {
             // Example: Create or update a job agent
-            var parameters = new Sql.JobAgentData("southeastasia")
+            Sql.JobAgentData parameters = new Sql.JobAgentData("southeastasia")
             {
                 DatabaseId = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/group1/providers/Microsoft.Sql/servers/server1/databases/db1",
             };
 
             return await collection.CreateOrUpdateAsync(jobAgentName, parameters);
+        }
+
+        public static async Task<Response<Sql.JobAgent>> GetExampleInstanceAsync(JobAgentCollection collection, string jobAgentName)
+        {
+            // Example: Get a job agent
+
+            return await collection.GetAsync(jobAgentName);
         }
 
         public static AsyncPageable<Sql.JobAgent> GetAllExampleInstanceAsync(JobAgentCollection collection)
@@ -515,7 +842,7 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.JobCredentialCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(JobCredentialCollection collection, string credentialName)
         {
             // Example: Create or update a credential
-            var parameters = new Sql.JobCredentialData()
+            Sql.JobCredentialData parameters = new Sql.JobCredentialData()
             {
                 Username = "myuser",
                 Password = "<password>",
@@ -524,11 +851,34 @@ namespace Azure.ResourceManager.Sql.Tests
             return await collection.CreateOrUpdateAsync(credentialName, parameters);
         }
 
+        public static async Task<Response<Sql.JobCredential>> GetExampleInstanceAsync(JobCredentialCollection collection, string credentialName)
+        {
+            // Example: Get a credential
+
+            return await collection.GetAsync(credentialName);
+        }
+
         public static AsyncPageable<Sql.JobCredential> GetAllExampleInstanceAsync(JobCredentialCollection collection)
         {
             // Example: List credentials in a job agent
 
             return collection.GetAllAsync();
+        }
+
+        public static async Task<Sql.Models.JobExecutionCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ServerJobAgentJobExecutionCollection collection)
+        {
+            // Example: Create job execution.
+            Guid jobExecutionId = Guid.Parse("5555-6666-7777-8888-999999999999");
+
+            return await collection.CreateOrUpdateAsync(jobExecutionId);
+        }
+
+        public static async Task<Response<Sql.ServerJobAgentJobExecution>> GetExampleInstanceAsync(ServerJobAgentJobExecutionCollection collection)
+        {
+            // Example: Get a job execution.
+            Guid jobExecutionId = Guid.Parse("5555-6666-7777-8888-999999999999");
+
+            return await collection.GetAsync(jobExecutionId);
         }
 
         public static AsyncPageable<Sql.ServerJobAgentJobExecution> GetAllExampleInstanceAsync(ServerJobAgentJobExecutionCollection collection)
@@ -545,6 +895,28 @@ namespace Azure.ResourceManager.Sql.Tests
             return collection.GetAllAsync(createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top);
         }
 
+        public static AsyncPageable<Sql.ServerJobAgentJobExecution> GetJobTargetExecutionsExampleInstanceAsync(ServerJobAgentJobExecutionCollection collection)
+        {
+            // Example: List job step target executions
+            Guid jobExecutionId = Guid.Parse("5555-6666-7777-8888-999999999999");
+            DateTimeOffset? createTimeMin = null;
+            DateTimeOffset? createTimeMax = null;
+            DateTimeOffset? endTimeMin = null;
+            DateTimeOffset? endTimeMax = null;
+            bool? isActive = null;
+            int? skip = null;
+            int? top = null;
+
+            return collection.GetJobTargetExecutionsAsync(jobExecutionId, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top);
+        }
+
+        public static async Task<Response<Sql.ServerJobAgentJobExecutionStep>> GetExampleInstanceAsync(ServerJobAgentJobExecutionStepCollection collection, string stepName)
+        {
+            // Example: Get a job step execution
+
+            return await collection.GetAsync(stepName);
+        }
+
         public static AsyncPageable<Sql.ServerJobAgentJobExecutionStep> GetAllExampleInstanceAsync(ServerJobAgentJobExecutionStepCollection collection)
         {
             // Example: List job step executions
@@ -559,17 +931,39 @@ namespace Azure.ResourceManager.Sql.Tests
             return collection.GetAllAsync(createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top);
         }
 
+        public static async Task<Response<Sql.ServerJobAgentJobExecutionStepTarget>> GetExampleInstanceAsync(ServerJobAgentJobExecutionStepTargetCollection collection)
+        {
+            // Example: Get a job step target execution
+            Guid targetId = Guid.Parse("aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee");
+
+            return await collection.GetAsync(targetId);
+        }
+
+        public static AsyncPageable<Sql.ServerJobAgentJobExecutionStepTarget> GetAllExampleInstanceAsync(ServerJobAgentJobExecutionStepTargetCollection collection)
+        {
+            // Example: List job step target executions
+            DateTimeOffset? createTimeMin = null;
+            DateTimeOffset? createTimeMax = null;
+            DateTimeOffset? endTimeMin = null;
+            DateTimeOffset? endTimeMax = null;
+            bool? isActive = null;
+            int? skip = null;
+            int? top = null;
+
+            return collection.GetAllAsync(createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top);
+        }
+
         public static async Task<Sql.Models.JobCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(JobCollection collection, string jobName)
         {
             // Example: Create a job with all properties specified
-            var parameters = new Sql.JobData()
+            Sql.JobData parameters = new Sql.JobData()
             {
                 Description = "my favourite job",
                 Schedule = new Sql.Models.JobSchedule()
                 {
                     StartTime = DateTimeOffset.Parse("2015-09-24T18:30:01Z"),
                     EndTime = DateTimeOffset.Parse("2015-09-24T23:59:59Z"),
-                    Type = JobScheduleType.Recurring,
+                    Type = Sql.Models.JobScheduleType.Recurring,
                     Enabled = true,
                     Interval = "PT5M",
                 },
@@ -578,11 +972,25 @@ namespace Azure.ResourceManager.Sql.Tests
             return await collection.CreateOrUpdateAsync(jobName, parameters);
         }
 
+        public static async Task<Response<Sql.Job>> GetExampleInstanceAsync(JobCollection collection, string jobName)
+        {
+            // Example: Get a job
+
+            return await collection.GetAsync(jobName);
+        }
+
         public static AsyncPageable<Sql.Job> GetAllExampleInstanceAsync(JobCollection collection)
         {
             // Example: List jobs in a job agent
 
             return collection.GetAllAsync();
+        }
+
+        public static async Task<Response<Sql.ServerJobAgentJobVersionStep>> GetExampleInstanceAsync(ServerJobAgentJobVersionStepCollection collection, string stepName)
+        {
+            // Example: Get the specified version of a job step.
+
+            return await collection.GetAsync(stepName);
         }
 
         public static AsyncPageable<Sql.ServerJobAgentJobVersionStep> GetAllExampleInstanceAsync(ServerJobAgentJobVersionStepCollection collection)
@@ -595,7 +1003,7 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.JobStepCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ServerJobAgentJobStepCollection collection, string stepName)
         {
             // Example: Create or update a job step with all properties specified.
-            var parameters = new Sql.JobStepData()
+            Sql.JobStepData parameters = new Sql.JobStepData()
             {
                 StepId = 1,
                 TargetGroup = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/group1/providers/Microsoft.Sql/servers/server1/jobAgents/agent1/targetGroups/targetGroup1",
@@ -625,11 +1033,33 @@ namespace Azure.ResourceManager.Sql.Tests
             return await collection.CreateOrUpdateAsync(stepName, parameters);
         }
 
+        public static async Task<Response<Sql.ServerJobAgentJobStep>> GetExampleInstanceAsync(ServerJobAgentJobStepCollection collection, string stepName)
+        {
+            // Example: Get the latest version of a job step.
+
+            return await collection.GetAsync(stepName);
+        }
+
         public static AsyncPageable<Sql.ServerJobAgentJobStep> GetAllExampleInstanceAsync(ServerJobAgentJobStepCollection collection)
         {
             // Example: List job steps for the latest version of a job.
 
             return collection.GetAllAsync();
+        }
+
+        public static async Task<Sql.Models.JobTargetGroupCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(JobTargetGroupCollection collection, string targetGroupName)
+        {
+            // Example: Create or update a target group with all properties.
+            Sql.JobTargetGroupData parameters = new Sql.JobTargetGroupData();
+
+            return await collection.CreateOrUpdateAsync(targetGroupName, parameters);
+        }
+
+        public static async Task<Response<Sql.JobTargetGroup>> GetExampleInstanceAsync(JobTargetGroupCollection collection, string targetGroupName)
+        {
+            // Example: Get a target group.
+
+            return await collection.GetAsync(targetGroupName);
         }
 
         public static AsyncPageable<Sql.JobTargetGroup> GetAllExampleInstanceAsync(JobTargetGroupCollection collection)
@@ -639,11 +1069,25 @@ namespace Azure.ResourceManager.Sql.Tests
             return collection.GetAllAsync();
         }
 
+        public static async Task<Response<Sql.JobVersion>> GetExampleInstanceAsync(JobVersionCollection collection, int jobVersion)
+        {
+            // Example: Get a version of a job.
+
+            return await collection.GetAsync(jobVersion);
+        }
+
         public static AsyncPageable<Sql.JobVersion> GetAllExampleInstanceAsync(JobVersionCollection collection)
         {
             // Example: Get all versions of a job.
 
             return collection.GetAllAsync();
+        }
+
+        public static async Task<Response<Sql.SubscriptionLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackup>> GetExampleInstanceAsync(SubscriptionLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackupCollection collection, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName)
+        {
+            // Example: Get the long term retention backup.
+
+            return await collection.GetAsync(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName);
         }
 
         public static AsyncPageable<Sql.SubscriptionLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackup> GetAllExampleInstanceAsync(SubscriptionLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackupCollection collection, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName)
@@ -655,6 +1099,13 @@ namespace Azure.ResourceManager.Sql.Tests
             return collection.GetAllAsync(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState);
         }
 
+        public static async Task<Response<Sql.ResourceGroupLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackup>> GetExampleInstanceAsync(ResourceGroupLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackupCollection collection, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName)
+        {
+            // Example: Get the long term retention backup.
+
+            return await collection.GetAsync(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName);
+        }
+
         public static AsyncPageable<Sql.ResourceGroupLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackup> GetAllExampleInstanceAsync(ResourceGroupLocationLongTermRetentionServerLongTermRetentionDatabaseLongTermRetentionBackupCollection collection, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName)
         {
             // Example: Get all long term retention backups under the database.
@@ -664,6 +1115,13 @@ namespace Azure.ResourceManager.Sql.Tests
             return collection.GetAllAsync(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState);
         }
 
+        public static async Task<Response<Sql.SubscriptionLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackup>> GetExampleInstanceAsync(SubscriptionLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackupCollection collection, string locationName, string managedInstanceName, string databaseName, string backupName)
+        {
+            // Example: Get the long term retention backup of a managed database.
+
+            return await collection.GetAsync(locationName, managedInstanceName, databaseName, backupName);
+        }
+
         public static AsyncPageable<Sql.SubscriptionLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackup> GetAllExampleInstanceAsync(SubscriptionLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackupCollection collection, string locationName, string managedInstanceName, string databaseName)
         {
             // Example: Get all long term retention backups under the database.
@@ -671,6 +1129,13 @@ namespace Azure.ResourceManager.Sql.Tests
             Sql.Models.DatabaseState? databaseState = null;
 
             return collection.GetAllAsync(locationName, managedInstanceName, databaseName, onlyLatestPerDatabase, databaseState);
+        }
+
+        public static async Task<Response<Sql.ResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackup>> GetExampleInstanceAsync(ResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackupCollection collection, string locationName, string managedInstanceName, string databaseName, string backupName)
+        {
+            // Example: Get the long term retention backup.
+
+            return await collection.GetAsync(locationName, managedInstanceName, databaseName, backupName);
         }
 
         public static AsyncPageable<Sql.ResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackup> GetAllExampleInstanceAsync(ResourceGroupLocationLongTermRetentionManagedInstanceLongTermRetentionDatabaseLongTermRetentionManagedInstanceBackupCollection collection, string locationName, string managedInstanceName, string databaseName)
@@ -685,8 +1150,8 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.LongTermRetentionPolicyCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(LongTermRetentionPolicyCollection collection)
         {
             // Example: Create or update the long term retention policy for the database.
-            var policyName = new Sql.Models.LongTermRetentionPolicyName("default");
-            var parameters = new Sql.LongTermRetentionPolicyData()
+            Sql.Models.LongTermRetentionPolicyName policyName = new Sql.Models.LongTermRetentionPolicyName("default");
+            Sql.LongTermRetentionPolicyData parameters = new Sql.LongTermRetentionPolicyData()
             {
                 WeeklyRetention = "P1M",
                 MonthlyRetention = "P1Y",
@@ -697,11 +1162,39 @@ namespace Azure.ResourceManager.Sql.Tests
             return await collection.CreateOrUpdateAsync(policyName, parameters);
         }
 
+        public static async Task<Response<Sql.LongTermRetentionPolicy>> GetExampleInstanceAsync(LongTermRetentionPolicyCollection collection)
+        {
+            // Example: Get the long term retention policy for the database.
+            Sql.Models.LongTermRetentionPolicyName policyName = new Sql.Models.LongTermRetentionPolicyName("default");
+
+            return await collection.GetAsync(policyName);
+        }
+
         public static AsyncPageable<Sql.LongTermRetentionPolicy> GetAllExampleInstanceAsync(LongTermRetentionPolicyCollection collection)
         {
             // Example: Get the long term retention policy for the database.
 
             return collection.GetAllAsync();
+        }
+
+        public static async Task<Sql.Models.ManagedBackupShortTermRetentionPolicyCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ManagedInstanceDatabaseBackupShortTermRetentionPolicyCollection collection)
+        {
+            // Example: Update the short term retention policy for the database.
+            Sql.Models.ManagedShortTermRetentionPolicyName policyName = new Sql.Models.ManagedShortTermRetentionPolicyName("default");
+            Sql.ManagedBackupShortTermRetentionPolicyData parameters = new Sql.ManagedBackupShortTermRetentionPolicyData()
+            {
+                RetentionDays = 14,
+            };
+
+            return await collection.CreateOrUpdateAsync(policyName, parameters);
+        }
+
+        public static async Task<Response<Sql.ManagedInstanceDatabaseBackupShortTermRetentionPolicy>> GetExampleInstanceAsync(ManagedInstanceDatabaseBackupShortTermRetentionPolicyCollection collection)
+        {
+            // Example: Get the short term retention policy for the database.
+            Sql.Models.ManagedShortTermRetentionPolicyName policyName = new Sql.Models.ManagedShortTermRetentionPolicyName("default");
+
+            return await collection.GetAsync(policyName);
         }
 
         public static AsyncPageable<Sql.ManagedInstanceDatabaseBackupShortTermRetentionPolicy> GetAllExampleInstanceAsync(ManagedInstanceDatabaseBackupShortTermRetentionPolicyCollection collection)
@@ -714,13 +1207,21 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicyCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ManagedInstanceRestorableDroppedDatabaseBackupShortTermRetentionPolicyCollection collection)
         {
             // Example: Update the short term retention policy for the restorable dropped database.
-            var policyName = new Sql.Models.ManagedShortTermRetentionPolicyName("default");
-            var parameters = new Sql.ManagedBackupShortTermRetentionPolicyData()
+            Sql.Models.ManagedShortTermRetentionPolicyName policyName = new Sql.Models.ManagedShortTermRetentionPolicyName("default");
+            Sql.ManagedBackupShortTermRetentionPolicyData parameters = new Sql.ManagedBackupShortTermRetentionPolicyData()
             {
                 RetentionDays = 14,
             };
 
             return await collection.CreateOrUpdateAsync(policyName, parameters);
+        }
+
+        public static async Task<Response<Sql.ManagedInstanceRestorableDroppedDatabaseBackupShortTermRetentionPolicy>> GetExampleInstanceAsync(ManagedInstanceRestorableDroppedDatabaseBackupShortTermRetentionPolicyCollection collection)
+        {
+            // Example: Get the short term retention policy for the database.
+            Sql.Models.ManagedShortTermRetentionPolicyName policyName = new Sql.Models.ManagedShortTermRetentionPolicyName("default");
+
+            return await collection.GetAsync(policyName);
         }
 
         public static AsyncPageable<Sql.ManagedInstanceRestorableDroppedDatabaseBackupShortTermRetentionPolicy> GetAllExampleInstanceAsync(ManagedInstanceRestorableDroppedDatabaseBackupShortTermRetentionPolicyCollection collection)
@@ -730,10 +1231,25 @@ namespace Azure.ResourceManager.Sql.Tests
             return collection.GetAllAsync();
         }
 
+        public static async Task<Response<Sql.ManagedInstanceQuery>> GetExampleInstanceAsync(ManagedInstanceQueryCollection collection, string queryId)
+        {
+            // Example: Obtain query properties
+
+            return await collection.GetAsync(queryId);
+        }
+
+        public static async Task<Response<Sql.ManagedDatabaseRestoreDetailsResult>> GetExampleInstanceAsync(ManagedDatabaseRestoreDetailsResultCollection collection)
+        {
+            // Example: Managed database restore details.
+            Sql.Models.RestoreDetailsName restoreDetailsName = new Sql.Models.RestoreDetailsName("Default");
+
+            return await collection.GetAsync(restoreDetailsName);
+        }
+
         public static async Task<Sql.Models.ManagedDatabaseCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ManagedDatabaseCollection collection, string databaseName)
         {
             // Example: Creates a new managed database by restoring from an external backup
-            var parameters = new Sql.ManagedDatabaseData("southeastasia")
+            Sql.ManagedDatabaseData parameters = new Sql.ManagedDatabaseData("southeastasia")
             {
                 Collation = "SQL_Latin1_General_CP1_CI_AS",
                 CreateMode = new Sql.Models.ManagedDatabaseCreateMode("RestoreExternalBackup"),
@@ -746,6 +1262,13 @@ namespace Azure.ResourceManager.Sql.Tests
             return await collection.CreateOrUpdateAsync(databaseName, parameters);
         }
 
+        public static async Task<Response<Sql.ManagedDatabase>> GetExampleInstanceAsync(ManagedDatabaseCollection collection, string databaseName)
+        {
+            // Example: Gets a managed database
+
+            return await collection.GetAsync(databaseName);
+        }
+
         public static AsyncPageable<Sql.ManagedDatabase> GetAllExampleInstanceAsync(ManagedDatabaseCollection collection)
         {
             // Example: List databases by managed instances
@@ -756,10 +1279,10 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.ManagedDatabaseSecurityAlertPolicyCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ManagedDatabaseSecurityAlertPolicyCollection collection)
         {
             // Example: Update a database's threat detection policy with all parameters
-            var securityAlertPolicyName = new Sql.Models.SecurityAlertPolicyName("Default");
-            var parameters = new Sql.ManagedDatabaseSecurityAlertPolicyData()
+            Sql.Models.SecurityAlertPolicyName securityAlertPolicyName = new Sql.Models.SecurityAlertPolicyName("Default");
+            Sql.ManagedDatabaseSecurityAlertPolicyData parameters = new Sql.ManagedDatabaseSecurityAlertPolicyData()
             {
-                State = SecurityAlertPolicyState.Enabled,
+                State = Sql.Models.SecurityAlertPolicyState.Enabled,
                 EmailAccountAdmins = true,
                 StorageEndpoint = "https://mystorage.blob.core.windows.net",
                 StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
@@ -767,6 +1290,14 @@ namespace Azure.ResourceManager.Sql.Tests
             };
 
             return await collection.CreateOrUpdateAsync(securityAlertPolicyName, parameters);
+        }
+
+        public static async Task<Response<Sql.ManagedDatabaseSecurityAlertPolicy>> GetExampleInstanceAsync(ManagedDatabaseSecurityAlertPolicyCollection collection)
+        {
+            // Example: Get a database's threat detection policy
+            Sql.Models.SecurityAlertPolicyName securityAlertPolicyName = new Sql.Models.SecurityAlertPolicyName("Default");
+
+            return await collection.GetAsync(securityAlertPolicyName);
         }
 
         public static AsyncPageable<Sql.ManagedDatabaseSecurityAlertPolicy> GetAllExampleInstanceAsync(ManagedDatabaseSecurityAlertPolicyCollection collection)
@@ -779,13 +1310,21 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.ManagedDatabaseTransparentDataEncryptionCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ManagedTransparentDataEncryptionCollection collection)
         {
             // Example: Update a database's Transparent Data Encryption state with minimal parameters
-            var tdeName = new Sql.Models.TransparentDataEncryptionName("current");
-            var parameters = new Sql.ManagedTransparentDataEncryptionData()
+            Sql.Models.TransparentDataEncryptionName tdeName = new Sql.Models.TransparentDataEncryptionName("current");
+            Sql.ManagedTransparentDataEncryptionData parameters = new Sql.ManagedTransparentDataEncryptionData()
             {
-                State = TransparentDataEncryptionState.Enabled,
+                State = Sql.Models.TransparentDataEncryptionState.Enabled,
             };
 
             return await collection.CreateOrUpdateAsync(tdeName, parameters);
+        }
+
+        public static async Task<Response<Sql.ManagedTransparentDataEncryption>> GetExampleInstanceAsync(ManagedTransparentDataEncryptionCollection collection)
+        {
+            // Example: Get a database's transparent data encryption
+            Sql.Models.TransparentDataEncryptionName tdeName = new Sql.Models.TransparentDataEncryptionName("current");
+
+            return await collection.GetAsync(tdeName);
         }
 
         public static AsyncPageable<Sql.ManagedTransparentDataEncryption> GetAllExampleInstanceAsync(ManagedTransparentDataEncryptionCollection collection)
@@ -798,8 +1337,8 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.ManagedInstanceAdministratorCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ManagedInstanceAdministratorCollection collection)
         {
             // Example: Create administrator of managed instance
-            var administratorName = new Sql.Models.AdministratorName("ActiveDirectory");
-            var parameters = new Sql.ManagedInstanceAdministratorData()
+            Sql.Models.AdministratorName administratorName = new Sql.Models.AdministratorName("ActiveDirectory");
+            Sql.ManagedInstanceAdministratorData parameters = new Sql.ManagedInstanceAdministratorData()
             {
                 AdministratorType = new Sql.Models.ManagedInstanceAdministratorType("ActiveDirectory"),
                 Login = "bob@contoso.com",
@@ -808,6 +1347,14 @@ namespace Azure.ResourceManager.Sql.Tests
             };
 
             return await collection.CreateOrUpdateAsync(administratorName, parameters);
+        }
+
+        public static async Task<Response<Sql.ManagedInstanceAdministrator>> GetExampleInstanceAsync(ManagedInstanceAdministratorCollection collection)
+        {
+            // Example: Get administrator of managed instance
+            Sql.Models.AdministratorName administratorName = new Sql.Models.AdministratorName("ActiveDirectory");
+
+            return await collection.GetAsync(administratorName);
         }
 
         public static AsyncPageable<Sql.ManagedInstanceAdministrator> GetAllExampleInstanceAsync(ManagedInstanceAdministratorCollection collection)
@@ -820,13 +1367,21 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.ManagedInstanceAzureADOnlyAuthenticationCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ManagedInstanceAzureADOnlyAuthenticationCollection collection)
         {
             // Example: Creates or updates Azure Active Directory only authentication object.
-            var authenticationName = new Sql.Models.AuthenticationName("Default");
-            var parameters = new Sql.ManagedInstanceAzureADOnlyAuthenticationData()
+            Sql.Models.AuthenticationName authenticationName = new Sql.Models.AuthenticationName("Default");
+            Sql.ManagedInstanceAzureADOnlyAuthenticationData parameters = new Sql.ManagedInstanceAzureADOnlyAuthenticationData()
             {
                 AzureADOnlyAuthentication = false,
             };
 
             return await collection.CreateOrUpdateAsync(authenticationName, parameters);
+        }
+
+        public static async Task<Response<Sql.ManagedInstanceAzureADOnlyAuthentication>> GetExampleInstanceAsync(ManagedInstanceAzureADOnlyAuthenticationCollection collection)
+        {
+            // Example: Gets a Azure Active Directory only authentication property.
+            Sql.Models.AuthenticationName authenticationName = new Sql.Models.AuthenticationName("Default");
+
+            return await collection.GetAsync(authenticationName);
         }
 
         public static AsyncPageable<Sql.ManagedInstanceAzureADOnlyAuthentication> GetAllExampleInstanceAsync(ManagedInstanceAzureADOnlyAuthenticationCollection collection)
@@ -839,8 +1394,8 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.ManagedInstanceEncryptionProtectorCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ManagedInstanceEncryptionProtectorCollection collection)
         {
             // Example: Update the encryption protector to key vault
-            var encryptionProtectorName = new Sql.Models.EncryptionProtectorName("current");
-            var parameters = new Sql.ManagedInstanceEncryptionProtectorData()
+            Sql.Models.EncryptionProtectorName encryptionProtectorName = new Sql.Models.EncryptionProtectorName("current");
+            Sql.ManagedInstanceEncryptionProtectorData parameters = new Sql.ManagedInstanceEncryptionProtectorData()
             {
                 ServerKeyName = "someVault_someKey_01234567890123456789012345678901",
                 ServerKeyType = new Sql.Models.ServerKeyType("AzureKeyVault"),
@@ -848,6 +1403,14 @@ namespace Azure.ResourceManager.Sql.Tests
             };
 
             return await collection.CreateOrUpdateAsync(encryptionProtectorName, parameters);
+        }
+
+        public static async Task<Response<Sql.ManagedInstanceEncryptionProtector>> GetExampleInstanceAsync(ManagedInstanceEncryptionProtectorCollection collection)
+        {
+            // Example: Get the encryption protector
+            Sql.Models.EncryptionProtectorName encryptionProtectorName = new Sql.Models.EncryptionProtectorName("current");
+
+            return await collection.GetAsync(encryptionProtectorName);
         }
 
         public static AsyncPageable<Sql.ManagedInstanceEncryptionProtector> GetAllExampleInstanceAsync(ManagedInstanceEncryptionProtectorCollection collection)
@@ -860,13 +1423,20 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.ManagedInstanceKeyCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ManagedInstanceKeyCollection collection, string keyName)
         {
             // Example: Creates or updates a managed instance key
-            var parameters = new Sql.ManagedInstanceKeyData()
+            Sql.ManagedInstanceKeyData parameters = new Sql.ManagedInstanceKeyData()
             {
                 ServerKeyType = new Sql.Models.ServerKeyType("AzureKeyVault"),
                 Uri = "https://someVault.vault.azure.net/keys/someKey/01234567890123456789012345678901",
             };
 
             return await collection.CreateOrUpdateAsync(keyName, parameters);
+        }
+
+        public static async Task<Response<Sql.ManagedInstanceKey>> GetExampleInstanceAsync(ManagedInstanceKeyCollection collection, string keyName)
+        {
+            // Example: Get the managed instance key
+
+            return await collection.GetAsync(keyName);
         }
 
         public static AsyncPageable<Sql.ManagedInstanceKey> GetAllExampleInstanceAsync(ManagedInstanceKeyCollection collection)
@@ -880,8 +1450,8 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.ManagedInstanceLongTermRetentionPolicyCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ManagedInstanceLongTermRetentionPolicyCollection collection)
         {
             // Example: Create or update the LTR policy for the managed database.
-            var policyName = new Sql.Models.ManagedInstanceLongTermRetentionPolicyName("default");
-            var parameters = new Sql.ManagedInstanceLongTermRetentionPolicyData()
+            Sql.Models.ManagedInstanceLongTermRetentionPolicyName policyName = new Sql.Models.ManagedInstanceLongTermRetentionPolicyName("default");
+            Sql.ManagedInstanceLongTermRetentionPolicyData parameters = new Sql.ManagedInstanceLongTermRetentionPolicyData()
             {
                 WeeklyRetention = "P1M",
                 MonthlyRetention = "P1Y",
@@ -892,11 +1462,27 @@ namespace Azure.ResourceManager.Sql.Tests
             return await collection.CreateOrUpdateAsync(policyName, parameters);
         }
 
+        public static async Task<Response<Sql.ManagedInstanceLongTermRetentionPolicy>> GetExampleInstanceAsync(ManagedInstanceLongTermRetentionPolicyCollection collection)
+        {
+            // Example: Get the long term retention policy for the managed database.
+            Sql.Models.ManagedInstanceLongTermRetentionPolicyName policyName = new Sql.Models.ManagedInstanceLongTermRetentionPolicyName("default");
+
+            return await collection.GetAsync(policyName);
+        }
+
         public static AsyncPageable<Sql.ManagedInstanceLongTermRetentionPolicy> GetAllExampleInstanceAsync(ManagedInstanceLongTermRetentionPolicyCollection collection)
         {
             // Example: Get the long term retention policies for the managed database.
 
             return collection.GetAllAsync();
+        }
+
+        public static async Task<Response<Sql.ManagedInstanceOperation>> GetExampleInstanceAsync(ManagedInstanceOperationCollection collection)
+        {
+            // Example: Gets the managed instance management operation
+            Guid operationId = Guid.Parse("00000000-1111-2222-3333-444444444444");
+
+            return await collection.GetAsync(operationId);
         }
 
         public static AsyncPageable<Sql.ManagedInstanceOperation> GetAllExampleInstanceAsync(ManagedInstanceOperationCollection collection)
@@ -909,7 +1495,7 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.ManagedInstancePrivateEndpointConnectionCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ManagedInstancePrivateEndpointConnectionCollection collection, string privateEndpointConnectionName)
         {
             // Example: Approve or reject a private endpoint connection with a given name.
-            var parameters = new Sql.ManagedInstancePrivateEndpointConnectionData()
+            Sql.ManagedInstancePrivateEndpointConnectionData parameters = new Sql.ManagedInstancePrivateEndpointConnectionData()
             {
                 PrivateLinkServiceConnectionState = new Sql.Models.ManagedInstancePrivateLinkServiceConnectionStateProperty("Approved", "Approved by johndoe@contoso.com"),
             };
@@ -917,11 +1503,25 @@ namespace Azure.ResourceManager.Sql.Tests
             return await collection.CreateOrUpdateAsync(privateEndpointConnectionName, parameters);
         }
 
+        public static async Task<Response<Sql.ManagedInstancePrivateEndpointConnection>> GetExampleInstanceAsync(ManagedInstancePrivateEndpointConnectionCollection collection, string privateEndpointConnectionName)
+        {
+            // Example: Gets private endpoint connection.
+
+            return await collection.GetAsync(privateEndpointConnectionName);
+        }
+
         public static AsyncPageable<Sql.ManagedInstancePrivateEndpointConnection> GetAllExampleInstanceAsync(ManagedInstancePrivateEndpointConnectionCollection collection)
         {
             // Example: Gets list of private endpoint connections on a server.
 
             return collection.GetAllAsync();
+        }
+
+        public static async Task<Response<Sql.ManagedInstancePrivateLink>> GetExampleInstanceAsync(ManagedInstancePrivateLinkCollection collection, string groupName)
+        {
+            // Example: Gets a private link resource for SQL.
+
+            return await collection.GetAsync(groupName);
         }
 
         public static AsyncPageable<Sql.ManagedInstancePrivateLink> GetAllExampleInstanceAsync(ManagedInstancePrivateLinkCollection collection)
@@ -934,7 +1534,7 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.ManagedInstanceCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ManagedInstanceCollection collection, string managedInstanceName)
         {
             // Example: Create managed instance with all properties
-            var parameters = new Sql.ManagedInstanceData("Japan East")
+            Sql.ManagedInstanceData parameters = new Sql.ManagedInstanceData("Japan East")
             {
                 Sku = new Sql.Models.Sku("GP_Gen5")
                 {
@@ -968,6 +1568,14 @@ namespace Azure.ResourceManager.Sql.Tests
             return await collection.CreateOrUpdateAsync(managedInstanceName, parameters);
         }
 
+        public static async Task<Response<Sql.ManagedInstance>> GetExampleInstanceAsync(ManagedInstanceCollection collection, string managedInstanceName)
+        {
+            // Example: Get managed instance
+            string expand = null;
+
+            return await collection.GetAsync(managedInstanceName, expand);
+        }
+
         public static AsyncPageable<Sql.ManagedInstance> GetAllExampleInstanceAsync(ManagedInstanceCollection collection)
         {
             // Example: List managed instances by resource group
@@ -979,8 +1587,8 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.ManagedInstanceVulnerabilityAssessmentCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ManagedInstanceVulnerabilityAssessmentCollection collection)
         {
             // Example: Create a managed instance's vulnerability assessment with all parameters
-            var vulnerabilityAssessmentName = new Sql.Models.VulnerabilityAssessmentName("default");
-            var parameters = new Sql.ManagedInstanceVulnerabilityAssessmentData()
+            Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName = new Sql.Models.VulnerabilityAssessmentName("default");
+            Sql.ManagedInstanceVulnerabilityAssessmentData parameters = new Sql.ManagedInstanceVulnerabilityAssessmentData()
             {
                 StorageContainerPath = "https://myStorage.blob.core.windows.net/vulnerability-assessment/",
                 StorageContainerSasKey = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
@@ -995,6 +1603,14 @@ namespace Azure.ResourceManager.Sql.Tests
             return await collection.CreateOrUpdateAsync(vulnerabilityAssessmentName, parameters);
         }
 
+        public static async Task<Response<Sql.ManagedInstanceVulnerabilityAssessment>> GetExampleInstanceAsync(ManagedInstanceVulnerabilityAssessmentCollection collection)
+        {
+            // Example: Get a managed instance's vulnerability assessment
+            Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName = new Sql.Models.VulnerabilityAssessmentName("default");
+
+            return await collection.GetAsync(vulnerabilityAssessmentName);
+        }
+
         public static AsyncPageable<Sql.ManagedInstanceVulnerabilityAssessment> GetAllExampleInstanceAsync(ManagedInstanceVulnerabilityAssessmentCollection collection)
         {
             // Example: Get a managed instance's vulnerability assessment policies
@@ -1005,10 +1621,10 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.ManagedServerSecurityAlertPolicyCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ManagedServerSecurityAlertPolicyCollection collection)
         {
             // Example: Update a managed server's threat detection policy with all parameters
-            var securityAlertPolicyName = new Sql.Models.SecurityAlertPolicyName("Default");
-            var parameters = new Sql.ManagedServerSecurityAlertPolicyData()
+            Sql.Models.SecurityAlertPolicyName securityAlertPolicyName = new Sql.Models.SecurityAlertPolicyName("Default");
+            Sql.ManagedServerSecurityAlertPolicyData parameters = new Sql.ManagedServerSecurityAlertPolicyData()
             {
-                State = SecurityAlertsPolicyState.Enabled,
+                State = Sql.Models.SecurityAlertsPolicyState.Enabled,
                 EmailAccountAdmins = true,
                 StorageEndpoint = "https://mystorage.blob.core.windows.net",
                 StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
@@ -1016,6 +1632,14 @@ namespace Azure.ResourceManager.Sql.Tests
             };
 
             return await collection.CreateOrUpdateAsync(securityAlertPolicyName, parameters);
+        }
+
+        public static async Task<Response<Sql.ManagedServerSecurityAlertPolicy>> GetExampleInstanceAsync(ManagedServerSecurityAlertPolicyCollection collection)
+        {
+            // Example: Get a managed server's threat detection policy
+            Sql.Models.SecurityAlertPolicyName securityAlertPolicyName = new Sql.Models.SecurityAlertPolicyName("Default");
+
+            return await collection.GetAsync(securityAlertPolicyName);
         }
 
         public static AsyncPageable<Sql.ManagedServerSecurityAlertPolicy> GetAllExampleInstanceAsync(ManagedServerSecurityAlertPolicyCollection collection)
@@ -1028,12 +1652,19 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.PrivateEndpointConnectionCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(PrivateEndpointConnectionCollection collection, string privateEndpointConnectionName)
         {
             // Example: Approve or reject a private endpoint connection with a given name.
-            var parameters = new Sql.PrivateEndpointConnectionData()
+            Sql.PrivateEndpointConnectionData parameters = new Sql.PrivateEndpointConnectionData()
             {
                 PrivateLinkServiceConnectionState = new Sql.Models.PrivateLinkServiceConnectionStateProperty(new Sql.Models.PrivateLinkServiceConnectionStateStatus("Approved"), "Approved by johndoe@contoso.com"),
             };
 
             return await collection.CreateOrUpdateAsync(privateEndpointConnectionName, parameters);
+        }
+
+        public static async Task<Response<Sql.PrivateEndpointConnection>> GetExampleInstanceAsync(PrivateEndpointConnectionCollection collection, string privateEndpointConnectionName)
+        {
+            // Example: Gets private endpoint connection.
+
+            return await collection.GetAsync(privateEndpointConnectionName);
         }
 
         public static AsyncPageable<Sql.PrivateEndpointConnection> GetAllExampleInstanceAsync(PrivateEndpointConnectionCollection collection)
@@ -1043,6 +1674,13 @@ namespace Azure.ResourceManager.Sql.Tests
             return collection.GetAllAsync();
         }
 
+        public static async Task<Response<Sql.PrivateLinkResource>> GetExampleInstanceAsync(PrivateLinkResourceCollection collection, string groupName)
+        {
+            // Example: Gets a private link resource for SQL.
+
+            return await collection.GetAsync(groupName);
+        }
+
         public static AsyncPageable<Sql.PrivateLinkResource> GetAllExampleInstanceAsync(PrivateLinkResourceCollection collection)
         {
             // Example: Gets private link resources for SQL.
@@ -1050,11 +1688,25 @@ namespace Azure.ResourceManager.Sql.Tests
             return collection.GetAllAsync();
         }
 
+        public static async Task<Response<Sql.RecoverableManagedDatabase>> GetExampleInstanceAsync(RecoverableManagedDatabaseCollection collection, string recoverableDatabaseName)
+        {
+            // Example: Gets a recoverable databases by managed instances
+
+            return await collection.GetAsync(recoverableDatabaseName);
+        }
+
         public static AsyncPageable<Sql.RecoverableManagedDatabase> GetAllExampleInstanceAsync(RecoverableManagedDatabaseCollection collection)
         {
             // Example: List recoverable databases by managed instances
 
             return collection.GetAllAsync();
+        }
+
+        public static async Task<Response<Sql.RestorePoint>> GetExampleInstanceAsync(RestorePointCollection collection, string restorePointName)
+        {
+            // Example: Gets a database restore point.
+
+            return await collection.GetAsync(restorePointName);
         }
 
         public static AsyncPageable<Sql.RestorePoint> GetAllExampleInstanceAsync(RestorePointCollection collection)
@@ -1067,8 +1719,8 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.ServerAzureADAdministratorCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ServerAzureADAdministratorCollection collection)
         {
             // Example: Creates or updates an existing Azure Active Directory administrator.
-            var administratorName = new Sql.Models.AdministratorName("ActiveDirectory");
-            var parameters = new Sql.ServerAzureADAdministratorData()
+            Sql.Models.AdministratorName administratorName = new Sql.Models.AdministratorName("ActiveDirectory");
+            Sql.ServerAzureADAdministratorData parameters = new Sql.ServerAzureADAdministratorData()
             {
                 AdministratorType = new Sql.Models.AdministratorType("ActiveDirectory"),
                 Login = "bob@contoso.com",
@@ -1077,6 +1729,14 @@ namespace Azure.ResourceManager.Sql.Tests
             };
 
             return await collection.CreateOrUpdateAsync(administratorName, parameters);
+        }
+
+        public static async Task<Response<Sql.ServerAzureADAdministrator>> GetExampleInstanceAsync(ServerAzureADAdministratorCollection collection)
+        {
+            // Example: Gets a Azure Active Directory administrator.
+            Sql.Models.AdministratorName administratorName = new Sql.Models.AdministratorName("ActiveDirectory");
+
+            return await collection.GetAsync(administratorName);
         }
 
         public static AsyncPageable<Sql.ServerAzureADAdministrator> GetAllExampleInstanceAsync(ServerAzureADAdministratorCollection collection)
@@ -1089,13 +1749,21 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.ServerAzureADOnlyAuthenticationCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ServerAzureADOnlyAuthenticationCollection collection)
         {
             // Example: Creates or updates Azure Active Directory only authentication object.
-            var authenticationName = new Sql.Models.AuthenticationName("Default");
-            var parameters = new Sql.ServerAzureADOnlyAuthenticationData()
+            Sql.Models.AuthenticationName authenticationName = new Sql.Models.AuthenticationName("Default");
+            Sql.ServerAzureADOnlyAuthenticationData parameters = new Sql.ServerAzureADOnlyAuthenticationData()
             {
                 AzureADOnlyAuthentication = false,
             };
 
             return await collection.CreateOrUpdateAsync(authenticationName, parameters);
+        }
+
+        public static async Task<Response<Sql.ServerAzureADOnlyAuthentication>> GetExampleInstanceAsync(ServerAzureADOnlyAuthenticationCollection collection)
+        {
+            // Example: Gets a Azure Active Directory only authentication property.
+            Sql.Models.AuthenticationName authenticationName = new Sql.Models.AuthenticationName("Default");
+
+            return await collection.GetAsync(authenticationName);
         }
 
         public static AsyncPageable<Sql.ServerAzureADOnlyAuthentication> GetAllExampleInstanceAsync(ServerAzureADOnlyAuthenticationCollection collection)
@@ -1108,16 +1776,23 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.ServerDevOpsAuditSettingCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ServerDevOpsAuditingSettingsCollection collection, string devOpsAuditingSettingsName)
         {
             // Example: Update a server's DevOps audit settings with all params
-            var parameters = new Sql.ServerDevOpsAuditingSettingsData()
+            Sql.ServerDevOpsAuditingSettingsData parameters = new Sql.ServerDevOpsAuditingSettingsData()
             {
                 IsAzureMonitorTargetEnabled = true,
-                State = BlobAuditingPolicyState.Enabled,
+                State = Sql.Models.BlobAuditingPolicyState.Enabled,
                 StorageEndpoint = "https://mystorage.blob.core.windows.net",
                 StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
                 StorageAccountSubscriptionId = Guid.Parse("00000000-1234-0000-5678-000000000000"),
             };
 
             return await collection.CreateOrUpdateAsync(devOpsAuditingSettingsName, parameters);
+        }
+
+        public static async Task<Response<Sql.ServerDevOpsAuditingSettings>> GetExampleInstanceAsync(ServerDevOpsAuditingSettingsCollection collection, string devOpsAuditingSettingsName)
+        {
+            // Example: Get a server's DevOps audit settings
+
+            return await collection.GetAsync(devOpsAuditingSettingsName);
         }
 
         public static AsyncPageable<Sql.ServerDevOpsAuditingSettings> GetAllExampleInstanceAsync(ServerDevOpsAuditingSettingsCollection collection)
@@ -1134,6 +1809,13 @@ namespace Azure.ResourceManager.Sql.Tests
             return await collection.CreateOrUpdateAsync(dnsAliasName);
         }
 
+        public static async Task<Response<Sql.ServerDnsAlias>> GetExampleInstanceAsync(ServerDnsAliasCollection collection, string dnsAliasName)
+        {
+            // Example: Get server DNS alias
+
+            return await collection.GetAsync(dnsAliasName);
+        }
+
         public static AsyncPageable<Sql.ServerDnsAlias> GetAllExampleInstanceAsync(ServerDnsAliasCollection collection)
         {
             // Example: List server DNS aliases
@@ -1144,13 +1826,20 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.ServerKeyCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ServerKeyCollection collection, string keyName)
         {
             // Example: Creates or updates a server key
-            var parameters = new Sql.ServerKeyData()
+            Sql.ServerKeyData parameters = new Sql.ServerKeyData()
             {
                 ServerKeyType = new Sql.Models.ServerKeyType("AzureKeyVault"),
                 Uri = "https://someVault.vault.azure.net/keys/someKey/01234567890123456789012345678901",
             };
 
             return await collection.CreateOrUpdateAsync(keyName, parameters);
+        }
+
+        public static async Task<Response<Sql.ServerKey>> GetExampleInstanceAsync(ServerKeyCollection collection, string keyName)
+        {
+            // Example: Get the server key
+
+            return await collection.GetAsync(keyName);
         }
 
         public static AsyncPageable<Sql.ServerKey> GetAllExampleInstanceAsync(ServerKeyCollection collection)
@@ -1163,10 +1852,10 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.ServerSecurityAlertPolicyCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ServerSecurityAlertPolicyCollection collection)
         {
             // Example: Update a server's threat detection policy with all parameters
-            var securityAlertPolicyName = new Sql.Models.SecurityAlertPolicyName("Default");
-            var parameters = new Sql.ServerSecurityAlertPolicyData()
+            Sql.Models.SecurityAlertPolicyName securityAlertPolicyName = new Sql.Models.SecurityAlertPolicyName("Default");
+            Sql.ServerSecurityAlertPolicyData parameters = new Sql.ServerSecurityAlertPolicyData()
             {
-                State = SecurityAlertsPolicyState.Enabled,
+                State = Sql.Models.SecurityAlertsPolicyState.Enabled,
                 EmailAccountAdmins = true,
                 StorageEndpoint = "https://mystorage.blob.core.windows.net",
                 StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
@@ -1176,11 +1865,34 @@ namespace Azure.ResourceManager.Sql.Tests
             return await collection.CreateOrUpdateAsync(securityAlertPolicyName, parameters);
         }
 
+        public static async Task<Response<Sql.ServerSecurityAlertPolicy>> GetExampleInstanceAsync(ServerSecurityAlertPolicyCollection collection)
+        {
+            // Example: Get a server's threat detection policy
+            Sql.Models.SecurityAlertPolicyName securityAlertPolicyName = new Sql.Models.SecurityAlertPolicyName("Default");
+
+            return await collection.GetAsync(securityAlertPolicyName);
+        }
+
         public static AsyncPageable<Sql.ServerSecurityAlertPolicy> GetAllExampleInstanceAsync(ServerSecurityAlertPolicyCollection collection)
         {
             // Example: List the server's threat detection policies
 
             return collection.GetAllAsync();
+        }
+
+        public static async Task<Sql.Models.ServerTrustGroupCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ServerTrustGroupCollection collection, string locationName, string serverTrustGroupName)
+        {
+            // Example: Create server trust group
+            Sql.ServerTrustGroupData parameters = new Sql.ServerTrustGroupData();
+
+            return await collection.CreateOrUpdateAsync(locationName, serverTrustGroupName, parameters);
+        }
+
+        public static async Task<Response<Sql.ServerTrustGroup>> GetExampleInstanceAsync(ServerTrustGroupCollection collection, string locationName, string serverTrustGroupName)
+        {
+            // Example: Get server trust group
+
+            return await collection.GetAsync(locationName, serverTrustGroupName);
         }
 
         public static AsyncPageable<Sql.ServerTrustGroup> GetAllExampleInstanceAsync(ServerTrustGroupCollection collection, string locationName)
@@ -1193,8 +1905,8 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.ServerVulnerabilityAssessmentCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ServerVulnerabilityAssessmentCollection collection)
         {
             // Example: Create a server's vulnerability assessment with all parameters
-            var vulnerabilityAssessmentName = new Sql.Models.VulnerabilityAssessmentName("default");
-            var parameters = new Sql.ServerVulnerabilityAssessmentData()
+            Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName = new Sql.Models.VulnerabilityAssessmentName("default");
+            Sql.ServerVulnerabilityAssessmentData parameters = new Sql.ServerVulnerabilityAssessmentData()
             {
                 StorageContainerPath = "https://myStorage.blob.core.windows.net/vulnerability-assessment/",
                 StorageContainerSasKey = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
@@ -1209,11 +1921,26 @@ namespace Azure.ResourceManager.Sql.Tests
             return await collection.CreateOrUpdateAsync(vulnerabilityAssessmentName, parameters);
         }
 
+        public static async Task<Response<Sql.ServerVulnerabilityAssessment>> GetExampleInstanceAsync(ServerVulnerabilityAssessmentCollection collection)
+        {
+            // Example: Get a server's vulnerability assessment
+            Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName = new Sql.Models.VulnerabilityAssessmentName("default");
+
+            return await collection.GetAsync(vulnerabilityAssessmentName);
+        }
+
         public static AsyncPageable<Sql.ServerVulnerabilityAssessment> GetAllExampleInstanceAsync(ServerVulnerabilityAssessmentCollection collection)
         {
             // Example: Get a server's vulnerability assessment policies
 
             return collection.GetAllAsync();
+        }
+
+        public static async Task<Response<Sql.SubscriptionUsage>> GetExampleInstanceAsync(SubscriptionUsageCollection collection, string locationName, string usageName)
+        {
+            // Example: Get specific subscription usage in the given location.
+
+            return await collection.GetAsync(locationName, usageName);
         }
 
         public static AsyncPageable<Sql.SubscriptionUsage> GetAllExampleInstanceAsync(SubscriptionUsageCollection collection, string locationName)
@@ -1226,12 +1953,19 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.SyncAgentCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(SyncAgentCollection collection, string syncAgentName)
         {
             // Example: Create a new sync agent
-            var parameters = new Sql.SyncAgentData()
+            Sql.SyncAgentData parameters = new Sql.SyncAgentData()
             {
                 SyncDatabaseId = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/Default-SQL-Onebox/providers/Microsoft.Sql/servers/syncagentcrud-8475/databases/sync",
             };
 
             return await collection.CreateOrUpdateAsync(syncAgentName, parameters);
+        }
+
+        public static async Task<Response<Sql.SyncAgent>> GetExampleInstanceAsync(SyncAgentCollection collection, string syncAgentName)
+        {
+            // Example: Get a sync agent
+
+            return await collection.GetAsync(syncAgentName);
         }
 
         public static AsyncPageable<Sql.SyncAgent> GetAllExampleInstanceAsync(SyncAgentCollection collection)
@@ -1244,7 +1978,7 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.SyncGroupCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(SyncGroupCollection collection, string syncGroupName)
         {
             // Example: Create a sync group
-            var parameters = new Sql.SyncGroupData()
+            Sql.SyncGroupData parameters = new Sql.SyncGroupData()
             {
                 Interval = -1,
                 ConflictResolutionPolicy = new Sql.Models.SyncConflictResolutionPolicy("HubWin"),
@@ -1254,6 +1988,13 @@ namespace Azure.ResourceManager.Sql.Tests
             };
 
             return await collection.CreateOrUpdateAsync(syncGroupName, parameters);
+        }
+
+        public static async Task<Response<Sql.SyncGroup>> GetExampleInstanceAsync(SyncGroupCollection collection, string syncGroupName)
+        {
+            // Example: Get a sync group
+
+            return await collection.GetAsync(syncGroupName);
         }
 
         public static AsyncPageable<Sql.SyncGroup> GetAllExampleInstanceAsync(SyncGroupCollection collection)
@@ -1266,7 +2007,7 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.SyncMemberCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(SyncMemberCollection collection, string syncMemberName)
         {
             // Example: Create a new sync member
-            var parameters = new Sql.SyncMemberData()
+            Sql.SyncMemberData parameters = new Sql.SyncMemberData()
             {
                 DatabaseType = new Sql.Models.SyncMemberDbType("AzureSqlDatabase"),
                 SyncMemberAzureDatabaseResourceId = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/syncgroupcrud-65440/providers/Microsoft.Sql/servers/syncgroupcrud-8475/databases/syncgroupcrud-4328",
@@ -1280,6 +2021,13 @@ namespace Azure.ResourceManager.Sql.Tests
             return await collection.CreateOrUpdateAsync(syncMemberName, parameters);
         }
 
+        public static async Task<Response<Sql.SyncMember>> GetExampleInstanceAsync(SyncMemberCollection collection, string syncMemberName)
+        {
+            // Example: Get a sync member
+
+            return await collection.GetAsync(syncMemberName);
+        }
+
         public static AsyncPageable<Sql.SyncMember> GetAllExampleInstanceAsync(SyncMemberCollection collection)
         {
             // Example: List sync members under a sync group
@@ -1287,11 +2035,25 @@ namespace Azure.ResourceManager.Sql.Tests
             return collection.GetAllAsync();
         }
 
+        public static async Task<Response<Sql.TimeZone>> GetExampleInstanceAsync(TimeZoneCollection collection, string locationName, string timeZoneId)
+        {
+            // Example: Get managed instance time zone
+
+            return await collection.GetAsync(locationName, timeZoneId);
+        }
+
         public static AsyncPageable<Sql.TimeZone> GetAllExampleInstanceAsync(TimeZoneCollection collection, string locationName)
         {
             // Example: List managed instance time zones by location
 
             return collection.GetAllAsync(locationName);
+        }
+
+        public static async Task<Response<Sql.VirtualCluster>> GetExampleInstanceAsync(VirtualClusterCollection collection, string virtualClusterName)
+        {
+            // Example: Get virtual cluster
+
+            return await collection.GetAsync(virtualClusterName);
         }
 
         public static AsyncPageable<Sql.VirtualCluster> GetAllExampleInstanceAsync(VirtualClusterCollection collection)
@@ -1304,13 +2066,20 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.VirtualNetworkRuleCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(VirtualNetworkRuleCollection collection, string virtualNetworkRuleName)
         {
             // Example: Create or update a virtual network rule
-            var parameters = new Sql.VirtualNetworkRuleData()
+            Sql.VirtualNetworkRuleData parameters = new Sql.VirtualNetworkRuleData()
             {
                 VirtualNetworkSubnetId = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/Default/providers/Microsoft.Network/virtualNetworks/testvnet/subnets/testsubnet",
                 IgnoreMissingVnetServiceEndpoint = false,
             };
 
             return await collection.CreateOrUpdateAsync(virtualNetworkRuleName, parameters);
+        }
+
+        public static async Task<Response<Sql.VirtualNetworkRule>> GetExampleInstanceAsync(VirtualNetworkRuleCollection collection, string virtualNetworkRuleName)
+        {
+            // Example: Gets a virtual network rule
+
+            return await collection.GetAsync(virtualNetworkRuleName);
         }
 
         public static AsyncPageable<Sql.VirtualNetworkRule> GetAllExampleInstanceAsync(VirtualNetworkRuleCollection collection)
@@ -1323,7 +2092,7 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.WorkloadClassifierCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(WorkloadClassifierCollection collection, string workloadClassifierName)
         {
             // Example: Create a workload group with all properties specified.
-            var parameters = new Sql.WorkloadClassifierData()
+            Sql.WorkloadClassifierData parameters = new Sql.WorkloadClassifierData()
             {
                 MemberName = "dbo",
                 Label = "test_label",
@@ -1336,6 +2105,13 @@ namespace Azure.ResourceManager.Sql.Tests
             return await collection.CreateOrUpdateAsync(workloadClassifierName, parameters);
         }
 
+        public static async Task<Response<Sql.WorkloadClassifier>> GetExampleInstanceAsync(WorkloadClassifierCollection collection, string workloadClassifierName)
+        {
+            // Example: Gets a workload classifier for a data warehouse
+
+            return await collection.GetAsync(workloadClassifierName);
+        }
+
         public static AsyncPageable<Sql.WorkloadClassifier> GetAllExampleInstanceAsync(WorkloadClassifierCollection collection)
         {
             // Example: Get the list of workload classifiers for a workload group
@@ -1346,7 +2122,7 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.WorkloadGroupCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(WorkloadGroupCollection collection, string workloadGroupName)
         {
             // Example: Create a workload group with all properties specified.
-            var parameters = new Sql.WorkloadGroupData()
+            Sql.WorkloadGroupData parameters = new Sql.WorkloadGroupData()
             {
                 MinResourcePercent = 0,
                 MaxResourcePercent = 100,
@@ -1359,6 +2135,13 @@ namespace Azure.ResourceManager.Sql.Tests
             return await collection.CreateOrUpdateAsync(workloadGroupName, parameters);
         }
 
+        public static async Task<Response<Sql.WorkloadGroup>> GetExampleInstanceAsync(WorkloadGroupCollection collection, string workloadGroupName)
+        {
+            // Example: Gets a workload group for a data warehouse
+
+            return await collection.GetAsync(workloadGroupName);
+        }
+
         public static AsyncPageable<Sql.WorkloadGroup> GetAllExampleInstanceAsync(WorkloadGroupCollection collection)
         {
             // Example: Get the list of workload groups for a data warehouse
@@ -1369,13 +2152,21 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.TransparentDataEncryptionCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(LogicalDatabaseTransparentDataEncryptionCollection collection)
         {
             // Example: Update a database's Transparent Data Encryption state with minimal parameters
-            var tdeName = new Sql.Models.TransparentDataEncryptionName("current");
-            var parameters = new Sql.LogicalDatabaseTransparentDataEncryptionData()
+            Sql.Models.TransparentDataEncryptionName tdeName = new Sql.Models.TransparentDataEncryptionName("current");
+            Sql.LogicalDatabaseTransparentDataEncryptionData parameters = new Sql.LogicalDatabaseTransparentDataEncryptionData()
             {
-                State = TransparentDataEncryptionState.Enabled,
+                State = Sql.Models.TransparentDataEncryptionState.Enabled,
             };
 
             return await collection.CreateOrUpdateAsync(tdeName, parameters);
+        }
+
+        public static async Task<Response<Sql.LogicalDatabaseTransparentDataEncryption>> GetExampleInstanceAsync(LogicalDatabaseTransparentDataEncryptionCollection collection)
+        {
+            // Example: Get a database's transparent data encryption
+            Sql.Models.TransparentDataEncryptionName tdeName = new Sql.Models.TransparentDataEncryptionName("current");
+
+            return await collection.GetAsync(tdeName);
         }
 
         public static AsyncPageable<Sql.LogicalDatabaseTransparentDataEncryption> GetAllExampleInstanceAsync(LogicalDatabaseTransparentDataEncryptionCollection collection)
@@ -1385,16 +2176,52 @@ namespace Azure.ResourceManager.Sql.Tests
             return collection.GetAllAsync();
         }
 
+        public static async Task<Sql.Models.BackupShortTermRetentionPolicyCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(BackupShortTermRetentionPolicyCollection collection)
+        {
+            // Example: Update the short term retention policy for the database.
+            Sql.Models.ShortTermRetentionPolicyName policyName = new Sql.Models.ShortTermRetentionPolicyName("default");
+            Sql.BackupShortTermRetentionPolicyData parameters = new Sql.BackupShortTermRetentionPolicyData()
+            {
+                RetentionDays = 7,
+                DiffBackupIntervalInHours = new Sql.Models.DiffBackupIntervalInHours(24),
+            };
+
+            return await collection.CreateOrUpdateAsync(policyName, parameters);
+        }
+
+        public static async Task<Response<Sql.BackupShortTermRetentionPolicy>> GetExampleInstanceAsync(BackupShortTermRetentionPolicyCollection collection)
+        {
+            // Example: Get the short term retention policy for the database.
+            Sql.Models.ShortTermRetentionPolicyName policyName = new Sql.Models.ShortTermRetentionPolicyName("default");
+
+            return await collection.GetAsync(policyName);
+        }
+
+        public static AsyncPageable<Sql.BackupShortTermRetentionPolicy> GetAllExampleInstanceAsync(BackupShortTermRetentionPolicyCollection collection)
+        {
+            // Example: Get the short term retention policy for the database.
+
+            return collection.GetAllAsync();
+        }
+
         public static async Task<Sql.Models.LedgerDigestUploadCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(LedgerDigestUploadsCollection collection)
         {
             // Example: Enables ledger digest upload configuration for a database
-            var ledgerDigestUploads = new Sql.Models.LedgerDigestUploadsName("current");
-            var parameters = new Sql.LedgerDigestUploadsData()
+            Sql.Models.LedgerDigestUploadsName ledgerDigestUploads = new Sql.Models.LedgerDigestUploadsName("current");
+            Sql.LedgerDigestUploadsData parameters = new Sql.LedgerDigestUploadsData()
             {
                 DigestStorageEndpoint = "https://MyAccount.blob.core.windows.net",
             };
 
             return await collection.CreateOrUpdateAsync(ledgerDigestUploads, parameters);
+        }
+
+        public static async Task<Response<Sql.LedgerDigestUploads>> GetExampleInstanceAsync(LedgerDigestUploadsCollection collection)
+        {
+            // Example: Gets the current ledger digest upload configuration for a database.
+            Sql.Models.LedgerDigestUploadsName ledgerDigestUploads = new Sql.Models.LedgerDigestUploadsName("current");
+
+            return await collection.GetAsync(ledgerDigestUploads);
         }
 
         public static AsyncPageable<Sql.LedgerDigestUploads> GetAllExampleInstanceAsync(LedgerDigestUploadsCollection collection)
@@ -1407,9 +2234,16 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.OutboundFirewallRuleCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(OutboundFirewallRuleCollection collection, string outboundRuleFqdn)
         {
             // Example: Approve or reject a outbound firewall rule with a given name.
-            var parameters = new Sql.OutboundFirewallRuleData();
+            Sql.OutboundFirewallRuleData parameters = new Sql.OutboundFirewallRuleData();
 
             return await collection.CreateOrUpdateAsync(outboundRuleFqdn, parameters);
+        }
+
+        public static async Task<Response<Sql.OutboundFirewallRule>> GetExampleInstanceAsync(OutboundFirewallRuleCollection collection, string outboundRuleFqdn)
+        {
+            // Example: Gets outbound firewall rule.
+
+            return await collection.GetAsync(outboundRuleFqdn);
         }
 
         public static AsyncPageable<Sql.OutboundFirewallRule> GetAllExampleInstanceAsync(OutboundFirewallRuleCollection collection)
@@ -1419,11 +2253,25 @@ namespace Azure.ResourceManager.Sql.Tests
             return collection.GetAllAsync();
         }
 
+        public static async Task<Response<Sql.RestorableDroppedDatabase>> GetExampleInstanceAsync(RestorableDroppedDatabaseCollection collection, string restorableDroppedDatabaseId)
+        {
+            // Example: Gets a restorable dropped database.
+
+            return await collection.GetAsync(restorableDroppedDatabaseId);
+        }
+
         public static AsyncPageable<Sql.RestorableDroppedDatabase> GetAllExampleInstanceAsync(RestorableDroppedDatabaseCollection collection)
         {
             // Example: Gets a list of restorable dropped databases.
 
             return collection.GetAllAsync();
+        }
+
+        public static async Task<Response<Sql.RestorableDroppedManagedDatabase>> GetExampleInstanceAsync(RestorableDroppedManagedDatabaseCollection collection, string restorableDroppedDatabaseId)
+        {
+            // Example: Gets a restorable dropped managed database.
+
+            return await collection.GetAsync(restorableDroppedDatabaseId);
         }
 
         public static AsyncPageable<Sql.RestorableDroppedManagedDatabase> GetAllExampleInstanceAsync(RestorableDroppedManagedDatabaseCollection collection)
@@ -1436,7 +2284,7 @@ namespace Azure.ResourceManager.Sql.Tests
         public static async Task<Sql.Models.ServerCreateOrUpdateOperation> CreateOrUpdateExampleInstanceAsync(ServerCollection collection, string serverName)
         {
             // Example: Create server
-            var parameters = new Sql.ServerData("Japan East")
+            Sql.ServerData parameters = new Sql.ServerData("Japan East")
             {
                 AdministratorLogin = "dummylogin",
                 AdministratorLoginPassword = "PLACEHOLDER",
@@ -1453,6 +2301,14 @@ namespace Azure.ResourceManager.Sql.Tests
             };
 
             return await collection.CreateOrUpdateAsync(serverName, parameters);
+        }
+
+        public static async Task<Response<Sql.Server>> GetExampleInstanceAsync(ServerCollection collection, string serverName)
+        {
+            // Example: Get server
+            string expand = null;
+
+            return await collection.GetAsync(serverName, expand);
         }
 
         public static AsyncPageable<Sql.Server> GetAllExampleInstanceAsync(ServerCollection collection)

@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ServerCommunicationLink. </summary>
     public partial class ServerCommunicationLinkCollectionMockTests : MockTestBase
     {
-        public ServerCommunicationLinkCollectionMockTests(bool isAsync) : base(isAsync)
+        public ServerCommunicationLinkCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public ServerCommunicationLinkCollectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.ServerCommunicationLinkCollection> GetServerCommunicationLinkCollectionAsync(string resourceGroupName, string serverName)
@@ -42,6 +40,14 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             // Example: Create a server communication link
             var collection = await GetServerCommunicationLinkCollectionAsync("sqlcrudtest-7398", "sqlcrudtest-4645");
             await TestHelper.CreateOrUpdateExampleInstanceAsync(collection, "link1");
+        }
+
+        [RecordedTest]
+        public async Task GetAsync()
+        {
+            // Example: Get a server communication link
+            var collection = await GetServerCommunicationLinkCollectionAsync("sqlcrudtest-7398", "sqlcrudtest-4645");
+            await TestHelper.GetExampleInstanceAsync(collection, "link1");
         }
 
         [RecordedTest]

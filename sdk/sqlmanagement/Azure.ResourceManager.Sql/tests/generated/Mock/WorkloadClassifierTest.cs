@@ -10,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -18,13 +19,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for WorkloadClassifier. </summary>
     public partial class WorkloadClassifierMockTests : MockTestBase
     {
-        public WorkloadClassifierMockTests(bool isAsync) : base(isAsync)
+        public WorkloadClassifierMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public WorkloadClassifierMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.WorkloadClassifierCollection> GetWorkloadClassifierCollectionAsync(string resourceGroupName, string serverName, string databaseName, string workloadGroupName)
@@ -54,18 +52,18 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         public async Task GetAsync()
         {
             // Example: Gets a workload classifier for a data warehouse
-            var resource = await GetWorkloadClassifierAsync();
+            var workloadClassifier = await GetWorkloadClassifierAsync();
 
-            await resource.GetAsync();
+            await workloadClassifier.GetAsync();
         }
 
         [RecordedTest]
         public async Task DeleteAsync()
         {
             // Example: Delete a workload classifier
-            var resource = await GetWorkloadClassifierAsync();
+            var workloadClassifier = await GetWorkloadClassifierAsync();
 
-            await resource.DeleteAsync();
+            await workloadClassifier.DeleteAsync();
         }
     }
 }

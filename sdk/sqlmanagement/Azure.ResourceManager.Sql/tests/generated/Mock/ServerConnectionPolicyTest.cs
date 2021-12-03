@@ -10,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -18,13 +19,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ServerConnectionPolicy. </summary>
     public partial class ServerConnectionPolicyMockTests : MockTestBase
     {
-        public ServerConnectionPolicyMockTests(bool isAsync) : base(isAsync)
+        public ServerConnectionPolicyMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public ServerConnectionPolicyMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.ServerConnectionPolicyCollection> GetServerConnectionPolicyCollectionAsync(string resourceGroupName, string serverName)
@@ -48,9 +46,9 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         public async Task GetAsync()
         {
             // Example: Get a server's secure connection policy
-            var resource = await GetServerConnectionPolicyAsync();
+            var serverConnectionPolicy = await GetServerConnectionPolicyAsync();
 
-            await resource.GetAsync();
+            await serverConnectionPolicy.GetAsync();
         }
     }
 }

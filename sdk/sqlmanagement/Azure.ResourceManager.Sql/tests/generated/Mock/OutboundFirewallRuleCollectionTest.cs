@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for OutboundFirewallRule. </summary>
     public partial class OutboundFirewallRuleCollectionMockTests : MockTestBase
     {
-        public OutboundFirewallRuleCollectionMockTests(bool isAsync) : base(isAsync)
+        public OutboundFirewallRuleCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public OutboundFirewallRuleCollectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.OutboundFirewallRuleCollection> GetOutboundFirewallRuleCollectionAsync(string resourceGroupName, string serverName)
@@ -42,6 +40,14 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             // Example: Approve or reject a outbound firewall rule with a given name.
             var collection = await GetOutboundFirewallRuleCollectionAsync("sqlcrudtest-7398", "sqlcrudtest-4645");
             await TestHelper.CreateOrUpdateExampleInstanceAsync(collection, "server.database.windows.net");
+        }
+
+        [RecordedTest]
+        public async Task GetAsync()
+        {
+            // Example: Gets outbound firewall rule.
+            var collection = await GetOutboundFirewallRuleCollectionAsync("sqlcrudtest-7398", "sqlcrudtest-4645");
+            await TestHelper.GetExampleInstanceAsync(collection, "server.database.windows.net");
         }
 
         [RecordedTest]

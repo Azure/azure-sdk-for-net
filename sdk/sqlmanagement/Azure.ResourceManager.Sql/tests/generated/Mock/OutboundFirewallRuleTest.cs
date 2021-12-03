@@ -10,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -18,13 +19,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for OutboundFirewallRule. </summary>
     public partial class OutboundFirewallRuleMockTests : MockTestBase
     {
-        public OutboundFirewallRuleMockTests(bool isAsync) : base(isAsync)
+        public OutboundFirewallRuleMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public OutboundFirewallRuleMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.OutboundFirewallRuleCollection> GetOutboundFirewallRuleCollectionAsync(string resourceGroupName, string serverName)
@@ -48,18 +46,18 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         public async Task GetAsync()
         {
             // Example: Gets outbound firewall rule.
-            var resource = await GetOutboundFirewallRuleAsync();
+            var outboundFirewallRule = await GetOutboundFirewallRuleAsync();
 
-            await resource.GetAsync();
+            await outboundFirewallRule.GetAsync();
         }
 
         [RecordedTest]
         public async Task DeleteAsync()
         {
             // Example: Deletes a outbound firewall rule with a given name.
-            var resource = await GetOutboundFirewallRuleAsync();
+            var outboundFirewallRule = await GetOutboundFirewallRuleAsync();
 
-            await resource.DeleteAsync();
+            await outboundFirewallRule.DeleteAsync();
         }
     }
 }

@@ -10,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -18,13 +19,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for JobCredential. </summary>
     public partial class JobCredentialMockTests : MockTestBase
     {
-        public JobCredentialMockTests(bool isAsync) : base(isAsync)
+        public JobCredentialMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public JobCredentialMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.JobCredentialCollection> GetJobCredentialCollectionAsync(string resourceGroupName, string serverName, string jobAgentName)
@@ -51,18 +49,18 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         public async Task GetAsync()
         {
             // Example: Get a credential
-            var resource = await GetJobCredentialAsync();
+            var jobCredential = await GetJobCredentialAsync();
 
-            await resource.GetAsync();
+            await jobCredential.GetAsync();
         }
 
         [RecordedTest]
         public async Task DeleteAsync()
         {
             // Example: Delete a credential
-            var resource = await GetJobCredentialAsync();
+            var jobCredential = await GetJobCredentialAsync();
 
-            await resource.DeleteAsync();
+            await jobCredential.DeleteAsync();
         }
     }
 }

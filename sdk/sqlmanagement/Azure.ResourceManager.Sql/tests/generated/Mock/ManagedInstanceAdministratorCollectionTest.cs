@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ManagedInstanceAdministrator. </summary>
     public partial class ManagedInstanceAdministratorCollectionMockTests : MockTestBase
     {
-        public ManagedInstanceAdministratorCollectionMockTests(bool isAsync) : base(isAsync)
+        public ManagedInstanceAdministratorCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public ManagedInstanceAdministratorCollectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.ManagedInstanceAdministratorCollection> GetManagedInstanceAdministratorCollectionAsync(string resourceGroupName, string managedInstanceName)
@@ -42,6 +40,14 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             // Example: Create administrator of managed instance
             var collection = await GetManagedInstanceAdministratorCollectionAsync("Default-SQL-SouthEastAsia", "managedInstance");
             await TestHelper.CreateOrUpdateExampleInstanceAsync(collection);
+        }
+
+        [RecordedTest]
+        public async Task GetAsync()
+        {
+            // Example: Get administrator of managed instance
+            var collection = await GetManagedInstanceAdministratorCollectionAsync("Default-SQL-SouthEastAsia", "managedInstance");
+            await TestHelper.GetExampleInstanceAsync(collection);
         }
 
         [RecordedTest]

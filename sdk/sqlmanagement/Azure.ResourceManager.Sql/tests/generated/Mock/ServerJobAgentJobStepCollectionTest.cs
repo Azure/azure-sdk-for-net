@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for JobStep. </summary>
     public partial class ServerJobAgentJobStepCollectionMockTests : MockTestBase
     {
-        public ServerJobAgentJobStepCollectionMockTests(bool isAsync) : base(isAsync)
+        public ServerJobAgentJobStepCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public ServerJobAgentJobStepCollectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.ServerJobAgentJobStepCollection> GetServerJobAgentJobStepCollectionAsync(string resourceGroupName, string serverName, string jobAgentName, string jobName)
@@ -48,6 +46,14 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             // Example: Create or update a job step with all properties specified.
             var collection = await GetServerJobAgentJobStepCollectionAsync("group1", "server1", "agent1", "job1");
             await TestHelper.CreateOrUpdateExampleInstanceAsync(collection, "step1");
+        }
+
+        [RecordedTest]
+        public async Task GetAsync()
+        {
+            // Example: Get the latest version of a job step.
+            var collection = await GetServerJobAgentJobStepCollectionAsync("group1", "server1", "agent1", "job1");
+            await TestHelper.GetExampleInstanceAsync(collection, "step1");
         }
 
         [RecordedTest]

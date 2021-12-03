@@ -10,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -18,13 +19,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for Job. </summary>
     public partial class JobMockTests : MockTestBase
     {
-        public JobMockTests(bool isAsync) : base(isAsync)
+        public JobMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public JobMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.JobCollection> GetJobCollectionAsync(string resourceGroupName, string serverName, string jobAgentName)
@@ -51,27 +49,27 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
         public async Task GetAsync()
         {
             // Example: Get a job
-            var resource = await GetJobAsync();
+            var job = await GetJobAsync();
 
-            await resource.GetAsync();
+            await job.GetAsync();
         }
 
         [RecordedTest]
         public async Task DeleteAsync()
         {
             // Example: Delete a job
-            var resource = await GetJobAsync();
+            var job = await GetJobAsync();
 
-            await resource.DeleteAsync();
+            await job.DeleteAsync();
         }
 
         [RecordedTest]
         public async Task CreateJobExecutionAsync()
         {
             // Example: Start a job execution.
-            var resource = await GetJobAsync();
+            var job = await GetJobAsync();
 
-            await resource.CreateJobExecutionAsync();
+            await job.CreateJobExecutionAsync();
         }
     }
 }

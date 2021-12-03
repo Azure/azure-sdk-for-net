@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ManagedInstance. </summary>
     public partial class ManagedInstanceCollectionMockTests : MockTestBase
     {
-        public ManagedInstanceCollectionMockTests(bool isAsync) : base(isAsync)
+        public ManagedInstanceCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public ManagedInstanceCollectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.ManagedInstanceCollection> GetManagedInstanceCollectionAsync(string resourceGroupName)
@@ -39,6 +37,14 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             // Example: Create managed instance with all properties
             var collection = await GetManagedInstanceCollectionAsync("testrg");
             await TestHelper.CreateOrUpdateExampleInstanceAsync(collection, "testinstance");
+        }
+
+        [RecordedTest]
+        public async Task GetAsync()
+        {
+            // Example: Get managed instance
+            var collection = await GetManagedInstanceCollectionAsync("testrg");
+            await TestHelper.GetExampleInstanceAsync(collection, "testinstance");
         }
 
         [RecordedTest]

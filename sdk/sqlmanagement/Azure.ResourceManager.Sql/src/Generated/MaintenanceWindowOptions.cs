@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql
             _data = resource;
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _maintenanceWindowOptionsRestClient = new MaintenanceWindowOptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _maintenanceWindowOptionsRestClient = new MaintenanceWindowOptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="MaintenanceWindowOptions"/> class. </summary>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sql
         {
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _maintenanceWindowOptionsRestClient = new MaintenanceWindowOptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _maintenanceWindowOptionsRestClient = new MaintenanceWindowOptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="MaintenanceWindowOptions"/> class. </summary>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql
         internal MaintenanceWindowOptions(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _maintenanceWindowOptionsRestClient = new MaintenanceWindowOptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _maintenanceWindowOptionsRestClient = new MaintenanceWindowOptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _maintenanceWindowOptionsRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowOptionsName, cancellationToken).ConfigureAwait(false);
+                var response = await _maintenanceWindowOptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowOptionsName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new MaintenanceWindowOptions(this, response.Value), response.GetRawResponse());
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _maintenanceWindowOptionsRestClient.Get(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowOptionsName, cancellationToken);
+                var response = _maintenanceWindowOptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowOptionsName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MaintenanceWindowOptions(this, response.Value), response.GetRawResponse());

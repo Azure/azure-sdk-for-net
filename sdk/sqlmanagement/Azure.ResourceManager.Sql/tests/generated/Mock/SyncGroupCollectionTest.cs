@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for SyncGroup. </summary>
     public partial class SyncGroupCollectionMockTests : MockTestBase
     {
-        public SyncGroupCollectionMockTests(bool isAsync) : base(isAsync)
+        public SyncGroupCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public SyncGroupCollectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.SyncGroupCollection> GetSyncGroupCollectionAsync(string resourceGroupName, string serverName, string databaseName)
@@ -45,6 +43,14 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             // Example: Create a sync group
             var collection = await GetSyncGroupCollectionAsync("syncgroupcrud-65440", "syncgroupcrud-8475", "syncgroupcrud-4328");
             await TestHelper.CreateOrUpdateExampleInstanceAsync(collection, "syncgroupcrud-3187");
+        }
+
+        [RecordedTest]
+        public async Task GetAsync()
+        {
+            // Example: Get a sync group
+            var collection = await GetSyncGroupCollectionAsync("syncgroupcrud-65440", "syncgroupcrud-8475", "syncgroupcrud-4328");
+            await TestHelper.GetExampleInstanceAsync(collection, "syncgroupcrud-3187");
         }
 
         [RecordedTest]

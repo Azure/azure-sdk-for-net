@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
     /// <summary> Test for ServerDnsAlias. </summary>
     public partial class ServerDnsAliasCollectionMockTests : MockTestBase
     {
-        public ServerDnsAliasCollectionMockTests(bool isAsync) : base(isAsync)
+        public ServerDnsAliasCollectionMockTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        }
-
-        public ServerDnsAliasCollectionMockTests() : this(false)
-        {
+            System.Environment.SetEnvironmentVariable("RESOURCE_MANAGER_URL", $"https://localhost:8443");
         }
 
         private async Task<Sql.ServerDnsAliasCollection> GetServerDnsAliasCollectionAsync(string resourceGroupName, string serverName)
@@ -42,6 +40,14 @@ namespace Azure.ResourceManager.Sql.Tests.Mock
             // Example: Create server DNS alias
             var collection = await GetServerDnsAliasCollectionAsync("Default", "dns-alias-server");
             await TestHelper.CreateOrUpdateExampleInstanceAsync(collection, "dns-alias-name-1");
+        }
+
+        [RecordedTest]
+        public async Task GetAsync()
+        {
+            // Example: Get server DNS alias
+            var collection = await GetServerDnsAliasCollectionAsync("Default", "dns-alias-server");
+            await TestHelper.GetExampleInstanceAsync(collection, "dns-alias-name-1");
         }
 
         [RecordedTest]
