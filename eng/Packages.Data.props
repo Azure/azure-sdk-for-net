@@ -48,7 +48,7 @@
     <PackageReference Update="System.Security.Cryptography.Cng" Version="4.3.0" />
     <PackageReference Update="System.Security.Cryptography.Primitives" Version="4.3.0" />
     <PackageReference Update="System.Text.Encodings.Web" Version="4.5.1" />
-    <PackageReference Update="System.Text.Json" Version="4.6.0" />
+    <PackageReference Update="System.Text.Json" Version="4.7.2" />
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
 
     <PackageReference Update="WindowsAzure.Storage" Version="9.3.3" />
@@ -66,8 +66,10 @@
     <PackageReference Update="System.Memory" Version="4.5.4" />
     <PackageReference Update="System.Memory.Data" Version="1.0.2" />
     <PackageReference Update="System.Numerics.Vectors" Version="4.5.0" />
+    <PackageReference Update="System.Net.Http" Version="4.3.4" />
     <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.6.0" />
     <PackageReference Update="System.Reflection.TypeExtensions" Version="4.7.0" />
+    <PackageReference Update="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
     <PackageReference Update="System.Threading.Tasks.Extensions" Version="4.5.4" />
     <PackageReference Update="System.Threading.Channels" Version="4.7.1" />
     <PackageReference Update="System.Security.Cryptography.ProtectedData" Version="4.7.0" />
@@ -211,7 +213,7 @@
     <PackageReference Update="Microsoft.Azure.Test.HttpRecorder" Version="[1.13.3, 2.0.0)" />
     <PackageReference Update="Microsoft.Azure.WebJobs.Extensions" Version="4.0.1" />
     <PackageReference Update="Microsoft.Azure.WebJobs.Extensions.Http" Version="3.0.2" />
-    <PackageReference Update="Microsoft.CSharp" Version="4.6" />
+    <PackageReference Update="Microsoft.CSharp" Version="4.7" />
     <PackageReference Update="Microsoft.Extensions.Azure" Version="1.0.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Binder" Version="2.1.10" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
