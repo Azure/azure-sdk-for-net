@@ -1,3 +1,10 @@
+namespace Azure
+{
+    public partial class RequestOptions : Azure.RequestContext
+    {
+        public RequestOptions() { }
+    }
+}
 namespace Azure.Core
 {
     [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
@@ -84,6 +91,13 @@ namespace Azure.Core
         public T To<T>(System.Text.Json.JsonSerializerOptions options) { throw null; }
         public long WriteTo(System.IO.Stream stream) { throw null; }
         public System.Threading.Tasks.Task<long> WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
+}
+namespace Azure.Core.Experimental
+{
+    public static partial class HttpPipelineExtensions
+    {
+        public static Azure.Core.HttpMessage CreateMessage(this Azure.Core.Pipeline.HttpPipeline pipeline, Azure.RequestOptions options) { throw null; }
     }
 }
 namespace Azure.Messaging

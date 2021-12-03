@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `RequestOptions` for use by Gen 1 Clients.
+
 ### Breaking Changes
 
 - The following types were removed:
