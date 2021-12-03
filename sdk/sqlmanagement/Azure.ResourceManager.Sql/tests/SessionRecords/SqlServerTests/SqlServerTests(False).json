@@ -6,12 +6,12 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-00f36e7954f7df4aab30e37fc643acc4-7a0509b49af07742-00",
+        "traceparent": "00-99a9cd3f56ba9e4eb14caa658fcf8f9e-d4fe20a23fa24c41-00",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.5",
+          "azsdk-net-ResourceManager/1.0.0-alpha.20211203.1",
           "(.NET Core 3.1.21; Microsoft Windows 10.0.22000)"
         ],
-        "x-ms-client-request-id": "21fc17b91e7f0a751d7a32efe6f4d88a",
+        "x-ms-client-request-id": "abd399f2464860e71d3f34e562040b7b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -20,15 +20,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "468",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 16 Nov 2021 21:32:21 GMT",
+        "Date": "Fri, 03 Dec 2021 02:07:10 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "cae1fac3-2736-44ce-8fc8-e81c5da8e93c",
-        "x-ms-ratelimit-remaining-subscription-reads": "10421",
-        "x-ms-request-id": "cae1fac3-2736-44ce-8fc8-e81c5da8e93c",
-        "x-ms-routing-request-id": "KOREASOUTH:20211116T213222Z:cae1fac3-2736-44ce-8fc8-e81c5da8e93c"
+        "x-ms-correlation-request-id": "37a96cc1-ada8-496d-bcaa-e05642776afa",
+        "x-ms-ratelimit-remaining-subscription-reads": "11766",
+        "x-ms-request-id": "37a96cc1-ada8-496d-bcaa-e05642776afa",
+        "x-ms-routing-request-id": "KOREASOUTH:20211203T020711Z:37a96cc1-ada8-496d-bcaa-e05642776afa"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -50,7 +50,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/Sql-RG-7353?api-version=2019-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/Sql-RG-6971?api-version=2019-10-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -58,10 +58,10 @@
         "Content-Length": "22",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.5",
+          "azsdk-net-ResourceManager/1.0.0-alpha.20211203.1",
           "(.NET Core 3.1.21; Microsoft Windows 10.0.22000)"
         ],
-        "x-ms-client-request-id": "9bcbb0eeefe930808b83bdc1e93b7805",
+        "x-ms-client-request-id": "1612d0b0e6584192903382e9da0a2c63",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -72,19 +72,19 @@
         "Cache-Control": "no-cache",
         "Content-Length": "220",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 16 Nov 2021 21:32:21 GMT",
+        "Date": "Fri, 03 Dec 2021 02:07:12 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "55ffc60f-aef8-4f04-acea-f8470a8a178e",
+        "x-ms-correlation-request-id": "132f5fc7-064c-43b8-8122-6f49353a7a06",
         "x-ms-ratelimit-remaining-subscription-writes": "1199",
-        "x-ms-request-id": "55ffc60f-aef8-4f04-acea-f8470a8a178e",
-        "x-ms-routing-request-id": "KOREASOUTH:20211116T213222Z:55ffc60f-aef8-4f04-acea-f8470a8a178e"
+        "x-ms-request-id": "132f5fc7-064c-43b8-8122-6f49353a7a06",
+        "x-ms-routing-request-id": "KOREASOUTH:20211203T020712Z:132f5fc7-064c-43b8-8122-6f49353a7a06"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-7353",
-        "name": "Sql-RG-7353",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-6971",
+        "name": "Sql-RG-6971",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "westus2",
         "properties": {
@@ -94,7 +94,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "290181891",
+    "RandomSeed": "19769215",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }

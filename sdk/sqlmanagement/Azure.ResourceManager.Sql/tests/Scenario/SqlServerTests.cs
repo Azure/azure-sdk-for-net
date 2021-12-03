@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [RecordedTest]
         public async Task CheckIfExist()
         {
-            string sqlServerName = Recording.GenerateAssetName("SqlServer-");
+            string sqlServerName = Recording.GenerateAssetName("sqlserver-");
             await CreateOrUpdateSqlServer(sqlServerName);
             Assert.AreEqual(true, _resourceGroup.GetSqlServers().CheckIfExists(sqlServerName).Value);
         }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            string sqlServerName = Recording.GenerateAssetName("SqlServer-");
+            string sqlServerName = Recording.GenerateAssetName("sqlserver-");
             var SqlServer = await CreateOrUpdateSqlServer(sqlServerName);
             Assert.IsNotNull(SqlServer.Data);
             Assert.AreEqual(sqlServerName, SqlServer.Data.Name);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [RecordedTest]
         public async Task Get()
         {
-            string sqlServerName = Recording.GenerateAssetName("SqlServer-");
+            string sqlServerName = Recording.GenerateAssetName("sqlserver-");
             await CreateOrUpdateSqlServer(sqlServerName);
             var SqlServer = await _resourceGroup.GetSqlServers().GetAsync(sqlServerName);
             Assert.IsNotNull(SqlServer.Value.Data);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [RecordedTest]
         public async Task GetAll()
         {
-            string sqlServerName = Recording.GenerateAssetName("SqlServer-");
+            string sqlServerName = Recording.GenerateAssetName("sqlserver-");
             await CreateOrUpdateSqlServer(sqlServerName);
             var SqlServerList = await _resourceGroup.GetSqlServers().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(SqlServerList);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [RecordedTest]
         public async Task Delete()
         {
-            string SqlServerName = Recording.GenerateAssetName("SqlServer-");
+            string SqlServerName = Recording.GenerateAssetName("sqlserver-");
             await CreateOrUpdateSqlServer(SqlServerName);
             var SqlServerList = await _resourceGroup.GetSqlServers().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(1, SqlServerList.Count);
