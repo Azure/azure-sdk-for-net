@@ -318,7 +318,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             var response = await callConnection.AddParticipantAsync(new CommunicationUserIdentifier(participantUserId)).ConfigureAwait(false);
 
-            Assert.AreEqual(false, string.IsNullOrEmpty(response.Value.ParticipantId));
+            Assert.AreEqual(false, string.IsNullOrEmpty(response.Value.OperationId));
 
             return response.Value;
         }
@@ -333,7 +333,7 @@ namespace Azure.Communication.CallingServer.Tests
                 callbackUri: new Uri(TestEnvironment.AppCallbackUrl)
                 ).ConfigureAwait(false);
 
-            Assert.AreEqual(false, string.IsNullOrEmpty(response.Value.ParticipantId));
+            Assert.AreEqual(false, string.IsNullOrEmpty(response.Value.OperationId));
 
             return response.Value;
         }

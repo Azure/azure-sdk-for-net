@@ -95,45 +95,47 @@
       }
     },
     {
-      "RequestUri": "https://acstestbot1.communication.azure.com/calling/participants?api-version=2021-11-15-preview",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "303",
-        "Content-Type": "application/json",
-        "traceparent": "00-a428e9f9a6674e47b7832ddc43af41e1-adcfff9b0a31574e-00",
-        "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20211026.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "ec4e38165ceab92ac30a543ba88bb0b8",
-        "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 26 Oct 2021 21:52:00 GMT",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": {
-        "callLocator": {
-          "groupCallId": "f8c9bb0a-25ec-408d-b335-266dcc0c0c9a",
-          "kind": "groupCallLocator"
+        "RequestUri": "https://acstestbot1.communication.azure.com/calling/participants?api-version=2021-11-15-preview",
+        "RequestMethod": "POST",
+        "RequestHeaders": {
+            "Accept": "application/json",
+            "Authorization": "Sanitized",
+            "Content-Length": "303",
+            "Content-Type": "application/json",
+            "traceparent": "00-a428e9f9a6674e47b7832ddc43af41e1-adcfff9b0a31574e-00",
+            "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20211026.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+            "x-ms-client-request-id": "ec4e38165ceab92ac30a543ba88bb0b8",
+            "x-ms-content-sha256": "Sanitized",
+            "x-ms-date": "Tue, 26 Oct 2021 21:52:00 GMT",
+            "x-ms-return-client-request-id": "true"
         },
-        "callbackUri": "https://dummy.ngrok.io/api/incident/callback?SecretKey=helloworld",
-        "participant": {
-          "communicationUser": {
-            "id": "8:acs:016a7064-0581-40b9-be73-6dde64d69d72_0000000d-5e6a-3252-a808-4548220003b8"
-          }
+        "RequestBody": {
+            "callLocator": {
+                "groupCallId": "f8c9bb0a-25ec-408d-b335-266dcc0c0c9a",
+                "kind": "groupCallLocator"
+            },
+            "callbackUri": "https://dummy.ngrok.io/api/incident/callback?SecretKey=helloworld",
+            "participant": {
+                "communicationUser": {
+                    "id": "8:acs:016a7064-0581-40b9-be73-6dde64d69d72_0000000d-5e6a-3252-a808-4548220003b8"
+                }
+            }
+        },
+        "StatusCode": 202,
+        "ResponseHeaders": {
+            "Content-Length": "56",
+            "Content-Type": "application/json; charset=utf-8",
+            "Date": "Tue, 26 Oct 2021 21:52:01 GMT",
+            "X-Azure-Ref": "0gHh4YQAAAAC8C6jZWNsBSo2vlevZZBjdV1NURURHRTA4MTkAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+            "X-Cache": "CONFIG_NOCACHE",
+            "X-Microsoft-Skype-Chain-ID": "2e0fa091-a1f7-4d89-83f7-771631d3d18d",
+            "x-ms-client-request-id": "ec4e38165ceab92ac30a543ba88bb0b8"
+        },
+        "ResponseBody": {
+            "operationId": "02000b80-c82d-485b-be9f-49e14f8bdbf1",
+            "status": "running",
+            "operationContext": "de346f03-7f8d-41ab-a232-cc5e14990769"
         }
-      },
-      "StatusCode": 202,
-      "ResponseHeaders": {
-        "Content-Length": "56",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 26 Oct 2021 21:52:01 GMT",
-        "X-Azure-Ref": "0gHh4YQAAAAC8C6jZWNsBSo2vlevZZBjdV1NURURHRTA4MTkAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
-        "X-Cache": "CONFIG_NOCACHE",
-        "X-Microsoft-Skype-Chain-ID": "2e0fa091-a1f7-4d89-83f7-771631d3d18d",
-        "x-ms-client-request-id": "ec4e38165ceab92ac30a543ba88bb0b8"
-      },
-      "ResponseBody": {
-        "participantId": "fcc37f82-c2ab-4259-a235-4e744e163085"
-      }
     },
     {
       "RequestUri": "https://acstestbot1.communication.azure.com/calling/participants:remove?api-version=2021-11-15-preview",

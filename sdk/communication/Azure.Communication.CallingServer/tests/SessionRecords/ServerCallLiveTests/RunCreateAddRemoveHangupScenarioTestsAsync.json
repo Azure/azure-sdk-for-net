@@ -128,7 +128,9 @@
             "x-ms-client-request-id": "a31a89405456b2bdaf8b092b273fd2c1"
         },
         "ResponseBody": {
-            "participantId": "3244ec04-9709-49ec-9206-f0ab1490e818"
+            "operationId": "02000b80-c82d-485b-be9f-49e14f8bdbf1",
+            "status": "running",
+            "operationContext": "de346f03-7f8d-41ab-a232-cc5e14990769"
         }
     },
     {

@@ -14,16 +14,39 @@ namespace Azure.Communication.CallingServer
     {
         internal static AddParticipantResult DeserializeAddParticipantResult(JsonElement element)
         {
-            Optional<string> participantId = default;
+            Optional<string> operationId = default;
+            CallingOperationStatus status = default;
+            Optional<string> operationContext = default;
+            Optional<CallingOperationResultDetails> resultDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("participantId"))
+                if (property.NameEquals("operationId"))
                 {
-                    participantId = property.Value.GetString();
+                    operationId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("status"))
+                {
+                    status = new CallingOperationStatus(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("operationContext"))
+                {
+                    operationContext = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("resultDetails"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resultDetails = CallingOperationResultDetails.DeserializeCallingOperationResultDetails(property.Value);
                     continue;
                 }
             }
-            return new AddParticipantResult(participantId.Value);
+            return new AddParticipantResult(operationId.Value, status, operationContext.Value, resultDetails.Value);
         }
     }
 }

@@ -54,11 +54,14 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Initializes a new instance of AddParticipantResult. </summary>
-        /// <param name="participantId"> The id of the added participant. </param>
+        /// <param name="operationId"> The operation id. </param>
+        /// <param name="status"> The status of the operation. </param>
+        /// <param name="operationContext"> The operation context provided by client. </param>
+        /// <param name="resultDetails"> The result info for the operation. </param>
         /// <returns> A new <see cref="CallingServer.AddParticipantResult"/> instance for mocking. </returns>
-        public static AddParticipantResult AddParticipantResult(string participantId = null)
+        public static AddParticipantResult AddParticipantResult(string operationId = null, CallingOperationStatus status = default, string operationContext = null, CallingOperationResultDetails resultDetails = null)
         {
-            return new AddParticipantResult(participantId);
+            return new AddParticipantResult(operationId, status, operationContext, resultDetails);
         }
 
         /// <summary> Initializes a new instance of StartCallRecordingResult. </summary>
