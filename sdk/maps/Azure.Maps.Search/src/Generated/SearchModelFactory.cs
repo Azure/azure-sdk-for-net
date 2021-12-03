@@ -64,17 +64,6 @@ namespace Azure.Maps.Search.Models
             return new ErrorAdditionalInfo(type, info);
         }
 
-        /// <summary> Initializes a new instance of SearchAddressResult. </summary>
-        /// <param name="summary"> Summary object for a Search API response. </param>
-        /// <param name="results"> A list of Search API results. </param>
-        /// <returns> A new <see cref="Models.SearchAddressResult"/> instance for mocking. </returns>
-        public static SearchAddressResult SearchAddressResult(SearchSummary summary = null, IEnumerable<SearchAddressResultItem> results = null)
-        {
-            results ??= new List<SearchAddressResultItem>();
-
-            return new SearchAddressResult(summary, results?.ToList());
-        }
-
         /// <summary> Initializes a new instance of SearchSummary. </summary>
         /// <param name="query"> The query parameter that was used to produce these search results. </param>
         /// <param name="queryType"> The type of query being returned: NEARBY or NON_NEAR. </param>
@@ -320,17 +309,6 @@ namespace Azure.Maps.Search.Models
             synonyms ??= new List<string>();
 
             return new PointOfInterestCategory(id, name, childIds?.ToList(), synonyms?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ReverseSearchAddressResult. </summary>
-        /// <param name="summary"> Summary object for a Search Address Reverse response. </param>
-        /// <param name="addresses"> Addresses array. </param>
-        /// <returns> A new <see cref="Models.ReverseSearchAddressResult"/> instance for mocking. </returns>
-        public static ReverseSearchAddressResult ReverseSearchAddressResult(SearchSummary summary = null, IEnumerable<ReverseSearchAddressResultItem> addresses = null)
-        {
-            addresses ??= new List<ReverseSearchAddressResultItem>();
-
-            return new ReverseSearchAddressResult(summary, addresses?.ToList());
         }
 
         /// <summary> Initializes a new instance of ReverseSearchAddressResultItem. </summary>

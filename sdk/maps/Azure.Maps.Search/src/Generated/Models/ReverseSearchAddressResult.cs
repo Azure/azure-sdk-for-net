@@ -27,9 +27,6 @@ namespace Azure.Maps.Search.Models
             Summary = summary;
             Addresses = addresses;
         }
-
-        /// <summary> Summary object for a Search Address Reverse response. </summary>
-        public SearchSummary Summary { get; }
         /// <summary> Addresses array. </summary>
         public IReadOnlyList<ReverseSearchAddressResultItem> Addresses { get; }
     }
