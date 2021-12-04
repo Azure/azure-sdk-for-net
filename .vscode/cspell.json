@@ -241,6 +241,7 @@
         "distcp",
         "eloqua",
         "exfiltration",
+        "fqdns",
         "hana",
         "hcatalog",
         "hdfs",

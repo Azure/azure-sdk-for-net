@@ -104,7 +104,7 @@ directive:
     }
 ```
 
-### Spell out Notebook
+### Fix spelling issues
 
 ``` yaml
 directive:

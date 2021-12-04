@@ -4516,15 +4516,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     }
     public partial class Notebook
     {
-        public Notebook(Azure.Analytics.Synapse.Artifacts.Models.NotebookMetadata metadata, int nbformat, int nbformatMinor, System.Collections.Generic.IEnumerable<Azure.Analytics.Synapse.Artifacts.Models.NotebookCell> cells) { }
+        public Notebook(Azure.Analytics.Synapse.Artifacts.Models.NotebookMetadata metadata, int notebookFormat, int notebookFormatMinor, System.Collections.Generic.IEnumerable<Azure.Analytics.Synapse.Artifacts.Models.NotebookCell> cells) { }
         public System.Collections.Generic.IDictionary<string, object> AdditionalProperties { get { throw null; } }
         public Azure.Analytics.Synapse.Artifacts.Models.BigDataPoolReference BigDataPool { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Analytics.Synapse.Artifacts.Models.NotebookCell> Cells { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.NotebookFolder Folder { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.NotebookMetadata Metadata { get { throw null; } set { } }
-        public int Nbformat { get { throw null; } set { } }
-        public int NbformatMinor { get { throw null; } set { } }
+        public int NotebookFormat { get { throw null; } set { } }
+        public int NotebookFormatMinor { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.NotebookSessionProperties SessionProperties { get { throw null; } set { } }
     }
     public partial class NotebookCell
