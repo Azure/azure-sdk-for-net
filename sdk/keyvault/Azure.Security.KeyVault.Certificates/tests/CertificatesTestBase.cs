@@ -65,9 +65,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                     InstrumentClientOptions(options)));
         }
 
-        public override async Task StartTestRecording()
+        public override async Task StartTestRecordingAsync()
         {
-            await base.StartTestRecording();
+            await base.StartTestRecordingAsync();
 
             _listener = new KeyVaultTestEventListener();
 
@@ -75,11 +75,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             VaultUri = new Uri(TestEnvironment.KeyVaultUrl);
         }
 
-        public override async Task StopTestRecording()
+        public override async Task StopTestRecordingAsync()
         {
             _listener?.Dispose();
 
-            await base.StopTestRecording();
+            await base.StopTestRecordingAsync();
         }
 
         [TearDown]

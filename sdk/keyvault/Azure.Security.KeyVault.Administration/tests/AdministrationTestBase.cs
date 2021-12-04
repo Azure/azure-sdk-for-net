@@ -99,9 +99,9 @@ namespace Azure.Security.KeyVault.Administration.Tests
         }
 
         /// <inheritdoc/>
-        public sealed override async Task StartTestRecording()
+        public sealed override async Task StartTestRecordingAsync()
         {
-            await base.StartTestRecording();
+            await base.StartTestRecordingAsync();
 
             // Clear the challenge cache to force a challenge response.
             // This results in consistent results when recording or playing back recorded tests.

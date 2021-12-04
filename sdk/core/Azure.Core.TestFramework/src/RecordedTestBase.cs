@@ -170,7 +170,7 @@ namespace Azure.Core.TestFramework
         }
 
         [SetUp]
-        public virtual async Task StartTestRecording()
+        public virtual async Task StartTestRecordingAsync()
         {
             // Only create test recordings for the latest version of the service
             TestContext.TestAdapter test = TestContext.CurrentContext.Test;
@@ -191,7 +191,7 @@ namespace Azure.Core.TestFramework
         }
 
         [TearDown]
-        public virtual async Task StopTestRecording()
+        public virtual async Task StopTestRecordingAsync()
         {
             bool testPassed = TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Passed;
             if (ValidateClientInstrumentation && testPassed)

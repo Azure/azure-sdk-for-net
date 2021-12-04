@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             var vnetLro = await rg.GetVirtualNetworks().CreateOrUpdateAsync(_vnetName, vnetData);
             _vnet = vnetLro.Value;
 
-            StopSessionRecording();
+            await StopSessionRecordingAsync();
         }
 
         [SetUp]

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             _linkName = SessionRecording.GenerateAssetName("link-");
             _vnetName = SessionRecording.GenerateAssetName("vnet-");
 
-            StopSessionRecording();
+            await StopSessionRecordingAsync();
         }
 
         [OneTimeTearDown]

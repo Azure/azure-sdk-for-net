@@ -36,9 +36,9 @@ namespace Azure.AI.Language.Conversations.Tests
         /// <summary>
         /// Creates the <see cref="Client"/> once tests begin.
         /// </summary>
-        public override async Task StartTestRecording()
+        public override async Task StartTestRecordingAsync()
         {
-            await base.StartTestRecording();
+            await base.StartTestRecordingAsync();
 
             Client = CreateClient<TClient>(
                 TestEnvironment.Endpoint,
