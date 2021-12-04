@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             SqlStoredProcedureCreateUpdateOptions updateOptions = new SqlStoredProcedureCreateUpdateOptions(storedProcedure.Id, _storedProcedureName, storedProcedure.Data.Type,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-                Resources.Models.Location.WestUS2, storedProcedure.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
+                Resources.Models.Location.WestUS, storedProcedure.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 
             storedProcedure = await (await SqlStoredProcedureCollection.CreateOrUpdateAsync(_storedProcedureName, updateOptions)).WaitForCompletionAsync();
             Assert.AreEqual(_storedProcedureName, storedProcedure.Data.Resource.Id);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         protected async Task<SqlStoredProcedure> CreateSqlStoredProcedure(AutoscaleSettings autoscale)
         {
             _storedProcedureName = Recording.GenerateAssetName("sql-stored-procedure-");
-            SqlStoredProcedureCreateUpdateOptions sqlDatabaseCreateUpdateOptions = new SqlStoredProcedureCreateUpdateOptions(Resources.Models.Location.WestUS2,
+            SqlStoredProcedureCreateUpdateOptions sqlDatabaseCreateUpdateOptions = new SqlStoredProcedureCreateUpdateOptions(Resources.Models.Location.WestUS,
                 new SqlStoredProcedureResource(_storedProcedureName)
                 {
                     Body = @"function () {

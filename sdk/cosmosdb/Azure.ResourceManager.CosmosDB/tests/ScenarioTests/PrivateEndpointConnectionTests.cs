@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var vnetName = Recording.GenerateAssetName("vnet-");
             var vnet = new VirtualNetworkData()
             {
-                Location = Resources.Models.Location.WestUS2,
+                Location = Resources.Models.Location.WestUS,
                 AddressSpace = new AddressSpace()
                 {
                     AddressPrefixes = { "10.0.0.0/16", }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var name = Recording.GenerateAssetName("pe-");
             var privateEndpointData = new PrivateEndpointData
             {
-                Location = Resources.Models.Location.WestUS2,
+                Location = Resources.Models.Location.WestUS,
                 Subnet = virtualNetwork.Data.Subnets[0],
                 ManualPrivateLinkServiceConnections = {
                     new PrivateLinkServiceConnection

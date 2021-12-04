@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             CassandraKeyspaceCreateUpdateOptions updateOptions = new CassandraKeyspaceCreateUpdateOptions(keyspace.Id, _keyspaceName, keyspace.Data.Type,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-                Resources.Models.Location.WestUS2, keyspace.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
+                Resources.Models.Location.WestUS, keyspace.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 
             keyspace = await (await CassandraKeyspaceCollection.CreateOrUpdateAsync(_keyspaceName, updateOptions)).WaitForCompletionAsync();
             Assert.AreEqual(_keyspaceName, keyspace.Data.Resource.Id);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountCassandraKeyspaceThroughputSetting throughput2 = await throughput.CreateOrUpdate(new ThroughputSettingsUpdateOptions(Resources.Models.Location.WestUS2,
+            DatabaseAccountCassandraKeyspaceThroughputSetting throughput2 = await throughput.CreateOrUpdate(new ThroughputSettingsUpdateOptions(Resources.Models.Location.WestUS,
                 new ThroughputSettingsResource(TestThroughput2, null, null, null))).WaitForCompletionAsync();
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         internal static async Task<CassandraKeyspace> CreateCassandraKeyspace(string name, AutoscaleSettings autoscale, CassandraKeyspaceCollection collection)
         {
-            CassandraKeyspaceCreateUpdateOptions cassandraKeyspaceCreateUpdateOptions = new CassandraKeyspaceCreateUpdateOptions(Resources.Models.Location.WestUS2,
+            CassandraKeyspaceCreateUpdateOptions cassandraKeyspaceCreateUpdateOptions = new CassandraKeyspaceCreateUpdateOptions(Resources.Models.Location.WestUS,
                 new CassandraKeyspaceResource(name))
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),

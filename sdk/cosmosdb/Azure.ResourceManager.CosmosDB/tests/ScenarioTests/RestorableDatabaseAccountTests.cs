@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task RestorableDatabaseAccountListByLocation()
         {
             _restorableDatabaseAccount = await CreateRestorableDatabaseAccount(Recording.GenerateAssetName("r-database-account-"));
-            var restorableAccounts = await (await ArmClient.GetDefaultSubscriptionAsync()).GetRestorableDatabaseAccounts().GetAllAsync(Resources.Models.Location.WestUS2).ToEnumerableAsync();
+            var restorableAccounts = await (await ArmClient.GetDefaultSubscriptionAsync()).GetRestorableDatabaseAccounts().GetAllAsync(Resources.Models.Location.WestUS).ToEnumerableAsync();
             Assert.That(restorableAccounts.Any(account => account.Data.AccountName == _restorableDatabaseAccount.Data.Name));
         }
 
@@ -63,10 +63,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             var locations = new List<DatabaseAccountLocation>()
             {
-                new DatabaseAccountLocation(id: null, locationName: Resources.Models.Location.WestUS2, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false)
+                new DatabaseAccountLocation(id: null, locationName: Resources.Models.Location.WestUS, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false)
             };
 
-            var createOptions = new DatabaseAccountCreateUpdateOptions(Resources.Models.Location.WestUS2, locations)
+            var createOptions = new DatabaseAccountCreateUpdateOptions(Resources.Models.Location.WestUS, locations)
             {
                 Kind = DatabaseAccountKind.GlobalDocumentDB,
                 ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds),

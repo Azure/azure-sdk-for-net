@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             var locations = new List<DatabaseAccountLocation>()
             {
-                new DatabaseAccountLocation(id: null, locationName: Resources.Models.Location.WestUS2, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false)
+                new DatabaseAccountLocation(id: null, locationName: Resources.Models.Location.WestUS, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false)
             };
 
             var createParameters = new DatabaseAccountCreateUpdateOptions(Resources.Models.Location.WestUS2, locations)

@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             SqlUserDefinedFunctionCreateUpdateOptions updateOptions = new SqlUserDefinedFunctionCreateUpdateOptions(userDefinedFunction.Id, _userDefinedFunctionName, userDefinedFunction.Data.Type,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-                Resources.Models.Location.WestUS2, userDefinedFunction.Data.Resource, new CreateUpdateOptions());
-            updateOptions = new SqlUserDefinedFunctionCreateUpdateOptions(Resources.Models.Location.WestUS2, new SqlUserDefinedFunctionResource(_userDefinedFunctionName)
+                Resources.Models.Location.WestUS, userDefinedFunction.Data.Resource, new CreateUpdateOptions());
+            updateOptions = new SqlUserDefinedFunctionCreateUpdateOptions(Resources.Models.Location.WestUS, new SqlUserDefinedFunctionResource(_userDefinedFunctionName)
             {
                 Body = @"function () { var updatetext = getContext();
     var response = context.getResponse();
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         protected async Task<SqlUserDefinedFunction> CreateSqlUserDefinedFunction(AutoscaleSettings autoscale)
         {
             _userDefinedFunctionName = Recording.GenerateAssetName("sql-stored-procedure-");
-            SqlUserDefinedFunctionCreateUpdateOptions sqlDatabaseCreateUpdateOptions = new SqlUserDefinedFunctionCreateUpdateOptions(Resources.Models.Location.WestUS2,
+            SqlUserDefinedFunctionCreateUpdateOptions sqlDatabaseCreateUpdateOptions = new SqlUserDefinedFunctionCreateUpdateOptions(Resources.Models.Location.WestUS,
                 new SqlUserDefinedFunctionResource(_userDefinedFunctionName)
                 {
                     Body = @"function () {

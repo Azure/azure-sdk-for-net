@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountCassandraKeyspaceTableThroughputSetting throughput2 = await throughput.CreateOrUpdate(new ThroughputSettingsUpdateOptions(Resources.Models.Location.WestUS2,
+            DatabaseAccountCassandraKeyspaceTableThroughputSetting throughput2 = await throughput.CreateOrUpdate(new ThroughputSettingsUpdateOptions(Resources.Models.Location.WestUS,
                 new ThroughputSettingsResource(TestThroughput2, null, null, null))).WaitForCompletionAsync();
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         private CassandraTableCreateUpdateOptions BuildCreateUpdateOptions(AutoscaleSettings autoscale)
         {
             _tableName = Recording.GenerateAssetName("cassandra-table-");
-            return new CassandraTableCreateUpdateOptions(Resources.Models.Location.WestUS2,
+            return new CassandraTableCreateUpdateOptions(Resources.Models.Location.WestUS,
                 new CassandraTableResource(_tableName, default, new CassandraSchema {
                     Columns = { new CassandraColumn { Name = "columnA", Type = "int" }, new CassandraColumn { Name = "columnB", Type = "ascii" } },
                     PartitionKeys = { new CassandraPartitionKey { Name = "columnA" } },

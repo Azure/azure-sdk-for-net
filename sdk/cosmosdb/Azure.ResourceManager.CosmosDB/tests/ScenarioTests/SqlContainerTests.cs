@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             SqlContainerCreateUpdateOptions updateOptions = new SqlContainerCreateUpdateOptions(container.Id, _containerName, container.Data.Type,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-                Resources.Models.Location.WestUS2, container.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
+                Resources.Models.Location.WestUS, container.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 
             container = await (await SqlContainerCollection.CreateOrUpdateAsync(_containerName, updateOptions)).WaitForCompletionAsync();
             Assert.AreEqual(_containerName, container.Data.Resource.Id);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountSqlDatabaseContainerThroughputSetting throughput2 = await throughput.CreateOrUpdate(new ThroughputSettingsUpdateOptions(Resources.Models.Location.WestUS2,
+            DatabaseAccountSqlDatabaseContainerThroughputSetting throughput2 = await throughput.CreateOrUpdate(new ThroughputSettingsUpdateOptions(Resources.Models.Location.WestUS,
                 new ThroughputSettingsResource(TestThroughput2, null, null, null))).WaitForCompletionAsync();
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
@@ -149,16 +149,16 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             var container = await CreateSqlContainer(null);
 
-            BackupInformation backupInfo =  await container.RetrieveContinuousBackupInformation(new ContinuousBackupRestoreLocation{ Location  = Resources.Models.Location.WestUS2}).WaitForCompletionAsync();
+            BackupInformation backupInfo =  await container.RetrieveContinuousBackupInformation(new ContinuousBackupRestoreLocation{ Location  = Resources.Models.Location.WestUS}).WaitForCompletionAsync();
             long restoreTime = DateTimeOffset.Parse(backupInfo.ContinuousBackupInformation.LatestRestorableTimestamp).ToUnixTimeMilliseconds();
             Assert.True(restoreTime > 0);
 
             SqlContainerCreateUpdateOptions updateOptions = new SqlContainerCreateUpdateOptions(container.Id, _containerName, container.Data.Type,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-                Resources.Models.Location.WestUS2, container.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
+                Resources.Models.Location.WestUS, container.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 
             container = await (await SqlContainerCollection.CreateOrUpdateAsync(_containerName, updateOptions)).WaitForCompletionAsync();
-            backupInfo =  await container.RetrieveContinuousBackupInformation(new ContinuousBackupRestoreLocation{ Location  = Resources.Models.Location.WestUS2}).WaitForCompletionAsync();
+            backupInfo =  await container.RetrieveContinuousBackupInformation(new ContinuousBackupRestoreLocation{ Location  = Resources.Models.Location.WestUS}).WaitForCompletionAsync();
             long latestRestoreTime = DateTimeOffset.Parse(backupInfo.ContinuousBackupInformation.LatestRestorableTimestamp).ToUnixTimeMilliseconds();
             Assert.True(latestRestoreTime > 0);
             Assert.True(latestRestoreTime > restoreTime);
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
         internal static async Task<SqlContainer> CreateSqlContainer(string name, AutoscaleSettings autoscale, SqlContainerCollection sqlContainerCollection)
         {
-            SqlContainerCreateUpdateOptions sqlDatabaseCreateUpdateOptions = new SqlContainerCreateUpdateOptions(Resources.Models.Location.WestUS2,
+            SqlContainerCreateUpdateOptions sqlDatabaseCreateUpdateOptions = new SqlContainerCreateUpdateOptions(Resources.Models.Location.WestUS,
                 new SqlContainerResource(name)
                 {
                     PartitionKey = new ContainerPartitionKey(new List<string> { "/address/zipCode" }, null, null, false)
@@ -242,10 +242,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             var locations = new List<DatabaseAccountLocation>()
             {
-                new DatabaseAccountLocation(id: null, locationName: Resources.Models.Location.WestUS2, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false)
+                new DatabaseAccountLocation(id: null, locationName: Resources.Models.Location.WestUS, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false)
             };
 
-            var createOptions = new DatabaseAccountCreateUpdateOptions(Resources.Models.Location.WestUS2, locations)
+            var createOptions = new DatabaseAccountCreateUpdateOptions(Resources.Models.Location.WestUS, locations)
             {
                 Kind = DatabaseAccountKind.GlobalDocumentDB,
                 ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds),
