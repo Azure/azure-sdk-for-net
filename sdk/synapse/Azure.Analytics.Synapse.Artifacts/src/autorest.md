@@ -103,3 +103,14 @@ directive:
       }
     }
 ```
+
+### Spell out Notebook
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.Notebook.properties
+  transform: >
+    $.nbformat['x-ms-client-name'] = 'NotebookFormat';
+    $.nbformat_minor['x-ms-client-name'] = 'NotebookFormatMinor';
+```
