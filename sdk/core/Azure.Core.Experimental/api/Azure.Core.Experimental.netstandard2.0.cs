@@ -95,11 +95,11 @@ namespace Azure.Core
         public System.Threading.Tasks.Task<long> WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
 }
-namespace Azure.Core.Experimental
+namespace Azure.Core.Pipeline
 {
     public static partial class HttpPipelineExtensions
     {
-        public static Azure.Core.HttpMessage CreateMessage(this Azure.Core.Pipeline.HttpPipeline pipeline, Azure.RequestOptions options) { throw null; }
+        public static Azure.Core.HttpMessage CreateMessage(this Azure.Core.Pipeline.HttpPipeline pipeline, Azure.RequestOptions? options) { throw null; }
     }
 }
 namespace Azure.Messaging
