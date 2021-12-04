@@ -4,6 +4,7 @@
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
@@ -28,7 +29,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         {
             try
             {
-                if (request?.Headers.TryGetValue(AuthHeaderName, out var authHeader) == true)
+                var authHeader = default(StringValues);
+                if (request?.Headers.TryGetValue(AuthHeaderName, out authHeader) == true)
                 {
                     var authHeaderValue = authHeader.ToString();
                     if (authHeaderValue.StartsWith(BearerPrefix, StringComparison.OrdinalIgnoreCase))
