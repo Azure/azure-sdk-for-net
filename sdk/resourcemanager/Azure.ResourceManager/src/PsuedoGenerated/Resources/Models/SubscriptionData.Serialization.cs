@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new SubscriptionData(id.Value, subscriptionId.Value, displayName.Value, tenantId.Value, Optional.ToNullable(state), subscriptionPolicies.Value, authorizationSource.Value, Optional.ToList(managedByTenants), Optional.ToDictionary(tags));
+            return new SubscriptionData(id.Value, displayName.Value, subscriptionId.Value, tenantId.Value, Optional.ToNullable(state), subscriptionPolicies.Value, authorizationSource.Value, Optional.ToList(managedByTenants), Optional.ToDictionary(tags));
         }
     }
 }
