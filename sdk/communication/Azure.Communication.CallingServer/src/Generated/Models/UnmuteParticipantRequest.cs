@@ -10,7 +10,7 @@ using Azure.Communication;
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The request payload for unmuting any participant. </summary>
+    /// <summary> The request payload to unmute a participant. </summary>
     internal partial class UnmuteParticipantRequest
     {
         /// <summary> Initializes a new instance of UnmuteParticipantRequest. </summary>

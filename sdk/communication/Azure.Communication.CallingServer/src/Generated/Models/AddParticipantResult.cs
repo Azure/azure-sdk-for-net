@@ -11,18 +11,32 @@ namespace Azure.Communication.CallingServer
     public partial class AddParticipantResult
     {
         /// <summary> Initializes a new instance of AddParticipantResult. </summary>
-        internal AddParticipantResult()
+        /// <param name="status"> The status of the operation. </param>
+        internal AddParticipantResult(CallingOperationStatus status)
         {
+            Status = status;
         }
 
         /// <summary> Initializes a new instance of AddParticipantResult. </summary>
-        /// <param name="participantId"> The id of the added participant. </param>
-        internal AddParticipantResult(string participantId)
+        /// <param name="operationId"> The operation id. </param>
+        /// <param name="status"> The status of the operation. </param>
+        /// <param name="operationContext"> The operation context provided by client. </param>
+        /// <param name="resultDetails"> The result info for the operation. </param>
+        internal AddParticipantResult(string operationId, CallingOperationStatus status, string operationContext, CallingOperationResultDetails resultDetails)
         {
-            ParticipantId = participantId;
+            OperationId = operationId;
+            Status = status;
+            OperationContext = operationContext;
+            ResultDetails = resultDetails;
         }
 
-        /// <summary> The id of the added participant. </summary>
-        public string ParticipantId { get; }
+        /// <summary> The operation id. </summary>
+        public string OperationId { get; }
+        /// <summary> The status of the operation. </summary>
+        public CallingOperationStatus Status { get; }
+        /// <summary> The operation context provided by client. </summary>
+        public string OperationContext { get; }
+        /// <summary> The result info for the operation. </summary>
+        public CallingOperationResultDetails ResultDetails { get; }
     }
 }

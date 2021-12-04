@@ -30,8 +30,15 @@ namespace Azure.Communication.CallingServer.Tests
                                                 "}";
 
         private const string AddParticipantResultPayload = "{" +
-                                                                "\"participantId\": \"dummyparticipantid\"" +
-                                                            "}";
+                                                "\"operationId\": \"dummyId\"," +
+                                                "\"status\": \"running\"," +
+                                                "\"operationContext\": \"dummyOperationContext\"," +
+                                                "\"resultDetails\": {" +
+                                                "\"code\": 200," +
+                                                "\"subcode\": 200," +
+                                                "\"message\": \"dummyMessage\"" +
+                                                  "}" +
+                                                "}";
 
         private const string TransferCallResultPayload = "{" +
                                                 "\"operationId\": \"dummyId\"," +
@@ -90,7 +97,6 @@ namespace Azure.Communication.CallingServer.Tests
                                                                 "\"id\": \"0000000d-5a5f-2db9-ccd7-44482200049a\"" +
                                                             "}" +
                                                     "}," +
-                                                    "\"participantId\": \"dummyParticipantId\"," +
                                                     "\"isMuted\": false" +
                                                 "}," +
                                                 "{" +
@@ -100,7 +106,6 @@ namespace Azure.Communication.CallingServer.Tests
                                                                 "\"value\": \"+1555123456\"" +
                                                             "}" +
                                                     "}," +
-                                                    "\"participantId\": \"dummyParticipantId1\"," +
                                                     "\"isMuted\": false" +
                                                 "}" +
                                                 "]";
@@ -113,7 +118,6 @@ namespace Azure.Communication.CallingServer.Tests
                                                                 "\"id\": \"0000000d-5a5f-2db9-ccd7-44482200049a\"" +
                                                             "}" +
                                                     "}," +
-                                                    "\"participantId\": \"dummyParticipantId\"," +
                                                     "\"isMuted\": false" +
                                                 "}";
 
@@ -630,7 +634,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             var response = await callConnection.AddParticipantAsync(participant, alternateCallerId, operationContext).ConfigureAwait(false);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
-            Assert.AreEqual("dummyparticipantid", response.Value.ParticipantId);
+            Assert.AreEqual("dummyId", response.Value.OperationId);
         }
 
         [TestCaseSource(nameof(TestData_AddParticipant))]
@@ -640,7 +644,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             var response = callConnection.AddParticipant(participant, alternateCallerId, operationContext);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
-            Assert.AreEqual("dummyparticipantid", response.Value.ParticipantId);
+            Assert.AreEqual("dummyId", response.Value.OperationId);
         }
 
         [TestCaseSource(nameof(TestData_AddParticipant))]
