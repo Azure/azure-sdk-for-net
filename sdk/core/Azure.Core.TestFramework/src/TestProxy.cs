@@ -168,8 +168,10 @@ namespace Azure.Core.TestFramework
             };
 
             Process checkCertProcess = Process.Start(checkCertProcessInfo);
-            var stdout = checkCertProcess.StandardOutput.ReadLine();
-            if (!"A valid certificate was found.".Equals(stdout, StringComparison.CurrentCultureIgnoreCase))
+            string output = checkCertProcess.StandardOutput.ReadToEnd();
+            if (!output.Contains("A valid certificate was found.") &&
+                // .NET 6.0 SDK has a different output
+                !output.Contains("CN=localhost"))
             {
                 TestContext.Progress.WriteLine("Importing certificate...");
                 checkCertProcess.WaitForExit();

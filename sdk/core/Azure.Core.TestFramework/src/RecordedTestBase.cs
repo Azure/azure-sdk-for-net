@@ -66,8 +66,11 @@ namespace Azure.Core.TestFramework
         private TestProxy _proxy;
 
         private readonly bool _useLegacyTransport;
+        private DateTime _testStartTime;
 
         protected bool ValidateClientInstrumentation { get; set; }
+
+        protected override DateTime TestStartTime => _testStartTime;
 
         protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null, bool useLegacyTransport = false) : base(isAsync)
         {
@@ -172,6 +175,9 @@ namespace Azure.Core.TestFramework
         [SetUp]
         public virtual async Task StartTestRecordingAsync()
         {
+            // initialize test start time in case test is skipped
+            _testStartTime = DateTime.UtcNow;
+
             // Only create test recordings for the latest version of the service
             TestContext.TestAdapter test = TestContext.CurrentContext.Test;
             if (Mode != RecordedTestMode.Live &&
@@ -188,6 +194,9 @@ namespace Azure.Core.TestFramework
 
             Recording = await CreateTestRecordingAsync(Mode, GetSessionFilePath(), Sanitizer, Matcher);
             ValidateClientInstrumentation = Recording.HasRequests;
+
+            // don't include test proxy overhead as part of test time
+            _testStartTime = DateTime.UtcNow;
         }
 
         [TearDown]
