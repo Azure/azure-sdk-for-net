@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Tests
             var ipLro = await rg.GetPublicIPAddresses().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("ip-"), ipData);
             _publicIPAddressIdentifier = ipLro.Value.Id;
             _bastionName = SessionRecording.GenerateAssetName("bastion-");
-            StopSessionRecording();
+            await StopSessionRecordingAsync();
         }
 
         [SetUp]

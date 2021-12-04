@@ -58,7 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             }
         }
 
-        public SqlScriptClientLiveTests(bool isAsync) : base(isAsync)
+        public SqlScriptClientLiveTests(bool isAsync) : base(isAsync, useLegacyTransport: true)
         {
         }
 

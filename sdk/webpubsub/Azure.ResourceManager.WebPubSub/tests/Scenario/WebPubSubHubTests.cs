@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("WebPubSubRG-"), new ResourceGroupData(Location.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
-            StopSessionRecording();
+            await StopSessionRecordingAsync();
         }
 
         [SetUp]

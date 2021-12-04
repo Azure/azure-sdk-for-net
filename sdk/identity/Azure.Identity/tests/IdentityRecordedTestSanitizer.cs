@@ -13,6 +13,12 @@ namespace Azure.Identity.Tests
 {
     public class IdentityRecordedTestSanitizer : RecordedTestSanitizer
     {
+        public IdentityRecordedTestSanitizer()
+        {
+            AddJsonPathSanitizer("$..refresh_token");
+            AddJsonPathSanitizer("$..access_token");
+        }
+
         public override void Sanitize(RecordEntry entry)
         {
             if (entry.RequestUri.Split('?')[0].EndsWith("/token"))

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Tests
             await mgmtOp.WaitForCompletionAsync();
             _mgmtGroup = mgmtOp.Value;
             _mgmtGroup = await _mgmtGroup.GetAsync();
-            StopSessionRecording();
+            await StopSessionRecordingAsync();
         }
 
         [RecordedTest]
