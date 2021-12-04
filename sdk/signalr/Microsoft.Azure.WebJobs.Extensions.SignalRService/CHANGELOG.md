@@ -7,4 +7,5 @@
 
 ### Bugs Fixed
 * Fixed the bug that the function host could not be shutdown locally on Functions V3 runtime.
+* Fixed the package restoring issue on .NET 5 and above.
 
