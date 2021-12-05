@@ -148,7 +148,7 @@ namespace Azure.Messaging.ServiceBus
                 {
                     Exception activeEx = AmqpExceptionHelper.TranslateException(ex);
 
-                    if (ex is ServiceBusException sbException && sbException.Reason == ServiceBusFailureReason.ServiceBusy)
+                    if (activeEx is ServiceBusException { Reason: ServiceBusFailureReason.ServiceBusy })
                     {
                         SetServerBusy(activeEx.Message);
                     }
