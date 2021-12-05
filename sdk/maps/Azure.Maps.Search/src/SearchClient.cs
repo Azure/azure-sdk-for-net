@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Maps.Search.Models;
+using System.Linq;
 
 namespace Azure.Maps.Search
 {
@@ -759,7 +760,7 @@ namespace Azure.Maps.Search
             scope.Start();
             try
             {
-                return await RestClient.SearchAddressAsync(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CountryFilter, options?.Coordinates.Lat, options?.Coordinates.Lon, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.TopLeft.ToString() : null, options?.BoundingBox != null ? options.BoundingBox.BottomRight.ToString() : null, options?.Language, options?.ExtendedPostalCodesFor, options?.EntityType, options?.LocalizedMapView, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SearchAddressAsync(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CountryFilter, options?.Coordinates?.Lat, options?.Coordinates?.Lon, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.TopLeft.ToString() : null, options?.BoundingBox != null ? options.BoundingBox.BottomRight.ToString() : null, options?.Language, options?.ExtendedPostalCodesFor, options?.EntityType, options?.LocalizedMapView, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -785,7 +786,7 @@ namespace Azure.Maps.Search
             scope.Start();
             try
             {
-                return RestClient.SearchAddress(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CountryFilter, options?.Coordinates.Lat, options?.Coordinates.Lon, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.TopLeft.ToString() : null, options?.BoundingBox != null ? options.BoundingBox.BottomRight.ToString() : null, options?.Language, options?.ExtendedPostalCodesFor, options?.EntityType, options?.LocalizedMapView, cancellationToken);
+                return RestClient.SearchAddress(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CountryFilter, options?.Coordinates?.Lat, options?.Coordinates?.Lon, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.TopLeft.ToString() : null, options?.BoundingBox != null ? options.BoundingBox.BottomRight.ToString() : null, options?.Language, options?.ExtendedPostalCodesFor, options?.EntityType, options?.LocalizedMapView, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1300,15 +1301,15 @@ namespace Azure.Maps.Search
         /// }
         /// ```
         /// </summary>
-        /// <param name="batchRequest"> The list of search fuzzy queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
+        /// <param name="queries"> The list of search fuzzy queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressBatchResult>> FuzzySearchBatchSyncAsync(BatchRequest batchRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressBatchResult>> FuzzySearchBatchAsync(IEnumerable<FuzzySearchQuery> queries, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.FuzzySearchBatchSync");
             scope.Start();
             try
             {
-                return await RestClient.FuzzySearchBatchSyncAsync(batchRequest, JsonFormat.Json, cancellationToken).ConfigureAwait(false);
+                return await RestClient.FuzzySearchBatchSyncAsync(BatchRequest<FuzzySearchQuery>.withQueries(queries).internalRepresentation(this), JsonFormat.Json, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1469,15 +1470,15 @@ namespace Azure.Maps.Search
         /// }
         /// ```
         /// </summary>
-        /// <param name="batchRequest"> The list of search fuzzy queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
+        /// <param name="queries"> The list of search fuzzy queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressBatchResult> FuzzySearchBatchSync(BatchRequest batchRequest, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressBatchResult> FuzzySearchBatch(IEnumerable<FuzzySearchQuery> queries, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.FuzzySearchBatchSync");
             scope.Start();
             try
             {
-                return RestClient.FuzzySearchBatchSync(batchRequest, JsonFormat.Json, cancellationToken);
+                return RestClient.FuzzySearchBatchSync(BatchRequest<FuzzySearchQuery>.withQueries(queries).internalRepresentation(this), JsonFormat.Json, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1630,15 +1631,15 @@ namespace Azure.Maps.Search
         /// }
         /// ```
         /// </summary>
-        /// <param name="batchRequest"> The list of address geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
+        /// <param name="queries"> The list of address geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressBatchResult>> SearchAddressBatchSyncAsync(BatchRequest batchRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressBatchResult>> SearchAddressBatchAsync(IEnumerable<SearchAddressQuery> queries, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchAddressBatchSync");
             scope.Start();
             try
             {
-                return await RestClient.SearchAddressBatchSyncAsync(batchRequest, JsonFormat.Json, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SearchAddressBatchSyncAsync(BatchRequest<SearchAddressQuery>.withQueries(queries).internalRepresentation(this), JsonFormat.Json, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1791,16 +1792,15 @@ namespace Azure.Maps.Search
         /// }
         /// ```
         /// </summary>
-        /// <param name="batchRequest"> The list of address geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
-
+        /// <param name="queries"> The list of address geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressBatchResult> SearchAddressBatchSync(BatchRequest batchRequest, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressBatchResult> SearchAddressBatch(IEnumerable<SearchAddressQuery> queries, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchAddressBatchSync");
             scope.Start();
             try
             {
-                return RestClient.SearchAddressBatchSync(batchRequest, JsonFormat.Json, cancellationToken);
+                return RestClient.SearchAddressBatchSync(BatchRequest<SearchAddressQuery>.withQueries(queries).internalRepresentation(this), JsonFormat.Json, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1955,16 +1955,15 @@ namespace Azure.Maps.Search
         /// }
         /// ```
         /// </summary>
-        /// <param name="batchRequest"> The list of reverse geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
-
+        /// <param name="queries"> The list of reverse geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ReverseSearchAddressBatchProcessResult>> ReverseSearchAddressBatchSyncAsync(BatchRequest batchRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReverseSearchAddressBatchProcessResult>> ReverseSearchAddressBatchAsync(IEnumerable<ReverseSearchAddressQuery> queries, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.ReverseSearchAddressBatchSync");
             scope.Start();
             try
             {
-                return await RestClient.ReverseSearchAddressBatchSyncAsync(batchRequest, JsonFormat.Json, cancellationToken).ConfigureAwait(false);
+                return await RestClient.ReverseSearchAddressBatchSyncAsync(BatchRequest<ReverseSearchAddressQuery>.withQueries(queries).internalRepresentation(this), JsonFormat.Json, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2119,16 +2118,15 @@ namespace Azure.Maps.Search
         /// }
         /// ```
         /// </summary>
-        /// <param name="batchRequest"> The list of reverse geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
-
+        /// <param name="queries"> The list of reverse geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ReverseSearchAddressBatchProcessResult> ReverseSearchAddressBatchSync(BatchRequest batchRequest, CancellationToken cancellationToken = default)
+        public virtual Response<ReverseSearchAddressBatchProcessResult> ReverseSearchAddressBatch(IEnumerable<ReverseSearchAddressQuery> queries, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.ReverseSearchAddressBatchSync");
             scope.Start();
             try
             {
-                return RestClient.ReverseSearchAddressBatchSync(batchRequest, JsonFormat.Json, cancellationToken);
+                return RestClient.ReverseSearchAddressBatchSync(BatchRequest<ReverseSearchAddressQuery>.withQueries(queries).internalRepresentation(this), JsonFormat.Json, cancellationToken);
             }
             catch (Exception e)
             {
@@ -2289,21 +2287,21 @@ namespace Azure.Maps.Search
         /// }
         /// ```
         /// </summary>
-        /// <param name="batchRequest"> The list of search fuzzy queries/requests to process. The list can contain a max of 10,000 queries and must contain at least 1 query. </param>
-
+        /// <param name="queries"> The list of search fuzzy queries/requests to process. The list can contain a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public virtual async Task<SearchFuzzySearchBatchOperation> StartFuzzySearchBatchAsync(BatchRequest batchRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queries"/> is null. </exception>
+        public virtual async Task<SearchFuzzySearchBatchOperation> StartFuzzySearchBatchAsync(IEnumerable<FuzzySearchQuery> queries, CancellationToken cancellationToken = default)
         {
-            if (batchRequest == null)
+            if (queries == null)
             {
-                throw new ArgumentNullException(nameof(batchRequest));
+                throw new ArgumentNullException(nameof(queries));
             }
             
             using var scope = _clientDiagnostics.CreateScope("SearchClient.StartFuzzySearchBatch");
             scope.Start();
             try
             {
+                var batchRequest = BatchRequest<FuzzySearchQuery>.withQueries(queries).internalRepresentation(this);
                 var originalResponse = await RestClient.FuzzySearchBatchAsync(batchRequest, JsonFormat.Json, cancellationToken).ConfigureAwait(false);
                 return new SearchFuzzySearchBatchOperation(_clientDiagnostics, _pipeline, RestClient.CreateFuzzySearchBatchRequest(batchRequest, JsonFormat.Json).Request, originalResponse);
             }
@@ -2466,21 +2464,21 @@ namespace Azure.Maps.Search
         /// }
         /// ```
         /// </summary>
-        /// <param name="batchRequest"> The list of search fuzzy queries/requests to process. The list can contain a max of 10,000 queries and must contain at least 1 query. </param>
-
+        /// <param name="queries"> The list of search fuzzy queries/requests to process. The list can contain a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public virtual SearchFuzzySearchBatchOperation StartFuzzySearchBatch(BatchRequest batchRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queries"/> is null. </exception>
+        public virtual SearchFuzzySearchBatchOperation StartFuzzySearchBatch(IEnumerable<FuzzySearchQuery> queries, CancellationToken cancellationToken = default)
         {
-            if (batchRequest == null)
+            if (queries == null)
             {
-                throw new ArgumentNullException(nameof(batchRequest));
+                throw new ArgumentNullException(nameof(queries));
             }
             
             using var scope = _clientDiagnostics.CreateScope("SearchClient.StartFuzzySearchBatch");
             scope.Start();
             try
             {
+                var batchRequest = BatchRequest<FuzzySearchQuery>.withQueries(queries).internalRepresentation(this);
                 var originalResponse = RestClient.FuzzySearchBatch(batchRequest, JsonFormat.Json, cancellationToken);
                 return new SearchFuzzySearchBatchOperation(_clientDiagnostics, _pipeline, RestClient.CreateFuzzySearchBatchRequest(batchRequest, JsonFormat.Json).Request, originalResponse);
             }
@@ -2987,23 +2985,24 @@ namespace Azure.Maps.Search
         /// }
         /// ```
         /// </summary>
-        /// <param name="batchRequest"> The list of address geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
+        /// <param name="queries"> The list of address geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public virtual async Task<SearchSearchAddressBatchOperation> StartSearchAddressBatchAsync(BatchRequest batchRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queries"/> is null. </exception>
+        public virtual async Task<SearchAddressBatchOperation> StartSearchAddressBatchAsync(IEnumerable<SearchAddressQuery> queries, CancellationToken cancellationToken = default)
         {
-            if (batchRequest == null)
+            if (queries == null)
             {
-                throw new ArgumentNullException(nameof(batchRequest));
+                throw new ArgumentNullException(nameof(queries));
             }
             
             using var scope = _clientDiagnostics.CreateScope("SearchClient.StartSearchAddressBatch");
             scope.Start();
             try
             {
+                var batchRequest = BatchRequest<SearchAddressQuery>.withQueries(queries).internalRepresentation(this);
                 var originalResponse = await RestClient.SearchAddressBatchAsync(batchRequest, JsonFormat.Json, cancellationToken).ConfigureAwait(false);
-                return new SearchSearchAddressBatchOperation(_clientDiagnostics, _pipeline, RestClient.CreateSearchAddressBatchRequest(batchRequest, JsonFormat.Json).Request, originalResponse);
+                return new SearchAddressBatchOperation(_clientDiagnostics, _pipeline, RestClient.CreateSearchAddressBatchRequest(batchRequest, JsonFormat.Json).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -3156,23 +3155,23 @@ namespace Azure.Maps.Search
         /// }
         /// ```
         /// </summary>
-        /// <param name="batchRequest"> The list of address geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
-
+        /// <param name="queries"> The list of address geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public virtual SearchSearchAddressBatchOperation StartSearchAddressBatch(BatchRequest batchRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queries"/> is null. </exception>
+        public virtual SearchAddressBatchOperation StartSearchAddressBatch(IEnumerable<SearchAddressQuery> queries, CancellationToken cancellationToken = default)
         {
-            if (batchRequest == null)
+            if (queries == null)
             {
-                throw new ArgumentNullException(nameof(batchRequest));
+                throw new ArgumentNullException(nameof(queries));
             }
             
             using var scope = _clientDiagnostics.CreateScope("SearchClient.StartSearchAddressBatch");
             scope.Start();
             try
-            {
+            {   
+                var batchRequest = BatchRequest<SearchAddressQuery>.withQueries(queries).internalRepresentation(this);
                 var originalResponse = RestClient.SearchAddressBatch(batchRequest, JsonFormat.Json, cancellationToken);
-                return new SearchSearchAddressBatchOperation(_clientDiagnostics, _pipeline, RestClient.CreateSearchAddressBatchRequest(batchRequest, JsonFormat.Json).Request, originalResponse);
+                return new SearchAddressBatchOperation(_clientDiagnostics, _pipeline, RestClient.CreateSearchAddressBatchRequest(batchRequest, JsonFormat.Json).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -3663,23 +3662,23 @@ namespace Azure.Maps.Search
         /// }
         /// ```
         /// </summary>
-        /// <param name="batchRequest"> The list of reverse geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
-
+        /// <param name="queries"> The list of reverse geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public virtual async Task<SearchReverseSearchAddressBatchOperation> StartReverseSearchAddressBatchAsync(BatchRequest batchRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queries"/> is null. </exception>
+        public virtual async Task<SearchReverseSearchAddressBatchOperation> StartReverseSearchAddressBatchAsync(IEnumerable<ReverseSearchAddressQuery> queries, CancellationToken cancellationToken = default)
         {
-            if (batchRequest == null)
+            if (queries == null)
             {
-                throw new ArgumentNullException(nameof(batchRequest));
+                throw new ArgumentNullException(nameof(queries));
             }
             
             using var scope = _clientDiagnostics.CreateScope("SearchClient.StartReverseSearchAddressBatch");
             scope.Start();
             try
-            {
-                var originalResponse = await RestClient.ReverseSearchAddressBatchAsync(batchRequest, JsonFormat.Json, cancellationToken).ConfigureAwait(false);
-                return new SearchReverseSearchAddressBatchOperation(_clientDiagnostics, _pipeline, RestClient.CreateReverseSearchAddressBatchRequest(batchRequest, JsonFormat.Json).Request, originalResponse);
+            {   
+                var batchQuery = BatchRequest<ReverseSearchAddressQuery>.withQueries(queries).internalRepresentation(this);
+                var originalResponse = await RestClient.ReverseSearchAddressBatchAsync(batchQuery, JsonFormat.Json, cancellationToken).ConfigureAwait(false);
+                return new SearchReverseSearchAddressBatchOperation(_clientDiagnostics, _pipeline, RestClient.CreateReverseSearchAddressBatchRequest(batchQuery, JsonFormat.Json).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -3834,21 +3833,21 @@ namespace Azure.Maps.Search
         /// }
         /// ```
         /// </summary>
-        /// <param name="batchRequest"> The list of reverse geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
-
+        /// <param name="queries"> The list of reverse geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public virtual SearchReverseSearchAddressBatchOperation StartReverseSearchAddressBatch(BatchRequest batchRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queries"/> is null. </exception>
+        public virtual SearchReverseSearchAddressBatchOperation StartReverseSearchAddressBatch(IEnumerable<ReverseSearchAddressQuery> queries, CancellationToken cancellationToken = default)
         {
-            if (batchRequest == null)
+            if (queries == null)
             {
-                throw new ArgumentNullException(nameof(batchRequest));
+                throw new ArgumentNullException(nameof(queries));
             }
             
             using var scope = _clientDiagnostics.CreateScope("SearchClient.StartReverseSearchAddressBatch");
             scope.Start();
             try
             {
+                var batchRequest = BatchRequest<ReverseSearchAddressQuery>.withQueries(queries).internalRepresentation(this);
                 var originalResponse = RestClient.ReverseSearchAddressBatch(batchRequest, JsonFormat.Json, cancellationToken);
                 return new SearchReverseSearchAddressBatchOperation(_clientDiagnostics, _pipeline, RestClient.CreateReverseSearchAddressBatchRequest(batchRequest, JsonFormat.Json).Request, originalResponse);
             }

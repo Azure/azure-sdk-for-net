@@ -8,10 +8,10 @@
 namespace Azure.Maps.Search.Models
 {
     /// <summary> Batch request object. </summary>
-    public partial class BatchRequestItem
+    internal partial class BatchRequestItemInternal
     {
-        /// <summary> Initializes a new instance of BatchRequestItem. </summary>
-        public BatchRequestItem()
+        /// <summary> Initializes a new instance of BatchRequestItemInternal. </summary>
+        public BatchRequestItemInternal()
         {
         }
 

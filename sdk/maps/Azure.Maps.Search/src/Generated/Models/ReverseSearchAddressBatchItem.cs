@@ -22,8 +22,5 @@ namespace Azure.Maps.Search.Models
         {
             Response = response;
         }
-
-        /// <summary> The result of the query. SearchAddressReverseResponse if the query completed successfully, ErrorResponse otherwise. </summary>
-        public ReverseSearchAddressBatchItemResponse Response { get; }
     }
 }

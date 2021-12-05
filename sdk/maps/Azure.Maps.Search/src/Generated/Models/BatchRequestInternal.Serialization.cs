@@ -10,15 +10,20 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class BatchRequestItem : IUtf8JsonSerializable
+    internal partial class BatchRequestInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Query))
+            if (Optional.IsCollectionDefined(BatchItems))
             {
-                writer.WritePropertyName("query");
-                writer.WriteStringValue(Query);
+                writer.WritePropertyName("batchItems");
+                writer.WriteStartArray();
+                foreach (var item in BatchItems)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }

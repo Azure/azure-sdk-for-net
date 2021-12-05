@@ -160,16 +160,16 @@ namespace Azure.Maps.Search
     /// }
     /// ```
     /// </summary>
-    public partial class SearchSearchAddressBatchOperation : Operation<SearchAddressBatchResult>, IOperationSource<SearchAddressBatchResult>
+    public partial class SearchAddressBatchOperation : Operation<SearchAddressBatchResult>, IOperationSource<SearchAddressBatchResult>
     {
         private readonly OperationInternals<SearchAddressBatchResult> _operation;
 
         /// <summary> Initializes a new instance of SearchSearchAddressBatchOperation for mocking. </summary>
-        protected SearchSearchAddressBatchOperation()
+        protected SearchAddressBatchOperation()
         {
         }
 
-        internal SearchSearchAddressBatchOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal SearchAddressBatchOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<SearchAddressBatchResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SearchSearchAddressBatchOperation");
         }

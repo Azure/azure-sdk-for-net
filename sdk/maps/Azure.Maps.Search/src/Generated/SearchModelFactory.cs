@@ -331,17 +331,6 @@ namespace Azure.Maps.Search.Models
             return new ReverseSearchAddressResultItem(address, position, roadUse?.ToList(), matchType);
         }
 
-        /// <summary> Initializes a new instance of ReverseSearchCrossStreetAddressResult. </summary>
-        /// <param name="summary"> Summary object for a Search Address Reverse Cross Street response. </param>
-        /// <param name="addresses"> Addresses array. </param>
-        /// <returns> A new <see cref="Models.ReverseSearchCrossStreetAddressResult"/> instance for mocking. </returns>
-        public static ReverseSearchCrossStreetAddressResult ReverseSearchCrossStreetAddressResult(SearchSummary summary = null, IEnumerable<ReverseSearchCrossStreetAddressResultItem> addresses = null)
-        {
-            addresses ??= new List<ReverseSearchCrossStreetAddressResultItem>();
-
-            return new ReverseSearchCrossStreetAddressResult(summary, addresses?.ToList());
-        }
-
         /// <summary> Initializes a new instance of ReverseSearchCrossStreetAddressResultItem. </summary>
         /// <param name="address"> The address of the result. </param>
         /// <param name="position"> Position property in the form of &quot;{latitude},{longitude}&quot;. </param>
@@ -360,15 +349,6 @@ namespace Azure.Maps.Search.Models
             batchItems ??= new List<SearchAddressBatchItem>();
 
             return new SearchAddressBatchResult(batchSummary, batchItems?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of SearchAddressBatchItem. </summary>
-        /// <param name="statusCode"> HTTP request status code. </param>
-        /// <param name="response"> The result of the query. SearchAddressResponse if the query completed successfully, ErrorResponse otherwise. </param>
-        /// <returns> A new <see cref="Models.SearchAddressBatchItem"/> instance for mocking. </returns>
-        public static SearchAddressBatchItem SearchAddressBatchItem(int? statusCode = null, SearchAddressBatchItemResponse response = null)
-        {
-            return new SearchAddressBatchItem(statusCode, response);
         }
 
         /// <summary> Initializes a new instance of SearchAddressBatchItemResponse. </summary>
@@ -391,14 +371,6 @@ namespace Azure.Maps.Search.Models
             return new BatchResultItem(statusCode);
         }
 
-        /// <summary> Initializes a new instance of BatchResult. </summary>
-        /// <param name="batchSummary"> Summary of the results for the batch request. </param>
-        /// <returns> A new <see cref="Models.BatchResult"/> instance for mocking. </returns>
-        public static BatchResult BatchResult(BatchResultSummary batchSummary = null)
-        {
-            return new BatchResult(batchSummary);
-        }
-
         /// <summary> Initializes a new instance of BatchResultSummary. </summary>
         /// <param name="successfulRequests"> Number of successful requests in the batch. </param>
         /// <param name="totalRequests"> Total number of requests in the batch. </param>
@@ -417,15 +389,6 @@ namespace Azure.Maps.Search.Models
             batchItems ??= new List<ReverseSearchAddressBatchItem>();
 
             return new ReverseSearchAddressBatchProcessResult(batchSummary, batchItems?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ReverseSearchAddressBatchItem. </summary>
-        /// <param name="statusCode"> HTTP request status code. </param>
-        /// <param name="response"> The result of the query. SearchAddressReverseResponse if the query completed successfully, ErrorResponse otherwise. </param>
-        /// <returns> A new <see cref="Models.ReverseSearchAddressBatchItem"/> instance for mocking. </returns>
-        public static ReverseSearchAddressBatchItem ReverseSearchAddressBatchItem(int? statusCode = null, ReverseSearchAddressBatchItemResponse response = null)
-        {
-            return new ReverseSearchAddressBatchItem(statusCode, response);
         }
 
         /// <summary> Initializes a new instance of ReverseSearchAddressBatchItemResponse. </summary>

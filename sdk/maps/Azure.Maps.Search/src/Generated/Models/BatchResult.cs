@@ -21,8 +21,5 @@ namespace Azure.Maps.Search.Models
         {
             BatchSummary = batchSummary;
         }
-
-        /// <summary> Summary of the results for the batch request. </summary>
-        public BatchResultSummary BatchSummary { get; }
     }
 }
