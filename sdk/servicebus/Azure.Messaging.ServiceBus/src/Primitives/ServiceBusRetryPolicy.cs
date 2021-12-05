@@ -148,6 +148,11 @@ namespace Azure.Messaging.ServiceBus
                 {
                     Exception activeEx = AmqpExceptionHelper.TranslateException(ex);
 
+                    if (ex is ServiceBusException sbException && sbException.Reason == ServiceBusFailureReason.ServiceBusy)
+                    {
+                        SetServerBusy(activeEx.Message);
+                    }
+
                     // Determine if there should be a retry for the next attempt; if so enforce the delay but do not quit the loop.
                     // Otherwise, throw the translated exception.
 
