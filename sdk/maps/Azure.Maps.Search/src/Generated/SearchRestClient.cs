@@ -2970,7 +2970,7 @@ namespace Azure.Maps.Search
             }
         }
 
-        internal HttpMessage CreateFuzzySearchBatchSyncRequest(BatchRequest batchRequest, JsonFormat? format)
+        internal HttpMessage CreateFuzzySearchBatchSyncRequest(BatchRequestInternal batchRequest, JsonFormat? format)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -3149,7 +3149,7 @@ namespace Azure.Maps.Search
         /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public async Task<Response<SearchAddressBatchResult>> FuzzySearchBatchSyncAsync(BatchRequest batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchAddressBatchResult>> FuzzySearchBatchSyncAsync(BatchRequestInternal batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
@@ -3329,7 +3329,7 @@ namespace Azure.Maps.Search
         /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public Response<SearchAddressBatchResult> FuzzySearchBatchSync(BatchRequest batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public Response<SearchAddressBatchResult> FuzzySearchBatchSync(BatchRequestInternal batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
@@ -3353,7 +3353,7 @@ namespace Azure.Maps.Search
             }
         }
 
-        internal HttpMessage CreateFuzzySearchBatchRequest(BatchRequest batchRequest, JsonFormat? format)
+        internal HttpMessage CreateFuzzySearchBatchRequest(BatchRequestInternal batchRequest, JsonFormat? format)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -3532,7 +3532,7 @@ namespace Azure.Maps.Search
         /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public async Task<ResponseWithHeaders<SearchFuzzySearchBatchHeaders>> FuzzySearchBatchAsync(BatchRequest batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<SearchFuzzySearchBatchHeaders>> FuzzySearchBatchAsync(BatchRequestInternal batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
@@ -3709,7 +3709,7 @@ namespace Azure.Maps.Search
         /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public ResponseWithHeaders<SearchFuzzySearchBatchHeaders> FuzzySearchBatch(BatchRequest batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<SearchFuzzySearchBatchHeaders> FuzzySearchBatch(BatchRequestInternal batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
@@ -4099,7 +4099,7 @@ namespace Azure.Maps.Search
             }
         }
 
-        internal HttpMessage CreateSearchAddressBatchSyncRequest(BatchRequest batchRequest, JsonFormat? format)
+        internal HttpMessage CreateSearchAddressBatchSyncRequest(BatchRequestInternal batchRequest, JsonFormat? format)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -4270,7 +4270,7 @@ namespace Azure.Maps.Search
         /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public async Task<Response<SearchAddressBatchResult>> SearchAddressBatchSyncAsync(BatchRequest batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchAddressBatchResult>> SearchAddressBatchSyncAsync(BatchRequestInternal batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
@@ -4442,7 +4442,7 @@ namespace Azure.Maps.Search
         /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public Response<SearchAddressBatchResult> SearchAddressBatchSync(BatchRequest batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public Response<SearchAddressBatchResult> SearchAddressBatchSync(BatchRequestInternal batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
@@ -4466,7 +4466,7 @@ namespace Azure.Maps.Search
             }
         }
 
-        internal HttpMessage CreateSearchAddressBatchRequest(BatchRequest batchRequest, JsonFormat? format)
+        internal HttpMessage CreateSearchAddressBatchRequest(BatchRequestInternal batchRequest, JsonFormat? format)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -4637,7 +4637,7 @@ namespace Azure.Maps.Search
         /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public async Task<ResponseWithHeaders<SearchSearchAddressBatchHeaders>> SearchAddressBatchAsync(BatchRequest batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<SearchSearchAddressBatchHeaders>> SearchAddressBatchAsync(BatchRequestInternal batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
@@ -4806,7 +4806,7 @@ namespace Azure.Maps.Search
         /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public ResponseWithHeaders<SearchSearchAddressBatchHeaders> SearchAddressBatch(BatchRequest batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<SearchSearchAddressBatchHeaders> SearchAddressBatch(BatchRequestInternal batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
@@ -5180,7 +5180,7 @@ namespace Azure.Maps.Search
             }
         }
 
-        internal HttpMessage CreateReverseSearchAddressBatchSyncRequest(BatchRequest batchRequest, JsonFormat? format)
+        internal HttpMessage CreateReverseSearchAddressBatchSyncRequest(BatchRequestInternal batchRequest, JsonFormat? format)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -5353,7 +5353,7 @@ namespace Azure.Maps.Search
         /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public async Task<Response<ReverseSearchAddressBatchProcessResult>> ReverseSearchAddressBatchSyncAsync(BatchRequest batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public async Task<Response<ReverseSearchAddressBatchProcessResult>> ReverseSearchAddressBatchSyncAsync(BatchRequestInternal batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
@@ -5527,7 +5527,7 @@ namespace Azure.Maps.Search
         /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public Response<ReverseSearchAddressBatchProcessResult> ReverseSearchAddressBatchSync(BatchRequest batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public Response<ReverseSearchAddressBatchProcessResult> ReverseSearchAddressBatchSync(BatchRequestInternal batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
@@ -5551,7 +5551,7 @@ namespace Azure.Maps.Search
             }
         }
 
-        internal HttpMessage CreateReverseSearchAddressBatchRequest(BatchRequest batchRequest, JsonFormat? format)
+        internal HttpMessage CreateReverseSearchAddressBatchRequest(BatchRequestInternal batchRequest, JsonFormat? format)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -5724,7 +5724,7 @@ namespace Azure.Maps.Search
         /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public async Task<ResponseWithHeaders<SearchReverseSearchAddressBatchHeaders>> ReverseSearchAddressBatchAsync(BatchRequest batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<SearchReverseSearchAddressBatchHeaders>> ReverseSearchAddressBatchAsync(BatchRequestInternal batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
@@ -5895,7 +5895,7 @@ namespace Azure.Maps.Search
         /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public ResponseWithHeaders<SearchReverseSearchAddressBatchHeaders> ReverseSearchAddressBatch(BatchRequest batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<SearchReverseSearchAddressBatchHeaders> ReverseSearchAddressBatch(BatchRequestInternal batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {

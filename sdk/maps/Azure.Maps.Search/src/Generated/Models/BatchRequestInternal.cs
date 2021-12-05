@@ -11,15 +11,15 @@ using Azure.Core;
 namespace Azure.Maps.Search.Models
 {
     /// <summary> This type represents the request body for the Batch service. </summary>
-    public partial class BatchRequest
+    internal partial class BatchRequestInternal
     {
-        /// <summary> Initializes a new instance of BatchRequest. </summary>
-        public BatchRequest()
+        /// <summary> Initializes a new instance of BatchRequestInternal. </summary>
+        public BatchRequestInternal()
         {
-            BatchItems = new ChangeTrackingList<BatchRequestItem>();
+            BatchItems = new ChangeTrackingList<BatchRequestItemInternal>();
         }
 
         /// <summary> The list of queries to process. </summary>
-        public IList<BatchRequestItem> BatchItems { get; }
+        public IList<BatchRequestItemInternal> BatchItems { get; }
     }
 }
