@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28803.352
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\core\Azure.Core\src\Azure.Core.csproj", "{9056EE3A-9ED4-441A-9A88-A567ED07DDDD}"
 EndProject
@@ -133,9 +133,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Perf", "Perf", "{FBC7A205-B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Storage", "Microsoft.Azure.Management.Storage\src\Microsoft.Azure.Management.Storage.csproj", "{AD469AF8-0675-4159-A5B7-F486E48B29CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Common.DataMovement", "Azure.Storage.Common.DataMovement\Azure.Storage.Common.DataMovement.csproj", "{2FB74239-57BF-419E-9434-1CA72F8B3D8E}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement.Tests", "Azure.Storage.DataMovement\tests\Azure.Storage.DataMovement.Tests.csproj", "{4442078A-2B4A-4E2F-B533-76848BD9BDFF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement", "Azure.Storage.DataMovement\src\Azure.Storage.DataMovement.csproj", "{AB06384A-23BC-4160-BC73-1EDEE4884F99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -271,14 +271,14 @@ Global
 		{AD469AF8-0675-4159-A5B7-F486E48B29CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD469AF8-0675-4159-A5B7-F486E48B29CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD469AF8-0675-4159-A5B7-F486E48B29CE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2FB74239-57BF-419E-9434-1CA72F8B3D8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2FB74239-57BF-419E-9434-1CA72F8B3D8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2FB74239-57BF-419E-9434-1CA72F8B3D8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2FB74239-57BF-419E-9434-1CA72F8B3D8E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4442078A-2B4A-4E2F-B533-76848BD9BDFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4442078A-2B4A-4E2F-B533-76848BD9BDFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4442078A-2B4A-4E2F-B533-76848BD9BDFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4442078A-2B4A-4E2F-B533-76848BD9BDFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB06384A-23BC-4160-BC73-1EDEE4884F99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB06384A-23BC-4160-BC73-1EDEE4884F99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB06384A-23BC-4160-BC73-1EDEE4884F99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB06384A-23BC-4160-BC73-1EDEE4884F99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
