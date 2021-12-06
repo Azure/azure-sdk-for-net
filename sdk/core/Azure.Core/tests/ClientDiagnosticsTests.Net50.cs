@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-#if NET5_0
+#if NET5_0_OR_GREATER
     public partial class ClientDiagnosticsTests
     {
         [SetUp]
@@ -174,7 +174,7 @@ namespace Azure.Core.Tests
 
             DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
 
-            scope.AddLink("LALALA");
+            scope.AddLink("test");
 
             scope.Start();
             scope.Dispose();

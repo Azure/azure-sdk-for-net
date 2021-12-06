@@ -1,5 +1,17 @@
 # Release History
 
+## 5.7.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+- Based on a new series of profiling and testing in real-world application scenarios, the default values for processor load balancing are being updated to provide better performance and stability.  The default load balancing interval was changed from 10 seconds to 30 seconds.  The default ownership expiration interval was changed from 30 seconds to 2 minutes.  The default load balancing strategy has been changed from balanced to greedy.
+
 ## 5.7.0-beta.1 (2021-11-09)
 
 ### Other Changes

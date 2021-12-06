@@ -21,11 +21,12 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of ServiceEndpointPolicy and their operations over a ResourceGroup. </summary>
+    /// <summary> A class representing collection of ServiceEndpointPolicy and their operations over its parent. </summary>
     public partial class ServiceEndpointPolicyCollection : ArmCollection, IEnumerable<ServiceEndpointPolicy>, IAsyncEnumerable<ServiceEndpointPolicy>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ServiceEndpointPoliciesRestOperations _restClient;
+        private readonly ServiceEndpointPoliciesRestOperations _serviceEndpointPoliciesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ServiceEndpointPolicyCollection"/> class for mocking. </summary>
         protected ServiceEndpointPolicyCollection()
@@ -37,22 +38,7 @@ namespace Azure.ResourceManager.Network
         internal ServiceEndpointPolicyCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ServiceEndpointPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        IEnumerator<ServiceEndpointPolicy> IEnumerable<ServiceEndpointPolicy>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<ServiceEndpointPolicy> IAsyncEnumerable<ServiceEndpointPolicy>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            _serviceEndpointPoliciesRestClient = new ServiceEndpointPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -81,8 +67,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, serviceEndpointPolicyName, parameters, cancellationToken);
-                var operation = new ServiceEndpointPolicyCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, serviceEndpointPolicyName, parameters).Request, response);
+                var response = _serviceEndpointPoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, parameters, cancellationToken);
+                var operation = new ServiceEndpointPolicyCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _serviceEndpointPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -115,8 +101,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, serviceEndpointPolicyName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceEndpointPolicyCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, serviceEndpointPolicyName, parameters).Request, response);
+                var response = await _serviceEndpointPoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceEndpointPolicyCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _serviceEndpointPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -128,22 +114,23 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the specified service Endpoint Policies in a specified resource group. </summary>
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy. </param>
         /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyName"/> is null. </exception>
         public virtual Response<ServiceEndpointPolicy> Get(string serviceEndpointPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
+            if (serviceEndpointPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.Get");
             scope.Start();
             try
             {
-                if (serviceEndpointPolicyName == null)
-                {
-                    throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, serviceEndpointPolicyName, expand, cancellationToken: cancellationToken);
+                var response = _serviceEndpointPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServiceEndpointPolicy(Parent, response.Value), response.GetRawResponse());
@@ -155,22 +142,23 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the specified service Endpoint Policies in a specified resource group. </summary>
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy. </param>
         /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyName"/> is null. </exception>
         public async virtual Task<Response<ServiceEndpointPolicy>> GetAsync(string serviceEndpointPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
+            if (serviceEndpointPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.Get");
             scope.Start();
             try
             {
-                if (serviceEndpointPolicyName == null)
-                {
-                    throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, serviceEndpointPolicyName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serviceEndpointPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ServiceEndpointPolicy(Parent, response.Value), response.GetRawResponse());
@@ -185,19 +173,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy. </param>
         /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyName"/> is null. </exception>
         public virtual Response<ServiceEndpointPolicy> GetIfExists(string serviceEndpointPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
+            if (serviceEndpointPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (serviceEndpointPolicyName == null)
-                {
-                    throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, serviceEndpointPolicyName, expand, cancellationToken: cancellationToken);
+                var response = _serviceEndpointPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, expand, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<ServiceEndpointPolicy>(null, response.GetRawResponse())
                     : Response.FromValue(new ServiceEndpointPolicy(this, response.Value), response.GetRawResponse());
@@ -212,19 +201,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy. </param>
         /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyName"/> is null. </exception>
         public async virtual Task<Response<ServiceEndpointPolicy>> GetIfExistsAsync(string serviceEndpointPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.GetIfExists");
+            if (serviceEndpointPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (serviceEndpointPolicyName == null)
-                {
-                    throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, serviceEndpointPolicyName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serviceEndpointPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<ServiceEndpointPolicy>(null, response.GetRawResponse())
                     : Response.FromValue(new ServiceEndpointPolicy(this, response.Value), response.GetRawResponse());
@@ -239,18 +229,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy. </param>
         /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string serviceEndpointPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
+            if (serviceEndpointPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.CheckIfExists");
             scope.Start();
             try
             {
-                if (serviceEndpointPolicyName == null)
-                {
-                    throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
-                }
-
                 var response = GetIfExists(serviceEndpointPolicyName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -264,18 +255,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy. </param>
         /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string serviceEndpointPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.CheckIfExists");
+            if (serviceEndpointPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (serviceEndpointPolicyName == null)
-                {
-                    throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
-                }
-
                 var response = await GetIfExistsAsync(serviceEndpointPolicyName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -297,7 +289,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _serviceEndpointPoliciesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -312,7 +304,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _serviceEndpointPoliciesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -335,7 +327,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _serviceEndpointPoliciesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -350,7 +342,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _serviceEndpointPoliciesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -408,7 +400,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        IEnumerator<ServiceEndpointPolicy> IEnumerable<ServiceEndpointPolicy>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<ServiceEndpointPolicy> IAsyncEnumerable<ServiceEndpointPolicy>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, ServiceEndpointPolicy, ServiceEndpointPolicyData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ServiceEndpointPolicy, ServiceEndpointPolicyData> Construct() { }
     }
 }

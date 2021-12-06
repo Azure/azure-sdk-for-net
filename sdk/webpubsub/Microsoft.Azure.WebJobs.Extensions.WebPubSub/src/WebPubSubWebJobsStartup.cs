@@ -3,6 +3,7 @@
 
 using Microsoft.Azure.WebJobs.Extensions.WebPubSub;
 using Microsoft.Azure.WebJobs.Hosting;
+using Microsoft.Extensions.Hosting;
 
 [assembly: WebJobsStartup(typeof(WebPubSubWebJobsStartup))]
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub

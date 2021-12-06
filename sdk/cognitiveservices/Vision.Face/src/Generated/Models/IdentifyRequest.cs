@@ -43,7 +43,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// personGroupId and largePersonGroupId should not be provided at the
         /// same time.</param>
         /// <param name="maxNumOfCandidatesReturned">The range of
-        /// maxNumOfCandidatesReturned is between 1 and 5 (default is
+        /// maxNumOfCandidatesReturned is between 1 and 100 (default is
         /// 1).</param>
         /// <param name="confidenceThreshold">Confidence threshold of
         /// identification, used to judge whether one face belong to one
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
 
         /// <summary>
         /// Gets or sets the range of maxNumOfCandidatesReturned is between 1
-        /// and 5 (default is 1).
+        /// and 100 (default is 1).
         /// </summary>
         [JsonProperty(PropertyName = "maxNumOfCandidatesReturned")]
         public int? MaxNumOfCandidatesReturned { get; set; }
@@ -144,9 +144,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
                     throw new ValidationException(ValidationRules.Pattern, "LargePersonGroupId", "^[a-z0-9-_]+$");
                 }
             }
-            if (MaxNumOfCandidatesReturned > 5)
+            if (MaxNumOfCandidatesReturned > 100)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxNumOfCandidatesReturned", 5);
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxNumOfCandidatesReturned", 100);
             }
             if (MaxNumOfCandidatesReturned < 1)
             {

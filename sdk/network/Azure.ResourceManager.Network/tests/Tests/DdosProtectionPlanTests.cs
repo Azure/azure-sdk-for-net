@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Tests
             // patch
             var tags = new TagsObject();
             tags.Tags.Add("tag2", "value2");
-            ddosProtectionPlan = await ddosProtectionPlan.UpdateTagsAsync(tags);
+            ddosProtectionPlan = await ddosProtectionPlan.UpdateAsync(tags);
             ddosProtectionPlanData = ddosProtectionPlan.Data;
 
             ValidateCommon(ddosProtectionPlanData, name);

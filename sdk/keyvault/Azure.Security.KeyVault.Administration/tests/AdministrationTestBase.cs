@@ -25,8 +25,8 @@ namespace Azure.Security.KeyVault.Administration.Tests
         private readonly ConcurrentStack<string> _keysToPurge = new ConcurrentStack<string>();
         private readonly KeyVaultAdministrationClientOptions.ServiceVersion _serviceVersion;
 
-        protected AdministrationTestBase(bool isAsync, KeyVaultAdministrationClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
-            : base(isAsync, mode)
+        protected AdministrationTestBase(bool isAsync, KeyVaultAdministrationClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode, bool useLegacyTransport = false)
+            : base(isAsync, mode, useLegacyTransport)
         {
             _serviceVersion = serviceVersion;
         }
@@ -99,9 +99,9 @@ namespace Azure.Security.KeyVault.Administration.Tests
         }
 
         /// <inheritdoc/>
-        public sealed override void StartTestRecording()
+        public sealed override async Task StartTestRecordingAsync()
         {
-            base.StartTestRecording();
+            await base.StartTestRecordingAsync();
 
             // Clear the challenge cache to force a challenge response.
             // This results in consistent results when recording or playing back recorded tests.

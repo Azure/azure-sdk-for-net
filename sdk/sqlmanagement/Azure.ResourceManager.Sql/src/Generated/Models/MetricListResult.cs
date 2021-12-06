@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of MetricListResult. </summary>
         /// <param name="value"> The list of metrics for the database. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal MetricListResult(IEnumerable<Metric> value)
+        internal MetricListResult(IEnumerable<SqlMetric> value)
         {
             if (value == null)
             {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Initializes a new instance of MetricListResult. </summary>
         /// <param name="value"> The list of metrics for the database. </param>
-        internal MetricListResult(IReadOnlyList<Metric> value)
+        internal MetricListResult(IReadOnlyList<SqlMetric> value)
         {
             Value = value;
         }
 
         /// <summary> The list of metrics for the database. </summary>
-        public IReadOnlyList<Metric> Value { get; }
+        public IReadOnlyList<SqlMetric> Value { get; }
     }
 }

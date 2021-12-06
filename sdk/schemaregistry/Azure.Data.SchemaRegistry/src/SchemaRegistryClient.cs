@@ -116,11 +116,11 @@ namespace Azure.Data.SchemaRegistry
                 ResponseWithHeaders<SchemaRegisterHeaders> response;
                 if (async)
                 {
-                    response = await RestClient.RegisterAsync(groupName, schemaName, new BinaryData(schemaDefinition).ToStream(), cancellationToken).ConfigureAwait(false);
+                    response = await RestClient.RegisterAsync(groupName, schemaName, format.ContentType, new BinaryData(schemaDefinition).ToStream(), cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = RestClient.Register(groupName, schemaName, new BinaryData(schemaDefinition).ToStream(), cancellationToken);
+                    response = RestClient.Register(groupName, schemaName,format.ContentType, new BinaryData(schemaDefinition).ToStream(), cancellationToken);
                 }
 
                 var properties = new SchemaProperties(format, response.Headers.SchemaId);
@@ -188,11 +188,11 @@ namespace Azure.Data.SchemaRegistry
                 ResponseWithHeaders<SchemaQueryIdByContentHeaders> response;
                 if (async)
                 {
-                    response = await RestClient.QueryIdByContentAsync(groupName, schemaName, new BinaryData(schemaDefinition).ToStream(), cancellationToken).ConfigureAwait(false);
+                    response = await RestClient.QueryIdByContentAsync(groupName, schemaName, format.ContentType, new BinaryData(schemaDefinition).ToStream(), cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = RestClient.QueryIdByContent(groupName, schemaName, new BinaryData(schemaDefinition).ToStream(), cancellationToken);
+                    response = RestClient.QueryIdByContent(groupName, schemaName, format.ContentType, new BinaryData(schemaDefinition).ToStream(), cancellationToken);
                 }
 
                 var properties = new SchemaProperties(format, response.Headers.SchemaId);

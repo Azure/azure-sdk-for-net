@@ -21,6 +21,14 @@ namespace Azure.Storage.Cryptography
             _keyWrapAlgorithm = options.KeyWrapAlgorithm;
         }
 
+        public static long ExpectedCiphertextLength(long plaintextLength)
+        {
+            const int aesBlockSizeBytes = 16;
+
+            // pkcs7 padding output length algorithm
+            return plaintextLength + (aesBlockSizeBytes - (plaintextLength % aesBlockSizeBytes));
+        }
+
         /// <summary>
         /// Wraps the given read-stream in a CryptoStream and provides the metadata used to create
         /// that stream.

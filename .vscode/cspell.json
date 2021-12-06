@@ -43,7 +43,6 @@
     "sdk/objectanchors/*/api/*.cs",
     "sdk/purview/*/api/*.cs",
     "sdk/remoterendering/*/api/*.cs",
-    "sdk/sqlmanagement/*/api/*.cs",
     "sdk/synapse/*/api/*.cs",
     "sdk/videoanalyzer/*/api/*.cs"
   ],
@@ -58,6 +57,7 @@
     "deserializable",
     "deserializes",
     "diagnoser",
+    "dotnetcli",
     "dont",
     "dtmf",
     "epsg",
@@ -120,6 +120,10 @@
       ]
     },
     {
+      "filename": "**/sdk/deviceupdate/**/*.cs",
+      "words": ["Fqdns"]
+    },
+    {
       "filename": "**/sdk/formrecognizer/**/*.cs",
       "words": ["ZhHant"]
     },
@@ -153,6 +157,7 @@
         "Vnets",
         "Vxlan",
         "WAFV",
+        "Wans"
       ]
     },
     {
@@ -168,8 +173,27 @@
       ]
     },
     {
+      "filename": "**/sdk/webpubsub/**/*.cs",
+      "words": [
+        "skus"
+      ]
+    },
+    {
       "filename": "**/sdk/resources/Azure.ResourceManager.Resources/api/*.cs",
       "words": ["Puid"]
+    },
+    {
+      "filename": "**/sdk/sqlmanagement/**/*.cs",
+      "words": [
+        "Droppeded",
+        "CIAS",
+        "Vcores",
+        "Unrestorable",
+        "Stdev",
+        "Ntext",
+        "Nvarchar",
+        "Stdev"
+      ]
     },
     {
       "filename": "**/sdk/search/**/*.cs",
@@ -209,6 +233,12 @@
         "Rehydrated",
         "Skus",
         "Undelete"
+      ]
+    },
+    {
+      "filename": "**/sdk/synapse/**/*.md",
+      "words": [
+        "abfss"
       ]
     },
     {

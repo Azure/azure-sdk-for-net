@@ -17,28 +17,32 @@ namespace Azure.AI.MetricsAdvisor.Tests
         protected const string TempDataFeedDimensionNameA = "dimensionA";
         protected const string TempDataFeedDimensionNameB = "dimensionB";
 
-        public MetricsAdvisorLiveTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        public MetricsAdvisorLiveTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode, useLegacyTransport: true)
         {
             Sanitizer = new MetricsAdvisorRecordedTestSanitizer();
         }
 
-        public MetricsAdvisorLiveTestBase(bool isAsync) : base(isAsync)
+        public MetricsAdvisorLiveTestBase(bool isAsync) : base(isAsync, useLegacyTransport: true)
         {
             Sanitizer = new MetricsAdvisorRecordedTestSanitizer();
         }
 
-        internal const string DetectionConfigurationId = "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c";
-        internal const string IncidentId = "736eed64368bb6a372e855322a15a736-174e1756000";
-        internal const string AlertConfigurationId = "204a211a-c5f4-45f3-a30e-512fb25d1d2c";
-        internal const string AlertId = "17571a77000";
-        internal const string MetricId = "27e3015f-04fd-44ba-a20b-bc529a0aebae";
-        internal const string DataFeedId = "9860df01-e740-40ec-94a2-6351813552ba";
+        internal const string DetectionConfigurationId = "efaee305-f049-43ec-9f9b-76026d55c14a";
+        internal const string IncidentId = "aaa0ff1cfe41d89ed481f9ac19dbcd8e-17c76f2dc00";
+        internal const string AlertConfigurationId = "1c1575d8-b09e-40c3-a3c0-d459c64d8382";
+        internal const string AlertId = "17bbd8dec00";
+        internal const string MetricId = "390d1139-98fb-45af-b831-8d5ad61b150a";
+        internal const string DataFeedId = "151e5444-449f-441e-8b64-988f21c5d054";
 
         protected int MaximumSamplesCount => 10;
 
-        protected DateTimeOffset SamplingStartTime => DateTimeOffset.Parse("2020-10-01T00:00:00Z");
+        protected int MaxPageSizeSamples => 1;
 
-        protected DateTimeOffset SamplingEndTime => DateTimeOffset.Parse("2020-10-31T00:00:00Z");
+        protected int SkipSamples => 1;
+
+        protected DateTimeOffset SamplingStartTime => DateTimeOffset.Parse("2021-10-01T00:00:00Z");
+
+        protected DateTimeOffset SamplingEndTime => DateTimeOffset.Parse("2021-10-31T00:00:00Z");
 
         public MetricsAdvisorAdministrationClient GetMetricsAdvisorAdministrationClient(bool useTokenCredential = false)
         {
@@ -111,10 +115,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(seriesKey, Is.Not.Null);
 
             Assert.That(Count(seriesKey), Is.EqualTo(2));
-            Assert.That(seriesKey.TryGetValue("city", out string city));
+            Assert.That(seriesKey.TryGetValue("region", out string region));
             Assert.That(seriesKey.TryGetValue("category", out string category));
 
-            Assert.That(city, Is.Not.Null.And.Not.Empty);
+            Assert.That(region, Is.Not.Null.And.Not.Empty);
             Assert.That(category, Is.Not.Null.And.Not.Empty);
         }
 
@@ -126,7 +130,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             foreach (KeyValuePair<string, string> dimension in groupKey)
             {
-                Assert.That(dimension.Key, Is.EqualTo("city").Or.EqualTo("category"));
+                Assert.That(dimension.Key, Is.EqualTo("region").Or.EqualTo("category"));
                 Assert.That(dimension.Value, Is.Not.Null.And.Not.Empty);
 
                 count++;

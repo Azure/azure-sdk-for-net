@@ -13,22 +13,8 @@ steps:
           ${{ parameters.SubscriptionConfiguration }}
         '@ | ConvertFrom-Json -AsHashtable
 
-        foreach($pair in $config.GetEnumerator()) {
-          if ($pair.Value -is [Hashtable]) {
-            foreach($nestedPair in $pair.Value.GetEnumerator()) {
-              # Mark values as secret so we don't print json blobs containing secrets in the logs.
-              # Prepend underscore to the variable name, so we can still access the variable names via environment
-              # variables if they get set subsequently.
-              Write-Host "##vso[task.setvariable variable=_$($nestedPair.Name);issecret=true;]$($nestedPair.Value)"
-            }
-          } else {
-            Write-Host "##vso[task.setvariable variable=_$($pair.Name);issecret=true;]$($pair.Value)"
-          }
-        }
-
-        Write-Host ($config | ConvertTo-Json)
-        $serialized = $config | ConvertTo-Json -Compress
-        Write-Host "##vso[task.setvariable variable=SubscriptionConfiguration;]$serialized"
+        . ./eng/common/TestResources/SubConfig-Helpers.ps1
+        SetSubscriptionConfiguration $config
       displayName: Initialize SubscriptionConfiguration variable
 
   - ${{ if parameters.SubscriptionConfigurations }}:
@@ -39,33 +25,14 @@ steps:
 
     - ${{ each config in parameters.SubscriptionConfigurations }}:
       - pwsh: |
-          $config = @'
+          $configBase = @'
             $(SubscriptionConfiguration)
           '@ | ConvertFrom-Json -AsHashtable
-          $addToConfig = @'
+          $config = @'
             ${{ config }}
           '@ | ConvertFrom-Json -AsHashtable
 
-          foreach ($pair in $addToConfig.GetEnumerator()) {
-            if ($pair.Value -is [Hashtable]) {
-              if (!$config.ContainsKey($pair.Name)) {
-                $config[$pair.Name] = @{}
-              }
-              foreach($nestedPair in $pair.Value.GetEnumerator()) {
-                # Mark values as secret so we don't print json blobs containing secrets in the logs.
-                # Prepend underscore to the variable name, so we can still access the variable names via environment
-                # variables if they get set subsequently.
-                Write-Host "##vso[task.setvariable variable=_$($nestedPair.Name);issecret=true;]$($nestedPair.Value)"
-                $config[$pair.Name][$nestedPair.Name] = $nestedPair.Value
-              }
-            } else {
-              Write-Host "##vso[task.setvariable variable=_$($pair.Name);issecret=true;]$($pair.Value)"
-              $config[$pair.Name] = $pair.Value
-            }
-          }
-
-          $serialized = $config | ConvertTo-Json -Compress
-          Write-Host ($config | ConvertTo-Json)
-          Write-Host "##vso[task.setvariable variable=SubscriptionConfiguration;]$serialized"
+          . ./eng/common/TestResources/SubConfig-Helpers.ps1
+          UpdateSubscriptionConfiguration $configBase $config
 
         displayName: Merge Test Resource Configurations

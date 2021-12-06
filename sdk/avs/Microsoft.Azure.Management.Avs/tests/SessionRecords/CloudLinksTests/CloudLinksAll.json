@@ -1,567 +1,150 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/js-dev-testing/providers/Microsoft.AVS/privateClouds/cloudLinker/cloudLinks/myLink?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2pzLWRldi10ZXN0aW5nL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvY2xvdWRMaW5rZXIvY2xvdWRMaW5rcy9teUxpbms/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/js-dev-testing/providers/Microsoft.AVS/privateClouds/cloudLinker/cloudLinks/myLink?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2pzLWRldi10ZXN0aW5nL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvY2xvdWRMaW5rZXIvY2xvdWRMaW5rcy9teUxpbms/YXBpLXZlcnNpb249MjAyMS0xMi0wMQ==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\n  \"properties\": {\n    \"linkedCloud\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-centralus/providers/Microsoft.AVS/privateClouds/fct-mock-centralus-45\"\n  }\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"linkedCloud\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-centralus/providers/Microsoft.AVS/privateClouds/fct-mock-centralus-45\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "bbf32442-acc3-4309-8f60-0e165540f717"
+          "6f0fc3a3-845c-40a8-b159-2489be9f9b93"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29929.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.8.0.50.generic.56.20.04.1.Ubuntu.SMP.Mon.Apr.12.21.46.35.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.1"
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "213"
+          "217"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
-        ],
-        "x-ms-request-id": [
-          "42b16268-eb41-4832-aef3-2c6bc634d2b1"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-correlation-request-id": [
-          "9bffa881-6aa5-43b1-86b4-9e8923fca3b7"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20210511T153501Z:9bffa881-6aa5-43b1-86b4-9e8923fca3b7"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-MSEdge-Ref": [
-          "Ref A: 930C5B6ED747479BB3E8B64004068457 Ref B: ATAEDGE0907 Ref C: 2021-05-11T15:34:58Z"
+        "Server": [
+          "Rocket"
         ],
         "Date": [
-          "Tue, 11 May 2021 15:35:01 GMT"
-        ],
-        "Content-Length": [
-          "438"
+          "Fri, 12 Nov 2021 17:41:02 GMT"
         ],
         "Content-Type": [
-          "application/json; charset=utf-8"
+          "application/json"
         ],
-        "Expires": [
-          "-1"
+        "Content-Length": [
+          "367"
         ]
       },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/js-dev-testing/providers/Microsoft.AVS/privateClouds/cloudLinker/cloudLinks/myLink\",\n  \"name\": \"myLink\",\n  \"properties\": {\n    \"linkedCloud\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-centralus/providers/Microsoft.AVS/privateClouds/fct-mock-centralus-45\",\n    \"status\": \"Active\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/cloudLinks\"\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/cloudLinks/cloudLink1\",\r\n  \"name\": \"cloudLink1\",\r\n  \"type\": \"Microsoft.AVS/privateClouds/cloudLinks\",\r\n  \"properties\": {\r\n    \"status\": \"Active\",\r\n    \"linkedCloud\": \"/subscriptions/12341234-1234-1234-1234-123412341234/resourceGroups/mygroup/providers/Microsoft.AVS/privateClouds/cloud2\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/js-dev-testing/providers/Microsoft.AVS/privateClouds/cloudLinker/cloudLinks?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2pzLWRldi10ZXN0aW5nL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvY2xvdWRMaW5rZXIvY2xvdWRMaW5rcz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/js-dev-testing/providers/Microsoft.AVS/privateClouds/cloudLinker/cloudLinks?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2pzLWRldi10ZXN0aW5nL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvY2xvdWRMaW5rZXIvY2xvdWRMaW5rcz9hcGktdmVyc2lvbj0yMDIxLTEyLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2d97c8bb-98d5-491c-b23b-cb866ab08033"
+          "21b2f60e-d7a5-479d-a80a-893e0dbd8a9a"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29929.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.8.0.50.generic.56.20.04.1.Ubuntu.SMP.Mon.Apr.12.21.46.35.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.1"
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14998"
-        ],
-        "x-ms-request-id": [
-          "ab66c441-c4e8-4da3-9f57-a8ee7077ea16"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-correlation-request-id": [
-          "3c3312a0-aae2-4b84-a0f1-a6ec8a4eae96"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20210511T153504Z:3c3312a0-aae2-4b84-a0f1-a6ec8a4eae96"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-MSEdge-Ref": [
-          "Ref A: BD02974D01AC47078660354D90AF7334 Ref B: ATAEDGE0907 Ref C: 2021-05-11T15:35:02Z"
+        "Server": [
+          "Rocket"
         ],
         "Date": [
-          "Tue, 11 May 2021 15:35:04 GMT"
-        ],
-        "Content-Length": [
-          "450"
+          "Fri, 12 Nov 2021 17:41:02 GMT"
         ],
         "Content-Type": [
-          "application/json; charset=utf-8"
+          "application/json"
         ],
-        "Expires": [
-          "-1"
+        "Content-Length": [
+          "379"
         ]
       },
-      "ResponseBody": "{\n  \"value\": [\n    {\n      \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/js-dev-testing/providers/Microsoft.AVS/privateClouds/cloudLinker/cloudLinks/myLink\",\n      \"name\": \"myLink\",\n      \"properties\": {\n        \"linkedCloud\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-centralus/providers/Microsoft.AVS/privateClouds/fct-mock-centralus-45\",\n        \"status\": \"Active\"\n      },\n      \"type\": \"Microsoft.AVS/privateClouds/cloudLinks\"\n    }\n  ]\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/cloudLinks/cloudLink1\",\r\n      \"name\": \"cloudLink1\",\r\n      \"type\": \"Microsoft.AVS/privateClouds/cloudLinks\",\r\n      \"properties\": {\r\n        \"status\": \"Active\",\r\n        \"linkedCloud\": \"/subscriptions/12341234-1234-1234-1234-123412341234/resourceGroups/mygroup/providers/Microsoft.AVS/privateClouds/cloud2\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/js-dev-testing/providers/Microsoft.AVS/privateClouds/cloudLinker/cloudLinks/myLink?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2pzLWRldi10ZXN0aW5nL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvY2xvdWRMaW5rZXIvY2xvdWRMaW5rcy9teUxpbms/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/js-dev-testing/providers/Microsoft.AVS/privateClouds/cloudLinker/cloudLinks/myLink?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2pzLWRldi10ZXN0aW5nL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvY2xvdWRMaW5rZXIvY2xvdWRMaW5rcy9teUxpbms/YXBpLXZlcnNpb249MjAyMS0xMi0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7aedc939-11b9-41c9-a62c-53dd995cad30"
+          "17286b4f-fe04-4739-a818-238d69e41f49"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29929.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.8.0.50.generic.56.20.04.1.Ubuntu.SMP.Mon.Apr.12.21.46.35.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.1"
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14997"
-        ],
-        "x-ms-request-id": [
-          "1401ea1f-4178-4041-81ac-73650c3e4dc4"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-correlation-request-id": [
-          "1a99ef0b-a725-400f-917c-f2b5a4a69ed5"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20210511T153504Z:1a99ef0b-a725-400f-917c-f2b5a4a69ed5"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-MSEdge-Ref": [
-          "Ref A: 4FF22A8052CC481382912112A6A57EF0 Ref B: ATAEDGE0907 Ref C: 2021-05-11T15:35:04Z"
+        "Server": [
+          "Rocket"
         ],
         "Date": [
-          "Tue, 11 May 2021 15:35:04 GMT"
-        ],
-        "Content-Length": [
-          "438"
+          "Fri, 12 Nov 2021 17:41:02 GMT"
         ],
         "Content-Type": [
-          "application/json; charset=utf-8"
+          "application/json"
         ],
-        "Expires": [
-          "-1"
+        "Content-Length": [
+          "367"
         ]
       },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/js-dev-testing/providers/Microsoft.AVS/privateClouds/cloudLinker/cloudLinks/myLink\",\n  \"name\": \"myLink\",\n  \"properties\": {\n    \"linkedCloud\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-centralus/providers/Microsoft.AVS/privateClouds/fct-mock-centralus-45\",\n    \"status\": \"Active\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/cloudLinks\"\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/cloudLinks/cloudLink1\",\r\n  \"name\": \"cloudLink1\",\r\n  \"type\": \"Microsoft.AVS/privateClouds/cloudLinks\",\r\n  \"properties\": {\r\n    \"status\": \"Active\",\r\n    \"linkedCloud\": \"/subscriptions/12341234-1234-1234-1234-123412341234/resourceGroups/mygroup/providers/Microsoft.AVS/privateClouds/cloud2\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/js-dev-testing/providers/Microsoft.AVS/privateClouds/cloudLinker/cloudLinks/myLink?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2pzLWRldi10ZXN0aW5nL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvY2xvdWRMaW5rZXIvY2xvdWRMaW5rcy9teUxpbms/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/js-dev-testing/providers/Microsoft.AVS/privateClouds/cloudLinker/cloudLinks/myLink?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2pzLWRldi10ZXN0aW5nL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvY2xvdWRMaW5rZXIvY2xvdWRMaW5rcy9teUxpbms/YXBpLXZlcnNpb249MjAyMS0xMi0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5289cfce-09aa-4221-8e1f-9dd51f40bd44"
+          "759371da-a2b6-4126-8a7a-1671e5eab907"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29929.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.8.0.50.generic.56.20.04.1.Ubuntu.SMP.Mon.Apr.12.21.46.35.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.1"
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/js-dev-testing/providers/Microsoft.AVS/privateClouds/cloudLinker/cloudLinks/myLink/operationresults/61f509aa-e5f5-4b89-8403-edbff88882e6?api-version=2021-06-01"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-deletes": [
-          "14999"
-        ],
-        "Azure-AsyncOperation": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/js-dev-testing/providers/Microsoft.AVS/privateClouds/cloudLinker/cloudLinks/myLink/operationstatuses/61f509aa-e5f5-4b89-8403-edbff88882e6?api-version=2021-06-01"
-        ],
-        "x-ms-request-id": [
-          "4afe1f5e-654f-4fe6-a128-9988140e1433"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-correlation-request-id": [
-          "d0fc5883-a030-4133-b81b-26b02504bf1b"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20210511T153505Z:d0fc5883-a030-4133-b81b-26b02504bf1b"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-MSEdge-Ref": [
-          "Ref A: 20DCFAD27E234BD691ABC358FDC95E57 Ref B: ATAEDGE0907 Ref C: 2021-05-11T15:35:04Z"
+        "Server": [
+          "Rocket"
         ],
         "Date": [
-          "Tue, 11 May 2021 15:35:05 GMT"
+          "Fri, 12 Nov 2021 17:41:02 GMT"
         ],
         "Content-Length": [
-          "440"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
+          "0"
         ]
       },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/js-dev-testing/providers/Microsoft.AVS/privateClouds/cloudLinker/cloudLinks/myLink\",\n  \"name\": \"myLink\",\n  \"properties\": {\n    \"linkedCloud\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-centralus/providers/Microsoft.AVS/privateClouds/fct-mock-centralus-45\",\n    \"status\": \"Deleting\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/cloudLinks\"\n}",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/js-dev-testing/providers/Microsoft.AVS/privateClouds/cloudLinker/cloudLinks/myLink/operationstatuses/61f509aa-e5f5-4b89-8403-edbff88882e6?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2pzLWRldi10ZXN0aW5nL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvY2xvdWRMaW5rZXIvY2xvdWRMaW5rcy9teUxpbmsvb3BlcmF0aW9uc3RhdHVzZXMvNjFmNTA5YWEtZTVmNS00Yjg5LTg0MDMtZWRiZmY4ODg4MmU2P2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.29929.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.8.0.50.generic.56.20.04.1.Ubuntu.SMP.Mon.Apr.12.21.46.35.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14996"
-        ],
-        "x-ms-request-id": [
-          "0b6e1d25-dd2f-438f-91f9-6ed35a2571e4"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-correlation-request-id": [
-          "4e921a37-c3e2-4c6b-b784-bf4b41740623"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20210511T153515Z:4e921a37-c3e2-4c6b-b784-bf4b41740623"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-MSEdge-Ref": [
-          "Ref A: 540B043655624229A801E5F0086084D5 Ref B: ATAEDGE0907 Ref C: 2021-05-11T15:35:15Z"
-        ],
-        "Date": [
-          "Tue, 11 May 2021 15:35:15 GMT"
-        ],
-        "Content-Length": [
-          "347"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/js-dev-testing/providers/Microsoft.AVS/privateClouds/cloudLinker/cloudLinks/myLink/operationstatuses/61f509aa-e5f5-4b89-8403-edbff88882e6\",\n  \"name\": \"61f509aa-e5f5-4b89-8403-edbff88882e6\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-11T11:35:04.852095-04:00\",\n  \"status\": \"Building\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/js-dev-testing/providers/Microsoft.AVS/privateClouds/cloudLinker/cloudLinks/myLink/operationstatuses/61f509aa-e5f5-4b89-8403-edbff88882e6?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2pzLWRldi10ZXN0aW5nL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvY2xvdWRMaW5rZXIvY2xvdWRMaW5rcy9teUxpbmsvb3BlcmF0aW9uc3RhdHVzZXMvNjFmNTA5YWEtZTVmNS00Yjg5LTg0MDMtZWRiZmY4ODg4MmU2P2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.29929.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.8.0.50.generic.56.20.04.1.Ubuntu.SMP.Mon.Apr.12.21.46.35.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14995"
-        ],
-        "x-ms-request-id": [
-          "a4472cd6-916d-4b25-8ac4-0302d4e375a1"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-correlation-request-id": [
-          "b8892908-c145-496c-8d22-14e1b7f8eab8"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20210511T153526Z:b8892908-c145-496c-8d22-14e1b7f8eab8"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-MSEdge-Ref": [
-          "Ref A: 6FEE238F90144C168D0B41CAA72DB434 Ref B: ATAEDGE0907 Ref C: 2021-05-11T15:35:26Z"
-        ],
-        "Date": [
-          "Tue, 11 May 2021 15:35:26 GMT"
-        ],
-        "Content-Length": [
-          "347"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/js-dev-testing/providers/Microsoft.AVS/privateClouds/cloudLinker/cloudLinks/myLink/operationstatuses/61f509aa-e5f5-4b89-8403-edbff88882e6\",\n  \"name\": \"61f509aa-e5f5-4b89-8403-edbff88882e6\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-11T11:35:04.852095-04:00\",\n  \"status\": \"Building\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/js-dev-testing/providers/Microsoft.AVS/privateClouds/cloudLinker/cloudLinks/myLink/operationstatuses/61f509aa-e5f5-4b89-8403-edbff88882e6?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2pzLWRldi10ZXN0aW5nL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvY2xvdWRMaW5rZXIvY2xvdWRMaW5rcy9teUxpbmsvb3BlcmF0aW9uc3RhdHVzZXMvNjFmNTA5YWEtZTVmNS00Yjg5LTg0MDMtZWRiZmY4ODg4MmU2P2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.29929.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.8.0.50.generic.56.20.04.1.Ubuntu.SMP.Mon.Apr.12.21.46.35.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14994"
-        ],
-        "x-ms-request-id": [
-          "8fbb2857-da15-467f-bad1-ee212404f850"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-correlation-request-id": [
-          "192ef048-9bcd-40f6-9067-d3160b21862b"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20210511T153536Z:192ef048-9bcd-40f6-9067-d3160b21862b"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-MSEdge-Ref": [
-          "Ref A: B52E127E69234DA6992C5702CDAE6A30 Ref B: ATAEDGE0907 Ref C: 2021-05-11T15:35:36Z"
-        ],
-        "Date": [
-          "Tue, 11 May 2021 15:35:36 GMT"
-        ],
-        "Content-Length": [
-          "347"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/js-dev-testing/providers/Microsoft.AVS/privateClouds/cloudLinker/cloudLinks/myLink/operationstatuses/61f509aa-e5f5-4b89-8403-edbff88882e6\",\n  \"name\": \"61f509aa-e5f5-4b89-8403-edbff88882e6\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-11T11:35:04.852095-04:00\",\n  \"status\": \"Building\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/js-dev-testing/providers/Microsoft.AVS/privateClouds/cloudLinker/cloudLinks/myLink/operationstatuses/61f509aa-e5f5-4b89-8403-edbff88882e6?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2pzLWRldi10ZXN0aW5nL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvY2xvdWRMaW5rZXIvY2xvdWRMaW5rcy9teUxpbmsvb3BlcmF0aW9uc3RhdHVzZXMvNjFmNTA5YWEtZTVmNS00Yjg5LTg0MDMtZWRiZmY4ODg4MmU2P2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.29929.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.8.0.50.generic.56.20.04.1.Ubuntu.SMP.Mon.Apr.12.21.46.35.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14993"
-        ],
-        "x-ms-request-id": [
-          "50f7b70e-9e42-40c3-b1d5-a0f9b23bef51"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-correlation-request-id": [
-          "6ae6c6d3-8bc4-4979-ac3d-4af2f289035c"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20210511T153547Z:6ae6c6d3-8bc4-4979-ac3d-4af2f289035c"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-MSEdge-Ref": [
-          "Ref A: C0165275D35D4097AEF64AD65742939B Ref B: ATAEDGE0907 Ref C: 2021-05-11T15:35:46Z"
-        ],
-        "Date": [
-          "Tue, 11 May 2021 15:35:46 GMT"
-        ],
-        "Content-Length": [
-          "396"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"endTime\": \"2021-05-11T11:35:33.8890726-04:00\",\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/js-dev-testing/providers/Microsoft.AVS/privateClouds/cloudLinker/cloudLinks/myLink/operationstatuses/61f509aa-e5f5-4b89-8403-edbff88882e6\",\n  \"name\": \"61f509aa-e5f5-4b89-8403-edbff88882e6\",\n  \"percentComplete\": 100,\n  \"startTime\": \"2021-05-11T11:35:04.852095-04:00\",\n  \"status\": \"Succeeded\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/js-dev-testing/providers/Microsoft.AVS/privateClouds/cloudLinker/cloudLinks/myLink/operationresults/61f509aa-e5f5-4b89-8403-edbff88882e6?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2pzLWRldi10ZXN0aW5nL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvY2xvdWRMaW5rZXIvY2xvdWRMaW5rcy9teUxpbmsvb3BlcmF0aW9ucmVzdWx0cy82MWY1MDlhYS1lNWY1LTRiODktODQwMy1lZGJmZjg4ODgyZTY/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.29929.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.8.0.50.generic.56.20.04.1.Ubuntu.SMP.Mon.Apr.12.21.46.35.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14992"
-        ],
-        "x-ms-request-id": [
-          "2abb79a0-062c-4ab7-87d6-2ff9799daec1"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-correlation-request-id": [
-          "80061f67-cfe9-4863-be1a-80f254b179e6"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20210511T153547Z:80061f67-cfe9-4863-be1a-80f254b179e6"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-MSEdge-Ref": [
-          "Ref A: E54A8D77EBC3456CA8398A2DB944BA0E Ref B: ATAEDGE0907 Ref C: 2021-05-11T15:35:47Z"
-        ],
-        "Date": [
-          "Tue, 11 May 2021 15:35:47 GMT"
-        ],
-        "Content-Length": [
-          "4"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "null",
+      "ResponseBody": "",
       "StatusCode": 200
     }
   ],

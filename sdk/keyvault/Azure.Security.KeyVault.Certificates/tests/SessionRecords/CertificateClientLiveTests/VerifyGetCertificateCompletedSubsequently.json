@@ -5,7 +5,7 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Type": "application/json",
+        "Content-Length": "0",
         "traceparent": "00-dbc8aa4d99dcf449b441c8e227d0d1d0-6166d03d515b634f-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
@@ -120,7 +120,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "traceparent": "00-9ae42aa6c4a0ed48afa8a7a3c18e9b3e-89b44f0550589e41-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
@@ -166,7 +165,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "traceparent": "00-c4062f2925841b45a4ef492ea0fee285-ea3d875f70227c4a-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
@@ -212,7 +210,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "traceparent": "00-76b60dcb6c1d3f4897c18464344765d2-838c3a4e8a717d48-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
@@ -258,7 +255,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "traceparent": "00-9e9936101c2632489b260b1eed709827-0a859a4daec31043-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
@@ -304,7 +300,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "traceparent": "00-12851ec9292f664e86142ca7fc2bc3bb-b9e9ee62a5574449-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
@@ -350,7 +345,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "traceparent": "00-baa7d59b46d19b47a3a62789fd0f8e84-f9e3b2dca7e51d48-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
@@ -396,7 +390,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "traceparent": "00-8d6d169a73c192428e54b52d8152bccd-3b9cc9d622a13b4f-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
@@ -442,7 +435,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "traceparent": "00-26c530037a23394ea03d5ad689433baa-eba0133d57cbe447-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
@@ -487,7 +479,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "traceparent": "00-db69f685ad14884f98c73fdf58d367e1-e87a63fe40baf849-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",

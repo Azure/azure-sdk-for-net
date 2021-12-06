@@ -61,7 +61,7 @@
         "x-ms-client-request-id": "8dd0cc9992540b9ef8a3d64fa419a6f0",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "service=localtestacr04anon.azurecr.io\u0026scope=repository%3alibrary%2fhello-world%3adelete\u0026refresh_token=Sanitized\u0026grant_type=password",
+      "RequestBody": "service=localtestacr04anon.azurecr.io\u0026scope=repository%3Alibrary%2Fhello-world%3Adelete\u0026refresh_token=Sanitized\u0026grant_type=password",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Connection": "keep-alive",

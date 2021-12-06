@@ -19,16 +19,15 @@ namespace Azure.Verticals.AgriFood.Farming
     /// <summary> The Boundaries service client. </summary>
     public partial class BoundariesClient
     {
-        private static readonly string[] AuthorizationScopes = { "https://farmbeats.azure.net/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
-
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of BoundariesClient for mocking. </summary>
         protected BoundariesClient()
@@ -50,7 +49,6 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 throw new ArgumentNullException(nameof(credential));
             }
-
             options ??= new FarmBeatsClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -220,14 +218,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetAsync(string farmerId, string boundaryId, RequestContext context = null)
+        public virtual async Task<Response> GetBoundaryAsync(string farmerId, string boundaryId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("BoundariesClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("BoundariesClient.GetBoundary");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRequest(farmerId, boundaryId);
+                using HttpMessage message = CreateGetBoundaryRequest(farmerId, boundaryId);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -281,14 +279,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response Get(string farmerId, string boundaryId, RequestContext context = null)
+        public virtual Response GetBoundary(string farmerId, string boundaryId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("BoundariesClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("BoundariesClient.GetBoundary");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRequest(farmerId, boundaryId);
+                using HttpMessage message = CreateGetBoundaryRequest(farmerId, boundaryId);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -1740,7 +1738,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetRequest(string farmerId, string boundaryId)
+        internal HttpMessage CreateGetBoundaryRequest(string farmerId, string boundaryId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

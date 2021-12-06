@@ -5,7 +5,6 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Type": "application/json",
         "traceparent": "00-5cbbdfeb3903b94492d44bc3e8b94850-42176924f3b0a64d-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Keys/4.3.0-alpha.20210713.1",
@@ -46,7 +45,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "traceparent": "00-5cbbdfeb3903b94492d44bc3e8b94850-42176924f3b0a64d-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Keys/4.3.0-alpha.20210713.1",

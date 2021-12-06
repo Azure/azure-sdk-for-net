@@ -34,10 +34,12 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// </summary>
         /// <param name="subdomainName">The subdomain name to use.</param>
         /// <param name="type">The Type of the resource.</param>
-        public CheckDomainAvailabilityParameter(string subdomainName, string type)
+        /// <param name="kind">The Kind of the resource.</param>
+        public CheckDomainAvailabilityParameter(string subdomainName, string type, string kind = default(string))
         {
             SubdomainName = subdomainName;
             Type = type;
+            Kind = kind;
             CustomInit();
         }
 
@@ -57,6 +59,12 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Kind of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "kind")]
+        public string Kind { get; set; }
 
         /// <summary>
         /// Validate the object.

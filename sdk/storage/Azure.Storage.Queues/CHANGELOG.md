@@ -1,6 +1,6 @@
 # Release History
 
-## 12.9.0-beta.2 (Unreleased)
+## 12.9.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,9 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.9.0-beta.2 (2021-11-30)
+- This release contains bug fixes to improve quality.
 
 ## 12.9.0-beta.1 (2021-11-03)
 - This release contains bug fixes to improve quality.

@@ -21,11 +21,12 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of WebApplicationFirewallPolicy and their operations over a ResourceGroup. </summary>
+    /// <summary> A class representing collection of WebApplicationFirewallPolicy and their operations over its parent. </summary>
     public partial class WebApplicationFirewallPolicyCollection : ArmCollection, IEnumerable<WebApplicationFirewallPolicy>, IAsyncEnumerable<WebApplicationFirewallPolicy>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly WebApplicationFirewallPoliciesRestOperations _restClient;
+        private readonly WebApplicationFirewallPoliciesRestOperations _webApplicationFirewallPoliciesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="WebApplicationFirewallPolicyCollection"/> class for mocking. </summary>
         protected WebApplicationFirewallPolicyCollection()
@@ -37,22 +38,7 @@ namespace Azure.ResourceManager.Network
         internal WebApplicationFirewallPolicyCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new WebApplicationFirewallPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        IEnumerator<WebApplicationFirewallPolicy> IEnumerable<WebApplicationFirewallPolicy>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<WebApplicationFirewallPolicy> IAsyncEnumerable<WebApplicationFirewallPolicy>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            _webApplicationFirewallPoliciesRestClient = new WebApplicationFirewallPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -81,7 +67,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, policyName, parameters, cancellationToken);
+                var response = _webApplicationFirewallPoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, policyName, parameters, cancellationToken);
                 var operation = new WebApplicationFirewallPolicyCreateOrUpdateOperation(Parent, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
@@ -115,7 +101,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, policyName, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _webApplicationFirewallPoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, policyName, parameters, cancellationToken).ConfigureAwait(false);
                 var operation = new WebApplicationFirewallPolicyCreateOrUpdateOperation(Parent, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -128,21 +114,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Retrieve protection policy with specified name within a resource group. </summary>
         /// <param name="policyName"> The name of the policy. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual Response<WebApplicationFirewallPolicy> Get(string policyName, CancellationToken cancellationToken = default)
         {
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicyCollection.Get");
             scope.Start();
             try
             {
-                if (policyName == null)
-                {
-                    throw new ArgumentNullException(nameof(policyName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, policyName, cancellationToken: cancellationToken);
+                var response = _webApplicationFirewallPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, policyName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new WebApplicationFirewallPolicy(Parent, response.Value), response.GetRawResponse());
@@ -154,21 +141,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Retrieve protection policy with specified name within a resource group. </summary>
         /// <param name="policyName"> The name of the policy. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public async virtual Task<Response<WebApplicationFirewallPolicy>> GetAsync(string policyName, CancellationToken cancellationToken = default)
         {
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicyCollection.Get");
             scope.Start();
             try
             {
-                if (policyName == null)
-                {
-                    throw new ArgumentNullException(nameof(policyName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, policyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _webApplicationFirewallPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, policyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new WebApplicationFirewallPolicy(Parent, response.Value), response.GetRawResponse());
@@ -182,19 +170,20 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="policyName"> The name of the policy. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual Response<WebApplicationFirewallPolicy> GetIfExists(string policyName, CancellationToken cancellationToken = default)
         {
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (policyName == null)
-                {
-                    throw new ArgumentNullException(nameof(policyName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, policyName, cancellationToken: cancellationToken);
+                var response = _webApplicationFirewallPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, policyName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<WebApplicationFirewallPolicy>(null, response.GetRawResponse())
                     : Response.FromValue(new WebApplicationFirewallPolicy(this, response.Value), response.GetRawResponse());
@@ -208,19 +197,20 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="policyName"> The name of the policy. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public async virtual Task<Response<WebApplicationFirewallPolicy>> GetIfExistsAsync(string policyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicyCollection.GetIfExists");
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicyCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (policyName == null)
-                {
-                    throw new ArgumentNullException(nameof(policyName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, policyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _webApplicationFirewallPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, policyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<WebApplicationFirewallPolicy>(null, response.GetRawResponse())
                     : Response.FromValue(new WebApplicationFirewallPolicy(this, response.Value), response.GetRawResponse());
@@ -234,18 +224,19 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="policyName"> The name of the policy. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string policyName, CancellationToken cancellationToken = default)
         {
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicyCollection.CheckIfExists");
             scope.Start();
             try
             {
-                if (policyName == null)
-                {
-                    throw new ArgumentNullException(nameof(policyName));
-                }
-
                 var response = GetIfExists(policyName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -258,18 +249,19 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="policyName"> The name of the policy. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string policyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicyCollection.CheckIfExists");
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicyCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (policyName == null)
-                {
-                    throw new ArgumentNullException(nameof(policyName));
-                }
-
                 var response = await GetIfExistsAsync(policyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -291,7 +283,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAll(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _webApplicationFirewallPoliciesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new WebApplicationFirewallPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -306,7 +298,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _webApplicationFirewallPoliciesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new WebApplicationFirewallPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -329,7 +321,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _webApplicationFirewallPoliciesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new WebApplicationFirewallPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -344,7 +336,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _webApplicationFirewallPoliciesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new WebApplicationFirewallPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -402,7 +394,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        IEnumerator<WebApplicationFirewallPolicy> IEnumerable<WebApplicationFirewallPolicy>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<WebApplicationFirewallPolicy> IAsyncEnumerable<WebApplicationFirewallPolicy>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, WebApplicationFirewallPolicy, WebApplicationFirewallPolicyData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, WebApplicationFirewallPolicy, WebApplicationFirewallPolicyData> Construct() { }
     }
 }

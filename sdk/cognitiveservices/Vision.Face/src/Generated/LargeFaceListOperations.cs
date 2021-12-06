@@ -118,7 +118,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> CreateWithHttpMessagesAsync(string largeFaceListId, string name = default(string), string userData = default(string), string recognitionModel = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> CreateWithHttpMessagesAsync(string largeFaceListId, string name, string userData = default(string), string recognitionModel = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -139,11 +139,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                     throw new ValidationException(ValidationRules.Pattern, "largeFaceListId", "^[a-z0-9-_]+$");
                 }
             }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
             if (name != null)
             {
                 if (name.Length > 128)
                 {
                     throw new ValidationException(ValidationRules.MaxLength, "name", 128);
+                }
+                if (name.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "name", 1);
                 }
             }
             if (userData != null)
@@ -952,6 +960,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// A value indicating whether the operation should return 'recognitionModel'
         /// in response.
         /// </param>
+        /// <param name='start'>
+        /// Starting large face list id to return (used to list a range of large face
+        /// lists).
+        /// </param>
+        /// <param name='top'>
+        /// Number of large face lists to return starting with the large face list id
+        /// indicated by the 'start' parameter.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -973,11 +989,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<LargeFaceList>>> ListWithHttpMessagesAsync(bool? returnRecognitionModel = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<LargeFaceList>>> ListWithHttpMessagesAsync(bool? returnRecognitionModel = false, string start = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
+            if (top > 1000)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "top", 1000);
+            }
+            if (top < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "top", 1);
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -987,6 +1011,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("returnRecognitionModel", returnRecognitionModel);
+                tracingParameters.Add("start", start);
+                tracingParameters.Add("top", top);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -998,6 +1024,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             if (returnRecognitionModel != null)
             {
                 _queryParameters.Add(string.Format("returnRecognitionModel={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(returnRecognitionModel, Client.SerializationSettings).Trim('"'))));
+            }
+            if (start != null)
+            {
+                _queryParameters.Add(string.Format("start={0}", System.Uri.EscapeDataString(start)));
+            }
+            if (top != null)
+            {
+                _queryParameters.Add(string.Format("top={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(top, Client.SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
