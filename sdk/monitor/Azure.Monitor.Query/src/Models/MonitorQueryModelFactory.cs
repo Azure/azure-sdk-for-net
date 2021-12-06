@@ -56,7 +56,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="columns"> The list of columns. </param>
         /// <param name="rows"> The list of rows. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="rows"/> is null. </exception>
-        public static LogsTable LogsTable(string name, IEnumerable<LogsTableColumn> columns, IEnumerable<LogsTableRow> rows) //IEnumerable<IEnumerable<object>> rows
+        public static LogsTable LogsTable(string name, IEnumerable<LogsTableColumn> columns, IEnumerable<LogsTableRow> rows)
         {
             JsonElement row = JsonElementFromObject(rows);
             return new LogsTable(name, columns, row);
