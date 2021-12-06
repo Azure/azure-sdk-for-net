@@ -1,0 +1,15 @@
+{
+  "OutputFolder": ".",
+  "Namespace": "Azure.ResourceManager.Appplatform",
+  "LibraryName": null,
+  "SharedSourceFolders": [
+    "..\\Generator.Shared",
+    "..\\Azure.Core.Shared"
+  ],
+  "azure-arm": true,
+  "public-clients": true,
+  "head-as-boolean": true,
+  "MgmtDebug": {
+    "SuppressListException": true
+  }
+}

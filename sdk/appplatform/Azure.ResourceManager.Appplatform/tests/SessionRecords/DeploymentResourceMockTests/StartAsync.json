@@ -1,0 +1,383 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000?api-version=2019-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-2e10a4bf4b6a0a468baa3eb73ecb8457-4e284e8d7b9e3847-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-beta.5 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "3ed71f8cd79ce4ef235172a96d6c29d8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "403",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 06 Dec 2021 09:04:49 GMT",
+        "ETag": "W/\u0022193-XMviJqaGXohjOV1XjmYhUY8VLpk\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "00000000-0000-0000-0000-000000000000",
+        "tenantId": "0000000-0000-0000-0000-000000000000",
+        "displayName": "Name of the subscription",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup?api-version=2019-10-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "81",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-beta.5 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "a36517b4249cfe14d1922b44d8d9e45c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "Azure.ResourceManager.Resources.Subscription",
+        "tags": {
+          "test": "env"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "254",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 06 Dec 2021 09:04:49 GMT",
+        "ETag": "W/\u0022fe-aZEo2isVQc1LUmWdignDK6uZSqI\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup",
+        "location": "eastus",
+        "managedBy": null,
+        "name": "myResourceGroup",
+        "properties": {
+          "provisioningState": "Succeeded"
+        },
+        "tags": {},
+        "type": "Microsoft.Resources/resourceGroups"
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice?api-version=2021-09-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "100",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager.Appplatform/1.0.0-alpha.20211206.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "266da679ec8997576f5217cf5dd34a75",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {},
+        "sku": {
+          "name": "S0",
+          "tier": "Standard"
+        },
+        "tags": {
+          "key1": "value1"
+        },
+        "location": "eastus"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "868",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 06 Dec 2021 09:04:49 GMT",
+        "ETag": "W/\u0022364-ikkV1B3sKYWUkwJRW9sAxcGcFt8\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice",
+        "name": "myservice",
+        "type": "aaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "location": "aaaaaaaaaaaaaaa",
+        "tags": {
+          "key6407": "aaaaaaaaaaaaaaaaaaa"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "networkProfile": {
+            "serviceRuntimeSubnetId": "aaaaaaaaaaaaaaaa",
+            "appSubnetId": "aaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "serviceCidr": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "serviceRuntimeNetworkResourceGroup": "aaaaaaaaaaaaaaaaa",
+            "appNetworkResourceGroup": "a",
+            "outboundIPs": {
+              "publicIPs": [
+                "aaaaaaa"
+              ]
+            },
+            "requiredTraffics": [
+              {
+                "protocol": "aa",
+                "port": 13,
+                "ips": [
+                  "aaaaaaaaaaaaaa"
+                ],
+                "fqdns": [
+                  "aaaaaaaaaaaaaaaaaaaaaaa"
+                ],
+                "direction": "Inbound"
+              }
+            ]
+          },
+          "version": 16,
+          "serviceId": "aaaaaaaaaaaaaa",
+          "powerState": "Running"
+        },
+        "sku": {
+          "name": "myservice",
+          "tier": "aaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "capacity": 3
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp?api-version=2021-09-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "301",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager.Appplatform/1.0.0-alpha.20211206.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "c62f156c02fec84fc0ce344a0c45a0fd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "public": true,
+          "activeDeploymentName": "mydeployment1",
+          "fqdn": "myapp.mydomain.com",
+          "httpsOnly": false,
+          "temporaryDisk": {
+            "sizeInGB": 2,
+            "mountPath": "/mytemporarydisk"
+          },
+          "persistentDisk": {
+            "sizeInGB": 2,
+            "mountPath": "/mypersistentdisk"
+          },
+          "enableEndToEndTLS": false
+        },
+        "identity": {},
+        "location": "eastus"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "1029",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 06 Dec 2021 09:04:49 GMT",
+        "ETag": "W/\u0022405-\u002BBjvj56kuq3yPqkfxLgYW1Q7TnY\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp",
+        "name": "myapp",
+        "type": "aaaaaaaaaa",
+        "properties": {
+          "public": true,
+          "url": "aaaa",
+          "provisioningState": "Succeeded",
+          "activeDeploymentName": "aaaaaaaaaa",
+          "fqdn": "aaa",
+          "httpsOnly": true,
+          "createdTime": "2021-12-06T09:04:49.135Z",
+          "temporaryDisk": {
+            "sizeInGB": 0,
+            "mountPath": "aaaaaaaaaaaaaaaaaaaaa"
+          },
+          "persistentDisk": {
+            "sizeInGB": 16,
+            "usedInGB": 40,
+            "mountPath": "aaaaa"
+          },
+          "customPersistentDisks": [
+            {
+              "customPersistentDiskProperties": {
+                "type": "AzureFileVolume",
+                "mountPath": "aaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "readOnly": true,
+                "mountOptions": [
+                  "aaaaaaaaaaaaaaaaaaaaaaaaaa"
+                ],
+                "shareName": "aaaaaaaaaaaaaaaaaaa"
+              },
+              "storageId": "aaaaaaaaaaaaaaaaaaaaaaaa"
+            }
+          ],
+          "enableEndToEndTLS": true,
+          "loadedCertificates": [
+            {
+              "resourceId": "aaaaaaaaaaaaaaaaaaaaaaa",
+              "loadTrustStore": true
+            }
+          ]
+        },
+        "identity": {
+          "type": "None",
+          "principalId": "00000000-0000-0000-0000-000000000000",
+          "tenantId": "00000000-0000-0000-0000-000000000000"
+        },
+        "location": "aaaaaaa"
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/deployments/mydeployment?api-version=2021-09-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "361",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager.Appplatform/1.0.0-alpha.20211206.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "4762cc4583a43d76467284b279125cc5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "source": {
+            "type": "Source",
+            "relativePath": "resources/a172cedcae47474b615c54d510a5d84a8dea3032e958587430b413538be3f333-2019082605-e3095339-1723-44b7-8b5e-31b1003978bc",
+            "version": "1.0",
+            "artifactSelector": "sub-module-1"
+          },
+          "deploymentSettings": {
+            "resourceRequests": {
+              "cpu": "1000m",
+              "memory": "3Gi"
+            },
+            "jvmOptions": "-Xms1G -Xmx3G",
+            "runtimeVersion": "Java_8"
+          }
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "1277",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 06 Dec 2021 09:04:49 GMT",
+        "ETag": "W/\u00224fd-pyf2nPD61jdicKd2y/bk4Z4gXAs\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/deployments/mydeployment",
+        "name": "mydeployment",
+        "type": "aaaaaaaaa",
+        "properties": {
+          "source": {
+            "type": "Jar",
+            "relativePath": "aaaaaaaaaaaaaaaaaaaaaaaa",
+            "version": "aaaaaaaaaaaaaaaaaaaaaaa",
+            "artifactSelector": "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "customContainer": {
+              "server": "aaaaaaaaaaaaaaaaaaa",
+              "containerImage": "aaaaaa",
+              "command": [
+                "aaaaa"
+              ],
+              "args": [
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              ],
+              "imageRegistryCredential": {
+                "username": "aaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "password": "aaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            }
+          },
+          "appName": "aaaaaaaaaaaaaaaaa",
+          "deploymentSettings": {
+            "cpu": 25,
+            "memoryInGB": 1,
+            "resourceRequests": {
+              "cpu": "aaaaaaaaaaaaaaaaaaa",
+              "memory": "aaaaaaaaa"
+            },
+            "jvmOptions": "aaaaa",
+            "netCoreMainEntryPath": "aaa",
+            "environmentVariables": {
+              "key4487": "aaaaaaaaaaa"
+            },
+            "runtimeVersion": "Java_8",
+            "containerProbeSettings": {
+              "disableProbe": true
+            }
+          },
+          "provisioningState": "Succeeded",
+          "status": "Unknown",
+          "active": true,
+          "createdTime": "2021-12-06T09:04:49.143Z",
+          "instances": [
+            {
+              "name": "mydeployment",
+              "status": "aaaaaa",
+              "reason": "aaaaaaaaaaaaa",
+              "discoveryStatus": "aaaaaaaaaaaaaaaaaaaa",
+              "startTime": "aaaaaaaaaaaaaaaaaaaaaaaaa"
+            }
+          ]
+        },
+        "sku": {
+          "name": "mydeployment",
+          "tier": "aaa",
+          "capacity": 19
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/deployments/mydeployment/start?api-version=2021-09-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.Appplatform/1.0.0-alpha.20211206.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "40056ee258e3c3593fc6fb2c1a295237",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "0",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 06 Dec 2021 09:04:49 GMT",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1723366791",
+    "RESOURCE_MANAGER_URL": "https://localhost:8443",
+    "SUBSCRIPTION_ID": "00000000-0000-0000-0000-000000000000"
+  }
+}
