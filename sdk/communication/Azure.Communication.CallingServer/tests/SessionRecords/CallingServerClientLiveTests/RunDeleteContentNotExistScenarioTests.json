@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://us-storage.asm.skype.com/v1/objects/0-wus-d10-00000000000000000000000000000000",
+      "RequestUri": "https://us-storage.asm.skype.com/v1/objects/Sanitized",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-3050ef82b14d684d9c9d30752fa2896e-666d78decf60cc4a-00",
-        "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20211126.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "traceparent": "00-dcae149403185a4699bfb39383910d7a-bc40db40ee659d45-00",
+        "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20211206.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-request-id": "2106d509dcd71eba799b85bf704f6361",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Fri, 26 Nov 2021 11:18:37 GMT",
+        "x-ms-date": "Mon, 06 Dec 2021 14:41:11 GMT",
         "x-ms-host": "acstelephonyportaltesting.communication.azure.com",
         "x-ms-return-client-request-id": "true"
       },
@@ -17,7 +17,7 @@
       "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Fri, 26 Nov 2021 11:18:37 GMT",
+        "Date": "Mon, 06 Dec 2021 14:41:11 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains"
       },

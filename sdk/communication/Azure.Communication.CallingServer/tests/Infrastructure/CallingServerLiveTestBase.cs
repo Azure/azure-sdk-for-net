@@ -18,16 +18,28 @@ namespace Azure.Communication.CallingServer.Tests
     public class CallingServerLiveTestBase : RecordedTestBase<CallingServerTestEnvironment>
     {
         // Random Gen Guid
-        protected const string FROM_USER_IDENTIFIER = "0000000e-0b11-32b7-69f0-553a0d00ee50";
+        protected const string FROM_USER_IDENTIFIER = "0000000e-2f93-1cfe-69ff-9c3a0d00d763";
 
         // Random Gen Guid
-        protected const string TO_USER_IDENTIFIER = "0000000e-0b11-51b4-eef0-8b3a0d00bc84";
+        protected const string TO_USER_IDENTIFIER = "0000000e-2f93-61fb-69ff-9c3a0d00d765";
 
         // From ACS Resource "immutableResourceId".
         protected const string RESOURCE_IDENTIFIER = "ab12b0ea-85ea-4f83-b0b6-84d90209c7c4";
 
         // Random Gen Guid
-        protected const string GROUP_IDENTIFIER = "0cf87440-50fd-11ec-87c7-57501c0d6284";
+        protected const string GROUP_IDENTIFIER = "2a44d970-568f-11ec-9b6b-f50b63e7bd11";
+
+        // Random Gen Guid
+        protected const string USER_IDENTIFIER = "0000000e-2ddd-081c-570c-113a0d00e4d8";
+
+        protected string GetAudioFileUrl()
+        {
+            if (Mode != RecordedTestMode.Playback)
+            {
+                return TestEnvironment.AudioFileUri;
+            }
+            return TestEnvironment.AudioFileUrl;
+        }
 
         protected string GetResourceId()
         {
@@ -45,7 +57,11 @@ namespace Azure.Communication.CallingServer.Tests
 
         protected string GetFixedUserId(string userGuid)
         {
-            return "8:acs:" + GetResourceId() + "_" + userGuid;
+            if (Mode != RecordedTestMode.Playback)
+            {
+                return "8:acs:" + GetResourceId() + "_" + userGuid;
+            }
+            return "8:acs:" + GetResourceId() + "_" + USER_IDENTIFIER;
         }
 
         protected string GetFromUserId()
@@ -92,12 +108,12 @@ namespace Azure.Communication.CallingServer.Tests
 
         protected string GetDeleteUrl()
         {
-            return "https://us-storage.asm.skype.com/v1/objects/0-wus-d2-455b7aa3abb3bc2761c19e17d32f70a2";
+            return "https://us-storage.asm.skype.com/v1/objects/0-wus-d10-dd8078b2cf30fa268e6327b164b99277";
         }
 
         protected string GetAsyncDeleteUrl()
         {
-            return "https://us-storage.asm.skype.com/v1/objects/0-wus-d2-47db0323f1df7010231b4292f3526495";
+            return "https://us-storage.asm.skype.com/v1/objects/0-wus-d1-7eda37310bb72038f8ff75a4c2145c40";
         }
 
         public CallingServerLiveTestBase(bool isAsync) : base(isAsync)
@@ -255,7 +271,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             Console.WriteLine("Performing PlayAudio operation");
 
-            var response = await callConnection.PlayAudioAsync(new Uri(TestEnvironment.AudioFileUrl), playAudioOptions).ConfigureAwait(false);
+            var response = await callConnection.PlayAudioAsync(new Uri(GetAudioFileUrl()), playAudioOptions).ConfigureAwait(false);
 
             Assert.AreEqual(response.Value.Status, CallingOperationStatus.Running);
         }
@@ -266,10 +282,10 @@ namespace Azure.Communication.CallingServer.Tests
 
             var response = await callingServerClient.PlayAudioAsync(
                 callLocator,
-                new Uri(TestEnvironment.AudioFileUrl),
+                new Uri(GetAudioFileUrl()),
                 new PlayAudioOptions()
                 {
-                    Loop = false,
+                    Loop = true,
                     AudioFileId = "ebb1d98d-fd86-4204-800c-f7bdfc2e515c",
                     CallbackUri = new Uri(TestEnvironment.AppCallbackUrl),
                     OperationContext = "de346f03-7f8d-41ab-a232-cc5e14990769"
@@ -546,7 +562,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             Console.WriteLine("Performing PlayAudio operation");
 
-            var response = await callConnection.PlayAudioToParticipantAsync(new CommunicationUserIdentifier(participantUserId), new Uri(TestEnvironment.AudioFileUrl), playAudioOptions).ConfigureAwait(false);
+            var response = await callConnection.PlayAudioToParticipantAsync(new CommunicationUserIdentifier(participantUserId), new Uri(GetAudioFileUrl()), playAudioOptions).ConfigureAwait(false);
 
             Assert.AreEqual(response.Value.Status, CallingOperationStatus.Running);
 
@@ -565,7 +581,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             Console.WriteLine("Performing PlayAudio operation");
 
-            var response = await callingServerClient.PlayAudioToParticipantAsync(callLocator, new CommunicationUserIdentifier(participantUserId), new Uri(TestEnvironment.AudioFileUrl), playAudioOptions).ConfigureAwait(false);
+            var response = await callingServerClient.PlayAudioToParticipantAsync(callLocator, new CommunicationUserIdentifier(participantUserId), new Uri(GetAudioFileUrl()), playAudioOptions).ConfigureAwait(false);
 
             Assert.AreEqual(response.Value.Status, CallingOperationStatus.Running);
 

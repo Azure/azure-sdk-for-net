@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -14,6 +15,7 @@ namespace Azure.Core.TestFramework
     public class RecordedTestSanitizer
     {
         public const string SanitizeValue = "Sanitized";
+        public const string SanitizedValue = "https://dummy.ngrok.io/audio/sample-message.wav";
         private List<(string JsonPath, Func<JToken, JToken> Sanitizer)> JsonPathSanitizers { get; } = new();
 
         /// <summary>
@@ -33,6 +35,12 @@ namespace Azure.Core.TestFramework
             AddJsonPathSanitizer("$..primaryConnectionString");
             AddJsonPathSanitizer("$..secondaryConnectionString");
             AddJsonPathSanitizer("$..connectionString");
+            AddJsonPathSanitizer("$..id");
+            AddJsonPathSanitizer("$..callConnectionId");
+            AddJsonPathSanitizer("$..rawId");
+            AddJsonPathSanitizer("$..audioFileUri");
+            AddJsonPathSanitizer("$..groupCallId");
+            AddJsonPathSanitizer("$..recordingId");
         }
 
         private static readonly JsonSerializerSettings SerializerSettings = new JsonSerializerSettings
@@ -49,7 +57,26 @@ namespace Azure.Core.TestFramework
 
         public virtual string SanitizeUri(string uri)
         {
-            return uri;
+            var recordingEndPointMatch = Regex.Match(uri, @"(recordings/[^/|?]*)");
+            var callConnectionIdMatch = Regex.Match(uri, @"(callConnections/[^/|?]*)");
+            var deleteEndPointMatch = Regex.Match(uri, @"(objects/[^/]*)");
+
+            if (callConnectionIdMatch.Success && callConnectionIdMatch.Groups.Count > 1)
+            {
+                return uri.Replace(callConnectionIdMatch.Groups[1].Value.Split('/')[1], SanitizeValue);
+            }
+            else if (recordingEndPointMatch.Success && recordingEndPointMatch.Groups.Count > 1)
+            {
+                return uri.Replace(recordingEndPointMatch.Groups[1].Value.Split('/')[1], SanitizeValue);
+            }
+            else if (deleteEndPointMatch.Success && deleteEndPointMatch.Groups.Count > 1)
+            {
+                return uri.Replace(deleteEndPointMatch.Groups[1].Value.Split('/')[1], SanitizeValue);
+            }
+            else
+            {
+                return uri;
+            }
         }
 
         public virtual void SanitizeHeaders(IDictionary<string, string[]> headers)
@@ -91,8 +118,16 @@ namespace Azure.Core.TestFramework
                 {
                     foreach (JToken token in jsonO.SelectTokens(jsonPath))
                     {
-                        token.Replace(sanitizer(token));
-                        modified = true;
+                        if (token.Path == "audioFileUri")
+                        {
+                            token.Replace(SanitizedValue);
+                            modified = true;
+                        }
+                        else
+                        {
+                            token.Replace(sanitizer(token));
+                            modified = true;
+                        }
                     }
                 }
 
