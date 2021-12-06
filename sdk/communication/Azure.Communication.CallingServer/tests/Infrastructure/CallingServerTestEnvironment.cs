@@ -23,6 +23,8 @@ namespace Azure.Communication.CallingServer.Tests
 
         public const string TargetCallConnectionId = "TARGET_CALL_CONNECTION_ID";
 
+        public const string AudioUrl = "AUDIO_FILE_URL";
+
         /// <summary>
         /// The download url required to download the file.
         /// </summary>
@@ -77,5 +79,10 @@ namespace Azure.Communication.CallingServer.Tests
         /// The publicly available url of the audio file which would be played as a prompt.
         /// </summary>
         public string AudioFileUrl => $"{AppBaseUrl}/audio/{AudioFileName}";
+
+        /// <summary>
+        /// The url of the audio file which would be played as a prompt.
+        /// </summary>
+        public string AudioFileUri => GetRecordedVariable(AudioUrl, options => options.IsSecret());
     }
 }

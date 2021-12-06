@@ -45,9 +45,11 @@ namespace Azure.Communication.CallingServer.Tests
             try
             {
                 // Play Prompt Audio
+                await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
                 await PlayAudioOperation(callConnection).ConfigureAwait(false);
 
                 // Cancel Prompt Audio
+                await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
                 await CancelAllMediaOperationsOperation(callConnection).ConfigureAwait(false);
             }
             catch (RequestFailedException ex)
@@ -63,6 +65,7 @@ namespace Azure.Communication.CallingServer.Tests
             finally
             {
                 // Hang up the Call, there is one call leg in this test case, hangup the call will also delete the call as the result.
+                await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
                 await HangupOperation(callConnection).ConfigureAwait(false);
             }
         }
