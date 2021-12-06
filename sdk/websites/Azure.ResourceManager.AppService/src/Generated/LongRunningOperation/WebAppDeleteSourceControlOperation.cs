@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Deletes the source control configuration of an app. </summary>
-    public partial class WebAppDeleteSourceControlOperation : Azure.Operation
+    public partial class WebAppDeleteSourceControlOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 

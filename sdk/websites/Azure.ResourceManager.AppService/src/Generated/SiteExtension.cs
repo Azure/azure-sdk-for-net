@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: WebApps_GetMSDeployLog
         /// <summary> Description for Get the MSDeploy Log for the last MSDeploy operation. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<MSDeployLog>> GetMSDeployLogAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<MsDeployLog>> GetMSDeployLogAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SiteExtension.GetMSDeployLog");
             scope.Start();
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: WebApps_GetMSDeployLog
         /// <summary> Description for Get the MSDeploy Log for the last MSDeploy operation. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MSDeployLog> GetMSDeployLog(CancellationToken cancellationToken = default)
+        public virtual Response<MsDeployLog> GetMSDeployLog(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SiteExtension.GetMSDeployLog");
             scope.Start();

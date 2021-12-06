@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Deletes a connection from an app (or deployment slot to a named virtual network. </summary>
-    public partial class WebAppDeleteVnetConnectionOperation : Azure.Operation
+    public partial class WebAppDeleteVnetConnectionOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 

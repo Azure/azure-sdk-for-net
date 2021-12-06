@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the AppServicePlan data model. </summary>
-    public partial class AppServicePlanData : Resource
+    public partial class AppServicePlanData : AppServiceResource
     {
         /// <summary> Initializes a new instance of AppServicePlanData. </summary>
         /// <param name="location"> The location. </param>

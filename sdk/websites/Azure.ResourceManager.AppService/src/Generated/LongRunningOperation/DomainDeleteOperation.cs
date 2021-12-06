@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Delete a domain. </summary>
-    public partial class DomainDeleteOperation : Azure.Operation
+    public partial class DomainDeleteOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 

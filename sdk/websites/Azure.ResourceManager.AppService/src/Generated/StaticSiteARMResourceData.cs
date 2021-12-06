@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the StaticSiteARMResource data model. </summary>
-    public partial class StaticSiteARMResourceData : Resource
+    public partial class StaticSiteARMResourceData : AppServiceResource
     {
         /// <summary> Initializes a new instance of StaticSiteARMResourceData. </summary>
         /// <param name="location"> The location. </param>

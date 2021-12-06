@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Detach the user provided function app from the static site build. </summary>
-    public partial class StaticSiteDetachUserProvidedFunctionAppFromStaticSiteBuildOperation : Azure.Operation
+    public partial class StaticSiteDetachUserProvidedFunctionAppFromStaticSiteBuildOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 

@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="timeGrain"> The time grain for the detector response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="detectorName"/> is null. </exception>
-        public async Task<Response<DetectorResponseData>> GetAppServiceCertificateOrderDetectorResponseAsync(string resourceGroupName, string certificateOrderName, string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceDetectorData>> GetAppServiceCertificateOrderDetectorResponseAsync(string resourceGroupName, string certificateOrderName, string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -193,13 +193,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DetectorResponseData value = default;
+                        AppServiceDetectorData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DetectorResponseData.DeserializeDetectorResponseData(document.RootElement);
+                        value = AppServiceDetectorData.DeserializeAppServiceDetectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DetectorResponseData)null, message.Response);
+                    return Response.FromValue((AppServiceDetectorData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="timeGrain"> The time grain for the detector response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="detectorName"/> is null. </exception>
-        public Response<DetectorResponseData> GetAppServiceCertificateOrderDetectorResponse(string resourceGroupName, string certificateOrderName, string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        public Response<AppServiceDetectorData> GetAppServiceCertificateOrderDetectorResponse(string resourceGroupName, string certificateOrderName, string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -235,13 +235,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DetectorResponseData value = default;
+                        AppServiceDetectorData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DetectorResponseData.DeserializeDetectorResponseData(document.RootElement);
+                        value = AppServiceDetectorData.DeserializeAppServiceDetectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DetectorResponseData)null, message.Response);
+                    return Response.FromValue((AppServiceDetectorData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

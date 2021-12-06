@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Delete a triggered web job by its ID for an app, or a deployment slot. </summary>
-    public partial class WebAppDeleteTriggeredWebJobOperation : Azure.Operation
+    public partial class WebAppDeleteTriggeredWebJobOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 

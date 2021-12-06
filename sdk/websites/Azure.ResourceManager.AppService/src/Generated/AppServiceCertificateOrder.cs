@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="certificateDistinguishedName"> Distinguished name to use for the certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateDistinguishedName"/> is null. </exception>
-        public async virtual Task<Response<AppServiceCertificateOrder>> UpdateAsync(AppServiceCertificateOrderPatchResource certificateDistinguishedName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<AppServiceCertificateOrder>> UpdateAsync(AppServiceCertificateOrderPatch certificateDistinguishedName, CancellationToken cancellationToken = default)
         {
             if (certificateDistinguishedName == null)
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="certificateDistinguishedName"> Distinguished name to use for the certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateDistinguishedName"/> is null. </exception>
-        public virtual Response<AppServiceCertificateOrder> Update(AppServiceCertificateOrderPatchResource certificateDistinguishedName, CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceCertificateOrder> Update(AppServiceCertificateOrderPatch certificateDistinguishedName, CancellationToken cancellationToken = default)
         {
             if (certificateDistinguishedName == null)
             {

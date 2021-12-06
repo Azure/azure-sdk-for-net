@@ -355,11 +355,11 @@ namespace Azure.ResourceManager.AppService
 
         #region SiteConfigSnapshot
 
-        /// <summary> Gets an object representing a SiteConfigSnapshot along with the instance operations that can be performed on it in the SiteConfigWeb. </summary>
-        /// <returns> Returns a <see cref="SiteConfigSnapshot" /> object. </returns>
-        public SiteConfigSnapshot GetSiteConfigSnapshot()
+        /// <summary> Gets a collection of SiteConfigSnapshots in the SiteConfigWeb. </summary>
+        /// <returns> An object representing collection of SiteConfigSnapshots and their operations over a SiteConfigWeb. </returns>
+        public SiteConfigSnapshotCollection GetSiteConfigSnapshots()
         {
-            return new SiteConfigSnapshot(this, Id + "/snapshots/{snapshotId}");
+            return new SiteConfigSnapshotCollection(this);
         }
         #endregion
     }

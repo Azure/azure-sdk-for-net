@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static RecommendationCollection DeserializeRecommendationCollection(JsonElement element)
         {
-            IReadOnlyList<Recommendation> value = default;
+            IReadOnlyList<AppServiceRecommendation> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<Recommendation> array = new List<Recommendation>();
+                    List<AppServiceRecommendation> array = new List<AppServiceRecommendation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Recommendation.DeserializeRecommendation(item));
+                        array.Add(AppServiceRecommendation.DeserializeAppServiceRecommendation(item));
                     }
                     value = array;
                     continue;

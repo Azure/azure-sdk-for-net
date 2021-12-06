@@ -19,7 +19,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of DetectorResponse and their operations over its parent. </summary>
+    /// <summary> A class representing collection of AppServiceDetector and their operations over its parent. </summary>
     public partial class SiteDetectorCollection : ArmCollection, IEnumerable<SiteDetector>, IAsyncEnumerable<SiteDetector>
 
     {
@@ -324,6 +324,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SiteDetector, DetectorResponseData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SiteDetector, AppServiceDetectorData> Construct() { }
     }
 }

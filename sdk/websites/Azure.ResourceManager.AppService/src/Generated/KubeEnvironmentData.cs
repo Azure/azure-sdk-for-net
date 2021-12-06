@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the KubeEnvironment data model. </summary>
-    public partial class KubeEnvironmentData : Resource
+    public partial class KubeEnvironmentData : AppServiceResource
     {
         /// <summary> Initializes a new instance of KubeEnvironmentData. </summary>
         /// <param name="location"> The location. </param>

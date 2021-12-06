@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the WebSite data model. </summary>
-    public partial class WebSiteData : Resource
+    public partial class WebSiteData : AppServiceResource
     {
         /// <summary> Initializes a new instance of WebSiteData. </summary>
         /// <param name="location"> The location. </param>

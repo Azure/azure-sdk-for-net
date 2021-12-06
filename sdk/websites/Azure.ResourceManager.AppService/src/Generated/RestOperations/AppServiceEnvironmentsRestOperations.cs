@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string name, AppServiceEnvironmentPatchResource hostingEnvironmentEnvelope)
+        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string name, AppServiceEnvironmentPatchOptions hostingEnvironmentEnvelope)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="hostingEnvironmentEnvelope"> Configuration details of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="hostingEnvironmentEnvelope"/> is null. </exception>
-        public async Task<Response<AppServiceEnvironmentData>> UpdateAsync(string resourceGroupName, string name, AppServiceEnvironmentPatchResource hostingEnvironmentEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceEnvironmentData>> UpdateAsync(string resourceGroupName, string name, AppServiceEnvironmentPatchOptions hostingEnvironmentEnvelope, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="hostingEnvironmentEnvelope"> Configuration details of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="hostingEnvironmentEnvelope"/> is null. </exception>
-        public Response<AppServiceEnvironmentData> Update(string resourceGroupName, string name, AppServiceEnvironmentPatchResource hostingEnvironmentEnvelope, CancellationToken cancellationToken = default)
+        public Response<AppServiceEnvironmentData> Update(string resourceGroupName, string name, AppServiceEnvironmentPatchOptions hostingEnvironmentEnvelope, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1917,7 +1917,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        public async Task<Response<IReadOnlyList<Models.Operation>>> ListOperationsAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<OperationInformation>>> ListOperationsAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1934,12 +1934,12 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IReadOnlyList<Models.Operation> value = default;
+                        IReadOnlyList<OperationInformation> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<Models.Operation> array = new List<Models.Operation>();
+                        List<OperationInformation> array = new List<OperationInformation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(Models.Operation.DeserializeOperation(item));
+                            array.Add(OperationInformation.DeserializeOperationInformation(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -1954,7 +1954,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        public Response<IReadOnlyList<Models.Operation>> ListOperations(string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<OperationInformation>> ListOperations(string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1971,12 +1971,12 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IReadOnlyList<Models.Operation> value = default;
+                        IReadOnlyList<OperationInformation> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<Models.Operation> array = new List<Models.Operation>();
+                        List<OperationInformation> array = new List<OperationInformation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(Models.Operation.DeserializeOperation(item));
+                            array.Add(OperationInformation.DeserializeOperationInformation(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

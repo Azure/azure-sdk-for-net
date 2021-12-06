@@ -268,10 +268,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="expiredOnly"> Specify &lt;code&gt;false&lt;/code&gt; to return all recommendations. The default is &lt;code&gt;true&lt;/code&gt;, which returns only expired recommendations. </param>
         /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Recommendation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Recommendation> GetHistoryForWebAppRecommendationsAsync(bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServiceRecommendation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServiceRecommendation> GetHistoryForWebAppRecommendationsAsync(bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<Recommendation>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppServiceRecommendation>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("WebSite.GetHistoryForWebAppRecommendations");
                 scope.Start();
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<Recommendation>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AppServiceRecommendation>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("WebSite.GetHistoryForWebAppRecommendations");
                 scope.Start();
@@ -311,10 +311,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="expiredOnly"> Specify &lt;code&gt;false&lt;/code&gt; to return all recommendations. The default is &lt;code&gt;true&lt;/code&gt;, which returns only expired recommendations. </param>
         /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Recommendation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Recommendation> GetHistoryForWebAppRecommendations(bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceRecommendation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServiceRecommendation> GetHistoryForWebAppRecommendations(bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<Recommendation> FirstPageFunc(int? pageSizeHint)
+            Page<AppServiceRecommendation> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("WebSite.GetHistoryForWebAppRecommendations");
                 scope.Start();
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<Recommendation> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AppServiceRecommendation> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("WebSite.GetHistoryForWebAppRecommendations");
                 scope.Start();
@@ -354,10 +354,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
         /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Recommendation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Recommendation> GetRecommendedRulesForWebAppRecommendationsAsync(bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServiceRecommendation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServiceRecommendation> GetRecommendedRulesForWebAppRecommendationsAsync(bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<Recommendation>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppServiceRecommendation>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("WebSite.GetRecommendedRulesForWebAppRecommendations");
                 scope.Start();
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<Recommendation>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AppServiceRecommendation>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("WebSite.GetRecommendedRulesForWebAppRecommendations");
                 scope.Start();
@@ -397,10 +397,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
         /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Recommendation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Recommendation> GetRecommendedRulesForWebAppRecommendations(bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceRecommendation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServiceRecommendation> GetRecommendedRulesForWebAppRecommendations(bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<Recommendation> FirstPageFunc(int? pageSizeHint)
+            Page<AppServiceRecommendation> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("WebSite.GetRecommendedRulesForWebAppRecommendations");
                 scope.Start();
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<Recommendation> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AppServiceRecommendation> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("WebSite.GetRecommendedRulesForWebAppRecommendations");
                 scope.Start();
@@ -4277,13 +4277,13 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region SiteSlotBackUp
+        #region SiteBackup
 
-        /// <summary> Gets a collection of SiteSlotBackUps in the WebSite. </summary>
-        /// <returns> An object representing collection of SiteSlotBackUps and their operations over a WebSite. </returns>
-        public SiteSlotBackUpCollection GetSiteSlotBackUps()
+        /// <summary> Gets a collection of SiteBackups in the WebSite. </summary>
+        /// <returns> An object representing collection of SiteBackups and their operations over a WebSite. </returns>
+        public SiteBackupCollection GetSiteBackups()
         {
-            return new SiteSlotBackUpCollection(this);
+            return new SiteBackupCollection(this);
         }
         #endregion
 

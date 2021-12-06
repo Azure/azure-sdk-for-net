@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Delete an existing certificate order. </summary>
-    public partial class AppServiceCertificateOrderDeleteOperation : Azure.Operation
+    public partial class AppServiceCertificateOrderDeleteOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 

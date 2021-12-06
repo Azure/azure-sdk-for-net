@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Delete a Kubernetes Environment. </summary>
-    public partial class KubeEnvironmentDeleteOperation : Azure.Operation
+    public partial class KubeEnvironmentDeleteOperation : Operation
     {
         private readonly OperationInternals _operation;
 

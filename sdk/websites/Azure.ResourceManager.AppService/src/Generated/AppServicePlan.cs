@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="appServicePlan"> Details of the App Service plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appServicePlan"/> is null. </exception>
-        public async virtual Task<Response<AppServicePlan>> UpdateAsync(AppServicePlanPatchResource appServicePlan, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<AppServicePlan>> UpdateAsync(AppServicePlanPatchOptions appServicePlan, CancellationToken cancellationToken = default)
         {
             if (appServicePlan == null)
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="appServicePlan"> Details of the App Service plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appServicePlan"/> is null. </exception>
-        public virtual Response<AppServicePlan> Update(AppServicePlanPatchResource appServicePlan, CancellationToken cancellationToken = default)
+        public virtual Response<AppServicePlan> Update(AppServicePlanPatchOptions appServicePlan, CancellationToken cancellationToken = default)
         {
             if (appServicePlan == null)
             {

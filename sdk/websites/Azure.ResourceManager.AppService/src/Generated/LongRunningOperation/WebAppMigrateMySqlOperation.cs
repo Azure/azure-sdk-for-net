@@ -16,9 +16,9 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Migrates a local (in-app) MySql database to a remote MySql database. </summary>
-    public partial class WebAppMigrateMySqlOperation : Operation<Operation>, IOperationSource<Operation>
+    public partial class WebAppMigrateMySqlOperation : Operation<OperationInformation>, IOperationSource<OperationInformation>
     {
-        private readonly OperationInternals<Operation> _operation;
+        private readonly OperationInternals<OperationInformation> _operation;
 
         /// <summary> Initializes a new instance of WebAppMigrateMySqlOperation for mocking. </summary>
         protected WebAppMigrateMySqlOperation()
@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal WebAppMigrateMySqlOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<Operation>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "WebAppMigrateMySqlOperation");
+            _operation = new OperationInternals<OperationInformation>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "WebAppMigrateMySqlOperation");
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override Operation Value => _operation.Value;
+        public override OperationInformation Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,21 +52,21 @@ namespace Azure.ResourceManager.AppService.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Operation>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<OperationInformation>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Operation>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<OperationInformation>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        Operation IOperationSource<Operation>.CreateResult(Response response, CancellationToken cancellationToken)
+        OperationInformation IOperationSource<OperationInformation>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return Operation.DeserializeOperation(document.RootElement);
+            return OperationInformation.DeserializeOperationInformation(document.RootElement);
         }
 
-        async ValueTask<Operation> IOperationSource<Operation>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<OperationInformation> IOperationSource<OperationInformation>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return Operation.DeserializeOperation(document.RootElement);
+            return OperationInformation.DeserializeOperationInformation(document.RootElement);
         }
     }
 }

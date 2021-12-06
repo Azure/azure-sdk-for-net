@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Delete a Hybrid Connection in use in an App Service plan. </summary>
-    public partial class AppServicePlanDeleteHybridConnectionOperation : Azure.Operation
+    public partial class AppServicePlanDeleteHybridConnectionOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 

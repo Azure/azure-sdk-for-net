@@ -9,9 +9,9 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.AppService
+namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class DetectorDefinitionResourceData : IUtf8JsonSerializable
+    public partial class AppServiceCertificatePatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,20 +23,29 @@ namespace Azure.ResourceManager.AppService
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
+            if (Optional.IsDefined(KeyVaultId))
+            {
+                writer.WritePropertyName("keyVaultId");
+                writer.WriteStringValue(KeyVaultId);
+            }
+            if (Optional.IsDefined(KeyVaultSecretName))
+            {
+                writer.WritePropertyName("keyVaultSecretName");
+                writer.WriteStringValue(KeyVaultSecretName);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static DetectorDefinitionResourceData DeserializeDetectorDefinitionResourceData(JsonElement element)
+        internal static AppServiceCertificatePatch DeserializeAppServiceCertificatePatch(JsonElement element)
         {
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<double> rank = default;
-            Optional<bool> isEnabled = default;
+            Optional<string> keyVaultId = default;
+            Optional<string> keyVaultSecretName = default;
+            Optional<KeyVaultSecretStatus> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -68,41 +77,31 @@ namespace Azure.ResourceManager.AppService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("keyVaultId"))
                         {
-                            displayName = property0.Value.GetString();
+                            keyVaultId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("keyVaultSecretName"))
                         {
-                            description = property0.Value.GetString();
+                            keyVaultSecretName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("rank"))
+                        if (property0.NameEquals("provisioningState"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            rank = property0.Value.GetDouble();
-                            continue;
-                        }
-                        if (property0.NameEquals("isEnabled"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            isEnabled = property0.Value.GetBoolean();
+                            provisioningState = property0.Value.GetString().ToKeyVaultSecretStatus();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new DetectorDefinitionResourceData(id, name, type, kind.Value, displayName.Value, description.Value, Optional.ToNullable(rank), Optional.ToNullable(isEnabled));
+            return new AppServiceCertificatePatch(id, name, type, kind.Value, keyVaultId.Value, keyVaultSecretName.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

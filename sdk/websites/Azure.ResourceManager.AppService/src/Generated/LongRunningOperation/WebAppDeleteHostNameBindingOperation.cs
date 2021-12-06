@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Deletes a hostname binding for an app. </summary>
-    public partial class WebAppDeleteHostNameBindingOperation : Azure.Operation
+    public partial class WebAppDeleteHostNameBindingOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 

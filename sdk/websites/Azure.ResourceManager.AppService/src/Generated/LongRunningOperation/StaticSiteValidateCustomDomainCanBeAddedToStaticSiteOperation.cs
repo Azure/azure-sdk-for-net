@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Validates a particular custom domain can be added to a static site. </summary>
-    public partial class StaticSiteValidateCustomDomainCanBeAddedToStaticSiteOperation : Azure.Operation
+    public partial class StaticSiteValidateCustomDomainCanBeAddedToStaticSiteOperation : Operation
     {
         private readonly OperationInternals _operation;
 

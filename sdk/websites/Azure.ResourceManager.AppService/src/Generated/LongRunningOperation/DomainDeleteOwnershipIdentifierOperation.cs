@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Delete ownership identifier for domain. </summary>
-    public partial class DomainDeleteOwnershipIdentifierOperation : Azure.Operation
+    public partial class DomainDeleteOwnershipIdentifierOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 

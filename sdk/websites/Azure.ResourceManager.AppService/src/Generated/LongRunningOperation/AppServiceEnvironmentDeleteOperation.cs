@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Delete an App Service Environment. </summary>
-    public partial class AppServiceEnvironmentDeleteOperation : Azure.Operation
+    public partial class AppServiceEnvironmentDeleteOperation : Operation
     {
         private readonly OperationInternals _operation;
 

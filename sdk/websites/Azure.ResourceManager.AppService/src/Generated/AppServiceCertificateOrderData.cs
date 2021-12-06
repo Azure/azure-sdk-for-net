@@ -15,14 +15,14 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the AppServiceCertificateOrder data model. </summary>
-    public partial class AppServiceCertificateOrderData : Resource
+    public partial class AppServiceCertificateOrderData : AppServiceResource
     {
         /// <summary> Initializes a new instance of AppServiceCertificateOrderData. </summary>
         /// <param name="location"> The location. </param>
         public AppServiceCertificateOrderData(Location location) : base(location)
         {
             Certificates = new ChangeTrackingDictionary<string, AppServiceCertificate>();
-            AppServiceCertificateNotRenewableReasons = new ChangeTrackingList<AppServiceCertificateOrderPropertiesAppServiceCertificateNotRenewableReasonsItem>();
+            AppServiceCertificateNotRenewableReasons = new ChangeTrackingList<AppServiceCertificateNotRenewableReason2>();
         }
 
         /// <summary> Initializes a new instance of AppServiceCertificateOrderData. </summary>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="appServiceCertificateNotRenewableReasons"> Reasons why App Service Certificate is not renewable at the current moment. </param>
         /// <param name="nextAutoRenewalTimeStamp"> Time stamp when the certificate would be auto renewed next. </param>
         /// <param name="contact"> Contact info. </param>
-        internal AppServiceCertificateOrderData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, string kind, IDictionary<string, AppServiceCertificate> certificates, string distinguishedName, string domainVerificationToken, int? validityInYears, int? keySize, CertificateProductType? productType, bool? autoRenew, ProvisioningState? provisioningState, CertificateOrderStatus? status, CertificateDetails signedCertificate, string csr, CertificateDetails intermediate, CertificateDetails root, string serialNumber, DateTimeOffset? lastCertificateIssuanceTime, DateTimeOffset? expirationTime, bool? isPrivateKeyExternal, IReadOnlyList<AppServiceCertificateOrderPropertiesAppServiceCertificateNotRenewableReasonsItem> appServiceCertificateNotRenewableReasons, DateTimeOffset? nextAutoRenewalTimeStamp, CertificateOrderContact contact) : base(id, name, type, tags, location, kind)
+        internal AppServiceCertificateOrderData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, string kind, IDictionary<string, AppServiceCertificate> certificates, string distinguishedName, string domainVerificationToken, int? validityInYears, int? keySize, CertificateProductType? productType, bool? autoRenew, ProvisioningState? provisioningState, CertificateOrderStatus? status, CertificateDetails signedCertificate, string csr, CertificateDetails intermediate, CertificateDetails root, string serialNumber, DateTimeOffset? lastCertificateIssuanceTime, DateTimeOffset? expirationTime, bool? isPrivateKeyExternal, IReadOnlyList<AppServiceCertificateNotRenewableReason2> appServiceCertificateNotRenewableReasons, DateTimeOffset? nextAutoRenewalTimeStamp, CertificateOrderContact contact) : base(id, name, type, tags, location, kind)
         {
             Certificates = certificates;
             DistinguishedName = distinguishedName;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> &lt;code&gt;true&lt;/code&gt; if private key is external; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsPrivateKeyExternal { get; }
         /// <summary> Reasons why App Service Certificate is not renewable at the current moment. </summary>
-        public IReadOnlyList<AppServiceCertificateOrderPropertiesAppServiceCertificateNotRenewableReasonsItem> AppServiceCertificateNotRenewableReasons { get; }
+        public IReadOnlyList<AppServiceCertificateNotRenewableReason2> AppServiceCertificateNotRenewableReasons { get; }
         /// <summary> Time stamp when the certificate would be auto renewed next. </summary>
         public DateTimeOffset? NextAutoRenewalTimeStamp { get; }
         /// <summary> Contact info. </summary>

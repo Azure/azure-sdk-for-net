@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Deletes a relay service connection by its name. </summary>
-    public partial class WebAppDeleteRelayServiceConnectionOperation : Azure.Operation
+    public partial class WebAppDeleteRelayServiceConnectionOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 

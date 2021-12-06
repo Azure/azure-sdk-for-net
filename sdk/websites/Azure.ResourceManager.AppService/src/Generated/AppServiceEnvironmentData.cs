@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the AppServiceEnvironment data model. </summary>
-    public partial class AppServiceEnvironmentData : Resource
+    public partial class AppServiceEnvironmentData : AppServiceResource
     {
         /// <summary> Initializes a new instance of AppServiceEnvironmentData. </summary>
         /// <param name="location"> The location. </param>

@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the Certificate data model. </summary>
-    public partial class CertificateData : Resource
+    public partial class CertificateData : AppServiceResource
     {
         /// <summary> Initializes a new instance of CertificateData. </summary>
         /// <param name="location"> The location. </param>

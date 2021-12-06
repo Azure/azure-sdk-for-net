@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Deletes a Swift Virtual Network connection from an app (or deployment slot). </summary>
-    public partial class WebAppDeleteSwiftVirtualNetworkOperation : Azure.Operation
+    public partial class WebAppDeleteSwiftVirtualNetworkOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 

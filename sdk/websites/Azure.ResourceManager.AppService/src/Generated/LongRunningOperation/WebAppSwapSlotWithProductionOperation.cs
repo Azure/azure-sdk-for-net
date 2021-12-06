@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Swaps two deployment slots of an app. </summary>
-    public partial class WebAppSwapSlotWithProductionOperation : Azure.Operation
+    public partial class WebAppSwapSlotWithProductionOperation : Operation
     {
         private readonly OperationInternals _operation;
 

@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Deploys zipped content to a specific environment of a static site. </summary>
-    public partial class StaticSiteCreateZipDeploymentForStaticSiteBuildOperation : Azure.Operation
+    public partial class StaticSiteCreateZipDeploymentForStaticSiteBuildOperation : Operation
     {
         private readonly OperationInternals _operation;
 

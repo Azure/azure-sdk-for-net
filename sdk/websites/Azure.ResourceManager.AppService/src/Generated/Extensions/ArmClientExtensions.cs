@@ -562,14 +562,14 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region SiteSlotBackUp
-        /// <summary> Gets an object representing a SiteSlotBackUp along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteBackup
+        /// <summary> Gets an object representing a SiteBackup along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotBackUp" /> object. </returns>
-        public static SiteSlotBackUp GetSiteSlotBackUp(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteBackup" /> object. </returns>
+        public static SiteBackup GetSiteBackup(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SiteSlotBackUp(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SiteBackup(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 

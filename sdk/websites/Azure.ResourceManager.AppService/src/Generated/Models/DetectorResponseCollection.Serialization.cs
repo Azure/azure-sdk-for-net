@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static DetectorResponseCollection DeserializeDetectorResponseCollection(JsonElement element)
         {
-            IReadOnlyList<DetectorResponseData> value = default;
+            IReadOnlyList<AppServiceDetectorData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<DetectorResponseData> array = new List<DetectorResponseData>();
+                    List<AppServiceDetectorData> array = new List<AppServiceDetectorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DetectorResponseData.DeserializeDetectorResponseData(item));
+                        array.Add(AppServiceDetectorData.DeserializeAppServiceDetectorData(item));
                     }
                     value = array;
                     continue;

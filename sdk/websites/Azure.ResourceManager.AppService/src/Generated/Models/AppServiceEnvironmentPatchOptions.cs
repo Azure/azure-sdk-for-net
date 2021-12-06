@@ -12,16 +12,16 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> ARM resource for a app service environment. </summary>
-    public partial class AppServiceEnvironmentPatchResource : ProxyOnlyResource
+    public partial class AppServiceEnvironmentPatchOptions : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of AppServiceEnvironmentPatchResource. </summary>
-        public AppServiceEnvironmentPatchResource()
+        /// <summary> Initializes a new instance of AppServiceEnvironmentPatchOptions. </summary>
+        public AppServiceEnvironmentPatchOptions()
         {
             ClusterSettings = new ChangeTrackingList<NameValuePair>();
             UserWhitelistedIpRanges = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceEnvironmentPatchResource. </summary>
+        /// <summary> Initializes a new instance of AppServiceEnvironmentPatchOptions. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="hasLinuxWorkers"> Flag that displays whether an ASE has linux workers or not. </param>
         /// <param name="dedicatedHostCount"> Dedicated Host Count. </param>
         /// <param name="zoneRedundant"> Whether or not this App Service Environment is zone-redundant. </param>
-        internal AppServiceEnvironmentPatchResource(ResourceIdentifier id, string name, ResourceType type, string kind, ProvisioningState? provisioningState, HostingEnvironmentStatus? status, VirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipsslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? suspended, IList<NameValuePair> clusterSettings, IList<string> userWhitelistedIpRanges, bool? hasLinuxWorkers, int? dedicatedHostCount, bool? zoneRedundant) : base(id, name, type, kind)
+        internal AppServiceEnvironmentPatchOptions(ResourceIdentifier id, string name, ResourceType type, string kind, ProvisioningState? provisioningState, HostingEnvironmentStatus? status, VirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipsslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? suspended, IList<NameValuePair> clusterSettings, IList<string> userWhitelistedIpRanges, bool? hasLinuxWorkers, int? dedicatedHostCount, bool? zoneRedundant) : base(id, name, type, kind)
         {
             ProvisioningState = provisioningState;
             Status = status;

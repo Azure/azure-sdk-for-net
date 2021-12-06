@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class Operation
+    public partial class OperationInformation
     {
-        internal static Operation DeserializeOperation(JsonElement element)
+        internal static OperationInformation DeserializeOperationInformation(JsonElement element)
         {
             Optional<string> id = default;
             Optional<string> name = default;
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new Operation(id.Value, name.Value, Optional.ToNullable(status), Optional.ToList(errors), Optional.ToNullable(createdTime), Optional.ToNullable(modifiedTime), Optional.ToNullable(expirationTime), Optional.ToNullable(geoMasterOperationId));
+            return new OperationInformation(id.Value, name.Value, Optional.ToNullable(status), Optional.ToList(errors), Optional.ToNullable(createdTime), Optional.ToNullable(modifiedTime), Optional.ToNullable(expirationTime), Optional.ToNullable(geoMasterOperationId));
         }
     }
 }

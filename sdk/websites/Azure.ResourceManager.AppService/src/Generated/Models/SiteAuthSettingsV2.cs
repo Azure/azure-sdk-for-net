@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="identityProviders"> The configuration settings of each of the identity providers used to configure App Service Authentication/Authorization. </param>
         /// <param name="login"> The configuration settings of the login flow of users using App Service Authentication/Authorization. </param>
         /// <param name="httpSettings"> The configuration settings of the HTTP requests for authentication and authorization requests made against App Service Authentication/Authorization. </param>
-        internal SiteAuthSettingsV2(ResourceIdentifier id, string name, ResourceType type, string kind, AuthPlatform platform, GlobalValidation globalValidation, IdentityProviders identityProviders, Login login, HttpSettings httpSettings) : base(id, name, type, kind)
+        internal SiteAuthSettingsV2(ResourceIdentifier id, string name, ResourceType type, string kind, AuthPlatform platform, GlobalValidation globalValidation, IdentityProviders identityProviders, LoginInformation login, HttpSettings httpSettings) : base(id, name, type, kind)
         {
             Platform = platform;
             GlobalValidation = globalValidation;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> The configuration settings of each of the identity providers used to configure App Service Authentication/Authorization. </summary>
         public IdentityProviders IdentityProviders { get; set; }
         /// <summary> The configuration settings of the login flow of users using App Service Authentication/Authorization. </summary>
-        public Login Login { get; set; }
+        public LoginInformation Login { get; set; }
         /// <summary> The configuration settings of the HTTP requests for authentication and authorization requests made against App Service Authentication/Authorization. </summary>
         public HttpSettings HttpSettings { get; set; }
     }

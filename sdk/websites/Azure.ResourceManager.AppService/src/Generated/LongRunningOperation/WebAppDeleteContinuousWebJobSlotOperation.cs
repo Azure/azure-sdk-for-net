@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Delete a continuous web job by its ID for an app, or a deployment slot. </summary>
-    public partial class WebAppDeleteContinuousWebJobSlotOperation : Azure.Operation
+    public partial class WebAppDeleteContinuousWebJobSlotOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 

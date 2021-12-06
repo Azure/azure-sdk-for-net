@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class Resource : IUtf8JsonSerializable
+    public partial class AppServiceResource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteEndObject();
         }
 
-        internal static Resource DeserializeResource(JsonElement element)
+        internal static AppServiceResource DeserializeAppServiceResource(JsonElement element)
         {
             Optional<string> kind = default;
             IDictionary<string, string> tags = default;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new Resource(id, name, type, tags, location, kind.Value);
+            return new AppServiceResource(id, name, type, tags, location, kind.Value);
         }
     }
 }

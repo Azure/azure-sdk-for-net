@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Deletes a domain ownership identifier for a web app. </summary>
-    public partial class WebAppDeleteDomainOwnershipIdentifierSlotOperation : Azure.Operation
+    public partial class WebAppDeleteDomainOwnershipIdentifierSlotOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 

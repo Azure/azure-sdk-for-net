@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Terminate a process by its ID for a web site, or a deployment slot, or specific scaled-out instance in a web site. </summary>
-    public partial class WebAppDeleteInstanceProcessOperation : Azure.Operation
+    public partial class WebAppDeleteInstanceProcessOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 

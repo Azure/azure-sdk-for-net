@@ -12,15 +12,15 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> MSDeploy ARM PUT information. </summary>
-    public partial class MSDeploy : ProxyOnlyResource
+    public partial class MsDeploy : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of MSDeploy. </summary>
-        public MSDeploy()
+        /// <summary> Initializes a new instance of MsDeploy. </summary>
+        public MsDeploy()
         {
             SetParameters = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MSDeploy. </summary>
+        /// <summary> Initializes a new instance of MsDeploy. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Sets the AppOffline rule while the MSDeploy operation executes.
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </param>
-        internal MSDeploy(ResourceIdentifier id, string name, ResourceType type, string kind, string packageUri, string connectionString, string dbType, string setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? skipAppData, bool? appOffline) : base(id, name, type, kind)
+        internal MsDeploy(ResourceIdentifier id, string name, ResourceType type, string kind, string packageUri, string connectionString, string dbType, string setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? skipAppData, bool? appOffline) : base(id, name, type, kind)
         {
             PackageUri = packageUri;
             ConnectionString = connectionString;

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the AppServiceCertificateResource data model. </summary>
-    public partial class AppServiceCertificateResourceData : Resource
+    public partial class AppServiceCertificateResourceData : AppServiceResource
     {
         /// <summary> Initializes a new instance of AppServiceCertificateResourceData. </summary>
         /// <param name="location"> The location. </param>

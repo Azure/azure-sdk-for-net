@@ -44,23 +44,23 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// OperationId: WebApps_CreateMSDeployOperation
         /// <summary> Description for Invoke the MSDeploy web app extension. </summary>
-        /// <param name="mSDeploy"> Details of MSDeploy operation. </param>
+        /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="mSDeploy"/> is null. </exception>
-        public virtual WebAppCreateMSDeployOperationOperation CreateOrUpdate(MSDeploy mSDeploy, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="msDeploy"/> is null. </exception>
+        public virtual WebAppCreateMSDeployOperationOperation CreateOrUpdate(MsDeploy msDeploy, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            if (mSDeploy == null)
+            if (msDeploy == null)
             {
-                throw new ArgumentNullException(nameof(mSDeploy));
+                throw new ArgumentNullException(nameof(msDeploy));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SiteExtensionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.CreateMSDeployOperation(Id.ResourceGroupName, Id.Name, mSDeploy, cancellationToken);
-                var operation = new WebAppCreateMSDeployOperationOperation(Parent, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateCreateMSDeployOperationRequest(Id.ResourceGroupName, Id.Name, mSDeploy).Request, response);
+                var response = _webAppsRestClient.CreateMSDeployOperation(Id.ResourceGroupName, Id.Name, msDeploy, cancellationToken);
+                var operation = new WebAppCreateMSDeployOperationOperation(Parent, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateCreateMSDeployOperationRequest(Id.ResourceGroupName, Id.Name, msDeploy).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -76,23 +76,23 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// OperationId: WebApps_CreateMSDeployOperation
         /// <summary> Description for Invoke the MSDeploy web app extension. </summary>
-        /// <param name="mSDeploy"> Details of MSDeploy operation. </param>
+        /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="mSDeploy"/> is null. </exception>
-        public async virtual Task<WebAppCreateMSDeployOperationOperation> CreateOrUpdateAsync(MSDeploy mSDeploy, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="msDeploy"/> is null. </exception>
+        public async virtual Task<WebAppCreateMSDeployOperationOperation> CreateOrUpdateAsync(MsDeploy msDeploy, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            if (mSDeploy == null)
+            if (msDeploy == null)
             {
-                throw new ArgumentNullException(nameof(mSDeploy));
+                throw new ArgumentNullException(nameof(msDeploy));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SiteExtensionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.CreateMSDeployOperationAsync(Id.ResourceGroupName, Id.Name, mSDeploy, cancellationToken).ConfigureAwait(false);
-                var operation = new WebAppCreateMSDeployOperationOperation(Parent, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateCreateMSDeployOperationRequest(Id.ResourceGroupName, Id.Name, mSDeploy).Request, response);
+                var response = await _webAppsRestClient.CreateMSDeployOperationAsync(Id.ResourceGroupName, Id.Name, msDeploy, cancellationToken).ConfigureAwait(false);
+                var operation = new WebAppCreateMSDeployOperationOperation(Parent, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateCreateMSDeployOperationRequest(Id.ResourceGroupName, Id.Name, msDeploy).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;

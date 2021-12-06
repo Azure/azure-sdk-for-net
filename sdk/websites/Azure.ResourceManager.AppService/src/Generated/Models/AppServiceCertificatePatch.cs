@@ -10,14 +10,14 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Key Vault container ARM resource for a certificate that is purchased through Azure. </summary>
-    public partial class AppServiceCertificatePatchResource : ProxyOnlyResource
+    public partial class AppServiceCertificatePatch : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of AppServiceCertificatePatchResource. </summary>
-        public AppServiceCertificatePatchResource()
+        /// <summary> Initializes a new instance of AppServiceCertificatePatch. </summary>
+        public AppServiceCertificatePatch()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceCertificatePatchResource. </summary>
+        /// <summary> Initializes a new instance of AppServiceCertificatePatch. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="keyVaultId"> Key Vault resource Id. </param>
         /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
         /// <param name="provisioningState"> Status of the Key Vault secret. </param>
-        internal AppServiceCertificatePatchResource(ResourceIdentifier id, string name, ResourceType type, string kind, string keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? provisioningState) : base(id, name, type, kind)
+        internal AppServiceCertificatePatch(ResourceIdentifier id, string name, ResourceType type, string kind, string keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? provisioningState) : base(id, name, type, kind)
         {
             KeyVaultId = keyVaultId;
             KeyVaultSecretName = keyVaultSecretName;

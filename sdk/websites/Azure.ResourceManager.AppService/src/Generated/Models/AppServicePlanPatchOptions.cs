@@ -11,14 +11,14 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> ARM resource for a app service plan. </summary>
-    public partial class AppServicePlanPatchResource : ProxyOnlyResource
+    public partial class AppServicePlanPatchOptions : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of AppServicePlanPatchResource. </summary>
-        public AppServicePlanPatchResource()
+        /// <summary> Initializes a new instance of AppServicePlanPatchOptions. </summary>
+        public AppServicePlanPatchOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServicePlanPatchResource. </summary>
+        /// <summary> Initializes a new instance of AppServicePlanPatchOptions. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will perform availability zone balancing.
         /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
         /// </param>
-        internal AppServicePlanPatchResource(ResourceIdentifier id, string name, ResourceType type, string kind, string workerTierName, StatusOptions? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, string geoRegion, bool? perSiteScaling, bool? elasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpirationTime, DateTimeOffset? freeOfferExpirationTime, string resourceGroup, bool? reserved, bool? isXenon, bool? hyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? zoneRedundant) : base(id, name, type, kind)
+        internal AppServicePlanPatchOptions(ResourceIdentifier id, string name, ResourceType type, string kind, string workerTierName, StatusOptions? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, string geoRegion, bool? perSiteScaling, bool? elasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpirationTime, DateTimeOffset? freeOfferExpirationTime, string resourceGroup, bool? reserved, bool? isXenon, bool? hyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? zoneRedundant) : base(id, name, type, kind)
         {
             WorkerTierName = workerTierName;
             Status = status;

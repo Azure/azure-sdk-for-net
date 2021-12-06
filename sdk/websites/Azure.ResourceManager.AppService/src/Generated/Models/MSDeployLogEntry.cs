@@ -10,18 +10,18 @@ using System;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> MSDeploy log entry. </summary>
-    public partial class MSDeployLogEntry
+    public partial class MsDeployLogEntry
     {
-        /// <summary> Initializes a new instance of MSDeployLogEntry. </summary>
-        internal MSDeployLogEntry()
+        /// <summary> Initializes a new instance of MsDeployLogEntry. </summary>
+        internal MsDeployLogEntry()
         {
         }
 
-        /// <summary> Initializes a new instance of MSDeployLogEntry. </summary>
+        /// <summary> Initializes a new instance of MsDeployLogEntry. </summary>
         /// <param name="time"> Timestamp of log entry. </param>
         /// <param name="type"> Log entry type. </param>
         /// <param name="message"> Log entry message. </param>
-        internal MSDeployLogEntry(DateTimeOffset? time, MSDeployLogEntryType? type, string message)
+        internal MsDeployLogEntry(DateTimeOffset? time, MSDeployLogEntryType? type, string message)
         {
             Time = time;
             Type = type;

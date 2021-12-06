@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string certificateOrderName, AppServiceCertificateOrderPatchResource certificateDistinguishedName)
+        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string certificateOrderName, AppServiceCertificateOrderPatch certificateDistinguishedName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="certificateDistinguishedName"> Distinguished name to use for the certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="certificateDistinguishedName"/> is null. </exception>
-        public async Task<Response<AppServiceCertificateOrderData>> UpdateAsync(string resourceGroupName, string certificateOrderName, AppServiceCertificateOrderPatchResource certificateDistinguishedName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceCertificateOrderData>> UpdateAsync(string resourceGroupName, string certificateOrderName, AppServiceCertificateOrderPatch certificateDistinguishedName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="certificateDistinguishedName"> Distinguished name to use for the certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="certificateDistinguishedName"/> is null. </exception>
-        public Response<AppServiceCertificateOrderData> Update(string resourceGroupName, string certificateOrderName, AppServiceCertificateOrderPatchResource certificateDistinguishedName, CancellationToken cancellationToken = default)
+        public Response<AppServiceCertificateOrderData> Update(string resourceGroupName, string certificateOrderName, AppServiceCertificateOrderPatch certificateDistinguishedName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -967,7 +967,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateCertificateRequest(string resourceGroupName, string certificateOrderName, string name, AppServiceCertificatePatchResource keyVaultCertificate)
+        internal HttpMessage CreateUpdateCertificateRequest(string resourceGroupName, string certificateOrderName, string name, AppServiceCertificatePatch keyVaultCertificate)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1000,7 +1000,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyVaultCertificate"> Key vault certificate resource Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, <paramref name="name"/>, or <paramref name="keyVaultCertificate"/> is null. </exception>
-        public async Task<Response<AppServiceCertificateResourceData>> UpdateCertificateAsync(string resourceGroupName, string certificateOrderName, string name, AppServiceCertificatePatchResource keyVaultCertificate, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceCertificateResourceData>> UpdateCertificateAsync(string resourceGroupName, string certificateOrderName, string name, AppServiceCertificatePatch keyVaultCertificate, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1042,7 +1042,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyVaultCertificate"> Key vault certificate resource Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, <paramref name="name"/>, or <paramref name="keyVaultCertificate"/> is null. </exception>
-        public Response<AppServiceCertificateResourceData> UpdateCertificate(string resourceGroupName, string certificateOrderName, string name, AppServiceCertificatePatchResource keyVaultCertificate, CancellationToken cancellationToken = default)
+        public Response<AppServiceCertificateResourceData> UpdateCertificate(string resourceGroupName, string certificateOrderName, string name, AppServiceCertificatePatch keyVaultCertificate, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

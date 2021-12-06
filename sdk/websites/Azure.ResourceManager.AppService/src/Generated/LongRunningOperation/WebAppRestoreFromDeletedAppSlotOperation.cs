@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Restores a deleted web app to this web app. </summary>
-    public partial class WebAppRestoreFromDeletedAppSlotOperation : Azure.Operation
+    public partial class WebAppRestoreFromDeletedAppSlotOperation : Operation
     {
         private readonly OperationInternals _operation;
 

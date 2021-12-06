@@ -6563,7 +6563,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateMSDeployOperationRequest(string resourceGroupName, string name, MSDeploy mSDeploy)
+        internal HttpMessage CreateCreateMSDeployOperationRequest(string resourceGroupName, string name, MsDeploy msDeploy)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -6582,7 +6582,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(mSDeploy);
+            content.JsonWriter.WriteObjectValue(msDeploy);
             request.Content = content;
             message.SetProperty("UserAgentOverride", _userAgent);
             return message;
@@ -6591,10 +6591,10 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Invoke the MSDeploy web app extension. </summary>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
-        /// <param name="mSDeploy"> Details of MSDeploy operation. </param>
+        /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="mSDeploy"/> is null. </exception>
-        public async Task<Response> CreateMSDeployOperationAsync(string resourceGroupName, string name, MSDeploy mSDeploy, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="msDeploy"/> is null. </exception>
+        public async Task<Response> CreateMSDeployOperationAsync(string resourceGroupName, string name, MsDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -6604,12 +6604,12 @@ namespace Azure.ResourceManager.AppService
             {
                 throw new ArgumentNullException(nameof(name));
             }
-            if (mSDeploy == null)
+            if (msDeploy == null)
             {
-                throw new ArgumentNullException(nameof(mSDeploy));
+                throw new ArgumentNullException(nameof(msDeploy));
             }
 
-            using var message = CreateCreateMSDeployOperationRequest(resourceGroupName, name, mSDeploy);
+            using var message = CreateCreateMSDeployOperationRequest(resourceGroupName, name, msDeploy);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -6623,10 +6623,10 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Invoke the MSDeploy web app extension. </summary>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
-        /// <param name="mSDeploy"> Details of MSDeploy operation. </param>
+        /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="mSDeploy"/> is null. </exception>
-        public Response CreateMSDeployOperation(string resourceGroupName, string name, MSDeploy mSDeploy, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="msDeploy"/> is null. </exception>
+        public Response CreateMSDeployOperation(string resourceGroupName, string name, MsDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -6636,12 +6636,12 @@ namespace Azure.ResourceManager.AppService
             {
                 throw new ArgumentNullException(nameof(name));
             }
-            if (mSDeploy == null)
+            if (msDeploy == null)
             {
-                throw new ArgumentNullException(nameof(mSDeploy));
+                throw new ArgumentNullException(nameof(msDeploy));
             }
 
-            using var message = CreateCreateMSDeployOperationRequest(resourceGroupName, name, mSDeploy);
+            using var message = CreateCreateMSDeployOperationRequest(resourceGroupName, name, msDeploy);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -6678,7 +6678,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        public async Task<Response<MSDeployLog>> GetMSDeployLogAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<MsDeployLog>> GetMSDeployLogAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -6695,9 +6695,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        MSDeployLog value = default;
+                        MsDeployLog value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MSDeployLog.DeserializeMSDeployLog(document.RootElement);
+                        value = MsDeployLog.DeserializeMsDeployLog(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -6710,7 +6710,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        public Response<MSDeployLog> GetMSDeployLog(string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<MsDeployLog> GetMSDeployLog(string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -6727,9 +6727,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        MSDeployLog value = default;
+                        MsDeployLog value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MSDeployLog.DeserializeMSDeployLog(document.RootElement);
+                        value = MsDeployLog.DeserializeMsDeployLog(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -9765,7 +9765,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateInstanceMSDeployOperationRequest(string resourceGroupName, string name, string instanceId, MSDeploy mSDeploy)
+        internal HttpMessage CreateCreateInstanceMSDeployOperationRequest(string resourceGroupName, string name, string instanceId, MsDeploy msDeploy)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -9786,7 +9786,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(mSDeploy);
+            content.JsonWriter.WriteObjectValue(msDeploy);
             request.Content = content;
             message.SetProperty("UserAgentOverride", _userAgent);
             return message;
@@ -9796,10 +9796,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="instanceId"> ID of web app instance. </param>
-        /// <param name="mSDeploy"> Details of MSDeploy operation. </param>
+        /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/>, or <paramref name="mSDeploy"/> is null. </exception>
-        public async Task<Response> CreateInstanceMSDeployOperationAsync(string resourceGroupName, string name, string instanceId, MSDeploy mSDeploy, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/>, or <paramref name="msDeploy"/> is null. </exception>
+        public async Task<Response> CreateInstanceMSDeployOperationAsync(string resourceGroupName, string name, string instanceId, MsDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -9813,12 +9813,12 @@ namespace Azure.ResourceManager.AppService
             {
                 throw new ArgumentNullException(nameof(instanceId));
             }
-            if (mSDeploy == null)
+            if (msDeploy == null)
             {
-                throw new ArgumentNullException(nameof(mSDeploy));
+                throw new ArgumentNullException(nameof(msDeploy));
             }
 
-            using var message = CreateCreateInstanceMSDeployOperationRequest(resourceGroupName, name, instanceId, mSDeploy);
+            using var message = CreateCreateInstanceMSDeployOperationRequest(resourceGroupName, name, instanceId, msDeploy);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -9833,10 +9833,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="instanceId"> ID of web app instance. </param>
-        /// <param name="mSDeploy"> Details of MSDeploy operation. </param>
+        /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/>, or <paramref name="mSDeploy"/> is null. </exception>
-        public Response CreateInstanceMSDeployOperation(string resourceGroupName, string name, string instanceId, MSDeploy mSDeploy, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/>, or <paramref name="msDeploy"/> is null. </exception>
+        public Response CreateInstanceMSDeployOperation(string resourceGroupName, string name, string instanceId, MsDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -9850,12 +9850,12 @@ namespace Azure.ResourceManager.AppService
             {
                 throw new ArgumentNullException(nameof(instanceId));
             }
-            if (mSDeploy == null)
+            if (msDeploy == null)
             {
-                throw new ArgumentNullException(nameof(mSDeploy));
+                throw new ArgumentNullException(nameof(msDeploy));
             }
 
-            using var message = CreateCreateInstanceMSDeployOperationRequest(resourceGroupName, name, instanceId, mSDeploy);
+            using var message = CreateCreateInstanceMSDeployOperationRequest(resourceGroupName, name, instanceId, msDeploy);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -9895,7 +9895,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of web app instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="instanceId"/> is null. </exception>
-        public async Task<Response<MSDeployLog>> GetInstanceMSDeployLogAsync(string resourceGroupName, string name, string instanceId, CancellationToken cancellationToken = default)
+        public async Task<Response<MsDeployLog>> GetInstanceMSDeployLogAsync(string resourceGroupName, string name, string instanceId, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -9916,9 +9916,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        MSDeployLog value = default;
+                        MsDeployLog value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MSDeployLog.DeserializeMSDeployLog(document.RootElement);
+                        value = MsDeployLog.DeserializeMsDeployLog(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -9932,7 +9932,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of web app instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="instanceId"/> is null. </exception>
-        public Response<MSDeployLog> GetInstanceMSDeployLog(string resourceGroupName, string name, string instanceId, CancellationToken cancellationToken = default)
+        public Response<MsDeployLog> GetInstanceMSDeployLog(string resourceGroupName, string name, string instanceId, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -9953,9 +9953,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        MSDeployLog value = default;
+                        MsDeployLog value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MSDeployLog.DeserializeMSDeployLog(document.RootElement);
+                        value = MsDeployLog.DeserializeMsDeployLog(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -22881,7 +22881,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateMSDeployOperationSlotRequest(string resourceGroupName, string name, string slot, MSDeploy mSDeploy)
+        internal HttpMessage CreateCreateMSDeployOperationSlotRequest(string resourceGroupName, string name, string slot, MsDeploy msDeploy)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -22902,7 +22902,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(mSDeploy);
+            content.JsonWriter.WriteObjectValue(msDeploy);
             request.Content = content;
             message.SetProperty("UserAgentOverride", _userAgent);
             return message;
@@ -22912,10 +22912,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
-        /// <param name="mSDeploy"> Details of MSDeploy operation. </param>
+        /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="mSDeploy"/> is null. </exception>
-        public async Task<Response> CreateMSDeployOperationSlotAsync(string resourceGroupName, string name, string slot, MSDeploy mSDeploy, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="msDeploy"/> is null. </exception>
+        public async Task<Response> CreateMSDeployOperationSlotAsync(string resourceGroupName, string name, string slot, MsDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -22929,12 +22929,12 @@ namespace Azure.ResourceManager.AppService
             {
                 throw new ArgumentNullException(nameof(slot));
             }
-            if (mSDeploy == null)
+            if (msDeploy == null)
             {
-                throw new ArgumentNullException(nameof(mSDeploy));
+                throw new ArgumentNullException(nameof(msDeploy));
             }
 
-            using var message = CreateCreateMSDeployOperationSlotRequest(resourceGroupName, name, slot, mSDeploy);
+            using var message = CreateCreateMSDeployOperationSlotRequest(resourceGroupName, name, slot, msDeploy);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -22949,10 +22949,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
-        /// <param name="mSDeploy"> Details of MSDeploy operation. </param>
+        /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="mSDeploy"/> is null. </exception>
-        public Response CreateMSDeployOperationSlot(string resourceGroupName, string name, string slot, MSDeploy mSDeploy, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="msDeploy"/> is null. </exception>
+        public Response CreateMSDeployOperationSlot(string resourceGroupName, string name, string slot, MsDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -22966,12 +22966,12 @@ namespace Azure.ResourceManager.AppService
             {
                 throw new ArgumentNullException(nameof(slot));
             }
-            if (mSDeploy == null)
+            if (msDeploy == null)
             {
-                throw new ArgumentNullException(nameof(mSDeploy));
+                throw new ArgumentNullException(nameof(msDeploy));
             }
 
-            using var message = CreateCreateMSDeployOperationSlotRequest(resourceGroupName, name, slot, mSDeploy);
+            using var message = CreateCreateMSDeployOperationSlotRequest(resourceGroupName, name, slot, msDeploy);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -23011,7 +23011,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
-        public async Task<Response<MSDeployLog>> GetMSDeployLogSlotAsync(string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public async Task<Response<MsDeployLog>> GetMSDeployLogSlotAsync(string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -23032,9 +23032,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        MSDeployLog value = default;
+                        MsDeployLog value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MSDeployLog.DeserializeMSDeployLog(document.RootElement);
+                        value = MsDeployLog.DeserializeMsDeployLog(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -23048,7 +23048,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
-        public Response<MSDeployLog> GetMSDeployLogSlot(string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public Response<MsDeployLog> GetMSDeployLogSlot(string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -23069,9 +23069,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        MSDeployLog value = default;
+                        MsDeployLog value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MSDeployLog.DeserializeMSDeployLog(document.RootElement);
+                        value = MsDeployLog.DeserializeMsDeployLog(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -26479,7 +26479,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateInstanceMSDeployOperationSlotRequest(string resourceGroupName, string name, string slot, string instanceId, MSDeploy mSDeploy)
+        internal HttpMessage CreateCreateInstanceMSDeployOperationSlotRequest(string resourceGroupName, string name, string slot, string instanceId, MsDeploy msDeploy)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -26502,7 +26502,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(mSDeploy);
+            content.JsonWriter.WriteObjectValue(msDeploy);
             request.Content = content;
             message.SetProperty("UserAgentOverride", _userAgent);
             return message;
@@ -26513,10 +26513,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="instanceId"> ID of web app instance. </param>
-        /// <param name="mSDeploy"> Details of MSDeploy operation. </param>
+        /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/>, or <paramref name="mSDeploy"/> is null. </exception>
-        public async Task<Response> CreateInstanceMSDeployOperationSlotAsync(string resourceGroupName, string name, string slot, string instanceId, MSDeploy mSDeploy, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/>, or <paramref name="msDeploy"/> is null. </exception>
+        public async Task<Response> CreateInstanceMSDeployOperationSlotAsync(string resourceGroupName, string name, string slot, string instanceId, MsDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -26534,12 +26534,12 @@ namespace Azure.ResourceManager.AppService
             {
                 throw new ArgumentNullException(nameof(instanceId));
             }
-            if (mSDeploy == null)
+            if (msDeploy == null)
             {
-                throw new ArgumentNullException(nameof(mSDeploy));
+                throw new ArgumentNullException(nameof(msDeploy));
             }
 
-            using var message = CreateCreateInstanceMSDeployOperationSlotRequest(resourceGroupName, name, slot, instanceId, mSDeploy);
+            using var message = CreateCreateInstanceMSDeployOperationSlotRequest(resourceGroupName, name, slot, instanceId, msDeploy);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -26555,10 +26555,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="instanceId"> ID of web app instance. </param>
-        /// <param name="mSDeploy"> Details of MSDeploy operation. </param>
+        /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/>, or <paramref name="mSDeploy"/> is null. </exception>
-        public Response CreateInstanceMSDeployOperationSlot(string resourceGroupName, string name, string slot, string instanceId, MSDeploy mSDeploy, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/>, or <paramref name="msDeploy"/> is null. </exception>
+        public Response CreateInstanceMSDeployOperationSlot(string resourceGroupName, string name, string slot, string instanceId, MsDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -26576,12 +26576,12 @@ namespace Azure.ResourceManager.AppService
             {
                 throw new ArgumentNullException(nameof(instanceId));
             }
-            if (mSDeploy == null)
+            if (msDeploy == null)
             {
-                throw new ArgumentNullException(nameof(mSDeploy));
+                throw new ArgumentNullException(nameof(msDeploy));
             }
 
-            using var message = CreateCreateInstanceMSDeployOperationSlotRequest(resourceGroupName, name, slot, instanceId, mSDeploy);
+            using var message = CreateCreateInstanceMSDeployOperationSlotRequest(resourceGroupName, name, slot, instanceId, msDeploy);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -26624,7 +26624,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of web app instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="instanceId"/> is null. </exception>
-        public async Task<Response<MSDeployLog>> GetInstanceMSDeployLogSlotAsync(string resourceGroupName, string name, string slot, string instanceId, CancellationToken cancellationToken = default)
+        public async Task<Response<MsDeployLog>> GetInstanceMSDeployLogSlotAsync(string resourceGroupName, string name, string slot, string instanceId, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -26649,9 +26649,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        MSDeployLog value = default;
+                        MsDeployLog value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MSDeployLog.DeserializeMSDeployLog(document.RootElement);
+                        value = MsDeployLog.DeserializeMsDeployLog(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -26666,7 +26666,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of web app instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="instanceId"/> is null. </exception>
-        public Response<MSDeployLog> GetInstanceMSDeployLogSlot(string resourceGroupName, string name, string slot, string instanceId, CancellationToken cancellationToken = default)
+        public Response<MsDeployLog> GetInstanceMSDeployLogSlot(string resourceGroupName, string name, string slot, string instanceId, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -26691,9 +26691,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        MSDeployLog value = default;
+                        MsDeployLog value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MSDeployLog.DeserializeMSDeployLog(document.RootElement);
+                        value = MsDeployLog.DeserializeMsDeployLog(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

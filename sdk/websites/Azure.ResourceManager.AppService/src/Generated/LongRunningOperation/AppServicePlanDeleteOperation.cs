@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Delete an App Service plan. </summary>
-    public partial class AppServicePlanDeleteOperation : Azure.Operation
+    public partial class AppServicePlanDeleteOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 

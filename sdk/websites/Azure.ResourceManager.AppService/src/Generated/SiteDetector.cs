@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DiagnosticsRestOperations _diagnosticsRestClient;
-        private readonly DetectorResponseData _data;
+        private readonly AppServiceDetectorData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SiteDetector"/> class for mocking. </summary>
         protected SiteDetector()
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "SiteDetector"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal SiteDetector(ArmResource options, DetectorResponseData resource) : base(options, resource.Id)
+        internal SiteDetector(ArmResource options, AppServiceDetectorData resource) : base(options, resource.Id)
         {
             HasData = true;
             _data = resource;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DetectorResponseData Data
+        public virtual AppServiceDetectorData Data
         {
             get
             {

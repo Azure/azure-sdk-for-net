@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyVaultCertificate"> Key vault certificate resource Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultCertificate"/> is null. </exception>
-        public async virtual Task<Response<AppServiceCertificateResource>> UpdateAsync(AppServiceCertificatePatchResource keyVaultCertificate, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<AppServiceCertificateResource>> UpdateAsync(AppServiceCertificatePatch keyVaultCertificate, CancellationToken cancellationToken = default)
         {
             if (keyVaultCertificate == null)
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyVaultCertificate"> Key vault certificate resource Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultCertificate"/> is null. </exception>
-        public virtual Response<AppServiceCertificateResource> Update(AppServiceCertificatePatchResource keyVaultCertificate, CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceCertificateResource> Update(AppServiceCertificatePatch keyVaultCertificate, CancellationToken cancellationToken = default)
         {
             if (keyVaultCertificate == null)
             {

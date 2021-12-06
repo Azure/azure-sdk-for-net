@@ -19,7 +19,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of DetectorResponse and their operations over its parent. </summary>
+    /// <summary> A class representing collection of AppServiceDetector and their operations over its parent. </summary>
     public partial class HostingEnvironmentDetectorCollection : ArmCollection, IEnumerable<HostingEnvironmentDetector>, IAsyncEnumerable<HostingEnvironmentDetector>
 
     {
@@ -324,6 +324,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, HostingEnvironmentDetector, DetectorResponseData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, HostingEnvironmentDetector, AppServiceDetectorData> Construct() { }
     }
 }

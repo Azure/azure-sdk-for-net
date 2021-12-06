@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Deletes a backup of an app by its ID. </summary>
-    public partial class WebAppDeleteBackupSlotOperation : Azure.Operation
+    public partial class WebAppDeleteBackupSlotOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 

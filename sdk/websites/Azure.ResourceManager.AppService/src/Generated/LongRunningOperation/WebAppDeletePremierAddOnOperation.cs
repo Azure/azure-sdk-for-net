@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Delete a premier add-on from an app. </summary>
-    public partial class WebAppDeletePremierAddOnOperation : Azure.Operation
+    public partial class WebAppDeletePremierAddOnOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 

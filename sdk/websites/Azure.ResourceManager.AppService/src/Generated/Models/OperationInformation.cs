@@ -12,15 +12,15 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> An operation on a resource. </summary>
-    public partial class Operation
+    public partial class OperationInformation
     {
-        /// <summary> Initializes a new instance of Operation. </summary>
-        internal Operation()
+        /// <summary> Initializes a new instance of OperationInformation. </summary>
+        internal OperationInformation()
         {
             Errors = new ChangeTrackingList<ErrorEntity>();
         }
 
-        /// <summary> Initializes a new instance of Operation. </summary>
+        /// <summary> Initializes a new instance of OperationInformation. </summary>
         /// <param name="id"> Operation ID. </param>
         /// <param name="name"> Operation name. </param>
         /// <param name="status"> The current status of the operation. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="modifiedTime"> Time when operation has been updated. </param>
         /// <param name="expirationTime"> Time when operation will expire. </param>
         /// <param name="geoMasterOperationId"> Applicable only for stamp operation ids. </param>
-        internal Operation(string id, string name, OperationStatus? status, IReadOnlyList<ErrorEntity> errors, DateTimeOffset? createdTime, DateTimeOffset? modifiedTime, DateTimeOffset? expirationTime, Guid? geoMasterOperationId)
+        internal OperationInformation(string id, string name, OperationStatus? status, IReadOnlyList<ErrorEntity> errors, DateTimeOffset? createdTime, DateTimeOffset? modifiedTime, DateTimeOffset? expirationTime, Guid? geoMasterOperationId)
         {
             Id = id;
             Name = name;

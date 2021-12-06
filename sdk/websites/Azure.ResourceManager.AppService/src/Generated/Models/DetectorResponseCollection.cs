@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of DetectorResponseCollection. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal DetectorResponseCollection(IEnumerable<DetectorResponseData> value)
+        internal DetectorResponseCollection(IEnumerable<AppServiceDetectorData> value)
         {
             if (value == null)
             {
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of DetectorResponseCollection. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal DetectorResponseCollection(IReadOnlyList<DetectorResponseData> value, string nextLink)
+        internal DetectorResponseCollection(IReadOnlyList<AppServiceDetectorData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of resources. </summary>
-        public IReadOnlyList<DetectorResponseData> Value { get; }
+        public IReadOnlyList<AppServiceDetectorData> Value { get; }
         /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }

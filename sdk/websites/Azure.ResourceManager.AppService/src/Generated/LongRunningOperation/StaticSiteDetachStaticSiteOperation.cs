@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Detaches a static site. </summary>
-    public partial class StaticSiteDetachStaticSiteOperation : Azure.Operation
+    public partial class StaticSiteDetachStaticSiteOperation : Operation
     {
         private readonly OperationInternals _operation;
 

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the PremierAddOn data model. </summary>
-    public partial class PremierAddOnData : Resource
+    public partial class PremierAddOnData : AppServiceResource
     {
         /// <summary> Initializes a new instance of PremierAddOnData. </summary>
         /// <param name="location"> The location. </param>

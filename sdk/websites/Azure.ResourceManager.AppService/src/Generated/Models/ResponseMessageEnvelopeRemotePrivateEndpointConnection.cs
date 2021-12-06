@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Message envelope that contains the common Azure resource manager properties and the resource provider specific content. </summary>
-    public partial class ResponseMessageEnvelopeRemotePrivateEndpointConnection : ResourceManager.Models.Resource
+    public partial class ResponseMessageEnvelopeRemotePrivateEndpointConnection : Resource
     {
         /// <summary> Initializes a new instance of ResponseMessageEnvelopeRemotePrivateEndpointConnection. </summary>
         internal ResponseMessageEnvelopeRemotePrivateEndpointConnection()

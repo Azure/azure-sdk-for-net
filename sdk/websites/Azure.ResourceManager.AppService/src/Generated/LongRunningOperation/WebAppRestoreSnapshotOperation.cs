@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Restores a web app from a snapshot. </summary>
-    public partial class WebAppRestoreSnapshotOperation : Azure.Operation
+    public partial class WebAppRestoreSnapshotOperation : Operation
     {
         private readonly OperationInternals _operation;
 

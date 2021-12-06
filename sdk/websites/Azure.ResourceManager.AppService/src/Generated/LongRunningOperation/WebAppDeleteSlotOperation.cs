@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Deletes a web, mobile, or API app, or one of the deployment slots. </summary>
-    public partial class WebAppDeleteSlotOperation : Azure.Operation
+    public partial class WebAppDeleteSlotOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 

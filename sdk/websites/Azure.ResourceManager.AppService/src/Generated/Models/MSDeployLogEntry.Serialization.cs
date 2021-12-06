@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class MSDeployLogEntry
+    public partial class MsDeployLogEntry
     {
-        internal static MSDeployLogEntry DeserializeMSDeployLogEntry(JsonElement element)
+        internal static MsDeployLogEntry DeserializeMsDeployLogEntry(JsonElement element)
         {
             Optional<DateTimeOffset> time = default;
             Optional<MSDeployLogEntryType> type = default;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new MSDeployLogEntry(Optional.ToNullable(time), Optional.ToNullable(type), message.Value);
+            return new MsDeployLogEntry(Optional.ToNullable(time), Optional.ToNullable(type), message.Value);
         }
     }
 }

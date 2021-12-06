@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Deletes a static site. </summary>
-    public partial class StaticSiteDeleteStaticSiteOperation : Azure.Operation
+    public partial class StaticSiteDeleteStaticSiteOperation : Operation
     {
         private readonly OperationInternals _operation;
 

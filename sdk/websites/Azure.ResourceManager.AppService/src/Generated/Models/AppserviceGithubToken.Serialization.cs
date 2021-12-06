@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppserviceGithubToken
+    public partial class AppServiceGithubToken
     {
-        internal static AppserviceGithubToken DeserializeAppserviceGithubToken(JsonElement element)
+        internal static AppServiceGithubToken DeserializeAppServiceGithubToken(JsonElement element)
         {
             Optional<string> accessToken = default;
             Optional<string> scope = default;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppserviceGithubToken(accessToken.Value, scope.Value, tokenType.Value, Optional.ToNullable(gotToken), errorMessage.Value);
+            return new AppServiceGithubToken(accessToken.Value, scope.Value, tokenType.Value, Optional.ToNullable(gotToken), errorMessage.Value);
         }
     }
 }

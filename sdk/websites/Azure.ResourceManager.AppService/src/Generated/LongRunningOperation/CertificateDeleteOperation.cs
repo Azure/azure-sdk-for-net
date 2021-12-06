@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Delete a certificate. </summary>
-    public partial class CertificateDeleteOperation : Azure.Operation
+    public partial class CertificateDeleteOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 

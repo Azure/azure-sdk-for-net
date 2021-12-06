@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Delete a deployment by its ID for an app, or a deployment slot. </summary>
-    public partial class WebAppDeleteDeploymentOperation : Azure.Operation
+    public partial class WebAppDeleteDeploymentOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 

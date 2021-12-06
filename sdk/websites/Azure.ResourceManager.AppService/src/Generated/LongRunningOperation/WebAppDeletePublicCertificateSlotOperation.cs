@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Deletes a hostname binding for an app. </summary>
-    public partial class WebAppDeletePublicCertificateSlotOperation : Azure.Operation
+    public partial class WebAppDeletePublicCertificateSlotOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 

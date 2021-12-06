@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<Contact> contactAdmin = default;
-            Optional<Contact> contactBilling = default;
-            Optional<Contact> contactRegistrant = default;
-            Optional<Contact> contactTech = default;
+            Optional<ContactInformation> contactAdmin = default;
+            Optional<ContactInformation> contactBilling = default;
+            Optional<ContactInformation> contactRegistrant = default;
+            Optional<ContactInformation> contactTech = default;
             Optional<DomainStatus> registrationStatus = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<IReadOnlyList<string>> nameServers = default;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            contactAdmin = Contact.DeserializeContact(property0.Value);
+                            contactAdmin = ContactInformation.DeserializeContactInformation(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("contactBilling"))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            contactBilling = Contact.DeserializeContact(property0.Value);
+                            contactBilling = ContactInformation.DeserializeContactInformation(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("contactRegistrant"))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            contactRegistrant = Contact.DeserializeContact(property0.Value);
+                            contactRegistrant = ContactInformation.DeserializeContactInformation(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("contactTech"))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            contactTech = Contact.DeserializeContact(property0.Value);
+                            contactTech = ContactInformation.DeserializeContactInformation(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("registrationStatus"))

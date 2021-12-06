@@ -13,15 +13,15 @@ namespace Azure.ResourceManager.AppService.Models
     /// Contact information for domain registration. If &apos;Domain Privacy&apos; option is not selected then the contact information is made publicly available through the Whois 
     /// directories as per ICANN requirements.
     /// </summary>
-    public partial class Contact
+    public partial class ContactInformation
     {
-        /// <summary> Initializes a new instance of Contact. </summary>
+        /// <summary> Initializes a new instance of ContactInformation. </summary>
         /// <param name="email"> Email address. </param>
         /// <param name="nameFirst"> First name. </param>
         /// <param name="nameLast"> Last name. </param>
         /// <param name="phone"> Phone number. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="email"/>, <paramref name="nameFirst"/>, <paramref name="nameLast"/>, or <paramref name="phone"/> is null. </exception>
-        public Contact(string email, string nameFirst, string nameLast, string phone)
+        public ContactInformation(string email, string nameFirst, string nameLast, string phone)
         {
             if (email == null)
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppService.Models
             Phone = phone;
         }
 
-        /// <summary> Initializes a new instance of Contact. </summary>
+        /// <summary> Initializes a new instance of ContactInformation. </summary>
         /// <param name="addressMailing"> Mailing address. </param>
         /// <param name="email"> Email address. </param>
         /// <param name="fax"> Fax number. </param>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="nameMiddle"> Middle name. </param>
         /// <param name="organization"> Organization contact belongs to. </param>
         /// <param name="phone"> Phone number. </param>
-        internal Contact(Address addressMailing, string email, string fax, string jobTitle, string nameFirst, string nameLast, string nameMiddle, string organization, string phone)
+        internal ContactInformation(Address addressMailing, string email, string fax, string jobTitle, string nameFirst, string nameLast, string nameMiddle, string organization, string phone)
         {
             AddressMailing = addressMailing;
             Email = email;

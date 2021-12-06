@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> A private link resource. </summary>
-    public partial class PrivateLinkResource : ResourceManager.Models.Resource
+    public partial class PrivateLinkResource : Resource
     {
         /// <summary> Initializes a new instance of PrivateLinkResource. </summary>
         /// <param name="properties"> Properties of a private link resource. </param>

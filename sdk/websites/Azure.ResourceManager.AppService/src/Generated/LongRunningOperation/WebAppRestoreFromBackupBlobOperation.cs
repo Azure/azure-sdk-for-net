@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Restores an app from a backup blob in Azure Storage. </summary>
-    public partial class WebAppRestoreFromBackupBlobOperation : Azure.Operation
+    public partial class WebAppRestoreFromBackupBlobOperation : Operation
     {
         private readonly OperationInternals _operation;
 

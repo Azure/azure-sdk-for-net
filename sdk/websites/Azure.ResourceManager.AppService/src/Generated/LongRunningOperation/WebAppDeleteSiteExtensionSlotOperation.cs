@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Remove a site extension from a web site, or a deployment slot. </summary>
-    public partial class WebAppDeleteSiteExtensionSlotOperation : Azure.Operation
+    public partial class WebAppDeleteSiteExtensionSlotOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 

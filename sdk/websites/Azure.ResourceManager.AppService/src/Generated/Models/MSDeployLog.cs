@@ -12,26 +12,26 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> MSDeploy log. </summary>
-    public partial class MSDeployLog : ProxyOnlyResource
+    public partial class MsDeployLog : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of MSDeployLog. </summary>
-        public MSDeployLog()
+        /// <summary> Initializes a new instance of MsDeployLog. </summary>
+        public MsDeployLog()
         {
-            Entries = new ChangeTrackingList<MSDeployLogEntry>();
+            Entries = new ChangeTrackingList<MsDeployLogEntry>();
         }
 
-        /// <summary> Initializes a new instance of MSDeployLog. </summary>
+        /// <summary> Initializes a new instance of MsDeployLog. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="entries"> List of log entry messages. </param>
-        internal MSDeployLog(ResourceIdentifier id, string name, ResourceType type, string kind, IReadOnlyList<MSDeployLogEntry> entries) : base(id, name, type, kind)
+        internal MsDeployLog(ResourceIdentifier id, string name, ResourceType type, string kind, IReadOnlyList<MsDeployLogEntry> entries) : base(id, name, type, kind)
         {
             Entries = entries;
         }
 
         /// <summary> List of log entry messages. </summary>
-        public IReadOnlyList<MSDeployLogEntry> Entries { get; }
+        public IReadOnlyList<MsDeployLogEntry> Entries { get; }
     }
 }

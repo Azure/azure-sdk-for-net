@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="state"> State string used for verification. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="state"/> is null. </exception>
-        public async Task<Response<AppserviceGithubToken>> GenerateGithubAccessTokenForAppserviceCLIAsyncAsync(string code, string state, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceGithubToken>> GenerateGithubAccessTokenForAppserviceCLIAsyncAsync(string code, string state, CancellationToken cancellationToken = default)
         {
             if (code == null)
             {
@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppserviceGithubToken value = default;
+                        AppServiceGithubToken value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppserviceGithubToken.DeserializeAppserviceGithubToken(document.RootElement);
+                        value = AppServiceGithubToken.DeserializeAppServiceGithubToken(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="state"> State string used for verification. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="state"/> is null. </exception>
-        public Response<AppserviceGithubToken> GenerateGithubAccessTokenForAppserviceCLIAsync(string code, string state, CancellationToken cancellationToken = default)
+        public Response<AppServiceGithubToken> GenerateGithubAccessTokenForAppserviceCLIAsync(string code, string state, CancellationToken cancellationToken = default)
         {
             if (code == null)
             {
@@ -118,9 +118,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppserviceGithubToken value = default;
+                        AppServiceGithubToken value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppserviceGithubToken.DeserializeAppserviceGithubToken(document.RootElement);
+                        value = AppServiceGithubToken.DeserializeAppServiceGithubToken(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

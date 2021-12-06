@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Restores a specific backup to another app (or deployment slot, if specified). </summary>
-    public partial class WebAppRestoreOperation : Azure.Operation
+    public partial class WebAppRestoreOperation : Operation
     {
         private readonly OperationInternals _operation;
 

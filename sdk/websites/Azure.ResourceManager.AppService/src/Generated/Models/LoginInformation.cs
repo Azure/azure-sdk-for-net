@@ -11,15 +11,15 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the login flow of users using App Service Authentication/Authorization. </summary>
-    public partial class Login
+    public partial class LoginInformation
     {
-        /// <summary> Initializes a new instance of Login. </summary>
-        public Login()
+        /// <summary> Initializes a new instance of LoginInformation. </summary>
+        public LoginInformation()
         {
             AllowedExternalRedirectUrls = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of Login. </summary>
+        /// <summary> Initializes a new instance of LoginInformation. </summary>
         /// <param name="routes"> The routes that specify the endpoints used for login and logout requests. </param>
         /// <param name="tokenStore"> The configuration settings of the token store. </param>
         /// <param name="preserveUrlFragmentsForLogins"> &lt;code&gt;true&lt;/code&gt; if the fragments from the request are preserved after the login request is made; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="cookieExpiration"> The configuration settings of the session cookie&apos;s expiration. </param>
         /// <param name="nonce"> The configuration settings of the nonce used in the login flow. </param>
-        internal Login(LoginRoutes routes, TokenStore tokenStore, bool? preserveUrlFragmentsForLogins, IList<string> allowedExternalRedirectUrls, CookieExpiration cookieExpiration, Nonce nonce)
+        internal LoginInformation(LoginRoutes routes, TokenStore tokenStore, bool? preserveUrlFragmentsForLogins, IList<string> allowedExternalRedirectUrls, CookieExpiration cookieExpiration, Nonce nonce)
         {
             Routes = routes;
             TokenStore = tokenStore;

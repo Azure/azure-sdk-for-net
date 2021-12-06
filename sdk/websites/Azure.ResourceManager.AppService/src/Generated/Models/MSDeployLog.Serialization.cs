@@ -12,7 +12,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class MSDeployLog : IUtf8JsonSerializable
+    public partial class MsDeployLog : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteEndObject();
         }
 
-        internal static MSDeployLog DeserializeMSDeployLog(JsonElement element)
+        internal static MsDeployLog DeserializeMsDeployLog(JsonElement element)
         {
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<IReadOnlyList<MSDeployLogEntry>> entries = default;
+            Optional<IReadOnlyList<MsDeployLogEntry>> entries = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<MSDeployLogEntry> array = new List<MSDeployLogEntry>();
+                            List<MsDeployLogEntry> array = new List<MsDeployLogEntry>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MSDeployLogEntry.DeserializeMSDeployLogEntry(item));
+                                array.Add(MsDeployLogEntry.DeserializeMsDeployLogEntry(item));
                             }
                             entries = array;
                             continue;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new MSDeployLog(id, name, type, kind.Value, Optional.ToList(entries));
+            return new MsDeployLog(id, name, type, kind.Value, Optional.ToList(entries));
         }
     }
 }

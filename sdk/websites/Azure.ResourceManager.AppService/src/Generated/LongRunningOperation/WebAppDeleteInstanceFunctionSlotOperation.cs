@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Delete a function for web site, or a deployment slot. </summary>
-    public partial class WebAppDeleteInstanceFunctionSlotOperation : Azure.Operation
+    public partial class WebAppDeleteInstanceFunctionSlotOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 

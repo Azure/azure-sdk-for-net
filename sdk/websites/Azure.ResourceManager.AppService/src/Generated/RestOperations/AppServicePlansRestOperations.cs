@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string name, AppServicePlanPatchResource appServicePlan)
+        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string name, AppServicePlanPatchOptions appServicePlan)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="appServicePlan"> Details of the App Service plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="appServicePlan"/> is null. </exception>
-        public async Task<Response<AppServicePlanData>> UpdateAsync(string resourceGroupName, string name, AppServicePlanPatchResource appServicePlan, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServicePlanData>> UpdateAsync(string resourceGroupName, string name, AppServicePlanPatchOptions appServicePlan, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="appServicePlan"> Details of the App Service plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="appServicePlan"/> is null. </exception>
-        public Response<AppServicePlanData> Update(string resourceGroupName, string name, AppServicePlanPatchResource appServicePlan, CancellationToken cancellationToken = default)
+        public Response<AppServicePlanData> Update(string resourceGroupName, string name, AppServicePlanPatchOptions appServicePlan, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

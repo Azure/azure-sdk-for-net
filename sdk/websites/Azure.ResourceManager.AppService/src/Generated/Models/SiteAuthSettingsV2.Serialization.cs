@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<AuthPlatform> platform = default;
             Optional<GlobalValidation> globalValidation = default;
             Optional<IdentityProviders> identityProviders = default;
-            Optional<Login> login = default;
+            Optional<LoginInformation> login = default;
             Optional<HttpSettings> httpSettings = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            login = Login.DeserializeLogin(property0.Value);
+                            login = LoginInformation.DeserializeLoginInformation(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("httpSettings"))
