@@ -59,6 +59,9 @@ stages:
                     - checkout: self
                     - download: current
                       artifact: ${{parameters.ArtifactName}}-signed
+                    - template: /eng/pipelines/steps/install-dotnet.yml
+                      parameters:
+                        EnableNuGetCache: false
                     - template: /eng/common/pipelines/templates/steps/retain-run.yml
                     - template: /eng/common/pipelines/templates/steps/set-test-pipeline-version.yml
                       parameters:

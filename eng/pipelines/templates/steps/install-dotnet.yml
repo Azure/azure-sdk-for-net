@@ -1,4 +1,5 @@
 parameters:
+  EnableNuGetCache: true
   NuGetCacheKey: 'Build'
 
 steps:
@@ -7,16 +8,16 @@ steps:
     inputs:
       solution: eng/InstallDevopsLogger.proj
       msbuildArguments: /p:WorkFolder="$(Agent.WorkFolder)" /p:BuildDirectory="$(Agent.BuildDirectory)"
-#Installation steps need to be uncommented when switching to a newer SDK that's not available on DevOps agents
+  #Installation steps need to be uncommented when switching to a newer SDK that's not available on DevOps agents
   - task: UseDotNet@2
     displayName: 'Use .NET Core SDK'
     inputs:
       useGlobalJson: true
       performMultiLevelLookup: true
-# test-proxy requires net5.0
+  # test-proxy requires ASP.NET Core 5.0 runtime
   - task: UseDotNet@2
     condition: ne(variables['Agent.OS'], 'Windows_NT') # Windows supports MultiLevelLookup and doesn't need explicit framework installation
-    displayName: 'Use .NET Core 5.0 runtime'
+    displayName: 'Use .NET Core 5.0 SDK'
     inputs:
       packageType: sdk
       performMultiLevelLookup: true
@@ -33,4 +34,5 @@ steps:
     inputs:
       key: 'nuget | "$(Agent.OS)" | $(Build.SourcesDirectory)/eng/Packages.Data.props | ${{parameters.NuGetCacheKey}}'
       path: $(NUGET_PACKAGES)
+    condition: ${{parameters.NuGetCacheKey}}
     displayName: Cache NuGet packages
