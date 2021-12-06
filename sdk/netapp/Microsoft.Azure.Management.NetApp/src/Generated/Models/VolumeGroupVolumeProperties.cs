@@ -22,28 +22,27 @@ namespace Microsoft.Azure.Management.NetApp.Models
     /// Volume resource
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class Volume : IResource
+    public partial class VolumeGroupVolumeProperties : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the Volume class.
+        /// Initializes a new instance of the VolumeGroupVolumeProperties
+        /// class.
         /// </summary>
-        public Volume()
+        public VolumeGroupVolumeProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Volume class.
+        /// Initializes a new instance of the VolumeGroupVolumeProperties
+        /// class.
         /// </summary>
-        /// <param name="location">Resource location</param>
         /// <param name="creationToken">Creation Token or File Path</param>
         /// <param name="usageThreshold">usageThreshold</param>
         /// <param name="subnetId">The Azure Resource URI for a delegated
         /// subnet. Must have the delegation Microsoft.NetApp/volumes</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
-        /// <param name="etag">A unique read-only string that changes whenever
-        /// the resource is updated.</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="fileSystemId">FileSystem ID</param>
@@ -122,12 +121,10 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// specific designation or identifier for the particular volume in a
         /// volume group for e.g. data, log</param>
         /// <param name="placementRules">Volume placement rules</param>
-        public Volume(string location, string creationToken, long usageThreshold, string subnetId, string id = default(string), string name = default(string), string etag = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string fileSystemId = default(string), string serviceLevel = default(string), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), IList<string> protocolTypes = default(IList<string>), string provisioningState = default(string), string snapshotId = default(string), string backupId = default(string), string baremetalTenantId = default(string), string networkFeatures = default(string), string networkSiblingSetId = default(string), string storageToNetworkProximity = default(string), IList<MountTargetProperties> mountTargets = default(IList<MountTargetProperties>), string volumeType = default(string), VolumePropertiesDataProtection dataProtection = default(VolumePropertiesDataProtection), bool? isRestoring = default(bool?), bool? snapshotDirectoryVisible = default(bool?), bool? kerberosEnabled = default(bool?), string securityStyle = default(string), bool? smbEncryption = default(bool?), bool? smbContinuouslyAvailable = default(bool?), double? throughputMibps = default(double?), string encryptionKeySource = default(string), bool? ldapEnabled = default(bool?), bool? coolAccess = default(bool?), int? coolnessPeriod = default(int?), string unixPermissions = default(string), int? cloneProgress = default(int?), string avsDataStore = default(string), bool? isDefaultQuotaEnabled = default(bool?), long? defaultUserQuotaInKiBs = default(long?), long? defaultGroupQuotaInKiBs = default(long?), string volumeGroupName = default(string), string capacityPoolResourceId = default(string), string proximityPlacementGroup = default(string), string t2Network = default(string), string volumeSpecName = default(string), IList<PlacementKeyValuePairs> placementRules = default(IList<PlacementKeyValuePairs>))
+        public VolumeGroupVolumeProperties(string creationToken, long usageThreshold, string subnetId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string fileSystemId = default(string), string serviceLevel = default(string), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), IList<string> protocolTypes = default(IList<string>), string provisioningState = default(string), string snapshotId = default(string), string backupId = default(string), string baremetalTenantId = default(string), string networkFeatures = default(string), string networkSiblingSetId = default(string), string storageToNetworkProximity = default(string), IList<MountTargetProperties> mountTargets = default(IList<MountTargetProperties>), string volumeType = default(string), VolumePropertiesDataProtection dataProtection = default(VolumePropertiesDataProtection), bool? isRestoring = default(bool?), bool? snapshotDirectoryVisible = default(bool?), bool? kerberosEnabled = default(bool?), string securityStyle = default(string), bool? smbEncryption = default(bool?), bool? smbContinuouslyAvailable = default(bool?), double? throughputMibps = default(double?), string encryptionKeySource = default(string), bool? ldapEnabled = default(bool?), bool? coolAccess = default(bool?), int? coolnessPeriod = default(int?), string unixPermissions = default(string), int? cloneProgress = default(int?), string avsDataStore = default(string), bool? isDefaultQuotaEnabled = default(bool?), long? defaultUserQuotaInKiBs = default(long?), long? defaultGroupQuotaInKiBs = default(long?), string volumeGroupName = default(string), string capacityPoolResourceId = default(string), string proximityPlacementGroup = default(string), string t2Network = default(string), string volumeSpecName = default(string), IList<PlacementKeyValuePairs> placementRules = default(IList<PlacementKeyValuePairs>))
         {
-            Location = location;
             Id = id;
             Name = name;
-            Etag = etag;
             Type = type;
             Tags = tags;
             FileSystemId = fileSystemId;
@@ -179,29 +176,16 @@ namespace Microsoft.Azure.Management.NetApp.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource location
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
         /// Gets resource Id
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets resource name
+        /// Gets or sets resource name
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets a unique read-only string that changes whenever the resource
-        /// is updated.
-        /// </summary>
-        [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; private set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets resource type
@@ -551,10 +535,6 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Location == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
-            }
             if (CreationToken == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "CreationToken");
