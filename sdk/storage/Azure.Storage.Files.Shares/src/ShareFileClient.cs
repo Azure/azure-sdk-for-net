@@ -4543,6 +4543,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response<ShareFileUploadInfo> Upload(
             Stream stream,
             ShareFileUploadOptions options,
@@ -4583,6 +4584,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ShareFileUploadInfo>> UploadAsync(
             Stream stream,
             ShareFileUploadOptions options,
