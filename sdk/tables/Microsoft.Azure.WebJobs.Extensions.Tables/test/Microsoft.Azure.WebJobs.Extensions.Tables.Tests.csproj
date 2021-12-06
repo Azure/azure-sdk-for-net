@@ -18,7 +18,6 @@
     <PackageReference Include="Moq" VersionOverride="4.7.145" />
     <PackageReference Include="xunit" VersionOverride="2.3.1" />
     <PackageReference Include="xunit.runner.visualstudio" VersionOverride="2.3.1" />
-    <DotNetCliToolReference Include="dotnet-xunit" VersionOverride="2.3.0-beta3-build3705" />
   </ItemGroup>
 
   <ItemGroup>

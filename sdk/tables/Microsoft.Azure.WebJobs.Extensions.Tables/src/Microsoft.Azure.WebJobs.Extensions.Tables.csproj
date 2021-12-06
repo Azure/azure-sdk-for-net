@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Version>1.0.0-beta.1</Version>
     <Description>This package extends the Microsoft.Azure.WebJobs library with Table triggers using Microsoft Azure Storage.</Description>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <AssemblyName>Microsoft.Azure.WebJobs.Extensions.Table</AssemblyName>
     <RootNamespace>Microsoft.Azure.WebJobs.Extensions.Table</RootNamespace>
     <NoWarn>$(NoWarn);CS1606;CS0618;AZC0001;CS1591;SA1636;SA1028;CA1200</NoWarn>

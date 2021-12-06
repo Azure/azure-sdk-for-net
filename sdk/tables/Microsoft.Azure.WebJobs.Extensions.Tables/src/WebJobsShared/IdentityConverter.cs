@@ -9,7 +9,6 @@ namespace Microsoft.Azure.WebJobs.Host.Converters
     /// <typeparam name="TValue">The <see cref="System.Type"/> being converted.</typeparam>
     internal class IdentityConverter<TValue> : IConverter<TValue, TValue>
     {
-        /// <inheritdoc/>
         public TValue Convert(TValue input)
         {
             return input;

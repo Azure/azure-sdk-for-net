@@ -135,6 +135,12 @@
     <IsTestProject Condition="'$(IsTestSupportProject)' == 'true'">false</IsTestProject>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(InheritDocEnabled)' != 'false' and '$(TargetFramework)' == 'netstandard2.0'">
+    <NoWarn>
+      $(NoWarn);IDT001<!-- InheritDoc related to malformed XML in netstandard.xml -->
+    </NoWarn>
+  </PropertyGroup>
+
   <Import Project="$(DefaultReferenceTargets)" Condition="Exists('$(DefaultReferenceTargets)') And '$(ImportDefaultReferences)'=='true'" />
 
   <Import Project="ApiListing.targets" />
