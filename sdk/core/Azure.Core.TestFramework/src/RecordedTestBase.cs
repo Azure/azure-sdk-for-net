@@ -154,7 +154,7 @@ namespace Azure.Core.TestFramework
                 Logger = new TestLogger();
             }
 
-            if (!_useLegacyTransport)
+            if (!_useLegacyTransport && Mode != RecordedTestMode.Live)
             {
                 _proxy = TestProxy.Start();
             }
