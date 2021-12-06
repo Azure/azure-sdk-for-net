@@ -42,6 +42,7 @@ namespace Azure.ResourceManager.Tests
             string subscriptionId = subscription.Id.SubscriptionId;
             Subscription result = await Client.GetSubscriptions().GetAsync(subscriptionId).ConfigureAwait(false);
             Assert.AreEqual(subscriptionId, result.Id.SubscriptionId);
+            Assert.AreEqual(subscriptionId, result.Data.SubscriptionGuid);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await Client.GetSubscriptions().GetAsync(null).ConfigureAwait(false));
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetSubscriptions().GetAsync(new Guid().ToString()).ConfigureAwait(false));

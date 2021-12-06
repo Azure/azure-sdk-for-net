@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="managedByTenants"> An array containing the tenants managing the subscription. </param>
         /// <param name="tags"> The tags attached to the subscription. </param>
         internal SubscriptionData(string id,
-            string displayName,
             string subscriptionId,
+            string displayName,
             string tenantId,
             SubscriptionState? state,
             SubscriptionPolicies subscriptionPolicies,
