@@ -250,7 +250,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="callConnectionId"> The thread id for the ChatThreadClient instance. </param>
         public virtual CallConnection GetCallConnection(string callConnectionId)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(CallingServerClient)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(GetCallConnection)}");
             scope.Start();
             try
             {
@@ -1082,7 +1082,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<PlayAudioResult>> PlayAudioToParticipantAsync(CallLocator callLocator, CommunicationIdentifier participant, Uri audioFileUri, PlayAudioOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(PlayAudioToParticipantAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(PlayAudioToParticipant)}");
             scope.Start();
             try
             {
@@ -1137,7 +1137,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response> CancelParticipantMediaOperationAsync(CallLocator callLocator, CommunicationIdentifier participant, string mediaOperationId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(CancelParticipantMediaOperationAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(CancelParticipantMediaOperation)}");
             scope.Start();
             try
             {
@@ -1186,7 +1186,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response> CancelMediaOperationAsync(CallLocator callLocator, string mediaOperationId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(CancelMediaOperationAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(CancelMediaOperation)}");
             scope.Start();
             try
             {
@@ -1238,7 +1238,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"><paramref name="target"/> is null.</exception>
         public virtual async Task<Response> RedirectCallAsync(string incomingCallContext, CommunicationIdentifier target, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(RedirectCallAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(RedirectCall)}");
             scope.Start();
             try
             {
@@ -1297,7 +1297,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
         public virtual async Task<Response<CallConnection>> AnswerCallAsync(string incomingCallContext, IEnumerable<CallMediaType> requestedMediaTypes, IEnumerable<CallingEventSubscriptionType> requestedCallEvents, Uri callbackUri, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(AnswerCallAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(AnswerCall)}");
             scope.Start();
             try
             {
@@ -1353,7 +1353,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
         public virtual async Task<Response> RejectCallAsync(string incomingCallContext, CallRejectReason callRejectReason, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(RejectCallAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(RejectCall)}");
             scope.Start();
             try
             {
