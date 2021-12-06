@@ -34,4 +34,10 @@
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Rl.Net">
+      <HintPath>..\Lib\Rl.Net.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
