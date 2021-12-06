@@ -13,6 +13,7 @@
 - Install the latest version of git (https://git-scm.com/downloads)
 - Install [PowerShell](https://docs.microsoft.com/powershell/scripting/install/installing-powershell), version 6 or higher, if you plan to make public API changes or are working with generated code snippets.
 - Install [NodeJS](https://nodejs.org/) (14.x.x) if you plan to use [C# code generation](https://github.com/Azure/autorest.csharp).
+- Install [.NET Core 2.0 Runtime](https://dotnet.microsoft.com/download/dotnet/2.0/runtime?utm_source=getdotnetcore&utm_medium=referral)
 
 ## GENERAL THINGS TO KNOW:
 
