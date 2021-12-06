@@ -222,6 +222,9 @@ stages:
                   deploy:
                     steps:
                       - checkout: self
+                      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+                        parameters:
+                          EnableNuGetCache: false
                       - pwsh: |
                           eng/scripts/Update-PkgVersion.ps1 -ServiceDirectory '${{parameters.ServiceDirectory}}' -PackageName '${{artifact.name}}'
                         displayName: Increment package version
