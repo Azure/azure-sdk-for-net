@@ -79,7 +79,7 @@ param (
     [switch] $OutFile,
 
     [Parameter()]
-    [switch] $SuppressVsoCommands = ($null -ne $env:SYSTEM_TEAMPROJECTID)
+    [switch] $SuppressVsoCommands = ($null -eq $env:SYSTEM_TEAMPROJECTID)
 )
 
 . $PSScriptRoot/SubConfig-Helpers.ps1
