@@ -79,7 +79,7 @@ param (
     [switch] $OutFile,
 
     [Parameter()]
-    [switch] $DevopsLogging = ($null -ne $env:SYSTEM_TEAMPROJECTID)
+    [switch] $SuppressVsoCommands = ($null -ne $env:SYSTEM_TEAMPROJECTID)
 )
 
 . $PSScriptRoot/SubConfig-Helpers.ps1
@@ -92,6 +92,17 @@ if (!$PSBoundParameters.ContainsKey('ErrorAction')) {
 function Log($Message)
 {
     Write-Host ('{0} - {1}' -f [DateTime]::Now.ToLongTimeString(), $Message)
+}
+
+# vso commands are specially formatted log lines that are parsed by Azure Pipelines
+# to perform additional actions, most commonly marking values as secrets.
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/scripts/logging-commands
+function LogVsoCommand([string]$message)
+{
+    if (!$CI -or $SuppressVsoCommands) {
+        return
+    }
+    Write-Host $message
 }
 
 function Retry([scriptblock] $Action, [int] $Attempts = 5)
@@ -227,19 +238,13 @@ function SetDeploymentOutputs([string]$serviceName, [object]$azContext, [object]
                 if (ShouldMarkValueAsSecret $serviceDirectoryPrefix $key $value $notSecretValues) {
                     # Treat all ARM template output variables as secrets since "SecureString" variables do not set values.
                     # In order to mask secrets but set environment variables for any given ARM template, we set variables twice as shown below.
-                    if ($DevopsLogging) {
-                        Write-Host "##vso[task.setvariable variable=_$key;issecret=true;]$value"
-                        Write-Host "Setting variable as secret '$key': $value"
-                    } else {
-                        Write-Host "Setting variable as secret '$key': REDACTED"
-                    }
+                    LogVsoCommand "##vso[task.setvariable variable=_$key;issecret=true;]$value"
+                    Write-Host "Setting variable as secret '$key'"
                 } else {
                     Write-Host "Setting variable '$key': $value"
                     $notSecretValues += $value
                 }
-                if ($DevopsLogging) {
-                    Write-Host "##vso[task.setvariable variable=$key;]$value"
-                }
+                LogVsoCommand "##vso[task.setvariable variable=$key;]$value"
             } else {
                 Write-Host ($shellExportFormat -f $key, $value)
             }
@@ -483,7 +488,7 @@ try {
 
         # Set the resource group name variable.
         Write-Host "Setting variable 'AZURE_RESOURCEGROUP_NAME': $ResourceGroupName"
-        Write-Host "##vso[task.setvariable variable=AZURE_RESOURCEGROUP_NAME;]$ResourceGroupName"
+        LogVsoCommand "##vso[task.setvariable variable=AZURE_RESOURCEGROUP_NAME;]$ResourceGroupName"
         if ($EnvironmentVariables.ContainsKey('AZURE_RESOURCEGROUP_NAME') -and `
             $EnvironmentVariables['AZURE_RESOURCEGROUP_NAME'] -ne $ResourceGroupName)
         {
@@ -875,7 +880,7 @@ The environment file will be named for the test resources template that it was
 generated for. For ARM templates, it will be test-resources.json.env. For
 Bicep templates, test-resources.bicep.env.
 
-.PARAMETER DevopsLogging
+.PARAMETER SuppressVsoCommands
 By default, the -CI parameter will print out secrets to logs with Azure Pipelines log
 commands that cause them to be redacted. For CI environments that don't support this (like 
 stress test clusters), this flag can be set to $false to avoid printing out these secrets to the logs.
