@@ -18,9 +18,9 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Create or update an App Service Environment. </summary>
-    public partial class AppServiceEnvironmentCreateOrUpdateOperation : Operation<AppServiceEnvironmentResource>, IOperationSource<AppServiceEnvironmentResource>
+    public partial class AppServiceEnvironmentCreateOrUpdateOperation : Operation<AppServiceEnvironment>, IOperationSource<AppServiceEnvironment>
     {
-        private readonly OperationInternals<AppServiceEnvironmentResource> _operation;
+        private readonly OperationInternals<AppServiceEnvironment> _operation;
 
         private readonly ArmResource _operationBase;
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal AppServiceEnvironmentCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<AppServiceEnvironmentResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "AppServiceEnvironmentCreateOrUpdateOperation");
+            _operation = new OperationInternals<AppServiceEnvironment>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "AppServiceEnvironmentCreateOrUpdateOperation");
             _operationBase = operationsBase;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService.Models
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override AppServiceEnvironmentResource Value => _operation.Value;
+        public override AppServiceEnvironment Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.AppService.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<AppServiceEnvironmentResource>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<AppServiceEnvironment>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<AppServiceEnvironmentResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<AppServiceEnvironment>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        AppServiceEnvironmentResource IOperationSource<AppServiceEnvironmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        AppServiceEnvironment IOperationSource<AppServiceEnvironment>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new AppServiceEnvironmentResource(_operationBase, AppServiceEnvironmentResourceData.DeserializeAppServiceEnvironmentResourceData(document.RootElement));
+            return new AppServiceEnvironment(_operationBase, AppServiceEnvironmentData.DeserializeAppServiceEnvironmentData(document.RootElement));
         }
 
-        async ValueTask<AppServiceEnvironmentResource> IOperationSource<AppServiceEnvironmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AppServiceEnvironment> IOperationSource<AppServiceEnvironment>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new AppServiceEnvironmentResource(_operationBase, AppServiceEnvironmentResourceData.DeserializeAppServiceEnvironmentResourceData(document.RootElement));
+            return new AppServiceEnvironment(_operationBase, AppServiceEnvironmentData.DeserializeAppServiceEnvironmentData(document.RootElement));
         }
     }
 }

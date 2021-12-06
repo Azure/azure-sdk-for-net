@@ -16,9 +16,9 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Sets data around private site access enablement and authorized Virtual Networks that can access the site. </summary>
-    public partial class WebAppPutPrivateAccessVnetOperation : Operation<SitePrivateAcces>
+    public partial class WebAppPutPrivateAccessVnetOperation : Operation<SitePrivateAccess>
     {
-        private readonly OperationOrResponseInternals<SitePrivateAcces> _operation;
+        private readonly OperationOrResponseInternals<SitePrivateAccess> _operation;
 
         /// <summary> Initializes a new instance of WebAppPutPrivateAccessVnetOperation for mocking. </summary>
         protected WebAppPutPrivateAccessVnetOperation()
@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal WebAppPutPrivateAccessVnetOperation(ArmResource operationsBase, Response<PrivateAccessData> response)
         {
-            _operation = new OperationOrResponseInternals<SitePrivateAcces>(Response.FromValue(new SitePrivateAcces(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<SitePrivateAccess>(Response.FromValue(new SitePrivateAccess(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override SitePrivateAcces Value => _operation.Value;
+        public override SitePrivateAccess Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.AppService.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<SitePrivateAcces>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<SitePrivateAccess>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<SitePrivateAcces>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<SitePrivateAccess>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

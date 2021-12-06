@@ -16,9 +16,9 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Updates whether FTP is allowed on the site or not. </summary>
-    public partial class WebAppUpdateFtpAllowedOperation : Operation<SiteBasicPublishingCredentialsPolicyFtp>
+    public partial class WebAppUpdateFtpAllowedOperation : Operation<BasicPublishingCredentialsPolicyFtp>
     {
-        private readonly OperationOrResponseInternals<SiteBasicPublishingCredentialsPolicyFtp> _operation;
+        private readonly OperationOrResponseInternals<BasicPublishingCredentialsPolicyFtp> _operation;
 
         /// <summary> Initializes a new instance of WebAppUpdateFtpAllowedOperation for mocking. </summary>
         protected WebAppUpdateFtpAllowedOperation()
@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal WebAppUpdateFtpAllowedOperation(ArmResource operationsBase, Response<CsmPublishingCredentialsPoliciesEntityData> response)
         {
-            _operation = new OperationOrResponseInternals<SiteBasicPublishingCredentialsPolicyFtp>(Response.FromValue(new SiteBasicPublishingCredentialsPolicyFtp(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<BasicPublishingCredentialsPolicyFtp>(Response.FromValue(new BasicPublishingCredentialsPolicyFtp(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override SiteBasicPublishingCredentialsPolicyFtp Value => _operation.Value;
+        public override BasicPublishingCredentialsPolicyFtp Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.AppService.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<SiteBasicPublishingCredentialsPolicyFtp>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<BasicPublishingCredentialsPolicyFtp>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<SiteBasicPublishingCredentialsPolicyFtp>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<BasicPublishingCredentialsPolicyFtp>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static ApiKVReferenceCollection DeserializeApiKVReferenceCollection(JsonElement element)
         {
-            IReadOnlyList<ApiKVReferenceData> value = default;
+            IReadOnlyList<ApiKeyVaultReferenceData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<ApiKVReferenceData> array = new List<ApiKVReferenceData>();
+                    List<ApiKeyVaultReferenceData> array = new List<ApiKeyVaultReferenceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiKVReferenceData.DeserializeApiKVReferenceData(item));
+                        array.Add(ApiKeyVaultReferenceData.DeserializeApiKeyVaultReferenceData(item));
                     }
                     value = array;
                     continue;

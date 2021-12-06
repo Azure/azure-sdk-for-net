@@ -19,7 +19,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of ApiKVReference and their operations over its parent. </summary>
+    /// <summary> A class representing collection of ApiKeyVaultReference and their operations over its parent. </summary>
     public partial class SiteConfigAppsettingCollection : ArmCollection, IEnumerable<SiteConfigAppsetting>, IAsyncEnumerable<SiteConfigAppsetting>
 
     {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Site.ResourceType;
+        protected override ResourceType ValidResourceType => WebSite.ResourceType;
 
         // Collection level operations.
 
@@ -306,6 +306,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SiteConfigAppsetting, ApiKVReferenceData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SiteConfigAppsetting, ApiKeyVaultReferenceData> Construct() { }
     }
 }

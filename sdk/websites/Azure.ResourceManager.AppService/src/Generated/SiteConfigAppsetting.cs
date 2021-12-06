@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly WebAppsRestOperations _webAppsRestClient;
-        private readonly ApiKVReferenceData _data;
+        private readonly ApiKeyVaultReferenceData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SiteConfigAppsetting"/> class for mocking. </summary>
         protected SiteConfigAppsetting()
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "SiteConfigAppsetting"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal SiteConfigAppsetting(ArmResource options, ApiKVReferenceData resource) : base(options, resource.Id)
+        internal SiteConfigAppsetting(ArmResource options, ApiKeyVaultReferenceData resource) : base(options, resource.Id)
         {
             HasData = true;
             _data = resource;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ApiKVReferenceData Data
+        public virtual ApiKeyVaultReferenceData Data
         {
             get
             {

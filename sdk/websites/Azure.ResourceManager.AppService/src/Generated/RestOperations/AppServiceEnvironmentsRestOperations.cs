@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get all App Service Environments for a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<AppServiceEnvironmentCollection>> ListAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<Models.AppServiceEnvironmentCollection>> ListAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServiceEnvironmentCollection value = default;
+                        Models.AppServiceEnvironmentCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppServiceEnvironmentCollection.DeserializeAppServiceEnvironmentCollection(document.RootElement);
+                        value = Models.AppServiceEnvironmentCollection.DeserializeAppServiceEnvironmentCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get all App Service Environments for a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<AppServiceEnvironmentCollection> List(CancellationToken cancellationToken = default)
+        public Response<Models.AppServiceEnvironmentCollection> List(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
             _pipeline.Send(message, cancellationToken);
@@ -92,9 +92,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServiceEnvironmentCollection value = default;
+                        Models.AppServiceEnvironmentCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppServiceEnvironmentCollection.DeserializeAppServiceEnvironmentCollection(document.RootElement);
+                        value = Models.AppServiceEnvironmentCollection.DeserializeAppServiceEnvironmentCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<AppServiceEnvironmentCollection>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<Models.AppServiceEnvironmentCollection>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -138,9 +138,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServiceEnvironmentCollection value = default;
+                        Models.AppServiceEnvironmentCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppServiceEnvironmentCollection.DeserializeAppServiceEnvironmentCollection(document.RootElement);
+                        value = Models.AppServiceEnvironmentCollection.DeserializeAppServiceEnvironmentCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<AppServiceEnvironmentCollection> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<Models.AppServiceEnvironmentCollection> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -165,9 +165,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServiceEnvironmentCollection value = default;
+                        Models.AppServiceEnvironmentCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppServiceEnvironmentCollection.DeserializeAppServiceEnvironmentCollection(document.RootElement);
+                        value = Models.AppServiceEnvironmentCollection.DeserializeAppServiceEnvironmentCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        public async Task<Response<AppServiceEnvironmentResourceData>> GetAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceEnvironmentData>> GetAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -217,13 +217,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServiceEnvironmentResourceData value = default;
+                        AppServiceEnvironmentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppServiceEnvironmentResourceData.DeserializeAppServiceEnvironmentResourceData(document.RootElement);
+                        value = AppServiceEnvironmentData.DeserializeAppServiceEnvironmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AppServiceEnvironmentResourceData)null, message.Response);
+                    return Response.FromValue((AppServiceEnvironmentData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        public Response<AppServiceEnvironmentResourceData> Get(string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<AppServiceEnvironmentData> Get(string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -251,19 +251,19 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServiceEnvironmentResourceData value = default;
+                        AppServiceEnvironmentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppServiceEnvironmentResourceData.DeserializeAppServiceEnvironmentResourceData(document.RootElement);
+                        value = AppServiceEnvironmentData.DeserializeAppServiceEnvironmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AppServiceEnvironmentResourceData)null, message.Response);
+                    return Response.FromValue((AppServiceEnvironmentData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string name, AppServiceEnvironmentResourceData hostingEnvironmentEnvelope)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string name, AppServiceEnvironmentData hostingEnvironmentEnvelope)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="hostingEnvironmentEnvelope"> Configuration details of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="hostingEnvironmentEnvelope"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string name, AppServiceEnvironmentResourceData hostingEnvironmentEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string name, AppServiceEnvironmentData hostingEnvironmentEnvelope, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="hostingEnvironmentEnvelope"> Configuration details of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="hostingEnvironmentEnvelope"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string name, AppServiceEnvironmentResourceData hostingEnvironmentEnvelope, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string name, AppServiceEnvironmentData hostingEnvironmentEnvelope, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="hostingEnvironmentEnvelope"> Configuration details of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="hostingEnvironmentEnvelope"/> is null. </exception>
-        public async Task<Response<AppServiceEnvironmentResourceData>> UpdateAsync(string resourceGroupName, string name, AppServiceEnvironmentPatchResource hostingEnvironmentEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceEnvironmentData>> UpdateAsync(string resourceGroupName, string name, AppServiceEnvironmentPatchResource hostingEnvironmentEnvelope, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -490,9 +490,9 @@ namespace Azure.ResourceManager.AppService
                 case 201:
                 case 202:
                     {
-                        AppServiceEnvironmentResourceData value = default;
+                        AppServiceEnvironmentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppServiceEnvironmentResourceData.DeserializeAppServiceEnvironmentResourceData(document.RootElement);
+                        value = AppServiceEnvironmentData.DeserializeAppServiceEnvironmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="hostingEnvironmentEnvelope"> Configuration details of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="hostingEnvironmentEnvelope"/> is null. </exception>
-        public Response<AppServiceEnvironmentResourceData> Update(string resourceGroupName, string name, AppServiceEnvironmentPatchResource hostingEnvironmentEnvelope, CancellationToken cancellationToken = default)
+        public Response<AppServiceEnvironmentData> Update(string resourceGroupName, string name, AppServiceEnvironmentPatchResource hostingEnvironmentEnvelope, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -529,9 +529,9 @@ namespace Azure.ResourceManager.AppService
                 case 201:
                 case 202:
                     {
-                        AppServiceEnvironmentResourceData value = default;
+                        AppServiceEnvironmentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppServiceEnvironmentResourceData.DeserializeAppServiceEnvironmentResourceData(document.RootElement);
+                        value = AppServiceEnvironmentData.DeserializeAppServiceEnvironmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        public async Task<Response<AddressResponseData>> GetVipInfoAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<AddressResponse>> GetVipInfoAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -667,13 +667,11 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AddressResponseData value = default;
+                        AddressResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AddressResponseData.DeserializeAddressResponseData(document.RootElement);
+                        value = AddressResponse.DeserializeAddressResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((AddressResponseData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -684,7 +682,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        public Response<AddressResponseData> GetVipInfo(string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<AddressResponse> GetVipInfo(string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -701,13 +699,11 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AddressResponseData value = default;
+                        AddressResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AddressResponseData.DeserializeAddressResponseData(document.RootElement);
+                        value = AddressResponse.DeserializeAddressResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((AddressResponseData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -3696,7 +3692,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<AppServiceEnvironmentCollection>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<Models.AppServiceEnvironmentCollection>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -3709,9 +3705,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServiceEnvironmentCollection value = default;
+                        Models.AppServiceEnvironmentCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppServiceEnvironmentCollection.DeserializeAppServiceEnvironmentCollection(document.RootElement);
+                        value = Models.AppServiceEnvironmentCollection.DeserializeAppServiceEnvironmentCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3723,7 +3719,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<AppServiceEnvironmentCollection> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
+        public Response<Models.AppServiceEnvironmentCollection> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -3736,9 +3732,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServiceEnvironmentCollection value = default;
+                        Models.AppServiceEnvironmentCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppServiceEnvironmentCollection.DeserializeAppServiceEnvironmentCollection(document.RootElement);
+                        value = Models.AppServiceEnvironmentCollection.DeserializeAppServiceEnvironmentCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3765,7 +3761,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<AppServiceEnvironmentCollection>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<Models.AppServiceEnvironmentCollection>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -3782,9 +3778,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServiceEnvironmentCollection value = default;
+                        Models.AppServiceEnvironmentCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppServiceEnvironmentCollection.DeserializeAppServiceEnvironmentCollection(document.RootElement);
+                        value = Models.AppServiceEnvironmentCollection.DeserializeAppServiceEnvironmentCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3797,7 +3793,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<AppServiceEnvironmentCollection> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<Models.AppServiceEnvironmentCollection> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -3814,9 +3810,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServiceEnvironmentCollection value = default;
+                        Models.AppServiceEnvironmentCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppServiceEnvironmentCollection.DeserializeAppServiceEnvironmentCollection(document.RootElement);
+                        value = Models.AppServiceEnvironmentCollection.DeserializeAppServiceEnvironmentCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

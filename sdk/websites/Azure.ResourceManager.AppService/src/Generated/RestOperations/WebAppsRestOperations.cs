@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        public async Task<Response<SiteData>> GetAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<WebSiteData>> GetAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -224,13 +224,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteData value = default;
+                        WebSiteData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteData.DeserializeSiteData(document.RootElement);
+                        value = WebSiteData.DeserializeWebSiteData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SiteData)null, message.Response);
+                    return Response.FromValue((WebSiteData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        public Response<SiteData> Get(string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<WebSiteData> Get(string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -258,19 +258,19 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteData value = default;
+                        WebSiteData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteData.DeserializeSiteData(document.RootElement);
+                        value = WebSiteData.DeserializeWebSiteData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SiteData)null, message.Response);
+                    return Response.FromValue((WebSiteData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string name, SiteData siteEnvelope)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string name, WebSiteData siteEnvelope)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteEnvelope"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string name, SiteData siteEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string name, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteEnvelope"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string name, SiteData siteEnvelope, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string name, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteEnvelope"/> is null. </exception>
-        public async Task<Response<SiteData>> UpdateAsync(string resourceGroupName, string name, SitePatchResource siteEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response<WebSiteData>> UpdateAsync(string resourceGroupName, string name, SitePatchResource siteEnvelope, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -500,9 +500,9 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                 case 202:
                     {
-                        SiteData value = default;
+                        WebSiteData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteData.DeserializeSiteData(document.RootElement);
+                        value = WebSiteData.DeserializeWebSiteData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteEnvelope"/> is null. </exception>
-        public Response<SiteData> Update(string resourceGroupName, string name, SitePatchResource siteEnvelope, CancellationToken cancellationToken = default)
+        public Response<WebSiteData> Update(string resourceGroupName, string name, SitePatchResource siteEnvelope, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -538,9 +538,9 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                 case 202:
                     {
-                        SiteData value = default;
+                        WebSiteData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteData.DeserializeSiteData(document.RootElement);
+                        value = WebSiteData.DeserializeWebSiteData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2966,7 +2966,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="appSettingKey"> App Setting key name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="appSettingKey"/> is null. </exception>
-        public async Task<Response<ApiKVReferenceData>> GetAppSettingKeyVaultReferenceAsync(string resourceGroupName, string name, string appSettingKey, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiKeyVaultReferenceData>> GetAppSettingKeyVaultReferenceAsync(string resourceGroupName, string name, string appSettingKey, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -2987,13 +2987,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        ApiKVReferenceData value = default;
+                        ApiKeyVaultReferenceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApiKVReferenceData.DeserializeApiKVReferenceData(document.RootElement);
+                        value = ApiKeyVaultReferenceData.DeserializeApiKeyVaultReferenceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ApiKVReferenceData)null, message.Response);
+                    return Response.FromValue((ApiKeyVaultReferenceData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -3005,7 +3005,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="appSettingKey"> App Setting key name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="appSettingKey"/> is null. </exception>
-        public Response<ApiKVReferenceData> GetAppSettingKeyVaultReference(string resourceGroupName, string name, string appSettingKey, CancellationToken cancellationToken = default)
+        public Response<ApiKeyVaultReferenceData> GetAppSettingKeyVaultReference(string resourceGroupName, string name, string appSettingKey, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -3026,13 +3026,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        ApiKVReferenceData value = default;
+                        ApiKeyVaultReferenceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApiKVReferenceData.DeserializeApiKVReferenceData(document.RootElement);
+                        value = ApiKeyVaultReferenceData.DeserializeApiKeyVaultReferenceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ApiKVReferenceData)null, message.Response);
+                    return Response.FromValue((ApiKeyVaultReferenceData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -3151,7 +3151,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="connectionStringKey"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="connectionStringKey"/> is null. </exception>
-        public async Task<Response<ApiKVReferenceData>> GetSiteConnectionStringKeyVaultReferenceAsync(string resourceGroupName, string name, string connectionStringKey, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiKeyVaultReferenceData>> GetSiteConnectionStringKeyVaultReferenceAsync(string resourceGroupName, string name, string connectionStringKey, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -3172,13 +3172,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        ApiKVReferenceData value = default;
+                        ApiKeyVaultReferenceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApiKVReferenceData.DeserializeApiKVReferenceData(document.RootElement);
+                        value = ApiKeyVaultReferenceData.DeserializeApiKeyVaultReferenceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ApiKVReferenceData)null, message.Response);
+                    return Response.FromValue((ApiKeyVaultReferenceData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -3190,7 +3190,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="connectionStringKey"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="connectionStringKey"/> is null. </exception>
-        public Response<ApiKVReferenceData> GetSiteConnectionStringKeyVaultReference(string resourceGroupName, string name, string connectionStringKey, CancellationToken cancellationToken = default)
+        public Response<ApiKeyVaultReferenceData> GetSiteConnectionStringKeyVaultReference(string resourceGroupName, string name, string connectionStringKey, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -3211,13 +3211,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        ApiKVReferenceData value = default;
+                        ApiKeyVaultReferenceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApiKVReferenceData.DeserializeApiKVReferenceData(document.RootElement);
+                        value = ApiKeyVaultReferenceData.DeserializeApiKeyVaultReferenceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ApiKVReferenceData)null, message.Response);
+                    return Response.FromValue((ApiKeyVaultReferenceData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -4252,7 +4252,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        public async Task<Response<SiteConfigResourceData>> GetConfigurationAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteConfigAutoGeneratedData>> GetConfigurationAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -4269,13 +4269,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteConfigResourceData value = default;
+                        SiteConfigAutoGeneratedData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteConfigResourceData.DeserializeSiteConfigResourceData(document.RootElement);
+                        value = SiteConfigAutoGeneratedData.DeserializeSiteConfigAutoGeneratedData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SiteConfigResourceData)null, message.Response);
+                    return Response.FromValue((SiteConfigAutoGeneratedData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -4286,7 +4286,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        public Response<SiteConfigResourceData> GetConfiguration(string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<SiteConfigAutoGeneratedData> GetConfiguration(string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -4303,19 +4303,19 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteConfigResourceData value = default;
+                        SiteConfigAutoGeneratedData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteConfigResourceData.DeserializeSiteConfigResourceData(document.RootElement);
+                        value = SiteConfigAutoGeneratedData.DeserializeSiteConfigAutoGeneratedData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SiteConfigResourceData)null, message.Response);
+                    return Response.FromValue((SiteConfigAutoGeneratedData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateConfigurationRequest(string resourceGroupName, string name, SiteConfigResourceData siteConfig)
+        internal HttpMessage CreateCreateOrUpdateConfigurationRequest(string resourceGroupName, string name, SiteConfigAutoGeneratedData siteConfig)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -4346,7 +4346,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteConfig"/> is null. </exception>
-        public async Task<Response<SiteConfigResourceData>> CreateOrUpdateConfigurationAsync(string resourceGroupName, string name, SiteConfigResourceData siteConfig, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteConfigAutoGeneratedData>> CreateOrUpdateConfigurationAsync(string resourceGroupName, string name, SiteConfigAutoGeneratedData siteConfig, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -4367,9 +4367,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteConfigResourceData value = default;
+                        SiteConfigAutoGeneratedData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteConfigResourceData.DeserializeSiteConfigResourceData(document.RootElement);
+                        value = SiteConfigAutoGeneratedData.DeserializeSiteConfigAutoGeneratedData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4383,7 +4383,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteConfig"/> is null. </exception>
-        public Response<SiteConfigResourceData> CreateOrUpdateConfiguration(string resourceGroupName, string name, SiteConfigResourceData siteConfig, CancellationToken cancellationToken = default)
+        public Response<SiteConfigAutoGeneratedData> CreateOrUpdateConfiguration(string resourceGroupName, string name, SiteConfigAutoGeneratedData siteConfig, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -4404,9 +4404,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteConfigResourceData value = default;
+                        SiteConfigAutoGeneratedData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteConfigResourceData.DeserializeSiteConfigResourceData(document.RootElement);
+                        value = SiteConfigAutoGeneratedData.DeserializeSiteConfigAutoGeneratedData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4414,7 +4414,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateConfigurationRequest(string resourceGroupName, string name, SiteConfigResourceData siteConfig)
+        internal HttpMessage CreateUpdateConfigurationRequest(string resourceGroupName, string name, SiteConfigAutoGeneratedData siteConfig)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -4445,7 +4445,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteConfig"/> is null. </exception>
-        public async Task<Response<SiteConfigResourceData>> UpdateConfigurationAsync(string resourceGroupName, string name, SiteConfigResourceData siteConfig, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteConfigAutoGeneratedData>> UpdateConfigurationAsync(string resourceGroupName, string name, SiteConfigAutoGeneratedData siteConfig, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -4466,9 +4466,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteConfigResourceData value = default;
+                        SiteConfigAutoGeneratedData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteConfigResourceData.DeserializeSiteConfigResourceData(document.RootElement);
+                        value = SiteConfigAutoGeneratedData.DeserializeSiteConfigAutoGeneratedData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4482,7 +4482,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteConfig"/> is null. </exception>
-        public Response<SiteConfigResourceData> UpdateConfiguration(string resourceGroupName, string name, SiteConfigResourceData siteConfig, CancellationToken cancellationToken = default)
+        public Response<SiteConfigAutoGeneratedData> UpdateConfiguration(string resourceGroupName, string name, SiteConfigAutoGeneratedData siteConfig, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -4503,9 +4503,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteConfigResourceData value = default;
+                        SiteConfigAutoGeneratedData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteConfigResourceData.DeserializeSiteConfigResourceData(document.RootElement);
+                        value = SiteConfigAutoGeneratedData.DeserializeSiteConfigAutoGeneratedData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4626,7 +4626,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="snapshotId"/> is null. </exception>
-        public async Task<Response<SiteConfigResourceData>> GetConfigurationSnapshotAsync(string resourceGroupName, string name, string snapshotId, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteConfigAutoGeneratedData>> GetConfigurationSnapshotAsync(string resourceGroupName, string name, string snapshotId, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -4647,13 +4647,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteConfigResourceData value = default;
+                        SiteConfigAutoGeneratedData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteConfigResourceData.DeserializeSiteConfigResourceData(document.RootElement);
+                        value = SiteConfigAutoGeneratedData.DeserializeSiteConfigAutoGeneratedData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SiteConfigResourceData)null, message.Response);
+                    return Response.FromValue((SiteConfigAutoGeneratedData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -4665,7 +4665,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="snapshotId"/> is null. </exception>
-        public Response<SiteConfigResourceData> GetConfigurationSnapshot(string resourceGroupName, string name, string snapshotId, CancellationToken cancellationToken = default)
+        public Response<SiteConfigAutoGeneratedData> GetConfigurationSnapshot(string resourceGroupName, string name, string snapshotId, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -4686,13 +4686,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteConfigResourceData value = default;
+                        SiteConfigAutoGeneratedData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteConfigResourceData.DeserializeSiteConfigResourceData(document.RootElement);
+                        value = SiteConfigAutoGeneratedData.DeserializeSiteConfigAutoGeneratedData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SiteConfigResourceData)null, message.Response);
+                    return Response.FromValue((SiteConfigAutoGeneratedData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -11209,8 +11209,6 @@ namespace Azure.ResourceManager.AppService
                         value = MigrateMySqlStatusData.DeserializeMigrateMySqlStatusData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((MigrateMySqlStatusData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -11243,8 +11241,6 @@ namespace Azure.ResourceManager.AppService
                         value = MigrateMySqlStatusData.DeserializeMigrateMySqlStatusData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((MigrateMySqlStatusData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -11678,8 +11674,6 @@ namespace Azure.ResourceManager.AppService
                         value = NetworkFeaturesData.DeserializeNetworkFeaturesData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((NetworkFeaturesData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -11717,8 +11711,6 @@ namespace Azure.ResourceManager.AppService
                         value = NetworkFeaturesData.DeserializeNetworkFeaturesData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((NetworkFeaturesData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -15920,7 +15912,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. By default, this API returns the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
-        public async Task<Response<SiteData>> GetSlotAsync(string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public async Task<Response<WebSiteData>> GetSlotAsync(string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -15941,13 +15933,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteData value = default;
+                        WebSiteData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteData.DeserializeSiteData(document.RootElement);
+                        value = WebSiteData.DeserializeWebSiteData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SiteData)null, message.Response);
+                    return Response.FromValue((WebSiteData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -15959,7 +15951,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. By default, this API returns the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
-        public Response<SiteData> GetSlot(string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public Response<WebSiteData> GetSlot(string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -15980,19 +15972,19 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteData value = default;
+                        WebSiteData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteData.DeserializeSiteData(document.RootElement);
+                        value = WebSiteData.DeserializeWebSiteData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SiteData)null, message.Response);
+                    return Response.FromValue((WebSiteData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateSlotRequest(string resourceGroupName, string name, string slot, SiteData siteEnvelope)
+        internal HttpMessage CreateCreateOrUpdateSlotRequest(string resourceGroupName, string name, string slot, WebSiteData siteEnvelope)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -16025,7 +16017,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteEnvelope"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateSlotAsync(string resourceGroupName, string name, string slot, SiteData siteEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateSlotAsync(string resourceGroupName, string name, string slot, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -16063,7 +16055,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteEnvelope"/> is null. </exception>
-        public Response CreateOrUpdateSlot(string resourceGroupName, string name, string slot, SiteData siteEnvelope, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdateSlot(string resourceGroupName, string name, string slot, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -16227,7 +16219,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteEnvelope"/> is null. </exception>
-        public async Task<Response<SiteData>> UpdateSlotAsync(string resourceGroupName, string name, string slot, SitePatchResource siteEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response<WebSiteData>> UpdateSlotAsync(string resourceGroupName, string name, string slot, SitePatchResource siteEnvelope, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -16253,9 +16245,9 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                 case 202:
                     {
-                        SiteData value = default;
+                        WebSiteData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteData.DeserializeSiteData(document.RootElement);
+                        value = WebSiteData.DeserializeWebSiteData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -16270,7 +16262,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteEnvelope"/> is null. </exception>
-        public Response<SiteData> UpdateSlot(string resourceGroupName, string name, string slot, SitePatchResource siteEnvelope, CancellationToken cancellationToken = default)
+        public Response<WebSiteData> UpdateSlot(string resourceGroupName, string name, string slot, SitePatchResource siteEnvelope, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -16296,9 +16288,9 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                 case 202:
                     {
-                        SiteData value = default;
+                        WebSiteData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteData.DeserializeSiteData(document.RootElement);
+                        value = WebSiteData.DeserializeWebSiteData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -19039,7 +19031,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="appSettingKey"> App Setting key name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="appSettingKey"/> is null. </exception>
-        public async Task<Response<ApiKVReferenceData>> GetAppSettingKeyVaultReferenceSlotAsync(string resourceGroupName, string name, string slot, string appSettingKey, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiKeyVaultReferenceData>> GetAppSettingKeyVaultReferenceSlotAsync(string resourceGroupName, string name, string slot, string appSettingKey, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -19064,13 +19056,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        ApiKVReferenceData value = default;
+                        ApiKeyVaultReferenceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApiKVReferenceData.DeserializeApiKVReferenceData(document.RootElement);
+                        value = ApiKeyVaultReferenceData.DeserializeApiKeyVaultReferenceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ApiKVReferenceData)null, message.Response);
+                    return Response.FromValue((ApiKeyVaultReferenceData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -19083,7 +19075,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="appSettingKey"> App Setting key name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="appSettingKey"/> is null. </exception>
-        public Response<ApiKVReferenceData> GetAppSettingKeyVaultReferenceSlot(string resourceGroupName, string name, string slot, string appSettingKey, CancellationToken cancellationToken = default)
+        public Response<ApiKeyVaultReferenceData> GetAppSettingKeyVaultReferenceSlot(string resourceGroupName, string name, string slot, string appSettingKey, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -19108,13 +19100,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        ApiKVReferenceData value = default;
+                        ApiKeyVaultReferenceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApiKVReferenceData.DeserializeApiKVReferenceData(document.RootElement);
+                        value = ApiKeyVaultReferenceData.DeserializeApiKeyVaultReferenceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ApiKVReferenceData)null, message.Response);
+                    return Response.FromValue((ApiKeyVaultReferenceData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -19248,7 +19240,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="connectionStringKey"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="connectionStringKey"/> is null. </exception>
-        public async Task<Response<ApiKVReferenceData>> GetSiteConnectionStringKeyVaultReferenceSlotAsync(string resourceGroupName, string name, string slot, string connectionStringKey, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiKeyVaultReferenceData>> GetSiteConnectionStringKeyVaultReferenceSlotAsync(string resourceGroupName, string name, string slot, string connectionStringKey, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -19273,13 +19265,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        ApiKVReferenceData value = default;
+                        ApiKeyVaultReferenceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApiKVReferenceData.DeserializeApiKVReferenceData(document.RootElement);
+                        value = ApiKeyVaultReferenceData.DeserializeApiKeyVaultReferenceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ApiKVReferenceData)null, message.Response);
+                    return Response.FromValue((ApiKeyVaultReferenceData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -19292,7 +19284,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="connectionStringKey"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="connectionStringKey"/> is null. </exception>
-        public Response<ApiKVReferenceData> GetSiteConnectionStringKeyVaultReferenceSlot(string resourceGroupName, string name, string slot, string connectionStringKey, CancellationToken cancellationToken = default)
+        public Response<ApiKeyVaultReferenceData> GetSiteConnectionStringKeyVaultReferenceSlot(string resourceGroupName, string name, string slot, string connectionStringKey, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -19317,13 +19309,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        ApiKVReferenceData value = default;
+                        ApiKeyVaultReferenceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApiKVReferenceData.DeserializeApiKVReferenceData(document.RootElement);
+                        value = ApiKeyVaultReferenceData.DeserializeApiKeyVaultReferenceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ApiKVReferenceData)null, message.Response);
+                    return Response.FromValue((ApiKeyVaultReferenceData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -20281,7 +20273,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will return configuration for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
-        public async Task<Response<SiteConfigResourceData>> GetConfigurationSlotAsync(string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteConfigAutoGeneratedData>> GetConfigurationSlotAsync(string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -20302,13 +20294,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteConfigResourceData value = default;
+                        SiteConfigAutoGeneratedData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteConfigResourceData.DeserializeSiteConfigResourceData(document.RootElement);
+                        value = SiteConfigAutoGeneratedData.DeserializeSiteConfigAutoGeneratedData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SiteConfigResourceData)null, message.Response);
+                    return Response.FromValue((SiteConfigAutoGeneratedData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -20320,7 +20312,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will return configuration for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
-        public Response<SiteConfigResourceData> GetConfigurationSlot(string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public Response<SiteConfigAutoGeneratedData> GetConfigurationSlot(string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -20341,19 +20333,19 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteConfigResourceData value = default;
+                        SiteConfigAutoGeneratedData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteConfigResourceData.DeserializeSiteConfigResourceData(document.RootElement);
+                        value = SiteConfigAutoGeneratedData.DeserializeSiteConfigAutoGeneratedData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SiteConfigResourceData)null, message.Response);
+                    return Response.FromValue((SiteConfigAutoGeneratedData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateConfigurationSlotRequest(string resourceGroupName, string name, string slot, SiteConfigResourceData siteConfig)
+        internal HttpMessage CreateCreateOrUpdateConfigurationSlotRequest(string resourceGroupName, string name, string slot, SiteConfigAutoGeneratedData siteConfig)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -20387,7 +20379,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteConfig"/> is null. </exception>
-        public async Task<Response<SiteConfigResourceData>> CreateOrUpdateConfigurationSlotAsync(string resourceGroupName, string name, string slot, SiteConfigResourceData siteConfig, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteConfigAutoGeneratedData>> CreateOrUpdateConfigurationSlotAsync(string resourceGroupName, string name, string slot, SiteConfigAutoGeneratedData siteConfig, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -20412,9 +20404,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteConfigResourceData value = default;
+                        SiteConfigAutoGeneratedData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteConfigResourceData.DeserializeSiteConfigResourceData(document.RootElement);
+                        value = SiteConfigAutoGeneratedData.DeserializeSiteConfigAutoGeneratedData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -20429,7 +20421,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteConfig"/> is null. </exception>
-        public Response<SiteConfigResourceData> CreateOrUpdateConfigurationSlot(string resourceGroupName, string name, string slot, SiteConfigResourceData siteConfig, CancellationToken cancellationToken = default)
+        public Response<SiteConfigAutoGeneratedData> CreateOrUpdateConfigurationSlot(string resourceGroupName, string name, string slot, SiteConfigAutoGeneratedData siteConfig, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -20454,9 +20446,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteConfigResourceData value = default;
+                        SiteConfigAutoGeneratedData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteConfigResourceData.DeserializeSiteConfigResourceData(document.RootElement);
+                        value = SiteConfigAutoGeneratedData.DeserializeSiteConfigAutoGeneratedData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -20464,7 +20456,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateConfigurationSlotRequest(string resourceGroupName, string name, string slot, SiteConfigResourceData siteConfig)
+        internal HttpMessage CreateUpdateConfigurationSlotRequest(string resourceGroupName, string name, string slot, SiteConfigAutoGeneratedData siteConfig)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -20498,7 +20490,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteConfig"/> is null. </exception>
-        public async Task<Response<SiteConfigResourceData>> UpdateConfigurationSlotAsync(string resourceGroupName, string name, string slot, SiteConfigResourceData siteConfig, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteConfigAutoGeneratedData>> UpdateConfigurationSlotAsync(string resourceGroupName, string name, string slot, SiteConfigAutoGeneratedData siteConfig, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -20523,9 +20515,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteConfigResourceData value = default;
+                        SiteConfigAutoGeneratedData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteConfigResourceData.DeserializeSiteConfigResourceData(document.RootElement);
+                        value = SiteConfigAutoGeneratedData.DeserializeSiteConfigAutoGeneratedData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -20540,7 +20532,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteConfig"/> is null. </exception>
-        public Response<SiteConfigResourceData> UpdateConfigurationSlot(string resourceGroupName, string name, string slot, SiteConfigResourceData siteConfig, CancellationToken cancellationToken = default)
+        public Response<SiteConfigAutoGeneratedData> UpdateConfigurationSlot(string resourceGroupName, string name, string slot, SiteConfigAutoGeneratedData siteConfig, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -20565,9 +20557,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteConfigResourceData value = default;
+                        SiteConfigAutoGeneratedData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteConfigResourceData.DeserializeSiteConfigResourceData(document.RootElement);
+                        value = SiteConfigAutoGeneratedData.DeserializeSiteConfigAutoGeneratedData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -20703,7 +20695,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="snapshotId"/> is null. </exception>
-        public async Task<Response<SiteConfigResourceData>> GetConfigurationSnapshotSlotAsync(string resourceGroupName, string name, string slot, string snapshotId, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteConfigAutoGeneratedData>> GetConfigurationSnapshotSlotAsync(string resourceGroupName, string name, string slot, string snapshotId, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -20728,13 +20720,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteConfigResourceData value = default;
+                        SiteConfigAutoGeneratedData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteConfigResourceData.DeserializeSiteConfigResourceData(document.RootElement);
+                        value = SiteConfigAutoGeneratedData.DeserializeSiteConfigAutoGeneratedData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SiteConfigResourceData)null, message.Response);
+                    return Response.FromValue((SiteConfigAutoGeneratedData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -20747,7 +20739,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="snapshotId"/> is null. </exception>
-        public Response<SiteConfigResourceData> GetConfigurationSnapshotSlot(string resourceGroupName, string name, string slot, string snapshotId, CancellationToken cancellationToken = default)
+        public Response<SiteConfigAutoGeneratedData> GetConfigurationSnapshotSlot(string resourceGroupName, string name, string slot, string snapshotId, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -20772,13 +20764,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteConfigResourceData value = default;
+                        SiteConfigAutoGeneratedData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteConfigResourceData.DeserializeSiteConfigResourceData(document.RootElement);
+                        value = SiteConfigAutoGeneratedData.DeserializeSiteConfigAutoGeneratedData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SiteConfigResourceData)null, message.Response);
+                    return Response.FromValue((SiteConfigAutoGeneratedData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

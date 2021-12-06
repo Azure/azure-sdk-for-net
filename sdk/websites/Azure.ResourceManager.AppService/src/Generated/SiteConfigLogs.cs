@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.AppService
         {
             HasData = true;
             _data = resource;
+            Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
@@ -46,6 +48,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SiteConfigLogs(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
+            Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
@@ -82,6 +85,9 @@ namespace Azure.ResourceManager.AppService
                 return _data;
             }
         }
+
+        /// <summary> Gets the parent resource of this resource. </summary>
+        public ArmResource Parent { get; }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs
@@ -143,6 +149,70 @@ namespace Azure.ResourceManager.AppService
         public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs
+        /// OperationId: WebApps_UpdateDiagnosticLogsConfig
+        /// <summary> Description for Updates the logging configuration of an app. </summary>
+        /// <param name="siteLogsConfig"> A SiteLogsConfig JSON object that contains the logging configuration to change in the &quot;properties&quot; property. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteLogsConfig"/> is null. </exception>
+        public async virtual Task<WebAppUpdateDiagnosticLogsConfigOperation> CreateOrUpdateAsync(SiteLogsConfigData siteLogsConfig, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (siteLogsConfig == null)
+            {
+                throw new ArgumentNullException(nameof(siteLogsConfig));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SiteConfigLogs.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _webAppsRestClient.UpdateDiagnosticLogsConfigAsync(Id.ResourceGroupName, Id.Parent.Name, siteLogsConfig, cancellationToken).ConfigureAwait(false);
+                var operation = new WebAppUpdateDiagnosticLogsConfigOperation(this, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs
+        /// OperationId: WebApps_UpdateDiagnosticLogsConfig
+        /// <summary> Description for Updates the logging configuration of an app. </summary>
+        /// <param name="siteLogsConfig"> A SiteLogsConfig JSON object that contains the logging configuration to change in the &quot;properties&quot; property. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteLogsConfig"/> is null. </exception>
+        public virtual WebAppUpdateDiagnosticLogsConfigOperation CreateOrUpdate(SiteLogsConfigData siteLogsConfig, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (siteLogsConfig == null)
+            {
+                throw new ArgumentNullException(nameof(siteLogsConfig));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SiteConfigLogs.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _webAppsRestClient.UpdateDiagnosticLogsConfig(Id.ResourceGroupName, Id.Parent.Name, siteLogsConfig, cancellationToken);
+                var operation = new WebAppUpdateDiagnosticLogsConfigOperation(this, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

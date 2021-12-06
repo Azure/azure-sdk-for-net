@@ -17,26 +17,26 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing collection of PremierAddOn and their operations over its parent. </summary>
-    public partial class SitePremieraddonCollection : ArmCollection
+    public partial class SitePremierAddonCollection : ArmCollection
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly WebAppsRestOperations _webAppsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SitePremieraddonCollection"/> class for mocking. </summary>
-        protected SitePremieraddonCollection()
+        /// <summary> Initializes a new instance of the <see cref="SitePremierAddonCollection"/> class for mocking. </summary>
+        protected SitePremierAddonCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of SitePremieraddonCollection class. </summary>
+        /// <summary> Initializes a new instance of SitePremierAddonCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal SitePremieraddonCollection(ArmResource parent) : base(parent)
+        internal SitePremierAddonCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Site.ResourceType;
+        protected override ResourceType ValidResourceType => WebSite.ResourceType;
 
         // Collection level operations.
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(premierAddOn));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SitePremieraddonCollection.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("SitePremierAddonCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(premierAddOn));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SitePremieraddonCollection.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("SitePremierAddonCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -121,21 +121,21 @@ namespace Azure.ResourceManager.AppService
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
-        public virtual Response<SitePremieraddon> Get(string premierAddOnName, CancellationToken cancellationToken = default)
+        public virtual Response<SitePremierAddon> Get(string premierAddOnName, CancellationToken cancellationToken = default)
         {
             if (premierAddOnName == null)
             {
                 throw new ArgumentNullException(nameof(premierAddOnName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SitePremieraddonCollection.Get");
+            using var scope = _clientDiagnostics.CreateScope("SitePremierAddonCollection.Get");
             scope.Start();
             try
             {
                 var response = _webAppsRestClient.GetPremierAddOn(Id.ResourceGroupName, Id.Name, premierAddOnName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SitePremieraddon(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SitePremierAddon(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,21 +151,21 @@ namespace Azure.ResourceManager.AppService
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
-        public async virtual Task<Response<SitePremieraddon>> GetAsync(string premierAddOnName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<SitePremierAddon>> GetAsync(string premierAddOnName, CancellationToken cancellationToken = default)
         {
             if (premierAddOnName == null)
             {
                 throw new ArgumentNullException(nameof(premierAddOnName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SitePremieraddonCollection.Get");
+            using var scope = _clientDiagnostics.CreateScope("SitePremierAddonCollection.Get");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.GetPremierAddOnAsync(Id.ResourceGroupName, Id.Name, premierAddOnName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SitePremieraddon(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SitePremierAddon(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -178,21 +178,21 @@ namespace Azure.ResourceManager.AppService
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
-        public virtual Response<SitePremieraddon> GetIfExists(string premierAddOnName, CancellationToken cancellationToken = default)
+        public virtual Response<SitePremierAddon> GetIfExists(string premierAddOnName, CancellationToken cancellationToken = default)
         {
             if (premierAddOnName == null)
             {
                 throw new ArgumentNullException(nameof(premierAddOnName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SitePremieraddonCollection.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SitePremierAddonCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = _webAppsRestClient.GetPremierAddOn(Id.ResourceGroupName, Id.Name, premierAddOnName, cancellationToken: cancellationToken);
                 return response.Value == null
-                    ? Response.FromValue<SitePremieraddon>(null, response.GetRawResponse())
-                    : Response.FromValue(new SitePremieraddon(this, response.Value), response.GetRawResponse());
+                    ? Response.FromValue<SitePremierAddon>(null, response.GetRawResponse())
+                    : Response.FromValue(new SitePremierAddon(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,21 +205,21 @@ namespace Azure.ResourceManager.AppService
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
-        public async virtual Task<Response<SitePremieraddon>> GetIfExistsAsync(string premierAddOnName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<SitePremierAddon>> GetIfExistsAsync(string premierAddOnName, CancellationToken cancellationToken = default)
         {
             if (premierAddOnName == null)
             {
                 throw new ArgumentNullException(nameof(premierAddOnName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SitePremieraddonCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SitePremierAddonCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.GetPremierAddOnAsync(Id.ResourceGroupName, Id.Name, premierAddOnName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
-                    ? Response.FromValue<SitePremieraddon>(null, response.GetRawResponse())
-                    : Response.FromValue(new SitePremieraddon(this, response.Value), response.GetRawResponse());
+                    ? Response.FromValue<SitePremierAddon>(null, response.GetRawResponse())
+                    : Response.FromValue(new SitePremierAddon(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(premierAddOnName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SitePremieraddonCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SitePremierAddonCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(premierAddOnName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SitePremieraddonCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SitePremierAddonCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
@@ -279,6 +279,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SitePremieraddon, PremierAddOnData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SitePremierAddon, PremierAddOnData> Construct() { }
     }
 }

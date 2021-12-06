@@ -18,22 +18,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a SiteSlotConfigConnectionstring along with the instance operations that can be performed on it. </summary>
-    public partial class SiteSlotConfigConnectionstring : ArmResource
+    /// <summary> A Class representing a SiteSlotConfigConnectionString along with the instance operations that can be performed on it. </summary>
+    public partial class SiteSlotConfigConnectionString : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly WebAppsRestOperations _webAppsRestClient;
-        private readonly ApiKVReferenceData _data;
+        private readonly ApiKeyVaultReferenceData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotConfigConnectionstring"/> class for mocking. </summary>
-        protected SiteSlotConfigConnectionstring()
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotConfigConnectionString"/> class for mocking. </summary>
+        protected SiteSlotConfigConnectionString()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteSlotConfigConnectionstring"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "SiteSlotConfigConnectionString"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal SiteSlotConfigConnectionstring(ArmResource options, ApiKVReferenceData resource) : base(options, resource.Id)
+        internal SiteSlotConfigConnectionString(ArmResource options, ApiKeyVaultReferenceData resource) : base(options, resource.Id)
         {
             HasData = true;
             _data = resource;
@@ -41,22 +41,22 @@ namespace Azure.ResourceManager.AppService
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotConfigConnectionstring"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotConfigConnectionString"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteSlotConfigConnectionstring(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal SiteSlotConfigConnectionString(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotConfigConnectionstring"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotConfigConnectionString"/> class. </summary>
         /// <param name="clientOptions"> The client options to build client context. </param>
         /// <param name="credential"> The credential to build client context. </param>
         /// <param name="uri"> The uri to build client context. </param>
         /// <param name="pipeline"> The pipeline to build client context. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteSlotConfigConnectionstring(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        internal SiteSlotConfigConnectionString(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ApiKVReferenceData Data
+        public virtual ApiKeyVaultReferenceData Data
         {
             get
             {
@@ -88,16 +88,16 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: WebApps_GetSiteConnectionStringKeyVaultReferenceSlot
         /// <summary> Description for Gets the config reference and status of an app. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteSlotConfigConnectionstring>> GetAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<SiteSlotConfigConnectionString>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionstring.Get");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionString.Get");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.GetSiteConnectionStringKeyVaultReferenceSlotAsync(Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotConfigConnectionstring(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotConfigConnectionString(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -111,16 +111,16 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: WebApps_GetSiteConnectionStringKeyVaultReferenceSlot
         /// <summary> Description for Gets the config reference and status of an app. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SiteSlotConfigConnectionstring> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotConfigConnectionString> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionstring.Get");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionString.Get");
             scope.Start();
             try
             {
                 var response = _webAppsRestClient.GetSiteConnectionStringKeyVaultReferenceSlot(Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotConfigConnectionstring(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotConfigConnectionString(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

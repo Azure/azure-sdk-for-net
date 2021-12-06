@@ -18,9 +18,9 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Updates the source control configuration of an app. </summary>
-    public partial class WebAppCreateOrUpdateSourceControlOperation : Operation<SiteSourcecontrol>, IOperationSource<SiteSourcecontrol>
+    public partial class WebAppCreateOrUpdateSourceControlOperation : Operation<SiteSourceControl>, IOperationSource<SiteSourceControl>
     {
-        private readonly OperationInternals<SiteSourcecontrol> _operation;
+        private readonly OperationInternals<SiteSourceControl> _operation;
 
         private readonly ArmResource _operationBase;
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal WebAppCreateOrUpdateSourceControlOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<SiteSourcecontrol>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "WebAppCreateOrUpdateSourceControlOperation");
+            _operation = new OperationInternals<SiteSourceControl>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "WebAppCreateOrUpdateSourceControlOperation");
             _operationBase = operationsBase;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService.Models
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override SiteSourcecontrol Value => _operation.Value;
+        public override SiteSourceControl Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.AppService.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<SiteSourcecontrol>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<SiteSourceControl>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<SiteSourcecontrol>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<SiteSourceControl>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        SiteSourcecontrol IOperationSource<SiteSourcecontrol>.CreateResult(Response response, CancellationToken cancellationToken)
+        SiteSourceControl IOperationSource<SiteSourceControl>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new SiteSourcecontrol(_operationBase, SiteSourceControlData.DeserializeSiteSourceControlData(document.RootElement));
+            return new SiteSourceControl(_operationBase, SiteSourceControlData.DeserializeSiteSourceControlData(document.RootElement));
         }
 
-        async ValueTask<SiteSourcecontrol> IOperationSource<SiteSourcecontrol>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SiteSourceControl> IOperationSource<SiteSourceControl>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new SiteSourcecontrol(_operationBase, SiteSourceControlData.DeserializeSiteSourceControlData(document.RootElement));
+            return new SiteSourceControl(_operationBase, SiteSourceControlData.DeserializeSiteSourceControlData(document.RootElement));
         }
     }
 }

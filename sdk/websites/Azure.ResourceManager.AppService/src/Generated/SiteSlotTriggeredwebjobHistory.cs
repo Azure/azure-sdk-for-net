@@ -18,22 +18,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a SiteSlotTriggeredwebjobHistory along with the instance operations that can be performed on it. </summary>
-    public partial class SiteSlotTriggeredwebjobHistory : ArmResource
+    /// <summary> A Class representing a SiteSlotTriggeredWebJobHistory along with the instance operations that can be performed on it. </summary>
+    public partial class SiteSlotTriggeredWebJobHistory : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly WebAppsRestOperations _webAppsRestClient;
         private readonly TriggeredJobHistoryData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotTriggeredwebjobHistory"/> class for mocking. </summary>
-        protected SiteSlotTriggeredwebjobHistory()
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotTriggeredWebJobHistory"/> class for mocking. </summary>
+        protected SiteSlotTriggeredWebJobHistory()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteSlotTriggeredwebjobHistory"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "SiteSlotTriggeredWebJobHistory"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal SiteSlotTriggeredwebjobHistory(ArmResource options, TriggeredJobHistoryData resource) : base(options, resource.Id)
+        internal SiteSlotTriggeredWebJobHistory(ArmResource options, TriggeredJobHistoryData resource) : base(options, resource.Id)
         {
             HasData = true;
             _data = resource;
@@ -41,29 +41,29 @@ namespace Azure.ResourceManager.AppService
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotTriggeredwebjobHistory"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotTriggeredWebJobHistory"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteSlotTriggeredwebjobHistory(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal SiteSlotTriggeredWebJobHistory(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotTriggeredwebjobHistory"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotTriggeredWebJobHistory"/> class. </summary>
         /// <param name="clientOptions"> The client options to build client context. </param>
         /// <param name="credential"> The credential to build client context. </param>
         /// <param name="uri"> The uri to build client context. </param>
         /// <param name="pipeline"> The pipeline to build client context. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteSlotTriggeredwebjobHistory(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        internal SiteSlotTriggeredWebJobHistory(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots/triggeredwebjobs/history";
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/triggeredwebjobs/history";
 
         /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
@@ -83,21 +83,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/history/{id}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/history/{id}
-        /// OperationId: WebApps_GetTriggeredWebJobHistorySlot
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id}
+        /// OperationId: WebApps_GetTriggeredWebJobHistory
         /// <summary> Description for Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteSlotTriggeredwebjobHistory>> GetAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<SiteSlotTriggeredWebJobHistory>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotTriggeredwebjobHistory.Get");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotTriggeredWebJobHistory.Get");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetTriggeredWebJobHistorySlotAsync(Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webAppsRestClient.GetTriggeredWebJobHistoryAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotTriggeredwebjobHistory(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotTriggeredWebJobHistory(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,21 +106,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/history/{id}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/history/{id}
-        /// OperationId: WebApps_GetTriggeredWebJobHistorySlot
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id}
+        /// OperationId: WebApps_GetTriggeredWebJobHistory
         /// <summary> Description for Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SiteSlotTriggeredwebjobHistory> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotTriggeredWebJobHistory> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotTriggeredwebjobHistory.Get");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotTriggeredWebJobHistory.Get");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetTriggeredWebJobHistorySlot(Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _webAppsRestClient.GetTriggeredWebJobHistory(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotTriggeredwebjobHistory(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotTriggeredWebJobHistory(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

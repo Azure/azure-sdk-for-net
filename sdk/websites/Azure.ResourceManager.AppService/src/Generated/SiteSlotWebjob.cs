@@ -18,22 +18,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a SiteSlotWebjob along with the instance operations that can be performed on it. </summary>
-    public partial class SiteSlotWebjob : ArmResource
+    /// <summary> A Class representing a SiteSlotWebJob along with the instance operations that can be performed on it. </summary>
+    public partial class SiteSlotWebJob : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly WebAppsRestOperations _webAppsRestClient;
         private readonly WebJobData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotWebjob"/> class for mocking. </summary>
-        protected SiteSlotWebjob()
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotWebJob"/> class for mocking. </summary>
+        protected SiteSlotWebJob()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteSlotWebjob"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "SiteSlotWebJob"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal SiteSlotWebjob(ArmResource options, WebJobData resource) : base(options, resource.Id)
+        internal SiteSlotWebJob(ArmResource options, WebJobData resource) : base(options, resource.Id)
         {
             HasData = true;
             _data = resource;
@@ -41,22 +41,22 @@ namespace Azure.ResourceManager.AppService
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotWebjob"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotWebJob"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteSlotWebjob(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal SiteSlotWebJob(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotWebjob"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotWebJob"/> class. </summary>
         /// <param name="clientOptions"> The client options to build client context. </param>
         /// <param name="credential"> The credential to build client context. </param>
         /// <param name="uri"> The uri to build client context. </param>
         /// <param name="pipeline"> The pipeline to build client context. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteSlotWebjob(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        internal SiteSlotWebJob(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
@@ -88,16 +88,16 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: WebApps_GetWebJobSlot
         /// <summary> Description for Get webjob information for an app, or a deployment slot. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteSlotWebjob>> GetAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<SiteSlotWebJob>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotWebjob.Get");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotWebJob.Get");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.GetWebJobSlotAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotWebjob(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotWebJob(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -111,16 +111,16 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: WebApps_GetWebJobSlot
         /// <summary> Description for Get webjob information for an app, or a deployment slot. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SiteSlotWebjob> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotWebJob> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotWebjob.Get");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotWebJob.Get");
             scope.Start();
             try
             {
                 var response = _webAppsRestClient.GetWebJobSlot(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotWebjob(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotWebJob(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

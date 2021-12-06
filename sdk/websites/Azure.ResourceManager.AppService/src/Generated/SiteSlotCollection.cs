@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of Site and their operations over its parent. </summary>
+    /// <summary> A class representing collection of WebSite and their operations over its parent. </summary>
     public partial class SiteSlotCollection : ArmCollection, IEnumerable<SiteSlot>, IAsyncEnumerable<SiteSlot>
 
     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Site.ResourceType;
+        protected override ResourceType ValidResourceType => WebSite.ResourceType;
 
         // Collection level operations.
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="slot"/> or <paramref name="siteEnvelope"/> is null. </exception>
-        public virtual WebAppCreateOrUpdateSlotOperation CreateOrUpdate(string slot, SiteData siteEnvelope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual WebAppCreateOrUpdateSlotOperation CreateOrUpdate(string slot, WebSiteData siteEnvelope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (slot == null)
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="slot"/> or <paramref name="siteEnvelope"/> is null. </exception>
-        public async virtual Task<WebAppCreateOrUpdateSlotOperation> CreateOrUpdateAsync(string slot, SiteData siteEnvelope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<WebAppCreateOrUpdateSlotOperation> CreateOrUpdateAsync(string slot, WebSiteData siteEnvelope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (slot == null)
             {
@@ -381,6 +381,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SiteSlot, SiteData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SiteSlot, WebSiteData> Construct() { }
     }
 }

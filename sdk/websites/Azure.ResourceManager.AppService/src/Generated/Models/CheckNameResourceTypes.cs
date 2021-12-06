@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string SiteValue = "Site";
+        private const string WebSiteValue = "Site";
         private const string SlotValue = "Slot";
         private const string HostingEnvironmentValue = "HostingEnvironment";
         private const string PublishingUserValue = "PublishingUser";
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService.Models
         private const string MicrosoftWebPublishingUsersValue = "Microsoft.Web/publishingUsers";
 
         /// <summary> Site. </summary>
-        public static CheckNameResourceTypes Site { get; } = new CheckNameResourceTypes(SiteValue);
+        public static CheckNameResourceTypes WebSite { get; } = new CheckNameResourceTypes(WebSiteValue);
         /// <summary> Slot. </summary>
         public static CheckNameResourceTypes Slot { get; } = new CheckNameResourceTypes(SlotValue);
         /// <summary> HostingEnvironment. </summary>

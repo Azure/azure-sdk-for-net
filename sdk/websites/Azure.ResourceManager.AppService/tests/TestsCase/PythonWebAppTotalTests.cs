@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             return Site.GetSiteSlots();
         }
 
-        private async Task<SiteSourcecontrolCollection> GetSiteSourceControlCollectionAsync()
+        private async Task<SiteSourcecontrol> GetSiteSourceControlCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
             var SiteName = Recording.GenerateAssetName("testSiteSource");
             var SiteInput = ResourceDataHelper.GetBasicSiteData(DefaultLocation);
             var lro = await resourceGroup.GetSites().CreateOrUpdateAsync(SiteName, SiteInput);
             var Site = lro.Value;
-            return Site.GetSiteSourcecontrols();
+            return Site.GetSiteSourcecontrol();
         }
 
         [TestCase]

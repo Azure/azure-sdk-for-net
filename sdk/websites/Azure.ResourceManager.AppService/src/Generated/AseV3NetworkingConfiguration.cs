@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.AppService
         {
             HasData = true;
             _data = resource;
+            Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _appServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
@@ -46,6 +48,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AseV3NetworkingConfiguration(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
+            Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _appServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
@@ -82,6 +85,9 @@ namespace Azure.ResourceManager.AppService
                 return _data;
             }
         }
+
+        /// <summary> Gets the parent resource of this resource. </summary>
+        public ArmResource Parent { get; }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/configurations/networking
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/configurations/networking
@@ -143,6 +149,70 @@ namespace Azure.ResourceManager.AppService
         public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/configurations/networking
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/configurations/networking
+        /// OperationId: AppServiceEnvironments_UpdateAseNetworkingConfiguration
+        /// <summary> Description for Update networking configuration of an App Service Environment. </summary>
+        /// <param name="aseNetworkingConfiguration"> The AseV3NetworkingConfiguration to use. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="aseNetworkingConfiguration"/> is null. </exception>
+        public async virtual Task<AppServiceEnvironmentUpdateAseNetworkingConfigurationOperation> CreateOrUpdateAsync(AseV3NetworkingConfigurationData aseNetworkingConfiguration, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (aseNetworkingConfiguration == null)
+            {
+                throw new ArgumentNullException(nameof(aseNetworkingConfiguration));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("AseV3NetworkingConfiguration.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _appServiceEnvironmentsRestClient.UpdateAseNetworkingConfigurationAsync(Id.ResourceGroupName, Id.Parent.Name, aseNetworkingConfiguration, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceEnvironmentUpdateAseNetworkingConfigurationOperation(this, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/configurations/networking
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/configurations/networking
+        /// OperationId: AppServiceEnvironments_UpdateAseNetworkingConfiguration
+        /// <summary> Description for Update networking configuration of an App Service Environment. </summary>
+        /// <param name="aseNetworkingConfiguration"> The AseV3NetworkingConfiguration to use. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="aseNetworkingConfiguration"/> is null. </exception>
+        public virtual AppServiceEnvironmentUpdateAseNetworkingConfigurationOperation CreateOrUpdate(AseV3NetworkingConfigurationData aseNetworkingConfiguration, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (aseNetworkingConfiguration == null)
+            {
+                throw new ArgumentNullException(nameof(aseNetworkingConfiguration));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("AseV3NetworkingConfiguration.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _appServiceEnvironmentsRestClient.UpdateAseNetworkingConfiguration(Id.ResourceGroupName, Id.Parent.Name, aseNetworkingConfiguration, cancellationToken);
+                var operation = new AppServiceEnvironmentUpdateAseNetworkingConfigurationOperation(this, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

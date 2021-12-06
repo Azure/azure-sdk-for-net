@@ -19,22 +19,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a SitePremieraddon along with the instance operations that can be performed on it. </summary>
-    public partial class SitePremieraddon : ArmResource
+    /// <summary> A Class representing a SitePremierAddon along with the instance operations that can be performed on it. </summary>
+    public partial class SitePremierAddon : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly WebAppsRestOperations _webAppsRestClient;
         private readonly PremierAddOnData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="SitePremieraddon"/> class for mocking. </summary>
-        protected SitePremieraddon()
+        /// <summary> Initializes a new instance of the <see cref="SitePremierAddon"/> class for mocking. </summary>
+        protected SitePremierAddon()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SitePremieraddon"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "SitePremierAddon"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal SitePremieraddon(ArmResource options, PremierAddOnData resource) : base(options, resource.Id)
+        internal SitePremierAddon(ArmResource options, PremierAddOnData resource) : base(options, resource.Id)
         {
             HasData = true;
             _data = resource;
@@ -42,22 +42,22 @@ namespace Azure.ResourceManager.AppService
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SitePremieraddon"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SitePremierAddon"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SitePremieraddon(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal SitePremierAddon(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SitePremieraddon"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SitePremierAddon"/> class. </summary>
         /// <param name="clientOptions"> The client options to build client context. </param>
         /// <param name="credential"> The credential to build client context. </param>
         /// <param name="uri"> The uri to build client context. </param>
         /// <param name="pipeline"> The pipeline to build client context. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SitePremieraddon(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        internal SitePremierAddon(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
@@ -89,16 +89,16 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: WebApps_GetPremierAddOn
         /// <summary> Description for Gets a named add-on of an app. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SitePremieraddon>> GetAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<SitePremierAddon>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SitePremieraddon.Get");
+            using var scope = _clientDiagnostics.CreateScope("SitePremierAddon.Get");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.GetPremierAddOnAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SitePremieraddon(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SitePremierAddon(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,16 +112,16 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: WebApps_GetPremierAddOn
         /// <summary> Description for Gets a named add-on of an app. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SitePremieraddon> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SitePremierAddon> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SitePremieraddon.Get");
+            using var scope = _clientDiagnostics.CreateScope("SitePremierAddon.Get");
             scope.Start();
             try
             {
                 var response = _webAppsRestClient.GetPremierAddOn(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SitePremieraddon(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SitePremierAddon(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<WebAppDeletePremierAddOnOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SitePremieraddon.Delete");
+            using var scope = _clientDiagnostics.CreateScope("SitePremierAddon.Delete");
             scope.Start();
             try
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual WebAppDeletePremierAddOnOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SitePremieraddon.Delete");
+            using var scope = _clientDiagnostics.CreateScope("SitePremierAddon.Delete");
             scope.Start();
             try
             {
@@ -203,19 +203,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="premierAddOn"> A JSON representation of the edited premier add-on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOn"/> is null. </exception>
-        public async virtual Task<Response<SitePremieraddon>> UpdateAsync(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<SitePremierAddon>> UpdateAsync(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
         {
             if (premierAddOn == null)
             {
                 throw new ArgumentNullException(nameof(premierAddOn));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SitePremieraddon.Update");
+            using var scope = _clientDiagnostics.CreateScope("SitePremierAddon.Update");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.UpdatePremierAddOnAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, premierAddOn, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SitePremieraddon(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SitePremierAddon(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -231,19 +231,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="premierAddOn"> A JSON representation of the edited premier add-on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOn"/> is null. </exception>
-        public virtual Response<SitePremieraddon> Update(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
+        public virtual Response<SitePremierAddon> Update(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
         {
             if (premierAddOn == null)
             {
                 throw new ArgumentNullException(nameof(premierAddOn));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SitePremieraddon.Update");
+            using var scope = _clientDiagnostics.CreateScope("SitePremierAddon.Update");
             scope.Start();
             try
             {
                 var response = _webAppsRestClient.UpdatePremierAddOn(Id.ResourceGroupName, Id.Parent.Name, Id.Name, premierAddOn, cancellationToken);
-                return Response.FromValue(new SitePremieraddon(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SitePremierAddon(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

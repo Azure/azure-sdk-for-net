@@ -19,22 +19,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a SiteHybridconnection along with the instance operations that can be performed on it. </summary>
-    public partial class SiteHybridconnection : ArmResource
+    /// <summary> A Class representing a SiteHybridConnection along with the instance operations that can be performed on it. </summary>
+    public partial class SiteHybridConnection : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly WebAppsRestOperations _webAppsRestClient;
         private readonly RelayServiceConnectionEntityData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="SiteHybridconnection"/> class for mocking. </summary>
-        protected SiteHybridconnection()
+        /// <summary> Initializes a new instance of the <see cref="SiteHybridConnection"/> class for mocking. </summary>
+        protected SiteHybridConnection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteHybridconnection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "SiteHybridConnection"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal SiteHybridconnection(ArmResource options, RelayServiceConnectionEntityData resource) : base(options, resource.Id)
+        internal SiteHybridConnection(ArmResource options, RelayServiceConnectionEntityData resource) : base(options, resource.Id)
         {
             HasData = true;
             _data = resource;
@@ -42,22 +42,22 @@ namespace Azure.ResourceManager.AppService
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteHybridconnection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteHybridConnection"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteHybridconnection(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal SiteHybridConnection(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteHybridconnection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteHybridConnection"/> class. </summary>
         /// <param name="clientOptions"> The client options to build client context. </param>
         /// <param name="credential"> The credential to build client context. </param>
         /// <param name="uri"> The uri to build client context. </param>
         /// <param name="pipeline"> The pipeline to build client context. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteHybridconnection(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        internal SiteHybridConnection(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
@@ -89,16 +89,16 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: WebApps_GetRelayServiceConnection
         /// <summary> Description for Gets a hybrid connection configuration by its name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteHybridconnection>> GetAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<SiteHybridConnection>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteHybridconnection.Get");
+            using var scope = _clientDiagnostics.CreateScope("SiteHybridConnection.Get");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.GetRelayServiceConnectionAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteHybridconnection(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteHybridConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,16 +112,16 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: WebApps_GetRelayServiceConnection
         /// <summary> Description for Gets a hybrid connection configuration by its name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SiteHybridconnection> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SiteHybridConnection> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteHybridconnection.Get");
+            using var scope = _clientDiagnostics.CreateScope("SiteHybridConnection.Get");
             scope.Start();
             try
             {
                 var response = _webAppsRestClient.GetRelayServiceConnection(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteHybridconnection(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteHybridConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<WebAppDeleteRelayServiceConnectionOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteHybridconnection.Delete");
+            using var scope = _clientDiagnostics.CreateScope("SiteHybridConnection.Delete");
             scope.Start();
             try
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual WebAppDeleteRelayServiceConnectionOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteHybridconnection.Delete");
+            using var scope = _clientDiagnostics.CreateScope("SiteHybridConnection.Delete");
             scope.Start();
             try
             {
@@ -203,19 +203,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="connectionEnvelope"> Details of the hybrid connection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionEnvelope"/> is null. </exception>
-        public async virtual Task<Response<SiteHybridconnection>> UpdateAsync(RelayServiceConnectionEntityData connectionEnvelope, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<SiteHybridConnection>> UpdateAsync(RelayServiceConnectionEntityData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (connectionEnvelope == null)
             {
                 throw new ArgumentNullException(nameof(connectionEnvelope));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteHybridconnection.Update");
+            using var scope = _clientDiagnostics.CreateScope("SiteHybridConnection.Update");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.UpdateRelayServiceConnectionAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionEnvelope, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SiteHybridconnection(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteHybridConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -231,19 +231,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="connectionEnvelope"> Details of the hybrid connection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionEnvelope"/> is null. </exception>
-        public virtual Response<SiteHybridconnection> Update(RelayServiceConnectionEntityData connectionEnvelope, CancellationToken cancellationToken = default)
+        public virtual Response<SiteHybridConnection> Update(RelayServiceConnectionEntityData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (connectionEnvelope == null)
             {
                 throw new ArgumentNullException(nameof(connectionEnvelope));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteHybridconnection.Update");
+            using var scope = _clientDiagnostics.CreateScope("SiteHybridConnection.Update");
             scope.Start();
             try
             {
                 var response = _webAppsRestClient.UpdateRelayServiceConnection(Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionEnvelope, cancellationToken);
-                return Response.FromValue(new SiteHybridconnection(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteHybridConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -18,9 +18,9 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Creates a new web, mobile, or API app in an existing resource group, or updates an existing app. </summary>
-    public partial class WebAppCreateOrUpdateOperation : Operation<Site>, IOperationSource<Site>
+    public partial class WebAppCreateOrUpdateOperation : Operation<WebSite>, IOperationSource<WebSite>
     {
-        private readonly OperationInternals<Site> _operation;
+        private readonly OperationInternals<WebSite> _operation;
 
         private readonly ArmResource _operationBase;
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal WebAppCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<Site>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "WebAppCreateOrUpdateOperation");
+            _operation = new OperationInternals<WebSite>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "WebAppCreateOrUpdateOperation");
             _operationBase = operationsBase;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService.Models
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override Site Value => _operation.Value;
+        public override WebSite Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.AppService.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Site>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<WebSite>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Site>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<WebSite>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        Site IOperationSource<Site>.CreateResult(Response response, CancellationToken cancellationToken)
+        WebSite IOperationSource<WebSite>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new Site(_operationBase, SiteData.DeserializeSiteData(document.RootElement));
+            return new WebSite(_operationBase, WebSiteData.DeserializeWebSiteData(document.RootElement));
         }
 
-        async ValueTask<Site> IOperationSource<Site>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<WebSite> IOperationSource<WebSite>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new Site(_operationBase, SiteData.DeserializeSiteData(document.RootElement));
+            return new WebSite(_operationBase, WebSiteData.DeserializeWebSiteData(document.RootElement));
         }
     }
 }

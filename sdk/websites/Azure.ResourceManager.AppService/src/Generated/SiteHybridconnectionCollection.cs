@@ -17,26 +17,26 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing collection of RelayServiceConnectionEntity and their operations over its parent. </summary>
-    public partial class SiteHybridconnectionCollection : ArmCollection
+    public partial class SiteHybridConnectionCollection : ArmCollection
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly WebAppsRestOperations _webAppsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SiteHybridconnectionCollection"/> class for mocking. </summary>
-        protected SiteHybridconnectionCollection()
+        /// <summary> Initializes a new instance of the <see cref="SiteHybridConnectionCollection"/> class for mocking. </summary>
+        protected SiteHybridConnectionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteHybridconnectionCollection class. </summary>
+        /// <summary> Initializes a new instance of SiteHybridConnectionCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal SiteHybridconnectionCollection(ArmResource parent) : base(parent)
+        internal SiteHybridConnectionCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Site.ResourceType;
+        protected override ResourceType ValidResourceType => WebSite.ResourceType;
 
         // Collection level operations.
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(connectionEnvelope));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteHybridconnectionCollection.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("SiteHybridConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(connectionEnvelope));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteHybridconnectionCollection.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("SiteHybridConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -121,21 +121,21 @@ namespace Azure.ResourceManager.AppService
         /// <param name="entityName"> Name of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
-        public virtual Response<SiteHybridconnection> Get(string entityName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteHybridConnection> Get(string entityName, CancellationToken cancellationToken = default)
         {
             if (entityName == null)
             {
                 throw new ArgumentNullException(nameof(entityName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteHybridconnectionCollection.Get");
+            using var scope = _clientDiagnostics.CreateScope("SiteHybridConnectionCollection.Get");
             scope.Start();
             try
             {
                 var response = _webAppsRestClient.GetRelayServiceConnection(Id.ResourceGroupName, Id.Name, entityName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteHybridconnection(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteHybridConnection(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,21 +151,21 @@ namespace Azure.ResourceManager.AppService
         /// <param name="entityName"> Name of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
-        public async virtual Task<Response<SiteHybridconnection>> GetAsync(string entityName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<SiteHybridConnection>> GetAsync(string entityName, CancellationToken cancellationToken = default)
         {
             if (entityName == null)
             {
                 throw new ArgumentNullException(nameof(entityName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteHybridconnectionCollection.Get");
+            using var scope = _clientDiagnostics.CreateScope("SiteHybridConnectionCollection.Get");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.GetRelayServiceConnectionAsync(Id.ResourceGroupName, Id.Name, entityName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteHybridconnection(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteHybridConnection(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -178,21 +178,21 @@ namespace Azure.ResourceManager.AppService
         /// <param name="entityName"> Name of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
-        public virtual Response<SiteHybridconnection> GetIfExists(string entityName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteHybridConnection> GetIfExists(string entityName, CancellationToken cancellationToken = default)
         {
             if (entityName == null)
             {
                 throw new ArgumentNullException(nameof(entityName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteHybridconnectionCollection.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SiteHybridConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = _webAppsRestClient.GetRelayServiceConnection(Id.ResourceGroupName, Id.Name, entityName, cancellationToken: cancellationToken);
                 return response.Value == null
-                    ? Response.FromValue<SiteHybridconnection>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteHybridconnection(this, response.Value), response.GetRawResponse());
+                    ? Response.FromValue<SiteHybridConnection>(null, response.GetRawResponse())
+                    : Response.FromValue(new SiteHybridConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,21 +205,21 @@ namespace Azure.ResourceManager.AppService
         /// <param name="entityName"> Name of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
-        public async virtual Task<Response<SiteHybridconnection>> GetIfExistsAsync(string entityName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<SiteHybridConnection>> GetIfExistsAsync(string entityName, CancellationToken cancellationToken = default)
         {
             if (entityName == null)
             {
                 throw new ArgumentNullException(nameof(entityName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteHybridconnectionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteHybridConnectionCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.GetRelayServiceConnectionAsync(Id.ResourceGroupName, Id.Name, entityName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
-                    ? Response.FromValue<SiteHybridconnection>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteHybridconnection(this, response.Value), response.GetRawResponse());
+                    ? Response.FromValue<SiteHybridConnection>(null, response.GetRawResponse())
+                    : Response.FromValue(new SiteHybridConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(entityName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteHybridconnectionCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SiteHybridConnectionCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(entityName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteHybridconnectionCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteHybridConnectionCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
@@ -279,6 +279,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SiteHybridconnection, RelayServiceConnectionEntityData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SiteHybridConnection, RelayServiceConnectionEntityData> Construct() { }
     }
 }

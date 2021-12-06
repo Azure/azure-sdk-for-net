@@ -30,23 +30,23 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region Domain
-        /// <summary> Gets an object representing a DomainCollection along with the instance operations that can be performed on it. </summary>
+        #region AppServiceDomain
+        /// <summary> Gets an object representing a AppServiceDomainCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DomainCollection" /> object. </returns>
-        public static DomainCollection GetDomains(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="AppServiceDomainCollection" /> object. </returns>
+        public static AppServiceDomainCollection GetAppServiceDomains(this ResourceGroup resourceGroup)
         {
-            return new DomainCollection(resourceGroup);
+            return new AppServiceDomainCollection(resourceGroup);
         }
         #endregion
 
-        #region AppServiceEnvironmentResource
-        /// <summary> Gets an object representing a AppServiceEnvironmentResourceCollection along with the instance operations that can be performed on it. </summary>
+        #region AppServiceEnvironment
+        /// <summary> Gets an object representing a AppServiceEnvironmentCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="AppServiceEnvironmentResourceCollection" /> object. </returns>
-        public static AppServiceEnvironmentResourceCollection GetAppServiceEnvironmentResources(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="AppServiceEnvironmentCollection" /> object. </returns>
+        public static AppServiceEnvironmentCollection GetAppServiceEnvironments(this ResourceGroup resourceGroup)
         {
-            return new AppServiceEnvironmentResourceCollection(resourceGroup);
+            return new AppServiceEnvironmentCollection(resourceGroup);
         }
         #endregion
 
@@ -90,13 +90,13 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region Site
-        /// <summary> Gets an object representing a SiteCollection along with the instance operations that can be performed on it. </summary>
+        #region WebSite
+        /// <summary> Gets an object representing a WebSiteCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="SiteCollection" /> object. </returns>
-        public static SiteCollection GetSites(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="WebSiteCollection" /> object. </returns>
+        public static WebSiteCollection GetWebSites(this ResourceGroup resourceGroup)
         {
-            return new SiteCollection(resourceGroup);
+            return new WebSiteCollection(resourceGroup);
         }
         #endregion
 

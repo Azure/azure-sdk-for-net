@@ -19,22 +19,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a SiteSlotContinuouswebjob along with the instance operations that can be performed on it. </summary>
-    public partial class SiteSlotContinuouswebjob : ArmResource
+    /// <summary> A Class representing a SiteSlotContinuousWebJob along with the instance operations that can be performed on it. </summary>
+    public partial class SiteSlotContinuousWebJob : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly WebAppsRestOperations _webAppsRestClient;
         private readonly ContinuousWebJobData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotContinuouswebjob"/> class for mocking. </summary>
-        protected SiteSlotContinuouswebjob()
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotContinuousWebJob"/> class for mocking. </summary>
+        protected SiteSlotContinuousWebJob()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteSlotContinuouswebjob"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "SiteSlotContinuousWebJob"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal SiteSlotContinuouswebjob(ArmResource options, ContinuousWebJobData resource) : base(options, resource.Id)
+        internal SiteSlotContinuousWebJob(ArmResource options, ContinuousWebJobData resource) : base(options, resource.Id)
         {
             HasData = true;
             _data = resource;
@@ -42,22 +42,22 @@ namespace Azure.ResourceManager.AppService
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotContinuouswebjob"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotContinuousWebJob"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteSlotContinuouswebjob(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal SiteSlotContinuousWebJob(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotContinuouswebjob"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotContinuousWebJob"/> class. </summary>
         /// <param name="clientOptions"> The client options to build client context. </param>
         /// <param name="credential"> The credential to build client context. </param>
         /// <param name="uri"> The uri to build client context. </param>
         /// <param name="pipeline"> The pipeline to build client context. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteSlotContinuouswebjob(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        internal SiteSlotContinuousWebJob(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
@@ -89,16 +89,16 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: WebApps_GetContinuousWebJobSlot
         /// <summary> Description for Gets a continuous web job by its ID for an app, or a deployment slot. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteSlotContinuouswebjob>> GetAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<SiteSlotContinuousWebJob>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotContinuouswebjob.Get");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotContinuousWebJob.Get");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.GetContinuousWebJobSlotAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotContinuouswebjob(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotContinuousWebJob(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,16 +112,16 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: WebApps_GetContinuousWebJobSlot
         /// <summary> Description for Gets a continuous web job by its ID for an app, or a deployment slot. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SiteSlotContinuouswebjob> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotContinuousWebJob> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotContinuouswebjob.Get");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotContinuousWebJob.Get");
             scope.Start();
             try
             {
                 var response = _webAppsRestClient.GetContinuousWebJobSlot(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotContinuouswebjob(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotContinuousWebJob(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<WebAppDeleteContinuousWebJobSlotOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotContinuouswebjob.Delete");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotContinuousWebJob.Delete");
             scope.Start();
             try
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual WebAppDeleteContinuousWebJobSlotOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotContinuouswebjob.Delete");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotContinuousWebJob.Delete");
             scope.Start();
             try
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> StartContinuousWebJobSlotAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotContinuouswebjob.StartContinuousWebJobSlot");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotContinuousWebJob.StartContinuousWebJobSlot");
             scope.Start();
             try
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response StartContinuousWebJobSlot(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotContinuouswebjob.StartContinuousWebJobSlot");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotContinuousWebJob.StartContinuousWebJobSlot");
             scope.Start();
             try
             {
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> StopContinuousWebJobSlotAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotContinuouswebjob.StopContinuousWebJobSlot");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotContinuousWebJob.StopContinuousWebJobSlot");
             scope.Start();
             try
             {
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response StopContinuousWebJobSlot(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotContinuouswebjob.StopContinuousWebJobSlot");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotContinuousWebJob.StopContinuousWebJobSlot");
             scope.Start();
             try
             {

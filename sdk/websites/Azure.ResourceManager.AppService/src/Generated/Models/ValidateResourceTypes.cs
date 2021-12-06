@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         private const string ServerFarmValue = "ServerFarm";
-        private const string SiteValue = "Site";
+        private const string WebSiteValue = "Site";
         private const string MicrosoftWebHostingEnvironmentsValue = "Microsoft.Web/hostingEnvironments";
 
         /// <summary> ServerFarm. </summary>
         public static ValidateResourceTypes ServerFarm { get; } = new ValidateResourceTypes(ServerFarmValue);
         /// <summary> Site. </summary>
-        public static ValidateResourceTypes Site { get; } = new ValidateResourceTypes(SiteValue);
+        public static ValidateResourceTypes WebSite { get; } = new ValidateResourceTypes(WebSiteValue);
         /// <summary> Microsoft.Web/hostingEnvironments. </summary>
         public static ValidateResourceTypes MicrosoftWebHostingEnvironments { get; } = new ValidateResourceTypes(MicrosoftWebHostingEnvironmentsValue);
         /// <summary> Determines if two <see cref="ValidateResourceTypes"/> values are the same. </summary>

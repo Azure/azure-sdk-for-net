@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         {
         }
 
-        private async Task<SiteSourcecontrolCollection> GetSiteSourceControlCollectionAsync()
+        private async Task<SiteSourcecontrol> GetSiteSourceControlCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
             var SiteName = Recording.GenerateAssetName("testSiteSource");
             var SiteInput = ResourceDataHelper.GetBasicSiteData(DefaultLocation);
             var lro = await resourceGroup.GetSites().CreateOrUpdateAsync(SiteName, SiteInput);
             var Site = lro.Value;
-            return Site.GetSiteSourcecontrols();
+            return Site.GetSiteSourcecontrol();
         }
 
         [TestCase]
@@ -50,6 +50,15 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             SiteSourcecontrol sourcecontrol1 = lro.Value;
             SiteSourcecontrol sourcecontrol2 = await container.GetAsync();
             ResourceDataHelper.AssertSiteSourceControlData(sourcecontrol1.Data, sourcecontrol2.Data);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task Delete()
+        {
+            var planName = Recording.GenerateAssetName("testAppServicePlan-");
+            var plan = await GetSiteSourceControlCollectionAsync();
+            await plan.DeleteAsync();
         }
     }
 }

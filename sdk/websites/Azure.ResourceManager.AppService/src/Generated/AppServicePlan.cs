@@ -428,10 +428,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="filter"> Supported filter: $filter=state eq running. Returns only web apps that are currently running. </param>
         /// <param name="top"> List page size. If specified, results are paged. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteData> GetWebAppsAsync(string skipToken = null, string filter = null, string top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="WebSiteData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WebSiteData> GetWebAppsAsync(string skipToken = null, string filter = null, string top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SiteData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<WebSiteData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("AppServicePlan.GetWebApps");
                 scope.Start();
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<SiteData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<WebSiteData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("AppServicePlan.GetWebApps");
                 scope.Start();
@@ -472,10 +472,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="filter"> Supported filter: $filter=state eq running. Returns only web apps that are currently running. </param>
         /// <param name="top"> List page size. If specified, results are paged. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteData> GetWebApps(string skipToken = null, string filter = null, string top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WebSiteData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WebSiteData> GetWebApps(string skipToken = null, string filter = null, string top = null, CancellationToken cancellationToken = default)
         {
-            Page<SiteData> FirstPageFunc(int? pageSizeHint)
+            Page<WebSiteData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("AppServicePlan.GetWebApps");
                 scope.Start();
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<SiteData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<WebSiteData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("AppServicePlan.GetWebApps");
                 scope.Start();

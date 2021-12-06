@@ -16,9 +16,9 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH). </summary>
-    public partial class WebAppUpdateRelayServiceConnectionOperation : Operation<SiteHybridconnection>
+    public partial class WebAppUpdateRelayServiceConnectionOperation : Operation<SiteHybridConnection>
     {
-        private readonly OperationOrResponseInternals<SiteHybridconnection> _operation;
+        private readonly OperationOrResponseInternals<SiteHybridConnection> _operation;
 
         /// <summary> Initializes a new instance of WebAppUpdateRelayServiceConnectionOperation for mocking. </summary>
         protected WebAppUpdateRelayServiceConnectionOperation()
@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal WebAppUpdateRelayServiceConnectionOperation(ArmResource operationsBase, Response<RelayServiceConnectionEntityData> response)
         {
-            _operation = new OperationOrResponseInternals<SiteHybridconnection>(Response.FromValue(new SiteHybridconnection(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<SiteHybridConnection>(Response.FromValue(new SiteHybridConnection(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override SiteHybridconnection Value => _operation.Value;
+        public override SiteHybridConnection Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.AppService.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<SiteHybridconnection>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<SiteHybridConnection>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<SiteHybridconnection>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<SiteHybridConnection>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

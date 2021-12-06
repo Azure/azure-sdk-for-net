@@ -19,21 +19,21 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of ApiKVReference and their operations over its parent. </summary>
-    public partial class SiteSlotConfigConnectionstringCollection : ArmCollection, IEnumerable<SiteSlotConfigConnectionstring>, IAsyncEnumerable<SiteSlotConfigConnectionstring>
+    /// <summary> A class representing collection of ApiKeyVaultReference and their operations over its parent. </summary>
+    public partial class SiteSlotConfigConnectionStringCollection : ArmCollection, IEnumerable<SiteSlotConfigConnectionString>, IAsyncEnumerable<SiteSlotConfigConnectionString>
 
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly WebAppsRestOperations _webAppsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotConfigConnectionstringCollection"/> class for mocking. </summary>
-        protected SiteSlotConfigConnectionstringCollection()
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotConfigConnectionStringCollection"/> class for mocking. </summary>
+        protected SiteSlotConfigConnectionStringCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteSlotConfigConnectionstringCollection class. </summary>
+        /// <summary> Initializes a new instance of SiteSlotConfigConnectionStringCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal SiteSlotConfigConnectionstringCollection(ArmResource parent) : base(parent)
+        internal SiteSlotConfigConnectionStringCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
@@ -51,21 +51,21 @@ namespace Azure.ResourceManager.AppService
         /// <param name="connectionStringKey"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
-        public virtual Response<SiteSlotConfigConnectionstring> Get(string connectionStringKey, CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotConfigConnectionString> Get(string connectionStringKey, CancellationToken cancellationToken = default)
         {
             if (connectionStringKey == null)
             {
                 throw new ArgumentNullException(nameof(connectionStringKey));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionstringCollection.Get");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionStringCollection.Get");
             scope.Start();
             try
             {
                 var response = _webAppsRestClient.GetSiteConnectionStringKeyVaultReferenceSlot(Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionStringKey, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotConfigConnectionstring(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotConfigConnectionString(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -81,21 +81,21 @@ namespace Azure.ResourceManager.AppService
         /// <param name="connectionStringKey"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
-        public async virtual Task<Response<SiteSlotConfigConnectionstring>> GetAsync(string connectionStringKey, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<SiteSlotConfigConnectionString>> GetAsync(string connectionStringKey, CancellationToken cancellationToken = default)
         {
             if (connectionStringKey == null)
             {
                 throw new ArgumentNullException(nameof(connectionStringKey));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionstringCollection.Get");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionStringCollection.Get");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.GetSiteConnectionStringKeyVaultReferenceSlotAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionStringKey, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotConfigConnectionstring(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotConfigConnectionString(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -108,21 +108,21 @@ namespace Azure.ResourceManager.AppService
         /// <param name="connectionStringKey"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
-        public virtual Response<SiteSlotConfigConnectionstring> GetIfExists(string connectionStringKey, CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotConfigConnectionString> GetIfExists(string connectionStringKey, CancellationToken cancellationToken = default)
         {
             if (connectionStringKey == null)
             {
                 throw new ArgumentNullException(nameof(connectionStringKey));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionstringCollection.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionStringCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = _webAppsRestClient.GetSiteConnectionStringKeyVaultReferenceSlot(Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionStringKey, cancellationToken: cancellationToken);
                 return response.Value == null
-                    ? Response.FromValue<SiteSlotConfigConnectionstring>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotConfigConnectionstring(this, response.Value), response.GetRawResponse());
+                    ? Response.FromValue<SiteSlotConfigConnectionString>(null, response.GetRawResponse())
+                    : Response.FromValue(new SiteSlotConfigConnectionString(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,21 +135,21 @@ namespace Azure.ResourceManager.AppService
         /// <param name="connectionStringKey"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
-        public async virtual Task<Response<SiteSlotConfigConnectionstring>> GetIfExistsAsync(string connectionStringKey, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<SiteSlotConfigConnectionString>> GetIfExistsAsync(string connectionStringKey, CancellationToken cancellationToken = default)
         {
             if (connectionStringKey == null)
             {
                 throw new ArgumentNullException(nameof(connectionStringKey));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionstringCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionStringCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.GetSiteConnectionStringKeyVaultReferenceSlotAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionStringKey, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
-                    ? Response.FromValue<SiteSlotConfigConnectionstring>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotConfigConnectionstring(this, response.Value), response.GetRawResponse());
+                    ? Response.FromValue<SiteSlotConfigConnectionString>(null, response.GetRawResponse())
+                    : Response.FromValue(new SiteSlotConfigConnectionString(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(connectionStringKey));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionstringCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionStringCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(connectionStringKey));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionstringCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionStringCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
@@ -213,17 +213,17 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: WebApps_GetSiteConnectionStringKeyVaultReferencesSlot
         /// <summary> Description for Gets the config reference app settings and status of an app. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteSlotConfigConnectionstring" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteSlotConfigConnectionstring> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SiteSlotConfigConnectionString" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SiteSlotConfigConnectionString> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SiteSlotConfigConnectionstring> FirstPageFunc(int? pageSizeHint)
+            Page<SiteSlotConfigConnectionString> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionstringCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionStringCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _webAppsRestClient.GetSiteConnectionStringKeyVaultReferencesSlot(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotConfigConnectionstring(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotConfigConnectionString(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -231,14 +231,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<SiteSlotConfigConnectionstring> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SiteSlotConfigConnectionString> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionstringCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionStringCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _webAppsRestClient.GetSiteConnectionStringKeyVaultReferencesSlotNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotConfigConnectionstring(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotConfigConnectionString(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -254,17 +254,17 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: WebApps_GetSiteConnectionStringKeyVaultReferencesSlot
         /// <summary> Description for Gets the config reference app settings and status of an app. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteSlotConfigConnectionstring" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteSlotConfigConnectionstring> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SiteSlotConfigConnectionString" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SiteSlotConfigConnectionString> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SiteSlotConfigConnectionstring>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SiteSlotConfigConnectionString>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionstringCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionStringCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _webAppsRestClient.GetSiteConnectionStringKeyVaultReferencesSlotAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotConfigConnectionstring(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotConfigConnectionString(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -272,14 +272,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<SiteSlotConfigConnectionstring>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SiteSlotConfigConnectionString>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionstringCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionStringCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _webAppsRestClient.GetSiteConnectionStringKeyVaultReferencesSlotNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotConfigConnectionstring(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotConfigConnectionString(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        IEnumerator<SiteSlotConfigConnectionstring> IEnumerable<SiteSlotConfigConnectionstring>.GetEnumerator()
+        IEnumerator<SiteSlotConfigConnectionString> IEnumerable<SiteSlotConfigConnectionString>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -300,12 +300,12 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<SiteSlotConfigConnectionstring> IAsyncEnumerable<SiteSlotConfigConnectionstring>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SiteSlotConfigConnectionString> IAsyncEnumerable<SiteSlotConfigConnectionString>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SiteSlotConfigConnectionstring, ApiKVReferenceData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SiteSlotConfigConnectionString, ApiKeyVaultReferenceData> Construct() { }
     }
 }

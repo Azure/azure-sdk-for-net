@@ -228,12 +228,12 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
             {
                 Sku = new SkuDescription()
                 {
-                    Name = "Basic",
-                    Tier = "Basic"
+                    Name = "Free",
+                    //Tier = "Basic"
                 },
-                RepositoryUrl = "https://github.com/username/RepoName",
+                RepositoryUrl = "https://github.com/00Kai0/html-docs-hello-world",
                 Branch = "master",
-                RepositoryToken = "repoToken123",
+                RepositoryToken = "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",
                 BuildProperties = new StaticSiteBuildProperties()
                 {
                     AppLocation = "app",
@@ -246,10 +246,10 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
         #endregion
 
         #region Certificate
-        public static void AssertCertificate(Certificate certificate1, Certificate certificate2)
+        public static void AssertCertificate(CertificateData certificate1, CertificateData certificate2)
         {
-            //AssertTrackedResource(certificate1, certificate2);
-            Assert.AreEqual(certificate1.Data.CanonicalName, certificate2.Data.CanonicalName);
+            AssertTrackedResource(certificate1, certificate2);
+            Assert.AreEqual(certificate1.CanonicalName, certificate2.CanonicalName);
         }
 
         public static CertificateData GetBasicCertificateData(Location location)

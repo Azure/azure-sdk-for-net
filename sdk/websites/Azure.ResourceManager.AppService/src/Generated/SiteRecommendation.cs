@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: Recommendations_DisableRecommendationForSite
         /// <summary> Description for Disables the specific rule for a web site permanently. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> DisableRecommendationForSiteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response> DisableAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteRecommendation.DisableRecommendationForSite");
+            using var scope = _clientDiagnostics.CreateScope("SiteRecommendation.Disable");
             scope.Start();
             try
             {
@@ -175,9 +175,9 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: Recommendations_DisableRecommendationForSite
         /// <summary> Description for Disables the specific rule for a web site permanently. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DisableRecommendationForSite(CancellationToken cancellationToken = default)
+        public virtual Response Disable(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteRecommendation.DisableRecommendationForSite");
+            using var scope = _clientDiagnostics.CreateScope("SiteRecommendation.Disable");
             scope.Start();
             try
             {

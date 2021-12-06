@@ -16,9 +16,9 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Updates a named add-on of an app. </summary>
-    public partial class WebAppUpdatePremierAddOnOperation : Operation<SitePremieraddon>
+    public partial class WebAppUpdatePremierAddOnOperation : Operation<SitePremierAddon>
     {
-        private readonly OperationOrResponseInternals<SitePremieraddon> _operation;
+        private readonly OperationOrResponseInternals<SitePremierAddon> _operation;
 
         /// <summary> Initializes a new instance of WebAppUpdatePremierAddOnOperation for mocking. </summary>
         protected WebAppUpdatePremierAddOnOperation()
@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal WebAppUpdatePremierAddOnOperation(ArmResource operationsBase, Response<PremierAddOnData> response)
         {
-            _operation = new OperationOrResponseInternals<SitePremieraddon>(Response.FromValue(new SitePremieraddon(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<SitePremierAddon>(Response.FromValue(new SitePremierAddon(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override SitePremieraddon Value => _operation.Value;
+        public override SitePremierAddon Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.AppService.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<SitePremieraddon>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<SitePremierAddon>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<SitePremieraddon>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<SitePremierAddon>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

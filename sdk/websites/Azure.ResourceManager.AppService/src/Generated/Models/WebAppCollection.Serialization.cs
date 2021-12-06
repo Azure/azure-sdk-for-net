@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static WebAppCollection DeserializeWebAppCollection(JsonElement element)
         {
-            IReadOnlyList<SiteData> value = default;
+            IReadOnlyList<WebSiteData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<SiteData> array = new List<SiteData>();
+                    List<WebSiteData> array = new List<WebSiteData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteData.DeserializeSiteData(item));
+                        array.Add(WebSiteData.DeserializeWebSiteData(item));
                     }
                     value = array;
                     continue;

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         private async Task<SiteSlotConfigWebCollection> GetSiteSlotConfigWebCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
-            var SiteName = Recording.GenerateAssetName("testSite_");
-            var SiteSlotName = Recording.GenerateAssetName("testSiteSlot_");
+            var SiteName = Recording.GenerateAssetName("testSite");
+            var SiteSlotName = Recording.GenerateAssetName("testSiteSlot");
             var SiteInput = ResourceDataHelper.GetBasicSiteData(DefaultLocation);
             var lro = await resourceGroup.GetSites().CreateOrUpdateAsync(SiteName, SiteInput);
             var Site = lro.Value;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         public async Task CreateOrUpdate()
         {
             var container = await GetSiteSlotConfigWebCollectionAsync();
-            var name = Recording.GenerateAssetName("testSiteSlotConfigWeb_");
+            var name = Recording.GenerateAssetName("testSiteSlotConfigWeb");
             var Input = ResourceDataHelper.GetBasicSiteConfigResourceData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(Input);
             SiteSlotConfigWeb siteSlotConfigWeb = lro.Value;

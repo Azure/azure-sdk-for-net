@@ -16,9 +16,9 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Updates a named add-on of an app. </summary>
-    public partial class WebAppUpdatePremierAddOnSlotOperation : Operation<SiteSlotPremieraddon>
+    public partial class WebAppUpdatePremierAddOnSlotOperation : Operation<SiteSlotPremierAddOn>
     {
-        private readonly OperationOrResponseInternals<SiteSlotPremieraddon> _operation;
+        private readonly OperationOrResponseInternals<SiteSlotPremierAddOn> _operation;
 
         /// <summary> Initializes a new instance of WebAppUpdatePremierAddOnSlotOperation for mocking. </summary>
         protected WebAppUpdatePremierAddOnSlotOperation()
@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal WebAppUpdatePremierAddOnSlotOperation(ArmResource operationsBase, Response<PremierAddOnData> response)
         {
-            _operation = new OperationOrResponseInternals<SiteSlotPremieraddon>(Response.FromValue(new SiteSlotPremieraddon(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<SiteSlotPremierAddOn>(Response.FromValue(new SiteSlotPremierAddOn(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override SiteSlotPremieraddon Value => _operation.Value;
+        public override SiteSlotPremierAddOn Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.AppService.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<SiteSlotPremieraddon>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<SiteSlotPremierAddOn>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<SiteSlotPremieraddon>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<SiteSlotPremierAddOn>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

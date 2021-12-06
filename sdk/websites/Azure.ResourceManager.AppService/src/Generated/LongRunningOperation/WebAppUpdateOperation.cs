@@ -16,25 +16,25 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description for Creates a new web, mobile, or API app in an existing resource group, or updates an existing app. </summary>
-    public partial class WebAppUpdateOperation : Operation<Site>
+    public partial class WebAppUpdateOperation : Operation<WebSite>
     {
-        private readonly OperationOrResponseInternals<Site> _operation;
+        private readonly OperationOrResponseInternals<WebSite> _operation;
 
         /// <summary> Initializes a new instance of WebAppUpdateOperation for mocking. </summary>
         protected WebAppUpdateOperation()
         {
         }
 
-        internal WebAppUpdateOperation(ArmResource operationsBase, Response<SiteData> response)
+        internal WebAppUpdateOperation(ArmResource operationsBase, Response<WebSiteData> response)
         {
-            _operation = new OperationOrResponseInternals<Site>(Response.FromValue(new Site(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<WebSite>(Response.FromValue(new WebSite(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override Site Value => _operation.Value;
+        public override WebSite Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.AppService.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Site>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<WebSite>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Site>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<WebSite>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

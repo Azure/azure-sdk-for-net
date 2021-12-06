@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static DomainCollection DeserializeDomainCollection(JsonElement element)
         {
-            IReadOnlyList<DomainData> value = default;
+            IReadOnlyList<AppServiceDomainData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<DomainData> array = new List<DomainData>();
+                    List<AppServiceDomainData> array = new List<AppServiceDomainData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DomainData.DeserializeDomainData(item));
+                        array.Add(AppServiceDomainData.DeserializeAppServiceDomainData(item));
                     }
                     value = array;
                     continue;

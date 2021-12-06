@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceEnvironmentCollection. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AppServiceEnvironmentCollection(IEnumerable<AppServiceEnvironmentResourceData> value)
+        internal AppServiceEnvironmentCollection(IEnumerable<AppServiceEnvironmentData> value)
         {
             if (value == null)
             {
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceEnvironmentCollection. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal AppServiceEnvironmentCollection(IReadOnlyList<AppServiceEnvironmentResourceData> value, string nextLink)
+        internal AppServiceEnvironmentCollection(IReadOnlyList<AppServiceEnvironmentData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of resources. </summary>
-        public IReadOnlyList<AppServiceEnvironmentResourceData> Value { get; }
+        public IReadOnlyList<AppServiceEnvironmentData> Value { get; }
         /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }

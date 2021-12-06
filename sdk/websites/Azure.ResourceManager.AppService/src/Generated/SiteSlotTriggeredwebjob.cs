@@ -19,22 +19,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a SiteSlotTriggeredwebjob along with the instance operations that can be performed on it. </summary>
-    public partial class SiteSlotTriggeredwebjob : ArmResource
+    /// <summary> A Class representing a SiteSlotTriggeredWebJob along with the instance operations that can be performed on it. </summary>
+    public partial class SiteSlotTriggeredWebJob : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly WebAppsRestOperations _webAppsRestClient;
         private readonly TriggeredWebJobData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotTriggeredwebjob"/> class for mocking. </summary>
-        protected SiteSlotTriggeredwebjob()
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotTriggeredWebJob"/> class for mocking. </summary>
+        protected SiteSlotTriggeredWebJob()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteSlotTriggeredwebjob"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "SiteSlotTriggeredWebJob"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal SiteSlotTriggeredwebjob(ArmResource options, TriggeredWebJobData resource) : base(options, resource.Id)
+        internal SiteSlotTriggeredWebJob(ArmResource options, TriggeredWebJobData resource) : base(options, resource.Id)
         {
             HasData = true;
             _data = resource;
@@ -42,29 +42,29 @@ namespace Azure.ResourceManager.AppService
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotTriggeredwebjob"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotTriggeredWebJob"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteSlotTriggeredwebjob(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal SiteSlotTriggeredWebJob(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotTriggeredwebjob"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotTriggeredWebJob"/> class. </summary>
         /// <param name="clientOptions"> The client options to build client context. </param>
         /// <param name="credential"> The credential to build client context. </param>
         /// <param name="uri"> The uri to build client context. </param>
         /// <param name="pipeline"> The pipeline to build client context. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteSlotTriggeredwebjob(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        internal SiteSlotTriggeredWebJob(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots/triggeredwebjobs";
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/triggeredwebjobs";
 
         /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
@@ -84,21 +84,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}
-        /// OperationId: WebApps_GetTriggeredWebJobSlot
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}
+        /// OperationId: WebApps_GetTriggeredWebJob
         /// <summary> Description for Gets a triggered web job by its ID for an app, or a deployment slot. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteSlotTriggeredwebjob>> GetAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<SiteSlotTriggeredWebJob>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotTriggeredwebjob.Get");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotTriggeredWebJob.Get");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetTriggeredWebJobSlotAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webAppsRestClient.GetTriggeredWebJobAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotTriggeredwebjob(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotTriggeredWebJob(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -107,21 +107,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}
-        /// OperationId: WebApps_GetTriggeredWebJobSlot
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}
+        /// OperationId: WebApps_GetTriggeredWebJob
         /// <summary> Description for Gets a triggered web job by its ID for an app, or a deployment slot. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SiteSlotTriggeredwebjob> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotTriggeredWebJob> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotTriggeredwebjob.Get");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotTriggeredWebJob.Get");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetTriggeredWebJobSlot(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _webAppsRestClient.GetTriggeredWebJob(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotTriggeredwebjob(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotTriggeredWebJob(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,20 +146,20 @@ namespace Azure.ResourceManager.AppService
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}
-        /// OperationId: WebApps_DeleteTriggeredWebJobSlot
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}
+        /// OperationId: WebApps_DeleteTriggeredWebJob
         /// <summary> Description for Delete a triggered web job by its ID for an app, or a deployment slot. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<WebAppDeleteTriggeredWebJobSlotOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<WebAppDeleteTriggeredWebJobOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotTriggeredwebjob.Delete");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotTriggeredWebJob.Delete");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.DeleteTriggeredWebJobSlotAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new WebAppDeleteTriggeredWebJobSlotOperation(response);
+                var response = await _webAppsRestClient.DeleteTriggeredWebJobAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new WebAppDeleteTriggeredWebJobOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -171,20 +171,20 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}
-        /// OperationId: WebApps_DeleteTriggeredWebJobSlot
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}
+        /// OperationId: WebApps_DeleteTriggeredWebJob
         /// <summary> Description for Delete a triggered web job by its ID for an app, or a deployment slot. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual WebAppDeleteTriggeredWebJobSlotOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual WebAppDeleteTriggeredWebJobOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotTriggeredwebjob.Delete");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotTriggeredWebJob.Delete");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.DeleteTriggeredWebJobSlot(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new WebAppDeleteTriggeredWebJobSlotOperation(response);
+                var response = _webAppsRestClient.DeleteTriggeredWebJob(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new WebAppDeleteTriggeredWebJobOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -196,18 +196,18 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/run
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}
-        /// OperationId: WebApps_RunTriggeredWebJobSlot
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/run
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}
+        /// OperationId: WebApps_RunTriggeredWebJob
         /// <summary> Description for Run a triggered web job for an app, or a deployment slot. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> RunTriggeredWebJobSlotAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response> RunAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotTriggeredwebjob.RunTriggeredWebJobSlot");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotTriggeredWebJob.Run");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.RunTriggeredWebJobSlotAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webAppsRestClient.RunTriggeredWebJobAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -217,18 +217,18 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/run
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}
-        /// OperationId: WebApps_RunTriggeredWebJobSlot
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/run
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}
+        /// OperationId: WebApps_RunTriggeredWebJob
         /// <summary> Description for Run a triggered web job for an app, or a deployment slot. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response RunTriggeredWebJobSlot(CancellationToken cancellationToken = default)
+        public virtual Response Run(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotTriggeredwebjob.RunTriggeredWebJobSlot");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotTriggeredWebJob.Run");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.RunTriggeredWebJobSlot(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _webAppsRestClient.RunTriggeredWebJob(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -238,13 +238,13 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        #region SiteSlotTriggeredwebjobHistory
+        #region SiteSlotTriggeredWebJobHistory
 
-        /// <summary> Gets a collection of SiteSlotTriggeredwebjobHistories in the SiteSlotTriggeredwebjob. </summary>
-        /// <returns> An object representing collection of SiteSlotTriggeredwebjobHistories and their operations over a SiteSlotTriggeredwebjob. </returns>
-        public SiteSlotTriggeredwebjobHistoryCollection GetSiteSlotTriggeredwebjobHistories()
+        /// <summary> Gets a collection of SiteSlotTriggeredWebJobHistories in the SiteSlotTriggeredWebJob. </summary>
+        /// <returns> An object representing collection of SiteSlotTriggeredWebJobHistories and their operations over a SiteSlotTriggeredWebJob. </returns>
+        public SiteSlotTriggeredWebJobHistoryCollection GetSiteSlotTriggeredWebJobHistories()
         {
-            return new SiteSlotTriggeredwebjobHistoryCollection(this);
+            return new SiteSlotTriggeredWebJobHistoryCollection(this);
         }
         #endregion
     }

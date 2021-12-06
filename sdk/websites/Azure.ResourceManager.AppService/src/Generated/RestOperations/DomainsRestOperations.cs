@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get all domains in a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<Models.DomainCollection>> ListAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<DomainCollection>> ListAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        Models.DomainCollection value = default;
+                        DomainCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.DomainCollection.DeserializeDomainCollection(document.RootElement);
+                        value = DomainCollection.DeserializeDomainCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get all domains in a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Models.DomainCollection> List(CancellationToken cancellationToken = default)
+        public Response<DomainCollection> List(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
             _pipeline.Send(message, cancellationToken);
@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        Models.DomainCollection value = default;
+                        DomainCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.DomainCollection.DeserializeDomainCollection(document.RootElement);
+                        value = DomainCollection.DeserializeDomainCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<Models.DomainCollection>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<DomainCollection>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -344,9 +344,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        Models.DomainCollection value = default;
+                        DomainCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.DomainCollection.DeserializeDomainCollection(document.RootElement);
+                        value = DomainCollection.DeserializeDomainCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<Models.DomainCollection> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<DomainCollection> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -371,9 +371,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        Models.DomainCollection value = default;
+                        DomainCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.DomainCollection.DeserializeDomainCollection(document.RootElement);
+                        value = DomainCollection.DeserializeDomainCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="domainName"> Name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is null. </exception>
-        public async Task<Response<DomainData>> GetAsync(string resourceGroupName, string domainName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceDomainData>> GetAsync(string resourceGroupName, string domainName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -423,13 +423,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DomainData value = default;
+                        AppServiceDomainData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DomainData.DeserializeDomainData(document.RootElement);
+                        value = AppServiceDomainData.DeserializeAppServiceDomainData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DomainData)null, message.Response);
+                    return Response.FromValue((AppServiceDomainData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="domainName"> Name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is null. </exception>
-        public Response<DomainData> Get(string resourceGroupName, string domainName, CancellationToken cancellationToken = default)
+        public Response<AppServiceDomainData> Get(string resourceGroupName, string domainName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -457,19 +457,19 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DomainData value = default;
+                        AppServiceDomainData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DomainData.DeserializeDomainData(document.RootElement);
+                        value = AppServiceDomainData.DeserializeAppServiceDomainData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DomainData)null, message.Response);
+                    return Response.FromValue((AppServiceDomainData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string domainName, DomainData domain)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string domainName, AppServiceDomainData domain)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="domain"> Domain registration information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, or <paramref name="domain"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string domainName, DomainData domain, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string domainName, AppServiceDomainData domain, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="domain"> Domain registration information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, or <paramref name="domain"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string domainName, DomainData domain, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string domainName, AppServiceDomainData domain, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -671,7 +671,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="domain"> Domain registration information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, or <paramref name="domain"/> is null. </exception>
-        public async Task<Response<DomainData>> UpdateAsync(string resourceGroupName, string domainName, DomainPatchResource domain, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceDomainData>> UpdateAsync(string resourceGroupName, string domainName, DomainPatchResource domain, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -693,9 +693,9 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                 case 202:
                     {
-                        DomainData value = default;
+                        AppServiceDomainData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DomainData.DeserializeDomainData(document.RootElement);
+                        value = AppServiceDomainData.DeserializeAppServiceDomainData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -709,7 +709,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="domain"> Domain registration information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, or <paramref name="domain"/> is null. </exception>
-        public Response<DomainData> Update(string resourceGroupName, string domainName, DomainPatchResource domain, CancellationToken cancellationToken = default)
+        public Response<AppServiceDomainData> Update(string resourceGroupName, string domainName, DomainPatchResource domain, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -731,9 +731,9 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                 case 202:
                     {
-                        DomainData value = default;
+                        AppServiceDomainData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DomainData.DeserializeDomainData(document.RootElement);
+                        value = AppServiceDomainData.DeserializeAppServiceDomainData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1331,7 +1331,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<Models.DomainCollection>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<DomainCollection>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1344,9 +1344,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        Models.DomainCollection value = default;
+                        DomainCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.DomainCollection.DeserializeDomainCollection(document.RootElement);
+                        value = DomainCollection.DeserializeDomainCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1358,7 +1358,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<Models.DomainCollection> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
+        public Response<DomainCollection> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1371,9 +1371,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        Models.DomainCollection value = default;
+                        DomainCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.DomainCollection.DeserializeDomainCollection(document.RootElement);
+                        value = DomainCollection.DeserializeDomainCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1478,7 +1478,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<Models.DomainCollection>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<DomainCollection>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1495,9 +1495,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        Models.DomainCollection value = default;
+                        DomainCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.DomainCollection.DeserializeDomainCollection(document.RootElement);
+                        value = DomainCollection.DeserializeDomainCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1510,7 +1510,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<Models.DomainCollection> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<DomainCollection> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1527,9 +1527,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        Models.DomainCollection value = default;
+                        DomainCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.DomainCollection.DeserializeDomainCollection(document.RootElement);
+                        value = DomainCollection.DeserializeDomainCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
