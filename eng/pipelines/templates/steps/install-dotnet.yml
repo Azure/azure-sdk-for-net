@@ -34,5 +34,5 @@ steps:
     inputs:
       key: 'nuget | "$(Agent.OS)" | $(Build.SourcesDirectory)/eng/Packages.Data.props | ${{parameters.NuGetCacheKey}}'
       path: $(NUGET_PACKAGES)
-    condition: ${{parameters.NuGetCacheKey}}
+    condition: ${{parameters.EnableNuGetCache}}
     displayName: Cache NuGet packages
