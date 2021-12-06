@@ -543,11 +543,11 @@ namespace Microsoft.Azure.Management.Compute
 
         /// <summary>
         /// Restart the dedicated host. The operation will complete successfully once
-        /// the dedicated host has restarted and is running. For VM health after the
-        /// restart, please check the Resource Health Center in the Azure Portal.
-        /// Please refer to
+        /// the dedicated host has restarted and is running. To determine the health of
+        /// VMs deployed on the dedicated host after the restart check the Resource
+        /// Health Center in the Azure Portal. Please refer to
         /// https://docs.microsoft.com/en-us/azure/service-health/resource-health-overview
-        /// for more information.
+        /// for more details.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
