@@ -20,7 +20,7 @@ namespace NetApp.Tests.ResourceTests
     {
         private const int delay = 10000;
 
-        //[Fact(Skip = "Manifest not released yet")]        
+        [Fact(Skip = "Service side bug not released yet")]        
         public void CreateDeleteVolumeGroup()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();

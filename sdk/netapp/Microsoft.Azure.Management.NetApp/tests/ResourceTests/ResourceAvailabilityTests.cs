@@ -28,8 +28,7 @@ namespace NetApp.Tests.ResourceTests
                 Assert.True(checkQuotaAvailabilityResponse.IsAvailable);
             }
         }
-
-        //[Fact(Skip = "Manifest not released yet")]
+        
         [Fact]
         public void GetQuotaLimit()
         {
@@ -42,7 +41,7 @@ namespace NetApp.Tests.ResourceTests
             }
         }
 
-        [Fact(Skip = "Manifest not released yet")]
+        [Fact(Skip = "Service side bug not released yet")]
         public void ListQuotaLimits()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
