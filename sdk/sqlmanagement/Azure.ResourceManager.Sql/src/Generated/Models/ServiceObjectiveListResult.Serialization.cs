@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -15,15 +16,15 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ServiceObjectiveListResult DeserializeServiceObjectiveListResult(JsonElement element)
         {
-            IReadOnlyList<ServiceObjective> value = default;
+            IReadOnlyList<ServiceObjectiveData> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<ServiceObjective> array = new List<ServiceObjective>();
+                    List<ServiceObjectiveData> array = new List<ServiceObjectiveData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceObjective.DeserializeServiceObjective(item));
+                        array.Add(ServiceObjectiveData.DeserializeServiceObjectiveData(item));
                     }
                     value = array;
                     continue;

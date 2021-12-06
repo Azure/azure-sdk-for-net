@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
             {
                 Location = resourceGroup.Data.Location,
                 IpConfigurations = {
-                    new NetworkInterfaceIPConfiguration()
+                    new NetworkInterfaceIPConfigurationData()
                     {
                         Name = "ipConfig",
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,

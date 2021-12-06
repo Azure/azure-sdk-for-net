@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 
 namespace Azure.DigitalTwins.Core.Tests
 {
@@ -10,6 +11,15 @@ namespace Azure.DigitalTwins.Core.Tests
     {
         internal const string FAKE_URL = "https://fakeHost.api.wus2.digitaltwins.azure.net";
         internal const string FAKE_HOST = "fakeHost.api.wus2.digitaltwins.azure.net";
+
+        public TestUrlSanitizer()
+        {
+            UriRegexSanitizers.Add(
+                new UriRegexSanitizer(@"https://(?<host>[^/]+)/", FAKE_HOST)
+                {
+                    GroupForReplace = "host"
+                });
+        }
 
         public override string SanitizeUri(string uri)
         {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ElasticPoolLicenseType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolLicenseType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ElasticPoolLicenseType(string value)
         {

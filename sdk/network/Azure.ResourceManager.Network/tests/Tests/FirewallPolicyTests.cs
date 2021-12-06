@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network.Tests
             _firewall = firewallLro.Value;
             _firewallIdentifier = _firewall.Id;
 
-            StopSessionRecording();
+            await StopSessionRecordingAsync();
         }
 
         [SetUp]

@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-#if NET5_0
+#if NET5_0_OR_GREATER
     public partial class ClientDiagnosticsTests
     {
         [SetUp]

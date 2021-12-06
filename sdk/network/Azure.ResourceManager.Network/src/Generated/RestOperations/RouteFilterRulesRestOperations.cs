@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.Network
 {
     internal partial class RouteFilterRulesRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
@@ -30,13 +29,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public RouteFilterRulesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-02-01")
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public RouteFilterRulesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null, string apiVersion = "2021-02-01")
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.Network
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string routeFilterName, string ruleName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string routeFilterName, string ruleName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -67,13 +64,18 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Deletes the specified rule from a route filter. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="routeFilterName"/>, or <paramref name="ruleName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string routeFilterName, string ruleName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="routeFilterName"/>, or <paramref name="ruleName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string routeFilterName, string ruleName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -87,7 +89,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(ruleName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, routeFilterName, ruleName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, routeFilterName, ruleName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -101,13 +103,18 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Deletes the specified rule from a route filter. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="routeFilterName"/>, or <paramref name="ruleName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string routeFilterName, string ruleName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="routeFilterName"/>, or <paramref name="ruleName"/> is null. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string routeFilterName, string ruleName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -121,7 +128,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(ruleName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, routeFilterName, ruleName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, routeFilterName, ruleName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -134,7 +141,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string routeFilterName, string ruleName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string routeFilterName, string ruleName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -157,13 +164,18 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the specified rule from a route filter. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="routeFilterName"/>, or <paramref name="ruleName"/> is null. </exception>
-        public async Task<Response<RouteFilterRuleData>> GetAsync(string resourceGroupName, string routeFilterName, string ruleName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="routeFilterName"/>, or <paramref name="ruleName"/> is null. </exception>
+        public async Task<Response<RouteFilterRuleData>> GetAsync(string subscriptionId, string resourceGroupName, string routeFilterName, string ruleName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -177,7 +189,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(ruleName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, routeFilterName, ruleName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, routeFilterName, ruleName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -196,13 +208,18 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the specified rule from a route filter. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="routeFilterName"/>, or <paramref name="ruleName"/> is null. </exception>
-        public Response<RouteFilterRuleData> Get(string resourceGroupName, string routeFilterName, string ruleName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="routeFilterName"/>, or <paramref name="ruleName"/> is null. </exception>
+        public Response<RouteFilterRuleData> Get(string subscriptionId, string resourceGroupName, string routeFilterName, string ruleName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -216,7 +233,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(ruleName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, routeFilterName, ruleName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, routeFilterName, ruleName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -234,7 +251,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string routeFilterName, string ruleName, RouteFilterRuleData routeFilterRuleParameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string routeFilterName, string ruleName, RouteFilterRuleData routeFilterRuleParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -261,14 +278,19 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates or updates a route in the specified route filter. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="ruleName"> The name of the route filter rule. </param>
         /// <param name="routeFilterRuleParameters"> Parameters supplied to the create or update route filter rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="routeFilterName"/>, <paramref name="ruleName"/>, or <paramref name="routeFilterRuleParameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string routeFilterName, string ruleName, RouteFilterRuleData routeFilterRuleParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="routeFilterName"/>, <paramref name="ruleName"/>, or <paramref name="routeFilterRuleParameters"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string routeFilterName, string ruleName, RouteFilterRuleData routeFilterRuleParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -286,7 +308,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(routeFilterRuleParameters));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, routeFilterName, ruleName, routeFilterRuleParameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, routeFilterName, ruleName, routeFilterRuleParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -299,14 +321,19 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates or updates a route in the specified route filter. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="ruleName"> The name of the route filter rule. </param>
         /// <param name="routeFilterRuleParameters"> Parameters supplied to the create or update route filter rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="routeFilterName"/>, <paramref name="ruleName"/>, or <paramref name="routeFilterRuleParameters"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string routeFilterName, string ruleName, RouteFilterRuleData routeFilterRuleParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="routeFilterName"/>, <paramref name="ruleName"/>, or <paramref name="routeFilterRuleParameters"/> is null. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string routeFilterName, string ruleName, RouteFilterRuleData routeFilterRuleParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -324,7 +351,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(routeFilterRuleParameters));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, routeFilterName, ruleName, routeFilterRuleParameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, routeFilterName, ruleName, routeFilterRuleParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -336,7 +363,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetAllByRouteFilterRequest(string resourceGroupName, string routeFilterName)
+        internal HttpMessage CreateListByRouteFilterRequest(string subscriptionId, string resourceGroupName, string routeFilterName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -358,12 +385,17 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets all RouteFilterRules in a route filter. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="routeFilterName"/> is null. </exception>
-        public async Task<Response<RouteFilterRuleListResult>> GetAllByRouteFilterAsync(string resourceGroupName, string routeFilterName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="routeFilterName"/> is null. </exception>
+        public async Task<Response<RouteFilterRuleListResult>> ListByRouteFilterAsync(string subscriptionId, string resourceGroupName, string routeFilterName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -373,7 +405,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(routeFilterName));
             }
 
-            using var message = CreateGetAllByRouteFilterRequest(resourceGroupName, routeFilterName);
+            using var message = CreateListByRouteFilterRequest(subscriptionId, resourceGroupName, routeFilterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -390,12 +422,17 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets all RouteFilterRules in a route filter. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="routeFilterName"/> is null. </exception>
-        public Response<RouteFilterRuleListResult> GetAllByRouteFilter(string resourceGroupName, string routeFilterName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="routeFilterName"/> is null. </exception>
+        public Response<RouteFilterRuleListResult> ListByRouteFilter(string subscriptionId, string resourceGroupName, string routeFilterName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -405,7 +442,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(routeFilterName));
             }
 
-            using var message = CreateGetAllByRouteFilterRequest(resourceGroupName, routeFilterName);
+            using var message = CreateListByRouteFilterRequest(subscriptionId, resourceGroupName, routeFilterName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -421,7 +458,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetAllByRouteFilterNextPageRequest(string nextLink, string resourceGroupName, string routeFilterName)
+        internal HttpMessage CreateListByRouteFilterNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string routeFilterName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -437,15 +474,20 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets all RouteFilterRules in a route filter. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="routeFilterName"/> is null. </exception>
-        public async Task<Response<RouteFilterRuleListResult>> GetAllByRouteFilterNextPageAsync(string nextLink, string resourceGroupName, string routeFilterName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="routeFilterName"/> is null. </exception>
+        public async Task<Response<RouteFilterRuleListResult>> ListByRouteFilterNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string routeFilterName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -456,7 +498,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(routeFilterName));
             }
 
-            using var message = CreateGetAllByRouteFilterNextPageRequest(nextLink, resourceGroupName, routeFilterName);
+            using var message = CreateListByRouteFilterNextPageRequest(nextLink, subscriptionId, resourceGroupName, routeFilterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -474,15 +516,20 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets all RouteFilterRules in a route filter. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="routeFilterName"/> is null. </exception>
-        public Response<RouteFilterRuleListResult> GetAllByRouteFilterNextPage(string nextLink, string resourceGroupName, string routeFilterName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="routeFilterName"/> is null. </exception>
+        public Response<RouteFilterRuleListResult> ListByRouteFilterNextPage(string nextLink, string subscriptionId, string resourceGroupName, string routeFilterName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -493,7 +540,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(routeFilterName));
             }
 
-            using var message = CreateGetAllByRouteFilterNextPageRequest(nextLink, resourceGroupName, routeFilterName);
+            using var message = CreateListByRouteFilterNextPageRequest(nextLink, subscriptionId, resourceGroupName, routeFilterName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

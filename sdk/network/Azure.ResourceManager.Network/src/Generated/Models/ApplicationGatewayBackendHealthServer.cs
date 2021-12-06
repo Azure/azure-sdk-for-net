@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Network;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Application gateway backendhealth http settings. </summary>
@@ -20,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ipConfiguration"> Reference to IP configuration of backend server. </param>
         /// <param name="health"> Health of backend server. </param>
         /// <param name="healthProbeLog"> Health Probe Log. </param>
-        internal ApplicationGatewayBackendHealthServer(string address, NetworkInterfaceIPConfiguration ipConfiguration, ApplicationGatewayBackendHealthServerHealth? health, string healthProbeLog)
+        internal ApplicationGatewayBackendHealthServer(string address, NetworkInterfaceIPConfigurationData ipConfiguration, ApplicationGatewayBackendHealthServerHealth? health, string healthProbeLog)
         {
             Address = address;
             IpConfiguration = ipConfiguration;
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> IP address or FQDN of backend server. </summary>
         public string Address { get; }
         /// <summary> Reference to IP configuration of backend server. </summary>
-        public NetworkInterfaceIPConfiguration IpConfiguration { get; }
+        public NetworkInterfaceIPConfigurationData IpConfiguration { get; }
         /// <summary> Health of backend server. </summary>
         public ApplicationGatewayBackendHealthServerHealth? Health { get; }
         /// <summary> Health Probe Log. </summary>
