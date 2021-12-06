@@ -198,19 +198,28 @@ namespace Azure.Monitor.Query.Tests
         public void ValidateMonitorModelFactoryTableCreation()
         {
             LogsTableColumn logsTableColumn1 = MonitorQueryModelFactory.LogsTableColumn("column1", LogsColumnType.String);
-            LogsTableColumn logsTableColumn2 = MonitorQueryModelFactory.LogsTableColumn("column2", LogsColumnType.String);
-            LogsTableColumn[] logsTableColumns = new LogsTableColumn[] { logsTableColumn1, logsTableColumn2 };
-            Object[] rowValues = new Object[] { "row1", "row2" };
+            LogsTableColumn logsTableColumn2 = MonitorQueryModelFactory.LogsTableColumn("column2", LogsColumnType.Int);
+            LogsTableColumn logsTableColumn3 = MonitorQueryModelFactory.LogsTableColumn("column3", LogsColumnType.Real);
+            LogsTableColumn logsTableColumn4 = MonitorQueryModelFactory.LogsTableColumn("column4", LogsColumnType.Bool);
+            LogsTableColumn[] logsTableColumns = new LogsTableColumn[] { logsTableColumn1, logsTableColumn2, logsTableColumn3, logsTableColumn4 };
+            Object[] rowValues = new Object[] { "row1", 123, 43.56, false };
             LogsTableRow logsTableRow = MonitorQueryModelFactory.LogsTableRow(logsTableColumns, rowValues);
             LogsTableRow[] rowArray = new LogsTableRow[] { logsTableRow };
             LogsTable logsTable = MonitorQueryModelFactory.LogsTable("tester", logsTableColumns.AsEnumerable(), rowArray.AsEnumerable());
 
             Assert.AreEqual(logsTable.Name, "tester");
             Assert.AreEqual(logsTable.Rows.Count, 1);
-            Assert.AreEqual(logsTable.Rows[0].ToString(), "[\"row1\",\"row2\"]");
-            Assert.AreEqual(logsTable.Columns.Count, 2);
+            Assert.AreEqual(logsTable.Rows[0].ToString(), "[\"row1\",123,43.560000000000002,false]");
+            Assert.AreEqual(logsTable.Columns.Count, 4);
+
             Assert.AreEqual(logsTable.Columns[0].Name, "column1");
+            Assert.AreEqual(logsTable.Columns[0].Type.ToString(), "string");
             Assert.AreEqual(logsTable.Columns[1].Name, "column2");
+            Assert.AreEqual(logsTable.Columns[1].Type.ToString(), "int");
+            Assert.AreEqual(logsTable.Columns[2].Name, "column3");
+            Assert.AreEqual(logsTable.Columns[2].Type.ToString(), "real");
+            Assert.AreEqual(logsTable.Columns[3].Name, "column4");
+            Assert.AreEqual(logsTable.Columns[3].Type.ToString(), "bool");
         }
     }
 }
