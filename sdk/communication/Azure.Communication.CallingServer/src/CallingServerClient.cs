@@ -250,7 +250,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="callConnectionId"> The thread id for the ChatThreadClient instance. </param>
         public virtual CallConnection GetCallConnection(string callConnectionId)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(CallingServerClient)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(GetCallConnection)}");
             scope.Start();
             try
             {
@@ -536,13 +536,25 @@ namespace Azure.Communication.CallingServer
         public virtual async Task<Response<Stream>> DownloadStreamingAsync(
             Uri sourceEndpoint,
             HttpRange range = default,
-            CancellationToken cancellationToken = default) =>
-            await _contentDownloader.DownloadStreamingInternal(
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(DownloadStreaming)}");
+            scope.Start();
+            try
+            {
+                return await _contentDownloader.DownloadStreamingInternal(
                 sourceEndpoint,
                 range,
                 async: true,
                 cancellationToken)
             .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// The <see cref="DownloadStreaming(Uri, HttpRange, CancellationToken)"/>
@@ -571,13 +583,25 @@ namespace Azure.Communication.CallingServer
         public virtual Response<Stream> DownloadStreaming(
             Uri sourceEndpoint,
             HttpRange range = default,
-            CancellationToken cancellationToken = default) =>
-            _contentDownloader.DownloadStreamingInternal(
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(DownloadStreaming)}");
+            scope.Start();
+            try
+            {
+                return _contentDownloader.DownloadStreamingInternal(
                 sourceEndpoint,
                 range,
                 async: false,
                 cancellationToken)
             .EnsureCompleted();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// The <see cref="DownloadTo(Uri, Stream, ContentTransferOptions, CancellationToken)"/>
@@ -606,9 +630,20 @@ namespace Azure.Communication.CallingServer
         /// a failure occurs.
         /// </remarks>
         public virtual Response DownloadTo(Uri sourceEndpoint, Stream destinationStream,
-            ContentTransferOptions transferOptions = default, CancellationToken cancellationToken = default) =>
-            _contentDownloader.StagedDownloadAsync(sourceEndpoint, destinationStream, transferOptions, async: false, cancellationToken: cancellationToken).EnsureCompleted();
-
+            ContentTransferOptions transferOptions = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(DownloadTo)}");
+            scope.Start();
+            try
+            {
+                return _contentDownloader.StagedDownloadAsync(sourceEndpoint, destinationStream, transferOptions, async: false, cancellationToken: cancellationToken).EnsureCompleted();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
         /// <summary>
         /// The <see cref="DownloadToAsync(Uri, Stream, ContentTransferOptions, CancellationToken)"/>
         /// operation downloads the specified content using parallel requests,
@@ -635,9 +670,20 @@ namespace Azure.Communication.CallingServer
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response> DownloadToAsync(Uri sourceEndpoint, Stream destinationStream, ContentTransferOptions transferOptions = default, CancellationToken cancellationToken = default) =>
-            await _contentDownloader.StagedDownloadAsync(sourceEndpoint, destinationStream, transferOptions, async: true, cancellationToken: cancellationToken).ConfigureAwait(false);
-
+        public virtual async Task<Response> DownloadToAsync(Uri sourceEndpoint, Stream destinationStream, ContentTransferOptions transferOptions = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(DownloadTo)}");
+            scope.Start();
+            try
+            {
+                return await _contentDownloader.StagedDownloadAsync(sourceEndpoint, destinationStream, transferOptions, async: true, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
         /// <summary>
         /// The <see cref="DownloadTo(Uri, string, ContentTransferOptions, CancellationToken)"/>
         /// operation downloads the specified content using parallel requests,
@@ -667,9 +713,19 @@ namespace Azure.Communication.CallingServer
         public virtual Response DownloadTo(Uri sourceEndpoint, string destinationPath,
             ContentTransferOptions transferOptions = default, CancellationToken cancellationToken = default)
         {
-            using Stream destination = File.Create(destinationPath);
-            return _contentDownloader.StagedDownloadAsync(sourceEndpoint, destination, transferOptions,
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(DownloadTo)}");
+            scope.Start();
+            try
+            {
+                using Stream destination = File.Create(destinationPath);
+                return _contentDownloader.StagedDownloadAsync(sourceEndpoint, destination, transferOptions,
                 async: false, cancellationToken: cancellationToken).EnsureCompleted();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -701,9 +757,19 @@ namespace Azure.Communication.CallingServer
         public virtual async Task<Response> DownloadToAsync(Uri sourceEndpoint, string destinationPath,
             ContentTransferOptions transferOptions = default, CancellationToken cancellationToken = default)
         {
-            using Stream destination = File.Create(destinationPath);
-            return await _contentDownloader.StagedDownloadAsync(sourceEndpoint, destination, transferOptions,
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(DownloadTo)}");
+            scope.Start();
+            try
+            {
+                using Stream destination = File.Create(destinationPath);
+                return await _contentDownloader.StagedDownloadAsync(sourceEndpoint, destination, transferOptions,
                 async: true, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary> Play audio in the call. </summary>
@@ -907,7 +973,7 @@ namespace Azure.Communication.CallingServer
         /// <returns>The <see cref="IEnumerable{CallParticipant}"/>.</returns>
         public virtual async Task<Response<IEnumerable<CallParticipant>>> GetParticipantsAsync(CallLocator callLocator, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(GetParticipantsAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(GetParticipants)}");
             scope.Start();
             try
             {
@@ -933,7 +999,7 @@ namespace Azure.Communication.CallingServer
         /// <returns>The <see cref="IEnumerable{CallParticipant}"/>.</returns>
         public virtual Response<CallParticipant> GetParticipant(CallLocator callLocator, CommunicationIdentifier participant, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipant)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(GetParticipant)}");
             scope.Start();
             try
             {
@@ -959,7 +1025,7 @@ namespace Azure.Communication.CallingServer
         /// <returns>The <see cref="IEnumerable{CallParticipant}"/>.</returns>
         public virtual async Task<Response<CallParticipant>> GetParticipantAsync(CallLocator callLocator, CommunicationIdentifier participant, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(GetParticipantAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(GetParticipant)}");
             scope.Start();
             try
             {
@@ -1016,7 +1082,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<PlayAudioResult>> PlayAudioToParticipantAsync(CallLocator callLocator, CommunicationIdentifier participant, Uri audioFileUri, PlayAudioOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(PlayAudioToParticipantAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(PlayAudioToParticipant)}");
             scope.Start();
             try
             {
@@ -1071,7 +1137,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response> CancelParticipantMediaOperationAsync(CallLocator callLocator, CommunicationIdentifier participant, string mediaOperationId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(CancelParticipantMediaOperationAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(CancelParticipantMediaOperation)}");
             scope.Start();
             try
             {
@@ -1120,7 +1186,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response> CancelMediaOperationAsync(CallLocator callLocator, string mediaOperationId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(CancelMediaOperationAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(CancelMediaOperation)}");
             scope.Start();
             try
             {
@@ -1172,7 +1238,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"><paramref name="target"/> is null.</exception>
         public virtual async Task<Response> RedirectCallAsync(string incomingCallContext, CommunicationIdentifier target, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(RedirectCallAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(RedirectCall)}");
             scope.Start();
             try
             {
@@ -1231,7 +1297,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
         public virtual async Task<Response<CallConnection>> AnswerCallAsync(string incomingCallContext, IEnumerable<CallMediaType> requestedMediaTypes, IEnumerable<CallingEventSubscriptionType> requestedCallEvents, Uri callbackUri, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(AnswerCallAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(AnswerCall)}");
             scope.Start();
             try
             {
@@ -1287,7 +1353,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
         public virtual async Task<Response> RejectCallAsync(string incomingCallContext, CallRejectReason callRejectReason, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(RejectCallAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(RejectCall)}");
             scope.Start();
             try
             {
@@ -1324,15 +1390,25 @@ namespace Azure.Communication.CallingServer
         /// </remarks>
         public virtual Response DeleteRecording(Uri deleteEndpoint, CancellationToken cancellationToken = default)
         {
-            HttpMessage message = AmsDirectRequestHelpers.GetHttpMessage(this, deleteEndpoint, RequestMethod.Delete);
-            _pipeline.Send(message, cancellationToken);
-
-            switch (message.Response.Status)
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(DeleteRecording)}");
+            scope.Start();
+            try
             {
-                case 200:
-                    return message.Response;
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                HttpMessage message = AmsDirectRequestHelpers.GetHttpMessage(this, deleteEndpoint, RequestMethod.Delete);
+                _pipeline.Send(message, cancellationToken);
+
+                switch (message.Response.Status)
+                {
+                    case 200:
+                        return message.Response;
+                    default:
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                }
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
             }
         }
 
@@ -1357,15 +1433,25 @@ namespace Azure.Communication.CallingServer
         /// </remarks>
         public virtual async Task<Response> DeleteRecordingAsync(Uri deleteEndpoint, CancellationToken cancellationToken = default)
         {
-            HttpMessage message = AmsDirectRequestHelpers.GetHttpMessage(this, deleteEndpoint, RequestMethod.Delete);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-
-            switch (message.Response.Status)
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(DeleteRecording)}");
+            scope.Start();
+            try
             {
-                case 200:
-                    return message.Response;
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                HttpMessage message = AmsDirectRequestHelpers.GetHttpMessage(this, deleteEndpoint, RequestMethod.Delete);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+
+                switch (message.Response.Status)
+                {
+                    case 200:
+                        return message.Response;
+                    default:
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                }
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
             }
         }
     }
