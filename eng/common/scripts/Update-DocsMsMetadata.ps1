@@ -202,9 +202,9 @@ foreach ($packageInfoLocation in $PackageInfoJsonLocations) {
   # Add validation step for daily update and release
   if ($ValidateDocsMsPackagesFn -and (Test-Path "Function:$ValidateDocsMsPackagesFn")) {
     &$ValidateDocsMsPackagesFn -PackageInfo $packageInfo -PackageSourceOverride $PackageSourceOverride -DocValidationImageId $DocValidationImageId
-    if ($LASTEXITCODE -ne 0) {
+    if ($LASTEXITCODE) {
       LogError "The package failed Doc.Ms validation. Check https://aka.ms/azsdk/docs/docker for more details on how to diagnose this issue."
-      exit 1
+      exit $LASTEXITCODE
     }
   }
   UpdateDocsMsMetadataForPackage $packageInfoLocation $packageInfo
