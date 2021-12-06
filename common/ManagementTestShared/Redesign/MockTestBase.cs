@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.TestFramework
             EnsureMockServerRunning();
         }
 
-        public MockTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        public MockTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, IsMockServerRunning()? RecordedTestMode.Playback: mode)
         {
             EnsureMockServerRunning();
         }
@@ -27,13 +27,26 @@ namespace Azure.ResourceManager.TestFramework
                 TestMockServerRunning();
         }
 
-        private void TestMockServerRunning()
+        private static bool IsMockServerRunning()
+        {
+            try
+            {
+                TestMockServerRunning();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private static void TestMockServerRunning()
         {
             using (var tcpClient = new TcpClient())
             {
                 try
                 {
-                    var uri = new Uri(TestEnvironment.MockEndPoint);
+                    var uri = new Uri(MockTestEnvironment.MockEndPoint);
                     tcpClient.Connect(uri.Host, uri.Port);
                 }
                 catch (SocketException)
