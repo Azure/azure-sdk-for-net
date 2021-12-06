@@ -1,8 +1,8 @@
 ﻿# Guide for migrating from Microsoft.Azure.OperationalInsights v1.1.0 to Azure.Monitor.Query v1.0.x
 
-This guide assists you in the migration from [Microsoft.Azure.OperationalInsights](https://www.nuget.org/packages/Microsoft.Azure.OperationalInsights/) v1.1.0 to [Azure.Monitor.Query](https://www.nuget.org/packages/Azure.Monitor.Query/) v1.0.x. Side-by-side comparisons are provided for similar operations between the two packages.
+This guide assists you in the migration from [Microsoft.Azure.OperationalInsights](https://www.nuget.org/packages/Microsoft.Azure.OperationalInsights/) v1.1.0 to [Azure.Monitor.Query](https://www.nuget.org/packages/Azure.Monitor.Query/) v1.0.x. Side-by-side comparisons are provided for similar operations between the two client libraries.
 
-Familiarity with the `Microsoft.Azure.OperationalInsights` v1.1.0 package is assumed. If you're new to the Azure.Monitor.Query client library for .NET, see the [README for `Azure.Monitor.Query`](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.Query#readme) instead of this guide.
+Familiarity with the `Microsoft.Azure.OperationalInsights` v1.1.0 package is assumed. If you're new to the `Azure.Monitor.Query` client library for .NET, see the [README for `Azure.Monitor.Query`](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.Query#readme) instead of this guide.
 
 ## Table of contents
 
@@ -12,7 +12,7 @@ Familiarity with the `Microsoft.Azure.OperationalInsights` v1.1.0 package is ass
 - [Important changes](#important-changes)
     - [The client](#the-client)
     - [Client constructors and authentication](#client-constructors-and-authentication)
-    - [Send a single query request](#sending-a-single-query-request)
+    - [Send a single query request](#send-a-single-query-request)
 - [Additional samples](#additional-samples)
 
 ## Migration benefits
@@ -25,17 +25,19 @@ To improve the development experience across Azure services, a set of uniform [d
 
 ### Cross-service SDK improvements
 
-The Azure.Monitor.Query client library also takes advantage of the cross-service improvements made to the Azure development experience. Examples include:
+The `Azure.Monitor.Query` client library also takes advantage of the cross-service improvements made to the Azure development experience. Examples include:
 
 - Using the new [`Azure.Identity`](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#readme) library to share a single authentication approach between clients.
 - A unified logging and diagnostics pipeline offering a common view of the activities across each of the client libraries.
 
 ### New features
 
-There are a variety of new features in version 1.0 of the Azure.Monitor.Query library. Some include:
+There are a variety of new features in version 1.0 of the `Azure.Monitor.Query` library. Some highlights include:
 
-- The ability to execute a batch of queries with the `LogsQueryClient.QueryBatch()` API.
+- The ability to execute a batch of Kusto queries with the `LogsQueryClient.QueryBatch()` API.
 - The ability to configure the retry policy used by the operations on the client.
+- The ability to map a Logs query result to a strongly typed model.
+- The ability to retrieve by column name instead of by column index.
 - Authentication with Azure Active Directory (Azure AD) credentials using [`Azure.Identity`](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#readme).
 
 For more new features, changes, and bug fixes, see the [CHANGELOG](https://github.com/Azure/azure-sdk-for-net/blob/Azure.Monitor.Query_1.0.1/sdk/monitor/Azure.Monitor.Query/CHANGELOG.md).
@@ -44,7 +46,7 @@ For more new features, changes, and bug fixes, see the [CHANGELOG](https://githu
 
 ### The client
 
-To provide a more intuitive experience, the top-level client to query logs was renamed to `LogsQueryClient` from `OperationalInsightsDataClient`. `LogsQueryClient` can be authenticated using Azure AD. This client is the single entry point to execute a single query or a batch of queries.
+To provide a more intuitive experience, the top-level client to query logs was renamed to `LogsQueryClient` from `OperationalInsightsDataClient`. `LogsQueryClient` can be authenticated using Azure AD. This client is the single entry point to execute a single Kusto query or a batch of Kusto queries.
 
 #### Consistency
 
@@ -54,7 +56,7 @@ There are now methods with similar names, signatures, and locations to create se
 
 In `Microsoft.Azure.OperationalInsights` v1.1.0:
 
-```.NET
+```csharp
 using Microsoft.Azure.OperationalInsights;
 using Microsoft.Rest.Azure.Authentication;
 
@@ -73,16 +75,16 @@ var adSettings = new ActiveDirectoryServiceSettings
 };
 
 ServiceClientCredentials credentials = ApplicationTokenProvider.LoginSilentAsync(domain, clientId, clientSecret, adSettings).GetAwaiter().GetResult();
-OperationalInsightsDataClient client = new OperationalInsightsDataClient(credentials);
+var client = new OperationalInsightsDataClient(credentials);
 ```
 
 In `Azure.Monitor.Query` v1.0.x:
 
-```.NET
+```csharp
 using Azure.Monitor.Query;
 using Azure.Identity;
 
-LogsQueryClient client = new LogsQueryClient(new DefaultAzureCredential());
+var client = new LogsQueryClient(new DefaultAzureCredential());
 ```
 
 ### Send a single query request
@@ -94,14 +96,14 @@ In version 1.0 of the Monitor Query library:
 
 In `Microsoft.Azure.OperationalInsights` v1.1.0:
 
-```.NET
+```csharp
 QueryResults queryResults = client.Query($"endtoendlogs_CL | where Message == '{testIdentifierEntries}'");
-HttpOperationResponse httpResponse = client.QueryWithHttpMessagesAsync($"endtoendlogs_CL | where Message == '{testIdentifierEntries}'").Result;
+HttpOperationResponse httpResponse = await client.QueryWithHttpMessagesAsync($"endtoendlogs_CL | where Message == '{testIdentifierEntries}'");
 ```
 
 In `Azure.Monitor.Query` v1.0.x:
 
-```.NET
+```csharp
 string query = "AzureActivity | top 10 by TimeGenerated";
 Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
     workspaceId,
