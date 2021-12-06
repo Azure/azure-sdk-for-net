@@ -571,7 +571,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: ($null -ne $env:SYSTEM_TEAMPROJECTID)
+Default value: ($null -eq $env:SYSTEM_TEAMPROJECTID)
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
