@@ -12,9 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- TEMP: Override the central version until the 5.7.x line goes GA.-->
-    <PackageReference Include="Azure.Messaging.EventHubs" OverrideVersion = "5.7.0-beta.1" />
-
+    <PackageReference Include="Azure.Messaging.EventHubs" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
     <PackageReference Include="System.Reflection.TypeExtensions" />
