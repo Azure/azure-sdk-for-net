@@ -203,7 +203,7 @@ foreach ($packageInfoLocation in $PackageInfoJsonLocations) {
   if ($ValidateDocsMsPackagesFn -and (Test-Path "Function:$ValidateDocsMsPackagesFn")) {
     &$ValidateDocsMsPackagesFn -PackageInfo $packageInfo $PackageSourceOverride $DocValidationImageId
     if ($LASTEXITCODE -ne 0) {
-      LogError "The package failed Doc.Ms validation. Please fixed the doc and republish to Doc.Ms."
+      LogError "The package failed Doc.Ms validation. Check https://aka.ms/azsdk/docs/docker for how to reproduce the errors"
       exit 1
     }
   }
