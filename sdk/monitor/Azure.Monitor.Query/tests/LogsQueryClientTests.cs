@@ -209,7 +209,7 @@ namespace Azure.Monitor.Query.Tests
 
             Assert.AreEqual(logsTable.Name, "tester");
             Assert.AreEqual(logsTable.Rows.Count, 1);
-            Assert.AreEqual(logsTable.Rows[0].ToString(), "[\"row1\",123,43.560000000000002,false]");
+            Assert.AreEqual(logsTable.Rows[0].ToString(), "[\"row1\",123,43.56,false]");
             Assert.AreEqual(logsTable.Columns.Count, 4);
 
             Assert.AreEqual(logsTable.Columns[0].Name, "column1");
