@@ -1,19 +1,23 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 using System;
 using System.Reflection;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Tables;
 using NUnit.Framework;
+
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
 {
     public class PocoEntityArgumentBindingProviderTests
     {
         private ParameterInfo[] _parameters;
+
         public PocoEntityArgumentBindingProviderTests()
         {
             _parameters = this.GetType().GetMethod("Parameters", BindingFlags.NonPublic | BindingFlags.Static).GetParameters();
         }
+
         [Test]
         public void Create_ReturnsNull_IfByRefParameter()
         {
@@ -25,6 +29,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             Assert.Null(binding);
         }
+
         [Test]
         public void Create_ReturnsBinding_IfContainsResolvedGenericParameter()
         {
@@ -36,10 +41,15 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             Assert.NotNull(binding);
         }
-        private static void Parameters(ref SimpleTableEntity byRef, GenericClass<SimpleTableEntity> generic) { }
+
+        private static void Parameters(ref SimpleTableEntity byRef, GenericClass<SimpleTableEntity> generic)
+        {
+        }
+
         private class SimpleTableEntity
         {
         }
+
         private class GenericClass<TArgument>
         {
         }

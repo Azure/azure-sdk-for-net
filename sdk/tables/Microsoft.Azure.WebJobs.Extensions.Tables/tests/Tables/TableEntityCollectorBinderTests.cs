@@ -1,5 +1,6 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -8,6 +9,7 @@ using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.WebJobs.Host.Tables;
 using Microsoft.Azure.Cosmos.Table;
 using NUnit.Framework;
+
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
 {
     public class TableEntityCollectorBinderTests
@@ -17,17 +19,20 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
         {
             public int TimesPartitionFlushed { get; set; }
             public int TimesFlushed { get; set; }
+
             public StubTableEntityWriter()
                 : base(new CloudTable(new Uri("http://localhost:10000/account/table")))
             {
                 TimesFlushed = 0;
                 TimesPartitionFlushed = 0;
             }
+
             public override Task FlushAsync(CancellationToken cancellationToken = default(CancellationToken))
             {
                 TimesFlushed++;
                 return base.FlushAsync(cancellationToken);
             }
+
             internal override Task ExecuteBatchAndCreateTableIfNotExistsAsync(
                 Dictionary<string, TableOperation> batch, CancellationToken cancellationToken)
             {
@@ -36,6 +41,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 return Task.FromResult(0);
             }
         }
+
         [Test]
         public void ValueHasNotChanged()
         {
@@ -50,6 +56,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             Assert.Null(parameterLog);
         }
+
         [Test]
         public void PropertyHasBeenAdded()
         {
@@ -72,6 +79,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.AreEqual(1, parameterLog.EntitiesWritten);
             Assert.AreEqual(0, writer.TimesPartitionFlushed);
         }
+
         [Test]
         public void MaximumBatchSizeFlushes()
         {
@@ -92,12 +100,14 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 value.RowKey = "RK" + i;
                 writer.Add(value);
             }
+
             // Act
             var parameterLog = product.GetStatus() as TableParameterLog;
             // Assert
             Assert.AreEqual(TableEntityWriter<ITableEntity>.MaxBatchSize + 1, parameterLog.EntitiesWritten);
             Assert.AreEqual(1, writer.TimesPartitionFlushed);
         }
+
         [Test]
         public void MaximumPartitionWidthFlushes()
         {
@@ -118,6 +128,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 value.PartitionKey = "PK" + i;
                 writer.Add(value);
             }
+
             // Act
             var parameterLog = product.GetStatus() as TableParameterLog;
             // Assert
@@ -125,6 +136,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.AreEqual(1, writer.TimesFlushed);
             Assert.AreEqual(TableEntityWriter<ITableEntity>.MaxPartitionWidth, writer.TimesPartitionFlushed);
         }
+
         [Test]
         public void PropertyHasBeenReplaced()
         {
@@ -158,6 +170,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.AreEqual(2, parameterLog.EntitiesWritten);
             Assert.AreEqual(1, writer.TimesPartitionFlushed);
         }
+
         private CloudTableClient CreateTableClient()
         {
             // StorageClientFactory clientFactory = new StorageClientFactory();

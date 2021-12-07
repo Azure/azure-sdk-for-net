@@ -1,5 +1,6 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -8,6 +9,7 @@ using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.WebJobs.Host.Tables;
 using Microsoft.Azure.Cosmos.Table;
 using NUnit.Framework;
+
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
 {
     public class PocoEntityCollectorBinderTests
@@ -17,12 +19,14 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             public string PartitionKey { get; set; }
             public string RowKey { get; set; }
         }
+
         internal class StubTableEntityWriter : TableEntityWriter<ITableEntity>
         {
             public StubTableEntityWriter()
                 : base(new CloudTable(new Uri("http://localhost:10000/account/table")))
             {
             }
+
             internal override Task ExecuteBatchAndCreateTableIfNotExistsAsync(
                 Dictionary<string, TableOperation> batch, CancellationToken cancellationToken)
             {
@@ -30,6 +34,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 return Task.FromResult(0);
             }
         }
+
         [Test]
         public void ValueHasNotChanged()
         {
@@ -46,6 +51,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             Assert.Null(parameterLog);
         }
+
         [Test]
         public void PropertyHasBeenAdded()
         {
@@ -67,6 +73,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             Assert.AreEqual(1, parameterLog.EntitiesWritten);
         }
+
         [Test]
         public void PropertyHasBeenReplaced()
         {
@@ -98,6 +105,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             Assert.AreEqual(2, parameterLog.EntitiesWritten);
         }
+
         private CloudTableClient CreateTableClient()
         {
             //StorageClientFactory clientFactory = new StorageClientFactory();

@@ -1,10 +1,12 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 using System;
 using System.Collections.Generic;
 using Microsoft.Azure.WebJobs.Host.Tables;
 using Microsoft.Azure.Cosmos.Table;
 using NUnit.Framework;
+
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
 {
     public class TableEntityValueBinderTests
@@ -27,6 +29,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             Assert.False(hasChanged);
         }
+
         [Test]
         public void HasChanged_ReturnsTrue_IfPropertyHasBeenAdded()
         {
@@ -46,6 +49,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             Assert.True(hasChanged);
         }
+
         [Test]
         public void HasChanged_ReturnsTrue_IfValueHasChanged()
         {
@@ -65,6 +69,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             Assert.True(hasChanged);
         }
+
         [Test]
         public void HasChanged_ReturnsTrue_IfMutuableValueHasBeenMutated()
         {
@@ -85,6 +90,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             Assert.True(hasChanged);
         }
+
         [Test]
         public void DeepClone_IfBinary_PreservesValue()
         {
@@ -97,6 +103,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.AreEqual(EdmType.Binary, property.PropertyType);
             Assert.AreEqual(expected, property.BinaryValue);
         }
+
         [Test]
         public void DeepClone_IfEmptyBinary_PreservesValue()
         {
@@ -109,6 +116,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.AreEqual(EdmType.Binary, property.PropertyType);
             Assert.AreEqual(expected, property.BinaryValue);
         }
+
         [Test]
         public void DeepClone_IfBinaryNull_PreservesValue()
         {
@@ -121,6 +129,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.AreEqual(EdmType.Binary, property.PropertyType);
             Assert.Null(property.BinaryValue);
         }
+
         [Test]
         public void DeepClone_IfBinary_CopiesValue()
         {
@@ -138,6 +147,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.True(actual.Length == 2); // Guard
             Assert.AreEqual(original, actual[0]);
         }
+
         [Test]
         public void DeepClone_IfBoolean_PreservesValue()
         {
@@ -150,6 +160,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.AreEqual(EdmType.Boolean, property.PropertyType);
             Assert.AreEqual(expected, property.BooleanValue);
         }
+
         [Test]
         public void DeepClone_IfBooleanNull_PreservesValue()
         {
@@ -162,6 +173,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.AreEqual(EdmType.Boolean, property.PropertyType);
             Assert.Null(property.BooleanValue);
         }
+
         [Test]
         public void DeepClone_IfDateTime_PreservesValue()
         {
@@ -174,6 +186,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.AreEqual(EdmType.DateTime, property.PropertyType);
             Assert.AreEqual(expected, property.DateTime);
         }
+
         [Test]
         public void DeepClone_IfDateTimeNull_PreservesValue()
         {
@@ -186,6 +199,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.AreEqual(EdmType.DateTime, property.PropertyType);
             Assert.Null(property.DateTime);
         }
+
         [Test]
         public void DeepClone_IfDouble_PreservesValue()
         {
@@ -198,6 +212,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.AreEqual(EdmType.Double, property.PropertyType);
             Assert.AreEqual(expected, property.DoubleValue);
         }
+
         [Test]
         public void DeepClone_IfDoubleNull_PreservesValue()
         {
@@ -210,6 +225,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.AreEqual(EdmType.Double, property.PropertyType);
             Assert.Null(property.DoubleValue);
         }
+
         [Test]
         public void DeepClone_IfGuid_PreservesValue()
         {
@@ -222,6 +238,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.AreEqual(EdmType.Guid, property.PropertyType);
             Assert.AreEqual(expected, property.GuidValue);
         }
+
         [Test]
         public void DeepClone_IfGuidNull_PreservesValue()
         {
@@ -234,6 +251,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.AreEqual(EdmType.Guid, property.PropertyType);
             Assert.Null(property.GuidValue);
         }
+
         [Test]
         public void DeepClone_IfInt32_PreservesValue()
         {
@@ -246,6 +264,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.AreEqual(EdmType.Int32, property.PropertyType);
             Assert.AreEqual(expected, property.Int32Value);
         }
+
         [Test]
         public void DeepClone_IfInt32Null_PreservesValue()
         {
@@ -258,6 +277,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.AreEqual(EdmType.Int32, property.PropertyType);
             Assert.Null(property.Int32Value);
         }
+
         [Test]
         public void DeepClone_IfInt64_PreservesValue()
         {
@@ -270,6 +290,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.AreEqual(EdmType.Int64, property.PropertyType);
             Assert.AreEqual(expected, property.Int64Value);
         }
+
         [Test]
         public void DeepClone_IfInt64Null_PreservesValue()
         {
@@ -282,6 +303,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.AreEqual(EdmType.Int64, property.PropertyType);
             Assert.Null(property.Int64Value);
         }
+
         [Test]
         public void DeepClone_IfString_PreservesValue()
         {
@@ -294,6 +316,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.AreEqual(EdmType.String, property.PropertyType);
             Assert.AreSame(expected, property.StringValue);
         }
+
         [Test]
         public void DeepClone_IfStringNull_PreservesValue()
         {
@@ -306,6 +329,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.AreEqual(EdmType.String, property.PropertyType);
             Assert.Null(property.StringValue);
         }
+
         private class SimpleTableEntity
         {
             public string Item { get; set; }

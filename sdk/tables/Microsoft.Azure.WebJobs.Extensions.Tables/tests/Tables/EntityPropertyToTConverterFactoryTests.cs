@@ -1,5 +1,6 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 using System;
 using Microsoft.Azure.WebJobs.Host.Converters;
 using Microsoft.Azure.WebJobs.Host.Tables;
@@ -24,6 +25,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             EntityProperty property = converter.Convert(expected);
             Assert.AreEqual(expected, property);
         }
+
         [Theory]
         [TestCase(false)]
         [TestCase(true)]
@@ -37,6 +39,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             bool actual = converter.Convert(property);
             Assert.AreEqual(expected, actual);
         }
+
         [Test]
         public void Create_Boolean_ConvertThrowsIfNullProperty()
         {
@@ -45,6 +48,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfNullProperty(converter);
         }
+
         [Test]
         public void Create_Boolean_ConvertThrowsIfPropertyTypeMismatches()
         {
@@ -53,6 +57,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfPropertyTypeMismatches(converter, "Boolean");
         }
+
         [Test]
         public void Create_Boolean_ConvertThrowsIfNullValue()
         {
@@ -61,6 +66,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfNullValue(converter, EntityProperty.GeneratePropertyForBool(null));
         }
+
         [Theory]
         [TestCase(false)]
         [TestCase(true)]
@@ -74,6 +80,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             bool? actual = converter.Convert(property);
             Assert.AreEqual(expected, actual);
         }
+
         [Test]
         public void Create_NullableBoolean_CanConvertNullValue()
         {
@@ -82,6 +89,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertCanConvertNullValue(converter, EntityProperty.GeneratePropertyForBool(null));
         }
+
         [Test]
         public void Create_NullableBoolean_ConvertThrowsIfNullProperty()
         {
@@ -90,6 +98,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfNullProperty(converter);
         }
+
         [Test]
         public void Create_NullableBoolean_ConvertThrowsIfPropertyTypeMismatches()
         {
@@ -98,6 +107,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfPropertyTypeMismatches(converter, "Boolean");
         }
+
         [Test]
         public void Create_ByteArray_CanConvert()
         {
@@ -110,6 +120,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             byte[] actual = converter.Convert(property);
             Assert.AreSame(expected, actual);
         }
+
         [Test]
         public void Create_ByteArray_ConvertThrowsIfNullProperty()
         {
@@ -118,6 +129,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfNullProperty(converter);
         }
+
         [Test]
         public void Create_ByteArray_ConvertThrowsIfPropertyTypeMismatches()
         {
@@ -126,6 +138,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfPropertyTypeMismatches(converter, "Binary");
         }
+
         [Test]
         public void Create_DateTime_CanConvert()
         {
@@ -139,6 +152,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.AreEqual(expected, actual);
             Assert.AreEqual(expected.Kind, actual.Kind);
         }
+
         [Test]
         public void Create_DateTime_ConvertThrowsIfNullProperty()
         {
@@ -147,6 +161,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfNullProperty(converter);
         }
+
         [Test]
         public void Create_DateTime_ConvertThrowsIfPropertyTypeMismatches()
         {
@@ -155,6 +170,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfPropertyTypeMismatches(converter, "DateTime");
         }
+
         [Test]
         public void Create_DateTime_ConvertThrowsIfNullValue()
         {
@@ -163,6 +179,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfNullValue(converter, EntityProperty.GeneratePropertyForDateTimeOffset(null));
         }
+
         [Test]
         public void Create_NullableDateTime_CanConvert()
         {
@@ -175,6 +192,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             DateTime? actual = converter.Convert(property);
             Assert.AreEqual(expected, actual);
         }
+
         [Test]
         public void Create_NullableDateTime_CanConvertNullValue()
         {
@@ -183,6 +201,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertCanConvertNullValue(converter, EntityProperty.GeneratePropertyForDateTimeOffset(null));
         }
+
         [Test]
         public void Create_NullableDateTime_ConvertThrowsIfNullProperty()
         {
@@ -191,6 +210,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfNullProperty(converter);
         }
+
         [Test]
         public void Create_NullableDateTime_ConvertThrowsIfPropertyTypeMismatches()
         {
@@ -199,6 +219,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfPropertyTypeMismatches(converter, "DateTime");
         }
+
         [Test]
         public void Create_DateTimeOffset_CanConvert()
         {
@@ -213,6 +234,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.AreEqual(expected, actual);
             Assert.AreEqual(expected.Offset, actual.Offset);
         }
+
         [Test]
         public void Create_DateTimeOffset_ConvertThrowsIfNullProperty()
         {
@@ -222,6 +244,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfNullProperty(converter);
         }
+
         [Test]
         public void Create_DateTimeOffset_ConvertThrowsIfPropertyTypeMismatches()
         {
@@ -231,6 +254,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfPropertyTypeMismatches(converter, "DateTime");
         }
+
         [Test]
         public void Create_DateTimeOffset_ConvertThrowsIfNullValue()
         {
@@ -240,6 +264,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfNullValue(converter, EntityProperty.GeneratePropertyForDateTimeOffset(null));
         }
+
         [Test]
         public void Create_NullableDateTimeOffset_CanConvert()
         {
@@ -253,6 +278,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             DateTimeOffset? actual = converter.Convert(property);
             Assert.AreEqual(expected, actual);
         }
+
         [Test]
         public void Create_NullableDateTimeOffset_CanConvertNullValue()
         {
@@ -262,6 +288,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertCanConvertNullValue(converter, EntityProperty.GeneratePropertyForDateTimeOffset(null));
         }
+
         [Test]
         public void Create_NullableDateTimeOffset_ConvertThrowsIfNullProperty()
         {
@@ -271,6 +298,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfNullProperty(converter);
         }
+
         [Test]
         public void Create_NullableDateTimeOffset_ConvertThrowsIfPropertyTypeMismatches()
         {
@@ -280,6 +308,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfPropertyTypeMismatches(converter, "DateTime");
         }
+
         [Test]
         public void Create_Double_CanConvert()
         {
@@ -292,6 +321,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             double actual = converter.Convert(property);
             Assert.AreEqual(expected, actual);
         }
+
         [Test]
         public void Create_Double_ConvertThrowsIfNullProperty()
         {
@@ -300,6 +330,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfNullProperty(converter);
         }
+
         [Test]
         public void Create_Double_ConvertThrowsIfPropertyTypeMismatches()
         {
@@ -308,6 +339,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfPropertyTypeMismatches(converter, "Double");
         }
+
         [Test]
         public void Create_Double_ConvertThrowsIfNullValue()
         {
@@ -316,6 +348,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfNullValue(converter, EntityProperty.GeneratePropertyForDouble(null));
         }
+
         [Test]
         public void Create_NullableDouble_CanConvert()
         {
@@ -328,6 +361,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             double? actual = converter.Convert(property);
             Assert.AreEqual(expected, actual);
         }
+
         [Test]
         public void Create_NullableDouble_CanConvertNullValue()
         {
@@ -336,6 +370,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertCanConvertNullValue(converter, EntityProperty.GeneratePropertyForDouble(null));
         }
+
         [Test]
         public void Create_NullableDouble_ConvertThrowsIfNullProperty()
         {
@@ -344,6 +379,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfNullProperty(converter);
         }
+
         [Test]
         public void Create_NullableDouble_ConvertThrowsIfPropertyTypeMismatches()
         {
@@ -352,6 +388,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfPropertyTypeMismatches(converter, "Double");
         }
+
         [Test]
         public void Create_Guid_CanConvert()
         {
@@ -364,6 +401,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Guid actual = converter.Convert(property);
             Assert.AreEqual(expected, actual);
         }
+
         [Test]
         public void Create_Guid_ConvertThrowsIfNullProperty()
         {
@@ -372,6 +410,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfNullProperty(converter);
         }
+
         [Test]
         public void Create_Guid_ConvertThrowsIfPropertyTypeMismatches()
         {
@@ -380,6 +419,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfPropertyTypeMismatches(converter, "Guid");
         }
+
         [Test]
         public void Create_Guid_ConvertThrowsIfNullValue()
         {
@@ -388,6 +428,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfNullValue(converter, EntityProperty.GeneratePropertyForGuid(null));
         }
+
         [Test]
         public void Create_NullableGuid_CanConvert()
         {
@@ -400,6 +441,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Guid? actual = converter.Convert(property);
             Assert.AreEqual(expected, actual);
         }
+
         [Test]
         public void Create_NullableGuid_CanConvertNullValue()
         {
@@ -408,6 +450,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertCanConvertNullValue(converter, EntityProperty.GeneratePropertyForGuid(null));
         }
+
         [Test]
         public void Create_NullableGuid_ConvertThrowsIfNullProperty()
         {
@@ -416,6 +459,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfNullProperty(converter);
         }
+
         [Test]
         public void Create_NullableGuid_ConvertThrowsIfPropertyTypeMismatches()
         {
@@ -424,6 +468,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfPropertyTypeMismatches(converter, "Guid");
         }
+
         [Test]
         public void Create_Int32_CanConvert()
         {
@@ -436,6 +481,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             int actual = converter.Convert(property);
             Assert.AreEqual(expected, actual);
         }
+
         [Test]
         public void Create_Int32_ConvertThrowsIfNullProperty()
         {
@@ -444,6 +490,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfNullProperty(converter);
         }
+
         [Test]
         public void Create_Int32_ConvertThrowsIfPropertyTypeMismatches()
         {
@@ -452,6 +499,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfPropertyTypeMismatches(converter, "Int32", new EntityProperty(false), "Boolean");
         }
+
         [Test]
         public void Create_Int32_ConvertThrowsIfNullValue()
         {
@@ -460,6 +508,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfNullValue(converter, EntityProperty.GeneratePropertyForInt(null));
         }
+
         [Test]
         public void Create_NullableInt32_CanConvert()
         {
@@ -472,6 +521,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             int? actual = converter.Convert(property);
             Assert.AreEqual(expected, actual);
         }
+
         [Test]
         public void Create_NullableInt32_CanConvertNullValue()
         {
@@ -480,6 +530,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertCanConvertNullValue(converter, EntityProperty.GeneratePropertyForInt(null));
         }
+
         [Test]
         public void Create_NullableInt32_ConvertThrowsIfNullProperty()
         {
@@ -488,6 +539,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfNullProperty(converter);
         }
+
         [Test]
         public void Create_NullableInt32_ConvertThrowsIfPropertyTypeMismatches()
         {
@@ -496,6 +548,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfPropertyTypeMismatches(converter, "Int32", new EntityProperty(false), "Boolean");
         }
+
         [Test]
         public void Create_Int64_CanConvert()
         {
@@ -508,6 +561,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             long actual = converter.Convert(property);
             Assert.AreEqual(expected, actual);
         }
+
         [Test]
         public void Create_Int64_ConvertThrowsIfNullProperty()
         {
@@ -516,6 +570,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfNullProperty(converter);
         }
+
         [Test]
         public void Create_Int64_ConvertThrowsIfPropertyTypeMismatches()
         {
@@ -524,6 +579,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfPropertyTypeMismatches(converter, "Int64");
         }
+
         [Test]
         public void Create_Int64_ConvertThrowsIfNullValue()
         {
@@ -532,6 +588,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfNullValue(converter, EntityProperty.GeneratePropertyForLong(null));
         }
+
         [Test]
         public void Create_NullableInt64_CanConvert()
         {
@@ -544,6 +601,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             long? actual = converter.Convert(property);
             Assert.AreEqual(expected, actual);
         }
+
         [Test]
         public void Create_NullableInt64_CanConvertNullValue()
         {
@@ -552,6 +610,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertCanConvertNullValue(converter, EntityProperty.GeneratePropertyForLong(null));
         }
+
         [Test]
         public void Create_NullableInt64_ConvertThrowsIfNullProperty()
         {
@@ -560,6 +619,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfNullProperty(converter);
         }
+
         [Test]
         public void Create_NullableInt64_ConvertThrowsIfPropertyTypeMismatches()
         {
@@ -568,6 +628,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfPropertyTypeMismatches(converter, "Int64");
         }
+
         [Test]
         public void Create_Enum_CanConvert()
         {
@@ -580,6 +641,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             AnEnum actual = converter.Convert(property);
             Assert.AreEqual(expected, actual);
         }
+
         [Test]
         public void Create_Enum_ConvertThrowsIfNullProperty()
         {
@@ -588,6 +650,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfNullProperty(converter);
         }
+
         [Test]
         public void Create_Enum_ConvertThrowsIfPropertyTypeMismatches()
         {
@@ -596,6 +659,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfPropertyTypeMismatches(converter, "String");
         }
+
         [Test]
         public void Create_Enum_ConvertThrowsIfNullValue()
         {
@@ -607,6 +671,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             ExceptionAssert.ThrowsInvalidOperation(() => converter.Convert(property),
                 "Enum property value must not be null.");
         }
+
         [Test]
         public void Create_Enum_ConvertThrowsIfNonMemberValue()
         {
@@ -618,6 +683,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             ExceptionAssert.ThrowsArgument(() => converter.Convert(property), null,
                 "Requested value 'D' was not found.");
         }
+
         [Test]
         public void Create_NullableEnum_CanConvert()
         {
@@ -630,6 +696,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             AnEnum? actual = converter.Convert(property);
             Assert.AreEqual(expected, actual);
         }
+
         [Test]
         public void Create_NullableEnum_CanConvertNullValue()
         {
@@ -638,6 +705,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertCanConvertNullValue(converter, EntityProperty.GeneratePropertyForString(null));
         }
+
         [Test]
         public void Create_NullableEnum_ConvertThrowsIfNullProperty()
         {
@@ -646,6 +714,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfNullProperty(converter);
         }
+
         [Test]
         public void Create_NullableEnum_ConvertThrowsIfPropertyTypeMismatches()
         {
@@ -654,6 +723,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfPropertyTypeMismatches(converter, "String");
         }
+
         [Test]
         public void Create_NullableEnum_ConvertThrowsIfNonMemberValue()
         {
@@ -665,6 +735,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             ExceptionAssert.ThrowsArgument(() => converter.Convert(property), null,
                 "Requested value 'D' was not found.");
         }
+
         [Test]
         public void Create_String_CanConvert()
         {
@@ -677,6 +748,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             string actual = converter.Convert(property);
             Assert.AreSame(expected, actual);
         }
+
         [Test]
         public void Create_String_ConvertThrowsIfNullProperty()
         {
@@ -685,6 +757,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfNullProperty(converter);
         }
+
         [Test]
         public void Create_String_ConvertThrowsIfPropertyTypeMismatches()
         {
@@ -693,6 +766,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfPropertyTypeMismatches(converter, "String");
         }
+
         [Test]
         public void Create_OtherType_CanConvert()
         {
@@ -707,6 +781,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(actual);
             Assert.AreEqual(original.Value, actual.Value);
         }
+
         [Test]
         public void Create_OtherType_CanConvertNullValue()
         {
@@ -721,6 +796,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Poco actual = converter.Convert(property);
             Assert.Null(actual);
         }
+
         [Test]
         public void Create_OtherType_ConvertThrowsIfNullProperty()
         {
@@ -729,6 +805,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfNullProperty(converter);
         }
+
         [Test]
         public void Create_OtherType_ConvertThrowsIfPropertyTypeMismatches()
         {
@@ -737,6 +814,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             AssertConvertThrowsIfPropertyTypeMismatches(converter, "String");
         }
+
         [Test]
         public void Create_OtherType_ConvertThrowsIfNullStringValue()
         {
@@ -748,6 +826,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             ExceptionAssert.ThrowsInvalidOperation(() => converter.Convert(property),
                 "The String property must not be null for JSON objects.");
         }
+
         private static void AssertCanConvertNullValue<TValue>(IConverter<EntityProperty, TValue?> converter,
             EntityProperty propertyWithNullValue) where TValue : struct
         {
@@ -759,16 +838,19 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             {
                 throw new ArgumentException("propertyWithNullValue");
             }
+
             Assert.NotNull(converter);
             TValue? actual = converter.Convert(propertyWithNullValue);
             Assert.False(actual.HasValue);
         }
+
         private static void AssertConvertThrowsIfNullProperty<TOutput>(IConverter<EntityProperty, TOutput> converter)
         {
             Assert.NotNull(converter);
             EntityProperty property = null;
             ExceptionAssert.ThrowsArgumentNull(() => converter.Convert(property), "input");
         }
+
         private static void AssertConvertThrowsIfNullValue<TOutput>(IConverter<EntityProperty, TOutput> converter,
             EntityProperty propertyWithNullValue)
         {
@@ -780,11 +862,13 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             {
                 throw new ArgumentException("propertyWithNullValue");
             }
+
             // Assert
             Assert.NotNull(converter);
             ExceptionAssert.ThrowsInvalidOperation(() => converter.Convert(propertyWithNullValue),
                 "Nullable object must have a value.");
         }
+
         private static void AssertConvertThrowsIfPropertyTypeMismatches<TOutput>(
             IConverter<EntityProperty, TOutput> converter, string expectedTypeName)
         {
@@ -792,8 +876,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             {
                 throw new InvalidOperationException("This test helper only works with non-Int32 types.");
             }
+
             AssertConvertThrowsIfPropertyTypeMismatches(converter, expectedTypeName, new EntityProperty(0), "Int32");
         }
+
         private static void AssertConvertThrowsIfPropertyTypeMismatches<TOutput>(
             IConverter<EntityProperty, TOutput> converter,
             string expectedTypeName,
@@ -805,10 +891,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             ExceptionAssert.ThrowsInvalidOperation(() => converter.Convert(property),
                 "Cannot return " + expectedTypeName + " type for a " + actualTypeName + " typed property.");
         }
+
         private class Poco
         {
             public string Value { get; set; }
         }
+
         private enum AnEnum
         {
             A,

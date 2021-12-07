@@ -1,5 +1,6 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -8,6 +9,7 @@ using Microsoft.Azure.WebJobs.Host.Tables;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Azure.Cosmos.Table;
 using NUnit.Framework;
+
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
 {
     public class TableEntityToPocoConverterTests
@@ -20,6 +22,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             Assert.NotNull(converter);
         }
+
         [Test]
         public void Create_IfPartitionKeyIsNonString_Throws()
         {
@@ -28,6 +31,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 () => TableEntityToPocoConverter<PocoWithNonStringPartitionKey>.Create(),
                 "If the PartitionKey property is present, it must be a String.");
         }
+
         [Test]
         public void Create_IfPartitionKeyHasIndexParameters_Throws()
         {
@@ -36,6 +40,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 () => TableEntityToPocoConverter<PocoWithIndexerPartitionKey>.Create(),
                 "If the PartitionKey property is present, it must not be an indexer.");
         }
+
         [Test]
         public void Create_IfRowKeyIsNonString_Throws()
         {
@@ -43,6 +48,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             ExceptionAssert.ThrowsInvalidOperation(() => TableEntityToPocoConverter<PocoWithNonStringRowKey>.Create(),
                 "If the RowKey property is present, it must be a String.");
         }
+
         [Test]
         public void Create_IfRowKeyHasIndexParameters_Throws()
         {
@@ -50,6 +56,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             ExceptionAssert.ThrowsInvalidOperation(() => TableEntityToPocoConverter<PocoWithIndexerRowKey>.Create(),
                 "If the RowKey property is present, it must not be an indexer.");
         }
+
         [Test]
         public void Create_IfTimestampIsNonDateTimeOffset_Throws()
         {
@@ -58,6 +65,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 () => TableEntityToPocoConverter<PocoWithNonDateTimeOffsetTimestamp>.Create(),
                 "If the Timestamp property is present, it must be a DateTimeOffset.");
         }
+
         [Test]
         public void Create_IfTimestampHasIndexParameters_Throws()
         {
@@ -65,6 +73,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             ExceptionAssert.ThrowsInvalidOperation(() => TableEntityToPocoConverter<PocoWithIndexerTimestamp>.Create(),
                 "If the Timestamp property is present, it must not be an indexer.");
         }
+
         [Test]
         public void Create_IfETagIsNonString_Throws()
         {
@@ -72,6 +81,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             ExceptionAssert.ThrowsInvalidOperation(() => TableEntityToPocoConverter<PocoWithNonStringETag>.Create(),
                 "If the ETag property is present, it must be a String.");
         }
+
         [Test]
         public void Create_IfETagHasIndexParameters_Throws()
         {
@@ -79,6 +89,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             ExceptionAssert.ThrowsInvalidOperation(() => TableEntityToPocoConverter<PocoWithIndexerETag>.Create(),
                 "If the ETag property is present, it must not be an indexer.");
         }
+
         [Test]
         public void Convert_IfInputIsNull_ReturnsDefault()
         {
@@ -90,6 +101,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             Assert.Null(actual);
         }
+
         [Test]
         public void Convert_PopulatesPartitionKey()
         {
@@ -106,6 +118,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(actual);
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
+
         [Test]
         public void Convert_IfPartitionKeyIsWriteOnly_PopulatesPartitionKey()
         {
@@ -123,6 +136,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(actual);
             Assert.AreSame(expectedPartitionKey, actual.ReadPartitionKey);
         }
+
         [Test]
         public void Convert_IfDictionaryContainsPartitionKey_PopulatesFromOfficialPartitionKey()
         {
@@ -143,6 +157,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(actual);
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
+
         [Test]
         public void Convert_IfPartitionKeyIsPrivate_Ignores()
         {
@@ -162,6 +177,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.Null(actual.PartitionKeyPublic);
             Assert.AreSame(expectedRowKey, actual.RowKey);
         }
+
         [Test]
         public void Convert_IfPartitionKeySetterIsPrivate_Ignores()
         {
@@ -181,6 +197,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.Null(actual.PartitionKey);
             Assert.AreSame(expectedRowKey, actual.RowKey);
         }
+
         [Test]
         public void Convert_IfPartitionKeyIsStatic_Ignores()
         {
@@ -200,6 +217,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.Null(PocoWithStaticPartitionKey.PartitionKey);
             Assert.AreSame(expectedRowKey, actual.RowKey);
         }
+
         [Test]
         public void Convert_IfPartitionKeyIsReadOnly_Ignores()
         {
@@ -217,6 +235,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(actual);
             Assert.AreSame(expectedRowKey, actual.RowKey);
         }
+
         [Test]
         public void Convert_PopulatesRowKey()
         {
@@ -233,6 +252,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(actual);
             Assert.AreSame(expectedRowKey, actual.RowKey);
         }
+
         [Test]
         public void Convert_IfRowKeyIsWriteOnly_PopulatesRowKey()
         {
@@ -250,6 +270,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(actual);
             Assert.AreSame(expectedRowKey, actual.ReadRowKey);
         }
+
         [Test]
         public void Convert_IfDictionaryContainsRowKey_PopulatesFromOfficialRowKey()
         {
@@ -270,6 +291,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(actual);
             Assert.AreSame(expectedRowKey, actual.RowKey);
         }
+
         [Test]
         public void Convert_IfRowKeyIsPrivate_Ignores()
         {
@@ -288,6 +310,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.Null(actual.RowKeyPublic);
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
+
         [Test]
         public void Convert_IfRowKeySetterIsPrivate_Ignores()
         {
@@ -307,6 +330,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.Null(actual.RowKey);
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
+
         [Test]
         public void Convert_IfRowKeyIsStatic_Ignores()
         {
@@ -325,6 +349,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.Null(PocoWithStaticRowKey.RowKey);
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
+
         [Test]
         public void Convert_IfRowKeyIsReadOnly_Ignores()
         {
@@ -341,6 +366,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(actual);
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
+
         [Test]
         public void Convert_PopulatesTimestamp()
         {
@@ -358,6 +384,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.AreEqual(expectedTimestamp, actual.Timestamp);
             Assert.AreEqual(expectedTimestamp.Offset, actual.Timestamp.Offset);
         }
+
         [Test]
         public void Convert_IfTimestampIsWriteOnly_PopulatesTimestamp()
         {
@@ -376,6 +403,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.AreEqual(expectedTimestamp, actual.ReadTimestamp);
             Assert.AreEqual(expectedTimestamp.Offset, actual.ReadTimestamp.Offset);
         }
+
         [Test]
         public void Convert_IfDictionaryContainsTimestamp_PopulatesFromOfficialTimestamp()
         {
@@ -397,6 +425,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.AreEqual(expectedTimestamp, actual.Timestamp);
             Assert.AreEqual(expectedTimestamp.Offset, actual.Timestamp.Offset);
         }
+
         [Test]
         public void Convert_IfTimestampIsPrivate_Ignores()
         {
@@ -416,6 +445,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.AreEqual(default(DateTimeOffset), actual.TimestampPublic);
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
+
         [Test]
         public void Convert_IfTimestampSetterIsPrivate_Ignores()
         {
@@ -435,6 +465,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.AreEqual(default(DateTimeOffset), actual.Timestamp);
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
+
         [Test]
         public void Convert_IfTimestampIsStatic_Ignores()
         {
@@ -454,6 +485,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.AreEqual(default(DateTimeOffset), PocoWithStaticTimestamp.Timestamp);
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
+
         [Test]
         public void Convert_IfTimestampIsReadOnly_Ignores()
         {
@@ -471,6 +503,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(actual);
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
+
         [Test]
         public void Convert_PopulatesETag()
         {
@@ -487,6 +520,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(actual);
             Assert.AreSame(expectedETag, actual.ETag);
         }
+
         [Test]
         public void Convert_IfETagIsWriteOnly_PopulatesETag()
         {
@@ -503,6 +537,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(actual);
             Assert.AreSame(expectedETag, actual.ReadETag);
         }
+
         [Test]
         public void Convert_IfDictionaryContainsETag_PopulatesFromOfficialETag()
         {
@@ -523,6 +558,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(actual);
             Assert.AreSame(expectedETag, actual.ETag);
         }
+
         [Test]
         public void Convert_IfETagIsPrivate_Ignores()
         {
@@ -541,6 +577,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.Null(actual.ETagPublic);
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
+
         [Test]
         public void Convert_IfETagSetterIsPrivate_Ignores()
         {
@@ -560,6 +597,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.Null(actual.ETag);
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
+
         [Test]
         public void Convert_IfETagIsStatic_Ignores()
         {
@@ -578,6 +616,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.Null(PocoWithStaticETag.ETag);
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
+
         [Test]
         public void Convert_IfETagIsReadOnly_Ignores()
         {
@@ -594,6 +633,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(actual);
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
+
         [Test]
         public void Convert_PopulatesOtherProperty()
         {
@@ -613,6 +653,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(actual);
             Assert.AreEqual(expectedOtherProperty, actual.OtherProperty);
         }
+
         [Test]
         public void Convert_IfOtherPropertyIsWriteOnly_PopulatesOtherProperty()
         {
@@ -633,6 +674,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(actual);
             Assert.AreEqual(expectedOtherProperty, actual.ReadOtherProperty);
         }
+
         [Test]
         public void Convert_IfOtherPropertyIsPrivate_Ignores()
         {
@@ -655,6 +697,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.Null(actual.OtherPropertyPublic);
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
+
         [Test]
         public void Convert_IfOtherPropertySetterIsPrivate_Ignores()
         {
@@ -677,6 +720,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.Null(actual.OtherProperty);
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
+
         [Test]
         public void Convert_IfOtherPropertyIsStatic_Ignores()
         {
@@ -699,6 +743,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.Null(PocoWithStaticOtherProperty.OtherProperty);
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
+
         [Test]
         public void Convert_IfOtherPropertyIsReadOnly_Ignores()
         {
@@ -720,6 +765,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(actual);
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
+
         [Test]
         public void Convert_IfOtherPropertyIsIndexer_Ignores()
         {
@@ -741,6 +787,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(actual);
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
+
         [Test]
         public void Convert_IfWriteEntityReturnsNull_DoesNotPopulateOtherProperties()
         {
@@ -761,6 +808,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.Null(actual.OtherProperty);
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
+
         [Test]
         public void Convert_IfOtherPropertyIsNotPresentInDictionary_DoesNotPopulateOtherProperty()
         {
@@ -779,6 +827,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.Null(actual.OtherProperty);
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
+
         [Test]
         public void Convert_IfExtraPropertyIsPresentInDictionary_Ignores()
         {
@@ -799,6 +848,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(actual);
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
+
         private static TableEntityToPocoConverter<TOutput> CreateProductUnderTest<TOutput>()
             where TOutput : new()
         {
@@ -806,13 +856,16 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(product); // Guard
             return product;
         }
+
         private class Poco
         {
         }
+
         private class PocoWithNonStringPartitionKey
         {
             public int PartitionKey { get; set; }
         }
+
         private class PocoWithIndexerPartitionKey
         {
             [IndexerName("PartitionKey")]
@@ -822,10 +875,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 set { }
             }
         }
+
         private class PocoWithNonStringRowKey
         {
             public int RowKey { get; set; }
         }
+
         private class PocoWithIndexerRowKey
         {
             [IndexerName("RowKey")]
@@ -835,10 +890,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 set { }
             }
         }
+
         private class PocoWithNonDateTimeOffsetTimestamp
         {
             public string Timestamp { get; set; }
         }
+
         private class PocoWithIndexerTimestamp
         {
             [IndexerName("Timestamp")]
@@ -848,10 +905,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 set { }
             }
         }
+
         private class PocoWithNonStringETag
         {
             public int ETag { get; set; }
         }
+
         private class PocoWithIndexerETag
         {
             [IndexerName("ETag")]
@@ -861,229 +920,282 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 set { }
             }
         }
+
         private class PocoWithPartitionKey
         {
             public string PartitionKey { get; set; }
         }
+
         private class PocoWithWriteOnlyPartitionKey
         {
             private string _partitionKey;
+
             public string PartitionKey
             {
                 set { _partitionKey = value; }
             }
+
             public string ReadPartitionKey
             {
                 get { return _partitionKey; }
             }
         }
+
         private class PocoWithPrivatePartitionKey
         {
             private string PartitionKey { get; set; }
+
             public string PartitionKeyPublic
             {
                 get { return PartitionKey; }
                 set { PartitionKey = value; }
             }
+
             public string RowKey { get; set; }
         }
+
         private class PocoWithPrivatePartitionKeySetter
         {
             public string PartitionKey { get; private set; }
             public string RowKey { get; set; }
         }
+
         private class PocoWithStaticPartitionKey
         {
             public static string PartitionKey { get; set; }
             public string RowKey { get; set; }
         }
+
         private class PocoWithReadOnlyPartitionKey
         {
             public string PartitionKey
             {
                 get { return null; }
             }
+
             public string RowKey { get; set; }
         }
+
         private class PocoWithRowKey
         {
             public string RowKey { get; set; }
         }
+
         private class PocoWithWriteOnlyRowKey
         {
             private string _rowKey;
+
             public string RowKey
             {
                 set { _rowKey = value; }
             }
+
             public string ReadRowKey
             {
                 get { return _rowKey; }
             }
         }
+
         private class PocoWithPrivateRowKey
         {
             public string PartitionKey { get; set; }
             private string RowKey { get; set; }
+
             public string RowKeyPublic
             {
                 get { return RowKey; }
                 set { RowKey = value; }
             }
         }
+
         private class PocoWithPrivateRowKeySetter
         {
             public string PartitionKey { get; set; }
             public string RowKey { get; private set; }
         }
+
         private class PocoWithStaticRowKey
         {
             public string PartitionKey { get; set; }
             public static string RowKey { get; set; }
         }
+
         private class PocoWithReadOnlyRowKey
         {
             public string PartitionKey { get; set; }
+
             public string RowKey
             {
                 get { return null; }
             }
         }
+
         private class PocoWithTimestamp
         {
             public DateTimeOffset Timestamp { get; set; }
         }
+
         private class PocoWithWriteOnlyTimestamp
         {
             private DateTimeOffset _timestamp;
+
             public DateTimeOffset Timestamp
             {
                 set { _timestamp = value; }
             }
+
             public DateTimeOffset ReadTimestamp
             {
                 get { return _timestamp; }
             }
         }
+
         private class PocoWithPrivateTimestamp
         {
             public string PartitionKey { get; set; }
             private DateTimeOffset Timestamp { get; set; }
+
             public DateTimeOffset TimestampPublic
             {
                 get { return Timestamp; }
                 set { Timestamp = value; }
             }
         }
+
         private class PocoWithPrivateTimestampSetter
         {
             public string PartitionKey { get; set; }
             public DateTimeOffset Timestamp { get; private set; }
         }
+
         private class PocoWithStaticTimestamp
         {
             public string PartitionKey { get; set; }
             public static DateTimeOffset Timestamp { get; set; }
         }
+
         private class PocoWithReadOnlyTimestamp
         {
             public string PartitionKey { get; set; }
+
             public DateTimeOffset Timestamp
             {
                 get { return default(DateTimeOffset); }
             }
         }
+
         private class PocoWithETag
         {
             public string ETag { get; set; }
         }
+
         private class PocoWithWriteOnlyETag
         {
             private string _eTag;
+
             public string ETag
             {
                 set { _eTag = value; }
             }
+
             public string ReadETag
             {
                 get { return _eTag; }
             }
         }
+
         private class PocoWithPrivateETag
         {
             public string PartitionKey { get; set; }
             private string ETag { get; set; }
+
             public string ETagPublic
             {
                 get { return ETag; }
                 set { ETag = value; }
             }
         }
+
         private class PocoWithPrivateETagSetter
         {
             public string PartitionKey { get; set; }
             public string ETag { get; private set; }
         }
+
         private class PocoWithStaticETag
         {
             public string PartitionKey { get; set; }
             public static string ETag { get; set; }
         }
+
         private class PocoWithReadOnlyETag
         {
             public string PartitionKey { get; set; }
+
             public string ETag
             {
                 get { return default(string); }
             }
         }
+
         private class PocoWithOtherProperty
         {
             public int? OtherProperty { get; set; }
         }
+
         private class PocoWithWriteOnlyOtherProperty
         {
             private int? _otherProperty;
+
             public int? OtherProperty
             {
                 set { _otherProperty = value; }
             }
+
             public int? ReadOtherProperty
             {
                 get { return _otherProperty; }
             }
         }
+
         private class PocoWithPrivateOtherProperty
         {
             public string PartitionKey { get; set; }
             private int? OtherProperty { get; set; }
+
             public int? OtherPropertyPublic
             {
                 get { return OtherProperty; }
                 set { OtherProperty = value; }
             }
         }
+
         private class PocoWithPrivateOtherPropertySetter
         {
             public string PartitionKey { get; set; }
             public int? OtherProperty { get; private set; }
         }
+
         private class PocoWithStaticOtherProperty
         {
             public string PartitionKey { get; set; }
             public static int? OtherProperty { get; set; }
         }
+
         private class PocoWithReadOnlyOtherProperty
         {
             public string PartitionKey { get; set; }
+
             public int? OtherProperty
             {
                 get { return null; }
             }
         }
+
         private class PocoWithIndexerOtherProperty
         {
             public string PartitionKey { get; set; }
+
             [IndexerName("OtherProperty")]
             public int? this[object index]
             {
@@ -1091,6 +1203,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 set { }
             }
         }
+
         private class PocoWithPartitionKeyAndOtherProperty
         {
             public string PartitionKey { get; set; }

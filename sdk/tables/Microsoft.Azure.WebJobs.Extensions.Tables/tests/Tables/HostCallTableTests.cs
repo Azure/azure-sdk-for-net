@@ -1,5 +1,6 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -23,6 +24,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
         private const string RowKey = "RK";
         private const int TestValue = Int32.MinValue;
         private const string TestQueueMessage = "ignore";
+
         [Ignore("TODO")]
         [TestCase("FuncWithITableEntity")]
         [TestCase("FuncWithPocoObjectEntity")]
@@ -39,6 +41,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             Assert.False(await table.ExistsAsync().ConfigureAwait(false));
         }
+
         [Test]
         [Ignore("TODO")]
         public async Task Table_IfBoundToCloudTableAndTableIsMissing_Creates()
@@ -53,20 +56,24 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             var table = account.CreateCloudTableClient().GetTableReference(TableName);
             Assert.True(await table.ExistsAsync().ConfigureAwait(false));
         }
+
         private class BindToCloudTableProgram
         {
             public static TaskCompletionSource<CloudTable> TaskSource { get; set; }
+
             public static void BindToCloudTable([Table(TableName)] CloudTable queue)
             {
                 TaskSource.TrySetResult(queue);
             }
         }
+
         [Test]
         [Ignore("TODO")]
         public async Task Table_IfBoundToICollectorITableEntity_CanCall()
         {
             await TestTableBoundToCollectorCanCallAsync(typeof(BindTableToICollectorITableEntity)).ConfigureAwait(false);
         }
+
         private class BindTableToICollectorITableEntity
         {
             public static void Call([Table(TableName)] ICollector<ITableEntity> table)
@@ -74,12 +81,14 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 table.Add(new DynamicTableEntity(PartitionKey, RowKey));
             }
         }
+
         [Test]
         [Ignore("TODO")]
         public async Task Table_IfBoundToICollectorDynamicTableEntity_CanCall()
         {
             await TestTableBoundToCollectorCanCallAsync(typeof(BindTableToICollectorDynamicTableEntity)).ConfigureAwait(false);
         }
+
         private class BindTableToICollectorDynamicTableEntity
         {
             public static void Call([Table(TableName)] ICollector<DynamicTableEntity> table)
@@ -87,12 +96,14 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 table.Add(new DynamicTableEntity(PartitionKey, RowKey));
             }
         }
+
         [Test]
         [Ignore("TODO")]
         public async Task Table_IfBoundToICollectorSdkTableEntity_CanCall()
         {
             await TestTableBoundToCollectorCanCallAsync(typeof(BindTableToICollectorSdkTableEntity)).ConfigureAwait(false);
         }
+
         private class BindTableToICollectorSdkTableEntity
         {
             public static void Call([Table(TableName)] ICollector<SdkTableEntity> table)
@@ -100,12 +111,14 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 table.Add(new SdkTableEntity { PartitionKey = PartitionKey, RowKey = RowKey });
             }
         }
+
         [Test]
         [Ignore("TODO")]
         public async Task Table_IfBoundToIAsyncCollectorITableEntity_CanCall()
         {
             await TestTableBoundToCollectorCanCallAsync(typeof(BindTableToIAsyncCollectorITableEntity)).ConfigureAwait(false);
         }
+
         private class BindTableToIAsyncCollectorITableEntity
         {
             public static Task Call([Table(TableName)] IAsyncCollector<ITableEntity> table)
@@ -113,12 +126,14 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 return table.AddAsync(new DynamicTableEntity(PartitionKey, RowKey));
             }
         }
+
         [Test]
         [Ignore("TODO")]
         public async Task Table_IfBoundToIAsyncCollectorDynamicTableEntity_CanCall()
         {
             await TestTableBoundToCollectorCanCallAsync(typeof(BindTableToIAsyncCollectorDynamicTableEntity)).ConfigureAwait(false);
         }
+
         private class BindTableToIAsyncCollectorDynamicTableEntity
         {
             public static Task Call([Table(TableName)] IAsyncCollector<DynamicTableEntity> table)
@@ -126,12 +141,14 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 return table.AddAsync(new DynamicTableEntity(PartitionKey, RowKey));
             }
         }
+
         [Test]
         [Ignore("TODO")]
         public async Task Table_IfBoundToIAsyncCollectorSdkTableEntity_CanCall()
         {
             await TestTableBoundToCollectorCanCallAsync(typeof(BindTableToIAsyncCollectorSdkTableEntity)).ConfigureAwait(false);
         }
+
         private class BindTableToIAsyncCollectorSdkTableEntity
         {
             public static Task Call([Table(TableName)] IAsyncCollector<SdkTableEntity> table)
@@ -139,6 +156,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 return table.AddAsync(new SdkTableEntity { PartitionKey = PartitionKey, RowKey = RowKey });
             }
         }
+
         private static async Task TestTableBoundToCollectorCanCallAsync(Type programType)
         {
             // Arrange
@@ -151,12 +169,14 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             DynamicTableEntity entity = table.Retrieve<DynamicTableEntity>(PartitionKey, RowKey);
             Assert.NotNull(entity);
         }
+
         [Test]
         [Ignore("TODO")]
         public async Task Table_IfBoundToCollectorAndETagDoesNotMatch_Throws()
         {
             await TestBindToConcurrentlyUpdatedTableEntity(typeof(BindTableToCollectorFoo), "collector").ConfigureAwait(false);
         }
+
         private class BindTableToCollectorFoo
         {
             public static void Call([Table(TableName)] ICollector<ITableEntity> collector,
@@ -178,6 +198,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                     new Dictionary<string, EntityProperty> { { "Value", new EntityProperty("Bar") } }));
             }
         }
+
         [Test]
         [Ignore("TODO")]
         public async Task TableEntity_IfBoundToJArray_CanCall()
@@ -194,10 +215,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             var jobActivator = new FakeActivator();
             jobActivator.Add(instance);
             IHost host = new HostBuilder()
-                .ConfigureDefaultTestHost<BindTableEntityToJArrayProgram>(b =>
-                {
-                    b.AddAzureStorage();
-                })
+                .ConfigureDefaultTestHost<BindTableEntityToJArrayProgram>(b => { b.AddAzureStorage(); })
                 .ConfigureServices(services =>
                 {
                     services.AddSingleton<IJobActivator>(jobActivator);
@@ -215,9 +233,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             await host.GetJobHost().CallAsync(type.GetMethod(nameof(BindTableEntityToJArrayProgram.Call)));
             Assert.AreEqual("x1;x2;x3;x4;", instance._result);
         }
+
         private class BindTableEntityToJArrayProgram
         {
             public string _result;
+
             // Helper to flatten a Jarray for quick testing.
             private static string Flatten(JArray array)
             {
@@ -227,26 +247,32 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                     sb.Append(array[i]["Value"]);
                     sb.Append(';');
                 }
+
                 return sb.ToString();
             }
+
             public void CallTakeFilter([Table(TableName, PartitionKey, Take = 2, Filter = "Value ne 'x2'")] JArray array)
             {
                 this._result = Flatten(array);
             }
+
             public void CallFilter([Table(TableName, PartitionKey, Filter = "Value ne 'x2'")] JArray array)
             {
                 this._result = Flatten(array);
             }
+
             public void CallTake([Table(TableName, PartitionKey, Take = 3)] JArray array)
             {
                 this._result = Flatten(array);
             }
+
             // No take or filters
             public void Call([Table(TableName, PartitionKey)] JArray array)
             {
                 this._result = Flatten(array);
             }
         }
+
         [Test]
         [Ignore("TODO")]
         public async Task TableEntity_IfBoundToJObject_CanCall()
@@ -259,14 +285,8 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             table.Insert(CreateTableEntity(PartitionKey, RowKey, "Value", "Foo"));
             // Act
             IHost host = new HostBuilder()
-                .ConfigureDefaultTestHost<BindTableEntityToJObjectProgram>(b =>
-                {
-                    b.AddAzureStorage();
-                })
-                .ConfigureServices(services =>
-                {
-                    services.AddSingleton<StorageAccountProvider>(new FakeStorageAccountProvider(account));
-                })
+                .ConfigureDefaultTestHost<BindTableEntityToJObjectProgram>(b => { b.AddAzureStorage(); })
+                .ConfigureServices(services => { services.AddSingleton<StorageAccountProvider>(new FakeStorageAccountProvider(account)); })
                 .Build();
             var prog = host.GetJobHost<BindTableEntityToJObjectProgram>();
             await prog.CallAsync("Call", new
@@ -279,6 +299,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             SdkTableEntity entity = table.Retrieve<SdkTableEntity>(PartitionKey, RowKey);
             Assert.NotNull(entity);
         }
+
         private class BindTableEntityToJObjectProgram
         {
             public static void Call([Table("{table}", "{pk1}", "{rk1}")] JObject entity)
@@ -287,6 +308,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 Assert.AreEqual("Foo", entity["Value"].ToString());
             }
         }
+
         [Test]
         [Ignore("TODO")]
         public async Task TableEntity_IfBoundToSdkTableEntity_CanCall()
@@ -304,6 +326,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(entity);
             Assert.AreEqual("Bar", entity.Value);
         }
+
         private class BindTableEntityToSdkTableEntityProgram
         {
             public static void Call([Table(TableName, PartitionKey, RowKey)] SdkTableEntity entity)
@@ -313,6 +336,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 entity.Value = "Bar";
             }
         }
+
         [Test]
         [Ignore("TODO")]
         public async Task TableEntity_IfBoundToPocoTableEntity_CanCall()
@@ -348,6 +372,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.AreEqual(EdmType.String, valueProperty.PropertyType);
             Assert.AreEqual("Bar", valueProperty.StringValue);
         }
+
         private class BindTableEntityToPocoTableEntityProgram
         {
             public static void Call([Table(TableName, PartitionKey, RowKey)] PocoTableEntityWithEnum entity)
@@ -361,24 +386,28 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 entity.Value = "Bar";
             }
         }
+
         private class PocoTableEntityWithEnum
         {
             public Fruit Fruit { get; set; }
             public TimeSpan Duration { get; set; }
             public string Value { get; set; }
         }
+
         private enum Fruit
         {
             Apple,
             Banana,
             Pear
         }
+
         [Test]
         [Ignore("TODO")]
         public async Task TableEntity_IfBoundToSdkTableEntityAndUpdatedConcurrently_Throws()
         {
             await TestBindTableEntityToConcurrentlyUpdatedValue(typeof(BindTableEntityToConcurrentlyUpdatedSdkTableEntity)).ConfigureAwait(false);
         }
+
         private class BindTableEntityToConcurrentlyUpdatedSdkTableEntity
         {
             public static void Call([Table(TableName, PartitionKey, RowKey)] SdkTableEntity entity,
@@ -398,12 +427,14 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 entity.Value = "Bar";
             }
         }
+
         [Test]
         [Ignore("TODO")]
         public async Task TableEntity_IfBoundToPocoTableEntityAndUpdatedConcurrently_Throws()
         {
             await TestBindTableEntityToConcurrentlyUpdatedValue(typeof(BindTableEntityToConcurrentlyUpdatedPocoTableEntity)).ConfigureAwait(false);
         }
+
         private class BindTableEntityToConcurrentlyUpdatedPocoTableEntity
         {
             public static void Call([Table(TableName, PartitionKey, RowKey)] PocoTableEntity entity,
@@ -423,10 +454,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 entity.Value = "Bar";
             }
         }
+
         private static async Task TestBindTableEntityToConcurrentlyUpdatedValue(Type programType)
         {
             await TestBindToConcurrentlyUpdatedTableEntity(programType, "entity").ConfigureAwait(false);
         }
+
         private static async Task TestBindToConcurrentlyUpdatedTableEntity(Type programType, string parameterName)
         {
             // Arrange
@@ -442,30 +475,36 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(entity);
             Assert.AreEqual("FooBackground", entity.Value);
         }
+
         private static async Task CallAsync(StorageAccount account, Type programType, string methodName, params Type[] customExtensions)
         {
             await FunctionalTest.CallAsync(account, programType, programType.GetMethod(methodName), null, customExtensions);
         }
+
         private static async Task CallAsync(StorageAccount account, Type programType, string methodName,
             IDictionary<string, object> arguments, params Type[] customExtensions)
         {
             await FunctionalTest.CallAsync(account, programType, programType.GetMethod(methodName), arguments, customExtensions);
         }
+
         private static async Task<TResult> CallAsync<TResult>(StorageAccount account, Type programType, string methodName,
             Action<TaskCompletionSource<TResult>> setTaskSource)
         {
             IDictionary<string, object> arguments = null;
             return await FunctionalTest.CallAsync<TResult>(account, programType, programType.GetMethod(methodName), arguments, setTaskSource);
         }
+
         private static async Task<TResult> CallAsync<TResult>(StorageAccount account, Type programType, string methodName,
             IDictionary<string, object> arguments, Action<TaskCompletionSource<TResult>> setTaskSource)
         {
             return await FunctionalTest.CallAsync<TResult>(account, programType, programType.GetMethod(methodName), arguments, setTaskSource);
         }
+
         private static async Task<Exception> CallFailureAsync(StorageAccount account, Type programType, string methodName)
         {
             return await FunctionalTest.CallFailureAsync(account, programType, programType.GetMethod(methodName), null);
         }
+
         private static StorageAccount GetRealStorage()
         {
             // Arrange
@@ -473,18 +512,21 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             var account = StorageAccount.NewFromConnectionString(acs);
             return account;
         }
+
         private static StorageAccount CreateFakeStorageAccount()
         {
             return new FakeStorageAccount();
         }
+
         private static ITableEntity CreateTableEntity(string partitionKey, string rowKey, string propertyName,
-    string propertyValue, string eTag = null)
+            string propertyValue, string eTag = null)
         {
             return new DynamicTableEntity(partitionKey, rowKey, eTag, new Dictionary<string, EntityProperty>
             {
                 { propertyName, new EntityProperty(propertyValue) }
             });
         }
+
         private static void AssertInvocationETagFailure(string expectedParameterName, Exception exception)
         {
             Assert.IsInstanceOf<FunctionInvocationException>(exception);
@@ -500,33 +542,40 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(invalidOperationException.Message);
             StringAssert.StartsWith("Entity PK='PK',RK='RK' does not match eTag", invalidOperationException.Message);
         }
+
         private class MissingTableProgram
         {
             public static void FuncWithICollector([Table(TableName)] ICollector<SdkTableEntity> entities)
             {
                 Assert.NotNull(entities);
             }
+
             public static void FuncWithITableEntity([Table(TableName, "PK", "RK")] SdkTableEntity entity)
             {
                 Assert.Null(entity);
             }
+
             public static void FuncWithPocoObjectEntity([Table(TableName, "PK", "RK")] PocoTableEntity entity)
             {
                 Assert.Null(entity);
             }
+
             public static void FuncWithPocoValueEntity([Table(TableName, "PK", "RK")] StructTableEntity entity)
             {
                 Assert.Null(entity.Value);
             }
         }
+
         private class SdkTableEntity : TableEntity
         {
             public string Value { get; set; }
         }
+
         private class PocoTableEntity
         {
             public string Value { get; set; }
         }
+
         private struct StructTableEntity
         {
             public string Value { get; set; }

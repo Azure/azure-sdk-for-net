@@ -1,5 +1,6 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,6 +10,7 @@ using Microsoft.Azure.Storage.Queue;
 using Microsoft.Azure.Cosmos.Table;
 using Newtonsoft.Json;
 using NUnit.Framework;
+
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
     public class TableEntityTests
@@ -17,6 +19,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         private const string TableName = "Table";
         private const string PartitionKey = "PK";
         private const string RowKey = "RK";
+
         [Test]
         [Ignore("TODO")]
         public async Task TableEntity_IfBoundToExistingDynamicTableEntity_Binds()
@@ -47,6 +50,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.AreEqual(EdmType.Int32, property.PropertyType);
             Assert.AreEqual(expectedValue, property.Int32Value);
         }
+
         [Test]
         [Ignore("TODO")]
         public async Task TableEntity_IfBoundToExistingPoco_Binds()
@@ -69,6 +73,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.NotNull(result);
             Assert.AreEqual(expectedValue, result.Value);
         }
+
         [Test]
         [Ignore("TODO")]
         public async Task TableEntity_IfUpdatesPoco_Persists()
@@ -98,6 +103,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.AreEqual(EdmType.String, property.PropertyType);
             Assert.AreEqual(expectedValue, property.StringValue);
         }
+
         [Test]
         [Ignore("TODO")]
         public async Task TableEntity_IfBoundToExistingPoco_BindsUsingNativeTableTypes()
@@ -120,6 +126,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.NotNull(result);
             Assert.AreEqual(expectedValue, result.Value);
         }
+
         [Test]
         [Ignore("TODO")]
         public async Task TableEntity_IfUpdatesPoco_PersistsUsingNativeTableTypes()
@@ -149,6 +156,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.AreEqual(EdmType.Binary, property.PropertyType);
             Assert.AreEqual(expectedValue, property.BinaryValue);
         }
+
         [Test]
         [Ignore("TODO")]
         public async Task TableEntity_IfUpdatesPartitionKey_Throws()
@@ -171,6 +179,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.AreEqual("When binding to a table entity, the partition key must not be changed.",
                 innerException.Message);
         }
+
         [Test]
         [Ignore("TODO")]
         public async Task TableEntity_IfUpdatesRowKey_Throws()
@@ -192,6 +201,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.IsInstanceOf<InvalidOperationException>(innerException);
             Assert.AreEqual("When binding to a table entity, the row key must not be changed.", innerException.Message);
         }
+
         [Test]
         [Ignore("TODO")]
         public async Task TableEntity_IfBoundUsingRouteParameters_Binds()
@@ -229,39 +239,51 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.True(property.Int32Value.HasValue);
             Assert.AreEqual(456, property.Int32Value.Value);
         }
+
         private static StorageAccount CreateFakeStorageAccount()
         {
             return new FakeStorageAccount();
         }
+
         private static async Task RunTriggerAsync(StorageAccount account, Type programType)
         {
             await FunctionalTest.RunTriggerAsync(account, programType);
         }
+
         private static async Task<TResult> RunTriggerAsync<TResult>(StorageAccount account, Type programType,
             Action<TaskCompletionSource<TResult>> setTaskSource)
         {
             return await FunctionalTest.RunTriggerAsync<TResult>(account, programType, setTaskSource);
         }
+
         private static async Task<Exception> RunTriggerFailureAsync(StorageAccount account, Type programType)
         {
-            return await FunctionalTest.RunTriggerFailureAsync<bool>(account, programType, (tcs) => {/* do nothing */});
+            return await FunctionalTest.RunTriggerFailureAsync<bool>(account, programType, (tcs) =>
+            {
+                /* do nothing */
+            });
         }
+
         private class BindToDynamicTableEntityProgram
         {
             public static TaskCompletionSource<DynamicTableEntity> TaskSource { get; set; }
+
             public static void Run([Table(TableName, PartitionKey, RowKey)] DynamicTableEntity entity)
             {
                 TaskSource.TrySetResult(entity);
             }
         }
+
         private class BindToPocoProgram
         {
             public static TaskCompletionSource<Poco> TaskSource { get; set; }
+
             public static void Run([Table(TableName, PartitionKey, RowKey)] Poco entity)
             {
                 TaskSource.TrySetResult(entity);
             }
         }
+
         private class UpdatePocoProgram
         {
             public static void Run([Table(TableName, PartitionKey, RowKey)] Poco entity)
@@ -270,14 +292,17 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 entity.Value = messageAsString;
             }
         }
+
         private class BindToPocoWithByteArrayValueProgram
         {
             public static TaskCompletionSource<PocoWithByteArrayValue> TaskSource { get; set; }
+
             public static void Run([Table(TableName, PartitionKey, RowKey)] PocoWithByteArrayValue entity)
             {
                 TaskSource.TrySetResult(entity);
             }
         }
+
         private class UpdatePocoWithByteArrayValueProgram
         {
             public static void Run([Table(TableName, PartitionKey, RowKey)] PocoWithByteArrayValue entity)
@@ -286,6 +311,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 entity.Value = messageAsBytes;
             }
         }
+
         private class UpdatePocoPartitionKeyProgram
         {
             public static void Run([Table(TableName, PartitionKey, RowKey)] PocoWithKeys entity)
@@ -293,6 +319,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 entity.PartitionKey = Guid.NewGuid().ToString();
             }
         }
+
         private class UpdatePocoRowKeyProgram
         {
             public static void Run([Table(TableName, PartitionKey, RowKey)] PocoWithKeys entity)
@@ -300,6 +327,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 entity.RowKey = Guid.NewGuid().ToString();
             }
         }
+
         private class BindUsingRouteParametersProgram
         {
             public static void Run([Table("{TableName}", "{PartitionKey}", "{RowKey}")] SdkTableEntity entity)
@@ -307,25 +335,30 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 entity.Value = 456;
             }
         }
+
         private class Poco
         {
             public string Value { get; set; }
         }
+
         private class PocoWithByteArrayValue
         {
             public byte[] Value { get; set; }
         }
+
         private class PocoWithKeys
         {
             public string PartitionKey { get; set; }
             public string RowKey { get; set; }
         }
+
         private class TableEntityMessage
         {
             public string TableName { get; set; }
             public string PartitionKey { get; set; }
             public string RowKey { get; set; }
         }
+
         private class SdkTableEntity : TableEntity
         {
             public int Value { get; set; }
