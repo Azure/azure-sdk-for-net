@@ -50,6 +50,12 @@ steps:
       STORAGE_CONNECTION_STRING: $(storage-connection-string)
     displayName: Run perf tests
 
+  - pwsh: |
+      get-content results.csv
+      get-content results.json
+    workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation/results
+    displayName: Print results
+
   - template: ../../eng/common/TestResources/remove-test-resources.yml
     parameters:
       ServiceDirectory: storage
