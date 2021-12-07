@@ -554,10 +554,10 @@
       "type": "object",
       "description": "Sanitizer for a request body",
       "properties": {
-        "value": {
+        "regex": {
           "type": "string"
         },
-        "regex": {
+        "value": {
           "type": "string"
         },
         "groupForReplace": {
@@ -565,8 +565,8 @@
         }
       },
       "required": [
-        "value",
-        "regex"
+        "regex",
+        "value"
       ]
     },
     "HeaderRegexSanitizer": {

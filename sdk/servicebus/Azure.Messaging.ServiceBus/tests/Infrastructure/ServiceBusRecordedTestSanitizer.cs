@@ -19,16 +19,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Infrastructure
             SanitizedHeaders.Add("ServiceBusSupplementaryAuthorization");
             BodyRegexSanitizers.Add(
                 new BodyRegexSanitizer(
-                    $"\u003CPrimaryKey\u003E{SanitizedKeyValue}\u003C/PrimaryKey\u003E",
-                    "\\u003CPrimaryKey\\u003E.*\\u003C/PrimaryKey\\u003E"));
+                    "\\u003CPrimaryKey\\u003E.*\\u003C/PrimaryKey\\u003E",
+                    $"\u003CPrimaryKey\u003E{SanitizedKeyValue}\u003C/PrimaryKey\u003E"));
             BodyRegexSanitizers.Add(
                 new BodyRegexSanitizer(
-                    $"\u003CSecondaryKey\u003E{SanitizedKeyValue}\u003C/SecondaryKey\u003E",
-                    "\\u003CSecondaryKey\\u003E.*\\u003C/SecondaryKey\\u003E"));
+                    "\\u003CSecondaryKey\\u003E.*\\u003C/SecondaryKey\\u003E",
+                    $"\u003CSecondaryKey\u003E{SanitizedKeyValue}\u003C/SecondaryKey\u003E"));
             BodyRegexSanitizers.Add(
                 new BodyRegexSanitizer(
-                    "\r\n",
-                    "[^\\r](?<break>\\n)")
+                    "[^\\r](?<break>\\n)",
+                                        "\r\n"))
                 {
                     GroupForReplace = "break"
                 });
