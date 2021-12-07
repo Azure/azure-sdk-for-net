@@ -177,7 +177,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             return schema;
         }
 
-        private static DatumReader<object> GetReader(Schema readerSchema, Schema writerSchema, SupportedType supportedType)
+        private static DatumReader<object> GetReader(Schema writerSchema, Schema readerSchema, SupportedType supportedType)
         {
             switch (supportedType)
             {
@@ -338,7 +338,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             if (supportedType == SupportedType.SpecificRecord)
             {
                 object returnInstance = Activator.CreateInstance(returnType);
-                DatumReader<object> reader = GetReader(((ISpecificRecord)returnInstance).Schema, writerSchema, SupportedType.SpecificRecord);
+                DatumReader<object> reader = GetReader(writerSchema, ((ISpecificRecord)returnInstance).Schema, SupportedType.SpecificRecord);
                 return reader.Read(reuse: returnInstance, binaryDecoder);
             }
             else
