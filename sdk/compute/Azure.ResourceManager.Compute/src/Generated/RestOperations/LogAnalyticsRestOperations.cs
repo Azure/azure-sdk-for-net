@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.Compute
 {
     internal partial class LogAnalyticsRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -28,19 +27,16 @@ namespace Azure.ResourceManager.Compute
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public LogAnalyticsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null)
+        public LogAnalyticsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null)
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateExportRequestRateByIntervalRequest(string location, RequestRateByIntervalInput parameters)
+        internal HttpMessage CreateExportRequestRateByIntervalRequest(string subscriptionId, string location, RequestRateByIntervalInput parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -64,12 +60,17 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Export logs that show Api requests made by this subscription in the given time window to show throttling activities. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="parameters"> Parameters supplied to the LogAnalytics getRequestRateByInterval Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> ExportRequestRateByIntervalAsync(string location, RequestRateByIntervalInput parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response> ExportRequestRateByIntervalAsync(string subscriptionId, string location, RequestRateByIntervalInput parameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateExportRequestRateByIntervalRequest(location, parameters);
+            using var message = CreateExportRequestRateByIntervalRequest(subscriptionId, location, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -92,12 +93,17 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Export logs that show Api requests made by this subscription in the given time window to show throttling activities. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="parameters"> Parameters supplied to the LogAnalytics getRequestRateByInterval Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public Response ExportRequestRateByInterval(string location, RequestRateByIntervalInput parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response ExportRequestRateByInterval(string subscriptionId, string location, RequestRateByIntervalInput parameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
@@ -107,7 +113,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateExportRequestRateByIntervalRequest(location, parameters);
+            using var message = CreateExportRequestRateByIntervalRequest(subscriptionId, location, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -119,7 +125,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateExportThrottledRequestsRequest(string location, ThrottledRequestsInput parameters)
+        internal HttpMessage CreateExportThrottledRequestsRequest(string subscriptionId, string location, ThrottledRequestsInput parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -143,12 +149,17 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Export logs that show total throttled Api requests for this subscription in the given time window. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="parameters"> Parameters supplied to the LogAnalytics getThrottledRequests Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> ExportThrottledRequestsAsync(string location, ThrottledRequestsInput parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response> ExportThrottledRequestsAsync(string subscriptionId, string location, ThrottledRequestsInput parameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
@@ -158,7 +169,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateExportThrottledRequestsRequest(location, parameters);
+            using var message = CreateExportThrottledRequestsRequest(subscriptionId, location, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -171,12 +182,17 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Export logs that show total throttled Api requests for this subscription in the given time window. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="parameters"> Parameters supplied to the LogAnalytics getThrottledRequests Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public Response ExportThrottledRequests(string location, ThrottledRequestsInput parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response ExportThrottledRequests(string subscriptionId, string location, ThrottledRequestsInput parameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
@@ -186,7 +202,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateExportThrottledRequestsRequest(location, parameters);
+            using var message = CreateExportThrottledRequestsRequest(subscriptionId, location, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

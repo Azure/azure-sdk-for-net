@@ -40,15 +40,15 @@ namespace Azure.Storage.Blobs.Test
         /// </summary>
         private byte[] EncryptData(byte[] data, byte[] key, byte[] iv)
         {
-            using (var aesProvider = new AesCryptoServiceProvider() { Key = key, IV = iv })
-            using (var encryptor = aesProvider.CreateEncryptor())
-            using (var memStream = new MemoryStream())
-            using (var cryptoStream = new CryptoStream(memStream, encryptor, CryptoStreamMode.Write))
-            {
-                cryptoStream.Write(data, 0, data.Length);
-                cryptoStream.FlushFinalBlock();
-                return memStream.ToArray();
-            }
+            using var aesProvider = Aes.Create();
+            aesProvider.Key = key;
+            aesProvider.IV = iv;
+            using var encryptor = aesProvider.CreateEncryptor();
+            using var memStream = new MemoryStream();
+            using var cryptoStream = new CryptoStream(memStream, encryptor, CryptoStreamMode.Write);
+            cryptoStream.Write(data, 0, data.Length);
+            cryptoStream.FlushFinalBlock();
+            return memStream.ToArray();
         }
 
         private async Task<IKeyEncryptionKey> GetKeyvaultIKeyEncryptionKey()
@@ -192,7 +192,11 @@ namespace Azure.Storage.Blobs.Test
             {
                 const int keySizeBits = 256;
                 var bytes = new byte[keySizeBits >> 3];
+#if NET6_0_OR_GREATER
+                RandomNumberGenerator.Create().GetBytes(bytes);
+#else
                 new RNGCryptoServiceProvider().GetBytes(bytes);
+#endif
                 userKeyBytes = bytes;
             }
             keyId ??= Guid.NewGuid().ToString();
@@ -689,7 +693,11 @@ namespace Azure.Storage.Blobs.Test
 
             const int keySizeBits = 256;
             var keyEncryptionKeyBytes = new byte[keySizeBits >> 3];
-            new RNGCryptoServiceProvider().GetBytes(keyEncryptionKeyBytes);
+#if NET6_0_OR_GREATER
+            RandomNumberGenerator.Create().GetBytes(keyEncryptionKeyBytes);
+#else
+                new RNGCryptoServiceProvider().GetBytes(keyEncryptionKeyBytes);
+#endif
             var keyId = Guid.NewGuid().ToString();
 
             var mockKey = GetTrackOneIKey(keyEncryptionKeyBytes, keyId).Object;
@@ -737,7 +745,11 @@ namespace Azure.Storage.Blobs.Test
 
             const int keySizeBits = 256;
             var keyEncryptionKeyBytes = new byte[keySizeBits >> 3];
-            new RNGCryptoServiceProvider().GetBytes(keyEncryptionKeyBytes);
+#if NET6_0_OR_GREATER
+            RandomNumberGenerator.Create().GetBytes(keyEncryptionKeyBytes);
+#else
+                new RNGCryptoServiceProvider().GetBytes(keyEncryptionKeyBytes);
+#endif
             var keyId = Guid.NewGuid().ToString();
 
             var mockKey = GetIKeyEncryptionKey(keyEncryptionKeyBytes, keyId).Object;
@@ -1055,6 +1067,61 @@ namespace Azure.Storage.Blobs.Test
                 Assert.IsTrue(downloadResult.Value.Details.Metadata.ContainsKey(originalMetadata.Key));
                 Assert.IsTrue(downloadResult.Value.Details.Metadata.ContainsKey(Constants.ClientSideEncryption.EncryptionDataKey));
                 Assert.AreNotEqual(firstDownloadEncryptionData, downloadResult.Value.Details.Metadata[Constants.ClientSideEncryption.EncryptionDataKey]);
+            }
+        }
+
+        [Test]
+        [LiveOnly]
+        /// <summary>
+        /// Crypto transform streams are unseekable and have no <see cref="Stream.Length"/>.
+        /// When length is unknown, <see cref="PartitionedUploader{TServiceSpecificArgs, TCompleteUploadReturn}"/>
+        /// doesn't even attempt a one-shot upload.
+        /// This tests if we correctly inform the uploader of an expected stream length so it
+        /// can respect the given <see cref="StorageTransferOptions"/>.
+        /// </summary>
+        public async Task PutBlobPutBlockSwitch([Values(true, false)] bool oneshot)
+        {
+            const int dataSize = 1 * Constants.KB;
+
+            // Arrange
+            byte[] data = GetRandomBuffer(dataSize);
+            int transferSize = oneshot
+                    ? 2 * dataSize // big enough for put blob even after AES-CBC PKCS7 padding
+                    : dataSize / 2;
+            StorageTransferOptions transferOptions = new StorageTransferOptions
+            {
+                InitialTransferSize = transferSize,
+                MaximumTransferSize = transferSize
+            };
+
+            IKeyEncryptionKey key = GetIKeyEncryptionKey().Object;
+            await using var disposable = await GetTestContainerEncryptionAsync(
+                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                {
+                    KeyEncryptionKey = key,
+                    KeyWrapAlgorithm = s_algorithmName
+                });
+            var blob = disposable.Container.GetBlobClient(GetNewBlobName());
+
+            // Act
+            await blob.UploadAsync(
+                new MemoryStream(data),
+                new BlobUploadOptions { TransferOptions = transferOptions },
+                cancellationToken: s_cancellationToken);
+
+            // Assert
+            Assert.IsTrue(await blob.ExistsAsync());
+            Assert.Greater((await blob.GetPropertiesAsync()).Value.ContentLength, 0);
+            // block list will return empty when putblob was used
+            BlockList blockList = await BlobsClientBuilder.ToBlockBlobClient(blob).GetBlockListAsync();
+            Assert.IsEmpty(blockList.UncommittedBlocks);
+            if (oneshot)
+            {
+                Assert.IsEmpty(blockList.CommittedBlocks);
+            }
+            else
+            {
+                Assert.IsNotEmpty(blockList.CommittedBlocks);
             }
         }
 

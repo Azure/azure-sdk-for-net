@@ -167,7 +167,7 @@ namespace Azure.Core.Tests
                 return Task.CompletedTask;
             }
 
-#if NET5_0
+#if NET5_0_OR_GREATER
             protected override void SerializeToStream(Stream stream, TransportContext context, CancellationToken cancellationToken)
             {
             }

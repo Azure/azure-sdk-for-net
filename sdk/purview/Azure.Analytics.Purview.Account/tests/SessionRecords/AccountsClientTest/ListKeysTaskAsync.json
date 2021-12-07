@@ -39,6 +39,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
+        "Content-Length": "0",
         "traceparent": "00-8875fd2bd09f8e48aa50779edca524fb-4f0807fd79172247-00",
         "User-Agent": [
           "azsdk-net-Analytics.Purview.Account/1.0.0-alpha.20210820.1",

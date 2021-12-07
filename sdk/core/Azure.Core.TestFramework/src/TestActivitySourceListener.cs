@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace Azure.Core.Tests
 {
-#if NET5_0
+#if NET5_0_OR_GREATER
     public class TestActivitySourceListener: IDisposable
     {
         private readonly ActivityListener _listener;

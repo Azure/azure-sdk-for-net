@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of UpsertManagedServerOperationParameters. </summary>
-        /// <param name="family"> . </param>
-        /// <param name="tier"> . </param>
-        /// <param name="vCores"> . </param>
-        /// <param name="storageSizeInGB"> . </param>
+        /// <param name="family"></param>
+        /// <param name="tier"></param>
+        /// <param name="vCores"></param>
+        /// <param name="storageSizeInGB"></param>
         internal UpsertManagedServerOperationParameters(string family, string tier, int? vCores, int? storageSizeInGB)
         {
             Family = family;
@@ -28,9 +28,13 @@ namespace Azure.ResourceManager.Sql.Models
             StorageSizeInGB = storageSizeInGB;
         }
 
+        /// <summary> Gets the family. </summary>
         public string Family { get; }
+        /// <summary> Gets the tier. </summary>
         public string Tier { get; }
+        /// <summary> Gets the v cores. </summary>
         public int? VCores { get; }
+        /// <summary> Gets the storage size in gb. </summary>
         public int? StorageSizeInGB { get; }
     }
 }

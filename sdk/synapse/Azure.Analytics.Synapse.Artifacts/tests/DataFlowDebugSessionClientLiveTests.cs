@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             }
         }
 
-        public DataFlowDebugSessionClientLiveTests(bool isAsync) : base(isAsync)
+        public DataFlowDebugSessionClientLiveTests(bool isAsync) : base(isAsync, useLegacyTransport: true)
         {
         }
 

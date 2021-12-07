@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.Resources.Tests
         protected ArmClient Client { get; private set; }
 
         protected ResourcesTestBase(bool isAsync, RecordedTestMode mode)
-        : base(isAsync, mode)
+        : base(isAsync, mode, useLegacyTransport: true)
         {
         }
 
         protected ResourcesTestBase(bool isAsync)
-            : base(isAsync)
+            : base(isAsync, useLegacyTransport: true)
         {
         }
 

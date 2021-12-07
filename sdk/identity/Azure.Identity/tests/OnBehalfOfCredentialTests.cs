@@ -14,6 +14,10 @@ namespace Azure.Identity.Tests
     {
         public OnBehalfOfCredentialTests(bool isAsync) : base(isAsync) { }
 
+#pragma warning disable SYSLIB0026 // X509Certificate2 is immutable
+        private static readonly X509Certificate2 _mockCertificate = new();
+#pragma warning restore // X509Certificate2 is immutable
+
         [Test]
         public void CtorValidation()
         {
@@ -29,19 +33,19 @@ namespace Azure.Identity.Tests
             // Assert
             Assert.AreEqual(clientSecret, cred._client._clientSecret);
 
-            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(null, ClientId, new X509Certificate2(), userAssertion));
-            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, null, new X509Certificate2(), userAssertion));
+            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(null, ClientId, _mockCertificate, userAssertion));
+            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, null, _mockCertificate, userAssertion));
             Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, ClientId, default(string), userAssertion));
-            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, ClientId, new X509Certificate2(), null));
-            cred = new OnBehalfOfCredential(TenantId, ClientId, new X509Certificate2(), userAssertion);
+            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, ClientId, _mockCertificate, null));
+            cred = new OnBehalfOfCredential(TenantId, ClientId, _mockCertificate, userAssertion);
             // Assert
             Assert.NotNull(cred._client._certificateProvider);
 
-            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(null, ClientId, new X509Certificate2(), userAssertion, new OnBehalfOfCredentialOptions()));
-            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, null, new X509Certificate2(), userAssertion, new OnBehalfOfCredentialOptions()));
+            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(null, ClientId, _mockCertificate, userAssertion, new OnBehalfOfCredentialOptions()));
+            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, null, _mockCertificate, userAssertion, new OnBehalfOfCredentialOptions()));
             Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, ClientId, default(X509Certificate2), userAssertion, new OnBehalfOfCredentialOptions()));
-            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, ClientId, new X509Certificate2(), null, new OnBehalfOfCredentialOptions()));
-            cred = new OnBehalfOfCredential(TenantId, ClientId, new X509Certificate2(), userAssertion, new OnBehalfOfCredentialOptions());
+            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, ClientId, _mockCertificate, null, new OnBehalfOfCredentialOptions()));
+            cred = new OnBehalfOfCredential(TenantId, ClientId, _mockCertificate, userAssertion, new OnBehalfOfCredentialOptions());
             // Assert
             Assert.NotNull(cred._client._certificateProvider);
         }

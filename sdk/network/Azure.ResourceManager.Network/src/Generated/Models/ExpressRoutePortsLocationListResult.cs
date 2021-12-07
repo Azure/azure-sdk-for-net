@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ExpressRoutePortsLocationListResult. </summary>
         internal ExpressRoutePortsLocationListResult()
         {
-            Value = new ChangeTrackingList<ExpressRoutePortsLocation>();
+            Value = new ChangeTrackingList<ExpressRoutePortsLocationData>();
         }
 
         /// <summary> Initializes a new instance of ExpressRoutePortsLocationListResult. </summary>
         /// <param name="value"> The list of all ExpressRoutePort peering locations. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal ExpressRoutePortsLocationListResult(IReadOnlyList<ExpressRoutePortsLocation> value, string nextLink)
+        internal ExpressRoutePortsLocationListResult(IReadOnlyList<ExpressRoutePortsLocationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of all ExpressRoutePort peering locations. </summary>
-        public IReadOnlyList<ExpressRoutePortsLocation> Value { get; }
+        public IReadOnlyList<ExpressRoutePortsLocationData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.KeyVault
     public partial class DeletedVault : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DeletedVaultsRestOperations _restClient;
+        private readonly VaultsRestOperations _vaultsRestClient;
         private readonly DeletedVaultData _data;
 
         /// <summary> Initializes a new instance of the <see cref="DeletedVault"/> class for mocking. </summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.KeyVault
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new DeletedVaultsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _vaultsRestClient = new VaultsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="DeletedVault"/> class. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.KeyVault
         internal DeletedVault(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new DeletedVaultsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _vaultsRestClient = new VaultsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="DeletedVault"/> class. </summary>
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.KeyVault
         internal DeletedVault(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new DeletedVaultsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _vaultsRestClient = new VaultsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.KeyVault/deletedVaults";
+        public static readonly ResourceType ResourceType = "Microsoft.KeyVault/locations/deletedVaults";
 
         /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.KeyVault
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _vaultsRestClient.GetDeletedAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new DeletedVault(this, response.Value), response.GetRawResponse());
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.KeyVault
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _vaultsRestClient.GetDeleted(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeletedVault(this, response.Value), response.GetRawResponse());
@@ -143,14 +143,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Permanently deletes the specified vault. aka Purges the deleted Azure key vault. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DeletedVaultPurgeOperation> PurgeAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VaultPurgeDeletedOperation> PurgeDeletedAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeletedVault.Purge");
+            using var scope = _clientDiagnostics.CreateScope("DeletedVault.PurgeDeleted");
             scope.Start();
             try
             {
-                var response = await _restClient.PurgeAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DeletedVaultPurgeOperation(_clientDiagnostics, Pipeline, _restClient.CreatePurgeRequest(Id.Parent.Name, Id.Name).Request, response);
+                var response = await _vaultsRestClient.PurgeDeletedAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new VaultPurgeDeletedOperation(_clientDiagnostics, Pipeline, _vaultsRestClient.CreatePurgeDeletedRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -165,14 +165,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Permanently deletes the specified vault. aka Purges the deleted Azure key vault. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DeletedVaultPurgeOperation Purge(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VaultPurgeDeletedOperation PurgeDeleted(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeletedVault.Purge");
+            using var scope = _clientDiagnostics.CreateScope("DeletedVault.PurgeDeleted");
             scope.Start();
             try
             {
-                var response = _restClient.Purge(Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DeletedVaultPurgeOperation(_clientDiagnostics, Pipeline, _restClient.CreatePurgeRequest(Id.Parent.Name, Id.Name).Request, response);
+                var response = _vaultsRestClient.PurgeDeleted(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new VaultPurgeDeletedOperation(_clientDiagnostics, Pipeline, _vaultsRestClient.CreatePurgeDeletedRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#if false
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System.Threading.Tasks;
@@ -42,3 +43,4 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
     }
 }
+#endif

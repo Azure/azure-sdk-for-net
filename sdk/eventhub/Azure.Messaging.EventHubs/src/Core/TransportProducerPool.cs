@@ -146,6 +146,25 @@ namespace Azure.Messaging.EventHubs.Core
         }
 
         /// <summary>
+        ///   Expires the pooled producer for the requested partition immediately.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The unique identifier of a partition associated with the Event Hub.</param>
+        /// <param name="forceClose"><c>true</c> to close the pooled producer even if it is in use; otherwise, <c>false</c> will defer closing until it is no longer in use.</param>
+        ///
+        public virtual async Task ExpirePooledProducerAsync(string partitionId,
+                                                            bool forceClose = false)
+        {
+           if (Pool.TryRemove(partitionId, out var poolItem))
+           {
+               if ((poolItem.ActiveInstances.IsEmpty) || (forceClose))
+               {
+                   await poolItem.PartitionProducer.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+               }
+           }
+        }
+
+        /// <summary>
         ///   Closes the producers in the pool and performs any cleanup necessary
         ///   for resources used by the <see cref="TransportProducerPool" />.
         /// </summary>
@@ -188,6 +207,7 @@ namespace Azure.Messaging.EventHubs.Core
             return _ =>
             {
                 // Capture the time stamp to use a consistent value.
+
                 var now = DateTimeOffset.UtcNow;
 
                 foreach (var key in Pool.Keys.ToList())
@@ -196,7 +216,7 @@ namespace Azure.Messaging.EventHubs.Core
                     {
                         if (poolItem.RemoveAfter <= now)
                         {
-                            if (Pool.TryRemove(key, out var _) && !poolItem.ActiveInstances.Any())
+                            if (Pool.TryRemove(key, out var _) && poolItem.ActiveInstances.IsEmpty)
                             {
                                 // At this point the pool item may have been closed already
                                 // if there was a context switch between the if conditions

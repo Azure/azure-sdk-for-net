@@ -17,6 +17,8 @@ namespace Azure.Core
         private readonly string _redactedPlaceholder;
         private readonly HashSet<string> _allowedHeaders;
 
+        internal static HttpMessageSanitizer Default = new HttpMessageSanitizer(Array.Empty<string>(), Array.Empty<string>());
+
         public HttpMessageSanitizer(string[] allowedQueryParameters, string[] allowedHeaders, string redactedPlaceholder = "REDACTED")
         {
             _logAllHeaders = allowedHeaders.Contains(LogAllValue);
@@ -44,7 +46,7 @@ namespace Azure.Core
                 return url;
             }
 
-#if NET5_0
+#if NET5_0_OR_GREATER
             int indexOfQuerySeparator = url.IndexOf('?', StringComparison.Ordinal);
 #else
             int indexOfQuerySeparator = url.IndexOf('?');
