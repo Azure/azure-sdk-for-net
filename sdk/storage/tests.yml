@@ -9,7 +9,7 @@ extends:
     Location: canadacentral
     CloudConfig:
       Preview:
-        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
+        SubscriptionConfiguration: $(sub-config-storage-test-resources-net)
       PrivatePreview:
         SubscriptionConfiguration: $(sub-config-storage-test-resources)
     Clouds: Preview
