@@ -21,18 +21,18 @@ namespace Azure.Analytics.Synapse.Spark.Samples
         public void SubmitSparkJobSync()
         {
             #region Snippet:CreateSparkBatchClient
+#if SNIPPET
             // Replace the strings below with the spark, endpoint, and file system information
             string sparkPoolName = "<my-spark-pool-name>";
-            /*@@*/sparkPoolName = TestEnvironment.SparkPoolName;
-
             string endpoint = "<my-endpoint-url>";
-            /*@@*/endpoint = TestEnvironment.EndpointUrl;
-
             string storageAccount = "<my-storage-account-name>";
-            /*@@*/storageAccount = TestEnvironment.StorageAccountName;
-
             string fileSystem = "<my-storage-filesystem-name>";
-            /*@@*/fileSystem = TestEnvironment.StorageFileSystemName;
+#else
+            string sparkPoolName = TestEnvironment.SparkPoolName;
+            string endpoint = TestEnvironment.EndpointUrl;
+            string storageAccount = TestEnvironment.StorageAccountName;
+            string fileSystem = TestEnvironment.StorageFileSystemName;
+#endif
 
             SparkBatchClient client = new SparkBatchClient(new Uri(endpoint), sparkPoolName, new DefaultAzureCredential());
             #endregion
@@ -73,7 +73,7 @@ namespace Azure.Analytics.Synapse.Spark.Samples
             #endregion
 
             #region Snippet:GetSparkBatchJob
-            SparkBatchJob retrievedJob = client.GetSparkBatchJob (jobCreated.Id);
+            SparkBatchJob retrievedJob = client.GetSparkBatchJob(jobCreated.Id);
             Debug.WriteLine($"Job is returned with name {retrievedJob.Name} and state {retrievedJob.State}");
             #endregion
 

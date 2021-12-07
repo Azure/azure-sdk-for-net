@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.MixedReality.Authentication;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
@@ -20,12 +20,12 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         private HashSet<AssetFileType> _supportedAssetFileTypesSet;
 
         /// <summary>
-        /// The Account ID to be used by the Client
+        /// The Account ID to be used by the Client.
         /// </summary>
         public Guid AccountId { get; }
 
         /// <summary>
-        /// The list of supported asset file types
+        /// The list of supported asset file types.
         /// </summary>
         public IReadOnlyList<AssetFileType> SupportedAssetFileTypes { get; private set; }
 
@@ -43,7 +43,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         }
 
         /// <summary>
-        /// The Account Domain to be used by the Client
+        /// The Account Domain to be used by the Client.
         /// </summary>
         public string AccountDomain { get; }
 
@@ -123,9 +123,9 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <summary>
         /// Creates an Object Anchors asset conversion job request.
         /// </summary>
-        /// <param name="options">The asset conversion job creation options</param>
-        /// <param name="cancellationToken">The cancellation token</param>
-        /// <returns>The asset conversion operation</returns>
+        /// <param name="options">The asset conversion job creation options.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The asset conversion operation.</returns>
         public virtual AssetConversionOperation StartAssetConversion(AssetConversionOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ObjectAnchorsConversionClient)}.{nameof(StartAssetConversion)}");
@@ -138,14 +138,14 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 }
 
                 AssetConversionProperties properties = new AssetConversionProperties
-            {
-                InputAssetFileType = options.InputAssetFileType,
-                ConversionConfiguration = options.ConversionConfiguration,
-                InputAssetUri = options.InputAssetUri
-            };
+                {
+                    InputAssetFileType = options.InputAssetFileType,
+                    ConversionConfiguration = options.ConversionConfiguration,
+                    InputAssetUri = options.InputAssetUri
+                };
 
-            _ingestionJobRestClient.Create(AccountId, options.JobId, body: properties, cancellationToken: cancellationToken);
-            return new AssetConversionOperation(options.JobId, this);
+                _ingestionJobRestClient.Create(AccountId, options.JobId, body: properties, cancellationToken: cancellationToken);
+                return new AssetConversionOperation(options.JobId, this);
             }
             catch (Exception ex)
             {
@@ -157,9 +157,9 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <summary>
         /// Creates an Object Anchors asset conversion job request.
         /// </summary>
-        /// <param name="options">The asset conversion job creation options</param>
-        /// <param name="cancellationToken">The cancellation toke</param>
-        /// <returns>The asset conversion operation</returns>
+        /// <param name="options">The asset conversion job creation options.</param>
+        /// <param name="cancellationToken">The cancellation toke.</param>
+        /// <returns>The asset conversion operation.</returns>
         public virtual async Task<AssetConversionOperation> StartAssetConversionAsync(AssetConversionOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ObjectAnchorsConversionClient)}.{nameof(StartAssetConversion)}");
@@ -172,14 +172,14 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 }
 
                 AssetConversionProperties properties = new AssetConversionProperties
-            {
-                InputAssetFileType = options.InputAssetFileType,
-                ConversionConfiguration = options.ConversionConfiguration,
-                InputAssetUri = options.InputAssetUri
-            };
+                {
+                    InputAssetFileType = options.InputAssetFileType,
+                    ConversionConfiguration = options.ConversionConfiguration,
+                    InputAssetUri = options.InputAssetUri
+                };
 
-            await _ingestionJobRestClient.CreateAsync(AccountId, options.JobId, body: properties, cancellationToken: cancellationToken).ConfigureAwait(false);
-            return new AssetConversionOperation(options.JobId, this);
+                await _ingestionJobRestClient.CreateAsync(AccountId, options.JobId, body: properties, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return new AssetConversionOperation(options.JobId, this);
             }
             catch (Exception ex)
             {
@@ -189,9 +189,9 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         }
 
         /// <summary>
-        /// Retrieves an upload URI intended to house the model to be ingested
+        /// Retrieves an upload URI intended to house the model to be ingested.
         /// </summary>
-        /// <param name="cancellationToken">The cancellation token</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns><see cref="Response{GetAssetUploadUriResult}"/>.</returns>
         public virtual Response<AssetUploadUriResult> GetAssetUploadUri(CancellationToken cancellationToken = default)
         {
@@ -209,9 +209,9 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         }
 
         /// <summary>
-        /// Retrieves an upload URI intended to house the model to be ingested
+        /// Retrieves an upload URI intended to house the model to be ingested.
         /// </summary>
-        /// <param name="cancellationToken">The cancellation token</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns><see cref="Response{GetAssetUploadUriResult}"/>.</returns>
         public virtual async Task<Response<AssetUploadUriResult>> GetAssetUploadUriAsync(CancellationToken cancellationToken = default)
         {
@@ -219,7 +219,9 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             scope.Start();
             try
             {
-                return await _getBlobUploadEndpointRestClient.GetAsync(AccountId, xMrcCv: GenerateCv(), cancellationToken: cancellationToken).ConfigureAwait(false);
+                return await _getBlobUploadEndpointRestClient
+                    .GetAsync(AccountId, xMrcCv: GenerateCv(), cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -229,10 +231,10 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         }
 
         /// <summary>
-        /// Gets the status of an Object Anchors asset conversion job
+        /// Gets the status of an Object Anchors asset conversion job.
         /// </summary>
-        /// <param name="JobId">The asset conversion job's ID</param>
-        /// <param name="cancellationToken">The cancellation token</param>
+        /// <param name="JobId">The asset conversion job's ID.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns><see cref="Response{AssetConversionProperties}"/>.</returns>
         internal virtual Response<AssetConversionProperties> GetAssetConversionStatus(Guid JobId, CancellationToken cancellationToken = default)
         {
@@ -240,7 +242,8 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             scope.Start();
             try
             {
-                var properties = _ingestionJobRestClient.Get(AccountId, JobId, xMrcCv: GenerateCv(), cancellationToken: cancellationToken);
+                ResponseWithHeaders<AssetConversionProperties, IngestionJobGetHeaders> properties = _ingestionJobRestClient
+                    .Get(AccountId, JobId, xMrcCv: GenerateCv(), cancellationToken: cancellationToken);
                 properties.Value.JobId = JobId;
                 properties.Value.AccountId = AccountId;
                 return properties;
@@ -253,14 +256,16 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         }
 
         /// <summary>
-        /// Gets the status of an Object Anchors asset conversion job
+        /// Gets the status of an Object Anchors asset conversion job.
         /// </summary>
-        /// <param name="JobId">The asset conversion job's ID</param>
-        /// <param name="cancellationToken">The cancellation token</param>
+        /// <param name="JobId">The asset conversion job's ID.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns><see cref="Response{AssetConversionProperties}"/>.</returns>
         internal virtual async Task<Response<AssetConversionProperties>> GetAssetConversionStatusAsync(Guid JobId, CancellationToken cancellationToken = default)
         {
-            var properties = await _ingestionJobRestClient.GetAsync(AccountId, JobId, xMrcCv: GenerateCv(), cancellationToken: cancellationToken).ConfigureAwait(false);
+            ResponseWithHeaders<AssetConversionProperties, IngestionJobGetHeaders> properties = await _ingestionJobRestClient
+                .GetAsync(AccountId, JobId, xMrcCv: GenerateCv(), cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
             properties.Value.JobId = JobId;
             properties.Value.AccountId = AccountId;
             return properties;

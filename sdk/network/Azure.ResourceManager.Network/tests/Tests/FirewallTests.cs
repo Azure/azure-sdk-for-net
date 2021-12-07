@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Tests
             _publicIPAddressIdentifier = _publicIPAddress.Id;
 
             _firewallName = SessionRecording.GenerateAssetName("firewall-");
-            StopSessionRecording();
+            await StopSessionRecordingAsync();
         }
 
         [OneTimeTearDown]

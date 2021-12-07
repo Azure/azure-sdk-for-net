@@ -2,13 +2,9 @@
 
 ## 7.6.0-beta.1 (Unreleased)
 
-### Features Added
-
-### Breaking Changes
-
 ### Bugs Fixed
 
-### Other Changes
+- Add a delay when retrying if we are being throttled by the service.
 
 ## 7.5.0 (2021-11-10)
 

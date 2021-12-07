@@ -34,7 +34,7 @@ namespace Azure.Storage.Test.Shared
         }
 
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
-            : base(async, mode)
+            : base(async, mode, useLegacyTransport: true)
         {
             Sanitizer = new StorageRecordedTestSanitizer();
             Tenants = new TenantConfigurationBuilder(this);

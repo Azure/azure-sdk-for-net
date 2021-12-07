@@ -23,6 +23,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
     /// </summary>
     internal static class WebPubSubRequestExtensions
     {
+        private static JsonSerializerOptions _innerSerializer => CreateSystemTextJsonSerializer();
         /// <summary>
         /// Parse request to system/user type ServiceRequest.
         /// </summary>
@@ -151,24 +152,17 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             return false;
         }
 
-        internal static Dictionary<string, object> DecodeConnectionStates(this string connectionStates)
+        internal static Dictionary<string, BinaryData> DecodeConnectionStates(this string connectionStates)
         {
             if (!string.IsNullOrEmpty(connectionStates))
             {
-                var states = new Dictionary<string, object>();
-                var parsedStates = Encoding.UTF8.GetString(Convert.FromBase64String(connectionStates));
-                var statesObj = JsonDocument.Parse(parsedStates);
-                foreach (var item in statesObj.RootElement.EnumerateObject())
-                {
-                    // Use ToString() to set pure value without ValueKind.
-                    states.Add(item.Name, item.Value.ToString());
-                }
-                return states;
+                var strongTyped = JsonSerializer.Deserialize<IReadOnlyDictionary<string, BinaryData>>(Convert.FromBase64String(connectionStates), _innerSerializer);
+                return new Dictionary<string, BinaryData>(strongTyped);
             }
             return null;
         }
 
-        internal static Dictionary<string,object> UpdateStates(this WebPubSubConnectionContext connectionContext, IReadOnlyDictionary<string, object> newStates)
+        internal static Dictionary<string, BinaryData> UpdateStates(this WebPubSubConnectionContext connectionContext, IReadOnlyDictionary<string, BinaryData> newStates)
         {
             // states cleared.
             if (newStates == null)
@@ -176,12 +170,12 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 return null;
             }
 
-            if (connectionContext.States?.Count > 0 || newStates.Count > 0)
+            if (connectionContext.ConnectionStates?.Count > 0 || newStates.Count > 0)
             {
-                var states = new Dictionary<string, object>();
-                if (connectionContext.States?.Count > 0)
+                var states = new Dictionary<string, BinaryData>();
+                if (connectionContext.ConnectionStates?.Count > 0)
                 {
-                    states = connectionContext.States.ToDictionary(x => x.Key, y => y.Value);
+                    states = connectionContext.ConnectionStates.ToDictionary(x => x.Key, y => y.Value);
                 }
 
                 // response states keep empty is no change.
@@ -199,9 +193,9 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             return null;
         }
 
-        internal static string EncodeConnectionStates(this Dictionary<string, object> value)
+        internal static string EncodeConnectionStates(this IReadOnlyDictionary<string, BinaryData> value)
         {
-            return Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(value)));
+            return Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(value, _innerSerializer)));
         }
 
         private static bool TryParseCloudEvents(this HttpRequest request, out WebPubSubConnectionContext connectionContext)
@@ -223,7 +217,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                     userId = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.UserId);
                 }
 
-                Dictionary<string, object> states = null;
+                Dictionary<string, BinaryData> states = null;
                 // connection states.
                 if (request.Headers.ContainsKey(Constants.Headers.CloudEvents.State))
                 {
@@ -305,5 +299,12 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 Constants.ContentTypes.JsonContentType => WebPubSubDataType.Json,
                 _ => throw new ArgumentException($"Invalid content type: {mediaType}")
             };
+
+        private static JsonSerializerOptions CreateSystemTextJsonSerializer()
+        {
+            var options = new JsonSerializerOptions();
+            options.Converters.Add(new ConnectionStatesConverter());
+            return options;
+        }
     }
 }

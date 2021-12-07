@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
         protected Subscription DefaultSubscription;
         protected ArmClient Client { get; private set; }
-        protected ServiceBusTestBase(bool isAsync) : base(isAsync)
+        protected ServiceBusTestBase(bool isAsync) : base(isAsync, useLegacyTransport: true)
         {
             Sanitizer = new ServiceBusRecordedTestSanitizer();
         }
-        protected ServiceBusTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        protected ServiceBusTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode, useLegacyTransport: true)
         {
             Sanitizer = new ServiceBusRecordedTestSanitizer();
         }

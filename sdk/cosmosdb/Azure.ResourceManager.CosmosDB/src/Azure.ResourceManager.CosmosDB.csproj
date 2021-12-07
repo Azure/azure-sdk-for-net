@@ -1,19 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Version>1.0.0-preview.2</Version>
+    <Version>1.0.0-beta.2</Version>
     <PackageId>Azure.ResourceManager.CosmosDB</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider Microsoft.DocumentDB</Description>
-    <PackageTags>azure;management;arm;resource manager;documentdb</PackageTags>
+    <PackageTags>azure;management;arm;resource manager;cosmosdb</PackageTags>
+    <NoWarn>$(NoWarn);CS1591;</NoWarn>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <!-- TODO: As part of release process, this PropertyGroup can be removed once RP is approved for namespace -->
-    <NoWarn>$(NoWarn);CS1591</NoWarn>
-    <ExcludeMgmtCoreShared>true</ExcludeMgmtCoreShared>
-    <IsMgmtSubLibrary>false</IsMgmtSubLibrary>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="$(MgmtAutorestVersion)" PrivateAssets="All" />
-  </ItemGroup>
 </Project>

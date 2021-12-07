@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static MetricValue DeserializeMetricValue(JsonElement element)
         {
-            Optional<int> Count = default;
+            Optional<int> count = default;
             Optional<double> average = default;
             Optional<double> maximum = default;
             Optional<double> minimum = default;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Count = property.Value.GetInt32();
+                    count = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("average"))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new MetricValue(Optional.ToNullable(Count), Optional.ToNullable(average), Optional.ToNullable(maximum), Optional.ToNullable(minimum), Optional.ToNullable(timestamp), Optional.ToNullable(total));
+            return new MetricValue(Optional.ToNullable(count), Optional.ToNullable(average), Optional.ToNullable(maximum), Optional.ToNullable(minimum), Optional.ToNullable(timestamp), Optional.ToNullable(total));
         }
     }
 }

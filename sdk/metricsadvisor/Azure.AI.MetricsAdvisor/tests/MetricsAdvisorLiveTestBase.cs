@@ -17,12 +17,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
         protected const string TempDataFeedDimensionNameA = "dimensionA";
         protected const string TempDataFeedDimensionNameB = "dimensionB";
 
-        public MetricsAdvisorLiveTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        public MetricsAdvisorLiveTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode, useLegacyTransport: true)
         {
             Sanitizer = new MetricsAdvisorRecordedTestSanitizer();
         }
 
-        public MetricsAdvisorLiveTestBase(bool isAsync) : base(isAsync)
+        public MetricsAdvisorLiveTestBase(bool isAsync) : base(isAsync, useLegacyTransport: true)
         {
             Sanitizer = new MetricsAdvisorRecordedTestSanitizer();
         }

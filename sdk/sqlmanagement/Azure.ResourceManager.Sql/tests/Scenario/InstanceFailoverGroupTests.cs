@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(Location.WestUS2));
             ResourceGroup resourceGroup = rgLro.Value;
             _resourceGroupIdentifier = resourceGroup.Id;
-            StopSessionRecording();
+            await StopSessionRecordingAsync();
         }
 
         [SetUp]

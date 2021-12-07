@@ -58,7 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             }
         }
 
-        public NotebookClientLiveTests(bool isAsync) : base(isAsync)
+        public NotebookClientLiveTests(bool isAsync) : base(isAsync, useLegacyTransport: true)
         {
         }
 
