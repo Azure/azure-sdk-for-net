@@ -25,9 +25,18 @@ namespace Microsoft.Azure.WebPubSub.Common
             var element = JsonDocument.ParseValue(ref reader).RootElement;
             foreach (var elementInfo in element.EnumerateObject())
             {
-                // Use Base64 decode mapping to encode to avoid data loss.
-                var decoded = elementInfo.Value.GetBytesFromBase64();
-                dic.Add(elementInfo.Name, BinaryData.FromBytes(decoded));
+                try
+                {
+                    // Use Base64 decode mapping to encode to avoid data loss.
+                    var decoded = elementInfo.Value.GetBytesFromBase64();
+                    dic.Add(elementInfo.Name, BinaryData.FromBytes(decoded));
+                }
+                catch (Exception)
+                {
+                    // States not set via SDK and users need to read from Header themselves.
+                    // Avoid partial results and return a non-null value.
+                    return new Dictionary<string, BinaryData>();
+                }
             }
             return dic;
         }
