@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.Maps.Search.Models;
 using NUnit.Framework;
 using System.Linq;
@@ -15,8 +15,11 @@ namespace Azure.Maps.Search.Tests
         [Test]
         public void SearchingAnAddress()
         {
-            #region Snippet:SearchAddress
-            var client = new SearchClient(endpoint: new Uri(TestEnvironment.Endpoint), credential: new DefaultAzureCredential());
+            var endpoint = TestEnvironment.Endpoint;
+            var clientId = TestEnvironment.MapAccountClientId;
+
+            #region Snippet:SearchingAnAddress
+            var client = new SearchClient(new DefaultAzureCredential(), endpoint, clientId);
             SearchAddressResult searchResponse = client.SearchAddress("Seattle");
 
             var primaryResult = searchResponse.Results.First();

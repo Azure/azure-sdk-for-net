@@ -1,0 +1,212 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/search/address/batch/json?api-version=1.0",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "240",
+        "Content-Type": "application/json",
+        "traceparent": "00-3dadc65046633749856be60db3ae2dbb-02171ab094d3c746-00",
+        "User-Agent": [
+          "azsdk-net-Maps.Search/1.0.0-alpha.20211207.1",
+          "(.NET 5.0.10; Darwin 21.1.0 Darwin Kernel Version 21.1.0: Wed Oct 13 17:33:23 PDT 2021; root:xnu-8019.41.5~1/RELEASE_X86_64)"
+        ],
+        "x-ms-client-id": "6a782b5b-631c-450d-9aa4-e561679d0d28",
+        "x-ms-client-request-id": "6241fd3fb9e20bae539ea24a141757bb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "batchItems": [
+          {
+            "query": "?https://atlas.microsoft.com/search/address/json?api-version=1.0\u0026query=Microsoft%20Campus"
+          },
+          {
+            "query": "?https://atlas.microsoft.com/search/address/json?api-version=1.0\u0026query=Millenium\u0026countrySet=US"
+          }
+        ]
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Content-Length": "2",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 07 Dec 2021 14:21:38 GMT",
+        "Location": "https://atlas.microsoft.com/search/address/batch/5f1f2da9-7018-4835-9546-a7e24a3a4ec4?api-version=1.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: 2FBB381B529E462E8BCF2C11D2A922C5 Ref B: TYO01EDGE2113 Ref C: 2021-12-07T14:21:38Z"
+      },
+      "ResponseBody": "\u0022\u0022"
+    },
+    {
+      "RequestUri": "https://atlas.microsoft.com/search/address/batch/5f1f2da9-7018-4835-9546-a7e24a3a4ec4?api-version=1.0",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Maps.Search/1.0.0-alpha.20211207.1",
+          "(.NET 5.0.10; Darwin 21.1.0 Darwin Kernel Version 21.1.0: Wed Oct 13 17:33:23 PDT 2021; root:xnu-8019.41.5~1/RELEASE_X86_64)"
+        ],
+        "x-ms-client-id": "6a782b5b-631c-450d-9aa4-e561679d0d28",
+        "x-ms-client-request-id": "7c4337d65167993b9ff59f91bd4e5045",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Tue, 07 Dec 2021 14:21:38 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: 6256E01F05354DEAA9E9E6440D5E7844 Ref B: TYO01EDGE2113 Ref C: 2021-12-07T14:21:38Z"
+      },
+      "ResponseBody": {
+        "batchItems": [
+          {
+            "statusCode": 200,
+            "response": {
+              "summary": {
+                "query": "microsoft campus",
+                "queryType": "NON_NEAR",
+                "queryTime": 4,
+                "numResults": 1,
+                "offset": 0,
+                "totalResults": 1,
+                "fuzzyLevel": 1
+              },
+              "results": [
+                {
+                  "type": "Street",
+                  "id": "US/STR/p1/1849473",
+                  "score": 4.1924114227,
+                  "address": {
+                    "streetName": "Microsoft West Campus Road",
+                    "municipality": "Redmond",
+                    "countrySecondarySubdivision": "King",
+                    "countrySubdivision": "WA",
+                    "countrySubdivisionName": "Washington",
+                    "countryCode": "US",
+                    "country": "United States",
+                    "countryCodeISO3": "USA",
+                    "freeformAddress": "Microsoft West Campus Road, Redmond, WA",
+                    "localName": "Redmond"
+                  },
+                  "position": {
+                    "lat": 47.65977,
+                    "lon": -122.13888
+                  },
+                  "viewport": {
+                    "topLeftPoint": {
+                      "lat": 47.66039,
+                      "lon": -122.14335
+                    },
+                    "btmRightPoint": {
+                      "lat": 47.65778,
+                      "lon": -122.13749
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "statusCode": 200,
+            "response": {
+              "summary": {
+                "query": "millenium",
+                "queryType": "NON_NEAR",
+                "queryTime": 11,
+                "numResults": 2,
+                "offset": 0,
+                "totalResults": 2,
+                "fuzzyLevel": 1
+              },
+              "results": [
+                {
+                  "type": "Street",
+                  "id": "US/STR/p2/1515019",
+                  "score": 2.0959999561,
+                  "address": {
+                    "streetName": "East Millenium Court",
+                    "municipalitySubdivision": "Hedrick Acres",
+                    "municipality": "Tucson",
+                    "countrySecondarySubdivision": "Pima",
+                    "countrySubdivision": "AZ",
+                    "countrySubdivisionName": "Arizona",
+                    "postalCode": "85719",
+                    "countryCode": "US",
+                    "country": "United States",
+                    "countryCodeISO3": "USA",
+                    "freeformAddress": "East Millenium Court, Tucson, AZ 85719",
+                    "localName": "Tucson"
+                  },
+                  "position": {
+                    "lat": 32.26197,
+                    "lon": -110.95794
+                  },
+                  "viewport": {
+                    "topLeftPoint": {
+                      "lat": 32.26197,
+                      "lon": -110.95794
+                    },
+                    "btmRightPoint": {
+                      "lat": 32.26195,
+                      "lon": -110.95733
+                    }
+                  }
+                },
+                {
+                  "type": "Street",
+                  "id": "US/STR/p0/585059",
+                  "score": 2.0754508972,
+                  "address": {
+                    "streetName": "Millenium Parkway",
+                    "municipality": "Livonia",
+                    "countrySecondarySubdivision": "Wayne",
+                    "countrySubdivision": "MI",
+                    "countrySubdivisionName": "Michigan",
+                    "postalCode": "48150",
+                    "countryCode": "US",
+                    "country": "United States",
+                    "countryCodeISO3": "USA",
+                    "freeformAddress": "Millenium Parkway, Livonia, MI 48150",
+                    "localName": "Livonia"
+                  },
+                  "position": {
+                    "lat": 42.38173,
+                    "lon": -83.33054
+                  },
+                  "viewport": {
+                    "topLeftPoint": {
+                      "lat": 42.38318,
+                      "lon": -83.33075
+                    },
+                    "btmRightPoint": {
+                      "lat": 42.38035,
+                      "lon": -83.33002
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "summary": {
+          "successfulRequests": 2,
+          "totalRequests": 2
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "6a782b5b-631c-450d-9aa4-e561679d0d28",
+    "ENDPOINT_URL": null,
+    "RandomSeed": "1374023997"
+  }
+}

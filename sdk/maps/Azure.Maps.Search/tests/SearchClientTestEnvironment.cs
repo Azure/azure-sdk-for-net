@@ -2,11 +2,19 @@
 // Licensed under the MIT License.
 
 using Azure.Core.TestFramework;
+using System;
+using NUnit.Framework;
 
 namespace Azure.Maps.Search.Tests
 {
     public class SearchClientTestEnvironment : TestEnvironment
     {
-        public string Endpoint => GetRecordedVariable("ENDPOINT_URL");
+        public Uri Endpoint {
+            get {
+                var endpoint = GetRecordedOptionalVariable("ENDPOINT_URL");
+                return endpoint != null ? new Uri(endpoint) : null;
+            }
+        }
+        public string MapAccountClientId => GetRecordedVariable("AZMAPS_CLIENT_ID");
     }
 }
