@@ -1,29 +1,31 @@
-foreach($volume in Get-Volume) {
-    if($null -ne $volume.DriveLetter) {
-       $entry = [ordered]@{
-        "name"= "agent_disk_size_bytes";
-        "value"= $volume.Size;
-        "timestamp"= [DateTimeOffset]::UtcNow;
-        "labels"= [ordered]@{
-          "driveLetter"= $volume.DriveLetter;
-          "fileSystemLabel"= $volume.FileSystemLabel;
-          "fileSystemType"= $volume.FileSystemType;
-        }
+$drives = [IO.DriveInfo]::GetDrives() | Where-Object { $_.TotalSize -gt 0 -and $_.DriveType -eq 'Fixed' -and $null -ne $_.Name }
+
+foreach($drive in $drives) {
+    $entry = [ordered]@{
+      "name"= "agent_driveinfo_size_bytes";
+      "value"= $drive.TotalSize;
+      "timestamp"= [DateTimeOffset]::UtcNow;
+      "labels"= [ordered]@{
+        "name"= $drive.Name;
+        "volumeLabel"= $drive.VolumeLabel;
+        "driveType"= $drive.DriveType.ToString();
+        "driveFormat"= $drive.DriveFormat;
       }
-
-      Write-Output "logmetric: $($entry | ConvertTo-Json -Compress)"
-
-      $entry = [ordered]@{
-        "name"= "agent_disk_remaining_bytes";
-        "value"= $volume.SizeRemaining;
-        "timestamp"= [DateTimeOffset]::UtcNow;
-        "labels"= [ordered]@{
-          "driveLetter"= $volume.DriveLetter;
-          "fileSystemLabel"= $volume.FileSystemLabel;
-          "fileSystemType"= $volume.FileSystemType;
-        }
-      }
-
-      Write-Output "logmetric: $($entry | ConvertTo-Json -Compress)"
     }
+
+    Write-Output "logmetric: $($entry | ConvertTo-Json -Compress)"
+
+    $entry = [ordered]@{
+      "name"= "agent_driveinfo_available_bytes";
+      "value"= $drive.AvailableFreeSpace;
+      "timestamp"= [DateTimeOffset]::UtcNow;
+      "labels"= [ordered]@{
+        "name"= $drive.Name;
+        "volumeLabel"= $drive.VolumeLabel;
+        "driveType"= $drive.DriveType.ToString();
+        "driveFormat"= $drive.DriveFormat;
+      }
+    }
+
+    Write-Output "logmetric: $($entry | ConvertTo-Json -Compress)"
 }
