@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             _resourceGroup = await GlobalClient.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
 
             _databaseAccountIdentifier = (await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.MongoDB)).Id;
-            StopSessionRecording();
+            await StopSessionRecordingAsync();
         }
 
         [OneTimeTearDown]

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             _roleDefinitionId = (await SqlRoleDefinitionTests.CreateSqlRoleDefinition($"{_databaseAccount.Id}/dbs/{_sqlDatabase.Data.Name}", _databaseAccount.GetSqlRoleDefinitions())).Id;
 
-            StopSessionRecording();
+            await StopSessionRecordingAsync();
         }
 
         [OneTimeTearDown]

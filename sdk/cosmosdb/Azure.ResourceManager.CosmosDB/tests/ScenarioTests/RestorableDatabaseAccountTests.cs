@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
 
         [OneTimeSetUp]
-        public void GlobalSetup()
+        public async Task GlobalSetup()
         {
-            StopSessionRecording();
+            await StopSessionRecordingAsync();
         }
 
         [SetUp]
