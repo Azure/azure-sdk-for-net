@@ -1320,7 +1320,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="AseV3NetworkingConfiguration" /> object. </returns>
         public AseV3NetworkingConfiguration GetAseV3NetworkingConfiguration()
         {
-            return new AseV3NetworkingConfiguration(this, Id + "/configurations/networking");
+            return new AseV3NetworkingConfiguration(this, new ResourceIdentifier(Id.ToString() + "/configurations/networking"));
         }
         #endregion
 
@@ -1330,7 +1330,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="HostingEnvironmentMultiRolePool" /> object. </returns>
         public HostingEnvironmentMultiRolePool GetHostingEnvironmentMultiRolePool()
         {
-            return new HostingEnvironmentMultiRolePool(this, Id + "/multiRolePools/default");
+            return new HostingEnvironmentMultiRolePool(this, new ResourceIdentifier(Id.ToString() + "/multiRolePools/default"));
         }
         #endregion
 
