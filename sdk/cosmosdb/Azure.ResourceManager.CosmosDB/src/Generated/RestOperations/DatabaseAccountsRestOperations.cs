@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.CosmosDB
 {
     internal partial class DatabaseAccountsRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
@@ -30,13 +29,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public DatabaseAccountsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-06-15")
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public DatabaseAccountsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null, string apiVersion = "2021-06-15")
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string accountName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string accountName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -65,12 +62,17 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Retrieves the properties of an existing Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public async Task<Response<DatabaseAccountData>> GetAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public async Task<Response<DatabaseAccountData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -80,7 +82,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, accountName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, accountName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -99,12 +101,17 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Retrieves the properties of an existing Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public Response<DatabaseAccountData> Get(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public Response<DatabaseAccountData> Get(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -114,7 +121,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, accountName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, accountName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -132,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string accountName, DatabaseAccountUpdateOptions updateParameters)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, DatabaseAccountUpdateOptions updateParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -157,13 +164,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Updates the properties of an existing Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="updateParameters"> The parameters to provide for the current database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="updateParameters"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string resourceGroupName, string accountName, DatabaseAccountUpdateOptions updateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="updateParameters"/> is null. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, DatabaseAccountUpdateOptions updateParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -177,7 +189,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(updateParameters));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, accountName, updateParameters);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, updateParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -189,13 +201,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Updates the properties of an existing Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="updateParameters"> The parameters to provide for the current database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="updateParameters"/> is null. </exception>
-        public Response Update(string resourceGroupName, string accountName, DatabaseAccountUpdateOptions updateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="updateParameters"/> is null. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string accountName, DatabaseAccountUpdateOptions updateParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -209,7 +226,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(updateParameters));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, accountName, updateParameters);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, updateParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -220,7 +237,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string accountName, DatabaseAccountCreateUpdateOptions createUpdateParameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, DatabaseAccountCreateUpdateOptions createUpdateParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -245,13 +262,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Creates or updates an Azure Cosmos DB database account. The &quot;Update&quot; method is preferred when performing updates on an account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="createUpdateParameters"> The parameters to provide for the current database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="createUpdateParameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string accountName, DatabaseAccountCreateUpdateOptions createUpdateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="createUpdateParameters"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string accountName, DatabaseAccountCreateUpdateOptions createUpdateParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -265,7 +287,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(createUpdateParameters));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, accountName, createUpdateParameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, accountName, createUpdateParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -277,13 +299,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Creates or updates an Azure Cosmos DB database account. The &quot;Update&quot; method is preferred when performing updates on an account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="createUpdateParameters"> The parameters to provide for the current database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="createUpdateParameters"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string accountName, DatabaseAccountCreateUpdateOptions createUpdateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="createUpdateParameters"/> is null. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string accountName, DatabaseAccountCreateUpdateOptions createUpdateParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -297,7 +324,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(createUpdateParameters));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, accountName, createUpdateParameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, accountName, createUpdateParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -308,7 +335,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string accountName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string accountName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -328,12 +355,17 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Deletes an existing Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -343,7 +375,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, accountName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, accountName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -356,12 +388,17 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Deletes an existing Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -371,7 +408,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, accountName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, accountName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -383,7 +420,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateFailoverPriorityChangeRequest(string resourceGroupName, string accountName, FailoverPolicies failoverParameters)
+        internal HttpMessage CreateFailoverPriorityChangeRequest(string subscriptionId, string resourceGroupName, string accountName, FailoverPolicies failoverParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -408,13 +445,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Changes the failover priority for the Azure Cosmos DB database account. A failover priority of 0 indicates a write region. The maximum value for a failover priority = (total number of regions - 1). Failover priority values must be unique for each of the regions in which the database account exists. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="failoverParameters"> The new failover policies for the database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="failoverParameters"/> is null. </exception>
-        public async Task<Response> FailoverPriorityChangeAsync(string resourceGroupName, string accountName, FailoverPolicies failoverParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="failoverParameters"/> is null. </exception>
+        public async Task<Response> FailoverPriorityChangeAsync(string subscriptionId, string resourceGroupName, string accountName, FailoverPolicies failoverParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -428,7 +470,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(failoverParameters));
             }
 
-            using var message = CreateFailoverPriorityChangeRequest(resourceGroupName, accountName, failoverParameters);
+            using var message = CreateFailoverPriorityChangeRequest(subscriptionId, resourceGroupName, accountName, failoverParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -441,13 +483,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Changes the failover priority for the Azure Cosmos DB database account. A failover priority of 0 indicates a write region. The maximum value for a failover priority = (total number of regions - 1). Failover priority values must be unique for each of the regions in which the database account exists. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="failoverParameters"> The new failover policies for the database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="failoverParameters"/> is null. </exception>
-        public Response FailoverPriorityChange(string resourceGroupName, string accountName, FailoverPolicies failoverParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="failoverParameters"/> is null. </exception>
+        public Response FailoverPriorityChange(string subscriptionId, string resourceGroupName, string accountName, FailoverPolicies failoverParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -461,7 +508,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(failoverParameters));
             }
 
-            using var message = CreateFailoverPriorityChangeRequest(resourceGroupName, accountName, failoverParameters);
+            using var message = CreateFailoverPriorityChangeRequest(subscriptionId, resourceGroupName, accountName, failoverParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -473,7 +520,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateListRequest()
+        internal HttpMessage CreateListRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -491,10 +538,17 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Lists all the Azure Cosmos DB database accounts available under the subscription. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DatabaseAccountsList>> ListAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public async Task<Response<DatabaseAccountsList>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest();
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateListRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -511,10 +565,17 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Lists all the Azure Cosmos DB database accounts available under the subscription. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DatabaseAccountsList> List(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public Response<DatabaseAccountsList> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest();
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateListRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -530,7 +591,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateListByResourceGroupRequest(string resourceGroupName)
+        internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -550,17 +611,22 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Lists all the Azure Cosmos DB database accounts available under the given resource group. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<DatabaseAccountsList>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        public async Task<Response<DatabaseAccountsList>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListByResourceGroupRequest(resourceGroupName);
+            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -577,17 +643,22 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Lists all the Azure Cosmos DB database accounts available under the given resource group. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<DatabaseAccountsList> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        public Response<DatabaseAccountsList> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListByResourceGroupRequest(resourceGroupName);
+            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -603,7 +674,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateListKeysRequest(string resourceGroupName, string accountName)
+        internal HttpMessage CreateListKeysRequest(string subscriptionId, string resourceGroupName, string accountName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -625,12 +696,17 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Lists the access keys for the specified Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public async Task<Response<DatabaseAccountKeyList>> ListKeysAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public async Task<Response<DatabaseAccountKeyList>> ListKeysAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -640,7 +716,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateListKeysRequest(resourceGroupName, accountName);
+            using var message = CreateListKeysRequest(subscriptionId, resourceGroupName, accountName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -657,12 +733,17 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Lists the access keys for the specified Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public Response<DatabaseAccountKeyList> ListKeys(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public Response<DatabaseAccountKeyList> ListKeys(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -672,7 +753,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateListKeysRequest(resourceGroupName, accountName);
+            using var message = CreateListKeysRequest(subscriptionId, resourceGroupName, accountName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -688,7 +769,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateListConnectionStringsRequest(string resourceGroupName, string accountName)
+        internal HttpMessage CreateListConnectionStringsRequest(string subscriptionId, string resourceGroupName, string accountName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -710,12 +791,17 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Lists the connection strings for the specified Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public async Task<Response<DatabaseAccountConnectionStringList>> ListConnectionStringsAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public async Task<Response<DatabaseAccountConnectionStringList>> ListConnectionStringsAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -725,7 +811,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateListConnectionStringsRequest(resourceGroupName, accountName);
+            using var message = CreateListConnectionStringsRequest(subscriptionId, resourceGroupName, accountName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -742,12 +828,17 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Lists the connection strings for the specified Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public Response<DatabaseAccountConnectionStringList> ListConnectionStrings(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public Response<DatabaseAccountConnectionStringList> ListConnectionStrings(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -757,7 +848,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateListConnectionStringsRequest(resourceGroupName, accountName);
+            using var message = CreateListConnectionStringsRequest(subscriptionId, resourceGroupName, accountName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -773,7 +864,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateOfflineRegionRequest(string resourceGroupName, string accountName, RegionForOnlineOffline regionParameterForOffline)
+        internal HttpMessage CreateOfflineRegionRequest(string subscriptionId, string resourceGroupName, string accountName, RegionForOnlineOffline regionParameterForOffline)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -799,13 +890,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Offline the specified region for the specified Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="regionParameterForOffline"> Cosmos DB region to offline for the database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="regionParameterForOffline"/> is null. </exception>
-        public async Task<Response> OfflineRegionAsync(string resourceGroupName, string accountName, RegionForOnlineOffline regionParameterForOffline, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="regionParameterForOffline"/> is null. </exception>
+        public async Task<Response> OfflineRegionAsync(string subscriptionId, string resourceGroupName, string accountName, RegionForOnlineOffline regionParameterForOffline, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -819,7 +915,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(regionParameterForOffline));
             }
 
-            using var message = CreateOfflineRegionRequest(resourceGroupName, accountName, regionParameterForOffline);
+            using var message = CreateOfflineRegionRequest(subscriptionId, resourceGroupName, accountName, regionParameterForOffline);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -832,13 +928,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Offline the specified region for the specified Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="regionParameterForOffline"> Cosmos DB region to offline for the database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="regionParameterForOffline"/> is null. </exception>
-        public Response OfflineRegion(string resourceGroupName, string accountName, RegionForOnlineOffline regionParameterForOffline, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="regionParameterForOffline"/> is null. </exception>
+        public Response OfflineRegion(string subscriptionId, string resourceGroupName, string accountName, RegionForOnlineOffline regionParameterForOffline, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -852,7 +953,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(regionParameterForOffline));
             }
 
-            using var message = CreateOfflineRegionRequest(resourceGroupName, accountName, regionParameterForOffline);
+            using var message = CreateOfflineRegionRequest(subscriptionId, resourceGroupName, accountName, regionParameterForOffline);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -864,7 +965,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateOnlineRegionRequest(string resourceGroupName, string accountName, RegionForOnlineOffline regionParameterForOnline)
+        internal HttpMessage CreateOnlineRegionRequest(string subscriptionId, string resourceGroupName, string accountName, RegionForOnlineOffline regionParameterForOnline)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -890,13 +991,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Online the specified region for the specified Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="regionParameterForOnline"> Cosmos DB region to online for the database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="regionParameterForOnline"/> is null. </exception>
-        public async Task<Response> OnlineRegionAsync(string resourceGroupName, string accountName, RegionForOnlineOffline regionParameterForOnline, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="regionParameterForOnline"/> is null. </exception>
+        public async Task<Response> OnlineRegionAsync(string subscriptionId, string resourceGroupName, string accountName, RegionForOnlineOffline regionParameterForOnline, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -910,7 +1016,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(regionParameterForOnline));
             }
 
-            using var message = CreateOnlineRegionRequest(resourceGroupName, accountName, regionParameterForOnline);
+            using var message = CreateOnlineRegionRequest(subscriptionId, resourceGroupName, accountName, regionParameterForOnline);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -923,13 +1029,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Online the specified region for the specified Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="regionParameterForOnline"> Cosmos DB region to online for the database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="regionParameterForOnline"/> is null. </exception>
-        public Response OnlineRegion(string resourceGroupName, string accountName, RegionForOnlineOffline regionParameterForOnline, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="regionParameterForOnline"/> is null. </exception>
+        public Response OnlineRegion(string subscriptionId, string resourceGroupName, string accountName, RegionForOnlineOffline regionParameterForOnline, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -943,7 +1054,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(regionParameterForOnline));
             }
 
-            using var message = CreateOnlineRegionRequest(resourceGroupName, accountName, regionParameterForOnline);
+            using var message = CreateOnlineRegionRequest(subscriptionId, resourceGroupName, accountName, regionParameterForOnline);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -955,7 +1066,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateListReadOnlyKeysRequest(string resourceGroupName, string accountName)
+        internal HttpMessage CreateListReadOnlyKeysRequest(string subscriptionId, string resourceGroupName, string accountName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -977,12 +1088,17 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Lists the read-only access keys for the specified Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public async Task<Response<DatabaseAccountReadOnlyKeyList>> ListReadOnlyKeysAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public async Task<Response<DatabaseAccountReadOnlyKeyList>> ListReadOnlyKeysAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -992,7 +1108,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateListReadOnlyKeysRequest(resourceGroupName, accountName);
+            using var message = CreateListReadOnlyKeysRequest(subscriptionId, resourceGroupName, accountName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1009,12 +1125,17 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Lists the read-only access keys for the specified Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public Response<DatabaseAccountReadOnlyKeyList> ListReadOnlyKeys(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public Response<DatabaseAccountReadOnlyKeyList> ListReadOnlyKeys(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1024,7 +1145,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateListReadOnlyKeysRequest(resourceGroupName, accountName);
+            using var message = CreateListReadOnlyKeysRequest(subscriptionId, resourceGroupName, accountName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1040,7 +1161,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateRegenerateKeyRequest(string resourceGroupName, string accountName, DatabaseAccountRegenerateKeyOptions keyToRegenerate)
+        internal HttpMessage CreateRegenerateKeyRequest(string subscriptionId, string resourceGroupName, string accountName, DatabaseAccountRegenerateKeyOptions keyToRegenerate)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1065,13 +1186,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Regenerates an access key for the specified Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyToRegenerate"> The name of the key to regenerate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="keyToRegenerate"/> is null. </exception>
-        public async Task<Response> RegenerateKeyAsync(string resourceGroupName, string accountName, DatabaseAccountRegenerateKeyOptions keyToRegenerate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="keyToRegenerate"/> is null. </exception>
+        public async Task<Response> RegenerateKeyAsync(string subscriptionId, string resourceGroupName, string accountName, DatabaseAccountRegenerateKeyOptions keyToRegenerate, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1085,7 +1211,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(keyToRegenerate));
             }
 
-            using var message = CreateRegenerateKeyRequest(resourceGroupName, accountName, keyToRegenerate);
+            using var message = CreateRegenerateKeyRequest(subscriptionId, resourceGroupName, accountName, keyToRegenerate);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1098,13 +1224,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Regenerates an access key for the specified Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyToRegenerate"> The name of the key to regenerate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="keyToRegenerate"/> is null. </exception>
-        public Response RegenerateKey(string resourceGroupName, string accountName, DatabaseAccountRegenerateKeyOptions keyToRegenerate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="keyToRegenerate"/> is null. </exception>
+        public Response RegenerateKey(string subscriptionId, string resourceGroupName, string accountName, DatabaseAccountRegenerateKeyOptions keyToRegenerate, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1118,7 +1249,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(keyToRegenerate));
             }
 
-            using var message = CreateRegenerateKeyRequest(resourceGroupName, accountName, keyToRegenerate);
+            using var message = CreateRegenerateKeyRequest(subscriptionId, resourceGroupName, accountName, keyToRegenerate);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1205,7 +1336,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateListMetricsRequest(string resourceGroupName, string accountName, string filter)
+        internal HttpMessage CreateListMetricsRequest(string subscriptionId, string resourceGroupName, string accountName, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1228,13 +1359,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Retrieves the metrics determined by the given filter for the given database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="filter"/> is null. </exception>
-        public async Task<Response<MetricList>> ListMetricsAsync(string resourceGroupName, string accountName, string filter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="filter"/> is null. </exception>
+        public async Task<Response<MetricList>> ListMetricsAsync(string subscriptionId, string resourceGroupName, string accountName, string filter, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1248,7 +1384,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(filter));
             }
 
-            using var message = CreateListMetricsRequest(resourceGroupName, accountName, filter);
+            using var message = CreateListMetricsRequest(subscriptionId, resourceGroupName, accountName, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1265,13 +1401,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Retrieves the metrics determined by the given filter for the given database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="filter"/> is null. </exception>
-        public Response<MetricList> ListMetrics(string resourceGroupName, string accountName, string filter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="filter"/> is null. </exception>
+        public Response<MetricList> ListMetrics(string subscriptionId, string resourceGroupName, string accountName, string filter, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1285,7 +1426,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(filter));
             }
 
-            using var message = CreateListMetricsRequest(resourceGroupName, accountName, filter);
+            using var message = CreateListMetricsRequest(subscriptionId, resourceGroupName, accountName, filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1301,7 +1442,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateListUsagesRequest(string resourceGroupName, string accountName, string filter)
+        internal HttpMessage CreateListUsagesRequest(string subscriptionId, string resourceGroupName, string accountName, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1327,13 +1468,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Retrieves the usages (most recent data) for the given database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public async Task<Response<UsageList>> ListUsagesAsync(string resourceGroupName, string accountName, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public async Task<Response<UsageList>> ListUsagesAsync(string subscriptionId, string resourceGroupName, string accountName, string filter = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1343,7 +1489,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateListUsagesRequest(resourceGroupName, accountName, filter);
+            using var message = CreateListUsagesRequest(subscriptionId, resourceGroupName, accountName, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1360,13 +1506,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Retrieves the usages (most recent data) for the given database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public Response<UsageList> ListUsages(string resourceGroupName, string accountName, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public Response<UsageList> ListUsages(string subscriptionId, string resourceGroupName, string accountName, string filter = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1376,7 +1527,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateListUsagesRequest(resourceGroupName, accountName, filter);
+            using var message = CreateListUsagesRequest(subscriptionId, resourceGroupName, accountName, filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1392,7 +1543,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateListMetricDefinitionsRequest(string resourceGroupName, string accountName)
+        internal HttpMessage CreateListMetricDefinitionsRequest(string subscriptionId, string resourceGroupName, string accountName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1414,12 +1565,17 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Retrieves metric definitions for the given database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public async Task<Response<MetricDefinitionList>> ListMetricDefinitionsAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public async Task<Response<MetricDefinitionList>> ListMetricDefinitionsAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1429,7 +1585,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateListMetricDefinitionsRequest(resourceGroupName, accountName);
+            using var message = CreateListMetricDefinitionsRequest(subscriptionId, resourceGroupName, accountName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1446,12 +1602,17 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Retrieves metric definitions for the given database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public Response<MetricDefinitionList> ListMetricDefinitions(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public Response<MetricDefinitionList> ListMetricDefinitions(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1461,7 +1622,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateListMetricDefinitionsRequest(resourceGroupName, accountName);
+            using var message = CreateListMetricDefinitionsRequest(subscriptionId, resourceGroupName, accountName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB
         internal DatabaseAccountCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _databaseAccountsRestClient = new DatabaseAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _databaseAccountsRestClient = new DatabaseAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _databaseAccountsRestClient.CreateOrUpdate(Id.ResourceGroupName, accountName, createUpdateParameters, cancellationToken);
-                var operation = new DatabaseAccountCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, accountName, createUpdateParameters).Request, response);
+                var response = _databaseAccountsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, accountName, createUpdateParameters, cancellationToken);
+                var operation = new DatabaseAccountCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, createUpdateParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -101,8 +101,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _databaseAccountsRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, accountName, createUpdateParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new DatabaseAccountCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, accountName, createUpdateParameters).Request, response);
+                var response = await _databaseAccountsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, createUpdateParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new DatabaseAccountCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, createUpdateParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _databaseAccountsRestClient.Get(Id.ResourceGroupName, accountName, cancellationToken);
+                var response = _databaseAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DatabaseAccount(Parent, response.Value), response.GetRawResponse());
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _databaseAccountsRestClient.GetAsync(Id.ResourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
+                var response = await _databaseAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new DatabaseAccount(Parent, response.Value), response.GetRawResponse());
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _databaseAccountsRestClient.Get(Id.ResourceGroupName, accountName, cancellationToken: cancellationToken);
+                var response = _databaseAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<DatabaseAccount>(null, response.GetRawResponse())
                     : Response.FromValue(new DatabaseAccount(this, response.Value), response.GetRawResponse());
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _databaseAccountsRestClient.GetAsync(Id.ResourceGroupName, accountName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _databaseAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<DatabaseAccount>(null, response.GetRawResponse())
                     : Response.FromValue(new DatabaseAccount(this, response.Value), response.GetRawResponse());
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _databaseAccountsRestClient.ListByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _databaseAccountsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DatabaseAccount(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _databaseAccountsRestClient.ListByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _databaseAccountsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DatabaseAccount(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)

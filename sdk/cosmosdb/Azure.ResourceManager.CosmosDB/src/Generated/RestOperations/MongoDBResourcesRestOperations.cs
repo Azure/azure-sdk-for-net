@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.CosmosDB
 {
     internal partial class MongoDBResourcesRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
@@ -30,13 +29,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public MongoDBResourcesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-06-15")
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public MongoDBResourcesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null, string apiVersion = "2021-06-15")
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateListMongoDBDatabasesRequest(string resourceGroupName, string accountName)
+        internal HttpMessage CreateListMongoDBDatabasesRequest(string subscriptionId, string resourceGroupName, string accountName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -66,12 +63,17 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Lists the MongoDB databases under an existing Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public async Task<Response<MongoDBDatabaseList>> ListMongoDBDatabasesAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public async Task<Response<MongoDBDatabaseList>> ListMongoDBDatabasesAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -81,7 +83,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateListMongoDBDatabasesRequest(resourceGroupName, accountName);
+            using var message = CreateListMongoDBDatabasesRequest(subscriptionId, resourceGroupName, accountName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -98,12 +100,17 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Lists the MongoDB databases under an existing Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public Response<MongoDBDatabaseList> ListMongoDBDatabases(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public Response<MongoDBDatabaseList> ListMongoDBDatabases(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -113,7 +120,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateListMongoDBDatabasesRequest(resourceGroupName, accountName);
+            using var message = CreateListMongoDBDatabasesRequest(subscriptionId, resourceGroupName, accountName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -129,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateGetMongoDBDatabaseRequest(string resourceGroupName, string accountName, string databaseName)
+        internal HttpMessage CreateGetMongoDBDatabaseRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -152,13 +159,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the MongoDB databases under an existing Azure Cosmos DB database account with the provided name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public async Task<Response<MongoDBDatabaseData>> GetMongoDBDatabaseAsync(string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
+        public async Task<Response<MongoDBDatabaseData>> GetMongoDBDatabaseAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -172,7 +184,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateGetMongoDBDatabaseRequest(resourceGroupName, accountName, databaseName);
+            using var message = CreateGetMongoDBDatabaseRequest(subscriptionId, resourceGroupName, accountName, databaseName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -191,13 +203,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the MongoDB databases under an existing Azure Cosmos DB database account with the provided name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public Response<MongoDBDatabaseData> GetMongoDBDatabase(string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
+        public Response<MongoDBDatabaseData> GetMongoDBDatabase(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -211,7 +228,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateGetMongoDBDatabaseRequest(resourceGroupName, accountName, databaseName);
+            using var message = CreateGetMongoDBDatabaseRequest(subscriptionId, resourceGroupName, accountName, databaseName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -229,7 +246,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateCreateUpdateMongoDBDatabaseRequest(string resourceGroupName, string accountName, string databaseName, MongoDBDatabaseCreateUpdateOptions createUpdateMongoDBDatabaseParameters)
+        internal HttpMessage CreateCreateUpdateMongoDBDatabaseRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, MongoDBDatabaseCreateUpdateOptions createUpdateMongoDBDatabaseParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -256,14 +273,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Create or updates Azure Cosmos DB MongoDB database. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="createUpdateMongoDBDatabaseParameters"> The parameters to provide for the current MongoDB database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="createUpdateMongoDBDatabaseParameters"/> is null. </exception>
-        public async Task<Response> CreateUpdateMongoDBDatabaseAsync(string resourceGroupName, string accountName, string databaseName, MongoDBDatabaseCreateUpdateOptions createUpdateMongoDBDatabaseParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="createUpdateMongoDBDatabaseParameters"/> is null. </exception>
+        public async Task<Response> CreateUpdateMongoDBDatabaseAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, MongoDBDatabaseCreateUpdateOptions createUpdateMongoDBDatabaseParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -281,7 +303,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(createUpdateMongoDBDatabaseParameters));
             }
 
-            using var message = CreateCreateUpdateMongoDBDatabaseRequest(resourceGroupName, accountName, databaseName, createUpdateMongoDBDatabaseParameters);
+            using var message = CreateCreateUpdateMongoDBDatabaseRequest(subscriptionId, resourceGroupName, accountName, databaseName, createUpdateMongoDBDatabaseParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -294,14 +316,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Create or updates Azure Cosmos DB MongoDB database. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="createUpdateMongoDBDatabaseParameters"> The parameters to provide for the current MongoDB database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="createUpdateMongoDBDatabaseParameters"/> is null. </exception>
-        public Response CreateUpdateMongoDBDatabase(string resourceGroupName, string accountName, string databaseName, MongoDBDatabaseCreateUpdateOptions createUpdateMongoDBDatabaseParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="createUpdateMongoDBDatabaseParameters"/> is null. </exception>
+        public Response CreateUpdateMongoDBDatabase(string subscriptionId, string resourceGroupName, string accountName, string databaseName, MongoDBDatabaseCreateUpdateOptions createUpdateMongoDBDatabaseParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -319,7 +346,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(createUpdateMongoDBDatabaseParameters));
             }
 
-            using var message = CreateCreateUpdateMongoDBDatabaseRequest(resourceGroupName, accountName, databaseName, createUpdateMongoDBDatabaseParameters);
+            using var message = CreateCreateUpdateMongoDBDatabaseRequest(subscriptionId, resourceGroupName, accountName, databaseName, createUpdateMongoDBDatabaseParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -331,7 +358,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateDeleteMongoDBDatabaseRequest(string resourceGroupName, string accountName, string databaseName)
+        internal HttpMessage CreateDeleteMongoDBDatabaseRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -353,13 +380,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Deletes an existing Azure Cosmos DB MongoDB database. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public async Task<Response> DeleteMongoDBDatabaseAsync(string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
+        public async Task<Response> DeleteMongoDBDatabaseAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -373,7 +405,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateDeleteMongoDBDatabaseRequest(resourceGroupName, accountName, databaseName);
+            using var message = CreateDeleteMongoDBDatabaseRequest(subscriptionId, resourceGroupName, accountName, databaseName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -386,13 +418,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Deletes an existing Azure Cosmos DB MongoDB database. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public Response DeleteMongoDBDatabase(string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
+        public Response DeleteMongoDBDatabase(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -406,7 +443,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateDeleteMongoDBDatabaseRequest(resourceGroupName, accountName, databaseName);
+            using var message = CreateDeleteMongoDBDatabaseRequest(subscriptionId, resourceGroupName, accountName, databaseName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -418,7 +455,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateGetMongoDBDatabaseThroughputRequest(string resourceGroupName, string accountName, string databaseName)
+        internal HttpMessage CreateGetMongoDBDatabaseThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -442,13 +479,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the RUs per second of the MongoDB database under an existing Azure Cosmos DB database account with the provided name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public async Task<Response<ThroughputSettingsData>> GetMongoDBDatabaseThroughputAsync(string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
+        public async Task<Response<ThroughputSettingsData>> GetMongoDBDatabaseThroughputAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -462,7 +504,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateGetMongoDBDatabaseThroughputRequest(resourceGroupName, accountName, databaseName);
+            using var message = CreateGetMongoDBDatabaseThroughputRequest(subscriptionId, resourceGroupName, accountName, databaseName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -481,13 +523,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the RUs per second of the MongoDB database under an existing Azure Cosmos DB database account with the provided name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public Response<ThroughputSettingsData> GetMongoDBDatabaseThroughput(string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
+        public Response<ThroughputSettingsData> GetMongoDBDatabaseThroughput(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -501,7 +548,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateGetMongoDBDatabaseThroughputRequest(resourceGroupName, accountName, databaseName);
+            using var message = CreateGetMongoDBDatabaseThroughputRequest(subscriptionId, resourceGroupName, accountName, databaseName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -519,7 +566,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateUpdateMongoDBDatabaseThroughputRequest(string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateOptions updateThroughputParameters)
+        internal HttpMessage CreateUpdateMongoDBDatabaseThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateOptions updateThroughputParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -547,14 +594,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Update RUs per second of the an Azure Cosmos DB MongoDB database. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="updateThroughputParameters"> The RUs per second of the parameters to provide for the current MongoDB database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="updateThroughputParameters"/> is null. </exception>
-        public async Task<Response> UpdateMongoDBDatabaseThroughputAsync(string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="updateThroughputParameters"/> is null. </exception>
+        public async Task<Response> UpdateMongoDBDatabaseThroughputAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -572,7 +624,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(updateThroughputParameters));
             }
 
-            using var message = CreateUpdateMongoDBDatabaseThroughputRequest(resourceGroupName, accountName, databaseName, updateThroughputParameters);
+            using var message = CreateUpdateMongoDBDatabaseThroughputRequest(subscriptionId, resourceGroupName, accountName, databaseName, updateThroughputParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -585,14 +637,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Update RUs per second of the an Azure Cosmos DB MongoDB database. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="updateThroughputParameters"> The RUs per second of the parameters to provide for the current MongoDB database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="updateThroughputParameters"/> is null. </exception>
-        public Response UpdateMongoDBDatabaseThroughput(string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="updateThroughputParameters"/> is null. </exception>
+        public Response UpdateMongoDBDatabaseThroughput(string subscriptionId, string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -610,7 +667,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(updateThroughputParameters));
             }
 
-            using var message = CreateUpdateMongoDBDatabaseThroughputRequest(resourceGroupName, accountName, databaseName, updateThroughputParameters);
+            using var message = CreateUpdateMongoDBDatabaseThroughputRequest(subscriptionId, resourceGroupName, accountName, databaseName, updateThroughputParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -622,7 +679,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateMigrateMongoDBDatabaseToAutoscaleRequest(string resourceGroupName, string accountName, string databaseName)
+        internal HttpMessage CreateMigrateMongoDBDatabaseToAutoscaleRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -646,13 +703,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Migrate an Azure Cosmos DB MongoDB database from manual throughput to autoscale. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public async Task<Response> MigrateMongoDBDatabaseToAutoscaleAsync(string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
+        public async Task<Response> MigrateMongoDBDatabaseToAutoscaleAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -666,7 +728,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateMigrateMongoDBDatabaseToAutoscaleRequest(resourceGroupName, accountName, databaseName);
+            using var message = CreateMigrateMongoDBDatabaseToAutoscaleRequest(subscriptionId, resourceGroupName, accountName, databaseName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -679,13 +741,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Migrate an Azure Cosmos DB MongoDB database from manual throughput to autoscale. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public Response MigrateMongoDBDatabaseToAutoscale(string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
+        public Response MigrateMongoDBDatabaseToAutoscale(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -699,7 +766,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateMigrateMongoDBDatabaseToAutoscaleRequest(resourceGroupName, accountName, databaseName);
+            using var message = CreateMigrateMongoDBDatabaseToAutoscaleRequest(subscriptionId, resourceGroupName, accountName, databaseName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -711,7 +778,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateMigrateMongoDBDatabaseToManualThroughputRequest(string resourceGroupName, string accountName, string databaseName)
+        internal HttpMessage CreateMigrateMongoDBDatabaseToManualThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -735,13 +802,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Migrate an Azure Cosmos DB MongoDB database from autoscale to manual throughput. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public async Task<Response> MigrateMongoDBDatabaseToManualThroughputAsync(string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
+        public async Task<Response> MigrateMongoDBDatabaseToManualThroughputAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -755,7 +827,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateMigrateMongoDBDatabaseToManualThroughputRequest(resourceGroupName, accountName, databaseName);
+            using var message = CreateMigrateMongoDBDatabaseToManualThroughputRequest(subscriptionId, resourceGroupName, accountName, databaseName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -768,13 +840,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Migrate an Azure Cosmos DB MongoDB database from autoscale to manual throughput. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public Response MigrateMongoDBDatabaseToManualThroughput(string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
+        public Response MigrateMongoDBDatabaseToManualThroughput(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -788,7 +865,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateMigrateMongoDBDatabaseToManualThroughputRequest(resourceGroupName, accountName, databaseName);
+            using var message = CreateMigrateMongoDBDatabaseToManualThroughputRequest(subscriptionId, resourceGroupName, accountName, databaseName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -800,7 +877,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateListMongoDBCollectionsRequest(string resourceGroupName, string accountName, string databaseName)
+        internal HttpMessage CreateListMongoDBCollectionsRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -824,13 +901,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Lists the MongoDB collection under an existing Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public async Task<Response<MongoDBCollectionList>> ListMongoDBCollectionsAsync(string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
+        public async Task<Response<MongoDBCollectionList>> ListMongoDBCollectionsAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -844,7 +926,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateListMongoDBCollectionsRequest(resourceGroupName, accountName, databaseName);
+            using var message = CreateListMongoDBCollectionsRequest(subscriptionId, resourceGroupName, accountName, databaseName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -861,13 +943,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Lists the MongoDB collection under an existing Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public Response<MongoDBCollectionList> ListMongoDBCollections(string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
+        public Response<MongoDBCollectionList> ListMongoDBCollections(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -881,7 +968,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateListMongoDBCollectionsRequest(resourceGroupName, accountName, databaseName);
+            using var message = CreateListMongoDBCollectionsRequest(subscriptionId, resourceGroupName, accountName, databaseName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -897,7 +984,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateGetMongoDBCollectionRequest(string resourceGroupName, string accountName, string databaseName, string collectionName)
+        internal HttpMessage CreateGetMongoDBCollectionRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -922,14 +1009,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the MongoDB collection under an existing Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="collectionName"> Cosmos DB collection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="collectionName"/> is null. </exception>
-        public async Task<Response<MongoDBCollectionData>> GetMongoDBCollectionAsync(string resourceGroupName, string accountName, string databaseName, string collectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="collectionName"/> is null. </exception>
+        public async Task<Response<MongoDBCollectionData>> GetMongoDBCollectionAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -947,7 +1039,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(collectionName));
             }
 
-            using var message = CreateGetMongoDBCollectionRequest(resourceGroupName, accountName, databaseName, collectionName);
+            using var message = CreateGetMongoDBCollectionRequest(subscriptionId, resourceGroupName, accountName, databaseName, collectionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -966,14 +1058,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the MongoDB collection under an existing Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="collectionName"> Cosmos DB collection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="collectionName"/> is null. </exception>
-        public Response<MongoDBCollectionData> GetMongoDBCollection(string resourceGroupName, string accountName, string databaseName, string collectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="collectionName"/> is null. </exception>
+        public Response<MongoDBCollectionData> GetMongoDBCollection(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -991,7 +1088,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(collectionName));
             }
 
-            using var message = CreateGetMongoDBCollectionRequest(resourceGroupName, accountName, databaseName, collectionName);
+            using var message = CreateGetMongoDBCollectionRequest(subscriptionId, resourceGroupName, accountName, databaseName, collectionName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1009,7 +1106,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateCreateUpdateMongoDBCollectionRequest(string resourceGroupName, string accountName, string databaseName, string collectionName, MongoDBCollectionCreateUpdateOptions createUpdateMongoDBCollectionParameters)
+        internal HttpMessage CreateCreateUpdateMongoDBCollectionRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName, MongoDBCollectionCreateUpdateOptions createUpdateMongoDBCollectionParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1038,15 +1135,20 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Create or update an Azure Cosmos DB MongoDB Collection. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="collectionName"> Cosmos DB collection name. </param>
         /// <param name="createUpdateMongoDBCollectionParameters"> The parameters to provide for the current MongoDB Collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="collectionName"/>, or <paramref name="createUpdateMongoDBCollectionParameters"/> is null. </exception>
-        public async Task<Response> CreateUpdateMongoDBCollectionAsync(string resourceGroupName, string accountName, string databaseName, string collectionName, MongoDBCollectionCreateUpdateOptions createUpdateMongoDBCollectionParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="collectionName"/>, or <paramref name="createUpdateMongoDBCollectionParameters"/> is null. </exception>
+        public async Task<Response> CreateUpdateMongoDBCollectionAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName, MongoDBCollectionCreateUpdateOptions createUpdateMongoDBCollectionParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1068,7 +1170,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(createUpdateMongoDBCollectionParameters));
             }
 
-            using var message = CreateCreateUpdateMongoDBCollectionRequest(resourceGroupName, accountName, databaseName, collectionName, createUpdateMongoDBCollectionParameters);
+            using var message = CreateCreateUpdateMongoDBCollectionRequest(subscriptionId, resourceGroupName, accountName, databaseName, collectionName, createUpdateMongoDBCollectionParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1081,15 +1183,20 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Create or update an Azure Cosmos DB MongoDB Collection. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="collectionName"> Cosmos DB collection name. </param>
         /// <param name="createUpdateMongoDBCollectionParameters"> The parameters to provide for the current MongoDB Collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="collectionName"/>, or <paramref name="createUpdateMongoDBCollectionParameters"/> is null. </exception>
-        public Response CreateUpdateMongoDBCollection(string resourceGroupName, string accountName, string databaseName, string collectionName, MongoDBCollectionCreateUpdateOptions createUpdateMongoDBCollectionParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="collectionName"/>, or <paramref name="createUpdateMongoDBCollectionParameters"/> is null. </exception>
+        public Response CreateUpdateMongoDBCollection(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName, MongoDBCollectionCreateUpdateOptions createUpdateMongoDBCollectionParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1111,7 +1218,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(createUpdateMongoDBCollectionParameters));
             }
 
-            using var message = CreateCreateUpdateMongoDBCollectionRequest(resourceGroupName, accountName, databaseName, collectionName, createUpdateMongoDBCollectionParameters);
+            using var message = CreateCreateUpdateMongoDBCollectionRequest(subscriptionId, resourceGroupName, accountName, databaseName, collectionName, createUpdateMongoDBCollectionParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1123,7 +1230,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateDeleteMongoDBCollectionRequest(string resourceGroupName, string accountName, string databaseName, string collectionName)
+        internal HttpMessage CreateDeleteMongoDBCollectionRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1147,14 +1254,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Deletes an existing Azure Cosmos DB MongoDB Collection. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="collectionName"> Cosmos DB collection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="collectionName"/> is null. </exception>
-        public async Task<Response> DeleteMongoDBCollectionAsync(string resourceGroupName, string accountName, string databaseName, string collectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="collectionName"/> is null. </exception>
+        public async Task<Response> DeleteMongoDBCollectionAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1172,7 +1284,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(collectionName));
             }
 
-            using var message = CreateDeleteMongoDBCollectionRequest(resourceGroupName, accountName, databaseName, collectionName);
+            using var message = CreateDeleteMongoDBCollectionRequest(subscriptionId, resourceGroupName, accountName, databaseName, collectionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1185,14 +1297,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Deletes an existing Azure Cosmos DB MongoDB Collection. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="collectionName"> Cosmos DB collection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="collectionName"/> is null. </exception>
-        public Response DeleteMongoDBCollection(string resourceGroupName, string accountName, string databaseName, string collectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="collectionName"/> is null. </exception>
+        public Response DeleteMongoDBCollection(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1210,7 +1327,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(collectionName));
             }
 
-            using var message = CreateDeleteMongoDBCollectionRequest(resourceGroupName, accountName, databaseName, collectionName);
+            using var message = CreateDeleteMongoDBCollectionRequest(subscriptionId, resourceGroupName, accountName, databaseName, collectionName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1222,7 +1339,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateGetMongoDBCollectionThroughputRequest(string resourceGroupName, string accountName, string databaseName, string collectionName)
+        internal HttpMessage CreateGetMongoDBCollectionThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1248,14 +1365,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the RUs per second of the MongoDB collection under an existing Azure Cosmos DB database account with the provided name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="collectionName"> Cosmos DB collection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="collectionName"/> is null. </exception>
-        public async Task<Response<ThroughputSettingsData>> GetMongoDBCollectionThroughputAsync(string resourceGroupName, string accountName, string databaseName, string collectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="collectionName"/> is null. </exception>
+        public async Task<Response<ThroughputSettingsData>> GetMongoDBCollectionThroughputAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1273,7 +1395,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(collectionName));
             }
 
-            using var message = CreateGetMongoDBCollectionThroughputRequest(resourceGroupName, accountName, databaseName, collectionName);
+            using var message = CreateGetMongoDBCollectionThroughputRequest(subscriptionId, resourceGroupName, accountName, databaseName, collectionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1292,14 +1414,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the RUs per second of the MongoDB collection under an existing Azure Cosmos DB database account with the provided name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="collectionName"> Cosmos DB collection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="collectionName"/> is null. </exception>
-        public Response<ThroughputSettingsData> GetMongoDBCollectionThroughput(string resourceGroupName, string accountName, string databaseName, string collectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="collectionName"/> is null. </exception>
+        public Response<ThroughputSettingsData> GetMongoDBCollectionThroughput(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1317,7 +1444,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(collectionName));
             }
 
-            using var message = CreateGetMongoDBCollectionThroughputRequest(resourceGroupName, accountName, databaseName, collectionName);
+            using var message = CreateGetMongoDBCollectionThroughputRequest(subscriptionId, resourceGroupName, accountName, databaseName, collectionName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1335,7 +1462,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateUpdateMongoDBCollectionThroughputRequest(string resourceGroupName, string accountName, string databaseName, string collectionName, ThroughputSettingsUpdateOptions updateThroughputParameters)
+        internal HttpMessage CreateUpdateMongoDBCollectionThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName, ThroughputSettingsUpdateOptions updateThroughputParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1365,15 +1492,20 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Update the RUs per second of an Azure Cosmos DB MongoDB collection. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="collectionName"> Cosmos DB collection name. </param>
         /// <param name="updateThroughputParameters"> The RUs per second of the parameters to provide for the current MongoDB collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="collectionName"/>, or <paramref name="updateThroughputParameters"/> is null. </exception>
-        public async Task<Response> UpdateMongoDBCollectionThroughputAsync(string resourceGroupName, string accountName, string databaseName, string collectionName, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="collectionName"/>, or <paramref name="updateThroughputParameters"/> is null. </exception>
+        public async Task<Response> UpdateMongoDBCollectionThroughputAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1395,7 +1527,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(updateThroughputParameters));
             }
 
-            using var message = CreateUpdateMongoDBCollectionThroughputRequest(resourceGroupName, accountName, databaseName, collectionName, updateThroughputParameters);
+            using var message = CreateUpdateMongoDBCollectionThroughputRequest(subscriptionId, resourceGroupName, accountName, databaseName, collectionName, updateThroughputParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1408,15 +1540,20 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Update the RUs per second of an Azure Cosmos DB MongoDB collection. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="collectionName"> Cosmos DB collection name. </param>
         /// <param name="updateThroughputParameters"> The RUs per second of the parameters to provide for the current MongoDB collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="collectionName"/>, or <paramref name="updateThroughputParameters"/> is null. </exception>
-        public Response UpdateMongoDBCollectionThroughput(string resourceGroupName, string accountName, string databaseName, string collectionName, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="collectionName"/>, or <paramref name="updateThroughputParameters"/> is null. </exception>
+        public Response UpdateMongoDBCollectionThroughput(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1438,7 +1575,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(updateThroughputParameters));
             }
 
-            using var message = CreateUpdateMongoDBCollectionThroughputRequest(resourceGroupName, accountName, databaseName, collectionName, updateThroughputParameters);
+            using var message = CreateUpdateMongoDBCollectionThroughputRequest(subscriptionId, resourceGroupName, accountName, databaseName, collectionName, updateThroughputParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1450,7 +1587,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateMigrateMongoDBCollectionToAutoscaleRequest(string resourceGroupName, string accountName, string databaseName, string collectionName)
+        internal HttpMessage CreateMigrateMongoDBCollectionToAutoscaleRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1476,14 +1613,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Migrate an Azure Cosmos DB MongoDB collection from manual throughput to autoscale. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="collectionName"> Cosmos DB collection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="collectionName"/> is null. </exception>
-        public async Task<Response> MigrateMongoDBCollectionToAutoscaleAsync(string resourceGroupName, string accountName, string databaseName, string collectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="collectionName"/> is null. </exception>
+        public async Task<Response> MigrateMongoDBCollectionToAutoscaleAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1501,7 +1643,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(collectionName));
             }
 
-            using var message = CreateMigrateMongoDBCollectionToAutoscaleRequest(resourceGroupName, accountName, databaseName, collectionName);
+            using var message = CreateMigrateMongoDBCollectionToAutoscaleRequest(subscriptionId, resourceGroupName, accountName, databaseName, collectionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1514,14 +1656,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Migrate an Azure Cosmos DB MongoDB collection from manual throughput to autoscale. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="collectionName"> Cosmos DB collection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="collectionName"/> is null. </exception>
-        public Response MigrateMongoDBCollectionToAutoscale(string resourceGroupName, string accountName, string databaseName, string collectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="collectionName"/> is null. </exception>
+        public Response MigrateMongoDBCollectionToAutoscale(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1539,7 +1686,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(collectionName));
             }
 
-            using var message = CreateMigrateMongoDBCollectionToAutoscaleRequest(resourceGroupName, accountName, databaseName, collectionName);
+            using var message = CreateMigrateMongoDBCollectionToAutoscaleRequest(subscriptionId, resourceGroupName, accountName, databaseName, collectionName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1551,7 +1698,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateMigrateMongoDBCollectionToManualThroughputRequest(string resourceGroupName, string accountName, string databaseName, string collectionName)
+        internal HttpMessage CreateMigrateMongoDBCollectionToManualThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1577,14 +1724,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Migrate an Azure Cosmos DB MongoDB collection from autoscale to manual throughput. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="collectionName"> Cosmos DB collection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="collectionName"/> is null. </exception>
-        public async Task<Response> MigrateMongoDBCollectionToManualThroughputAsync(string resourceGroupName, string accountName, string databaseName, string collectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="collectionName"/> is null. </exception>
+        public async Task<Response> MigrateMongoDBCollectionToManualThroughputAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1602,7 +1754,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(collectionName));
             }
 
-            using var message = CreateMigrateMongoDBCollectionToManualThroughputRequest(resourceGroupName, accountName, databaseName, collectionName);
+            using var message = CreateMigrateMongoDBCollectionToManualThroughputRequest(subscriptionId, resourceGroupName, accountName, databaseName, collectionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1615,14 +1767,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Migrate an Azure Cosmos DB MongoDB collection from autoscale to manual throughput. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="collectionName"> Cosmos DB collection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="collectionName"/> is null. </exception>
-        public Response MigrateMongoDBCollectionToManualThroughput(string resourceGroupName, string accountName, string databaseName, string collectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="collectionName"/> is null. </exception>
+        public Response MigrateMongoDBCollectionToManualThroughput(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1640,7 +1797,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(collectionName));
             }
 
-            using var message = CreateMigrateMongoDBCollectionToManualThroughputRequest(resourceGroupName, accountName, databaseName, collectionName);
+            using var message = CreateMigrateMongoDBCollectionToManualThroughputRequest(subscriptionId, resourceGroupName, accountName, databaseName, collectionName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

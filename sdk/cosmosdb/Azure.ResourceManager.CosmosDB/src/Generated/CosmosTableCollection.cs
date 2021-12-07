@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB
         internal CosmosTableCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _tableResourcesRestClient = new TableResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _tableResourcesRestClient = new TableResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _tableResourcesRestClient.CreateUpdateTable(Id.ResourceGroupName, Id.Name, tableName, createUpdateTableParameters, cancellationToken);
-                var operation = new TableResourceCreateUpdateTableOperation(Parent, _clientDiagnostics, Pipeline, _tableResourcesRestClient.CreateCreateUpdateTableRequest(Id.ResourceGroupName, Id.Name, tableName, createUpdateTableParameters).Request, response);
+                var response = _tableResourcesRestClient.CreateUpdateTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tableName, createUpdateTableParameters, cancellationToken);
+                var operation = new TableResourceCreateUpdateTableOperation(Parent, _clientDiagnostics, Pipeline, _tableResourcesRestClient.CreateCreateUpdateTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tableName, createUpdateTableParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _tableResourcesRestClient.CreateUpdateTableAsync(Id.ResourceGroupName, Id.Name, tableName, createUpdateTableParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new TableResourceCreateUpdateTableOperation(Parent, _clientDiagnostics, Pipeline, _tableResourcesRestClient.CreateCreateUpdateTableRequest(Id.ResourceGroupName, Id.Name, tableName, createUpdateTableParameters).Request, response);
+                var response = await _tableResourcesRestClient.CreateUpdateTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tableName, createUpdateTableParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new TableResourceCreateUpdateTableOperation(Parent, _clientDiagnostics, Pipeline, _tableResourcesRestClient.CreateCreateUpdateTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tableName, createUpdateTableParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _tableResourcesRestClient.GetTable(Id.ResourceGroupName, Id.Name, tableName, cancellationToken);
+                var response = _tableResourcesRestClient.GetTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tableName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CosmosTable(Parent, response.Value), response.GetRawResponse());
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _tableResourcesRestClient.GetTableAsync(Id.ResourceGroupName, Id.Name, tableName, cancellationToken).ConfigureAwait(false);
+                var response = await _tableResourcesRestClient.GetTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tableName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new CosmosTable(Parent, response.Value), response.GetRawResponse());
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _tableResourcesRestClient.GetTable(Id.ResourceGroupName, Id.Name, tableName, cancellationToken: cancellationToken);
+                var response = _tableResourcesRestClient.GetTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tableName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<CosmosTable>(null, response.GetRawResponse())
                     : Response.FromValue(new CosmosTable(this, response.Value), response.GetRawResponse());
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _tableResourcesRestClient.GetTableAsync(Id.ResourceGroupName, Id.Name, tableName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _tableResourcesRestClient.GetTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tableName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<CosmosTable>(null, response.GetRawResponse())
                     : Response.FromValue(new CosmosTable(this, response.Value), response.GetRawResponse());
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _tableResourcesRestClient.ListTables(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _tableResourcesRestClient.ListTables(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new CosmosTable(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _tableResourcesRestClient.ListTablesAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _tableResourcesRestClient.ListTablesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new CosmosTable(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)

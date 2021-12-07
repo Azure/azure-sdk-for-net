@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB
         internal GremlinGraphCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _gremlinResourcesRestClient = new GremlinResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _gremlinResourcesRestClient = new GremlinResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _gremlinResourcesRestClient.CreateUpdateGremlinGraph(Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, createUpdateGremlinGraphParameters, cancellationToken);
-                var operation = new GremlinResourceCreateUpdateGremlinGraphOperation(Parent, _clientDiagnostics, Pipeline, _gremlinResourcesRestClient.CreateCreateUpdateGremlinGraphRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, createUpdateGremlinGraphParameters).Request, response);
+                var response = _gremlinResourcesRestClient.CreateUpdateGremlinGraph(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, createUpdateGremlinGraphParameters, cancellationToken);
+                var operation = new GremlinResourceCreateUpdateGremlinGraphOperation(Parent, _clientDiagnostics, Pipeline, _gremlinResourcesRestClient.CreateCreateUpdateGremlinGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, createUpdateGremlinGraphParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _gremlinResourcesRestClient.CreateUpdateGremlinGraphAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, createUpdateGremlinGraphParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new GremlinResourceCreateUpdateGremlinGraphOperation(Parent, _clientDiagnostics, Pipeline, _gremlinResourcesRestClient.CreateCreateUpdateGremlinGraphRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, createUpdateGremlinGraphParameters).Request, response);
+                var response = await _gremlinResourcesRestClient.CreateUpdateGremlinGraphAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, createUpdateGremlinGraphParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new GremlinResourceCreateUpdateGremlinGraphOperation(Parent, _clientDiagnostics, Pipeline, _gremlinResourcesRestClient.CreateCreateUpdateGremlinGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, createUpdateGremlinGraphParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _gremlinResourcesRestClient.GetGremlinGraph(Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, cancellationToken);
+                var response = _gremlinResourcesRestClient.GetGremlinGraph(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GremlinGraph(Parent, response.Value), response.GetRawResponse());
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _gremlinResourcesRestClient.GetGremlinGraphAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, cancellationToken).ConfigureAwait(false);
+                var response = await _gremlinResourcesRestClient.GetGremlinGraphAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new GremlinGraph(Parent, response.Value), response.GetRawResponse());
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _gremlinResourcesRestClient.GetGremlinGraph(Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, cancellationToken: cancellationToken);
+                var response = _gremlinResourcesRestClient.GetGremlinGraph(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<GremlinGraph>(null, response.GetRawResponse())
                     : Response.FromValue(new GremlinGraph(this, response.Value), response.GetRawResponse());
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _gremlinResourcesRestClient.GetGremlinGraphAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _gremlinResourcesRestClient.GetGremlinGraphAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<GremlinGraph>(null, response.GetRawResponse())
                     : Response.FromValue(new GremlinGraph(this, response.Value), response.GetRawResponse());
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _gremlinResourcesRestClient.ListGremlinGraphs(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _gremlinResourcesRestClient.ListGremlinGraphs(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new GremlinGraph(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _gremlinResourcesRestClient.ListGremlinGraphsAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _gremlinResourcesRestClient.ListGremlinGraphsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new GremlinGraph(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)

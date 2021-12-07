@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB
         internal SqlContainerCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _sqlResourcesRestClient = new SqlResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _sqlResourcesRestClient = new SqlResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _sqlResourcesRestClient.CreateUpdateSqlContainer(Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, createUpdateSqlContainerParameters, cancellationToken);
-                var operation = new SqlResourceCreateUpdateSqlContainerOperation(Parent, _clientDiagnostics, Pipeline, _sqlResourcesRestClient.CreateCreateUpdateSqlContainerRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, createUpdateSqlContainerParameters).Request, response);
+                var response = _sqlResourcesRestClient.CreateUpdateSqlContainer(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, createUpdateSqlContainerParameters, cancellationToken);
+                var operation = new SqlResourceCreateUpdateSqlContainerOperation(Parent, _clientDiagnostics, Pipeline, _sqlResourcesRestClient.CreateCreateUpdateSqlContainerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, createUpdateSqlContainerParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _sqlResourcesRestClient.CreateUpdateSqlContainerAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, createUpdateSqlContainerParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlResourceCreateUpdateSqlContainerOperation(Parent, _clientDiagnostics, Pipeline, _sqlResourcesRestClient.CreateCreateUpdateSqlContainerRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, createUpdateSqlContainerParameters).Request, response);
+                var response = await _sqlResourcesRestClient.CreateUpdateSqlContainerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, createUpdateSqlContainerParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlResourceCreateUpdateSqlContainerOperation(Parent, _clientDiagnostics, Pipeline, _sqlResourcesRestClient.CreateCreateUpdateSqlContainerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, createUpdateSqlContainerParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _sqlResourcesRestClient.GetSqlContainer(Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken);
+                var response = _sqlResourcesRestClient.GetSqlContainer(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlContainer(Parent, response.Value), response.GetRawResponse());
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _sqlResourcesRestClient.GetSqlContainerAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken).ConfigureAwait(false);
+                var response = await _sqlResourcesRestClient.GetSqlContainerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new SqlContainer(Parent, response.Value), response.GetRawResponse());
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _sqlResourcesRestClient.GetSqlContainer(Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken: cancellationToken);
+                var response = _sqlResourcesRestClient.GetSqlContainer(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<SqlContainer>(null, response.GetRawResponse())
                     : Response.FromValue(new SqlContainer(this, response.Value), response.GetRawResponse());
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _sqlResourcesRestClient.GetSqlContainerAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _sqlResourcesRestClient.GetSqlContainerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<SqlContainer>(null, response.GetRawResponse())
                     : Response.FromValue(new SqlContainer(this, response.Value), response.GetRawResponse());
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _sqlResourcesRestClient.ListSqlContainers(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _sqlResourcesRestClient.ListSqlContainers(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new SqlContainer(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _sqlResourcesRestClient.ListSqlContainersAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _sqlResourcesRestClient.ListSqlContainersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new SqlContainer(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)

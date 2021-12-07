@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB
         internal CassandraTableCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _cassandraResourcesRestClient = new CassandraResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _cassandraResourcesRestClient = new CassandraResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _cassandraResourcesRestClient.CreateUpdateCassandraTable(Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, createUpdateCassandraTableParameters, cancellationToken);
-                var operation = new CassandraResourceCreateUpdateCassandraTableOperation(Parent, _clientDiagnostics, Pipeline, _cassandraResourcesRestClient.CreateCreateUpdateCassandraTableRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, createUpdateCassandraTableParameters).Request, response);
+                var response = _cassandraResourcesRestClient.CreateUpdateCassandraTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, createUpdateCassandraTableParameters, cancellationToken);
+                var operation = new CassandraResourceCreateUpdateCassandraTableOperation(Parent, _clientDiagnostics, Pipeline, _cassandraResourcesRestClient.CreateCreateUpdateCassandraTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, createUpdateCassandraTableParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _cassandraResourcesRestClient.CreateUpdateCassandraTableAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, createUpdateCassandraTableParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CassandraResourceCreateUpdateCassandraTableOperation(Parent, _clientDiagnostics, Pipeline, _cassandraResourcesRestClient.CreateCreateUpdateCassandraTableRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, createUpdateCassandraTableParameters).Request, response);
+                var response = await _cassandraResourcesRestClient.CreateUpdateCassandraTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, createUpdateCassandraTableParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new CassandraResourceCreateUpdateCassandraTableOperation(Parent, _clientDiagnostics, Pipeline, _cassandraResourcesRestClient.CreateCreateUpdateCassandraTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, createUpdateCassandraTableParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _cassandraResourcesRestClient.GetCassandraTable(Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, cancellationToken);
+                var response = _cassandraResourcesRestClient.GetCassandraTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CassandraTable(Parent, response.Value), response.GetRawResponse());
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _cassandraResourcesRestClient.GetCassandraTableAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, cancellationToken).ConfigureAwait(false);
+                var response = await _cassandraResourcesRestClient.GetCassandraTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new CassandraTable(Parent, response.Value), response.GetRawResponse());
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _cassandraResourcesRestClient.GetCassandraTable(Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, cancellationToken: cancellationToken);
+                var response = _cassandraResourcesRestClient.GetCassandraTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<CassandraTable>(null, response.GetRawResponse())
                     : Response.FromValue(new CassandraTable(this, response.Value), response.GetRawResponse());
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _cassandraResourcesRestClient.GetCassandraTableAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _cassandraResourcesRestClient.GetCassandraTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<CassandraTable>(null, response.GetRawResponse())
                     : Response.FromValue(new CassandraTable(this, response.Value), response.GetRawResponse());
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _cassandraResourcesRestClient.ListCassandraTables(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _cassandraResourcesRestClient.ListCassandraTables(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new CassandraTable(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _cassandraResourcesRestClient.ListCassandraTablesAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _cassandraResourcesRestClient.ListCassandraTablesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new CassandraTable(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)

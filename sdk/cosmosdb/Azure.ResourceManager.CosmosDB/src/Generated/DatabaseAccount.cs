@@ -50,18 +50,18 @@ namespace Azure.ResourceManager.CosmosDB
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _databaseAccountsRestClient = new DatabaseAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _databaseRestClient = new DatabaseRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _collectionRestClient = new CollectionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _collectionRegionRestClient = new CollectionRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _databaseAccountRegionRestClient = new DatabaseAccountRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _percentileSourceTargetRestClient = new PercentileSourceTargetRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _percentileTargetRestClient = new PercentileTargetRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _percentileRestClient = new PercentileRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _collectionPartitionRegionRestClient = new CollectionPartitionRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _collectionPartitionRestClient = new CollectionPartitionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _partitionKeyRangeIdRestClient = new PartitionKeyRangeIdRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _partitionKeyRangeIdRegionRestClient = new PartitionKeyRangeIdRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _databaseAccountsRestClient = new DatabaseAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _databaseRestClient = new DatabaseRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _collectionRestClient = new CollectionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _collectionRegionRestClient = new CollectionRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _databaseAccountRegionRestClient = new DatabaseAccountRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _percentileSourceTargetRestClient = new PercentileSourceTargetRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _percentileTargetRestClient = new PercentileTargetRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _percentileRestClient = new PercentileRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _collectionPartitionRegionRestClient = new CollectionPartitionRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _collectionPartitionRestClient = new CollectionPartitionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _partitionKeyRangeIdRestClient = new PartitionKeyRangeIdRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _partitionKeyRangeIdRegionRestClient = new PartitionKeyRangeIdRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="DatabaseAccount"/> class. </summary>
@@ -70,18 +70,18 @@ namespace Azure.ResourceManager.CosmosDB
         internal DatabaseAccount(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _databaseAccountsRestClient = new DatabaseAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _databaseRestClient = new DatabaseRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _collectionRestClient = new CollectionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _collectionRegionRestClient = new CollectionRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _databaseAccountRegionRestClient = new DatabaseAccountRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _percentileSourceTargetRestClient = new PercentileSourceTargetRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _percentileTargetRestClient = new PercentileTargetRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _percentileRestClient = new PercentileRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _collectionPartitionRegionRestClient = new CollectionPartitionRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _collectionPartitionRestClient = new CollectionPartitionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _partitionKeyRangeIdRestClient = new PartitionKeyRangeIdRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _partitionKeyRangeIdRegionRestClient = new PartitionKeyRangeIdRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _databaseAccountsRestClient = new DatabaseAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _databaseRestClient = new DatabaseRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _collectionRestClient = new CollectionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _collectionRegionRestClient = new CollectionRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _databaseAccountRegionRestClient = new DatabaseAccountRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _percentileSourceTargetRestClient = new PercentileSourceTargetRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _percentileTargetRestClient = new PercentileTargetRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _percentileRestClient = new PercentileRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _collectionPartitionRegionRestClient = new CollectionPartitionRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _collectionPartitionRestClient = new CollectionPartitionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _partitionKeyRangeIdRestClient = new PartitionKeyRangeIdRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _partitionKeyRangeIdRegionRestClient = new PartitionKeyRangeIdRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="DatabaseAccount"/> class. </summary>
@@ -93,18 +93,18 @@ namespace Azure.ResourceManager.CosmosDB
         internal DatabaseAccount(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _databaseAccountsRestClient = new DatabaseAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _databaseRestClient = new DatabaseRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _collectionRestClient = new CollectionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _collectionRegionRestClient = new CollectionRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _databaseAccountRegionRestClient = new DatabaseAccountRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _percentileSourceTargetRestClient = new PercentileSourceTargetRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _percentileTargetRestClient = new PercentileTargetRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _percentileRestClient = new PercentileRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _collectionPartitionRegionRestClient = new CollectionPartitionRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _collectionPartitionRestClient = new CollectionPartitionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _partitionKeyRangeIdRestClient = new PartitionKeyRangeIdRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _partitionKeyRangeIdRegionRestClient = new PartitionKeyRangeIdRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _databaseAccountsRestClient = new DatabaseAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _databaseRestClient = new DatabaseRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _collectionRestClient = new CollectionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _collectionRegionRestClient = new CollectionRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _databaseAccountRegionRestClient = new DatabaseAccountRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _percentileSourceTargetRestClient = new PercentileSourceTargetRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _percentileTargetRestClient = new PercentileTargetRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _percentileRestClient = new PercentileRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _collectionPartitionRegionRestClient = new CollectionPartitionRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _collectionPartitionRestClient = new CollectionPartitionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _partitionKeyRangeIdRestClient = new PartitionKeyRangeIdRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _partitionKeyRangeIdRegionRestClient = new PartitionKeyRangeIdRegionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _databaseAccountsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _databaseAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new DatabaseAccount(this, response.Value), response.GetRawResponse());
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _databaseAccountsRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _databaseAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DatabaseAccount(this, response.Value), response.GetRawResponse());
@@ -193,8 +193,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _databaseAccountsRestClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DatabaseAccountDeleteOperation(_clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _databaseAccountsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new DatabaseAccountDeleteOperation(_clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -215,8 +215,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _databaseAccountsRestClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DatabaseAccountDeleteOperation(_clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _databaseAccountsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new DatabaseAccountDeleteOperation(_clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _databaseAccountsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _databaseAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DatabaseAccount(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _databaseAccountsRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var originalResponse = _databaseAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new DatabaseAccount(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _databaseAccountsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _databaseAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DatabaseAccount(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _databaseAccountsRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var originalResponse = _databaseAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new DatabaseAccount(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _databaseAccountsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _databaseAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DatabaseAccount(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _databaseAccountsRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var originalResponse = _databaseAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new DatabaseAccount(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -416,8 +416,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _databaseAccountsRestClient.UpdateAsync(Id.ResourceGroupName, Id.Name, updateParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new DatabaseAccountUpdateOperation(this, _clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, updateParameters).Request, response);
+                var response = await _databaseAccountsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new DatabaseAccountUpdateOperation(this, _clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -445,8 +445,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _databaseAccountsRestClient.Update(Id.ResourceGroupName, Id.Name, updateParameters, cancellationToken);
-                var operation = new DatabaseAccountUpdateOperation(this, _clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, updateParameters).Request, response);
+                var response = _databaseAccountsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateParameters, cancellationToken);
+                var operation = new DatabaseAccountUpdateOperation(this, _clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -474,8 +474,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _databaseAccountsRestClient.FailoverPriorityChangeAsync(Id.ResourceGroupName, Id.Name, failoverParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new DatabaseAccountFailoverPriorityChangeOperation(_clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateFailoverPriorityChangeRequest(Id.ResourceGroupName, Id.Name, failoverParameters).Request, response);
+                var response = await _databaseAccountsRestClient.FailoverPriorityChangeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, failoverParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new DatabaseAccountFailoverPriorityChangeOperation(_clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateFailoverPriorityChangeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, failoverParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -503,8 +503,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _databaseAccountsRestClient.FailoverPriorityChange(Id.ResourceGroupName, Id.Name, failoverParameters, cancellationToken);
-                var operation = new DatabaseAccountFailoverPriorityChangeOperation(_clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateFailoverPriorityChangeRequest(Id.ResourceGroupName, Id.Name, failoverParameters).Request, response);
+                var response = _databaseAccountsRestClient.FailoverPriorityChange(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, failoverParameters, cancellationToken);
+                var operation = new DatabaseAccountFailoverPriorityChangeOperation(_clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateFailoverPriorityChangeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, failoverParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _databaseAccountsRestClient.ListKeysAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _databaseAccountsRestClient.ListKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _databaseAccountsRestClient.ListKeys(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _databaseAccountsRestClient.ListKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _databaseAccountsRestClient.ListConnectionStringsAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _databaseAccountsRestClient.ListConnectionStringsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _databaseAccountsRestClient.ListConnectionStrings(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _databaseAccountsRestClient.ListConnectionStrings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -604,8 +604,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _databaseAccountsRestClient.OfflineRegionAsync(Id.ResourceGroupName, Id.Name, regionParameterForOffline, cancellationToken).ConfigureAwait(false);
-                var operation = new DatabaseAccountOfflineRegionOperation(_clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateOfflineRegionRequest(Id.ResourceGroupName, Id.Name, regionParameterForOffline).Request, response);
+                var response = await _databaseAccountsRestClient.OfflineRegionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regionParameterForOffline, cancellationToken).ConfigureAwait(false);
+                var operation = new DatabaseAccountOfflineRegionOperation(_clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateOfflineRegionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regionParameterForOffline).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -633,8 +633,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _databaseAccountsRestClient.OfflineRegion(Id.ResourceGroupName, Id.Name, regionParameterForOffline, cancellationToken);
-                var operation = new DatabaseAccountOfflineRegionOperation(_clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateOfflineRegionRequest(Id.ResourceGroupName, Id.Name, regionParameterForOffline).Request, response);
+                var response = _databaseAccountsRestClient.OfflineRegion(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regionParameterForOffline, cancellationToken);
+                var operation = new DatabaseAccountOfflineRegionOperation(_clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateOfflineRegionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regionParameterForOffline).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -662,8 +662,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _databaseAccountsRestClient.OnlineRegionAsync(Id.ResourceGroupName, Id.Name, regionParameterForOnline, cancellationToken).ConfigureAwait(false);
-                var operation = new DatabaseAccountOnlineRegionOperation(_clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateOnlineRegionRequest(Id.ResourceGroupName, Id.Name, regionParameterForOnline).Request, response);
+                var response = await _databaseAccountsRestClient.OnlineRegionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regionParameterForOnline, cancellationToken).ConfigureAwait(false);
+                var operation = new DatabaseAccountOnlineRegionOperation(_clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateOnlineRegionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regionParameterForOnline).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -691,8 +691,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _databaseAccountsRestClient.OnlineRegion(Id.ResourceGroupName, Id.Name, regionParameterForOnline, cancellationToken);
-                var operation = new DatabaseAccountOnlineRegionOperation(_clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateOnlineRegionRequest(Id.ResourceGroupName, Id.Name, regionParameterForOnline).Request, response);
+                var response = _databaseAccountsRestClient.OnlineRegion(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regionParameterForOnline, cancellationToken);
+                var operation = new DatabaseAccountOnlineRegionOperation(_clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateOnlineRegionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regionParameterForOnline).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _databaseAccountsRestClient.ListReadOnlyKeysAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _databaseAccountsRestClient.ListReadOnlyKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _databaseAccountsRestClient.ListReadOnlyKeys(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _databaseAccountsRestClient.ListReadOnlyKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -756,8 +756,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _databaseAccountsRestClient.RegenerateKeyAsync(Id.ResourceGroupName, Id.Name, keyToRegenerate, cancellationToken).ConfigureAwait(false);
-                var operation = new DatabaseAccountRegenerateKeyOperation(_clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateRegenerateKeyRequest(Id.ResourceGroupName, Id.Name, keyToRegenerate).Request, response);
+                var response = await _databaseAccountsRestClient.RegenerateKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyToRegenerate, cancellationToken).ConfigureAwait(false);
+                var operation = new DatabaseAccountRegenerateKeyOperation(_clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyToRegenerate).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -785,8 +785,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _databaseAccountsRestClient.RegenerateKey(Id.ResourceGroupName, Id.Name, keyToRegenerate, cancellationToken);
-                var operation = new DatabaseAccountRegenerateKeyOperation(_clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateRegenerateKeyRequest(Id.ResourceGroupName, Id.Name, keyToRegenerate).Request, response);
+                var response = _databaseAccountsRestClient.RegenerateKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyToRegenerate, cancellationToken);
+                var operation = new DatabaseAccountRegenerateKeyOperation(_clientDiagnostics, Pipeline, _databaseAccountsRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyToRegenerate).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -815,7 +815,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _databaseAccountsRestClient.ListMetricsAsync(Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _databaseAccountsRestClient.ListMetricsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -844,7 +844,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _databaseAccountsRestClient.ListMetrics(Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
+                    var response = _databaseAccountsRestClient.ListMetrics(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -868,7 +868,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _databaseAccountsRestClient.ListUsagesAsync(Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _databaseAccountsRestClient.ListUsagesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -892,7 +892,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _databaseAccountsRestClient.ListUsages(Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
+                    var response = _databaseAccountsRestClient.ListUsages(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -915,7 +915,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _databaseAccountsRestClient.ListMetricDefinitionsAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _databaseAccountsRestClient.ListMetricDefinitionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -938,7 +938,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _databaseAccountsRestClient.ListMetricDefinitions(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _databaseAccountsRestClient.ListMetricDefinitions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -972,7 +972,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _databaseRestClient.ListMetricsAsync(Id.ResourceGroupName, Id.Name, databaseRid, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _databaseRestClient.ListMetricsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1006,7 +1006,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _databaseRestClient.ListMetrics(Id.ResourceGroupName, Id.Name, databaseRid, filter, cancellationToken: cancellationToken);
+                    var response = _databaseRestClient.ListMetrics(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1036,7 +1036,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _databaseRestClient.ListUsagesAsync(Id.ResourceGroupName, Id.Name, databaseRid, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _databaseRestClient.ListUsagesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1066,7 +1066,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _databaseRestClient.ListUsages(Id.ResourceGroupName, Id.Name, databaseRid, filter, cancellationToken: cancellationToken);
+                    var response = _databaseRestClient.ListUsages(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1095,7 +1095,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _databaseRestClient.ListMetricDefinitionsAsync(Id.ResourceGroupName, Id.Name, databaseRid, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _databaseRestClient.ListMetricDefinitionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1124,7 +1124,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _databaseRestClient.ListMetricDefinitions(Id.ResourceGroupName, Id.Name, databaseRid, cancellationToken: cancellationToken);
+                    var response = _databaseRestClient.ListMetricDefinitions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1163,7 +1163,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _collectionRestClient.ListMetricsAsync(Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _collectionRestClient.ListMetricsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1202,7 +1202,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _collectionRestClient.ListMetrics(Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter, cancellationToken: cancellationToken);
+                    var response = _collectionRestClient.ListMetrics(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1237,7 +1237,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _collectionRestClient.ListUsagesAsync(Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _collectionRestClient.ListUsagesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1272,7 +1272,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _collectionRestClient.ListUsages(Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter, cancellationToken: cancellationToken);
+                    var response = _collectionRestClient.ListUsages(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1306,7 +1306,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _collectionRestClient.ListMetricDefinitionsAsync(Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _collectionRestClient.ListMetricDefinitionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1340,7 +1340,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _collectionRestClient.ListMetricDefinitions(Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, cancellationToken: cancellationToken);
+                    var response = _collectionRestClient.ListMetricDefinitions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1384,7 +1384,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _collectionRegionRestClient.ListMetricsAsync(Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _collectionRegionRestClient.ListMetricsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1428,7 +1428,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _collectionRegionRestClient.ListMetrics(Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, filter, cancellationToken: cancellationToken);
+                    var response = _collectionRegionRestClient.ListMetrics(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1462,7 +1462,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _databaseAccountRegionRestClient.ListMetricsAsync(Id.ResourceGroupName, Id.Name, region, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _databaseAccountRegionRestClient.ListMetricsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, region, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1496,7 +1496,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _databaseAccountRegionRestClient.ListMetrics(Id.ResourceGroupName, Id.Name, region, filter, cancellationToken: cancellationToken);
+                    var response = _databaseAccountRegionRestClient.ListMetrics(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, region, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1535,7 +1535,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _percentileSourceTargetRestClient.ListMetricsAsync(Id.ResourceGroupName, Id.Name, sourceRegion, targetRegion, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _percentileSourceTargetRestClient.ListMetricsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceRegion, targetRegion, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1574,7 +1574,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _percentileSourceTargetRestClient.ListMetrics(Id.ResourceGroupName, Id.Name, sourceRegion, targetRegion, filter, cancellationToken: cancellationToken);
+                    var response = _percentileSourceTargetRestClient.ListMetrics(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceRegion, targetRegion, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1608,7 +1608,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _percentileTargetRestClient.ListMetricsAsync(Id.ResourceGroupName, Id.Name, targetRegion, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _percentileTargetRestClient.ListMetricsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, targetRegion, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1642,7 +1642,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _percentileTargetRestClient.ListMetrics(Id.ResourceGroupName, Id.Name, targetRegion, filter, cancellationToken: cancellationToken);
+                    var response = _percentileTargetRestClient.ListMetrics(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, targetRegion, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1671,7 +1671,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _percentileRestClient.ListMetricsAsync(Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _percentileRestClient.ListMetricsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1700,7 +1700,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _percentileRestClient.ListMetrics(Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
+                    var response = _percentileRestClient.ListMetrics(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1744,7 +1744,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _collectionPartitionRegionRestClient.ListMetricsAsync(Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _collectionPartitionRegionRestClient.ListMetricsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1788,7 +1788,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _collectionPartitionRegionRestClient.ListMetrics(Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, filter, cancellationToken: cancellationToken);
+                    var response = _collectionPartitionRegionRestClient.ListMetrics(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1827,7 +1827,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _collectionPartitionRestClient.ListMetricsAsync(Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _collectionPartitionRestClient.ListMetricsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1866,7 +1866,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _collectionPartitionRestClient.ListMetrics(Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter, cancellationToken: cancellationToken);
+                    var response = _collectionPartitionRestClient.ListMetrics(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1901,7 +1901,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _collectionPartitionRestClient.ListUsagesAsync(Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _collectionPartitionRestClient.ListUsagesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1936,7 +1936,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _collectionPartitionRestClient.ListUsages(Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter, cancellationToken: cancellationToken);
+                    var response = _collectionPartitionRestClient.ListUsages(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1980,7 +1980,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _partitionKeyRangeIdRestClient.ListMetricsAsync(Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, partitionKeyRangeId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _partitionKeyRangeIdRestClient.ListMetricsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, partitionKeyRangeId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -2024,7 +2024,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _partitionKeyRangeIdRestClient.ListMetrics(Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, partitionKeyRangeId, filter, cancellationToken: cancellationToken);
+                    var response = _partitionKeyRangeIdRestClient.ListMetrics(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, partitionKeyRangeId, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -2073,7 +2073,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _partitionKeyRangeIdRegionRestClient.ListMetricsAsync(Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, partitionKeyRangeId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _partitionKeyRangeIdRegionRestClient.ListMetricsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, partitionKeyRangeId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -2122,7 +2122,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _partitionKeyRangeIdRegionRestClient.ListMetrics(Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, partitionKeyRangeId, filter, cancellationToken: cancellationToken);
+                    var response = _partitionKeyRangeIdRegionRestClient.ListMetrics(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, partitionKeyRangeId, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)

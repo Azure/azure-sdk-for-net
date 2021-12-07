@@ -45,13 +45,13 @@ namespace Azure.ResourceManager.CosmosDB
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restorableDatabaseAccountsRestClient = new RestorableDatabaseAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _restorableSqlDatabasesRestClient = new RestorableSqlDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _restorableSqlContainersRestClient = new RestorableSqlContainersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _restorableSqlResourcesRestClient = new RestorableSqlResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _restorableMongodbDatabasesRestClient = new RestorableMongodbDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _restorableMongodbCollectionsRestClient = new RestorableMongodbCollectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _restorableMongodbResourcesRestClient = new RestorableMongodbResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _restorableDatabaseAccountsRestClient = new RestorableDatabaseAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _restorableSqlDatabasesRestClient = new RestorableSqlDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _restorableSqlContainersRestClient = new RestorableSqlContainersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _restorableSqlResourcesRestClient = new RestorableSqlResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _restorableMongodbDatabasesRestClient = new RestorableMongodbDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _restorableMongodbCollectionsRestClient = new RestorableMongodbCollectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _restorableMongodbResourcesRestClient = new RestorableMongodbResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="RestorableDatabaseAccount"/> class. </summary>
@@ -60,13 +60,13 @@ namespace Azure.ResourceManager.CosmosDB
         internal RestorableDatabaseAccount(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restorableDatabaseAccountsRestClient = new RestorableDatabaseAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _restorableSqlDatabasesRestClient = new RestorableSqlDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _restorableSqlContainersRestClient = new RestorableSqlContainersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _restorableSqlResourcesRestClient = new RestorableSqlResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _restorableMongodbDatabasesRestClient = new RestorableMongodbDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _restorableMongodbCollectionsRestClient = new RestorableMongodbCollectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _restorableMongodbResourcesRestClient = new RestorableMongodbResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _restorableDatabaseAccountsRestClient = new RestorableDatabaseAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _restorableSqlDatabasesRestClient = new RestorableSqlDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _restorableSqlContainersRestClient = new RestorableSqlContainersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _restorableSqlResourcesRestClient = new RestorableSqlResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _restorableMongodbDatabasesRestClient = new RestorableMongodbDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _restorableMongodbCollectionsRestClient = new RestorableMongodbCollectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _restorableMongodbResourcesRestClient = new RestorableMongodbResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="RestorableDatabaseAccount"/> class. </summary>
@@ -78,13 +78,13 @@ namespace Azure.ResourceManager.CosmosDB
         internal RestorableDatabaseAccount(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restorableDatabaseAccountsRestClient = new RestorableDatabaseAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _restorableSqlDatabasesRestClient = new RestorableSqlDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _restorableSqlContainersRestClient = new RestorableSqlContainersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _restorableSqlResourcesRestClient = new RestorableSqlResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _restorableMongodbDatabasesRestClient = new RestorableMongodbDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _restorableMongodbCollectionsRestClient = new RestorableMongodbCollectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _restorableMongodbResourcesRestClient = new RestorableMongodbResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _restorableDatabaseAccountsRestClient = new RestorableDatabaseAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _restorableSqlDatabasesRestClient = new RestorableSqlDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _restorableSqlContainersRestClient = new RestorableSqlContainersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _restorableSqlResourcesRestClient = new RestorableSqlResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _restorableMongodbDatabasesRestClient = new RestorableMongodbDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _restorableMongodbCollectionsRestClient = new RestorableMongodbCollectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _restorableMongodbResourcesRestClient = new RestorableMongodbResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _restorableDatabaseAccountsRestClient.GetByLocationAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restorableDatabaseAccountsRestClient.GetByLocationAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new RestorableDatabaseAccount(this, response.Value), response.GetRawResponse());
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _restorableDatabaseAccountsRestClient.GetByLocation(Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _restorableDatabaseAccountsRestClient.GetByLocation(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RestorableDatabaseAccount(this, response.Value), response.GetRawResponse());
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _restorableSqlDatabasesRestClient.ListAsync(Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restorableSqlDatabasesRestClient.ListAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _restorableSqlDatabasesRestClient.List(Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _restorableSqlDatabasesRestClient.List(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _restorableSqlContainersRestClient.ListAsync(Id.Parent.Name, Id.Name, restorableSqlDatabaseRid, startTime, endTime, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restorableSqlContainersRestClient.ListAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, restorableSqlDatabaseRid, startTime, endTime, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _restorableSqlContainersRestClient.List(Id.Parent.Name, Id.Name, restorableSqlDatabaseRid, startTime, endTime, cancellationToken: cancellationToken);
+                    var response = _restorableSqlContainersRestClient.List(Id.SubscriptionId, Id.Parent.Name, Id.Name, restorableSqlDatabaseRid, startTime, endTime, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _restorableSqlResourcesRestClient.ListAsync(Id.Parent.Name, Id.Name, restoreLocation, restoreTimestampInUtc, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restorableSqlResourcesRestClient.ListAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, restoreLocation, restoreTimestampInUtc, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _restorableSqlResourcesRestClient.List(Id.Parent.Name, Id.Name, restoreLocation, restoreTimestampInUtc, cancellationToken: cancellationToken);
+                    var response = _restorableSqlResourcesRestClient.List(Id.SubscriptionId, Id.Parent.Name, Id.Name, restoreLocation, restoreTimestampInUtc, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _restorableMongodbDatabasesRestClient.ListAsync(Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restorableMongodbDatabasesRestClient.ListAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _restorableMongodbDatabasesRestClient.List(Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _restorableMongodbDatabasesRestClient.List(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _restorableMongodbCollectionsRestClient.ListAsync(Id.Parent.Name, Id.Name, restorableMongodbDatabaseRid, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restorableMongodbCollectionsRestClient.ListAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, restorableMongodbDatabaseRid, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _restorableMongodbCollectionsRestClient.List(Id.Parent.Name, Id.Name, restorableMongodbDatabaseRid, cancellationToken: cancellationToken);
+                    var response = _restorableMongodbCollectionsRestClient.List(Id.SubscriptionId, Id.Parent.Name, Id.Name, restorableMongodbDatabaseRid, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _restorableMongodbResourcesRestClient.ListAsync(Id.Parent.Name, Id.Name, restoreLocation, restoreTimestampInUtc, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restorableMongodbResourcesRestClient.ListAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, restoreLocation, restoreTimestampInUtc, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _restorableMongodbResourcesRestClient.List(Id.Parent.Name, Id.Name, restoreLocation, restoreTimestampInUtc, cancellationToken: cancellationToken);
+                    var response = _restorableMongodbResourcesRestClient.List(Id.SubscriptionId, Id.Parent.Name, Id.Name, restoreLocation, restoreTimestampInUtc, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)

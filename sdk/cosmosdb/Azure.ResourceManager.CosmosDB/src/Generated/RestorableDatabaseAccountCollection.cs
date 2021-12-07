@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CosmosDB
         internal RestorableDatabaseAccountCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restorableDatabaseAccountsRestClient = new RestorableDatabaseAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _restorableDatabaseAccountsRestClient = new RestorableDatabaseAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _restorableDatabaseAccountsRestClient.GetByLocation(location, instanceId, cancellationToken);
+                var response = _restorableDatabaseAccountsRestClient.GetByLocation(Id.SubscriptionId, location, instanceId, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RestorableDatabaseAccount(Parent, response.Value), response.GetRawResponse());
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _restorableDatabaseAccountsRestClient.GetByLocationAsync(location, instanceId, cancellationToken).ConfigureAwait(false);
+                var response = await _restorableDatabaseAccountsRestClient.GetByLocationAsync(Id.SubscriptionId, location, instanceId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new RestorableDatabaseAccount(Parent, response.Value), response.GetRawResponse());
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _restorableDatabaseAccountsRestClient.GetByLocation(location, instanceId, cancellationToken: cancellationToken);
+                var response = _restorableDatabaseAccountsRestClient.GetByLocation(Id.SubscriptionId, location, instanceId, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<RestorableDatabaseAccount>(null, response.GetRawResponse())
                     : Response.FromValue(new RestorableDatabaseAccount(this, response.Value), response.GetRawResponse());
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _restorableDatabaseAccountsRestClient.GetByLocationAsync(location, instanceId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _restorableDatabaseAccountsRestClient.GetByLocationAsync(Id.SubscriptionId, location, instanceId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<RestorableDatabaseAccount>(null, response.GetRawResponse())
                     : Response.FromValue(new RestorableDatabaseAccount(this, response.Value), response.GetRawResponse());
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _restorableDatabaseAccountsRestClient.ListByLocation(location, cancellationToken: cancellationToken);
+                    var response = _restorableDatabaseAccountsRestClient.ListByLocation(Id.SubscriptionId, location, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new RestorableDatabaseAccount(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _restorableDatabaseAccountsRestClient.ListByLocationAsync(location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restorableDatabaseAccountsRestClient.ListByLocationAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new RestorableDatabaseAccount(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB
         internal MongoDBCollectionCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _mongoDBResourcesRestClient = new MongoDBResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _mongoDBResourcesRestClient = new MongoDBResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _mongoDBResourcesRestClient.CreateUpdateMongoDBCollection(Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, createUpdateMongoDBCollectionParameters, cancellationToken);
-                var operation = new MongoDBResourceCreateUpdateMongoDBCollectionOperation(Parent, _clientDiagnostics, Pipeline, _mongoDBResourcesRestClient.CreateCreateUpdateMongoDBCollectionRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, createUpdateMongoDBCollectionParameters).Request, response);
+                var response = _mongoDBResourcesRestClient.CreateUpdateMongoDBCollection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, createUpdateMongoDBCollectionParameters, cancellationToken);
+                var operation = new MongoDBResourceCreateUpdateMongoDBCollectionOperation(Parent, _clientDiagnostics, Pipeline, _mongoDBResourcesRestClient.CreateCreateUpdateMongoDBCollectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, createUpdateMongoDBCollectionParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _mongoDBResourcesRestClient.CreateUpdateMongoDBCollectionAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, createUpdateMongoDBCollectionParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new MongoDBResourceCreateUpdateMongoDBCollectionOperation(Parent, _clientDiagnostics, Pipeline, _mongoDBResourcesRestClient.CreateCreateUpdateMongoDBCollectionRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, createUpdateMongoDBCollectionParameters).Request, response);
+                var response = await _mongoDBResourcesRestClient.CreateUpdateMongoDBCollectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, createUpdateMongoDBCollectionParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new MongoDBResourceCreateUpdateMongoDBCollectionOperation(Parent, _clientDiagnostics, Pipeline, _mongoDBResourcesRestClient.CreateCreateUpdateMongoDBCollectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, createUpdateMongoDBCollectionParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _mongoDBResourcesRestClient.GetMongoDBCollection(Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, cancellationToken);
+                var response = _mongoDBResourcesRestClient.GetMongoDBCollection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MongoDBCollection(Parent, response.Value), response.GetRawResponse());
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _mongoDBResourcesRestClient.GetMongoDBCollectionAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, cancellationToken).ConfigureAwait(false);
+                var response = await _mongoDBResourcesRestClient.GetMongoDBCollectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new MongoDBCollection(Parent, response.Value), response.GetRawResponse());
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _mongoDBResourcesRestClient.GetMongoDBCollection(Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, cancellationToken: cancellationToken);
+                var response = _mongoDBResourcesRestClient.GetMongoDBCollection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<MongoDBCollection>(null, response.GetRawResponse())
                     : Response.FromValue(new MongoDBCollection(this, response.Value), response.GetRawResponse());
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _mongoDBResourcesRestClient.GetMongoDBCollectionAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _mongoDBResourcesRestClient.GetMongoDBCollectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<MongoDBCollection>(null, response.GetRawResponse())
                     : Response.FromValue(new MongoDBCollection(this, response.Value), response.GetRawResponse());
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _mongoDBResourcesRestClient.ListMongoDBCollections(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _mongoDBResourcesRestClient.ListMongoDBCollections(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new MongoDBCollection(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _mongoDBResourcesRestClient.ListMongoDBCollectionsAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _mongoDBResourcesRestClient.ListMongoDBCollectionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new MongoDBCollection(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)

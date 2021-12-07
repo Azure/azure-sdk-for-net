@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.CosmosDB
 {
     internal partial class SqlResourcesRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
@@ -30,13 +29,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public SqlResourcesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-06-15")
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public SqlResourcesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null, string apiVersion = "2021-06-15")
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateListSqlDatabasesRequest(string resourceGroupName, string accountName)
+        internal HttpMessage CreateListSqlDatabasesRequest(string subscriptionId, string resourceGroupName, string accountName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -66,12 +63,17 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Lists the SQL databases under an existing Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public async Task<Response<SqlDatabaseList>> ListSqlDatabasesAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public async Task<Response<SqlDatabaseList>> ListSqlDatabasesAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -81,7 +83,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateListSqlDatabasesRequest(resourceGroupName, accountName);
+            using var message = CreateListSqlDatabasesRequest(subscriptionId, resourceGroupName, accountName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -98,12 +100,17 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Lists the SQL databases under an existing Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public Response<SqlDatabaseList> ListSqlDatabases(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public Response<SqlDatabaseList> ListSqlDatabases(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -113,7 +120,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateListSqlDatabasesRequest(resourceGroupName, accountName);
+            using var message = CreateListSqlDatabasesRequest(subscriptionId, resourceGroupName, accountName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -129,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateGetSqlDatabaseRequest(string resourceGroupName, string accountName, string databaseName)
+        internal HttpMessage CreateGetSqlDatabaseRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -152,13 +159,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the SQL database under an existing Azure Cosmos DB database account with the provided name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public async Task<Response<SqlDatabaseData>> GetSqlDatabaseAsync(string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
+        public async Task<Response<SqlDatabaseData>> GetSqlDatabaseAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -172,7 +184,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateGetSqlDatabaseRequest(resourceGroupName, accountName, databaseName);
+            using var message = CreateGetSqlDatabaseRequest(subscriptionId, resourceGroupName, accountName, databaseName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -191,13 +203,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the SQL database under an existing Azure Cosmos DB database account with the provided name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public Response<SqlDatabaseData> GetSqlDatabase(string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
+        public Response<SqlDatabaseData> GetSqlDatabase(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -211,7 +228,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateGetSqlDatabaseRequest(resourceGroupName, accountName, databaseName);
+            using var message = CreateGetSqlDatabaseRequest(subscriptionId, resourceGroupName, accountName, databaseName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -229,7 +246,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateCreateUpdateSqlDatabaseRequest(string resourceGroupName, string accountName, string databaseName, SqlDatabaseCreateUpdateOptions createUpdateSqlDatabaseParameters)
+        internal HttpMessage CreateCreateUpdateSqlDatabaseRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, SqlDatabaseCreateUpdateOptions createUpdateSqlDatabaseParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -256,14 +273,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Create or update an Azure Cosmos DB SQL database. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="createUpdateSqlDatabaseParameters"> The parameters to provide for the current SQL database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="createUpdateSqlDatabaseParameters"/> is null. </exception>
-        public async Task<Response> CreateUpdateSqlDatabaseAsync(string resourceGroupName, string accountName, string databaseName, SqlDatabaseCreateUpdateOptions createUpdateSqlDatabaseParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="createUpdateSqlDatabaseParameters"/> is null. </exception>
+        public async Task<Response> CreateUpdateSqlDatabaseAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, SqlDatabaseCreateUpdateOptions createUpdateSqlDatabaseParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -281,7 +303,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(createUpdateSqlDatabaseParameters));
             }
 
-            using var message = CreateCreateUpdateSqlDatabaseRequest(resourceGroupName, accountName, databaseName, createUpdateSqlDatabaseParameters);
+            using var message = CreateCreateUpdateSqlDatabaseRequest(subscriptionId, resourceGroupName, accountName, databaseName, createUpdateSqlDatabaseParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -294,14 +316,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Create or update an Azure Cosmos DB SQL database. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="createUpdateSqlDatabaseParameters"> The parameters to provide for the current SQL database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="createUpdateSqlDatabaseParameters"/> is null. </exception>
-        public Response CreateUpdateSqlDatabase(string resourceGroupName, string accountName, string databaseName, SqlDatabaseCreateUpdateOptions createUpdateSqlDatabaseParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="createUpdateSqlDatabaseParameters"/> is null. </exception>
+        public Response CreateUpdateSqlDatabase(string subscriptionId, string resourceGroupName, string accountName, string databaseName, SqlDatabaseCreateUpdateOptions createUpdateSqlDatabaseParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -319,7 +346,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(createUpdateSqlDatabaseParameters));
             }
 
-            using var message = CreateCreateUpdateSqlDatabaseRequest(resourceGroupName, accountName, databaseName, createUpdateSqlDatabaseParameters);
+            using var message = CreateCreateUpdateSqlDatabaseRequest(subscriptionId, resourceGroupName, accountName, databaseName, createUpdateSqlDatabaseParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -331,7 +358,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateDeleteSqlDatabaseRequest(string resourceGroupName, string accountName, string databaseName)
+        internal HttpMessage CreateDeleteSqlDatabaseRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -353,13 +380,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Deletes an existing Azure Cosmos DB SQL database. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public async Task<Response> DeleteSqlDatabaseAsync(string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
+        public async Task<Response> DeleteSqlDatabaseAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -373,7 +405,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateDeleteSqlDatabaseRequest(resourceGroupName, accountName, databaseName);
+            using var message = CreateDeleteSqlDatabaseRequest(subscriptionId, resourceGroupName, accountName, databaseName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -386,13 +418,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Deletes an existing Azure Cosmos DB SQL database. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public Response DeleteSqlDatabase(string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
+        public Response DeleteSqlDatabase(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -406,7 +443,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateDeleteSqlDatabaseRequest(resourceGroupName, accountName, databaseName);
+            using var message = CreateDeleteSqlDatabaseRequest(subscriptionId, resourceGroupName, accountName, databaseName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -418,7 +455,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateGetSqlDatabaseThroughputRequest(string resourceGroupName, string accountName, string databaseName)
+        internal HttpMessage CreateGetSqlDatabaseThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -442,13 +479,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the RUs per second of the SQL database under an existing Azure Cosmos DB database account with the provided name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public async Task<Response<ThroughputSettingsData>> GetSqlDatabaseThroughputAsync(string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
+        public async Task<Response<ThroughputSettingsData>> GetSqlDatabaseThroughputAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -462,7 +504,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateGetSqlDatabaseThroughputRequest(resourceGroupName, accountName, databaseName);
+            using var message = CreateGetSqlDatabaseThroughputRequest(subscriptionId, resourceGroupName, accountName, databaseName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -481,13 +523,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the RUs per second of the SQL database under an existing Azure Cosmos DB database account with the provided name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public Response<ThroughputSettingsData> GetSqlDatabaseThroughput(string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
+        public Response<ThroughputSettingsData> GetSqlDatabaseThroughput(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -501,7 +548,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateGetSqlDatabaseThroughputRequest(resourceGroupName, accountName, databaseName);
+            using var message = CreateGetSqlDatabaseThroughputRequest(subscriptionId, resourceGroupName, accountName, databaseName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -519,7 +566,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateUpdateSqlDatabaseThroughputRequest(string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateOptions updateThroughputParameters)
+        internal HttpMessage CreateUpdateSqlDatabaseThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateOptions updateThroughputParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -547,14 +594,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Update RUs per second of an Azure Cosmos DB SQL database. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="updateThroughputParameters"> The parameters to provide for the RUs per second of the current SQL database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="updateThroughputParameters"/> is null. </exception>
-        public async Task<Response> UpdateSqlDatabaseThroughputAsync(string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="updateThroughputParameters"/> is null. </exception>
+        public async Task<Response> UpdateSqlDatabaseThroughputAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -572,7 +624,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(updateThroughputParameters));
             }
 
-            using var message = CreateUpdateSqlDatabaseThroughputRequest(resourceGroupName, accountName, databaseName, updateThroughputParameters);
+            using var message = CreateUpdateSqlDatabaseThroughputRequest(subscriptionId, resourceGroupName, accountName, databaseName, updateThroughputParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -585,14 +637,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Update RUs per second of an Azure Cosmos DB SQL database. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="updateThroughputParameters"> The parameters to provide for the RUs per second of the current SQL database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="updateThroughputParameters"/> is null. </exception>
-        public Response UpdateSqlDatabaseThroughput(string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="updateThroughputParameters"/> is null. </exception>
+        public Response UpdateSqlDatabaseThroughput(string subscriptionId, string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -610,7 +667,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(updateThroughputParameters));
             }
 
-            using var message = CreateUpdateSqlDatabaseThroughputRequest(resourceGroupName, accountName, databaseName, updateThroughputParameters);
+            using var message = CreateUpdateSqlDatabaseThroughputRequest(subscriptionId, resourceGroupName, accountName, databaseName, updateThroughputParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -622,7 +679,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateMigrateSqlDatabaseToAutoscaleRequest(string resourceGroupName, string accountName, string databaseName)
+        internal HttpMessage CreateMigrateSqlDatabaseToAutoscaleRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -646,13 +703,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Migrate an Azure Cosmos DB SQL database from manual throughput to autoscale. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public async Task<Response> MigrateSqlDatabaseToAutoscaleAsync(string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
+        public async Task<Response> MigrateSqlDatabaseToAutoscaleAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -666,7 +728,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateMigrateSqlDatabaseToAutoscaleRequest(resourceGroupName, accountName, databaseName);
+            using var message = CreateMigrateSqlDatabaseToAutoscaleRequest(subscriptionId, resourceGroupName, accountName, databaseName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -679,13 +741,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Migrate an Azure Cosmos DB SQL database from manual throughput to autoscale. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public Response MigrateSqlDatabaseToAutoscale(string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
+        public Response MigrateSqlDatabaseToAutoscale(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -699,7 +766,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateMigrateSqlDatabaseToAutoscaleRequest(resourceGroupName, accountName, databaseName);
+            using var message = CreateMigrateSqlDatabaseToAutoscaleRequest(subscriptionId, resourceGroupName, accountName, databaseName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -711,7 +778,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateMigrateSqlDatabaseToManualThroughputRequest(string resourceGroupName, string accountName, string databaseName)
+        internal HttpMessage CreateMigrateSqlDatabaseToManualThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -735,13 +802,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Migrate an Azure Cosmos DB SQL database from autoscale to manual throughput. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public async Task<Response> MigrateSqlDatabaseToManualThroughputAsync(string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
+        public async Task<Response> MigrateSqlDatabaseToManualThroughputAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -755,7 +827,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateMigrateSqlDatabaseToManualThroughputRequest(resourceGroupName, accountName, databaseName);
+            using var message = CreateMigrateSqlDatabaseToManualThroughputRequest(subscriptionId, resourceGroupName, accountName, databaseName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -768,13 +840,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Migrate an Azure Cosmos DB SQL database from autoscale to manual throughput. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public Response MigrateSqlDatabaseToManualThroughput(string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
+        public Response MigrateSqlDatabaseToManualThroughput(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -788,7 +865,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateMigrateSqlDatabaseToManualThroughputRequest(resourceGroupName, accountName, databaseName);
+            using var message = CreateMigrateSqlDatabaseToManualThroughputRequest(subscriptionId, resourceGroupName, accountName, databaseName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -800,7 +877,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateListSqlContainersRequest(string resourceGroupName, string accountName, string databaseName)
+        internal HttpMessage CreateListSqlContainersRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -824,13 +901,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Lists the SQL container under an existing Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public async Task<Response<SqlContainerList>> ListSqlContainersAsync(string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
+        public async Task<Response<SqlContainerList>> ListSqlContainersAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -844,7 +926,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateListSqlContainersRequest(resourceGroupName, accountName, databaseName);
+            using var message = CreateListSqlContainersRequest(subscriptionId, resourceGroupName, accountName, databaseName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -861,13 +943,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Lists the SQL container under an existing Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public Response<SqlContainerList> ListSqlContainers(string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseName"/> is null. </exception>
+        public Response<SqlContainerList> ListSqlContainers(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -881,7 +968,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateListSqlContainersRequest(resourceGroupName, accountName, databaseName);
+            using var message = CreateListSqlContainersRequest(subscriptionId, resourceGroupName, accountName, databaseName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -897,7 +984,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateGetSqlContainerRequest(string resourceGroupName, string accountName, string databaseName, string containerName)
+        internal HttpMessage CreateGetSqlContainerRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -922,14 +1009,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the SQL container under an existing Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="containerName"/> is null. </exception>
-        public async Task<Response<SqlContainerData>> GetSqlContainerAsync(string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="containerName"/> is null. </exception>
+        public async Task<Response<SqlContainerData>> GetSqlContainerAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -947,7 +1039,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(containerName));
             }
 
-            using var message = CreateGetSqlContainerRequest(resourceGroupName, accountName, databaseName, containerName);
+            using var message = CreateGetSqlContainerRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -966,14 +1058,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the SQL container under an existing Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="containerName"/> is null. </exception>
-        public Response<SqlContainerData> GetSqlContainer(string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="containerName"/> is null. </exception>
+        public Response<SqlContainerData> GetSqlContainer(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -991,7 +1088,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(containerName));
             }
 
-            using var message = CreateGetSqlContainerRequest(resourceGroupName, accountName, databaseName, containerName);
+            using var message = CreateGetSqlContainerRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1009,7 +1106,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateCreateUpdateSqlContainerRequest(string resourceGroupName, string accountName, string databaseName, string containerName, SqlContainerCreateUpdateOptions createUpdateSqlContainerParameters)
+        internal HttpMessage CreateCreateUpdateSqlContainerRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, SqlContainerCreateUpdateOptions createUpdateSqlContainerParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1038,15 +1135,20 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Create or update an Azure Cosmos DB SQL container. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="createUpdateSqlContainerParameters"> The parameters to provide for the current SQL container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="createUpdateSqlContainerParameters"/> is null. </exception>
-        public async Task<Response> CreateUpdateSqlContainerAsync(string resourceGroupName, string accountName, string databaseName, string containerName, SqlContainerCreateUpdateOptions createUpdateSqlContainerParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="createUpdateSqlContainerParameters"/> is null. </exception>
+        public async Task<Response> CreateUpdateSqlContainerAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, SqlContainerCreateUpdateOptions createUpdateSqlContainerParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1068,7 +1170,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(createUpdateSqlContainerParameters));
             }
 
-            using var message = CreateCreateUpdateSqlContainerRequest(resourceGroupName, accountName, databaseName, containerName, createUpdateSqlContainerParameters);
+            using var message = CreateCreateUpdateSqlContainerRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, createUpdateSqlContainerParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1081,15 +1183,20 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Create or update an Azure Cosmos DB SQL container. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="createUpdateSqlContainerParameters"> The parameters to provide for the current SQL container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="createUpdateSqlContainerParameters"/> is null. </exception>
-        public Response CreateUpdateSqlContainer(string resourceGroupName, string accountName, string databaseName, string containerName, SqlContainerCreateUpdateOptions createUpdateSqlContainerParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="createUpdateSqlContainerParameters"/> is null. </exception>
+        public Response CreateUpdateSqlContainer(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, SqlContainerCreateUpdateOptions createUpdateSqlContainerParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1111,7 +1218,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(createUpdateSqlContainerParameters));
             }
 
-            using var message = CreateCreateUpdateSqlContainerRequest(resourceGroupName, accountName, databaseName, containerName, createUpdateSqlContainerParameters);
+            using var message = CreateCreateUpdateSqlContainerRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, createUpdateSqlContainerParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1123,7 +1230,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateDeleteSqlContainerRequest(string resourceGroupName, string accountName, string databaseName, string containerName)
+        internal HttpMessage CreateDeleteSqlContainerRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1147,14 +1254,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Deletes an existing Azure Cosmos DB SQL container. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="containerName"/> is null. </exception>
-        public async Task<Response> DeleteSqlContainerAsync(string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="containerName"/> is null. </exception>
+        public async Task<Response> DeleteSqlContainerAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1172,7 +1284,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(containerName));
             }
 
-            using var message = CreateDeleteSqlContainerRequest(resourceGroupName, accountName, databaseName, containerName);
+            using var message = CreateDeleteSqlContainerRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1185,14 +1297,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Deletes an existing Azure Cosmos DB SQL container. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="containerName"/> is null. </exception>
-        public Response DeleteSqlContainer(string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="containerName"/> is null. </exception>
+        public Response DeleteSqlContainer(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1210,7 +1327,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(containerName));
             }
 
-            using var message = CreateDeleteSqlContainerRequest(resourceGroupName, accountName, databaseName, containerName);
+            using var message = CreateDeleteSqlContainerRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1222,7 +1339,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateGetSqlContainerThroughputRequest(string resourceGroupName, string accountName, string databaseName, string containerName)
+        internal HttpMessage CreateGetSqlContainerThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1248,14 +1365,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the RUs per second of the SQL container under an existing Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="containerName"/> is null. </exception>
-        public async Task<Response<ThroughputSettingsData>> GetSqlContainerThroughputAsync(string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="containerName"/> is null. </exception>
+        public async Task<Response<ThroughputSettingsData>> GetSqlContainerThroughputAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1273,7 +1395,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(containerName));
             }
 
-            using var message = CreateGetSqlContainerThroughputRequest(resourceGroupName, accountName, databaseName, containerName);
+            using var message = CreateGetSqlContainerThroughputRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1292,14 +1414,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the RUs per second of the SQL container under an existing Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="containerName"/> is null. </exception>
-        public Response<ThroughputSettingsData> GetSqlContainerThroughput(string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="containerName"/> is null. </exception>
+        public Response<ThroughputSettingsData> GetSqlContainerThroughput(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1317,7 +1444,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(containerName));
             }
 
-            using var message = CreateGetSqlContainerThroughputRequest(resourceGroupName, accountName, databaseName, containerName);
+            using var message = CreateGetSqlContainerThroughputRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1335,7 +1462,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateUpdateSqlContainerThroughputRequest(string resourceGroupName, string accountName, string databaseName, string containerName, ThroughputSettingsUpdateOptions updateThroughputParameters)
+        internal HttpMessage CreateUpdateSqlContainerThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, ThroughputSettingsUpdateOptions updateThroughputParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1365,15 +1492,20 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Update RUs per second of an Azure Cosmos DB SQL container. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="updateThroughputParameters"> The parameters to provide for the RUs per second of the current SQL container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="updateThroughputParameters"/> is null. </exception>
-        public async Task<Response> UpdateSqlContainerThroughputAsync(string resourceGroupName, string accountName, string databaseName, string containerName, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="updateThroughputParameters"/> is null. </exception>
+        public async Task<Response> UpdateSqlContainerThroughputAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1395,7 +1527,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(updateThroughputParameters));
             }
 
-            using var message = CreateUpdateSqlContainerThroughputRequest(resourceGroupName, accountName, databaseName, containerName, updateThroughputParameters);
+            using var message = CreateUpdateSqlContainerThroughputRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, updateThroughputParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1408,15 +1540,20 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Update RUs per second of an Azure Cosmos DB SQL container. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="updateThroughputParameters"> The parameters to provide for the RUs per second of the current SQL container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="updateThroughputParameters"/> is null. </exception>
-        public Response UpdateSqlContainerThroughput(string resourceGroupName, string accountName, string databaseName, string containerName, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="updateThroughputParameters"/> is null. </exception>
+        public Response UpdateSqlContainerThroughput(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1438,7 +1575,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(updateThroughputParameters));
             }
 
-            using var message = CreateUpdateSqlContainerThroughputRequest(resourceGroupName, accountName, databaseName, containerName, updateThroughputParameters);
+            using var message = CreateUpdateSqlContainerThroughputRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, updateThroughputParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1450,7 +1587,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateMigrateSqlContainerToAutoscaleRequest(string resourceGroupName, string accountName, string databaseName, string containerName)
+        internal HttpMessage CreateMigrateSqlContainerToAutoscaleRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1476,14 +1613,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Migrate an Azure Cosmos DB SQL container from manual throughput to autoscale. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="containerName"/> is null. </exception>
-        public async Task<Response> MigrateSqlContainerToAutoscaleAsync(string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="containerName"/> is null. </exception>
+        public async Task<Response> MigrateSqlContainerToAutoscaleAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1501,7 +1643,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(containerName));
             }
 
-            using var message = CreateMigrateSqlContainerToAutoscaleRequest(resourceGroupName, accountName, databaseName, containerName);
+            using var message = CreateMigrateSqlContainerToAutoscaleRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1514,14 +1656,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Migrate an Azure Cosmos DB SQL container from manual throughput to autoscale. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="containerName"/> is null. </exception>
-        public Response MigrateSqlContainerToAutoscale(string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="containerName"/> is null. </exception>
+        public Response MigrateSqlContainerToAutoscale(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1539,7 +1686,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(containerName));
             }
 
-            using var message = CreateMigrateSqlContainerToAutoscaleRequest(resourceGroupName, accountName, databaseName, containerName);
+            using var message = CreateMigrateSqlContainerToAutoscaleRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1551,7 +1698,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateMigrateSqlContainerToManualThroughputRequest(string resourceGroupName, string accountName, string databaseName, string containerName)
+        internal HttpMessage CreateMigrateSqlContainerToManualThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1577,14 +1724,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Migrate an Azure Cosmos DB SQL container from autoscale to manual throughput. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="containerName"/> is null. </exception>
-        public async Task<Response> MigrateSqlContainerToManualThroughputAsync(string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="containerName"/> is null. </exception>
+        public async Task<Response> MigrateSqlContainerToManualThroughputAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1602,7 +1754,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(containerName));
             }
 
-            using var message = CreateMigrateSqlContainerToManualThroughputRequest(resourceGroupName, accountName, databaseName, containerName);
+            using var message = CreateMigrateSqlContainerToManualThroughputRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1615,14 +1767,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Migrate an Azure Cosmos DB SQL container from autoscale to manual throughput. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="containerName"/> is null. </exception>
-        public Response MigrateSqlContainerToManualThroughput(string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="containerName"/> is null. </exception>
+        public Response MigrateSqlContainerToManualThroughput(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1640,7 +1797,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(containerName));
             }
 
-            using var message = CreateMigrateSqlContainerToManualThroughputRequest(resourceGroupName, accountName, databaseName, containerName);
+            using var message = CreateMigrateSqlContainerToManualThroughputRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1652,7 +1809,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateListSqlStoredProceduresRequest(string resourceGroupName, string accountName, string databaseName, string containerName)
+        internal HttpMessage CreateListSqlStoredProceduresRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1678,14 +1835,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Lists the SQL storedProcedure under an existing Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="containerName"/> is null. </exception>
-        public async Task<Response<SqlStoredProcedureList>> ListSqlStoredProceduresAsync(string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="containerName"/> is null. </exception>
+        public async Task<Response<SqlStoredProcedureList>> ListSqlStoredProceduresAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1703,7 +1865,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(containerName));
             }
 
-            using var message = CreateListSqlStoredProceduresRequest(resourceGroupName, accountName, databaseName, containerName);
+            using var message = CreateListSqlStoredProceduresRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1720,14 +1882,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Lists the SQL storedProcedure under an existing Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="containerName"/> is null. </exception>
-        public Response<SqlStoredProcedureList> ListSqlStoredProcedures(string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="containerName"/> is null. </exception>
+        public Response<SqlStoredProcedureList> ListSqlStoredProcedures(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1745,7 +1912,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(containerName));
             }
 
-            using var message = CreateListSqlStoredProceduresRequest(resourceGroupName, accountName, databaseName, containerName);
+            using var message = CreateListSqlStoredProceduresRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1761,7 +1928,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateGetSqlStoredProcedureRequest(string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName)
+        internal HttpMessage CreateGetSqlStoredProcedureRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1788,15 +1955,20 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the SQL storedProcedure under an existing Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="storedProcedureName"> Cosmos DB storedProcedure name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="storedProcedureName"/> is null. </exception>
-        public async Task<Response<SqlStoredProcedureData>> GetSqlStoredProcedureAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="storedProcedureName"/> is null. </exception>
+        public async Task<Response<SqlStoredProcedureData>> GetSqlStoredProcedureAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1818,7 +1990,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(storedProcedureName));
             }
 
-            using var message = CreateGetSqlStoredProcedureRequest(resourceGroupName, accountName, databaseName, containerName, storedProcedureName);
+            using var message = CreateGetSqlStoredProcedureRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, storedProcedureName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1837,15 +2009,20 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the SQL storedProcedure under an existing Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="storedProcedureName"> Cosmos DB storedProcedure name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="storedProcedureName"/> is null. </exception>
-        public Response<SqlStoredProcedureData> GetSqlStoredProcedure(string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="storedProcedureName"/> is null. </exception>
+        public Response<SqlStoredProcedureData> GetSqlStoredProcedure(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1867,7 +2044,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(storedProcedureName));
             }
 
-            using var message = CreateGetSqlStoredProcedureRequest(resourceGroupName, accountName, databaseName, containerName, storedProcedureName);
+            using var message = CreateGetSqlStoredProcedureRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, storedProcedureName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1885,7 +2062,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateCreateUpdateSqlStoredProcedureRequest(string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, SqlStoredProcedureCreateUpdateOptions createUpdateSqlStoredProcedureParameters)
+        internal HttpMessage CreateCreateUpdateSqlStoredProcedureRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, SqlStoredProcedureCreateUpdateOptions createUpdateSqlStoredProcedureParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1916,6 +2093,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Create or update an Azure Cosmos DB SQL storedProcedure. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
@@ -1923,9 +2101,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="storedProcedureName"> Cosmos DB storedProcedure name. </param>
         /// <param name="createUpdateSqlStoredProcedureParameters"> The parameters to provide for the current SQL storedProcedure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="storedProcedureName"/>, or <paramref name="createUpdateSqlStoredProcedureParameters"/> is null. </exception>
-        public async Task<Response> CreateUpdateSqlStoredProcedureAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, SqlStoredProcedureCreateUpdateOptions createUpdateSqlStoredProcedureParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="storedProcedureName"/>, or <paramref name="createUpdateSqlStoredProcedureParameters"/> is null. </exception>
+        public async Task<Response> CreateUpdateSqlStoredProcedureAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, SqlStoredProcedureCreateUpdateOptions createUpdateSqlStoredProcedureParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1951,7 +2133,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(createUpdateSqlStoredProcedureParameters));
             }
 
-            using var message = CreateCreateUpdateSqlStoredProcedureRequest(resourceGroupName, accountName, databaseName, containerName, storedProcedureName, createUpdateSqlStoredProcedureParameters);
+            using var message = CreateCreateUpdateSqlStoredProcedureRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, storedProcedureName, createUpdateSqlStoredProcedureParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1964,6 +2146,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Create or update an Azure Cosmos DB SQL storedProcedure. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
@@ -1971,9 +2154,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="storedProcedureName"> Cosmos DB storedProcedure name. </param>
         /// <param name="createUpdateSqlStoredProcedureParameters"> The parameters to provide for the current SQL storedProcedure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="storedProcedureName"/>, or <paramref name="createUpdateSqlStoredProcedureParameters"/> is null. </exception>
-        public Response CreateUpdateSqlStoredProcedure(string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, SqlStoredProcedureCreateUpdateOptions createUpdateSqlStoredProcedureParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="storedProcedureName"/>, or <paramref name="createUpdateSqlStoredProcedureParameters"/> is null. </exception>
+        public Response CreateUpdateSqlStoredProcedure(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, SqlStoredProcedureCreateUpdateOptions createUpdateSqlStoredProcedureParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1999,7 +2186,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(createUpdateSqlStoredProcedureParameters));
             }
 
-            using var message = CreateCreateUpdateSqlStoredProcedureRequest(resourceGroupName, accountName, databaseName, containerName, storedProcedureName, createUpdateSqlStoredProcedureParameters);
+            using var message = CreateCreateUpdateSqlStoredProcedureRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, storedProcedureName, createUpdateSqlStoredProcedureParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -2011,7 +2198,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateDeleteSqlStoredProcedureRequest(string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName)
+        internal HttpMessage CreateDeleteSqlStoredProcedureRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2037,15 +2224,20 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Deletes an existing Azure Cosmos DB SQL storedProcedure. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="storedProcedureName"> Cosmos DB storedProcedure name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="storedProcedureName"/> is null. </exception>
-        public async Task<Response> DeleteSqlStoredProcedureAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="storedProcedureName"/> is null. </exception>
+        public async Task<Response> DeleteSqlStoredProcedureAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -2067,7 +2259,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(storedProcedureName));
             }
 
-            using var message = CreateDeleteSqlStoredProcedureRequest(resourceGroupName, accountName, databaseName, containerName, storedProcedureName);
+            using var message = CreateDeleteSqlStoredProcedureRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, storedProcedureName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -2080,15 +2272,20 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Deletes an existing Azure Cosmos DB SQL storedProcedure. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="storedProcedureName"> Cosmos DB storedProcedure name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="storedProcedureName"/> is null. </exception>
-        public Response DeleteSqlStoredProcedure(string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="storedProcedureName"/> is null. </exception>
+        public Response DeleteSqlStoredProcedure(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -2110,7 +2307,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(storedProcedureName));
             }
 
-            using var message = CreateDeleteSqlStoredProcedureRequest(resourceGroupName, accountName, databaseName, containerName, storedProcedureName);
+            using var message = CreateDeleteSqlStoredProcedureRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, storedProcedureName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -2122,7 +2319,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateListSqlUserDefinedFunctionsRequest(string resourceGroupName, string accountName, string databaseName, string containerName)
+        internal HttpMessage CreateListSqlUserDefinedFunctionsRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2148,14 +2345,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Lists the SQL userDefinedFunction under an existing Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="containerName"/> is null. </exception>
-        public async Task<Response<SqlUserDefinedFunctionList>> ListSqlUserDefinedFunctionsAsync(string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="containerName"/> is null. </exception>
+        public async Task<Response<SqlUserDefinedFunctionList>> ListSqlUserDefinedFunctionsAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -2173,7 +2375,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(containerName));
             }
 
-            using var message = CreateListSqlUserDefinedFunctionsRequest(resourceGroupName, accountName, databaseName, containerName);
+            using var message = CreateListSqlUserDefinedFunctionsRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -2190,14 +2392,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Lists the SQL userDefinedFunction under an existing Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="containerName"/> is null. </exception>
-        public Response<SqlUserDefinedFunctionList> ListSqlUserDefinedFunctions(string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="containerName"/> is null. </exception>
+        public Response<SqlUserDefinedFunctionList> ListSqlUserDefinedFunctions(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -2215,7 +2422,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(containerName));
             }
 
-            using var message = CreateListSqlUserDefinedFunctionsRequest(resourceGroupName, accountName, databaseName, containerName);
+            using var message = CreateListSqlUserDefinedFunctionsRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -2231,7 +2438,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateGetSqlUserDefinedFunctionRequest(string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName)
+        internal HttpMessage CreateGetSqlUserDefinedFunctionRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2258,15 +2465,20 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the SQL userDefinedFunction under an existing Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="userDefinedFunctionName"> Cosmos DB userDefinedFunction name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="userDefinedFunctionName"/> is null. </exception>
-        public async Task<Response<SqlUserDefinedFunctionData>> GetSqlUserDefinedFunctionAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="userDefinedFunctionName"/> is null. </exception>
+        public async Task<Response<SqlUserDefinedFunctionData>> GetSqlUserDefinedFunctionAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -2288,7 +2500,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(userDefinedFunctionName));
             }
 
-            using var message = CreateGetSqlUserDefinedFunctionRequest(resourceGroupName, accountName, databaseName, containerName, userDefinedFunctionName);
+            using var message = CreateGetSqlUserDefinedFunctionRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, userDefinedFunctionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -2307,15 +2519,20 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the SQL userDefinedFunction under an existing Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="userDefinedFunctionName"> Cosmos DB userDefinedFunction name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="userDefinedFunctionName"/> is null. </exception>
-        public Response<SqlUserDefinedFunctionData> GetSqlUserDefinedFunction(string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="userDefinedFunctionName"/> is null. </exception>
+        public Response<SqlUserDefinedFunctionData> GetSqlUserDefinedFunction(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -2337,7 +2554,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(userDefinedFunctionName));
             }
 
-            using var message = CreateGetSqlUserDefinedFunctionRequest(resourceGroupName, accountName, databaseName, containerName, userDefinedFunctionName);
+            using var message = CreateGetSqlUserDefinedFunctionRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, userDefinedFunctionName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -2355,7 +2572,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateCreateUpdateSqlUserDefinedFunctionRequest(string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateOptions createUpdateSqlUserDefinedFunctionParameters)
+        internal HttpMessage CreateCreateUpdateSqlUserDefinedFunctionRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateOptions createUpdateSqlUserDefinedFunctionParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2386,6 +2603,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Create or update an Azure Cosmos DB SQL userDefinedFunction. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
@@ -2393,9 +2611,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="userDefinedFunctionName"> Cosmos DB userDefinedFunction name. </param>
         /// <param name="createUpdateSqlUserDefinedFunctionParameters"> The parameters to provide for the current SQL userDefinedFunction. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="userDefinedFunctionName"/>, or <paramref name="createUpdateSqlUserDefinedFunctionParameters"/> is null. </exception>
-        public async Task<Response> CreateUpdateSqlUserDefinedFunctionAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateOptions createUpdateSqlUserDefinedFunctionParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="userDefinedFunctionName"/>, or <paramref name="createUpdateSqlUserDefinedFunctionParameters"/> is null. </exception>
+        public async Task<Response> CreateUpdateSqlUserDefinedFunctionAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateOptions createUpdateSqlUserDefinedFunctionParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -2421,7 +2643,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(createUpdateSqlUserDefinedFunctionParameters));
             }
 
-            using var message = CreateCreateUpdateSqlUserDefinedFunctionRequest(resourceGroupName, accountName, databaseName, containerName, userDefinedFunctionName, createUpdateSqlUserDefinedFunctionParameters);
+            using var message = CreateCreateUpdateSqlUserDefinedFunctionRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, userDefinedFunctionName, createUpdateSqlUserDefinedFunctionParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -2434,6 +2656,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Create or update an Azure Cosmos DB SQL userDefinedFunction. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
@@ -2441,9 +2664,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="userDefinedFunctionName"> Cosmos DB userDefinedFunction name. </param>
         /// <param name="createUpdateSqlUserDefinedFunctionParameters"> The parameters to provide for the current SQL userDefinedFunction. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="userDefinedFunctionName"/>, or <paramref name="createUpdateSqlUserDefinedFunctionParameters"/> is null. </exception>
-        public Response CreateUpdateSqlUserDefinedFunction(string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateOptions createUpdateSqlUserDefinedFunctionParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="userDefinedFunctionName"/>, or <paramref name="createUpdateSqlUserDefinedFunctionParameters"/> is null. </exception>
+        public Response CreateUpdateSqlUserDefinedFunction(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateOptions createUpdateSqlUserDefinedFunctionParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -2469,7 +2696,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(createUpdateSqlUserDefinedFunctionParameters));
             }
 
-            using var message = CreateCreateUpdateSqlUserDefinedFunctionRequest(resourceGroupName, accountName, databaseName, containerName, userDefinedFunctionName, createUpdateSqlUserDefinedFunctionParameters);
+            using var message = CreateCreateUpdateSqlUserDefinedFunctionRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, userDefinedFunctionName, createUpdateSqlUserDefinedFunctionParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -2481,7 +2708,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateDeleteSqlUserDefinedFunctionRequest(string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName)
+        internal HttpMessage CreateDeleteSqlUserDefinedFunctionRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2507,15 +2734,20 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Deletes an existing Azure Cosmos DB SQL userDefinedFunction. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="userDefinedFunctionName"> Cosmos DB userDefinedFunction name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="userDefinedFunctionName"/> is null. </exception>
-        public async Task<Response> DeleteSqlUserDefinedFunctionAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="userDefinedFunctionName"/> is null. </exception>
+        public async Task<Response> DeleteSqlUserDefinedFunctionAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -2537,7 +2769,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(userDefinedFunctionName));
             }
 
-            using var message = CreateDeleteSqlUserDefinedFunctionRequest(resourceGroupName, accountName, databaseName, containerName, userDefinedFunctionName);
+            using var message = CreateDeleteSqlUserDefinedFunctionRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, userDefinedFunctionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -2550,15 +2782,20 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Deletes an existing Azure Cosmos DB SQL userDefinedFunction. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="userDefinedFunctionName"> Cosmos DB userDefinedFunction name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="userDefinedFunctionName"/> is null. </exception>
-        public Response DeleteSqlUserDefinedFunction(string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="userDefinedFunctionName"/> is null. </exception>
+        public Response DeleteSqlUserDefinedFunction(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -2580,7 +2817,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(userDefinedFunctionName));
             }
 
-            using var message = CreateDeleteSqlUserDefinedFunctionRequest(resourceGroupName, accountName, databaseName, containerName, userDefinedFunctionName);
+            using var message = CreateDeleteSqlUserDefinedFunctionRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, userDefinedFunctionName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -2592,7 +2829,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateListSqlTriggersRequest(string resourceGroupName, string accountName, string databaseName, string containerName)
+        internal HttpMessage CreateListSqlTriggersRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2618,14 +2855,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Lists the SQL trigger under an existing Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="containerName"/> is null. </exception>
-        public async Task<Response<SqlTriggerList>> ListSqlTriggersAsync(string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="containerName"/> is null. </exception>
+        public async Task<Response<SqlTriggerList>> ListSqlTriggersAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -2643,7 +2885,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(containerName));
             }
 
-            using var message = CreateListSqlTriggersRequest(resourceGroupName, accountName, databaseName, containerName);
+            using var message = CreateListSqlTriggersRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -2660,14 +2902,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Lists the SQL trigger under an existing Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="containerName"/> is null. </exception>
-        public Response<SqlTriggerList> ListSqlTriggers(string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, or <paramref name="containerName"/> is null. </exception>
+        public Response<SqlTriggerList> ListSqlTriggers(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -2685,7 +2932,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(containerName));
             }
 
-            using var message = CreateListSqlTriggersRequest(resourceGroupName, accountName, databaseName, containerName);
+            using var message = CreateListSqlTriggersRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -2701,7 +2948,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateGetSqlTriggerRequest(string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName)
+        internal HttpMessage CreateGetSqlTriggerRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2728,15 +2975,20 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the SQL trigger under an existing Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="triggerName"> Cosmos DB trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="triggerName"/> is null. </exception>
-        public async Task<Response<SqlTriggerData>> GetSqlTriggerAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="triggerName"/> is null. </exception>
+        public async Task<Response<SqlTriggerData>> GetSqlTriggerAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -2758,7 +3010,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(triggerName));
             }
 
-            using var message = CreateGetSqlTriggerRequest(resourceGroupName, accountName, databaseName, containerName, triggerName);
+            using var message = CreateGetSqlTriggerRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, triggerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -2777,15 +3029,20 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the SQL trigger under an existing Azure Cosmos DB database account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="triggerName"> Cosmos DB trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="triggerName"/> is null. </exception>
-        public Response<SqlTriggerData> GetSqlTrigger(string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="triggerName"/> is null. </exception>
+        public Response<SqlTriggerData> GetSqlTrigger(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -2807,7 +3064,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(triggerName));
             }
 
-            using var message = CreateGetSqlTriggerRequest(resourceGroupName, accountName, databaseName, containerName, triggerName);
+            using var message = CreateGetSqlTriggerRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, triggerName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -2825,7 +3082,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateCreateUpdateSqlTriggerRequest(string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, SqlTriggerCreateUpdateOptions createUpdateSqlTriggerParameters)
+        internal HttpMessage CreateCreateUpdateSqlTriggerRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, SqlTriggerCreateUpdateOptions createUpdateSqlTriggerParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2856,6 +3113,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Create or update an Azure Cosmos DB SQL trigger. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
@@ -2863,9 +3121,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="triggerName"> Cosmos DB trigger name. </param>
         /// <param name="createUpdateSqlTriggerParameters"> The parameters to provide for the current SQL trigger. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="triggerName"/>, or <paramref name="createUpdateSqlTriggerParameters"/> is null. </exception>
-        public async Task<Response> CreateUpdateSqlTriggerAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, SqlTriggerCreateUpdateOptions createUpdateSqlTriggerParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="triggerName"/>, or <paramref name="createUpdateSqlTriggerParameters"/> is null. </exception>
+        public async Task<Response> CreateUpdateSqlTriggerAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, SqlTriggerCreateUpdateOptions createUpdateSqlTriggerParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -2891,7 +3153,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(createUpdateSqlTriggerParameters));
             }
 
-            using var message = CreateCreateUpdateSqlTriggerRequest(resourceGroupName, accountName, databaseName, containerName, triggerName, createUpdateSqlTriggerParameters);
+            using var message = CreateCreateUpdateSqlTriggerRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, triggerName, createUpdateSqlTriggerParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -2904,6 +3166,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Create or update an Azure Cosmos DB SQL trigger. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
@@ -2911,9 +3174,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="triggerName"> Cosmos DB trigger name. </param>
         /// <param name="createUpdateSqlTriggerParameters"> The parameters to provide for the current SQL trigger. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="triggerName"/>, or <paramref name="createUpdateSqlTriggerParameters"/> is null. </exception>
-        public Response CreateUpdateSqlTrigger(string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, SqlTriggerCreateUpdateOptions createUpdateSqlTriggerParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="triggerName"/>, or <paramref name="createUpdateSqlTriggerParameters"/> is null. </exception>
+        public Response CreateUpdateSqlTrigger(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, SqlTriggerCreateUpdateOptions createUpdateSqlTriggerParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -2939,7 +3206,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(createUpdateSqlTriggerParameters));
             }
 
-            using var message = CreateCreateUpdateSqlTriggerRequest(resourceGroupName, accountName, databaseName, containerName, triggerName, createUpdateSqlTriggerParameters);
+            using var message = CreateCreateUpdateSqlTriggerRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, triggerName, createUpdateSqlTriggerParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -2951,7 +3218,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateDeleteSqlTriggerRequest(string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName)
+        internal HttpMessage CreateDeleteSqlTriggerRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2977,15 +3244,20 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Deletes an existing Azure Cosmos DB SQL trigger. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="triggerName"> Cosmos DB trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="triggerName"/> is null. </exception>
-        public async Task<Response> DeleteSqlTriggerAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="triggerName"/> is null. </exception>
+        public async Task<Response> DeleteSqlTriggerAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -3007,7 +3279,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(triggerName));
             }
 
-            using var message = CreateDeleteSqlTriggerRequest(resourceGroupName, accountName, databaseName, containerName, triggerName);
+            using var message = CreateDeleteSqlTriggerRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, triggerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -3020,15 +3292,20 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Deletes an existing Azure Cosmos DB SQL trigger. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="triggerName"> Cosmos DB trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="triggerName"/> is null. </exception>
-        public Response DeleteSqlTrigger(string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="triggerName"/> is null. </exception>
+        public Response DeleteSqlTrigger(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -3050,7 +3327,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(triggerName));
             }
 
-            using var message = CreateDeleteSqlTriggerRequest(resourceGroupName, accountName, databaseName, containerName, triggerName);
+            using var message = CreateDeleteSqlTriggerRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, triggerName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -3062,7 +3339,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateRetrieveContinuousBackupInformationRequest(string resourceGroupName, string accountName, string databaseName, string containerName, ContinuousBackupRestoreLocation location)
+        internal HttpMessage CreateRetrieveContinuousBackupInformationRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, ContinuousBackupRestoreLocation location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -3092,15 +3369,20 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Retrieves continuous backup information for a container resource. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="location"> The name of the continuous backup restore location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="location"/> is null. </exception>
-        public async Task<Response> RetrieveContinuousBackupInformationAsync(string resourceGroupName, string accountName, string databaseName, string containerName, ContinuousBackupRestoreLocation location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="location"/> is null. </exception>
+        public async Task<Response> RetrieveContinuousBackupInformationAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, ContinuousBackupRestoreLocation location, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -3122,7 +3404,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateRetrieveContinuousBackupInformationRequest(resourceGroupName, accountName, databaseName, containerName, location);
+            using var message = CreateRetrieveContinuousBackupInformationRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -3135,15 +3417,20 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Retrieves continuous backup information for a container resource. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="location"> The name of the continuous backup restore location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="location"/> is null. </exception>
-        public Response RetrieveContinuousBackupInformation(string resourceGroupName, string accountName, string databaseName, string containerName, ContinuousBackupRestoreLocation location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="location"/> is null. </exception>
+        public Response RetrieveContinuousBackupInformation(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, ContinuousBackupRestoreLocation location, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -3165,7 +3452,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateRetrieveContinuousBackupInformationRequest(resourceGroupName, accountName, databaseName, containerName, location);
+            using var message = CreateRetrieveContinuousBackupInformationRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
