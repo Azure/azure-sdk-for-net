@@ -49,6 +49,49 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         }
 
         [RecordedTest]
+        public async Task CanSerializeAndDeserializeWithCompatibleSchema()
+        {
+            var client = CreateClient();
+            var groupName = TestEnvironment.SchemaRegistryGroup;
+            var employee = new Employee_V2 { Age = 42, Name = "Caketown", City = "Redmond" };
+
+            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions() { AutoRegisterSchemas = true });
+            (string schemaId, BinaryData data) = await encoder.EncodeAsync(employee, typeof(Employee_V2), CancellationToken.None);
+
+            // deserialize using the old schema, which is forward compatible with the new schema
+            // if you swap the old schema and the new schema in your mind, then this can also be thought as a backwards compatible test
+            var deserializedObject = await encoder.DecodeAsync(data, schemaId, typeof(Employee), CancellationToken.None);
+            var readEmployee = deserializedObject as Employee;
+            Assert.IsNotNull(readEmployee);
+            Assert.AreEqual("Caketown", readEmployee.Name);
+            Assert.AreEqual(42, readEmployee.Age);
+
+            // deserialize using the new schema to make sure we are respecting it
+            deserializedObject = await encoder.DecodeAsync(data, schemaId, typeof(Employee_V2), CancellationToken.None);
+            var readEmployeeV2 = deserializedObject as Employee_V2;
+            Assert.IsNotNull(readEmployee);
+            Assert.AreEqual("Caketown", readEmployeeV2.Name);
+            Assert.AreEqual(42, readEmployeeV2.Age);
+            Assert.AreEqual("Redmond", readEmployeeV2.City);
+        }
+
+        [RecordedTest]
+        public async Task CannotDeserializeIntoNonCompatibleType()
+        {
+            var client = CreateClient();
+            var groupName = TestEnvironment.SchemaRegistryGroup;
+            var employee = new Employee() { Age = 42, Name = "Caketown"};
+
+            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions() { AutoRegisterSchemas = true });
+            (string schemaId, BinaryData data) = await encoder.EncodeAsync(employee, typeof(Employee), CancellationToken.None);
+
+            // deserialize with the new schema, which is NOT backward compatible with the old schema as it adds a new field
+            Assert.That(
+                async () => await encoder.DecodeAsync(data, schemaId, typeof(Employee_V2), CancellationToken.None),
+                Throws.InstanceOf<AvroException>());
+        }
+
+        [RecordedTest]
         public async Task CanSerializeAndDeserializeGenericRecord()
         {
             var client = CreateClient();

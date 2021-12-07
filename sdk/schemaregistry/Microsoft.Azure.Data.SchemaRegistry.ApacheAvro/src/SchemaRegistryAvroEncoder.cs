@@ -177,14 +177,14 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             return schema;
         }
 
-        private static DatumReader<object> GetReader(Schema schema, SupportedType supportedType)
+        private static DatumReader<object> GetReader(Schema readerSchema, Schema writerSchema, SupportedType supportedType)
         {
             switch (supportedType)
             {
                 case SupportedType.SpecificRecord:
-                    return new SpecificDatumReader<object>(schema, schema);
+                    return new SpecificDatumReader<object>(writerSchema, readerSchema);
                 case SupportedType.GenericRecord:
-                    return new GenericDatumReader<object>(schema, schema);
+                    return new GenericDatumReader<object>(writerSchema, readerSchema);
                 default:
                     throw new ArgumentException($"Invalid supported type value: {supportedType}");
             }
@@ -323,19 +323,29 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 
             SupportedType supportedType = GetSupportedTypeOrThrow(returnType);
 
-            Schema schema;
+            Schema writerSchema;
             if (async)
             {
-                schema = await GetSchemaByIdAsync(schemaId, true, cancellationToken).ConfigureAwait(false);
+                writerSchema = await GetSchemaByIdAsync(schemaId, true, cancellationToken).ConfigureAwait(false);
             }
             else
             {
-                schema = GetSchemaByIdAsync(schemaId, false, cancellationToken).EnsureCompleted();
+                writerSchema = GetSchemaByIdAsync(schemaId, false, cancellationToken).EnsureCompleted();
             }
 
             var binaryDecoder = new BinaryDecoder(data.ToStream());
-            DatumReader<object> reader = GetReader(schema, supportedType);
-            return reader.Read(reuse: null, binaryDecoder);
+
+            if (supportedType == SupportedType.SpecificRecord)
+            {
+                object returnInstance = Activator.CreateInstance(returnType);
+                DatumReader<object> reader = GetReader(((ISpecificRecord)returnInstance).Schema, writerSchema, SupportedType.SpecificRecord);
+                return reader.Read(reuse: returnInstance, binaryDecoder);
+            }
+            else
+            {
+                DatumReader<object> reader = GetReader(writerSchema, writerSchema, supportedType);
+                return reader.Read(reuse: null, binaryDecoder);
+            }
         }
     }
 }
