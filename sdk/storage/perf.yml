@@ -1,5 +1,4 @@
 variables:
-  - template: ../../eng/pipelines/templates/variables/globals.yml
   - name: NugetSecurityAnalysisWarningLevel
     value: 'none'
   - name: skipComponentGovernanceDetection
@@ -25,6 +24,8 @@ steps:
     path: s/azure-sdk-tools
 
   - template: ../../eng/pipelines/templates/steps/install-dotnet.yml
+    parameters:
+      EnableNuGetCache: false
 
   - template: ../../eng/common/TestResources/deploy-test-resources.yml
     parameters:
