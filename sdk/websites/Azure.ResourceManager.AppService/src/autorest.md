@@ -275,17 +275,17 @@ directive:
             "modelAsString": true
           }
   - from: swagger-document
-    where: $.definitions.AppServiceCertificateOrder.properties.properties.properties.appServiceCertificateNotRenewableReasons.items
+    where: $.definitions.Domain.properties.properties.properties.domainNotRenewableReasons.items
     transform: >
       $["x-ms-enum"]={
-            "name": "AppServiceCertificateNotRenewableReason2",
+            "name": "DomainNotRenewableReasons",
             "modelAsString": true
           }
   - from: swagger-document
-    where: $.definitions.AppServiceCertificateOrderPatchResource.properties.properties.properties.appServiceCertificateNotRenewableReasons.items
+    where: $.definitions.DomainPatchResource.properties.properties.properties.domainNotRenewableReasons.items
     transform: >
       $["x-ms-enum"]={
-            "name": "AppServiceCertificateNotRenewableReason2",
+            "name": "DomainNotRenewableReasons",
             "modelAsString": true
           }
 

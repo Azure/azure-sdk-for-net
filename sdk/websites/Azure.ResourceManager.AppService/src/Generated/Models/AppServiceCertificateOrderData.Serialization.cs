@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppService
             Optional<DateTimeOffset> lastCertificateIssuanceTime = default;
             Optional<DateTimeOffset> expirationTime = default;
             Optional<bool> isPrivateKeyExternal = default;
-            Optional<IReadOnlyList<AppServiceCertificateNotRenewableReason2>> appServiceCertificateNotRenewableReasons = default;
+            Optional<IReadOnlyList<AppServiceCertificateNotRenewableReason>> appServiceCertificateNotRenewableReasons = default;
             Optional<DateTimeOffset> nextAutoRenewalTimeStamp = default;
             Optional<CertificateOrderContact> contact = default;
             foreach (var property in element.EnumerateObject())
@@ -318,10 +318,10 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AppServiceCertificateNotRenewableReason2> array = new List<AppServiceCertificateNotRenewableReason2>();
+                            List<AppServiceCertificateNotRenewableReason> array = new List<AppServiceCertificateNotRenewableReason>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new AppServiceCertificateNotRenewableReason2(item.GetString()));
+                                array.Add(new AppServiceCertificateNotRenewableReason(item.GetString()));
                             }
                             appServiceCertificateNotRenewableReasons = array;
                             continue;

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             NameServers = new ChangeTrackingList<string>();
             ManagedHostNames = new ChangeTrackingList<HostName>();
-            DomainNotRenewableReasons = new ChangeTrackingList<DomainPatchResourcePropertiesDomainNotRenewableReasonsItem>();
+            DomainNotRenewableReasons = new ChangeTrackingList<DomainNotRenewableReasons>();
         }
 
         /// <summary> Initializes a new instance of DomainPatchResource. </summary>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="dnsZoneId"> Azure DNS Zone to use. </param>
         /// <param name="targetDnsType"> Target DNS type (would be used for migration). </param>
         /// <param name="authCode"></param>
-        internal DomainPatchResource(ResourceIdentifier id, string name, ResourceType type, string kind, ContactInformation contactAdmin, ContactInformation contactBilling, ContactInformation contactRegistrant, ContactInformation contactTech, DomainStatus? registrationStatus, ProvisioningState? provisioningState, IReadOnlyList<string> nameServers, bool? privacy, DateTimeOffset? createdTime, DateTimeOffset? expirationTime, DateTimeOffset? lastRenewedTime, bool? autoRenew, bool? readyForDnsRecordManagement, IReadOnlyList<HostName> managedHostNames, DomainPurchaseConsent consent, IReadOnlyList<DomainPatchResourcePropertiesDomainNotRenewableReasonsItem> domainNotRenewableReasons, DnsType? dnsType, string dnsZoneId, DnsType? targetDnsType, string authCode) : base(id, name, type, kind)
+        internal DomainPatchResource(ResourceIdentifier id, string name, ResourceType type, string kind, ContactInformation contactAdmin, ContactInformation contactBilling, ContactInformation contactRegistrant, ContactInformation contactTech, DomainStatus? registrationStatus, ProvisioningState? provisioningState, IReadOnlyList<string> nameServers, bool? privacy, DateTimeOffset? createdTime, DateTimeOffset? expirationTime, DateTimeOffset? lastRenewedTime, bool? autoRenew, bool? readyForDnsRecordManagement, IReadOnlyList<HostName> managedHostNames, DomainPurchaseConsent consent, IReadOnlyList<DomainNotRenewableReasons> domainNotRenewableReasons, DnsType? dnsType, string dnsZoneId, DnsType? targetDnsType, string authCode) : base(id, name, type, kind)
         {
             ContactAdmin = contactAdmin;
             ContactBilling = contactBilling;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Legal agreement consent. </summary>
         public DomainPurchaseConsent Consent { get; set; }
         /// <summary> Reasons why domain is not renewable. </summary>
-        public IReadOnlyList<DomainPatchResourcePropertiesDomainNotRenewableReasonsItem> DomainNotRenewableReasons { get; }
+        public IReadOnlyList<DomainNotRenewableReasons> DomainNotRenewableReasons { get; }
         /// <summary> Current DNS type. </summary>
         public DnsType? DnsType { get; set; }
         /// <summary> Azure DNS Zone to use. </summary>
