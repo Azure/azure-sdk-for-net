@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="DatabaseAccountSqlDatabaseThroughputSetting" /> object. </returns>
         public DatabaseAccountSqlDatabaseThroughputSetting GetDatabaseAccountSqlDatabaseThroughputSetting()
         {
-            return new DatabaseAccountSqlDatabaseThroughputSetting(this, new ResourceIdentifier(Id.ToString() + "/throughputSettings/default"));
+            return new DatabaseAccountSqlDatabaseThroughputSetting(this, Id + "/throughputSettings/default");
         }
         #endregion
 

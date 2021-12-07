@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="DatabaseAccountCassandraKeyspaceTableThroughputSetting" /> object. </returns>
         public DatabaseAccountCassandraKeyspaceTableThroughputSetting GetDatabaseAccountCassandraKeyspaceTableThroughputSetting()
         {
-            return new DatabaseAccountCassandraKeyspaceTableThroughputSetting(this, new ResourceIdentifier(Id.ToString() + "/throughputSettings/default"));
+            return new DatabaseAccountCassandraKeyspaceTableThroughputSetting(this, Id + "/throughputSettings/default");
         }
         #endregion
     }

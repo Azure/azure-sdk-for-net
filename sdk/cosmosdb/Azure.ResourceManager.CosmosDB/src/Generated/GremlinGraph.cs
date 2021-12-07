@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="DatabaseAccountGremlinDatabaseGraphThroughputSetting" /> object. </returns>
         public DatabaseAccountGremlinDatabaseGraphThroughputSetting GetDatabaseAccountGremlinDatabaseGraphThroughputSetting()
         {
-            return new DatabaseAccountGremlinDatabaseGraphThroughputSetting(this, new ResourceIdentifier(Id.ToString() + "/throughputSettings/default"));
+            return new DatabaseAccountGremlinDatabaseGraphThroughputSetting(this, Id + "/throughputSettings/default");
         }
         #endregion
     }
