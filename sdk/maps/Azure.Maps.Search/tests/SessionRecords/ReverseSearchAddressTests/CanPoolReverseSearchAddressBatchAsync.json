@@ -1,0 +1,160 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/search/address/reverse/batch/json?api-version=1.0",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "258",
+        "Content-Type": "application/json",
+        "traceparent": "00-f2309f759934fd4e88ae04673ebe903a-4f80a3a9c5fc2f46-00",
+        "User-Agent": [
+          "azsdk-net-Maps.Search/1.0.0-alpha.20211208.1",
+          "(.NET 5.0.10; Darwin 21.1.0 Darwin Kernel Version 21.1.0: Wed Oct 13 17:33:23 PDT 2021; root:xnu-8019.41.5~1/RELEASE_X86_64)"
+        ],
+        "x-ms-client-id": "6a782b5b-631c-450d-9aa4-e561679d0d28",
+        "x-ms-client-request-id": "ff5d32832334a87adfb1cca1b93bb4a2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "batchItems": [
+          {
+            "query": "?https://atlas.microsoft.com/search/address/reverse/json?api-version=1.0\u0026query=24%2C121\u0026language=en"
+          },
+          {
+            "query": "?https://atlas.microsoft.com/search/address/reverse/json?api-version=1.0\u0026query=47.606038%2C-122.333345"
+          }
+        ]
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Content-Length": "2",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 07 Dec 2021 19:45:35 GMT",
+        "Location": "https://atlas.microsoft.com/search/address/reverse/batch/125c3be4-0d25-4290-9174-fa370986a62a?api-version=1.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: 901EAA4A43A64D8BAA9AA7C499330AC2 Ref B: TPE30EDGE0621 Ref C: 2021-12-07T19:45:35Z"
+      },
+      "ResponseBody": "\u0022\u0022"
+    },
+    {
+      "RequestUri": "https://atlas.microsoft.com/search/address/reverse/batch/125c3be4-0d25-4290-9174-fa370986a62a?api-version=1.0",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Maps.Search/1.0.0-alpha.20211208.1",
+          "(.NET 5.0.10; Darwin 21.1.0 Darwin Kernel Version 21.1.0: Wed Oct 13 17:33:23 PDT 2021; root:xnu-8019.41.5~1/RELEASE_X86_64)"
+        ],
+        "x-ms-client-id": "6a782b5b-631c-450d-9aa4-e561679d0d28",
+        "x-ms-client-request-id": "0867be200e44eae5ef5a312b44f6f40e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Tue, 07 Dec 2021 19:45:35 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: BAC6BEA47D104C7E80283ABE6FA5D4D2 Ref B: TPE30EDGE0621 Ref C: 2021-12-07T19:45:35Z"
+      },
+      "ResponseBody": {
+        "batchItems": [
+          {
+            "statusCode": 200,
+            "response": {
+              "summary": {
+                "queryTime": 6,
+                "numResults": 1
+              },
+              "addresses": [
+                {
+                  "address": {
+                    "buildingNumber": "1-20",
+                    "streetNumber": "1-20",
+                    "routeNumbers": [],
+                    "street": "Niuwei Road",
+                    "streetName": "Niuwei Road",
+                    "streetNameAndNumber": "1-20Niuwei Road",
+                    "countryCode": "TW",
+                    "countrySubdivision": "T\u00E1iw\u0101n",
+                    "municipality": "Nantou County",
+                    "postalCode": "545",
+                    "municipalitySubdivision": "Puli Township",
+                    "country": "Taiwan",
+                    "countryCodeISO3": "TWN",
+                    "freeformAddress": "1-20, Niuwei Road, Puli Township, Nantou County 54558",
+                    "boundingBox": {
+                      "northEast": "24.000558,120.988821",
+                      "southWest": "24.000178,120.987017",
+                      "entity": "position"
+                    },
+                    "extendedPostalCode": "54558",
+                    "localName": "Puli Township"
+                  },
+                  "position": "24.000271,120.988739"
+                }
+              ]
+            }
+          },
+          {
+            "statusCode": 200,
+            "response": {
+              "summary": {
+                "queryTime": 7,
+                "numResults": 1
+              },
+              "addresses": [
+                {
+                  "address": {
+                    "buildingNumber": "214",
+                    "streetNumber": "214",
+                    "routeNumbers": [],
+                    "street": "Madison Street",
+                    "streetName": "Madison Street",
+                    "streetNameAndNumber": "214 Madison Street",
+                    "countryCode": "US",
+                    "countrySubdivision": "WA",
+                    "countrySecondarySubdivision": "King",
+                    "municipality": "Seattle",
+                    "postalCode": "98104",
+                    "municipalitySubdivision": "Central Business District",
+                    "country": "United States",
+                    "countryCodeISO3": "USA",
+                    "freeformAddress": "214 Madison Street, Seattle, WA 98104",
+                    "boundingBox": {
+                      "northEast": "47.606097,-122.332937",
+                      "southWest": "47.605644,-122.334014",
+                      "entity": "position"
+                    },
+                    "extendedPostalCode": "98104-3638",
+                    "countrySubdivisionName": "Washington",
+                    "localName": "Seattle"
+                  },
+                  "position": "47.605488,-122.334358"
+                }
+              ]
+            }
+          }
+        ],
+        "summary": {
+          "successfulRequests": 2,
+          "totalRequests": 2
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "6a782b5b-631c-450d-9aa4-e561679d0d28",
+    "ENDPOINT_URL": null,
+    "RandomSeed": "387930997"
+  }
+}
