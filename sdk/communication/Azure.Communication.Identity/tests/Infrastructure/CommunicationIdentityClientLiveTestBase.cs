@@ -13,7 +13,7 @@ namespace Azure.Communication.Identity.Tests
 {
     public class CommunicationIdentityClientLiveTestBase : RecordedTestBase<CommunicationIdentityClientTestEnvironment>
     {
-        public CommunicationIdentityClientLiveTestBase(bool isAsync) : base(isAsync, useLegacyTransport: true)
+        public CommunicationIdentityClientLiveTestBase(bool isAsync) : base(isAsync)
             => Sanitizer = new CommunicationIdentityClientRecordedTestSanitizer();
 
         /// <summary>
