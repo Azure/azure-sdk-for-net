@@ -8,8 +8,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "167",
         "Content-Type": "application/json; serialization=Avro",
-        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.1.0-alpha.20211206.1 (.NET 6.0.0-rtm.21522.10; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "941694569ea87c5e875d6d738111f1b5",
+        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.1.0-alpha.20211206.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "60ea13b23a4bad00e921283e4fc81d97",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -33,7 +33,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Tue, 07 Dec 2021 19:08:27 GMT",
+        "Date": "Tue, 07 Dec 2021 19:06:28 GMT",
         "Location": "https://jolovschemaregistry.servicebus.windows.net/$schemagroups/azsdk_net_test_group/schemas/TestSchema.Employee/versions/2?api-version=2021-10",
         "Schema-Group-Name": "azsdk_net_test_group",
         "Schema-Id": "6b6ee2de55fe46b58be31f43dee3b51e",
@@ -48,7 +48,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "545660463",
+    "RandomSeed": "118305434",
     "SCHEMAREGISTRY_ENDPOINT": "jolovschemaregistry.servicebus.windows.net",
     "SCHEMAREGISTRY_GROUP": "azsdk_net_test_group"
   }
