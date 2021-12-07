@@ -12,7 +12,7 @@ using Microsoft.Azure.Storage.Queue;
 using Microsoft.Azure.Cosmos.Table;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Xunit;
+using NUnit.Framework;
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
     public class TableTests
@@ -22,7 +22,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         private const string PartitionKey = "PK";
         private const string RowKey = "RK";
         private const string PropertyName = "Property";
-        [Fact]
+        [Test]
         public void Table_IndexingFails()
         {
             void AssertIndexingError<TProgram>(string methodName, string expectedErrorMessage)
@@ -52,7 +52,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 x = new Poco { PartitionKey = PartitionKey, RowKey = RowKey, Property = "1234" };
             }
         }
-        [Fact(Skip = "TODO")]
+        [Test]
+        [Ignore("TODO")]
         public async Task Table_SingleOut_Supported()
         {
             IHost host = new HostBuilder()
@@ -78,7 +79,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
         // TableName can have {  } pairs.
-        [Fact(Skip = "TODO")]
+        [Test]
+        [Ignore("TODO")]
         public async Task Table_ResolvedName()
         {
             IHost host = new HostBuilder()
@@ -101,7 +103,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 return new CustomTableBinding<T>(input);
             }
         }
-        [Fact(Skip = "TODO")]
+        [Test]
+        [Ignore("TODO")]
         public async Task Table_IfBoundToCustomTableBindingExtension_BindsCorrectly()
         {
             // Arrange
@@ -115,7 +118,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             .Build();
             await host.GetJobHost<CustomTableBindingExtensionProgram>().CallAsync("Run").ConfigureAwait(false); // Act
             // Assert
-            Assert.Equal(TableName, CustomTableBinding<Poco>.Table.Name);
+            Assert.AreEqual(TableName, CustomTableBinding<Poco>.Table.Name);
             Assert.True(CustomTableBinding<Poco>.AddInvoked);
             Assert.True(CustomTableBinding<Poco>.DeleteInvoked);
         }
@@ -129,7 +132,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                typeof(CustomTableBindingConverter<>));
             }
         }
-        [Fact(Skip = "TODO")]
+        [Test]
+        [Ignore("TODO")]
         public async Task Table_IfBoundToCloudTable_BindsAndCreatesTable()
         {
             // Arrange
@@ -141,12 +145,13 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 (s) => BindToCloudTableProgram.TaskSource = s).ConfigureAwait(false);
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(TableName, result.Name);
+            Assert.AreEqual(TableName, result.Name);
             CloudTableClient client = account.CreateCloudTableClient();
             CloudTable table = client.GetTableReference(TableName);
             Assert.True(await table.ExistsAsync().ConfigureAwait(false));
         }
-        [Fact(Skip = "TODO")]
+        [Test]
+        [Ignore("TODO")]
         public async Task Table_IfBoundToICollectorJObject_AddInsertsEntity()
         {
             // Arrange
@@ -167,7 +172,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             AssertPropertyValue(entity, "ValueNum", 123);
         }
         // Partition and RowKey values are in the attribute
-        [Fact(Skip = "TODO")]
+        [Test]
+        [Ignore("TODO")]
         public async Task Table_IfBoundToICollectorJObject__WithAttrKeys_AddInsertsEntity()
         {
             // Arrange
@@ -184,7 +190,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var account = host.GetStorageAccount();
             await AssertStringPropertyAsync(account, "ValueStr", expectedValue).ConfigureAwait(false);
         }
-        [Fact(Skip = "TODO")]
+        [Test]
+        [Ignore("TODO")]
         public async Task Table_IfBoundToICollectorITableEntity_AddInsertsEntity()
         {
             // Arrange
@@ -197,7 +204,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             // Assert
             await AssertStringPropertyAsync(account, PropertyName, expectedValue).ConfigureAwait(false);
         }
-        [Fact(Skip = "TODO")]
+        [Test]
+        [Ignore("TODO")]
         public async Task Table_IfBoundToICollectorPoco_AddInsertsEntity()
         {
             // Arrange
@@ -210,7 +218,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             // Assert
             await AssertStringPropertyAsync(account, PropertyName, expectedValue).ConfigureAwait(false);
         }
-        [Fact(Skip = "TODO")]
+        [Test]
+        [Ignore("TODO")]
         public async Task Table_IfBoundToICollectorPoco_AddInsertsUsingNativeTableTypes()
         {
             // Arrange
@@ -251,8 +260,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             CloudTable table = client.GetTableReference(TableName);
             Assert.True(await table.ExistsAsync().ConfigureAwait(false));
             DynamicTableEntity entity = table.Retrieve<DynamicTableEntity>(PartitionKey, RowKey);
-            Assert.Equal(expected.PartitionKey, entity.PartitionKey);
-            Assert.Equal(expected.RowKey, entity.RowKey);
+            Assert.AreEqual(expected.PartitionKey, entity.PartitionKey);
+            Assert.AreEqual(expected.RowKey, entity.RowKey);
             IDictionary<string, EntityProperty> properties = entity.Properties;
             AssertNullablePropertyEqual(expected.BooleanProperty, EdmType.Boolean, properties, "BooleanProperty",
                 (p) => p.BooleanValue);
@@ -293,10 +302,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.NotNull(properties);
             Assert.True(properties.ContainsKey(propertyName));
             EntityProperty property = properties[propertyName];
-            Assert.Equal(expectedType, property.PropertyType);
+            Assert.AreEqual(expectedType, property.PropertyType);
             Nullable<T> actualValue = actualAccessor.Invoke(property);
             Assert.True(actualValue.HasValue);
-            Assert.Equal(expected, actualValue.Value);
+            Assert.AreEqual(expected, actualValue.Value);
         }
         private static void AssertPropertyValue(DynamicTableEntity entity, string propertyName, object expectedValue)
         {
@@ -305,13 +314,13 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.NotNull(property);
             if (expectedValue is string)
             {
-                Assert.Equal(EdmType.String, property.PropertyType);
-                Assert.Equal(expectedValue, property.StringValue);
+                Assert.AreEqual(EdmType.String, property.PropertyType);
+                Assert.AreEqual(expectedValue, property.StringValue);
             }
             else if (expectedValue is int)
             {
-                Assert.Equal(EdmType.Int32, property.PropertyType);
-                Assert.Equal(expectedValue, property.Int32Value);
+                Assert.AreEqual(EdmType.Int32, property.PropertyType);
+                Assert.AreEqual(expectedValue, property.Int32Value);
             }
             else
             {
@@ -328,9 +337,9 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.NotNull(properties);
             Assert.True(properties.ContainsKey(propertyName));
             EntityProperty property = properties[propertyName];
-            Assert.Equal(expectedType, property.PropertyType);
+            Assert.AreEqual(expectedType, property.PropertyType);
             T actualValue = actualAccessor.Invoke(property);
-            Assert.Equal(expected, actualValue);
+            Assert.AreEqual(expected, actualValue);
         }
         private static void AssertPropertyNull<T>(EdmType expectedType,
             IDictionary<string, EntityProperty> properties,
@@ -341,7 +350,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.NotNull(properties);
             Assert.True(properties.ContainsKey(propertyName));
             EntityProperty property = properties[propertyName];
-            Assert.Equal(expectedType, property.PropertyType);
+            Assert.AreEqual(expectedType, property.PropertyType);
             Nullable<T> actualValue = actualAccessor.Invoke(property);
             Assert.False(actualValue.HasValue);
         }
@@ -364,8 +373,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.True(entity.Properties.ContainsKey(propertyName));
             EntityProperty property = entity.Properties[propertyName];
             Assert.NotNull(property);
-            Assert.Equal(EdmType.String, property.PropertyType);
-            Assert.Equal(expectedValue, property.StringValue);
+            Assert.AreEqual(EdmType.String, property.PropertyType);
+            Assert.AreEqual(expectedValue, property.StringValue);
         }
         private static StorageAccount CreateFakeStorageAccount()
         {

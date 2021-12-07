@@ -11,7 +11,8 @@ using Microsoft.Azure.WebJobs.Host.FunctionalTests;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Linq;
-using Xunit;
+using NUnit.Framework;
+
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
 {
     public class HostCallTableTests
@@ -22,11 +23,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
         private const string RowKey = "RK";
         private const int TestValue = Int32.MinValue;
         private const string TestQueueMessage = "ignore";
-        [Theory(Skip = "TODO")]
-        [InlineData("FuncWithITableEntity")]
-        [InlineData("FuncWithPocoObjectEntity")]
-        [InlineData("FuncWithPocoValueEntity")]
-        [InlineData("FuncWithICollector")]
+        [Ignore("TODO")]
+        [TestCase("FuncWithITableEntity")]
+        [TestCase("FuncWithPocoObjectEntity")]
+        [TestCase("FuncWithPocoValueEntity")]
+        [TestCase("FuncWithICollector")]
         public async Task Table_IfBoundToTypeAndTableIsMissing_DoesNotCreate(string methodName)
         {
             // Arrange
@@ -38,7 +39,8 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             Assert.False(await table.ExistsAsync().ConfigureAwait(false));
         }
-        [Fact(Skip = "TODO")]
+        [Test]
+        [Ignore("TODO")]
         public async Task Table_IfBoundToCloudTableAndTableIsMissing_Creates()
         {
             // Arrange
@@ -59,7 +61,8 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 TaskSource.TrySetResult(queue);
             }
         }
-        [Fact(Skip = "TODO")]
+        [Test]
+        [Ignore("TODO")]
         public async Task Table_IfBoundToICollectorITableEntity_CanCall()
         {
             await TestTableBoundToCollectorCanCallAsync(typeof(BindTableToICollectorITableEntity)).ConfigureAwait(false);
@@ -71,7 +74,8 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 table.Add(new DynamicTableEntity(PartitionKey, RowKey));
             }
         }
-        [Fact(Skip = "TODO")]
+        [Test]
+        [Ignore("TODO")]
         public async Task Table_IfBoundToICollectorDynamicTableEntity_CanCall()
         {
             await TestTableBoundToCollectorCanCallAsync(typeof(BindTableToICollectorDynamicTableEntity)).ConfigureAwait(false);
@@ -83,7 +87,8 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 table.Add(new DynamicTableEntity(PartitionKey, RowKey));
             }
         }
-        [Fact(Skip = "TODO")]
+        [Test]
+        [Ignore("TODO")]
         public async Task Table_IfBoundToICollectorSdkTableEntity_CanCall()
         {
             await TestTableBoundToCollectorCanCallAsync(typeof(BindTableToICollectorSdkTableEntity)).ConfigureAwait(false);
@@ -95,7 +100,8 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 table.Add(new SdkTableEntity { PartitionKey = PartitionKey, RowKey = RowKey });
             }
         }
-        [Fact(Skip = "TODO")]
+        [Test]
+        [Ignore("TODO")]
         public async Task Table_IfBoundToIAsyncCollectorITableEntity_CanCall()
         {
             await TestTableBoundToCollectorCanCallAsync(typeof(BindTableToIAsyncCollectorITableEntity)).ConfigureAwait(false);
@@ -107,7 +113,8 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 return table.AddAsync(new DynamicTableEntity(PartitionKey, RowKey));
             }
         }
-        [Fact(Skip = "TODO")]
+        [Test]
+        [Ignore("TODO")]
         public async Task Table_IfBoundToIAsyncCollectorDynamicTableEntity_CanCall()
         {
             await TestTableBoundToCollectorCanCallAsync(typeof(BindTableToIAsyncCollectorDynamicTableEntity)).ConfigureAwait(false);
@@ -119,7 +126,8 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 return table.AddAsync(new DynamicTableEntity(PartitionKey, RowKey));
             }
         }
-        [Fact(Skip = "TODO")]
+        [Test]
+        [Ignore("TODO")]
         public async Task Table_IfBoundToIAsyncCollectorSdkTableEntity_CanCall()
         {
             await TestTableBoundToCollectorCanCallAsync(typeof(BindTableToIAsyncCollectorSdkTableEntity)).ConfigureAwait(false);
@@ -143,7 +151,8 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             DynamicTableEntity entity = table.Retrieve<DynamicTableEntity>(PartitionKey, RowKey);
             Assert.NotNull(entity);
         }
-        [Fact(Skip = "TODO")]
+        [Test]
+        [Ignore("TODO")]
         public async Task Table_IfBoundToCollectorAndETagDoesNotMatch_Throws()
         {
             await TestBindToConcurrentlyUpdatedTableEntity(typeof(BindTableToCollectorFoo), "collector").ConfigureAwait(false);
@@ -155,7 +164,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             {
                 SdkTableEntity entity = table.Retrieve<SdkTableEntity>(PartitionKey, RowKey);
                 Assert.NotNull(entity);
-                Assert.Equal("Foo", entity.Value);
+                Assert.AreEqual("Foo", entity.Value);
                 // Update the entity to invalidate the version read by this method.
                 table.Replace(new SdkTableEntity
                 {
@@ -169,8 +178,8 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                     new Dictionary<string, EntityProperty> { { "Value", new EntityProperty("Bar") } }));
             }
         }
-        [Fact(Skip = "TODO")]
-        [Trait("SecretsRequired", "true")]
+        [Test]
+        [Ignore("TODO")]
         public async Task TableEntity_IfBoundToJArray_CanCall()
         {
             StorageAccount account = GetRealStorage(); // Fake storage doesn't implement table filters
@@ -198,13 +207,13 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Act
             Type type = typeof(BindTableEntityToJArrayProgram);
             await host.GetJobHost().CallAsync(type.GetMethod(nameof(BindTableEntityToJArrayProgram.CallTakeFilter)));
-            Assert.Equal("x1;x3;", instance._result);
+            Assert.AreEqual("x1;x3;", instance._result);
             await host.GetJobHost().CallAsync(type.GetMethod(nameof(BindTableEntityToJArrayProgram.CallFilter)));
-            Assert.Equal("x1;x3;x4;", instance._result);
+            Assert.AreEqual("x1;x3;x4;", instance._result);
             await host.GetJobHost().CallAsync(type.GetMethod(nameof(BindTableEntityToJArrayProgram.CallTake)));
-            Assert.Equal("x1;x2;x3;", instance._result);
+            Assert.AreEqual("x1;x2;x3;", instance._result);
             await host.GetJobHost().CallAsync(type.GetMethod(nameof(BindTableEntityToJArrayProgram.Call)));
-            Assert.Equal("x1;x2;x3;x4;", instance._result);
+            Assert.AreEqual("x1;x2;x3;x4;", instance._result);
         }
         private class BindTableEntityToJArrayProgram
         {
@@ -238,7 +247,8 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 this._result = Flatten(array);
             }
         }
-        [Fact(Skip = "TODO")]
+        [Test]
+        [Ignore("TODO")]
         public async Task TableEntity_IfBoundToJObject_CanCall()
         {
             // Arrange
@@ -274,10 +284,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             public static void Call([Table("{table}", "{pk1}", "{rk1}")] JObject entity)
             {
                 Assert.NotNull(entity);
-                Assert.Equal("Foo", entity["Value"].ToString());
+                Assert.AreEqual("Foo", entity["Value"].ToString());
             }
         }
-        [Fact(Skip = "TODO")]
+        [Test]
+        [Ignore("TODO")]
         public async Task TableEntity_IfBoundToSdkTableEntity_CanCall()
         {
             // Arrange
@@ -291,18 +302,19 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             SdkTableEntity entity = table.Retrieve<SdkTableEntity>(PartitionKey, RowKey);
             Assert.NotNull(entity);
-            Assert.Equal("Bar", entity.Value);
+            Assert.AreEqual("Bar", entity.Value);
         }
         private class BindTableEntityToSdkTableEntityProgram
         {
             public static void Call([Table(TableName, PartitionKey, RowKey)] SdkTableEntity entity)
             {
                 Assert.NotNull(entity);
-                Assert.Equal("Foo", entity.Value);
+                Assert.AreEqual("Foo", entity.Value);
                 entity.Value = "Bar";
             }
         }
-        [Fact(Skip = "TODO")]
+        [Test]
+        [Ignore("TODO")]
         public async Task TableEntity_IfBoundToPocoTableEntity_CanCall()
         {
             // Arrange
@@ -321,29 +333,29 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             DynamicTableEntity entity = table.Retrieve<DynamicTableEntity>(PartitionKey, RowKey);
             Assert.NotNull(entity);
-            Assert.Equal(PartitionKey, entity.PartitionKey); // Guard
-            Assert.Equal(RowKey, entity.RowKey); // Guard
+            Assert.AreEqual(PartitionKey, entity.PartitionKey); // Guard
+            Assert.AreEqual(RowKey, entity.RowKey); // Guard
             IDictionary<string, EntityProperty> properties = entity.Properties;
-            Assert.Equal(3, properties.Count);
+            Assert.AreEqual(3, properties.Count);
             Assert.True(properties.ContainsKey("Value"));
             EntityProperty fruitProperty = properties["Fruit"];
-            Assert.Equal(EdmType.String, fruitProperty.PropertyType);
-            Assert.Equal("Pear", fruitProperty.StringValue);
+            Assert.AreEqual(EdmType.String, fruitProperty.PropertyType);
+            Assert.AreEqual("Pear", fruitProperty.StringValue);
             EntityProperty durationProperty = properties["Duration"];
-            Assert.Equal(EdmType.String, durationProperty.PropertyType);
-            Assert.Equal("\"00:02:00\"", durationProperty.StringValue);
+            Assert.AreEqual(EdmType.String, durationProperty.PropertyType);
+            Assert.AreEqual("\"00:02:00\"", durationProperty.StringValue);
             EntityProperty valueProperty = properties["Value"];
-            Assert.Equal(EdmType.String, valueProperty.PropertyType);
-            Assert.Equal("Bar", valueProperty.StringValue);
+            Assert.AreEqual(EdmType.String, valueProperty.PropertyType);
+            Assert.AreEqual("Bar", valueProperty.StringValue);
         }
         private class BindTableEntityToPocoTableEntityProgram
         {
             public static void Call([Table(TableName, PartitionKey, RowKey)] PocoTableEntityWithEnum entity)
             {
                 Assert.NotNull(entity);
-                Assert.Equal(Fruit.Banana, entity.Fruit);
-                Assert.Equal(TimeSpan.FromSeconds(1), entity.Duration);
-                Assert.Equal("Foo", entity.Value);
+                Assert.AreEqual(Fruit.Banana, entity.Fruit);
+                Assert.AreEqual(TimeSpan.FromSeconds(1), entity.Duration);
+                Assert.AreEqual("Foo", entity.Value);
                 entity.Fruit = Fruit.Pear;
                 entity.Duration = TimeSpan.FromMinutes(2);
                 entity.Value = "Bar";
@@ -361,7 +373,8 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Banana,
             Pear
         }
-        [Fact(Skip = "TODO")]
+        [Test]
+        [Ignore("TODO")]
         public async Task TableEntity_IfBoundToSdkTableEntityAndUpdatedConcurrently_Throws()
         {
             await TestBindTableEntityToConcurrentlyUpdatedValue(typeof(BindTableEntityToConcurrentlyUpdatedSdkTableEntity)).ConfigureAwait(false);
@@ -372,7 +385,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 [Table(TableName)] CloudTable table)
             {
                 Assert.NotNull(entity);
-                Assert.Equal("Foo", entity.Value);
+                Assert.AreEqual("Foo", entity.Value);
                 // Update the entity to invalidate the version read by this method.
                 table.Replace(new SdkTableEntity
                 {
@@ -385,7 +398,8 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 entity.Value = "Bar";
             }
         }
-        [Fact(Skip = "TODO")]
+        [Test]
+        [Ignore("TODO")]
         public async Task TableEntity_IfBoundToPocoTableEntityAndUpdatedConcurrently_Throws()
         {
             await TestBindTableEntityToConcurrentlyUpdatedValue(typeof(BindTableEntityToConcurrentlyUpdatedPocoTableEntity)).ConfigureAwait(false);
@@ -396,7 +410,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 [Table(TableName)] CloudTable table)
             {
                 Assert.NotNull(entity);
-                Assert.Equal("Foo", entity.Value);
+                Assert.AreEqual("Foo", entity.Value);
                 // Update the entity to invalidate the version read by this method.
                 table.Replace(new SdkTableEntity
                 {
@@ -426,7 +440,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             AssertInvocationETagFailure(parameterName, exception);
             SdkTableEntity entity = table.Retrieve<SdkTableEntity>(PartitionKey, RowKey);
             Assert.NotNull(entity);
-            Assert.Equal("FooBackground", entity.Value);
+            Assert.AreEqual("FooBackground", entity.Value);
         }
         private static async Task CallAsync(StorageAccount account, Type programType, string methodName, params Type[] customExtensions)
         {
@@ -473,18 +487,18 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
         }
         private static void AssertInvocationETagFailure(string expectedParameterName, Exception exception)
         {
-            Assert.IsType<FunctionInvocationException>(exception);
-            Assert.IsType<InvalidOperationException>(exception.InnerException);
+            Assert.IsInstanceOf<FunctionInvocationException>(exception);
+            Assert.IsInstanceOf<InvalidOperationException>(exception.InnerException);
             string expectedMessage = String.Format(CultureInfo.InvariantCulture,
                 "Error while handling parameter {0} after function returned:", expectedParameterName);
-            Assert.Equal(expectedMessage, exception.InnerException.Message);
+            Assert.AreEqual(expectedMessage, exception.InnerException.Message);
             Exception innerException = exception.InnerException.InnerException;
-            Assert.IsType<InvalidOperationException>(innerException);
+            Assert.IsInstanceOf<InvalidOperationException>(innerException);
             // This exception is an implementation detail of the fake storage account. A real one would use a
             // StorageException (this assert may need to change if the fake is updated to be more realistic).
             InvalidOperationException invalidOperationException = (InvalidOperationException)innerException;
             Assert.NotNull(invalidOperationException.Message);
-            Assert.StartsWith("Entity PK='PK',RK='RK' does not match eTag", invalidOperationException.Message);
+            StringAssert.StartsWith("Entity PK='PK',RK='RK' does not match eTag", invalidOperationException.Message);
         }
         private class MissingTableProgram
         {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.WebJobs.Host.Tables;
 using Microsoft.Azure.Cosmos.Table;
-using Xunit;
+using NUnit.Framework;
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
 {
     public class TableEntityCollectorBinderTests
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 return Task.FromResult(0);
             }
         }
-        [Fact]
+        [Test]
         public void ValueHasNotChanged()
         {
             // Arrange
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             Assert.Null(parameterLog);
         }
-        [Fact]
+        [Test]
         public void PropertyHasBeenAdded()
         {
             // Arrange
@@ -69,10 +69,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Act
             var parameterLog = product.GetStatus() as TableParameterLog;
             // Assert
-            Assert.Equal(1, parameterLog.EntitiesWritten);
-            Assert.Equal(0, writer.TimesPartitionFlushed);
+            Assert.AreEqual(1, parameterLog.EntitiesWritten);
+            Assert.AreEqual(0, writer.TimesPartitionFlushed);
         }
-        [Fact]
+        [Test]
         public void MaximumBatchSizeFlushes()
         {
             // Arrange
@@ -95,10 +95,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Act
             var parameterLog = product.GetStatus() as TableParameterLog;
             // Assert
-            Assert.Equal(TableEntityWriter<ITableEntity>.MaxBatchSize + 1, parameterLog.EntitiesWritten);
-            Assert.Equal(1, writer.TimesPartitionFlushed);
+            Assert.AreEqual(TableEntityWriter<ITableEntity>.MaxBatchSize + 1, parameterLog.EntitiesWritten);
+            Assert.AreEqual(1, writer.TimesPartitionFlushed);
         }
-        [Fact]
+        [Test]
         public void MaximumPartitionWidthFlushes()
         {
             // Arrange
@@ -121,11 +121,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Act
             var parameterLog = product.GetStatus() as TableParameterLog;
             // Assert
-            Assert.Equal(TableEntityWriter<ITableEntity>.MaxPartitionWidth + 1, parameterLog.EntitiesWritten);
-            Assert.Equal(1, writer.TimesFlushed);
-            Assert.Equal(TableEntityWriter<ITableEntity>.MaxPartitionWidth, writer.TimesPartitionFlushed);
+            Assert.AreEqual(TableEntityWriter<ITableEntity>.MaxPartitionWidth + 1, parameterLog.EntitiesWritten);
+            Assert.AreEqual(1, writer.TimesFlushed);
+            Assert.AreEqual(TableEntityWriter<ITableEntity>.MaxPartitionWidth, writer.TimesPartitionFlushed);
         }
-        [Fact]
+        [Test]
         public void PropertyHasBeenReplaced()
         {
             // Arrange
@@ -144,19 +144,19 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Act
             var parameterLog = product.GetStatus() as TableParameterLog;
             // Assert
-            Assert.Equal(1, parameterLog.EntitiesWritten);
-            Assert.Equal(0, writer.TimesPartitionFlushed);
+            Assert.AreEqual(1, parameterLog.EntitiesWritten);
+            Assert.AreEqual(0, writer.TimesPartitionFlushed);
             // Calling again should yield no changes
-            Assert.Equal(1, parameterLog.EntitiesWritten);
+            Assert.AreEqual(1, parameterLog.EntitiesWritten);
             // Assert
-            Assert.Equal(0, writer.TimesPartitionFlushed);
+            Assert.AreEqual(0, writer.TimesPartitionFlushed);
             // Add same value again.
             writer.Add(value);
             // Act
             parameterLog = product.GetStatus() as TableParameterLog;
             // Assert
-            Assert.Equal(2, parameterLog.EntitiesWritten);
-            Assert.Equal(1, writer.TimesPartitionFlushed);
+            Assert.AreEqual(2, parameterLog.EntitiesWritten);
+            Assert.AreEqual(1, writer.TimesPartitionFlushed);
         }
         private CloudTableClient CreateTableClient()
         {

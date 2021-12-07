@@ -4,43 +4,44 @@ using System;
 using System.Reflection;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Tables;
-using Xunit;
+using Microsoft.Azure.Cosmos.Table;
+using NUnit.Framework;
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
 {
-    public class PocoEntityArgumentBindingProviderTests
+    public class TableEntityArgumentBindingProviderTests
     {
         private ParameterInfo[] _parameters;
-        public PocoEntityArgumentBindingProviderTests()
+        public TableEntityArgumentBindingProviderTests()
         {
             _parameters = this.GetType().GetMethod("Parameters", BindingFlags.NonPublic | BindingFlags.Static).GetParameters();
         }
-        [Fact]
+        [Test]
         public void Create_ReturnsNull_IfByRefParameter()
         {
             // Arrange
-            ITableEntityArgumentBindingProvider product = new PocoEntityArgumentBindingProvider();
+            ITableEntityArgumentBindingProvider product = new TableEntityArgumentBindingProvider();
             Type parameterType = typeof(SimpleTableEntity).MakeByRefType();
             // Act
             IArgumentBinding<TableEntityContext> binding = product.TryCreate(_parameters[0]);
             // Assert
             Assert.Null(binding);
         }
-        [Fact]
+        [Test]
         public void Create_ReturnsBinding_IfContainsResolvedGenericParameter()
         {
             // Arrange
-            ITableEntityArgumentBindingProvider product = new PocoEntityArgumentBindingProvider();
-            Type parameterType = typeof(GenericClass<SimpleTableEntity>);
+            ITableEntityArgumentBindingProvider product = new TableEntityArgumentBindingProvider();
+            Type parameterType = typeof(GenericClass<int>);
             // Act
             IArgumentBinding<TableEntityContext> binding = product.TryCreate(_parameters[1]);
             // Assert
             Assert.NotNull(binding);
         }
-        private static void Parameters(ref SimpleTableEntity byRef, GenericClass<SimpleTableEntity> generic) { }
-        private class SimpleTableEntity
+        private static void Parameters(ref SimpleTableEntity byRef, GenericClass<int> generic) {}
+        private class SimpleTableEntity : TableEntity
         {
         }
-        private class GenericClass<TArgument>
+        private class GenericClass<TArgument> : TableEntity
         {
         }
     }

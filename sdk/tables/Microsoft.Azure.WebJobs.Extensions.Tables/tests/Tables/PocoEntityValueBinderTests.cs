@@ -2,12 +2,12 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 using System;
 using Microsoft.Azure.WebJobs.Host.Tables;
-using Xunit;
+using NUnit.Framework;
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
 {
     public class PocoEntityValueBinderTests
     {
-        [Fact]
+        [Test]
         public void HasChanged_ReturnsFalse_IfValueHasNotChanged()
         {
             // Arrange
@@ -21,7 +21,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             Assert.False(hasChanged);
         }
-        [Fact]
+        [Test]
         public void HasChanged_ReturnsTrue_IfValueHasChanged()
         {
             // Arrange

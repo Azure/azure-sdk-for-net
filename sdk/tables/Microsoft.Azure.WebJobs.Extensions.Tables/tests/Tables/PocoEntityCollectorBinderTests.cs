@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.WebJobs.Host.Tables;
 using Microsoft.Azure.Cosmos.Table;
-using Xunit;
+using NUnit.Framework;
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
 {
     public class PocoEntityCollectorBinderTests
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 return Task.FromResult(0);
             }
         }
-        [Fact]
+        [Test]
         public void ValueHasNotChanged()
         {
             // Arrange
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             Assert.Null(parameterLog);
         }
-        [Fact]
+        [Test]
         public void PropertyHasBeenAdded()
         {
             // Arrange
@@ -65,9 +65,9 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Act
             var parameterLog = product.GetStatus() as TableParameterLog;
             // Assert
-            Assert.Equal(1, parameterLog.EntitiesWritten);
+            Assert.AreEqual(1, parameterLog.EntitiesWritten);
         }
-        [Fact]
+        [Test]
         public void PropertyHasBeenReplaced()
         {
             // Arrange
@@ -86,17 +86,17 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Act
             var parameterLog = product.GetStatus() as TableParameterLog;
             // Assert
-            Assert.Equal(1, parameterLog.EntitiesWritten);
+            Assert.AreEqual(1, parameterLog.EntitiesWritten);
             // Calling again should yield no changes
             parameterLog = product.GetStatus() as TableParameterLog;
             // Assert
-            Assert.Equal(1, parameterLog.EntitiesWritten);
+            Assert.AreEqual(1, parameterLog.EntitiesWritten);
             // Add same value again.
             writer.Add(value);
             // Act
             parameterLog = product.GetStatus() as TableParameterLog;
             // Assert
-            Assert.Equal(2, parameterLog.EntitiesWritten);
+            Assert.AreEqual(2, parameterLog.EntitiesWritten);
         }
         private CloudTableClient CreateTableClient()
         {
