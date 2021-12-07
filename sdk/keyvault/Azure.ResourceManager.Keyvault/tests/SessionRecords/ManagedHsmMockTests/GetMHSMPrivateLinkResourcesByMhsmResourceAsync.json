@@ -1,0 +1,256 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000?api-version=2019-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-89a5624c1008a5449418752d7bacabef-3b2ac8392e28b04c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20211207.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "a16e733263ace09e3904d864b8c5746d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "462",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 07 Dec 2021 06:01:02 GMT",
+        "ETag": "W/\u00221ce-Ye80cJBiPXTM8QpZG/wWQI13QwY\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000",
+        "subscriptionId": "aaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "displayName": "aaaaaaaaaaaaaaaaaa",
+        "tenantId": "00000000-0000-0000-0000-000000000000",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "aaaa",
+          "quotaId": "aaaaaaaaaaaa",
+          "spendingLimit": "On"
+        },
+        "authorizationSource": "aaaaaaaaaaaaaaaaaa",
+        "managedByTenants": [
+          {
+            "tenantId": "00000000-0000-0000-0000-000000000000"
+          }
+        ],
+        "tags": {
+          "key7626": "aaaaaaaaaaaaaaa"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/hsm-group?api-version=2019-10-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "81",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20211207.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "414d85a623b66996fbc5109d5978df80",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "Azure.ResourceManager.Resources.Subscription",
+        "tags": {
+          "test": "env"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "317",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 07 Dec 2021 06:01:02 GMT",
+        "ETag": "W/\u002213d-MAIpUYSVeAhlmLEVEx5biv2NbP0\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/hsm-group",
+        "name": "hsm-group",
+        "type": "aaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "properties": {
+          "provisioningState": "Succeeded"
+        },
+        "location": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "managedBy": "aaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "tags": {
+          "key9892": "aaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.KeyVault/managedHSMs/hsm1?api-version=2021-04-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "258",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager.KeyVault/1.0.0-alpha.20211207.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "fd6a102906d3cd21d990cb3f8106cee4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "tenantId": "00000000-0000-0000-0000-000000000000",
+          "enableSoftDelete": true,
+          "softDeleteRetentionInDays": 90,
+          "enablePurgeProtection": true
+        },
+        "sku": {
+          "family": "B",
+          "name": "Standard_B1"
+        },
+        "tags": {
+          "Dept": "hsm",
+          "Environment": "dogfood"
+        },
+        "location": "westus"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "1472",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 07 Dec 2021 06:01:02 GMT",
+        "ETag": "W/\u00225c0-oYQK4I7vzAWBb5\u002B\u002BvepVdPXokVE\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.KeyVault/managedHSMs/hsm1",
+        "name": "hsm1",
+        "type": "aaa",
+        "location": "aaaaaa",
+        "sku": {
+          "family": "B",
+          "name": "Standard_B1"
+        },
+        "tags": {
+          "key161": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "systemData": {
+          "createdBy": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createdByType": "User",
+          "createdAt": "2021-12-07T06:01:02.627Z",
+          "lastModifiedBy": "aaaaaaaaaaaaaaaaaaaaaaa",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2021-12-07T06:01:02.627Z"
+        },
+        "properties": {
+          "tenantId": "00000000-0000-0000-0000-000000000000",
+          "initialAdminObjectIds": [
+            "a"
+          ],
+          "hsmUri": "aaaaaaaaaaaaaaaaaaaaa",
+          "enableSoftDelete": true,
+          "softDeleteRetentionInDays": 30,
+          "enablePurgeProtection": true,
+          "createMode": "recover",
+          "statusMessage": "a",
+          "provisioningState": "Succeeded",
+          "networkAcls": {
+            "bypass": "AzureServices",
+            "defaultAction": "Allow",
+            "ipRules": [
+              {
+                "value": "aaaaaaaaaa"
+              }
+            ],
+            "virtualNetworkRules": [
+              {
+                "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName"
+              }
+            ]
+          },
+          "privateEndpointConnections": [
+            {
+              "properties": {
+                "privateEndpoint": {
+                  "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName"
+                },
+                "privateLinkServiceConnectionState": {
+                  "status": "Pending",
+                  "description": "aaaaaa",
+                  "actionsRequired": "None"
+                },
+                "provisioningState": "Succeeded"
+              }
+            }
+          ],
+          "publicNetworkAccess": "Enabled",
+          "scheduledPurgeDate": "2021-12-07T06:01:02.627Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.KeyVault/managedHSMs/hsm1/privateLinkResources?api-version=2021-04-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.KeyVault/1.0.0-alpha.20211207.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "a73b5824775aa09a648068265756e7f4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "656",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 07 Dec 2021 06:01:02 GMT",
+        "ETag": "W/\u0022290-1zruolCjutj0NUN3Iqf4T5HAUzM\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.KeyVault/managedHSMs/hsm1/privateLinkResources/aaaaaaaaaaaaaaaaaaaaaaa",
+            "name": "privateLinkResources",
+            "type": "aaaaaaa",
+            "location": "aaaaaaa",
+            "sku": {
+              "family": "B",
+              "name": "Standard_B1"
+            },
+            "tags": {
+              "key4095": "aaaaa"
+            },
+            "systemData": {
+              "createdBy": "aaaaaaaaaaaaaaaaaaaaa",
+              "createdByType": "User",
+              "createdAt": "2021-12-07T06:01:02.641Z",
+              "lastModifiedBy": "aaaaaaaaaaa",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2021-12-07T06:01:02.641Z"
+            },
+            "properties": {
+              "groupId": "aa",
+              "requiredMembers": [
+                "aaaaaaaaaaaaaaaaa"
+              ],
+              "requiredZoneNames": [
+                "aaaaaaaaaaaaaaaaaaaa"
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "368495253",
+    "RESOURCE_MANAGER_URL": "https://localhost:8443",
+    "SUBSCRIPTION_ID": "00000000-0000-0000-0000-000000000000"
+  }
+}

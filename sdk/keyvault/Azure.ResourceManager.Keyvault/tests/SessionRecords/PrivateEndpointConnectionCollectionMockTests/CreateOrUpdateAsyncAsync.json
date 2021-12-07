@@ -1,0 +1,272 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000?api-version=2019-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-e48ce061299ddf46b43a03cc62e8a0af-f4d9aca1602ea24e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20211207.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "570d1dc6abd9e41484ecf44058888367",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "447",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 07 Dec 2021 06:01:15 GMT",
+        "ETag": "W/\u00221bf-inXbWe\u002BisYkLZoCvnOY3rL3N0Ek\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000",
+        "subscriptionId": "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "displayName": "aaaa",
+        "tenantId": "00000000-0000-0000-0000-000000000000",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "aaaaaaaaaaaaaaaaaaaaaaa",
+          "quotaId": "aaaaaaaaaaaaaaaa",
+          "spendingLimit": "On"
+        },
+        "authorizationSource": "aaaaa",
+        "managedByTenants": [
+          {
+            "tenantId": "00000000-0000-0000-0000-000000000000"
+          }
+        ],
+        "tags": {
+          "key9717": "aaa"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/sample-group?api-version=2019-10-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "81",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20211207.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "8aebd6ad0102b70cf4b1f48b70b6f20f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "Azure.ResourceManager.Resources.Subscription",
+        "tags": {
+          "test": "env"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "282",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 07 Dec 2021 06:01:15 GMT",
+        "ETag": "W/\u002211a-hvMOBWRNzGgEBPDZjHr2/XkDcTs\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/sample-group",
+        "name": "sample-group",
+        "type": "aaaaaaa",
+        "properties": {
+          "provisioningState": "Succeeded"
+        },
+        "location": "aaaaaaa",
+        "managedBy": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "tags": {
+          "key7912": "aaaaaaaaaaaaaaaaaaaaa"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sample-group/providers/Microsoft.KeyVault/vaults/sample-vault?api-version=2021-04-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "221",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager.KeyVault/1.0.0-alpha.20211207.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "d894864a5ee594cdf4b2b60be53b5038",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "westus",
+        "properties": {
+          "tenantId": "00000000-0000-0000-0000-000000000000",
+          "sku": {
+            "family": "A",
+            "name": "standard"
+          },
+          "enabledForDeployment": true,
+          "enabledForDiskEncryption": true,
+          "enabledForTemplateDeployment": true
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "1951",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 07 Dec 2021 06:01:15 GMT",
+        "ETag": "W/\u002279f-mxhjS3H6Ug4qkoSKyODEm8EIEgM\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sample-group/providers/Microsoft.KeyVault/vaults/sample-vault",
+        "name": "sample-vault",
+        "type": "a",
+        "location": "aaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "tags": {
+          "key7871": "aaaaaaaaaaaa"
+        },
+        "systemData": {
+          "createdBy": "aaaaaaaaaaaaaaaaaaaaa",
+          "createdByType": "User",
+          "createdAt": "2021-12-07T06:01:15.439Z",
+          "lastModifiedBy": "aaaa",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2021-12-07T06:01:15.439Z"
+        },
+        "properties": {
+          "tenantId": "00000000-0000-0000-0000-000000000000",
+          "sku": {
+            "family": "A",
+            "name": "standard"
+          },
+          "accessPolicies": [
+            {
+              "tenantId": "00000000-0000-0000-0000-000000000000",
+              "objectId": "aaaaaaaaaaaaaaa",
+              "applicationId": "00000000-0000-0000-0000-000000000000",
+              "permissions": {
+                "keys": [
+                  "encrypt"
+                ],
+                "secrets": [
+                  "get"
+                ],
+                "certificates": [
+                  "get"
+                ],
+                "storage": [
+                  "get"
+                ]
+              }
+            }
+          ],
+          "vaultUri": "aaaaaaaaaaaaaaaaaaaaaaaaa",
+          "hsmPoolResourceId": "aaaaaa",
+          "enabledForDeployment": true,
+          "enabledForDiskEncryption": true,
+          "enabledForTemplateDeployment": true,
+          "enableSoftDelete": true,
+          "softDeleteRetentionInDays": 28,
+          "enableRbacAuthorization": true,
+          "createMode": "recover",
+          "enablePurgeProtection": true,
+          "networkAcls": {
+            "bypass": "AzureServices",
+            "defaultAction": "Allow",
+            "ipRules": [
+              {
+                "value": "aaaaaaaaaaaa"
+              }
+            ],
+            "virtualNetworkRules": [
+              {
+                "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName",
+                "ignoreMissingVnetServiceEndpoint": true
+              }
+            ]
+          },
+          "provisioningState": "Succeeded",
+          "privateEndpointConnections": [
+            {
+              "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName",
+              "etag": "aaaaaaaaaaaaaaaaaaaa",
+              "properties": {
+                "privateEndpoint": {
+                  "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName"
+                },
+                "privateLinkServiceConnectionState": {
+                  "status": "Pending",
+                  "description": "aaaaaaaaaaaaa",
+                  "actionsRequired": "None"
+                },
+                "provisioningState": "Succeeded"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sample-group/providers/Microsoft.KeyVault/vaults/sample-vault/privateEndpointConnections/sample-pec?api-version=2021-04-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "144",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager.KeyVault/1.0.0-alpha.20211207.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "d1f6e5f9abf44f810856964f4a00d2b9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "etag": "",
+        "properties": {
+          "privateLinkServiceConnectionState": {
+            "status": "Approved",
+            "description": "My name is Joe and I\u0027m approving this."
+          }
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "620",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 07 Dec 2021 06:01:15 GMT",
+        "ETag": "W/\u002226c-njIdFdACDuLOeDatVkZEAIoTbck\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sample-group/providers/Microsoft.KeyVault/vaults/sample-vault/privateEndpointConnections/sample-pec",
+        "name": "sample-pec",
+        "type": "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "location": "aaaaaaaaaaaaaaaaa",
+        "tags": {
+          "key3989": "aaaa"
+        },
+        "properties": {
+          "privateEndpoint": {
+            "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName"
+          },
+          "privateLinkServiceConnectionState": {
+            "status": "Pending",
+            "description": "aaaaaaaaaaaa",
+            "actionsRequired": "None"
+          },
+          "provisioningState": "Succeeded"
+        },
+        "etag": "aaaaaaaaaa"
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "134830690",
+    "RESOURCE_MANAGER_URL": "https://localhost:8443",
+    "SUBSCRIPTION_ID": "00000000-0000-0000-0000-000000000000"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "OutputFolder": ".",
+  "Namespace": "Azure.ResourceManager.KeyVault",
+  "LibraryName": "KeyVault",
+  "SharedSourceFolders": [
+    "..\\Generator.Shared",
+    "..\\Azure.Core.Shared"
+  ],
+  "azure-arm": true,
+  "public-clients": true,
+  "head-as-boolean": true,
+  "ListException": [
+    "/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}",
+    "/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedManagedHSMs/{name}"
+  ]
+}
