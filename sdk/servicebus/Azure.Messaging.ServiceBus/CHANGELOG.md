@@ -1,5 +1,11 @@
 # Release History
 
+## 7.5.1 (2021-12-07)
+
+### Bugs Fixed
+
+- Add a delay when retrying if we are being throttled by the service.
+
 ## 7.5.0 (2021-11-10)
 
 ### Breaking Changes
