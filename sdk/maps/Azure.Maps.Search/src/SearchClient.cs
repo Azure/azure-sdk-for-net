@@ -48,7 +48,7 @@ namespace Azure.Maps.Search
             options ??= new SearchClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://atlas.microsoft.com/.default" };
-            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes), new AzureKeyCredentialPolicy(new AzureKeyCredential(clientId), "x-ms-client-id"));
             RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, clientId, options.Version);
         }
 
@@ -1305,7 +1305,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SearchAddressBatchResult>> FuzzySearchBatchAsync(IEnumerable<FuzzySearchQuery> queries, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.FuzzySearchBatchSync");
+            using var scope = _clientDiagnostics.CreateScope("SearchClient.FuzzySearchBatch");
             scope.Start();
             try
             {
@@ -1474,7 +1474,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SearchAddressBatchResult> FuzzySearchBatch(IEnumerable<FuzzySearchQuery> queries, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.FuzzySearchBatchSync");
+            using var scope = _clientDiagnostics.CreateScope("SearchClient.FuzzySearchBatch");
             scope.Start();
             try
             {
@@ -1635,7 +1635,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SearchAddressBatchResult>> SearchAddressBatchAsync(IEnumerable<SearchAddressQuery> queries, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchAddressBatchSync");
+            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchAddressBatch");
             scope.Start();
             try
             {
@@ -1796,7 +1796,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SearchAddressBatchResult> SearchAddressBatch(IEnumerable<SearchAddressQuery> queries, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchAddressBatchSync");
+            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchAddressBatch");
             scope.Start();
             try
             {
@@ -1959,7 +1959,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ReverseSearchAddressBatchProcessResult>> ReverseSearchAddressBatchAsync(IEnumerable<ReverseSearchAddressQuery> queries, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.ReverseSearchAddressBatchSync");
+            using var scope = _clientDiagnostics.CreateScope("SearchClient.ReverseSearchAddressBatch");
             scope.Start();
             try
             {
@@ -2122,7 +2122,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ReverseSearchAddressBatchProcessResult> ReverseSearchAddressBatch(IEnumerable<ReverseSearchAddressQuery> queries, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.ReverseSearchAddressBatchSync");
+            using var scope = _clientDiagnostics.CreateScope("SearchClient.ReverseSearchAddressBatch");
             scope.Start();
             try
             {
