@@ -60,7 +60,11 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
             {
                 return message;
             }
-            return String.Format("{0} (Parameter '{2}')", message, Environment.NewLine, parameterName);
+#if NET461
+            return $"{message}{Environment.NewLine}Parameter name: {parameterName}";
+#else
+            return $"{message} (Parameter '{parameterName}')";
+#endif
         }
     }
 }
