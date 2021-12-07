@@ -1,13 +1,16 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 using Microsoft.Azure.WebJobs.Host.Tables;
 using Microsoft.Azure.Cosmos.Table;
-using Xunit;
+using NUnit.Framework;
+
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Tables
 {
     public class TableEntityWriterTests
     {
-        [Fact(Skip = "TODO")]
+        [Test]
+        [Ignore("TODO")]
         public void FlushAfterAdd_PersistsEntity()
         {
             // Arrange

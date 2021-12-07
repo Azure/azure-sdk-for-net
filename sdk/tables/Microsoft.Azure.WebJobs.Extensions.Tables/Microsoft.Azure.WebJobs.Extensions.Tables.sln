@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.WebJobs.Extensions.Tables", "src\Microsoft.Azure.WebJobs.Extensions.Tables.csproj", "{57375945-61B5-4150-B55E-33BC5DAC2F25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.WebJobs.Extensions.Tables.Tests", "test\Microsoft.Azure.WebJobs.Extensions.Tables.Tests.csproj", "{4FAA8AB3-4173-485B-B6F7-5A4E239FC8AA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.WebJobs.Extensions.Tables.Tests", "tests\Microsoft.Azure.WebJobs.Extensions.Tables.Tests.csproj", "{4FAA8AB3-4173-485B-B6F7-5A4E239FC8AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

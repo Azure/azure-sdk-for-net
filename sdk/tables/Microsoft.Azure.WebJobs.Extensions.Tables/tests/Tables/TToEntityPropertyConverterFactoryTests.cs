@@ -1,20 +1,22 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 using System;
 using Microsoft.Azure.WebJobs.Host.Converters;
 using Microsoft.Azure.WebJobs.Host.Tables;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Azure.Cosmos.Table;
 using Newtonsoft.Json;
-using Xunit;
-using Xunit.Extensions;
+using NUnit.Framework;
+
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
 {
     public class TToEntityPropertyConverterFactoryTests
     {
         private static DateTime _minimumValidDateTimeValue = new DateTime(1601, 01, 01, 0, 0, 0, DateTimeKind.Utc);
         private static DateTimeOffset _minimumValidDateTimeOffsetValue = new DateTimeOffset(_minimumValidDateTimeValue);
-        [Fact]
+
+        [Test]
         public void Create_EntityProperty_CanConvert()
         {
             // Act
@@ -24,11 +26,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(converter);
             EntityProperty expected = new EntityProperty(1);
             EntityProperty property = converter.Convert(expected);
-            Assert.Same(expected, property);
+            Assert.AreSame(expected, property);
         }
+
         [Theory]
-        [InlineData(false)]
-        [InlineData(true)]
+        [TestCase(false)]
+        [TestCase(true)]
         public void Create_Boolean_CanConvert(bool expectedValue)
         {
             // Act
@@ -37,13 +40,14 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(converter);
             EntityProperty property = converter.Convert(expectedValue);
             Assert.NotNull(property);
-            Assert.Equal(EdmType.Boolean, property.PropertyType);
+            Assert.AreEqual(EdmType.Boolean, property.PropertyType);
             Assert.True(property.BooleanValue.HasValue);
-            Assert.Equal(expectedValue, property.BooleanValue.Value);
+            Assert.AreEqual(expectedValue, property.BooleanValue.Value);
         }
+
         [Theory]
-        [InlineData(false)]
-        [InlineData(true)]
+        [TestCase(false)]
+        [TestCase(true)]
         public void Create_NullableBoolean_CanConvert(bool expectedValue)
         {
             // Act
@@ -52,11 +56,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(converter);
             EntityProperty property = converter.Convert(expectedValue);
             Assert.NotNull(property);
-            Assert.Equal(EdmType.Boolean, property.PropertyType);
+            Assert.AreEqual(EdmType.Boolean, property.PropertyType);
             Assert.True(property.BooleanValue.HasValue);
-            Assert.Equal(expectedValue, property.BooleanValue.Value);
+            Assert.AreEqual(expectedValue, property.BooleanValue.Value);
         }
-        [Fact]
+
+        [Test]
         public void Create_NullableBoolean_CanConvertNull()
         {
             // Act
@@ -65,10 +70,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(converter);
             EntityProperty property = converter.Convert(null);
             Assert.NotNull(property);
-            Assert.Equal(EdmType.Boolean, property.PropertyType);
+            Assert.AreEqual(EdmType.Boolean, property.PropertyType);
             Assert.False(property.BooleanValue.HasValue);
         }
-        [Fact]
+
+        [Test]
         public void Create_ByteArray_CanConvert()
         {
             // Act
@@ -78,10 +84,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             byte[] expected = new byte[] { 0x12 };
             EntityProperty property = converter.Convert(expected);
             Assert.NotNull(property);
-            Assert.Equal(EdmType.Binary, property.PropertyType);
-            Assert.Same(expected, property.BinaryValue);
+            Assert.AreEqual(EdmType.Binary, property.PropertyType);
+            Assert.AreSame(expected, property.BinaryValue);
         }
-        [Fact]
+
+        [Test]
         public void Create_DateTime_CanConvert()
         {
             // Act
@@ -91,11 +98,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             DateTime expected = DateTime.Now;
             EntityProperty property = converter.Convert(expected);
             Assert.NotNull(property);
-            Assert.Equal(EdmType.DateTime, property.PropertyType);
+            Assert.AreEqual(EdmType.DateTime, property.PropertyType);
             Assert.True(property.DateTime.HasValue);
-            Assert.Equal(expected, property.DateTime.Value);
+            Assert.AreEqual(expected, property.DateTime.Value);
         }
-        [Fact]
+
+        [Test]
         public void Create_DateTime_CanConvertMinimumValidValue()
         {
             // Act
@@ -104,11 +112,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(converter);
             EntityProperty property = converter.Convert(_minimumValidDateTimeValue);
             Assert.NotNull(property);
-            Assert.Equal(EdmType.DateTime, property.PropertyType);
+            Assert.AreEqual(EdmType.DateTime, property.PropertyType);
             Assert.True(property.DateTime.HasValue);
-            Assert.Equal(_minimumValidDateTimeValue, property.DateTime.Value);
+            Assert.AreEqual(_minimumValidDateTimeValue, property.DateTime.Value);
         }
-        [Fact]
+
+        [Test]
         public void Create_DateTime_ConvertLessThanMinimumValidValueThrows()
         {
             // Act
@@ -117,9 +126,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(converter);
             DateTime value = _minimumValidDateTimeValue.AddTicks(-1);
             ExceptionAssert.ThrowsArgumentOutOfRange(() => converter.Convert(value), "input", "Azure Tables cannot " +
-                "store DateTime values before the year 1601. Did you mean to use a nullable DateTime?");
+                                                                                              "store DateTime values before the year 1601. Did you mean to use a nullable DateTime?");
         }
-        [Fact]
+
+        [Test]
         public void Create_NullableDateTime_CanConvert()
         {
             // Act
@@ -129,11 +139,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             DateTime? expected = DateTime.Now;
             EntityProperty property = converter.Convert(expected);
             Assert.NotNull(property);
-            Assert.Equal(EdmType.DateTime, property.PropertyType);
+            Assert.AreEqual(EdmType.DateTime, property.PropertyType);
             Assert.True(property.DateTime.HasValue);
-            Assert.Equal(expected, property.DateTime.Value);
+            Assert.AreEqual(expected, property.DateTime.Value);
         }
-        [Fact]
+
+        [Test]
         public void Create_NullableDateTime_CanConvertNull()
         {
             // Act
@@ -142,10 +153,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(converter);
             EntityProperty property = converter.Convert(null);
             Assert.NotNull(property);
-            Assert.Equal(EdmType.DateTime, property.PropertyType);
+            Assert.AreEqual(EdmType.DateTime, property.PropertyType);
             Assert.False(property.DateTime.HasValue);
         }
-        [Fact]
+
+        [Test]
         public void Create_NullableDateTime_CanConvertMinimumValidValue()
         {
             // Act
@@ -154,11 +166,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(converter);
             EntityProperty property = converter.Convert(_minimumValidDateTimeValue);
             Assert.NotNull(property);
-            Assert.Equal(EdmType.DateTime, property.PropertyType);
+            Assert.AreEqual(EdmType.DateTime, property.PropertyType);
             Assert.True(property.DateTime.HasValue);
-            Assert.Equal(_minimumValidDateTimeValue, property.DateTime.Value);
+            Assert.AreEqual(_minimumValidDateTimeValue, property.DateTime.Value);
         }
-        [Fact]
+
+        [Test]
         public void Create_NullableDateTime_ConvertLessThanMinimumValidValueThrows()
         {
             // Act
@@ -167,9 +180,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(converter);
             DateTime value = _minimumValidDateTimeValue.AddTicks(-1);
             ExceptionAssert.ThrowsArgumentOutOfRange(() => converter.Convert(value), "input", "Azure Tables cannot " +
-                "store DateTime values before the year 1601. Did you mean to use a nullable DateTime?");
+                                                                                              "store DateTime values before the year 1601. Did you mean to use a nullable DateTime?");
         }
-        [Fact]
+
+        [Test]
         public void Create_DateTimeOffset_CanConvert()
         {
             // Act
@@ -180,11 +194,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             DateTimeOffset expected = DateTimeOffset.UtcNow;
             EntityProperty property = converter.Convert(expected);
             Assert.NotNull(property);
-            Assert.Equal(EdmType.DateTime, property.PropertyType);
+            Assert.AreEqual(EdmType.DateTime, property.PropertyType);
             Assert.True(property.DateTimeOffsetValue.HasValue);
-            Assert.Equal(expected, property.DateTimeOffsetValue.Value);
+            Assert.AreEqual(expected, property.DateTimeOffsetValue.Value);
         }
-        [Fact]
+
+        [Test]
         public void Create_DateTimeOffset_CanConvertMinimumValidValue()
         {
             // Act
@@ -194,11 +209,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(converter);
             EntityProperty property = converter.Convert(_minimumValidDateTimeOffsetValue);
             Assert.NotNull(property);
-            Assert.Equal(EdmType.DateTime, property.PropertyType);
+            Assert.AreEqual(EdmType.DateTime, property.PropertyType);
             Assert.True(property.DateTimeOffsetValue.HasValue);
-            Assert.Equal(_minimumValidDateTimeOffsetValue, property.DateTimeOffsetValue.Value);
+            Assert.AreEqual(_minimumValidDateTimeOffsetValue, property.DateTimeOffsetValue.Value);
         }
-        [Fact]
+
+        [Test]
         public void Create_DateTimeOffset_ConvertLessThanMinimumValidValueThrows()
         {
             // Act
@@ -210,7 +226,8 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             ExceptionAssert.ThrowsArgumentOutOfRange(() => converter.Convert(value), "input", "Azure Tables cannot " +
                 "store DateTime values before the year 1601. Did you mean to use a nullable DateTime?");
         }
-        [Fact]
+
+        [Test]
         public void Create_NullableDateTimeOffset_CanConvert()
         {
             // Act
@@ -221,11 +238,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             DateTimeOffset? expected = DateTimeOffset.Now;
             EntityProperty property = converter.Convert(expected);
             Assert.NotNull(property);
-            Assert.Equal(EdmType.DateTime, property.PropertyType);
+            Assert.AreEqual(EdmType.DateTime, property.PropertyType);
             Assert.True(property.DateTimeOffsetValue.HasValue);
-            Assert.Equal(expected, property.DateTimeOffsetValue.Value);
+            Assert.AreEqual(expected, property.DateTimeOffsetValue.Value);
         }
-        [Fact]
+
+        [Test]
         public void Create_NullableDateTimeOffset_CanConvertNull()
         {
             // Act
@@ -235,10 +253,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(converter);
             EntityProperty property = converter.Convert(null);
             Assert.NotNull(property);
-            Assert.Equal(EdmType.DateTime, property.PropertyType);
+            Assert.AreEqual(EdmType.DateTime, property.PropertyType);
             Assert.False(property.DateTimeOffsetValue.HasValue);
         }
-        [Fact]
+
+        [Test]
         public void Create_NullableDateTimeOffset_CanConvertMinimumValidValue()
         {
             // Act
@@ -248,11 +267,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(converter);
             EntityProperty property = converter.Convert(_minimumValidDateTimeOffsetValue);
             Assert.NotNull(property);
-            Assert.Equal(EdmType.DateTime, property.PropertyType);
+            Assert.AreEqual(EdmType.DateTime, property.PropertyType);
             Assert.True(property.DateTimeOffsetValue.HasValue);
-            Assert.Equal(_minimumValidDateTimeOffsetValue, property.DateTimeOffsetValue.Value);
+            Assert.AreEqual(_minimumValidDateTimeOffsetValue, property.DateTimeOffsetValue.Value);
         }
-        [Fact]
+
+        [Test]
         public void Create_NullableDateTimeOffset_ConvertLessThanMinimumValidValueThrows()
         {
             // Act
@@ -262,9 +282,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(converter);
             DateTimeOffset value = _minimumValidDateTimeOffsetValue.AddTicks(-1);
             ExceptionAssert.ThrowsArgumentOutOfRange(() => converter.Convert(value), "input", "Azure Tables cannot " +
-                "store DateTime values before the year 1601. Did you mean to use a nullable DateTime?");
+                                                                                              "store DateTime values before the year 1601. Did you mean to use a nullable DateTime?");
         }
-        [Fact]
+
+        [Test]
         public void Create_Double_CanConvert()
         {
             // Act
@@ -274,11 +295,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             const double expectedValue = 3.14;
             EntityProperty property = converter.Convert(expectedValue);
             Assert.NotNull(property);
-            Assert.Equal(EdmType.Double, property.PropertyType);
+            Assert.AreEqual(EdmType.Double, property.PropertyType);
             Assert.True(property.DoubleValue.HasValue);
-            Assert.Equal(expectedValue, property.DoubleValue.Value);
+            Assert.AreEqual(expectedValue, property.DoubleValue.Value);
         }
-        [Fact]
+
+        [Test]
         public void Create_NullableDouble_CanConvert()
         {
             // Act
@@ -288,11 +310,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             const double expectedValue = 3.14;
             EntityProperty property = converter.Convert(expectedValue);
             Assert.NotNull(property);
-            Assert.Equal(EdmType.Double, property.PropertyType);
+            Assert.AreEqual(EdmType.Double, property.PropertyType);
             Assert.True(property.DoubleValue.HasValue);
-            Assert.Equal(expectedValue, property.DoubleValue.Value);
+            Assert.AreEqual(expectedValue, property.DoubleValue.Value);
         }
-        [Fact]
+
+        [Test]
         public void Create_NullableDouble_CanConvertNull()
         {
             // Act
@@ -301,10 +324,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(converter);
             EntityProperty property = converter.Convert(null);
             Assert.NotNull(property);
-            Assert.Equal(EdmType.Double, property.PropertyType);
+            Assert.AreEqual(EdmType.Double, property.PropertyType);
             Assert.False(property.DoubleValue.HasValue);
         }
-        [Fact]
+
+        [Test]
         public void Create_Guid_CanConvert()
         {
             // Act
@@ -314,11 +338,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Guid expectedValue = Guid.NewGuid();
             EntityProperty property = converter.Convert(expectedValue);
             Assert.NotNull(property);
-            Assert.Equal(EdmType.Guid, property.PropertyType);
+            Assert.AreEqual(EdmType.Guid, property.PropertyType);
             Assert.True(property.GuidValue.HasValue);
-            Assert.Equal(expectedValue, property.GuidValue.Value);
+            Assert.AreEqual(expectedValue, property.GuidValue.Value);
         }
-        [Fact]
+
+        [Test]
         public void Create_NullableGuid_CanConvert()
         {
             // Act
@@ -328,11 +353,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Guid expectedValue = Guid.NewGuid();
             EntityProperty property = converter.Convert(expectedValue);
             Assert.NotNull(property);
-            Assert.Equal(EdmType.Guid, property.PropertyType);
+            Assert.AreEqual(EdmType.Guid, property.PropertyType);
             Assert.True(property.GuidValue.HasValue);
-            Assert.Equal(expectedValue, property.GuidValue.Value);
+            Assert.AreEqual(expectedValue, property.GuidValue.Value);
         }
-        [Fact]
+
+        [Test]
         public void Create_NullableGuid_CanConvertNull()
         {
             // Act
@@ -341,10 +367,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(converter);
             EntityProperty property = converter.Convert(null);
             Assert.NotNull(property);
-            Assert.Equal(EdmType.Guid, property.PropertyType);
+            Assert.AreEqual(EdmType.Guid, property.PropertyType);
             Assert.False(property.GuidValue.HasValue);
         }
-        [Fact]
+
+        [Test]
         public void Create_Int32_CanConvert()
         {
             // Act
@@ -354,11 +381,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             const int expectedValue = 123;
             EntityProperty property = converter.Convert(expectedValue);
             Assert.NotNull(property);
-            Assert.Equal(EdmType.Int32, property.PropertyType);
+            Assert.AreEqual(EdmType.Int32, property.PropertyType);
             Assert.True(property.Int32Value.HasValue);
-            Assert.Equal(expectedValue, property.Int32Value.Value);
+            Assert.AreEqual(expectedValue, property.Int32Value.Value);
         }
-        [Fact]
+
+        [Test]
         public void Create_NullableInt32_CanConvert()
         {
             // Act
@@ -368,11 +396,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             const int expectedValue = 123;
             EntityProperty property = converter.Convert(expectedValue);
             Assert.NotNull(property);
-            Assert.Equal(EdmType.Int32, property.PropertyType);
+            Assert.AreEqual(EdmType.Int32, property.PropertyType);
             Assert.True(property.Int32Value.HasValue);
-            Assert.Equal(expectedValue, property.Int32Value.Value);
+            Assert.AreEqual(expectedValue, property.Int32Value.Value);
         }
-        [Fact]
+
+        [Test]
         public void Create_NullableInt32_CanConvertNull()
         {
             // Act
@@ -381,10 +410,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(converter);
             EntityProperty property = converter.Convert(null);
             Assert.NotNull(property);
-            Assert.Equal(EdmType.Int32, property.PropertyType);
+            Assert.AreEqual(EdmType.Int32, property.PropertyType);
             Assert.False(property.Int32Value.HasValue);
         }
-        [Fact]
+
+        [Test]
         public void Create_Int64_CanConvert()
         {
             // Act
@@ -394,11 +424,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             const long expectedValue = 123;
             EntityProperty property = converter.Convert(expectedValue);
             Assert.NotNull(property);
-            Assert.Equal(EdmType.Int64, property.PropertyType);
+            Assert.AreEqual(EdmType.Int64, property.PropertyType);
             Assert.True(property.Int64Value.HasValue);
-            Assert.Equal(expectedValue, property.Int64Value.Value);
+            Assert.AreEqual(expectedValue, property.Int64Value.Value);
         }
-        [Fact]
+
+        [Test]
         public void Create_NullableInt64_CanConvert()
         {
             // Act
@@ -408,11 +439,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             const long expectedValue = 123;
             EntityProperty property = converter.Convert(expectedValue);
             Assert.NotNull(property);
-            Assert.Equal(EdmType.Int64, property.PropertyType);
+            Assert.AreEqual(EdmType.Int64, property.PropertyType);
             Assert.True(property.Int64Value.HasValue);
-            Assert.Equal(expectedValue, property.Int64Value.Value);
+            Assert.AreEqual(expectedValue, property.Int64Value.Value);
         }
-        [Fact]
+
+        [Test]
         public void Create_NullableInt64_CanConvertNull()
         {
             // Act
@@ -421,10 +453,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(converter);
             EntityProperty property = converter.Convert(null);
             Assert.NotNull(property);
-            Assert.Equal(EdmType.Int64, property.PropertyType);
+            Assert.AreEqual(EdmType.Int64, property.PropertyType);
             Assert.False(property.Int64Value.HasValue);
         }
-        [Fact]
+
+        [Test]
         public void Create_String_CanConvert()
         {
             // Act
@@ -434,10 +467,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             const string expected = "abc";
             EntityProperty property = converter.Convert(expected);
             Assert.NotNull(property);
-            Assert.Equal(EdmType.String, property.PropertyType);
-            Assert.Same(expected, property.StringValue);
+            Assert.AreEqual(EdmType.String, property.PropertyType);
+            Assert.AreSame(expected, property.StringValue);
         }
-        [Fact]
+
+        [Test]
         public void Create_Enum_CanConvert()
         {
             // Act
@@ -447,10 +481,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             const AnEnum expectedValue = AnEnum.B;
             EntityProperty property = converter.Convert(expectedValue);
             Assert.NotNull(property);
-            Assert.Equal(EdmType.String, property.PropertyType);
-            Assert.Equal(expectedValue.ToString(), property.StringValue);
+            Assert.AreEqual(EdmType.String, property.PropertyType);
+            Assert.AreEqual(expectedValue.ToString(), property.StringValue);
         }
-        [Fact]
+
+        [Test]
         public void Create_NullableEnum_CanConvert()
         {
             // Act
@@ -460,10 +495,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             const AnEnum expectedValue = AnEnum.B;
             EntityProperty property = converter.Convert(expectedValue);
             Assert.NotNull(property);
-            Assert.Equal(EdmType.String, property.PropertyType);
-            Assert.Equal(expectedValue.ToString(), property.StringValue);
+            Assert.AreEqual(EdmType.String, property.PropertyType);
+            Assert.AreEqual(expectedValue.ToString(), property.StringValue);
         }
-        [Fact]
+
+        [Test]
         public void Create_NullableEnum_CanConvertNull()
         {
             // Act
@@ -472,10 +508,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(converter);
             EntityProperty property = converter.Convert(null);
             Assert.NotNull(property);
-            Assert.Equal(EdmType.String, property.PropertyType);
+            Assert.AreEqual(EdmType.String, property.PropertyType);
             Assert.Null(property.StringValue);
         }
-        [Fact]
+
+        [Test]
         public void Create_OtherType_CanConvert()
         {
             // Act
@@ -485,11 +522,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Poco original = new Poco { Value = "abc" };
             EntityProperty property = converter.Convert(original);
             Assert.NotNull(property);
-            Assert.Equal(EdmType.String, property.PropertyType);
+            Assert.AreEqual(EdmType.String, property.PropertyType);
             string expected = JsonConvert.SerializeObject(original, Formatting.Indented);
-            Assert.Equal(expected, property.StringValue);
+            Assert.AreEqual(expected, property.StringValue);
         }
-        [Fact]
+
+        [Test]
         public void Create_OtherType_CanConvertNull()
         {
             // Act
@@ -498,13 +536,15 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             Assert.NotNull(converter);
             EntityProperty property = converter.Convert(null);
             Assert.NotNull(property);
-            Assert.Equal(EdmType.String, property.PropertyType);
-            Assert.Equal("null", property.StringValue);
+            Assert.AreEqual(EdmType.String, property.PropertyType);
+            Assert.AreEqual("null", property.StringValue);
         }
+
         private class Poco
         {
             public string Value { get; set; }
         }
+
         private enum AnEnum
         {
             A,

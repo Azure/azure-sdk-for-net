@@ -4,15 +4,9 @@ using System;
 using System.Runtime.ExceptionServices;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Timers;
-using Microsoft.Extensions.Hosting;
-using Xunit;
+using NUnit.Framework;
 namespace Microsoft.Azure.WebJobs.Host.TestCommon
 {
-    public class TestExceptionHandlerFactory : IWebJobsExceptionHandlerFactory
-    {
-        private TestExceptionHandler _handler = new TestExceptionHandler();
-        public IWebJobsExceptionHandler Create(IHost jobHost) => _handler;
-    }
     public class TestExceptionHandler : IWebJobsExceptionHandler
     {
         public void Initialize(JobHost host)

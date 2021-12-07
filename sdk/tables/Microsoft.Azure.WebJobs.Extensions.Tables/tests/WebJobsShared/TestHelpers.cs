@@ -16,7 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Xunit;
+using NUnit.Framework;
 namespace Microsoft.Azure.WebJobs.Host.TestCommon
 {
     public static class TestHelpers
@@ -119,8 +119,8 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
             }
             catch (FunctionIndexingException e)
             {
-                Assert.Equal("Error indexing method '" + functionName + "'", e.Message);
-                Assert.StartsWith(expectedErrorMessage, e.InnerException.Message);
+                Assert.AreEqual("Error indexing method '" + functionName + "'", e.Message);
+                StringAssert.StartsWith(expectedErrorMessage, e.InnerException.Message);
                 return;
             }
             Assert.True(false, "Invoker should have failed");
@@ -288,8 +288,5 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
             FieldInfo elapsedFieldInfo = typeof(Stopwatch).GetField("_elapsed", BindingFlags.NonPublic | BindingFlags.Instance);
             elapsedFieldInfo.SetValue(sw, elapsed.Ticks);
         }
-    }
-    public class TestProgram
-    {
     }
 }

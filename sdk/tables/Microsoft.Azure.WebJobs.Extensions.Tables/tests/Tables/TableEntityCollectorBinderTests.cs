@@ -1,5 +1,6 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -7,7 +8,8 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.WebJobs.Host.Tables;
 using Microsoft.Azure.Cosmos.Table;
-using Xunit;
+using NUnit.Framework;
+
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
 {
     public class TableEntityCollectorBinderTests
@@ -17,17 +19,20 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
         {
             public int TimesPartitionFlushed { get; set; }
             public int TimesFlushed { get; set; }
+
             public StubTableEntityWriter()
                 : base(new CloudTable(new Uri("http://localhost:10000/account/table")))
             {
                 TimesFlushed = 0;
                 TimesPartitionFlushed = 0;
             }
+
             public override Task FlushAsync(CancellationToken cancellationToken = default(CancellationToken))
             {
                 TimesFlushed++;
                 return base.FlushAsync(cancellationToken);
             }
+
             internal override Task ExecuteBatchAndCreateTableIfNotExistsAsync(
                 Dictionary<string, TableOperation> batch, CancellationToken cancellationToken)
             {
@@ -36,7 +41,8 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 return Task.FromResult(0);
             }
         }
-        [Fact]
+
+        [Test]
         public void ValueHasNotChanged()
         {
             // Arrange
@@ -50,7 +56,8 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Assert
             Assert.Null(parameterLog);
         }
-        [Fact]
+
+        [Test]
         public void PropertyHasBeenAdded()
         {
             // Arrange
@@ -69,10 +76,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Act
             var parameterLog = product.GetStatus() as TableParameterLog;
             // Assert
-            Assert.Equal(1, parameterLog.EntitiesWritten);
-            Assert.Equal(0, writer.TimesPartitionFlushed);
+            Assert.AreEqual(1, parameterLog.EntitiesWritten);
+            Assert.AreEqual(0, writer.TimesPartitionFlushed);
         }
-        [Fact]
+
+        [Test]
         public void MaximumBatchSizeFlushes()
         {
             // Arrange
@@ -92,13 +100,15 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 value.RowKey = "RK" + i;
                 writer.Add(value);
             }
+
             // Act
             var parameterLog = product.GetStatus() as TableParameterLog;
             // Assert
-            Assert.Equal(TableEntityWriter<ITableEntity>.MaxBatchSize + 1, parameterLog.EntitiesWritten);
-            Assert.Equal(1, writer.TimesPartitionFlushed);
+            Assert.AreEqual(TableEntityWriter<ITableEntity>.MaxBatchSize + 1, parameterLog.EntitiesWritten);
+            Assert.AreEqual(1, writer.TimesPartitionFlushed);
         }
-        [Fact]
+
+        [Test]
         public void MaximumPartitionWidthFlushes()
         {
             // Arrange
@@ -118,14 +128,16 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 value.PartitionKey = "PK" + i;
                 writer.Add(value);
             }
+
             // Act
             var parameterLog = product.GetStatus() as TableParameterLog;
             // Assert
-            Assert.Equal(TableEntityWriter<ITableEntity>.MaxPartitionWidth + 1, parameterLog.EntitiesWritten);
-            Assert.Equal(1, writer.TimesFlushed);
-            Assert.Equal(TableEntityWriter<ITableEntity>.MaxPartitionWidth, writer.TimesPartitionFlushed);
+            Assert.AreEqual(TableEntityWriter<ITableEntity>.MaxPartitionWidth + 1, parameterLog.EntitiesWritten);
+            Assert.AreEqual(1, writer.TimesFlushed);
+            Assert.AreEqual(TableEntityWriter<ITableEntity>.MaxPartitionWidth, writer.TimesPartitionFlushed);
         }
-        [Fact]
+
+        [Test]
         public void PropertyHasBeenReplaced()
         {
             // Arrange
@@ -144,20 +156,21 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             // Act
             var parameterLog = product.GetStatus() as TableParameterLog;
             // Assert
-            Assert.Equal(1, parameterLog.EntitiesWritten);
-            Assert.Equal(0, writer.TimesPartitionFlushed);
+            Assert.AreEqual(1, parameterLog.EntitiesWritten);
+            Assert.AreEqual(0, writer.TimesPartitionFlushed);
             // Calling again should yield no changes
-            Assert.Equal(1, parameterLog.EntitiesWritten);
+            Assert.AreEqual(1, parameterLog.EntitiesWritten);
             // Assert
-            Assert.Equal(0, writer.TimesPartitionFlushed);
+            Assert.AreEqual(0, writer.TimesPartitionFlushed);
             // Add same value again.
             writer.Add(value);
             // Act
             parameterLog = product.GetStatus() as TableParameterLog;
             // Assert
-            Assert.Equal(2, parameterLog.EntitiesWritten);
-            Assert.Equal(1, writer.TimesPartitionFlushed);
+            Assert.AreEqual(2, parameterLog.EntitiesWritten);
+            Assert.AreEqual(1, writer.TimesPartitionFlushed);
         }
+
         private CloudTableClient CreateTableClient()
         {
             // StorageClientFactory clientFactory = new StorageClientFactory();

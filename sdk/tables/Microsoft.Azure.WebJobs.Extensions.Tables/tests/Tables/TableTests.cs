@@ -1,5 +1,6 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -12,7 +13,8 @@ using Microsoft.Azure.Storage.Queue;
 using Microsoft.Azure.Cosmos.Table;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Xunit;
+using NUnit.Framework;
+
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
     public class TableTests
@@ -22,19 +24,18 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         private const string PartitionKey = "PK";
         private const string RowKey = "RK";
         private const string PropertyName = "Property";
-        [Fact]
+
+        [Test]
         public void Table_IndexingFails()
         {
             void AssertIndexingError<TProgram>(string methodName, string expectedErrorMessage)
             {
                 IHost host = new HostBuilder()
-                    .ConfigureDefaultTestHost<TProgram>(builder =>
-                    {
-                        builder.UseFakeStorage();
-                    })
+                    .ConfigureDefaultTestHost<TProgram>(builder => { builder.UseFakeStorage(); })
                     .Build();
                 host.GetJobHost<TProgram>().AssertIndexingError(methodName, expectedErrorMessage).GetAwaiter().GetResult();
             }
+
             // Verify we catch various indexing failures.
             AssertIndexingError<BadProgramTableName>(nameof(BadProgramTableName.Run), "Validation failed for property 'TableName', value '$$'");
             // Pocos must have a default ctor.
@@ -52,20 +53,23 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 x = new Poco { PartitionKey = PartitionKey, RowKey = RowKey, Property = "1234" };
             }
         }
-        [Fact(Skip = "TODO")]
+
+        [Test]
+        [Ignore("TODO")]
         public async Task Table_SingleOut_Supported()
         {
             IHost host = new HostBuilder()
-             .ConfigureDefaultTestHost<BindToSingleOutProgram>(builder =>
-             {
-                 builder.AddAzureStorage()
-                     .UseFakeStorage();
-             })
-             .Build();
+                .ConfigureDefaultTestHost<BindToSingleOutProgram>(builder =>
+                {
+                    builder.AddAzureStorage()
+                        .UseFakeStorage();
+                })
+                .Build();
             await host.GetJobHost<BindToSingleOutProgram>().CallAsync(nameof(BindToSingleOutProgram.Run)).ConfigureAwait(false);
             var account = host.GetStorageAccount();
             await AssertStringPropertyAsync(account, "Property", "1234").ConfigureAwait(false);
         }
+
         // Helper to demonstrate that TableName property can include { } pairs.
         private class BindToICollectorITableEntityResolvedTableProgram
         {
@@ -77,8 +81,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 table2.Add(new Poco { PartitionKey = PartitionKey, RowKey = RowKey, Property = "456" });
             }
         }
+
         // TableName can have {  } pairs.
-        [Fact(Skip = "TODO")]
+        [Test]
+        [Ignore("TODO")]
         public async Task Table_ResolvedName()
         {
             IHost host = new HostBuilder()
@@ -93,6 +99,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             await AssertStringPropertyAsync(account, "Property", "123", "TaZZ").ConfigureAwait(false);
             await AssertStringPropertyAsync(account, "Property", "456", "ZZxZZ").ConfigureAwait(false);
         }
+
         private class CustomTableBindingConverter<T>
             : IConverter<CloudTable, CustomTableBinding<T>>
         {
@@ -101,7 +108,9 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 return new CustomTableBinding<T>(input);
             }
         }
-        [Fact(Skip = "TODO")]
+
+        [Test]
+        [Ignore("TODO")]
         public async Task Table_IfBoundToCustomTableBindingExtension_BindsCorrectly()
         {
             // Arrange
@@ -110,26 +119,28 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 .ConfigureDefaultTestHost<CustomTableBindingExtensionProgram>(builder =>
                 {
                     builder.UseFakeStorage()
-                    .AddExtension(ext);
+                        .AddExtension(ext);
                 })
-            .Build();
+                .Build();
             await host.GetJobHost<CustomTableBindingExtensionProgram>().CallAsync("Run").ConfigureAwait(false); // Act
             // Assert
-            Assert.Equal(TableName, CustomTableBinding<Poco>.Table.Name);
+            Assert.AreEqual(TableName, CustomTableBinding<Poco>.Table.Name);
             Assert.True(CustomTableBinding<Poco>.AddInvoked);
             Assert.True(CustomTableBinding<Poco>.DeleteInvoked);
         }
+
         // Add a rule for binding CloudTable --> CustomTableBinding<TEntity>
         internal class TableConverterExtensionConfigProvider : IExtensionConfigProvider
         {
             public void Initialize(ExtensionConfigContext context)
             {
-                context.AddBindingRule<TableAttribute>().
-                    AddOpenConverter<CloudTable, CustomTableBinding<OpenType>>(
-               typeof(CustomTableBindingConverter<>));
+                context.AddBindingRule<TableAttribute>().AddOpenConverter<CloudTable, CustomTableBinding<OpenType>>(
+                    typeof(CustomTableBindingConverter<>));
             }
         }
-        [Fact(Skip = "TODO")]
+
+        [Test]
+        [Ignore("TODO")]
         public async Task Table_IfBoundToCloudTable_BindsAndCreatesTable()
         {
             // Arrange
@@ -141,12 +152,14 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 (s) => BindToCloudTableProgram.TaskSource = s).ConfigureAwait(false);
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(TableName, result.Name);
+            Assert.AreEqual(TableName, result.Name);
             CloudTableClient client = account.CreateCloudTableClient();
             CloudTable table = client.GetTableReference(TableName);
             Assert.True(await table.ExistsAsync().ConfigureAwait(false));
         }
-        [Fact(Skip = "TODO")]
+
+        [Test]
+        [Ignore("TODO")]
         public async Task Table_IfBoundToICollectorJObject_AddInsertsEntity()
         {
             // Arrange
@@ -166,25 +179,26 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             AssertPropertyValue(entity, "ValueStr", "abcdef");
             AssertPropertyValue(entity, "ValueNum", 123);
         }
+
         // Partition and RowKey values are in the attribute
-        [Fact(Skip = "TODO")]
+        [Test]
+        [Ignore("TODO")]
         public async Task Table_IfBoundToICollectorJObject__WithAttrKeys_AddInsertsEntity()
         {
             // Arrange
             const string expectedValue = "abcdef";
             // Act
             var host = new HostBuilder()
-                .ConfigureDefaultTestHost<BindToICollectorJObjectProgramKeysInAttr>(builder =>
-                {
-                    builder.UseFakeStorage();
-                })
+                .ConfigureDefaultTestHost<BindToICollectorJObjectProgramKeysInAttr>(builder => { builder.UseFakeStorage(); })
                 .Build();
             await host.GetJobHost<BindToICollectorJObjectProgramKeysInAttr>().CallAsync("Run").ConfigureAwait(false);
             // Assert
             var account = host.GetStorageAccount();
             await AssertStringPropertyAsync(account, "ValueStr", expectedValue).ConfigureAwait(false);
         }
-        [Fact(Skip = "TODO")]
+
+        [Test]
+        [Ignore("TODO")]
         public async Task Table_IfBoundToICollectorITableEntity_AddInsertsEntity()
         {
             // Arrange
@@ -197,7 +211,9 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             // Assert
             await AssertStringPropertyAsync(account, PropertyName, expectedValue).ConfigureAwait(false);
         }
-        [Fact(Skip = "TODO")]
+
+        [Test]
+        [Ignore("TODO")]
         public async Task Table_IfBoundToICollectorPoco_AddInsertsEntity()
         {
             // Arrange
@@ -210,7 +226,9 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             // Assert
             await AssertStringPropertyAsync(account, PropertyName, expectedValue).ConfigureAwait(false);
         }
-        [Fact(Skip = "TODO")]
+
+        [Test]
+        [Ignore("TODO")]
         public async Task Table_IfBoundToICollectorPoco_AddInsertsUsingNativeTableTypes()
         {
             // Arrange
@@ -251,8 +269,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             CloudTable table = client.GetTableReference(TableName);
             Assert.True(await table.ExistsAsync().ConfigureAwait(false));
             DynamicTableEntity entity = table.Retrieve<DynamicTableEntity>(PartitionKey, RowKey);
-            Assert.Equal(expected.PartitionKey, entity.PartitionKey);
-            Assert.Equal(expected.RowKey, entity.RowKey);
+            Assert.AreEqual(expected.PartitionKey, entity.PartitionKey);
+            Assert.AreEqual(expected.RowKey, entity.RowKey);
             IDictionary<string, EntityProperty> properties = entity.Properties;
             AssertNullablePropertyEqual(expected.BooleanProperty, EdmType.Boolean, properties, "BooleanProperty",
                 (p) => p.BooleanValue);
@@ -283,6 +301,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             AssertPropertyEqual(JsonConvert.SerializeObject(expected.PocoProperty, Formatting.Indented), EdmType.String,
                 properties, "PocoProperty", (p) => p.StringValue);
         }
+
         private static void AssertNullablePropertyEqual<T>(T expected,
             EdmType expectedType,
             IDictionary<string, EntityProperty> properties,
@@ -293,11 +312,12 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.NotNull(properties);
             Assert.True(properties.ContainsKey(propertyName));
             EntityProperty property = properties[propertyName];
-            Assert.Equal(expectedType, property.PropertyType);
+            Assert.AreEqual(expectedType, property.PropertyType);
             Nullable<T> actualValue = actualAccessor.Invoke(property);
             Assert.True(actualValue.HasValue);
-            Assert.Equal(expected, actualValue.Value);
+            Assert.AreEqual(expected, actualValue.Value);
         }
+
         private static void AssertPropertyValue(DynamicTableEntity entity, string propertyName, object expectedValue)
         {
             Assert.True(entity.Properties.ContainsKey(propertyName));
@@ -305,19 +325,20 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.NotNull(property);
             if (expectedValue is string)
             {
-                Assert.Equal(EdmType.String, property.PropertyType);
-                Assert.Equal(expectedValue, property.StringValue);
+                Assert.AreEqual(EdmType.String, property.PropertyType);
+                Assert.AreEqual(expectedValue, property.StringValue);
             }
             else if (expectedValue is int)
             {
-                Assert.Equal(EdmType.Int32, property.PropertyType);
-                Assert.Equal(expectedValue, property.Int32Value);
+                Assert.AreEqual(EdmType.Int32, property.PropertyType);
+                Assert.AreEqual(expectedValue, property.Int32Value);
             }
             else
             {
                 Assert.False(true, "test bug: unsupported property type: " + expectedValue.GetType().FullName);
             }
         }
+
         private static void AssertPropertyEqual<T>(T expected,
             EdmType expectedType,
             IDictionary<string, EntityProperty> properties,
@@ -328,10 +349,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.NotNull(properties);
             Assert.True(properties.ContainsKey(propertyName));
             EntityProperty property = properties[propertyName];
-            Assert.Equal(expectedType, property.PropertyType);
+            Assert.AreEqual(expectedType, property.PropertyType);
             T actualValue = actualAccessor.Invoke(property);
-            Assert.Equal(expected, actualValue);
+            Assert.AreEqual(expected, actualValue);
         }
+
         private static void AssertPropertyNull<T>(EdmType expectedType,
             IDictionary<string, EntityProperty> properties,
             string propertyName,
@@ -341,10 +363,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.NotNull(properties);
             Assert.True(properties.ContainsKey(propertyName));
             EntityProperty property = properties[propertyName];
-            Assert.Equal(expectedType, property.PropertyType);
+            Assert.AreEqual(expectedType, property.PropertyType);
             Nullable<T> actualValue = actualAccessor.Invoke(property);
             Assert.False(actualValue.HasValue);
         }
+
         // Assert the given table has the given entity with PropertyName=ExpectedValue
         private async Task AssertStringPropertyAsync(
             StorageAccount account,
@@ -364,30 +387,36 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.True(entity.Properties.ContainsKey(propertyName));
             EntityProperty property = entity.Properties[propertyName];
             Assert.NotNull(property);
-            Assert.Equal(EdmType.String, property.PropertyType);
-            Assert.Equal(expectedValue, property.StringValue);
+            Assert.AreEqual(EdmType.String, property.PropertyType);
+            Assert.AreEqual(expectedValue, property.StringValue);
         }
+
         private static StorageAccount CreateFakeStorageAccount()
         {
             return new FakeStorageAccount();
         }
+
         private static async Task RunTriggerAsync(StorageAccount account, Type programType)
         {
             await FunctionalTest.RunTriggerAsync(account, programType);
         }
+
         private static async Task<TResult> RunTriggerAsync<TResult>(StorageAccount account, Type programType,
             Action<TaskCompletionSource<TResult>> setTaskSource)
         {
             return await FunctionalTest.RunTriggerAsync<TResult>(account, programType, setTaskSource);
         }
+
         private class BindToCloudTableProgram
         {
             public static TaskCompletionSource<CloudTable> TaskSource { get; set; }
+
             public static void Run([Table(TableName)] CloudTable table)
             {
                 TaskSource.TrySetResult(table);
             }
         }
+
         private class BindToICollectorJObjectProgram
         {
             public static void Run(
@@ -402,12 +431,14 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 }));
             }
         }
+
         // Partition and RowKey are missing from JObject, get them from the attribute.
         private class BindToICollectorJObjectProgramKeysInAttr
         {
             [NoAutomaticTrigger]
             public static void Run(
-                [Table(TableName, PartitionKey, RowKey)] ICollector<JObject> table)
+                [Table(TableName, PartitionKey, RowKey)]
+                ICollector<JObject> table)
             {
                 table.Add(JObject.FromObject(new
                 {
@@ -417,6 +448,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 }));
             }
         }
+
         private class BindToICollectorITableEntityProgram
         {
             public static void Run(
@@ -430,6 +462,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 table.Add(new DynamicTableEntity(PartitionKey, RowKey, etag: null, properties: properties));
             }
         }
+
         private class BindToICollectorPocoProgram
         {
             public static void Run(
@@ -439,6 +472,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 table.Add(new Poco { PartitionKey = PartitionKey, RowKey = RowKey, Property = messageAsString });
             }
         }
+
         private class BindToICollectorPocoWithAllTypesProgram
         {
             public static void Run(
@@ -449,6 +483,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 table.Add(entity);
             }
         }
+
         private class CustomTableBindingExtensionProgram
         {
             public static void Run([Table(TableName)] CustomTableBinding<Poco> table)
@@ -458,6 +493,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 table.Delete(entity);
             }
         }
+
         private class BadProgramTableName
         {
             public static void Run([Table("$$")] ICollector<Poco> output)
@@ -465,6 +501,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 Assert.True(false, "should have gotten error at indexing time.");
             }
         }
+
         private class BadProgram1
         {
             public static void Run([Table(TableName)] ICollector<BadPoco> output)
@@ -472,6 +509,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 Assert.True(false, "should have gotten error at indexing time.");
             }
         }
+
         private class BadProgram2
         {
             public static void Run([Table(TableName)] ICollector<BadPocoMissingRowKey> output)
@@ -479,6 +517,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 Assert.True(false, "should have gotten error at indexing time.");
             }
         }
+
         private class BadProgram3
         {
             public static void Run([Table(TableName)] ICollector<BadPocoMissingPartitionKey> output)
@@ -486,6 +525,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 Assert.True(false, "should have gotten error at indexing time.");
             }
         }
+
         private class BadProgram4
         {
             public static void Run([Table(TableName, PartitionKey, RowKey)] BadPocoMissingDefaultCtor input)
@@ -493,6 +533,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 Assert.True(false, "should have gotten error at indexing time.");
             }
         }
+
         // Poco that should fail at binding time:
         // 1. Does not derive from ITableEntity, and
         // 2. Missing PartitionKey and RowKey values, so not structurally  compatible with ITableEntity
@@ -500,24 +541,29 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             public string Value { get; set; }
         }
+
         private class BadPocoMissingRowKey
         {
             public string PartitionKey { get; set; }
             public string Value { get; set; }
         }
+
         private class BadPocoMissingPartitionKey
         {
             public string RowKey { get; set; }
             public string Value { get; set; }
         }
+
         private class BadPocoMissingDefaultCtor
         {
             public BadPocoMissingDefaultCtor(string value)
             {
                 this.Value = value;
             }
+
             public string Value { get; set; }
         }
+
         private class TableOutProgram
         {
             public static void Run([Table(TableName, PartitionKey, RowKey)] out Poco value)
@@ -526,6 +572,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 Assert.True(false, "should have gotten error at indexing time.");
             }
         }
+
         private class TableOutArrayProgram
         {
             public static void Run([Table(TableName, PartitionKey, RowKey)] out Poco[] value)
@@ -534,12 +581,14 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 Assert.True(false, "should have gotten error at indexing time.");
             }
         }
+
         private class Poco
         {
             public string PartitionKey { get; set; }
             public string RowKey { get; set; }
             public string Property { get; set; }
         }
+
         private class PocoWithAllTypes
         {
             public string PartitionKey { get; set; }
@@ -562,6 +611,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             public string StringProperty { get; set; }
             public Poco PocoProperty { get; set; }
         }
+
         /// <summary>
         /// Binding type demonstrating how custom binding extensions can be used to bind to
         /// arbitrary types
@@ -572,22 +622,26 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             public static bool AddInvoked;
             public static bool DeleteInvoked;
             public static CloudTable Table;
+
             public CustomTableBinding(CloudTable table)
             {
                 // this custom binding has the table, so can perform whatever storage
                 // operations it needs to
                 Table = table;
             }
+
             public void Add(TEntity entity)
             {
                 // storage operations here
                 AddInvoked = true;
             }
+
             public void Delete(TEntity entity)
             {
                 // storage operations here
                 DeleteInvoked = true;
             }
+
             internal Task FlushAsync(CancellationToken cancellationToken)
             {
                 // complete and flush all storage operations
