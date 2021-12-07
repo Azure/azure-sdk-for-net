@@ -1,6 +1,8 @@
 ﻿using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Core;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Tests
 {
@@ -16,9 +18,17 @@ namespace Azure.ResourceManager.Tests
         const string SubscriptionResourceId = "/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575";
         const string TenantResourceId = "/providers/Microsoft.Billing/billingAccounts/3984c6f4-2d2a-4b04-93ce-43cf4824b698%3Ae2f1492a-a492-468d-909f-bf7fe6662c01_2019-05-31";
 
-        [SetUp]
-        public void Setup()
+        [Test]
+        public void Sort()
         {
+            List<ResourceIdentifier> list = new List<ResourceIdentifier>();
+            ResourceIdentifier id = new ResourceIdentifier(TrackedResourceId);
+            ResourceIdentifier childId = id.AppendChildResource("myChild", "myChildName");
+            list.Add(childId);
+            list.Add(id);
+            Assert.AreEqual(childId.Name, list[0].Name);
+            list.Sort();
+            Assert.AreEqual(id.Name, list[0].Name);
         }
 
         [TestCase(TenantResourceId)]

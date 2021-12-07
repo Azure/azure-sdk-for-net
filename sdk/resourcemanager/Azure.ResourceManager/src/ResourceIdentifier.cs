@@ -311,7 +311,7 @@ namespace Azure.ResourceManager
         }
 
         /// <summary>
-        /// Convert a resource identifier to a string
+        /// Convert a resource identifier to a string.
         /// </summary>
         /// <param name="id"> The resource identifier. </param>
         public static implicit operator string(ResourceIdentifier id) => id?.ToString();
@@ -319,8 +319,8 @@ namespace Azure.ResourceManager
         /// <summary>
         /// Operator overloading for '=='.
         /// </summary>
-        /// <param name="id1">Left ResourceIdentifier object to compare.</param>
-        /// <param name="id2">Right ResourceIdentifier object to compare.</param>
+        /// <param name="id1"> Left ResourceIdentifier object to compare. </param>
+        /// <param name="id2"> Right ResourceIdentifier object to compare. </param>
         /// <returns></returns>
         public static bool operator ==(ResourceIdentifier id1, ResourceIdentifier id2)
         {
@@ -333,8 +333,8 @@ namespace Azure.ResourceManager
         /// <summary>
         /// Operator overloading for '!='.
         /// </summary>
-        /// <param name="id1">Left ResourceIdentifier object to compare.</param>
-        /// <param name="id2">Right ResourceIdentifier object to compare.</param>
+        /// <param name="id1"> Left ResourceIdentifier object to compare. </param>
+        /// <param name="id2"> Right ResourceIdentifier object to compare. </param>
         /// <returns></returns>
         public static bool operator !=(ResourceIdentifier id1, ResourceIdentifier id2)
         {
