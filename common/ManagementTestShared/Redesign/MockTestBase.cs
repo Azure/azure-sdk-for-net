@@ -11,12 +11,18 @@ namespace Azure.ResourceManager.TestFramework
 {
     public abstract class MockTestBase : ManagementRecordedTestBase<MockTestEnvironment>
     {
+        private static bool playbackMode = false;
+        static MockTestBase()
+        {
+            playbackMode = !IsMockServerRunning();
+        }
+
         public MockTestBase(bool isAsync) : base(isAsync)
         {
             EnsureMockServerRunning();
         }
 
-        public MockTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, IsMockServerRunning()? RecordedTestMode.Playback: mode)
+        public MockTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, playbackMode ? RecordedTestMode.Playback: mode)
         {
             EnsureMockServerRunning();
         }
