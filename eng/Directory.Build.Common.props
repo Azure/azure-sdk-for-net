@@ -100,12 +100,6 @@
     </NoWarn>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(InheritDocEnabled)' != 'false' and '$(TargetFramework)' == 'netstandard2.0'">
-    <NoWarn>
-      $(NoWarn);IDT001<!-- InheritDoc related to malformed XML in netstandard.xml -->
-    </NoWarn>
-  </PropertyGroup>
-
   <!-- CodeAnalysis RuleSet -->
   <PropertyGroup Condition="'$(IsClientLibrary)' == 'true'">
     <CodeAnalysisRuleSet>$(RepoEngPath)\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
