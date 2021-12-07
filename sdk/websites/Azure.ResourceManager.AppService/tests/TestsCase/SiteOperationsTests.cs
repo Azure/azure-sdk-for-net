@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         {
         }
 
-        private async Task<Site> CreateSiteAsync(string siteName)
+        private async Task<WebSite> CreateSiteAsync(string siteName)
         {
-            var container = (await CreateResourceGroupAsync()).GetSites();
+            var container = (await CreateResourceGroupAsync()).GetWebSites();
             var input = ResourceDataHelper.GetBasicSiteData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(siteName, input);
             return lro.Value;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         {
             var siteName = Recording.GenerateAssetName("testSite-");
             var site1 = await CreateSiteAsync(siteName);
-            Site site2 = await site1.GetAsync();
+            WebSite site2 = await site1.GetAsync();
 
             ResourceDataHelper.AssertSite(site1.Data, site2.Data);
         }

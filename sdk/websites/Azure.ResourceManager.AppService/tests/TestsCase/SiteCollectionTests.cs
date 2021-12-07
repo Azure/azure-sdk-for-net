@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         {
         }
 
-        private async Task<SiteCollection> GetSiteCollectionAsync()
+        private async Task<WebSiteCollection> GetSiteCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
-            return resourceGroup.GetSites();
+            return resourceGroup.GetWebSites();
         }
 
         [TestCase]
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var siteName = Recording.GenerateAssetName("testSite-");
             var input = ResourceDataHelper.GetBasicSiteData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(siteName, input);
-            Site site1 = lro.Value;
-            Site site2 = await container.GetAsync(siteName);
+            WebSite site1 = lro.Value;
+            WebSite site2 = await container.GetAsync(siteName);
             ResourceDataHelper.AssertSite(site1.Data, site2.Data);
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var siteName = Recording.GenerateAssetName("testSite-");
             var input = ResourceDataHelper.GetBasicSiteData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(siteName, input);
-            Site site = lro.Value;
+            WebSite site = lro.Value;
             Assert.IsTrue(await container.CheckIfExistsAsync(siteName));
             Assert.IsFalse(await container.CheckIfExistsAsync(siteName + "1"));
 

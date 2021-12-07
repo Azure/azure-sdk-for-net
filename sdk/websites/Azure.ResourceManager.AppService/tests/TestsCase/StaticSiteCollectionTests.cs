@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.AppService.Tests.Helpers;
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         {
             var container = await GetStaticSiteCollectionAsync();
             var name = Recording.GenerateAssetName("testStaticSite");
-            var input = ResourceDataHelper.GetBasicStaticSiteARMSourceData(StaticSiteLocation);
+            var input = ResourceDataHelper.GetBasicStaticSiteARMResourceData(StaticSiteLocation);
             var lro = await container.CreateOrUpdateAsync(name, input);
             var staticSite = lro.Value;
             Assert.AreEqual(name, staticSite.Data.Name);
@@ -40,12 +41,12 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         public async Task Get()
         {
             var container = await GetStaticSiteCollectionAsync();
-            var sourceName = Recording.GenerateAssetName("testStaticSite");
-            var input = ResourceDataHelper.GetBasicSiteSourceControlData();
-            var lro = await container.CreateOrUpdateAsync(sourceName, input);
-            SiteSourceControl sourceControl1 = lro.Value;
-            SiteSourceControl sourceControl2 = await container.GetAsync(sourceName);
-            ResourceDataHelper.AssertSiteSourceControlData(sourceControl1.Data, sourceControl2.Data);
+            var staticSiteName = Recording.GenerateAssetName("testStaticSite");
+            var input = ResourceDataHelper.GetBasicStaticSiteARMResourceData(StaticSiteLocation);
+            var lro = await container.CreateOrUpdateAsync(staticSiteName, input);
+            StaticSiteARMResource staticSite1 = lro.Value;
+            StaticSiteARMResource staticSite2 = await container.GetAsync(staticSiteName);
+            ResourceDataHelper.AssertStaticSiteARMResourceData(staticSite1.Data, staticSite2.Data);
         }
 
         [TestCase]
@@ -53,11 +54,11 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         public async Task GetAll()
         {
             var container = await GetStaticSiteCollectionAsync();
-            var input = ResourceDataHelper.GetBasicSiteSourceControlData(DefaultLocation);
+            var input = ResourceDataHelper.GetBasicStaticSiteARMResourceData(StaticSiteLocation);
             _ = await container.CreateOrUpdateAsync(Recording.GenerateAssetName("testStaticSite"), input);
             _ = await container.CreateOrUpdateAsync(Recording.GenerateAssetName("testStaticSite-"), input);
             int count = 0;
-            await foreach (var siteSourceControl in container.GetAllAsync())
+            await foreach (var staticSitel in container.GetAllAsync())
             {
                 count++;
             }
@@ -69,12 +70,12 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         public async Task CheckIfExistsAsync()
         {
             var container = await GetStaticSiteCollectionAsync();
-            var sourceControlName = Recording.GenerateAssetName("testStaticSite");
-            var input = ResourceDataHelper.GetBasicAppServicePlanData(DefaultLocation);
-            var lro = await container.CreateOrUpdateAsync(sourceControlName, input);
-            AppServicePlan plan = lro.Value;
-            Assert.IsTrue(await container.CheckIfExistsAsync(sourceControlName));
-            Assert.IsFalse(await container.CheckIfExistsAsync(sourceControlName + "1"));
+            var staticSiteName = Recording.GenerateAssetName("testStaticSite");
+            var input = ResourceDataHelper.GetBasicStaticSiteARMResourceData(StaticSiteLocation);
+            var lro = await container.CreateOrUpdateAsync(staticSiteName, input);
+            StaticSiteARMResource staticSiteARMResource = lro.Value;
+            Assert.IsTrue(await container.CheckIfExistsAsync(staticSiteName));
+            Assert.IsFalse(await container.CheckIfExistsAsync(staticSiteName + "1"));
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.CheckIfExistsAsync(null));
         }

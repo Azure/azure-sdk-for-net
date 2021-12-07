@@ -17,25 +17,26 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         {
         }
 
-        private async Task<SiteSlotConfigWebCollection> GetSiteSlotConfigWebCollectionAsync()
+        private async Task<SiteSlotConfigWeb> GetSiteSlotConfigWebCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
-            var SiteName = Recording.GenerateAssetName("testSite_");
-            var SiteSlotName = Recording.GenerateAssetName("testSiteSlot_");
+            var SiteName = Recording.GenerateAssetName("testSite");
+            var SiteSlotName = Recording.GenerateAssetName("testSiteSlot");
             var SiteInput = ResourceDataHelper.GetBasicSiteData(DefaultLocation);
-            var lro = await resourceGroup.GetSites().CreateOrUpdateAsync(SiteName, SiteInput);
+            var lro = await resourceGroup.GetWebSites().CreateOrUpdateAsync(SiteName, SiteInput);
             var Site = lro.Value;
             var lroSiteSlot = await Site.GetSiteSlots().CreateOrUpdateAsync(SiteSlotName, SiteInput);
             var siteSlot = lroSiteSlot.Value;
-            return siteSlot.GetSiteSlotConfigWebs();
+            return siteSlot.GetSiteSlotConfigWeb();
         }
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Cannot complete the operation because the site will exceed the number of slots allowed for the 'Free' SKU")]
         public async Task CreateOrUpdate()
         {
             var container = await GetSiteSlotConfigWebCollectionAsync();
-        var name = Recording.GenerateAssetName("testSiteSlotConfigWeb_");
+        var name = Recording.GenerateAssetName("testSiteSlotConfigWeb");
         var Input = ResourceDataHelper.GetBasicSiteConfigResourceData(DefaultLocation);
         var lro = await container.CreateOrUpdateAsync(Input);
         SiteSlotConfigWeb siteSlotConfigWeb = lro.Value;
