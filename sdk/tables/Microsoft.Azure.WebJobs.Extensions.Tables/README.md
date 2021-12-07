@@ -2,9 +2,9 @@
 
 ## Getting started
 
-### Install the packag
+### Install the package
 
-### Prerequisite
+### Prerequisites
 
 ### Authenticate the Client
 
@@ -13,6 +13,8 @@
 ### Thread safety
 
 ### Additional concept
+
+## Troubleshooting
 
 ## Examples
 
