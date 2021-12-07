@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
     public class AppServicePlanOperationsTests : AppServiceTestBase
     {
         public AppServicePlanOperationsTests(bool isAsync)
-    : base(isAsync, RecordedTestMode.Record)
+    : base(isAsync)
         {
         }
 

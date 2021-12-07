@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
     {
         protected Location StaticSiteLocation => Location.EastUS2;
         public StaticSiteCollectionTests(bool isAsync)
-           : base(isAsync, Azure.Core.TestFramework.RecordedTestMode.Record)
+           : base(isAsync)
         {
         }
 
