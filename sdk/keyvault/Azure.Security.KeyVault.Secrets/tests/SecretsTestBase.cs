@@ -62,9 +62,9 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                         })));
         }
 
-        public override void StartTestRecording()
+        public override async Task StartTestRecordingAsync()
         {
-            base.StartTestRecording();
+            await base.StartTestRecordingAsync();
 
             _listener = new KeyVaultTestEventListener();
 
@@ -72,11 +72,11 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             VaultUri = new Uri(TestEnvironment.KeyVaultUrl);
         }
 
-        public override void StopTestRecording()
+        public override async Task StopTestRecordingAsync()
         {
             _listener?.Dispose();
 
-            base.StopTestRecording();
+            await base.StopTestRecordingAsync();
         }
 
         [TearDown]

@@ -5,77 +5,93 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class DatabaseUsage
+    public partial class DatabaseUsage : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties");
+            writer.WriteStartObject();
+            writer.WriteEndObject();
+            writer.WriteEndObject();
+        }
+
         internal static DatabaseUsage DeserializeDatabaseUsage(JsonElement element)
         {
-            Optional<string> name = default;
-            Optional<string> resourceName = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
             Optional<string> displayName = default;
             Optional<double> currentValue = default;
             Optional<double> limit = default;
             Optional<string> unit = default;
-            Optional<DateTimeOffset> nextResetTime = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("id"))
+                {
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceName"))
+                if (property.NameEquals("type"))
                 {
-                    resourceName = property.Value.GetString();
+                    type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
-                {
-                    displayName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("currentValue"))
+                if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    currentValue = property.Value.GetDouble();
-                    continue;
-                }
-                if (property.NameEquals("limit"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
+                        if (property0.NameEquals("displayName"))
+                        {
+                            displayName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("currentValue"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            currentValue = property0.Value.GetDouble();
+                            continue;
+                        }
+                        if (property0.NameEquals("limit"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            limit = property0.Value.GetDouble();
+                            continue;
+                        }
+                        if (property0.NameEquals("unit"))
+                        {
+                            unit = property0.Value.GetString();
+                            continue;
+                        }
                     }
-                    limit = property.Value.GetDouble();
-                    continue;
-                }
-                if (property.NameEquals("unit"))
-                {
-                    unit = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("nextResetTime"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    nextResetTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new DatabaseUsage(name.Value, resourceName.Value, displayName.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), unit.Value, Optional.ToNullable(nextResetTime));
+            return new DatabaseUsage(id, name, type, displayName.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), unit.Value);
         }
     }
 }

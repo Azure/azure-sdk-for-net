@@ -173,53 +173,8 @@ directive:
   - from: swagger-document
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}'].patch.responses.200.schema
     transform: $.$ref = "#/definitions/WebPubSub"
- 
-  # Change ACLAction to AclAction
-  # - rename-model:
-  #     from: ACLAction
-  #     to: AclAction
-  # - from: swagger-document
-  #   where: $.definitions.WebPubSubNetworkACLs
-  #   transform: $.properties.defaultAction.$ref = "#/definitions/AclAction"
-
-  # Remove Sku
-  # # - remove-operation: "Sku"
-  # # - remove-operation: "GetSku"
-  # # - remove-operation: "GetSkus"
-  # # - remove-operation: "Getskus"
-  # # - remove-operation: "ListSku"
-  # # - remove-operation: "ListSkus"
-  # - from: swagger-document
-  #   where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/skus']
-  #   transform: $ = {}
-  # # - remove-model: Sku
-  # # - remove-model: SkuCapacity
-  # # - remove-model: SkuList
-  # - from: swagger-document
-  #   where: $.definitions.Sku
-  #   transform: $ = {}
-  # - from: swagger-document
-  #   where: $.definitions.SkuCapacity
-  #   transform: $ = {}
-  # - from: swagger-document
-  #   where: $.definitions.SkuList
-  #   transform: $ = {}
-
-  # # Change ResourceSku to WebPubSubSku
-  # - rename-model:
-  #     from: ResourceSku
-  #     to: WebPubSubSku
-  # - from: swagger-document
-  #   where: $.WebPubSubResource.properties.sku
-  #   transform: $.$ref = "#/definitions/WebPubSubSku"
 
   # Change NetworkACL to NetworkAcl
-  # - rename-model:
-  #     from: NetworkACL
-  #     to: NetworkAcl
-  # - from: swagger-document
-  #   where: $.definitions.PrivateEndpointACL
-  #   transform: $.allOf[0].$ref = "#/definitions/NetworkAcl"
   - from: swagger-document
     where: $.definitions.WebPubSubProperties.properties.networkACLs
     transform: $.description = "Network Acls"

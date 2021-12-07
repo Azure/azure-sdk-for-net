@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Azure SDK client library for the WebPubSub service</Description>
     <AssemblyTitle>Azure SDK for WebPubSub</AssemblyTitle>
@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Microsoft.Azure.WebPubSub.Common.csproj" />
+	<Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\ConnectionStatesConverter.cs" LinkBase="Shared" />
   </ItemGroup>
 
 </Project>

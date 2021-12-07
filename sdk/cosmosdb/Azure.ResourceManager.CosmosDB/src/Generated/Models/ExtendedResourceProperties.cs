@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal ExtendedResourceProperties(string rid, object ts, string etag)
+        internal ExtendedResourceProperties(string rid, float? ts, string etag)
         {
             Rid = rid;
             Ts = ts;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> A system generated property. A unique identifier. </summary>
         public string Rid { get; }
         /// <summary> A system generated property that denotes the last updated timestamp of the resource. </summary>
-        public object Ts { get; }
+        public float? Ts { get; }
         /// <summary> A system generated property representing the resource etag required for optimistic concurrency control. </summary>
         public string Etag { get; }
     }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Tests
             Subscription subscription = await GlobalClient.GetSubscriptions().GetIfExistsAsync(SessionEnvironment.SubscriptionId);
             var op = InstrumentOperation(subscription.GetResourceGroups().Construct(_location).CreateOrUpdate(_rgName, waitForCompletion: false));
             op.WaitForCompletion();
-            StopSessionRecording();
+            await StopSessionRecordingAsync();
         }
 
         [RecordedTest]
