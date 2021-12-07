@@ -26,6 +26,7 @@ namespace Azure.ResourceManager
         /// </summary>
         internal const string DefaultUri = "https://management.azure.com";
         private Tenant _tenant;
+        private bool _hasLoadedResourcesFromApi;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ArmClient"/> class for mocking.
@@ -110,6 +111,8 @@ namespace Azure.ResourceManager
 
             ClientOptions = options.Clone();
 
+            LoadResourceVersionsFromRp();
+
             _tenant = new Tenant(ClientOptions, Credential, BaseUri, Pipeline);
             _defaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId) ? null :
                 new Subscription(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), ResourceIdentifier.RootResourceIdentifier.AppendChildResource(Subscription.ResourceType.Type, defaultSubscriptionId));
@@ -137,6 +140,53 @@ namespace Azure.ResourceManager
         /// Gets the HTTP pipeline.
         /// </summary>
         protected virtual HttpPipeline Pipeline { get; private set; }
+
+        private static readonly object s_getResourceVersionLock = new object();
+        /// <summary>
+        /// Gets the version this client will use for the resourceType.
+        /// </summary>
+        /// <param name="resourceType"> The resource type to check. </param>
+        /// <exception cref="InvalidOperationException"> Throws if the resource type is not recognized. </exception>
+        public string GetResourceVersion(ResourceType resourceType)
+        {
+            string version;
+            Dictionary<string, string> resourceVersions;
+            if (!ClientOptions.ResourceVersions.TryGetValue(resourceType.Namespace, out resourceVersions))
+            {
+                if (!_hasLoadedResourcesFromApi)
+                {
+                    lock (s_getResourceVersionLock)
+                    {
+                        if (!_hasLoadedResourcesFromApi)
+                        {
+                            LoadResourceVersionsFromApi(resourceType.Namespace);
+                        }
+                        _hasLoadedResourcesFromApi = true;
+                    }
+                }
+            }
+            if (!ClientOptions.ResourceVersions[resourceType.Namespace].TryGetValue(resourceType, out version))
+            {
+                throw new InvalidOperationException($"Invalid resource type {resourceType}");
+            }
+            return version;
+        }
+
+        private void LoadResourceVersionsFromApi(string resourceNamespace)
+        {
+            Dictionary<string, string> resourceVersions = new Dictionary<string, string>();
+            Provider results = GetDefaultSubscription().GetProviders().Get(resourceNamespace);
+            foreach (var type in results.Data.ResourceTypes)
+            {
+                resourceVersions[new ResourceType(type.ResourceType)] = type.ApiVersions[0];
+            }
+            ClientOptions.ResourceVersions.Add(resourceNamespace, resourceVersions);
+        }
+
+        private void LoadResourceVersionsFromRp()
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Gets the Azure subscriptions.

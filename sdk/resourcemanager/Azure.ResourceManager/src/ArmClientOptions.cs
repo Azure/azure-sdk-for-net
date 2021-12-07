@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 
@@ -36,6 +37,13 @@ namespace Azure.ResourceManager
         }
 
         /// <summary>
+        /// Dictionary of ResourceType to version overrides.
+        /// </summary>
+        public Dictionary<string, string> ResourceVersionOverrides { get; } = new Dictionary<string, string>();
+
+        internal Dictionary<string, Dictionary<string, string>> ResourceVersions { get; private set; } = new Dictionary<string, Dictionary<string, string>>();
+
+        /// <summary>
         /// Gets override object.
         /// </summary>
         /// <typeparam name="T"> The type of the underlying model this class wraps. </typeparam>
@@ -56,6 +64,7 @@ namespace Azure.ResourceManager
 
             copy.ApiVersions = ApiVersions.Clone();
             copy.Transport = Transport;
+            copy.ResourceVersions = ResourceVersions;
             return copy;
         }
     }
