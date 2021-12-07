@@ -1,0 +1,766 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/search/address/json?api-version=1.0\u0026query=Road\u0026countrySet=FJI",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-093ff31e82f0f4498bccc5e0c925beea-7825a6a7bfb15441-00",
+        "User-Agent": [
+          "azsdk-net-Maps.Search/1.0.0-alpha.20211207.1",
+          "(.NET 5.0.10; Darwin 21.1.0 Darwin Kernel Version 21.1.0: Wed Oct 13 17:33:23 PDT 2021; root:xnu-8019.41.5~1/RELEASE_X86_64)"
+        ],
+        "x-ms-client-id": "6a782b5b-631c-450d-9aa4-e561679d0d28",
+        "x-ms-client-request-id": "2db1b9005201cac8bc3db1f8a0d7dbec",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "4538",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 07 Dec 2021 14:21:37 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: 5F616694A87544479CF4F9D37DF95A46 Ref B: TYO01EDGE2113 Ref C: 2021-12-07T14:21:37Z"
+      },
+      "ResponseBody": {
+        "summary": {
+          "query": "road",
+          "queryType": "NON_NEAR",
+          "queryTime": 5,
+          "numResults": 10,
+          "offset": 0,
+          "totalResults": 386,
+          "fuzzyLevel": 1
+        },
+        "results": [
+          {
+            "type": "Street",
+            "id": "FJ/STR/p0/4231",
+            "score": 2.0962057114,
+            "address": {
+              "streetName": "Bukuya Road",
+              "countrySecondarySubdivision": "Ba",
+              "countrySubdivision": "Western",
+              "countryCode": "FJ",
+              "country": "Fiji",
+              "countryCodeISO3": "FJI",
+              "freeformAddress": "Bukuya Road Ba, Western"
+            },
+            "position": {
+              "lat": -17.66581,
+              "lon": 177.7786
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -17.65377,
+                "lon": 177.75875
+              },
+              "btmRightPoint": {
+                "lat": -17.67175,
+                "lon": 177.77762
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "FJ/STR/p0/4249",
+            "score": 2.0962057114,
+            "address": {
+              "streetName": "Meginyia Road",
+              "municipality": "Nadi",
+              "countrySecondarySubdivision": "Ba",
+              "countrySubdivision": "Western",
+              "countryCode": "FJ",
+              "country": "Fiji",
+              "countryCodeISO3": "FJI",
+              "freeformAddress": "Meginyia Road Nadi Ba, Western",
+              "localName": "Nadi"
+            },
+            "position": {
+              "lat": -17.77726,
+              "lon": 177.44487
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -17.76666,
+                "lon": 177.43525
+              },
+              "btmRightPoint": {
+                "lat": -17.78464,
+                "lon": 177.45413
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "FJ/STR/p0/4339",
+            "score": 2.0962057114,
+            "address": {
+              "streetName": "Kings Road",
+              "countryCode": "FJ",
+              "country": "Fiji",
+              "countryCodeISO3": "FJI",
+              "freeformAddress": "Kings Road"
+            },
+            "position": {
+              "lat": -17.65134,
+              "lon": 178.25936
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -17.67354,
+                "lon": 178.12045
+              },
+              "btmRightPoint": {
+                "lat": -17.69152,
+                "lon": 178.13933
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "FJ/STR/p0/4347",
+            "score": 2.0962057114,
+            "address": {
+              "streetName": "Kings Road",
+              "countrySecondarySubdivision": "Ba",
+              "countrySubdivision": "Western",
+              "countryCode": "FJ",
+              "country": "Fiji",
+              "countryCodeISO3": "FJI",
+              "freeformAddress": "Kings Road Ba, Western"
+            },
+            "position": {
+              "lat": -17.52948,
+              "lon": 177.53782
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -17.54807,
+                "lon": 177.55132
+              },
+              "btmRightPoint": {
+                "lat": -17.56605,
+                "lon": 177.57019
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "FJ/STR/p0/4354",
+            "score": 2.0962057114,
+            "address": {
+              "streetName": "Kings Road",
+              "countrySecondarySubdivision": "Rewa",
+              "countrySubdivision": "Central",
+              "countryCode": "FJ",
+              "country": "Fiji",
+              "countryCodeISO3": "FJI",
+              "freeformAddress": "Kings Road Rewa, Central"
+            },
+            "position": {
+              "lat": -18.07743,
+              "lon": 178.50056
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -18.06685,
+                "lon": 178.4855
+              },
+              "btmRightPoint": {
+                "lat": -18.08484,
+                "lon": 178.50442
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "FJ/STR/p0/4374",
+            "score": 2.0962057114,
+            "address": {
+              "streetName": "Namatiu Road",
+              "municipality": "Nakasaleka",
+              "countrySecondarySubdivision": "Kadavu",
+              "countrySubdivision": "Eastern",
+              "countryCode": "FJ",
+              "country": "Fiji",
+              "countryCodeISO3": "FJI",
+              "freeformAddress": "Namatiu Road Nakasaleka Kadavu, Eastern",
+              "localName": "Nakasaleka"
+            },
+            "position": {
+              "lat": -18.99374,
+              "lon": 178.41406
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -18.99132,
+                "lon": 178.40697
+              },
+              "btmRightPoint": {
+                "lat": -19.0093,
+                "lon": 178.426
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "FJ/STR/p0/4377",
+            "score": 2.0962057114,
+            "address": {
+              "streetName": "Miegunyah Road",
+              "countrySecondarySubdivision": "Ba",
+              "countrySubdivision": "Western",
+              "countryCode": "FJ",
+              "country": "Fiji",
+              "countryCodeISO3": "FJI",
+              "freeformAddress": "Miegunyah Road Ba, Western"
+            },
+            "position": {
+              "lat": -17.78928,
+              "lon": 177.46227
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -17.78073,
+                "lon": 177.45021
+              },
+              "btmRightPoint": {
+                "lat": -17.79871,
+                "lon": 177.4691
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "FJ/STR/p0/4380",
+            "score": 2.0962057114,
+            "address": {
+              "streetName": "Votualevu Road",
+              "countrySecondarySubdivision": "Ba",
+              "countrySubdivision": "Western",
+              "countryCode": "FJ",
+              "country": "Fiji",
+              "countryCodeISO3": "FJI",
+              "freeformAddress": "Votualevu Road Ba, Western"
+            },
+            "position": {
+              "lat": -17.75221,
+              "lon": 177.48457
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -17.74173,
+                "lon": 177.46489
+              },
+              "btmRightPoint": {
+                "lat": -17.75971,
+                "lon": 177.48377
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "FJ/STR/p0/4394",
+            "score": 2.0962057114,
+            "address": {
+              "streetName": "Nathavanandi Road",
+              "municipality": "Gau",
+              "countrySecondarySubdivision": "Lomaiviti",
+              "countrySubdivision": "Eastern",
+              "countryCode": "FJ",
+              "country": "Fiji",
+              "countryCodeISO3": "FJI",
+              "freeformAddress": "Nathavanandi Road Gau Lomaiviti, Eastern",
+              "localName": "Gau"
+            },
+            "position": {
+              "lat": -17.96453,
+              "lon": 179.31338
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -17.95729,
+                "lon": 179.2892
+              },
+              "btmRightPoint": {
+                "lat": -17.97528,
+                "lon": 179.3081
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "FJ/STR/p0/4405",
+            "score": 2.0962057114,
+            "address": {
+              "streetName": "Sawani Road",
+              "countrySecondarySubdivision": "Naitasiri",
+              "countrySubdivision": "Central",
+              "countryCode": "FJ",
+              "country": "Fiji",
+              "countryCodeISO3": "FJI",
+              "freeformAddress": "Sawani Road Naitasiri, Central"
+            },
+            "position": {
+              "lat": -17.9509,
+              "lon": 178.38606
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -17.94184,
+                "lon": 178.37976
+              },
+              "btmRightPoint": {
+                "lat": -17.95983,
+                "lon": 178.39866
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://atlas.microsoft.com/search/address/json?api-version=1.0\u0026query=Road\u0026countrySet=NZ",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-6adaaa16ca055a48bf1b86086f6aea83-3451172bdee64d46-00",
+        "User-Agent": [
+          "azsdk-net-Maps.Search/1.0.0-alpha.20211207.1",
+          "(.NET 5.0.10; Darwin 21.1.0 Darwin Kernel Version 21.1.0: Wed Oct 13 17:33:23 PDT 2021; root:xnu-8019.41.5~1/RELEASE_X86_64)"
+        ],
+        "x-ms-client-id": "6a782b5b-631c-450d-9aa4-e561679d0d28",
+        "x-ms-client-request-id": "6c1bfb170414ac87dcad4cacbee12a74",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "6306",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 07 Dec 2021 14:21:37 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: 937497F4687B451A853369FAE20C850E Ref B: TYO01EDGE2113 Ref C: 2021-12-07T14:21:37Z"
+      },
+      "ResponseBody": {
+        "summary": {
+          "query": "road",
+          "queryType": "NON_NEAR",
+          "queryTime": 7,
+          "numResults": 10,
+          "offset": 0,
+          "totalResults": 25935,
+          "fuzzyLevel": 1
+        },
+        "results": [
+          {
+            "type": "Geography",
+            "id": "NZ/GEO/p0/3259",
+            "score": 2.3589038849,
+            "entityType": "Municipality",
+            "address": {
+              "municipality": "Gorge Road",
+              "countrySecondarySubdivision": "Southland",
+              "countryTertiarySubdivision": "Southland",
+              "countrySubdivision": "South Island",
+              "countryCode": "NZ",
+              "country": "New Zealand",
+              "countryCodeISO3": "NZL",
+              "freeformAddress": "Gorge Road"
+            },
+            "position": {
+              "lat": -46.4769,
+              "lon": 168.702
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -46.42802,
+                "lon": 168.64996
+              },
+              "btmRightPoint": {
+                "lat": -46.57068,
+                "lon": 168.75584
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": -46.42802,
+                "lon": 168.64996
+              },
+              "btmRightPoint": {
+                "lat": -46.57068,
+                "lon": 168.75584
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00005831-3200-1200-0000-00007d3288e1"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "NZ/GEO/p0/2556",
+            "score": 2.3587200642,
+            "entityType": "Municipality",
+            "address": {
+              "municipality": "Mill Road",
+              "countrySecondarySubdivision": "Southland",
+              "countryTertiarySubdivision": "Invercargill",
+              "countrySubdivision": "South Island",
+              "countryCode": "NZ",
+              "country": "New Zealand",
+              "countryCodeISO3": "NZL",
+              "freeformAddress": "Mill Road"
+            },
+            "position": {
+              "lat": -46.40001,
+              "lon": 168.41878
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -46.37816,
+                "lon": 168.39993
+              },
+              "btmRightPoint": {
+                "lat": -46.41403,
+                "lon": 168.45886
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": -46.37816,
+                "lon": 168.39993
+              },
+              "btmRightPoint": {
+                "lat": -46.41403,
+                "lon": 168.45886
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00005831-3200-1200-0000-00007d3285d6"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "NZ/GEO/p0/1670",
+            "score": 2.3586893082,
+            "entityType": "Municipality",
+            "address": {
+              "municipality": "Inland Road",
+              "countrySecondarySubdivision": "Canterbury",
+              "countryTertiarySubdivision": "Kaikoura",
+              "countrySubdivision": "South Island",
+              "countryCode": "NZ",
+              "country": "New Zealand",
+              "countryCodeISO3": "NZL",
+              "freeformAddress": "Inland Road"
+            },
+            "position": {
+              "lat": -42.38382,
+              "lon": 173.50591
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -42.32313,
+                "lon": 173.37755
+              },
+              "btmRightPoint": {
+                "lat": -42.45464,
+                "lon": 173.63242
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": -42.32313,
+                "lon": 173.37755
+              },
+              "btmRightPoint": {
+                "lat": -42.45464,
+                "lon": 173.63242
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00005831-3200-1200-0000-00007d340e48"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "NZ/GEO/p0/417",
+            "score": 2.3585665226,
+            "entityType": "Municipality",
+            "address": {
+              "municipality": "Desert Road",
+              "countrySecondarySubdivision": "Waikato",
+              "countryTertiarySubdivision": "Taupo",
+              "countrySubdivision": "North Island",
+              "countryCode": "NZ",
+              "country": "New Zealand",
+              "countryCodeISO3": "NZL",
+              "freeformAddress": "Desert Road"
+            },
+            "position": {
+              "lat": -39.22627,
+              "lon": 175.73512
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -39.15299,
+                "lon": 175.66984
+              },
+              "btmRightPoint": {
+                "lat": -39.27672,
+                "lon": 175.81236
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": -39.15299,
+                "lon": 175.66984
+              },
+              "btmRightPoint": {
+                "lat": -39.27672,
+                "lon": 175.81236
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00005831-3200-1200-0000-00007d328cc7"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "NZ/GEO/p0/97",
+            "score": 2.3584132195,
+            "entityType": "Municipality",
+            "address": {
+              "municipality": "Bird Road",
+              "countrySecondarySubdivision": "Taranaki",
+              "countryTertiarySubdivision": "Stratford",
+              "countrySubdivision": "North Island",
+              "countryCode": "NZ",
+              "country": "New Zealand",
+              "countryCodeISO3": "NZL",
+              "freeformAddress": "Bird Road"
+            },
+            "position": {
+              "lat": -39.36421,
+              "lon": 174.34468
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -39.3358,
+                "lon": 174.2974
+              },
+              "btmRightPoint": {
+                "lat": -39.37867,
+                "lon": 174.36285
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": -39.3358,
+                "lon": 174.2974
+              },
+              "btmRightPoint": {
+                "lat": -39.37867,
+                "lon": 174.36285
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00005831-3200-1200-0000-00007d328d0f"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "NZ/GEO/p0/2810",
+            "score": 2.0992157459,
+            "entityType": "Neighbourhood",
+            "address": {
+              "municipalitySubdivision": "K\u0027Road",
+              "municipality": "Auckland",
+              "countrySecondarySubdivision": "Auckland",
+              "countryTertiarySubdivision": "Auckland",
+              "countrySubdivision": "North Island",
+              "countryCode": "NZ",
+              "country": "New Zealand",
+              "countryCodeISO3": "NZL",
+              "freeformAddress": "K\u0027Road, Auckland"
+            },
+            "position": {
+              "lat": -36.85839,
+              "lon": 174.75537
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -36.85671,
+                "lon": 174.75243
+              },
+              "btmRightPoint": {
+                "lat": -36.86009,
+                "lon": 174.76368
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": -36.85671,
+                "lon": 174.75243
+              },
+              "btmRightPoint": {
+                "lat": -36.86009,
+                "lon": 174.76368
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "da2492ed-706d-49a8-9a60-6a572b57df5d"
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "NZ/STR/p0/5",
+            "score": 2.0962057114,
+            "address": {
+              "streetName": "Pudjeck Road",
+              "countrySecondarySubdivision": "Canterbury",
+              "countryTertiarySubdivision": "Timaru",
+              "countrySubdivision": "South Island",
+              "countryCode": "NZ",
+              "country": "New Zealand",
+              "countryCodeISO3": "NZL",
+              "freeformAddress": "Pudjeck Road, Timaru"
+            },
+            "position": {
+              "lat": -44.43125,
+              "lon": 171.17117
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -44.42213,
+                "lon": 171.15569
+              },
+              "btmRightPoint": {
+                "lat": -44.44011,
+                "lon": 171.18088
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "NZ/STR/p0/8",
+            "score": 2.0962057114,
+            "address": {
+              "streetName": "Slopedown Road",
+              "countrySecondarySubdivision": "Otago",
+              "countryTertiarySubdivision": "Clutha",
+              "countrySubdivision": "South Island",
+              "countryCode": "NZ",
+              "country": "New Zealand",
+              "countryCodeISO3": "NZL",
+              "freeformAddress": "Slopedown Road, Clutha"
+            },
+            "position": {
+              "lat": -46.30851,
+              "lon": 169.21534
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -46.30833,
+                "lon": 169.22742
+              },
+              "btmRightPoint": {
+                "lat": -46.32631,
+                "lon": 169.25347
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "NZ/STR/p0/21",
+            "score": 2.0962057114,
+            "address": {
+              "streetName": "Wilkie Road",
+              "countrySecondarySubdivision": "Manawatu Wanganui",
+              "countryTertiarySubdivision": "Ruapehu",
+              "countrySubdivision": "North Island",
+              "countryCode": "NZ",
+              "country": "New Zealand",
+              "countryCodeISO3": "NZL",
+              "freeformAddress": "Wilkie Road, Ruapehu"
+            },
+            "position": {
+              "lat": -38.8994,
+              "lon": 174.97829
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -38.89069,
+                "lon": 174.96679
+              },
+              "btmRightPoint": {
+                "lat": -38.90868,
+                "lon": 174.9899
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "NZ/STR/p0/24",
+            "score": 2.0962057114,
+            "address": {
+              "streetName": "Wilkie Road",
+              "municipality": "Dunedin",
+              "countrySecondarySubdivision": "Otago",
+              "countryTertiarySubdivision": "Dan\u012Bdina",
+              "countrySubdivision": "South Island",
+              "countryCode": "NZ",
+              "country": "New Zealand",
+              "countryCodeISO3": "NZL",
+              "freeformAddress": "Wilkie Road, Dunedin, Dunedin",
+              "localName": "Dunedin"
+            },
+            "position": {
+              "lat": -45.89279,
+              "lon": 170.49587
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -45.89218,
+                "lon": 170.4941
+              },
+              "btmRightPoint": {
+                "lat": -45.89302,
+                "lon": 170.49739
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "6a782b5b-631c-450d-9aa4-e561679d0d28",
+    "ENDPOINT_URL": null,
+    "RandomSeed": "956393242"
+  }
+}

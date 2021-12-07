@@ -1,0 +1,500 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/search/address/json?api-version=1.0\u0026query=Seattle",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-816057cee9311c439e518445e3a69eec-8f7c7f1fb7c8474e-00",
+        "User-Agent": [
+          "azsdk-net-Maps.Search/1.0.0-alpha.20211207.1",
+          "(.NET 5.0.10; Darwin 21.1.0 Darwin Kernel Version 21.1.0: Wed Oct 13 17:33:23 PDT 2021; root:xnu-8019.41.5~1/RELEASE_X86_64)"
+        ],
+        "x-ms-client-id": "6a782b5b-631c-450d-9aa4-e561679d0d28",
+        "x-ms-client-request-id": "748cfd99c300c3a12cd77f1c9e9ca68e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "7486",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 07 Dec 2021 14:21:35 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: CB4AB3BDE828487CAF24F587F46AF7F9 Ref B: TYO01EDGE2113 Ref C: 2021-12-07T14:21:35Z"
+      },
+      "ResponseBody": {
+        "summary": {
+          "query": "seattle",
+          "queryType": "NON_NEAR",
+          "queryTime": 6,
+          "numResults": 10,
+          "offset": 0,
+          "totalResults": 325,
+          "fuzzyLevel": 1
+        },
+        "results": [
+          {
+            "type": "Geography",
+            "id": "US/GEO/p0/15372",
+            "score": 2.5823674202,
+            "entityType": "Municipality",
+            "address": {
+              "municipality": "Seattle",
+              "countrySecondarySubdivision": "King",
+              "countrySubdivision": "WA",
+              "countrySubdivisionName": "Washington",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Seattle, WA"
+            },
+            "position": {
+              "lat": 47.60323,
+              "lon": -122.33028
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 47.7364,
+                "lon": -122.4594
+              },
+              "btmRightPoint": {
+                "lat": 47.35069,
+                "lon": -122.21866
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": 47.7364,
+                "lon": -122.4594
+              },
+              "btmRightPoint": {
+                "lat": 47.35069,
+                "lon": -122.21866
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00005557-4100-3c00-0000-0000596ae44e"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "MX/GEO/p0/51804",
+            "score": 2.1768069267,
+            "entityType": "MunicipalitySubdivision",
+            "address": {
+              "municipalitySubdivision": "Seattle",
+              "municipality": "Guadalajara",
+              "countrySubdivision": "Jalisco",
+              "countryCode": "MX",
+              "country": "M\u00E9xico",
+              "countryCodeISO3": "MEX",
+              "freeformAddress": "Seattle, Guadalajara, Jalisco"
+            },
+            "position": {
+              "lat": 20.72069,
+              "lon": -103.37434
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 20.72301,
+                "lon": -103.37591
+              },
+              "btmRightPoint": {
+                "lat": 20.71684,
+                "lon": -103.36898
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": 20.72301,
+                "lon": -103.37591
+              },
+              "btmRightPoint": {
+                "lat": 20.71684,
+                "lon": -103.36898
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00004d30-3300-3c00-0000-00002672312a"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "MX/GEO/p0/51686",
+            "score": 2.1554658413,
+            "entityType": "MunicipalitySubdivision",
+            "address": {
+              "municipalitySubdivision": "Ecol\u00F3gica Seattle",
+              "municipality": "Guadalajara",
+              "countrySubdivision": "Jalisco",
+              "countryCode": "MX",
+              "country": "M\u00E9xico",
+              "countryCodeISO3": "MEX",
+              "freeformAddress": "Ecol\u00F3gica Seattle, Guadalajara, Jalisco"
+            },
+            "position": {
+              "lat": 20.71985,
+              "lon": -103.37826
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 20.72235,
+                "lon": -103.3809
+              },
+              "btmRightPoint": {
+                "lat": 20.7172,
+                "lon": -103.37555
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": 20.72235,
+                "lon": -103.3809
+              },
+              "btmRightPoint": {
+                "lat": 20.7172,
+                "lon": -103.37555
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00004d30-3300-3c00-0000-000026723144"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "MX/GEO/p0/51529",
+            "score": 2.1345388889,
+            "entityType": "MunicipalitySubdivision",
+            "address": {
+              "municipalitySubdivision": "Jardines Seattle Unidad",
+              "municipality": "Guadalajara",
+              "countrySubdivision": "Jalisco",
+              "countryCode": "MX",
+              "country": "M\u00E9xico",
+              "countryCodeISO3": "MEX",
+              "freeformAddress": "Jardines Seattle Unidad, Guadalajara, Jalisco"
+            },
+            "position": {
+              "lat": 20.72459,
+              "lon": -103.36959
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 20.72538,
+                "lon": -103.37112
+              },
+              "btmRightPoint": {
+                "lat": 20.72394,
+                "lon": -103.36858
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": 20.72538,
+                "lon": -103.37112
+              },
+              "btmRightPoint": {
+                "lat": 20.72394,
+                "lon": -103.36858
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00004d30-3300-3c00-0000-0000267230e4"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "US/GEO/p0/14645",
+            "score": 2.1199998856,
+            "entityType": "PostalCodeArea",
+            "address": {
+              "municipalitySubdivision": "Victory Heights, Olympic Hills, Northgate, Meadowbrook, Matthews Beach, Cedar Park",
+              "municipality": "Seattle",
+              "countrySecondarySubdivision": "King",
+              "countrySubdivision": "WA",
+              "countrySubdivisionName": "Washington",
+              "postalCode": "98125",
+              "postalName": "Seattle",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Seattle, WA 98125"
+            },
+            "position": {
+              "lat": 47.71567,
+              "lon": -122.30436
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 47.73504,
+                "lon": -122.33021
+              },
+              "btmRightPoint": {
+                "lat": 47.6975,
+                "lon": -122.25632
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": 47.73504,
+                "lon": -122.33021
+              },
+              "btmRightPoint": {
+                "lat": 47.6975,
+                "lon": -122.25632
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00005557-4100-2800-0000-00000bfa24ac"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "US/GEO/p0/14647",
+            "score": 2.1199998856,
+            "entityType": "PostalCodeArea",
+            "address": {
+              "municipalitySubdivision": "Wedgewood, View Ridge, Sand Point, Roosevelt, Ravenna, Northgate, Green Lake",
+              "municipality": "Seattle",
+              "countrySecondarySubdivision": "King",
+              "countrySubdivision": "WA",
+              "countrySubdivisionName": "Washington",
+              "postalCode": "98115",
+              "postalName": "Seattle",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Seattle, WA 98115"
+            },
+            "position": {
+              "lat": 47.68627,
+              "lon": -122.30082
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 47.70296,
+                "lon": -122.33104
+              },
+              "btmRightPoint": {
+                "lat": 47.66418,
+                "lon": -122.22509
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": 47.70296,
+                "lon": -122.33104
+              },
+              "btmRightPoint": {
+                "lat": 47.66418,
+                "lon": -122.22509
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00005557-4100-2800-0000-00000bf9a8ac"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "US/GEO/p0/14650",
+            "score": 2.1199998856,
+            "entityType": "PostalCodeArea",
+            "address": {
+              "municipalitySubdivision": "Ballinger",
+              "municipality": "Shoreline, Lake Forest Park",
+              "countrySecondarySubdivision": "King",
+              "countrySubdivision": "WA",
+              "countrySubdivisionName": "Washington",
+              "postalCode": "98155",
+              "postalName": "Seattle",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Seattle, WA 98155"
+            },
+            "position": {
+              "lat": 47.76178,
+              "lon": -122.30151
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 47.77769,
+                "lon": -122.33041
+              },
+              "btmRightPoint": {
+                "lat": 47.73294,
+                "lon": -122.26138
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": 47.77769,
+                "lon": -122.33041
+              },
+              "btmRightPoint": {
+                "lat": 47.73294,
+                "lon": -122.26138
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00005557-4100-2800-0000-00000bfa9ca6"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "US/GEO/p0/14655",
+            "score": 2.1199998856,
+            "entityType": "PostalCodeArea",
+            "address": {
+              "municipalitySubdivision": "Sunset Hill, North Beach-Blue Ridge, Greenwood, Crown Hill",
+              "municipality": "Seattle",
+              "countrySecondarySubdivision": "King",
+              "countrySubdivision": "WA",
+              "countrySubdivisionName": "Washington",
+              "postalCode": "98117",
+              "postalName": "Seattle",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Seattle, WA 98117"
+            },
+            "position": {
+              "lat": 47.69017,
+              "lon": -122.37794
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 47.70232,
+                "lon": -122.41094
+              },
+              "btmRightPoint": {
+                "lat": 47.67486,
+                "lon": -122.35741
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": 47.70232,
+                "lon": -122.41094
+              },
+              "btmRightPoint": {
+                "lat": 47.67486,
+                "lon": -122.35741
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00005557-4100-2800-0000-00000bf9ccbf"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "US/GEO/p0/14672",
+            "score": 2.1199998856,
+            "entityType": "PostalCodeArea",
+            "address": {
+              "municipalitySubdivision": "Downtown Seattle",
+              "municipality": "Seattle",
+              "countrySecondarySubdivision": "King",
+              "countrySubdivision": "WA",
+              "countrySubdivisionName": "Washington",
+              "postalCode": "98114",
+              "postalName": "Seattle",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Seattle, WA 98114"
+            },
+            "position": {
+              "lat": 47.59901,
+              "lon": -122.3251
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 47.59901,
+                "lon": -122.3251
+              },
+              "btmRightPoint": {
+                "lat": 47.59901,
+                "lon": -122.3251
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "US/GEO/p0/14677",
+            "score": 2.1199998856,
+            "entityType": "PostalCodeArea",
+            "address": {
+              "municipality": "Seattle, Tukwila, Seatac, Burien",
+              "countrySecondarySubdivision": "King",
+              "countrySubdivision": "WA",
+              "countrySubdivisionName": "Washington",
+              "postalCode": "98168",
+              "postalName": "Seattle",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Seattle, WA 98168"
+            },
+            "position": {
+              "lat": 47.48665,
+              "lon": -122.29721
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 47.51484,
+                "lon": -122.33419
+              },
+              "btmRightPoint": {
+                "lat": 47.46532,
+                "lon": -122.24892
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": 47.51484,
+                "lon": -122.33419
+              },
+              "btmRightPoint": {
+                "lat": 47.46532,
+                "lon": -122.24892
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00005557-4100-2800-0000-00000bfac569"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "6a782b5b-631c-450d-9aa4-e561679d0d28",
+    "ENDPOINT_URL": null,
+    "RandomSeed": "289407704"
+  }
+}
