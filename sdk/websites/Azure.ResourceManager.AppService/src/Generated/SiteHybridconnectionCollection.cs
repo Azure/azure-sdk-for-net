@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteHybridConnectionCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.CreateOrUpdateRelayServiceConnection(Id.ResourceGroupName, Id.Name, entityName, connectionEnvelope, cancellationToken);
+                var response = _webAppsRestClient.CreateOrUpdateRelayServiceConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, connectionEnvelope, cancellationToken);
                 var operation = new WebAppCreateOrUpdateRelayServiceConnectionOperation(Parent, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.CreateOrUpdateRelayServiceConnectionAsync(Id.ResourceGroupName, Id.Name, entityName, connectionEnvelope, cancellationToken).ConfigureAwait(false);
+                var response = await _webAppsRestClient.CreateOrUpdateRelayServiceConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, connectionEnvelope, cancellationToken).ConfigureAwait(false);
                 var operation = new WebAppCreateOrUpdateRelayServiceConnectionOperation(Parent, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetRelayServiceConnection(Id.ResourceGroupName, Id.Name, entityName, cancellationToken);
+                var response = _webAppsRestClient.GetRelayServiceConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteHybridConnection(Parent, response.Value), response.GetRawResponse());
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetRelayServiceConnectionAsync(Id.ResourceGroupName, Id.Name, entityName, cancellationToken).ConfigureAwait(false);
+                var response = await _webAppsRestClient.GetRelayServiceConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new SiteHybridConnection(Parent, response.Value), response.GetRawResponse());
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetRelayServiceConnection(Id.ResourceGroupName, Id.Name, entityName, cancellationToken: cancellationToken);
+                var response = _webAppsRestClient.GetRelayServiceConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<SiteHybridConnection>(null, response.GetRawResponse())
                     : Response.FromValue(new SiteHybridConnection(this, response.Value), response.GetRawResponse());
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetRelayServiceConnectionAsync(Id.ResourceGroupName, Id.Name, entityName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _webAppsRestClient.GetRelayServiceConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<SiteHybridConnection>(null, response.GetRawResponse())
                     : Response.FromValue(new SiteHybridConnection(this, response.Value), response.GetRawResponse());

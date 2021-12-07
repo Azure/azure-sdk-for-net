@@ -50,14 +50,14 @@ namespace Azure.ResourceManager.AppService
             return new DomainRegistrationProviderRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
 
-        private static ProviderRestOperations GetProviderRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        private static ProviderRestOperations GetProviderRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
         {
-            return new ProviderRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+            return new ProviderRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
 
-        private static WebSiteManagementRestOperations GetWebSiteManagementRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        private static WebSiteManagementRestOperations GetWebSiteManagementRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
         {
-            return new WebSiteManagementRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+            return new WebSiteManagementRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
 
         /// RequestPath: /providers/Microsoft.CertificateRegistration/operations
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.AppService
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetProviderRestOperations(clientDiagnostics, credential, options, pipeline, tenant.Id.SubscriptionId, baseUri);
+                var restOperations = GetProviderRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 async Task<Page<ApplicationStackResource>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetAvailableStacksProviders");
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.AppService
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetProviderRestOperations(clientDiagnostics, credential, options, pipeline, tenant.Id.SubscriptionId, baseUri);
+                var restOperations = GetProviderRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 Page<ApplicationStackResource> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetAvailableStacksProviders");
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.AppService
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetProviderRestOperations(clientDiagnostics, credential, options, pipeline, tenant.Id.SubscriptionId, baseUri);
+                var restOperations = GetProviderRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 async Task<Page<FunctionAppStack>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetFunctionAppStacksProviders");
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.AppService
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetProviderRestOperations(clientDiagnostics, credential, options, pipeline, tenant.Id.SubscriptionId, baseUri);
+                var restOperations = GetProviderRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 Page<FunctionAppStack> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetFunctionAppStacksProviders");
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.AppService
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetProviderRestOperations(clientDiagnostics, credential, options, pipeline, tenant.Id.SubscriptionId, baseUri);
+                var restOperations = GetProviderRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 async Task<Page<FunctionAppStack>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetFunctionAppStacksForLocationProviders");
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.AppService
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetProviderRestOperations(clientDiagnostics, credential, options, pipeline, tenant.Id.SubscriptionId, baseUri);
+                var restOperations = GetProviderRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 Page<FunctionAppStack> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetFunctionAppStacksForLocationProviders");
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.AppService
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetProviderRestOperations(clientDiagnostics, credential, options, pipeline, tenant.Id.SubscriptionId, baseUri);
+                var restOperations = GetProviderRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 async Task<Page<WebAppStack>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetWebAppStacksForLocationProviders");
@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.AppService
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetProviderRestOperations(clientDiagnostics, credential, options, pipeline, tenant.Id.SubscriptionId, baseUri);
+                var restOperations = GetProviderRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 Page<WebAppStack> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetWebAppStacksForLocationProviders");
@@ -686,7 +686,7 @@ namespace Azure.ResourceManager.AppService
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetProviderRestOperations(clientDiagnostics, credential, options, pipeline, tenant.Id.SubscriptionId, baseUri);
+                var restOperations = GetProviderRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 async Task<Page<CsmOperationDescription>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetOperationsProviders");
@@ -734,7 +734,7 @@ namespace Azure.ResourceManager.AppService
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetProviderRestOperations(clientDiagnostics, credential, options, pipeline, tenant.Id.SubscriptionId, baseUri);
+                var restOperations = GetProviderRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 Page<CsmOperationDescription> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetOperationsProviders");
@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.AppService
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetProviderRestOperations(clientDiagnostics, credential, options, pipeline, tenant.Id.SubscriptionId, baseUri);
+                var restOperations = GetProviderRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 async Task<Page<WebAppStack>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetWebAppStacksProviders");
@@ -834,7 +834,7 @@ namespace Azure.ResourceManager.AppService
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetProviderRestOperations(clientDiagnostics, credential, options, pipeline, tenant.Id.SubscriptionId, baseUri);
+                var restOperations = GetProviderRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 Page<WebAppStack> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetWebAppStacksProviders");
@@ -897,7 +897,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, tenant.Id.SubscriptionId, baseUri);
+                    var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                     var response = await restOperations.GenerateGithubAccessTokenForAppserviceCLIAsyncAsync(code, state, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
@@ -937,7 +937,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, tenant.Id.SubscriptionId, baseUri);
+                    var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                     var response = restOperations.GenerateGithubAccessTokenForAppserviceCLIAsync(code, state, cancellationToken);
                     return response;
                 }

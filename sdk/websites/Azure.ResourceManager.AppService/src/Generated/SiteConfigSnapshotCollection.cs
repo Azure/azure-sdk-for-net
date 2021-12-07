@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteConfigSnapshotCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetConfigurationSnapshot(Id.ResourceGroupName, Id.Parent.Name, snapshotId, cancellationToken);
+                var response = _webAppsRestClient.GetConfigurationSnapshot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, snapshotId, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteConfigSnapshot(Parent, response.Value), response.GetRawResponse());
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetConfigurationSnapshotAsync(Id.ResourceGroupName, Id.Parent.Name, snapshotId, cancellationToken).ConfigureAwait(false);
+                var response = await _webAppsRestClient.GetConfigurationSnapshotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, snapshotId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new SiteConfigSnapshot(Parent, response.Value), response.GetRawResponse());
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetConfigurationSnapshot(Id.ResourceGroupName, Id.Parent.Name, snapshotId, cancellationToken: cancellationToken);
+                var response = _webAppsRestClient.GetConfigurationSnapshot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, snapshotId, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<SiteConfigSnapshot>(null, response.GetRawResponse())
                     : Response.FromValue(new SiteConfigSnapshot(this, response.Value), response.GetRawResponse());
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetConfigurationSnapshotAsync(Id.ResourceGroupName, Id.Parent.Name, snapshotId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _webAppsRestClient.GetConfigurationSnapshotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, snapshotId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<SiteConfigSnapshot>(null, response.GetRawResponse())
                     : Response.FromValue(new SiteConfigSnapshot(this, response.Value), response.GetRawResponse());

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
             _data = resource;
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteSlotNetworkConfig"/> class. </summary>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         {
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteSlotNetworkConfig"/> class. </summary>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotNetworkConfig(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetSwiftVirtualNetworkConnectionSlotAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webAppsRestClient.GetSwiftVirtualNetworkConnectionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new SiteSlotNetworkConfig(this, response.Value), response.GetRawResponse());
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetSwiftVirtualNetworkConnectionSlot(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
+                var response = _webAppsRestClient.GetSwiftVirtualNetworkConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteSlotNetworkConfig(this, response.Value), response.GetRawResponse());
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.DeleteSwiftVirtualNetworkSlotAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webAppsRestClient.DeleteSwiftVirtualNetworkSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new WebAppDeleteSwiftVirtualNetworkSlotOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.DeleteSwiftVirtualNetworkSlot(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
+                var response = _webAppsRestClient.DeleteSwiftVirtualNetworkSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 var operation = new WebAppDeleteSwiftVirtualNetworkSlotOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.CreateOrUpdateSwiftVirtualNetworkConnectionWithCheckSlotAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, connectionEnvelope, cancellationToken).ConfigureAwait(false);
+                var response = await _webAppsRestClient.CreateOrUpdateSwiftVirtualNetworkConnectionWithCheckSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, connectionEnvelope, cancellationToken).ConfigureAwait(false);
                 var operation = new WebAppCreateOrUpdateSwiftVirtualNetworkConnectionWithCheckSlotOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.CreateOrUpdateSwiftVirtualNetworkConnectionWithCheckSlot(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, connectionEnvelope, cancellationToken);
+                var response = _webAppsRestClient.CreateOrUpdateSwiftVirtualNetworkConnectionWithCheckSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, connectionEnvelope, cancellationToken);
                 var operation = new WebAppCreateOrUpdateSwiftVirtualNetworkConnectionWithCheckSlotOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.UpdateSwiftVirtualNetworkConnectionWithCheckSlotAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, connectionEnvelope, cancellationToken).ConfigureAwait(false);
+                var response = await _webAppsRestClient.UpdateSwiftVirtualNetworkConnectionWithCheckSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, connectionEnvelope, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SiteSlotNetworkConfig(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.UpdateSwiftVirtualNetworkConnectionWithCheckSlot(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, connectionEnvelope, cancellationToken);
+                var response = _webAppsRestClient.UpdateSwiftVirtualNetworkConnectionWithCheckSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, connectionEnvelope, cancellationToken);
                 return Response.FromValue(new SiteSlotNetworkConfig(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

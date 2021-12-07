@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.AppService
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _appServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _recommendationsRestClient = new RecommendationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _appServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _recommendationsRestClient = new RecommendationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="AppServiceEnvironment"/> class. </summary>
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.AppService
         internal AppServiceEnvironment(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _appServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _recommendationsRestClient = new RecommendationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _appServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _recommendationsRestClient = new RecommendationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="AppServiceEnvironment"/> class. </summary>
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.AppService
         internal AppServiceEnvironment(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _appServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _recommendationsRestClient = new RecommendationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _appServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _recommendationsRestClient = new RecommendationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _appServiceEnvironmentsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceEnvironmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new AppServiceEnvironment(this, response.Value), response.GetRawResponse());
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _appServiceEnvironmentsRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _appServiceEnvironmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AppServiceEnvironment(this, response.Value), response.GetRawResponse());
@@ -163,8 +163,8 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _appServiceEnvironmentsRestClient.DeleteAsync(Id.ResourceGroupName, Id.Name, forceDelete, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceEnvironmentDeleteOperation(_clientDiagnostics, Pipeline, _appServiceEnvironmentsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name, forceDelete).Request, response);
+                var response = await _appServiceEnvironmentsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDelete, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceEnvironmentDeleteOperation(_clientDiagnostics, Pipeline, _appServiceEnvironmentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDelete).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -189,8 +189,8 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _appServiceEnvironmentsRestClient.Delete(Id.ResourceGroupName, Id.Name, forceDelete, cancellationToken);
-                var operation = new AppServiceEnvironmentDeleteOperation(_clientDiagnostics, Pipeline, _appServiceEnvironmentsRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name, forceDelete).Request, response);
+                var response = _appServiceEnvironmentsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDelete, cancellationToken);
+                var operation = new AppServiceEnvironmentDeleteOperation(_clientDiagnostics, Pipeline, _appServiceEnvironmentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDelete).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _appServiceEnvironmentsRestClient.UpdateAsync(Id.ResourceGroupName, Id.Name, hostingEnvironmentEnvelope, cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceEnvironmentsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostingEnvironmentEnvelope, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AppServiceEnvironment(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _appServiceEnvironmentsRestClient.Update(Id.ResourceGroupName, Id.Name, hostingEnvironmentEnvelope, cancellationToken);
+                var response = _appServiceEnvironmentsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostingEnvironmentEnvelope, cancellationToken);
                 return Response.FromValue(new AppServiceEnvironment(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await _appServiceEnvironmentsRestClient.ListCapacitiesAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _appServiceEnvironmentsRestClient.ListCapacitiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await _appServiceEnvironmentsRestClient.ListCapacitiesNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _appServiceEnvironmentsRestClient.ListCapacitiesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = _appServiceEnvironmentsRestClient.ListCapacities(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _appServiceEnvironmentsRestClient.ListCapacities(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = _appServiceEnvironmentsRestClient.ListCapacitiesNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _appServiceEnvironmentsRestClient.ListCapacitiesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _appServiceEnvironmentsRestClient.GetVipInfoAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceEnvironmentsRestClient.GetVipInfoAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _appServiceEnvironmentsRestClient.GetVipInfo(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _appServiceEnvironmentsRestClient.GetVipInfo(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _appServiceEnvironmentsRestClient.ListDiagnosticsAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceEnvironmentsRestClient.ListDiagnosticsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value, response.GetRawResponse());
             }
             catch (Exception e)
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _appServiceEnvironmentsRestClient.ListDiagnostics(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _appServiceEnvironmentsRestClient.ListDiagnostics(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(response.Value, response.GetRawResponse());
             }
             catch (Exception e)
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _appServiceEnvironmentsRestClient.GetDiagnosticsItemAsync(Id.ResourceGroupName, Id.Name, diagnosticsName, cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceEnvironmentsRestClient.GetDiagnosticsItemAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diagnosticsName, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _appServiceEnvironmentsRestClient.GetDiagnosticsItem(Id.ResourceGroupName, Id.Name, diagnosticsName, cancellationToken);
+                var response = _appServiceEnvironmentsRestClient.GetDiagnosticsItem(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diagnosticsName, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await _appServiceEnvironmentsRestClient.GetInboundNetworkDependenciesEndpointsAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _appServiceEnvironmentsRestClient.GetInboundNetworkDependenciesEndpointsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await _appServiceEnvironmentsRestClient.GetInboundNetworkDependenciesEndpointsNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _appServiceEnvironmentsRestClient.GetInboundNetworkDependenciesEndpointsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = _appServiceEnvironmentsRestClient.GetInboundNetworkDependenciesEndpoints(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _appServiceEnvironmentsRestClient.GetInboundNetworkDependenciesEndpoints(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = _appServiceEnvironmentsRestClient.GetInboundNetworkDependenciesEndpointsNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _appServiceEnvironmentsRestClient.GetInboundNetworkDependenciesEndpointsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _appServiceEnvironmentsRestClient.ListOperationsAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceEnvironmentsRestClient.ListOperationsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value, response.GetRawResponse());
             }
             catch (Exception e)
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _appServiceEnvironmentsRestClient.ListOperations(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _appServiceEnvironmentsRestClient.ListOperations(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(response.Value, response.GetRawResponse());
             }
             catch (Exception e)
@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await _appServiceEnvironmentsRestClient.GetOutboundNetworkDependenciesEndpointsAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _appServiceEnvironmentsRestClient.GetOutboundNetworkDependenciesEndpointsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await _appServiceEnvironmentsRestClient.GetOutboundNetworkDependenciesEndpointsNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _appServiceEnvironmentsRestClient.GetOutboundNetworkDependenciesEndpointsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = _appServiceEnvironmentsRestClient.GetOutboundNetworkDependenciesEndpoints(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _appServiceEnvironmentsRestClient.GetOutboundNetworkDependenciesEndpoints(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = _appServiceEnvironmentsRestClient.GetOutboundNetworkDependenciesEndpointsNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _appServiceEnvironmentsRestClient.GetOutboundNetworkDependenciesEndpointsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _appServiceEnvironmentsRestClient.GetPrivateLinkResourcesAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceEnvironmentsRestClient.GetPrivateLinkResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value.Value, response.GetRawResponse());
             }
             catch (Exception e)
@@ -718,7 +718,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _appServiceEnvironmentsRestClient.GetPrivateLinkResources(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _appServiceEnvironmentsRestClient.GetPrivateLinkResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(response.Value.Value, response.GetRawResponse());
             }
             catch (Exception e)
@@ -739,7 +739,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _appServiceEnvironmentsRestClient.RebootAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceEnvironmentsRestClient.RebootAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -760,7 +760,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _appServiceEnvironmentsRestClient.Reboot(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _appServiceEnvironmentsRestClient.Reboot(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await _appServiceEnvironmentsRestClient.ListAppServicePlansAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _appServiceEnvironmentsRestClient.ListAppServicePlansAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -799,7 +799,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await _appServiceEnvironmentsRestClient.ListAppServicePlansNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _appServiceEnvironmentsRestClient.ListAppServicePlansNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -825,7 +825,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = _appServiceEnvironmentsRestClient.ListAppServicePlans(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _appServiceEnvironmentsRestClient.ListAppServicePlans(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -840,7 +840,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = _appServiceEnvironmentsRestClient.ListAppServicePlansNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _appServiceEnvironmentsRestClient.ListAppServicePlansNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -867,7 +867,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await _appServiceEnvironmentsRestClient.ListWebAppsAsync(Id.ResourceGroupName, Id.Name, propertiesToInclude, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _appServiceEnvironmentsRestClient.ListWebAppsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, propertiesToInclude, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -882,7 +882,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await _appServiceEnvironmentsRestClient.ListWebAppsNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, propertiesToInclude, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _appServiceEnvironmentsRestClient.ListWebAppsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, propertiesToInclude, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -909,7 +909,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = _appServiceEnvironmentsRestClient.ListWebApps(Id.ResourceGroupName, Id.Name, propertiesToInclude, cancellationToken: cancellationToken);
+                    var response = _appServiceEnvironmentsRestClient.ListWebApps(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, propertiesToInclude, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -924,7 +924,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = _appServiceEnvironmentsRestClient.ListWebAppsNextPage(nextLink, Id.ResourceGroupName, Id.Name, propertiesToInclude, cancellationToken: cancellationToken);
+                    var response = _appServiceEnvironmentsRestClient.ListWebAppsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, propertiesToInclude, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -951,7 +951,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await _appServiceEnvironmentsRestClient.ListUsagesAsync(Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _appServiceEnvironmentsRestClient.ListUsagesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -966,7 +966,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await _appServiceEnvironmentsRestClient.ListUsagesNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _appServiceEnvironmentsRestClient.ListUsagesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -993,7 +993,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = _appServiceEnvironmentsRestClient.ListUsages(Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
+                    var response = _appServiceEnvironmentsRestClient.ListUsages(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1008,7 +1008,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = _appServiceEnvironmentsRestClient.ListUsagesNextPage(nextLink, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
+                    var response = _appServiceEnvironmentsRestClient.ListUsagesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1036,7 +1036,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await _recommendationsRestClient.ListHistoryForHostingEnvironmentAsync(Id.ResourceGroupName, Id.Name, expiredOnly, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _recommendationsRestClient.ListHistoryForHostingEnvironmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expiredOnly, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1051,7 +1051,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await _recommendationsRestClient.ListHistoryForHostingEnvironmentNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, expiredOnly, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _recommendationsRestClient.ListHistoryForHostingEnvironmentNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expiredOnly, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1079,7 +1079,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = _recommendationsRestClient.ListHistoryForHostingEnvironment(Id.ResourceGroupName, Id.Name, expiredOnly, filter, cancellationToken: cancellationToken);
+                    var response = _recommendationsRestClient.ListHistoryForHostingEnvironment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expiredOnly, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1094,7 +1094,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = _recommendationsRestClient.ListHistoryForHostingEnvironmentNextPage(nextLink, Id.ResourceGroupName, Id.Name, expiredOnly, filter, cancellationToken: cancellationToken);
+                    var response = _recommendationsRestClient.ListHistoryForHostingEnvironmentNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expiredOnly, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1122,7 +1122,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await _recommendationsRestClient.ListRecommendedRulesForHostingEnvironmentAsync(Id.ResourceGroupName, Id.Name, featured, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _recommendationsRestClient.ListRecommendedRulesForHostingEnvironmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featured, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1137,7 +1137,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await _recommendationsRestClient.ListRecommendedRulesForHostingEnvironmentNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, featured, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _recommendationsRestClient.ListRecommendedRulesForHostingEnvironmentNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featured, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1165,7 +1165,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = _recommendationsRestClient.ListRecommendedRulesForHostingEnvironment(Id.ResourceGroupName, Id.Name, featured, filter, cancellationToken: cancellationToken);
+                    var response = _recommendationsRestClient.ListRecommendedRulesForHostingEnvironment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featured, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1180,7 +1180,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = _recommendationsRestClient.ListRecommendedRulesForHostingEnvironmentNextPage(nextLink, Id.ResourceGroupName, Id.Name, featured, filter, cancellationToken: cancellationToken);
+                    var response = _recommendationsRestClient.ListRecommendedRulesForHostingEnvironmentNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featured, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1210,7 +1210,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _recommendationsRestClient.DisableAllForHostingEnvironmentAsync(Id.ResourceGroupName, Id.Name, environmentName, cancellationToken).ConfigureAwait(false);
+                var response = await _recommendationsRestClient.DisableAllForHostingEnvironmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1238,7 +1238,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _recommendationsRestClient.DisableAllForHostingEnvironment(Id.ResourceGroupName, Id.Name, environmentName, cancellationToken);
+                var response = _recommendationsRestClient.DisableAllForHostingEnvironment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1266,7 +1266,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _recommendationsRestClient.ResetAllFiltersForHostingEnvironmentAsync(Id.ResourceGroupName, Id.Name, environmentName, cancellationToken).ConfigureAwait(false);
+                var response = await _recommendationsRestClient.ResetAllFiltersForHostingEnvironmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1294,7 +1294,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _recommendationsRestClient.ResetAllFiltersForHostingEnvironment(Id.ResourceGroupName, Id.Name, environmentName, cancellationToken);
+                var response = _recommendationsRestClient.ResetAllFiltersForHostingEnvironment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, cancellationToken);
                 return response;
             }
             catch (Exception e)

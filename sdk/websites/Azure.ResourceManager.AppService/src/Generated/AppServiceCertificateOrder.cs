@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _appServiceCertificateOrdersRestClient = new AppServiceCertificateOrdersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _appServiceCertificateOrdersRestClient = new AppServiceCertificateOrdersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="AppServiceCertificateOrder"/> class. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService
         internal AppServiceCertificateOrder(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _appServiceCertificateOrdersRestClient = new AppServiceCertificateOrdersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _appServiceCertificateOrdersRestClient = new AppServiceCertificateOrdersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="AppServiceCertificateOrder"/> class. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService
         internal AppServiceCertificateOrder(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _appServiceCertificateOrdersRestClient = new AppServiceCertificateOrdersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _appServiceCertificateOrdersRestClient = new AppServiceCertificateOrdersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _appServiceCertificateOrdersRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceCertificateOrdersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new AppServiceCertificateOrder(this, response.Value), response.GetRawResponse());
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _appServiceCertificateOrdersRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _appServiceCertificateOrdersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AppServiceCertificateOrder(this, response.Value), response.GetRawResponse());
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _appServiceCertificateOrdersRestClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceCertificateOrdersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new AppServiceCertificateOrderDeleteOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _appServiceCertificateOrdersRestClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _appServiceCertificateOrdersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 var operation = new AppServiceCertificateOrderDeleteOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _appServiceCertificateOrdersRestClient.UpdateAsync(Id.ResourceGroupName, Id.Name, certificateDistinguishedName, cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceCertificateOrdersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateDistinguishedName, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AppServiceCertificateOrder(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _appServiceCertificateOrdersRestClient.Update(Id.ResourceGroupName, Id.Name, certificateDistinguishedName, cancellationToken);
+                var response = _appServiceCertificateOrdersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateDistinguishedName, cancellationToken);
                 return Response.FromValue(new AppServiceCertificateOrder(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _appServiceCertificateOrdersRestClient.ReissueAsync(Id.ResourceGroupName, Id.Name, reissueCertificateOrderRequest, cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceCertificateOrdersRestClient.ReissueAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, reissueCertificateOrderRequest, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _appServiceCertificateOrdersRestClient.Reissue(Id.ResourceGroupName, Id.Name, reissueCertificateOrderRequest, cancellationToken);
+                var response = _appServiceCertificateOrdersRestClient.Reissue(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, reissueCertificateOrderRequest, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _appServiceCertificateOrdersRestClient.RenewAsync(Id.ResourceGroupName, Id.Name, renewCertificateOrderRequest, cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceCertificateOrdersRestClient.RenewAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, renewCertificateOrderRequest, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _appServiceCertificateOrdersRestClient.Renew(Id.ResourceGroupName, Id.Name, renewCertificateOrderRequest, cancellationToken);
+                var response = _appServiceCertificateOrdersRestClient.Renew(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, renewCertificateOrderRequest, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _appServiceCertificateOrdersRestClient.ResendEmailAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceCertificateOrdersRestClient.ResendEmailAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _appServiceCertificateOrdersRestClient.ResendEmail(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _appServiceCertificateOrdersRestClient.ResendEmail(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _appServiceCertificateOrdersRestClient.ResendRequestEmailsAsync(Id.ResourceGroupName, Id.Name, nameIdentifier, cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceCertificateOrdersRestClient.ResendRequestEmailsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nameIdentifier, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _appServiceCertificateOrdersRestClient.ResendRequestEmails(Id.ResourceGroupName, Id.Name, nameIdentifier, cancellationToken);
+                var response = _appServiceCertificateOrdersRestClient.ResendRequestEmails(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nameIdentifier, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _appServiceCertificateOrdersRestClient.RetrieveSiteSealAsync(Id.ResourceGroupName, Id.Name, siteSealRequest, cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceCertificateOrdersRestClient.RetrieveSiteSealAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteSealRequest, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _appServiceCertificateOrdersRestClient.RetrieveSiteSeal(Id.ResourceGroupName, Id.Name, siteSealRequest, cancellationToken);
+                var response = _appServiceCertificateOrdersRestClient.RetrieveSiteSeal(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteSealRequest, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _appServiceCertificateOrdersRestClient.VerifyDomainOwnershipAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceCertificateOrdersRestClient.VerifyDomainOwnershipAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _appServiceCertificateOrdersRestClient.VerifyDomainOwnership(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _appServiceCertificateOrdersRestClient.VerifyDomainOwnership(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _appServiceCertificateOrdersRestClient.RetrieveCertificateActionsAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceCertificateOrdersRestClient.RetrieveCertificateActionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value, response.GetRawResponse());
             }
             catch (Exception e)
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _appServiceCertificateOrdersRestClient.RetrieveCertificateActions(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _appServiceCertificateOrdersRestClient.RetrieveCertificateActions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(response.Value, response.GetRawResponse());
             }
             catch (Exception e)
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _appServiceCertificateOrdersRestClient.RetrieveCertificateEmailHistoryAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceCertificateOrdersRestClient.RetrieveCertificateEmailHistoryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value, response.GetRawResponse());
             }
             catch (Exception e)
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _appServiceCertificateOrdersRestClient.RetrieveCertificateEmailHistory(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _appServiceCertificateOrdersRestClient.RetrieveCertificateEmailHistory(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(response.Value, response.GetRawResponse());
             }
             catch (Exception e)

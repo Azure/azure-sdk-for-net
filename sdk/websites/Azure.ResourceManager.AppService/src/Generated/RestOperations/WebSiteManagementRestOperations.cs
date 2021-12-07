@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.AppService
 {
     internal partial class WebSiteManagementRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
@@ -30,13 +29,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public WebSiteManagementRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-02-01")
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public WebSiteManagementRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null, string apiVersion = "2021-02-01")
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
@@ -473,7 +470,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateListBillingMetersRequest(string billingLocation, string osType)
+        internal HttpMessage CreateListBillingMetersRequest(string subscriptionId, string billingLocation, string osType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -499,12 +496,19 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Gets a list of meters for a given location. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="billingLocation"> Azure Location of billable resource. </param>
         /// <param name="osType"> App Service OS type meters used for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<BillingMeterCollection>> ListBillingMetersAsync(string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public async Task<Response<BillingMeterCollection>> ListBillingMetersAsync(string subscriptionId, string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListBillingMetersRequest(billingLocation, osType);
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateListBillingMetersRequest(subscriptionId, billingLocation, osType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -521,12 +525,19 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Gets a list of meters for a given location. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="billingLocation"> Azure Location of billable resource. </param>
         /// <param name="osType"> App Service OS type meters used for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<BillingMeterCollection> ListBillingMeters(string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public Response<BillingMeterCollection> ListBillingMeters(string subscriptionId, string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListBillingMetersRequest(billingLocation, osType);
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateListBillingMetersRequest(subscriptionId, billingLocation, osType);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -542,7 +553,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string name, CheckNameResourceTypes type, bool? isFqdn)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, string name, CheckNameResourceTypes type, bool? isFqdn)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -568,19 +579,24 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Check if a resource name is available. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="name"> Resource name to verify. </param>
         /// <param name="type"> Resource type used for verification. </param>
         /// <param name="isFqdn"> Is fully qualified domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async Task<Response<ResourceNameAvailability>> CheckNameAvailabilityAsync(string name, CheckNameResourceTypes type, bool? isFqdn = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is null. </exception>
+        public async Task<Response<ResourceNameAvailability>> CheckNameAvailabilityAsync(string subscriptionId, string name, CheckNameResourceTypes type, bool? isFqdn = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var message = CreateCheckNameAvailabilityRequest(name, type, isFqdn);
+            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, name, type, isFqdn);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -597,19 +613,24 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Check if a resource name is available. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="name"> Resource name to verify. </param>
         /// <param name="type"> Resource type used for verification. </param>
         /// <param name="isFqdn"> Is fully qualified domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public Response<ResourceNameAvailability> CheckNameAvailability(string name, CheckNameResourceTypes type, bool? isFqdn = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is null. </exception>
+        public Response<ResourceNameAvailability> CheckNameAvailability(string subscriptionId, string name, CheckNameResourceTypes type, bool? isFqdn = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var message = CreateCheckNameAvailabilityRequest(name, type, isFqdn);
+            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, name, type, isFqdn);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -625,7 +646,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateGetSubscriptionDeploymentLocationsRequest()
+        internal HttpMessage CreateGetSubscriptionDeploymentLocationsRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -643,10 +664,17 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Gets list of available geo regions plus ministamps. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DeploymentLocations>> GetSubscriptionDeploymentLocationsAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public async Task<Response<DeploymentLocations>> GetSubscriptionDeploymentLocationsAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetSubscriptionDeploymentLocationsRequest();
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateGetSubscriptionDeploymentLocationsRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -663,10 +691,17 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Gets list of available geo regions plus ministamps. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DeploymentLocations> GetSubscriptionDeploymentLocations(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public Response<DeploymentLocations> GetSubscriptionDeploymentLocations(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetSubscriptionDeploymentLocationsRequest();
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateGetSubscriptionDeploymentLocationsRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -682,7 +717,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateListGeoRegionsRequest(SkuName? sku, bool? linuxWorkersEnabled, bool? xenonWorkersEnabled, bool? linuxDynamicWorkersEnabled)
+        internal HttpMessage CreateListGeoRegionsRequest(string subscriptionId, SkuName? sku, bool? linuxWorkersEnabled, bool? xenonWorkersEnabled, bool? linuxDynamicWorkersEnabled)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -716,14 +751,21 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get a list of available geographical regions. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="sku"> Name of SKU used to filter the regions. </param>
         /// <param name="linuxWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux workers. </param>
         /// <param name="xenonWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Xenon workers. </param>
         /// <param name="linuxDynamicWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux Consumption Workers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<GeoRegionCollection>> ListGeoRegionsAsync(SkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public async Task<Response<GeoRegionCollection>> ListGeoRegionsAsync(string subscriptionId, SkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListGeoRegionsRequest(sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled);
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateListGeoRegionsRequest(subscriptionId, sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -740,14 +782,21 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get a list of available geographical regions. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="sku"> Name of SKU used to filter the regions. </param>
         /// <param name="linuxWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux workers. </param>
         /// <param name="xenonWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Xenon workers. </param>
         /// <param name="linuxDynamicWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux Consumption Workers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<GeoRegionCollection> ListGeoRegions(SkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public Response<GeoRegionCollection> ListGeoRegions(string subscriptionId, SkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListGeoRegionsRequest(sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled);
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateListGeoRegionsRequest(subscriptionId, sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -763,7 +812,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateListSiteIdentifiersAssignedToHostNameRequest(NameIdentifier nameIdentifier)
+        internal HttpMessage CreateListSiteIdentifiersAssignedToHostNameRequest(string subscriptionId, NameIdentifier nameIdentifier)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -785,17 +834,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for List all apps that are assigned to a hostname. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="nameIdentifier"> Hostname information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nameIdentifier"/> is null. </exception>
-        public async Task<Response<IdentifierCollection>> ListSiteIdentifiersAssignedToHostNameAsync(NameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="nameIdentifier"/> is null. </exception>
+        public async Task<Response<IdentifierCollection>> ListSiteIdentifiersAssignedToHostNameAsync(string subscriptionId, NameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (nameIdentifier == null)
             {
                 throw new ArgumentNullException(nameof(nameIdentifier));
             }
 
-            using var message = CreateListSiteIdentifiersAssignedToHostNameRequest(nameIdentifier);
+            using var message = CreateListSiteIdentifiersAssignedToHostNameRequest(subscriptionId, nameIdentifier);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -812,17 +866,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for List all apps that are assigned to a hostname. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="nameIdentifier"> Hostname information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nameIdentifier"/> is null. </exception>
-        public Response<IdentifierCollection> ListSiteIdentifiersAssignedToHostName(NameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="nameIdentifier"/> is null. </exception>
+        public Response<IdentifierCollection> ListSiteIdentifiersAssignedToHostName(string subscriptionId, NameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (nameIdentifier == null)
             {
                 throw new ArgumentNullException(nameof(nameIdentifier));
             }
 
-            using var message = CreateListSiteIdentifiersAssignedToHostNameRequest(nameIdentifier);
+            using var message = CreateListSiteIdentifiersAssignedToHostNameRequest(subscriptionId, nameIdentifier);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -838,7 +897,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateListPremierAddOnOffersRequest()
+        internal HttpMessage CreateListPremierAddOnOffersRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -856,10 +915,17 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for List all premier add-on offers. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<PremierAddOnOfferCollection>> ListPremierAddOnOffersAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public async Task<Response<PremierAddOnOfferCollection>> ListPremierAddOnOffersAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListPremierAddOnOffersRequest();
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateListPremierAddOnOffersRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -876,10 +942,17 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for List all premier add-on offers. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<PremierAddOnOfferCollection> ListPremierAddOnOffers(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public Response<PremierAddOnOfferCollection> ListPremierAddOnOffers(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListPremierAddOnOffersRequest();
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateListPremierAddOnOffersRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -895,7 +968,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateListSkusRequest()
+        internal HttpMessage CreateListSkusRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -913,10 +986,17 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for List all SKUs. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<SkuInfos>> ListSkusAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public async Task<Response<SkuInfos>> ListSkusAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListSkusRequest();
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateListSkusRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -933,10 +1013,17 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for List all SKUs. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SkuInfos> ListSkus(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public Response<SkuInfos> ListSkus(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListSkusRequest();
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateListSkusRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -952,7 +1039,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateVerifyHostingEnvironmentVnetRequest(VnetParameters parameters)
+        internal HttpMessage CreateVerifyHostingEnvironmentVnetRequest(string subscriptionId, VnetParameters parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -974,17 +1061,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Verifies if this VNET is compatible with an App Service Environment by analyzing the Network Security Group rules. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="parameters"> VNET information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<VnetValidationFailureDetails>> VerifyHostingEnvironmentVnetAsync(VnetParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response<VnetValidationFailureDetails>> VerifyHostingEnvironmentVnetAsync(string subscriptionId, VnetParameters parameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateVerifyHostingEnvironmentVnetRequest(parameters);
+            using var message = CreateVerifyHostingEnvironmentVnetRequest(subscriptionId, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1001,17 +1093,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Verifies if this VNET is compatible with an App Service Environment by analyzing the Network Security Group rules. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="parameters"> VNET information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public Response<VnetValidationFailureDetails> VerifyHostingEnvironmentVnet(VnetParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="parameters"/> is null. </exception>
+        public Response<VnetValidationFailureDetails> VerifyHostingEnvironmentVnet(string subscriptionId, VnetParameters parameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateVerifyHostingEnvironmentVnetRequest(parameters);
+            using var message = CreateVerifyHostingEnvironmentVnetRequest(subscriptionId, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1027,7 +1124,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateMoveRequest(string resourceGroupName, CsmMoveResourceEnvelope moveResourceEnvelope)
+        internal HttpMessage CreateMoveRequest(string subscriptionId, string resourceGroupName, CsmMoveResourceEnvelope moveResourceEnvelope)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1051,12 +1148,17 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Move resources between resource groups. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="moveResourceEnvelope"/> is null. </exception>
-        public async Task<Response> MoveAsync(string resourceGroupName, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="moveResourceEnvelope"/> is null. </exception>
+        public async Task<Response> MoveAsync(string subscriptionId, string resourceGroupName, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1066,7 +1168,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(moveResourceEnvelope));
             }
 
-            using var message = CreateMoveRequest(resourceGroupName, moveResourceEnvelope);
+            using var message = CreateMoveRequest(subscriptionId, resourceGroupName, moveResourceEnvelope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1078,12 +1180,17 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Move resources between resource groups. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="moveResourceEnvelope"/> is null. </exception>
-        public Response Move(string resourceGroupName, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="moveResourceEnvelope"/> is null. </exception>
+        public Response Move(string subscriptionId, string resourceGroupName, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1093,7 +1200,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(moveResourceEnvelope));
             }
 
-            using var message = CreateMoveRequest(resourceGroupName, moveResourceEnvelope);
+            using var message = CreateMoveRequest(subscriptionId, resourceGroupName, moveResourceEnvelope);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1104,7 +1211,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateValidateRequest(string resourceGroupName, ValidateRequest validateRequest)
+        internal HttpMessage CreateValidateRequest(string subscriptionId, string resourceGroupName, ValidateRequest validateRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1128,12 +1235,17 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Validate if a resource can be created. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="validateRequest"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="validateRequest"/> is null. </exception>
-        public async Task<Response<ValidateResponse>> ValidateAsync(string resourceGroupName, ValidateRequest validateRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="validateRequest"/> is null. </exception>
+        public async Task<Response<ValidateResponse>> ValidateAsync(string subscriptionId, string resourceGroupName, ValidateRequest validateRequest, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1143,7 +1255,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(validateRequest));
             }
 
-            using var message = CreateValidateRequest(resourceGroupName, validateRequest);
+            using var message = CreateValidateRequest(subscriptionId, resourceGroupName, validateRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1160,12 +1272,17 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Validate if a resource can be created. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="validateRequest"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="validateRequest"/> is null. </exception>
-        public Response<ValidateResponse> Validate(string resourceGroupName, ValidateRequest validateRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="validateRequest"/> is null. </exception>
+        public Response<ValidateResponse> Validate(string subscriptionId, string resourceGroupName, ValidateRequest validateRequest, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1175,7 +1292,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(validateRequest));
             }
 
-            using var message = CreateValidateRequest(resourceGroupName, validateRequest);
+            using var message = CreateValidateRequest(subscriptionId, resourceGroupName, validateRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1191,7 +1308,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateValidateMoveRequest(string resourceGroupName, CsmMoveResourceEnvelope moveResourceEnvelope)
+        internal HttpMessage CreateValidateMoveRequest(string subscriptionId, string resourceGroupName, CsmMoveResourceEnvelope moveResourceEnvelope)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1215,12 +1332,17 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Validate whether a resource can be moved. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="moveResourceEnvelope"/> is null. </exception>
-        public async Task<Response> ValidateMoveAsync(string resourceGroupName, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="moveResourceEnvelope"/> is null. </exception>
+        public async Task<Response> ValidateMoveAsync(string subscriptionId, string resourceGroupName, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1230,7 +1352,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(moveResourceEnvelope));
             }
 
-            using var message = CreateValidateMoveRequest(resourceGroupName, moveResourceEnvelope);
+            using var message = CreateValidateMoveRequest(subscriptionId, resourceGroupName, moveResourceEnvelope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1242,12 +1364,17 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Validate whether a resource can be moved. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="moveResourceEnvelope"/> is null. </exception>
-        public Response ValidateMove(string resourceGroupName, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="moveResourceEnvelope"/> is null. </exception>
+        public Response ValidateMove(string subscriptionId, string resourceGroupName, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1257,7 +1384,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(moveResourceEnvelope));
             }
 
-            using var message = CreateValidateMoveRequest(resourceGroupName, moveResourceEnvelope);
+            using var message = CreateValidateMoveRequest(subscriptionId, resourceGroupName, moveResourceEnvelope);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1336,7 +1463,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateListBillingMetersNextPageRequest(string nextLink, string billingLocation, string osType)
+        internal HttpMessage CreateListBillingMetersNextPageRequest(string nextLink, string subscriptionId, string billingLocation, string osType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1352,18 +1479,23 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Gets a list of meters for a given location. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="billingLocation"> Azure Location of billable resource. </param>
         /// <param name="osType"> App Service OS type meters used for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<BillingMeterCollection>> ListBillingMetersNextPageAsync(string nextLink, string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        public async Task<Response<BillingMeterCollection>> ListBillingMetersNextPageAsync(string nextLink, string subscriptionId, string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
 
-            using var message = CreateListBillingMetersNextPageRequest(nextLink, billingLocation, osType);
+            using var message = CreateListBillingMetersNextPageRequest(nextLink, subscriptionId, billingLocation, osType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1381,18 +1513,23 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Gets a list of meters for a given location. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="billingLocation"> Azure Location of billable resource. </param>
         /// <param name="osType"> App Service OS type meters used for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<BillingMeterCollection> ListBillingMetersNextPage(string nextLink, string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        public Response<BillingMeterCollection> ListBillingMetersNextPage(string nextLink, string subscriptionId, string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
 
-            using var message = CreateListBillingMetersNextPageRequest(nextLink, billingLocation, osType);
+            using var message = CreateListBillingMetersNextPageRequest(nextLink, subscriptionId, billingLocation, osType);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1408,7 +1545,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateListGeoRegionsNextPageRequest(string nextLink, SkuName? sku, bool? linuxWorkersEnabled, bool? xenonWorkersEnabled, bool? linuxDynamicWorkersEnabled)
+        internal HttpMessage CreateListGeoRegionsNextPageRequest(string nextLink, string subscriptionId, SkuName? sku, bool? linuxWorkersEnabled, bool? xenonWorkersEnabled, bool? linuxDynamicWorkersEnabled)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1424,20 +1561,25 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get a list of available geographical regions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="sku"> Name of SKU used to filter the regions. </param>
         /// <param name="linuxWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux workers. </param>
         /// <param name="xenonWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Xenon workers. </param>
         /// <param name="linuxDynamicWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux Consumption Workers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<GeoRegionCollection>> ListGeoRegionsNextPageAsync(string nextLink, SkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        public async Task<Response<GeoRegionCollection>> ListGeoRegionsNextPageAsync(string nextLink, string subscriptionId, SkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
 
-            using var message = CreateListGeoRegionsNextPageRequest(nextLink, sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled);
+            using var message = CreateListGeoRegionsNextPageRequest(nextLink, subscriptionId, sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1455,20 +1597,25 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get a list of available geographical regions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="sku"> Name of SKU used to filter the regions. </param>
         /// <param name="linuxWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux workers. </param>
         /// <param name="xenonWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Xenon workers. </param>
         /// <param name="linuxDynamicWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux Consumption Workers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<GeoRegionCollection> ListGeoRegionsNextPage(string nextLink, SkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        public Response<GeoRegionCollection> ListGeoRegionsNextPage(string nextLink, string subscriptionId, SkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
 
-            using var message = CreateListGeoRegionsNextPageRequest(nextLink, sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled);
+            using var message = CreateListGeoRegionsNextPageRequest(nextLink, subscriptionId, sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1484,7 +1631,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateListSiteIdentifiersAssignedToHostNameNextPageRequest(string nextLink, NameIdentifier nameIdentifier)
+        internal HttpMessage CreateListSiteIdentifiersAssignedToHostNameNextPageRequest(string nextLink, string subscriptionId, NameIdentifier nameIdentifier)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1500,21 +1647,26 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for List all apps that are assigned to a hostname. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="nameIdentifier"> Hostname information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="nameIdentifier"/> is null. </exception>
-        public async Task<Response<IdentifierCollection>> ListSiteIdentifiersAssignedToHostNameNextPageAsync(string nextLink, NameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="nameIdentifier"/> is null. </exception>
+        public async Task<Response<IdentifierCollection>> ListSiteIdentifiersAssignedToHostNameNextPageAsync(string nextLink, string subscriptionId, NameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (nameIdentifier == null)
             {
                 throw new ArgumentNullException(nameof(nameIdentifier));
             }
 
-            using var message = CreateListSiteIdentifiersAssignedToHostNameNextPageRequest(nextLink, nameIdentifier);
+            using var message = CreateListSiteIdentifiersAssignedToHostNameNextPageRequest(nextLink, subscriptionId, nameIdentifier);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1532,21 +1684,26 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for List all apps that are assigned to a hostname. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="nameIdentifier"> Hostname information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="nameIdentifier"/> is null. </exception>
-        public Response<IdentifierCollection> ListSiteIdentifiersAssignedToHostNameNextPage(string nextLink, NameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="nameIdentifier"/> is null. </exception>
+        public Response<IdentifierCollection> ListSiteIdentifiersAssignedToHostNameNextPage(string nextLink, string subscriptionId, NameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (nameIdentifier == null)
             {
                 throw new ArgumentNullException(nameof(nameIdentifier));
             }
 
-            using var message = CreateListSiteIdentifiersAssignedToHostNameNextPageRequest(nextLink, nameIdentifier);
+            using var message = CreateListSiteIdentifiersAssignedToHostNameNextPageRequest(nextLink, subscriptionId, nameIdentifier);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1562,7 +1719,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateListPremierAddOnOffersNextPageRequest(string nextLink)
+        internal HttpMessage CreateListPremierAddOnOffersNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1578,16 +1735,21 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for List all premier add-on offers. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<PremierAddOnOfferCollection>> ListPremierAddOnOffersNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        public async Task<Response<PremierAddOnOfferCollection>> ListPremierAddOnOffersNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
 
-            using var message = CreateListPremierAddOnOffersNextPageRequest(nextLink);
+            using var message = CreateListPremierAddOnOffersNextPageRequest(nextLink, subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1605,16 +1767,21 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for List all premier add-on offers. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<PremierAddOnOfferCollection> ListPremierAddOnOffersNextPage(string nextLink, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        public Response<PremierAddOnOfferCollection> ListPremierAddOnOffersNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
 
-            using var message = CreateListPremierAddOnOffersNextPageRequest(nextLink);
+            using var message = CreateListPremierAddOnOffersNextPageRequest(nextLink, subscriptionId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

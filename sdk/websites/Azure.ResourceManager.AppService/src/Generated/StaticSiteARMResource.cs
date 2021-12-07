@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _staticSitesRestClient = new StaticSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _staticSitesRestClient = new StaticSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="StaticSiteARMResource"/> class. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService
         internal StaticSiteARMResource(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _staticSitesRestClient = new StaticSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _staticSitesRestClient = new StaticSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="StaticSiteARMResource"/> class. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService
         internal StaticSiteARMResource(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _staticSitesRestClient = new StaticSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _staticSitesRestClient = new StaticSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _staticSitesRestClient.GetStaticSiteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _staticSitesRestClient.GetStaticSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new StaticSiteARMResource(this, response.Value), response.GetRawResponse());
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _staticSitesRestClient.GetStaticSite(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _staticSitesRestClient.GetStaticSite(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new StaticSiteARMResource(this, response.Value), response.GetRawResponse());
@@ -158,8 +158,8 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _staticSitesRestClient.DeleteStaticSiteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StaticSiteDeleteStaticSiteOperation(_clientDiagnostics, Pipeline, _staticSitesRestClient.CreateDeleteStaticSiteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _staticSitesRestClient.DeleteStaticSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new StaticSiteDeleteStaticSiteOperation(_clientDiagnostics, Pipeline, _staticSitesRestClient.CreateDeleteStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -183,8 +183,8 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _staticSitesRestClient.DeleteStaticSite(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new StaticSiteDeleteStaticSiteOperation(_clientDiagnostics, Pipeline, _staticSitesRestClient.CreateDeleteStaticSiteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _staticSitesRestClient.DeleteStaticSite(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new StaticSiteDeleteStaticSiteOperation(_clientDiagnostics, Pipeline, _staticSitesRestClient.CreateDeleteStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _staticSitesRestClient.UpdateStaticSiteAsync(Id.ResourceGroupName, Id.Name, staticSiteEnvelope, cancellationToken).ConfigureAwait(false);
+                var response = await _staticSitesRestClient.UpdateStaticSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, staticSiteEnvelope, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new StaticSiteARMResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _staticSitesRestClient.UpdateStaticSite(Id.ResourceGroupName, Id.Name, staticSiteEnvelope, cancellationToken);
+                var response = _staticSitesRestClient.UpdateStaticSite(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, staticSiteEnvelope, cancellationToken);
                 return Response.FromValue(new StaticSiteARMResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await _staticSitesRestClient.ListStaticSiteUsersAsync(Id.ResourceGroupName, Id.Name, authprovider, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _staticSitesRestClient.ListStaticSiteUsersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await _staticSitesRestClient.ListStaticSiteUsersNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, authprovider, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _staticSitesRestClient.ListStaticSiteUsersNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = _staticSitesRestClient.ListStaticSiteUsers(Id.ResourceGroupName, Id.Name, authprovider, cancellationToken: cancellationToken);
+                    var response = _staticSitesRestClient.ListStaticSiteUsers(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = _staticSitesRestClient.ListStaticSiteUsersNextPage(nextLink, Id.ResourceGroupName, Id.Name, authprovider, cancellationToken: cancellationToken);
+                    var response = _staticSitesRestClient.ListStaticSiteUsersNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _staticSitesRestClient.DeleteStaticSiteUserAsync(Id.ResourceGroupName, Id.Name, authprovider, userid, cancellationToken).ConfigureAwait(false);
+                var response = await _staticSitesRestClient.DeleteStaticSiteUserAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider, userid, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _staticSitesRestClient.DeleteStaticSiteUser(Id.ResourceGroupName, Id.Name, authprovider, userid, cancellationToken);
+                var response = _staticSitesRestClient.DeleteStaticSiteUser(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider, userid, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _staticSitesRestClient.UpdateStaticSiteUserAsync(Id.ResourceGroupName, Id.Name, authprovider, userid, staticSiteUserEnvelope, cancellationToken).ConfigureAwait(false);
+                var response = await _staticSitesRestClient.UpdateStaticSiteUserAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider, userid, staticSiteUserEnvelope, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _staticSitesRestClient.UpdateStaticSiteUser(Id.ResourceGroupName, Id.Name, authprovider, userid, staticSiteUserEnvelope, cancellationToken);
+                var response = _staticSitesRestClient.UpdateStaticSiteUser(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider, userid, staticSiteUserEnvelope, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _staticSitesRestClient.CreateOrUpdateStaticSiteAppSettingsAsync(Id.ResourceGroupName, Id.Name, appSettings, cancellationToken).ConfigureAwait(false);
+                var response = await _staticSitesRestClient.CreateOrUpdateStaticSiteAppSettingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appSettings, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _staticSitesRestClient.CreateOrUpdateStaticSiteAppSettings(Id.ResourceGroupName, Id.Name, appSettings, cancellationToken);
+                var response = _staticSitesRestClient.CreateOrUpdateStaticSiteAppSettings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appSettings, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _staticSitesRestClient.CreateOrUpdateStaticSiteFunctionAppSettingsAsync(Id.ResourceGroupName, Id.Name, appSettings, cancellationToken).ConfigureAwait(false);
+                var response = await _staticSitesRestClient.CreateOrUpdateStaticSiteFunctionAppSettingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appSettings, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _staticSitesRestClient.CreateOrUpdateStaticSiteFunctionAppSettings(Id.ResourceGroupName, Id.Name, appSettings, cancellationToken);
+                var response = _staticSitesRestClient.CreateOrUpdateStaticSiteFunctionAppSettings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appSettings, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _staticSitesRestClient.CreateUserRolesInvitationLinkAsync(Id.ResourceGroupName, Id.Name, staticSiteUserRolesInvitationEnvelope, cancellationToken).ConfigureAwait(false);
+                var response = await _staticSitesRestClient.CreateUserRolesInvitationLinkAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, staticSiteUserRolesInvitationEnvelope, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _staticSitesRestClient.CreateUserRolesInvitationLink(Id.ResourceGroupName, Id.Name, staticSiteUserRolesInvitationEnvelope, cancellationToken);
+                var response = _staticSitesRestClient.CreateUserRolesInvitationLink(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, staticSiteUserRolesInvitationEnvelope, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -668,8 +668,8 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _staticSitesRestClient.DetachStaticSiteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StaticSiteDetachStaticSiteOperation(_clientDiagnostics, Pipeline, _staticSitesRestClient.CreateDetachStaticSiteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _staticSitesRestClient.DetachStaticSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new StaticSiteDetachStaticSiteOperation(_clientDiagnostics, Pipeline, _staticSitesRestClient.CreateDetachStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -693,8 +693,8 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _staticSitesRestClient.DetachStaticSite(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new StaticSiteDetachStaticSiteOperation(_clientDiagnostics, Pipeline, _staticSitesRestClient.CreateDetachStaticSiteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _staticSitesRestClient.DetachStaticSite(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new StaticSiteDetachStaticSiteOperation(_clientDiagnostics, Pipeline, _staticSitesRestClient.CreateDetachStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -720,7 +720,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await _staticSitesRestClient.ListStaticSiteFunctionsAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _staticSitesRestClient.ListStaticSiteFunctionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -735,7 +735,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await _staticSitesRestClient.ListStaticSiteFunctionsNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _staticSitesRestClient.ListStaticSiteFunctionsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -761,7 +761,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = _staticSitesRestClient.ListStaticSiteFunctions(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _staticSitesRestClient.ListStaticSiteFunctions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -776,7 +776,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = _staticSitesRestClient.ListStaticSiteFunctionsNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _staticSitesRestClient.ListStaticSiteFunctionsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -799,7 +799,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _staticSitesRestClient.ListStaticSiteAppSettingsAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _staticSitesRestClient.ListStaticSiteAppSettingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -820,7 +820,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _staticSitesRestClient.ListStaticSiteAppSettings(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _staticSitesRestClient.ListStaticSiteAppSettings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -841,7 +841,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _staticSitesRestClient.ListStaticSiteConfiguredRolesAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _staticSitesRestClient.ListStaticSiteConfiguredRolesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -862,7 +862,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _staticSitesRestClient.ListStaticSiteConfiguredRoles(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _staticSitesRestClient.ListStaticSiteConfiguredRoles(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -883,7 +883,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _staticSitesRestClient.ListStaticSiteFunctionAppSettingsAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _staticSitesRestClient.ListStaticSiteFunctionAppSettingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -904,7 +904,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _staticSitesRestClient.ListStaticSiteFunctionAppSettings(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _staticSitesRestClient.ListStaticSiteFunctionAppSettings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -925,7 +925,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _staticSitesRestClient.ListStaticSiteSecretsAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _staticSitesRestClient.ListStaticSiteSecretsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -946,7 +946,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _staticSitesRestClient.ListStaticSiteSecrets(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _staticSitesRestClient.ListStaticSiteSecrets(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -967,7 +967,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _staticSitesRestClient.GetPrivateLinkResourcesAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _staticSitesRestClient.GetPrivateLinkResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value.Value, response.GetRawResponse());
             }
             catch (Exception e)
@@ -988,7 +988,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _staticSitesRestClient.GetPrivateLinkResources(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _staticSitesRestClient.GetPrivateLinkResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(response.Value.Value, response.GetRawResponse());
             }
             catch (Exception e)
@@ -1016,7 +1016,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _staticSitesRestClient.ResetStaticSiteApiKeyAsync(Id.ResourceGroupName, Id.Name, resetPropertiesEnvelope, cancellationToken).ConfigureAwait(false);
+                var response = await _staticSitesRestClient.ResetStaticSiteApiKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resetPropertiesEnvelope, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1044,7 +1044,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _staticSitesRestClient.ResetStaticSiteApiKey(Id.ResourceGroupName, Id.Name, resetPropertiesEnvelope, cancellationToken);
+                var response = _staticSitesRestClient.ResetStaticSiteApiKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resetPropertiesEnvelope, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1073,8 +1073,8 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _staticSitesRestClient.CreateZipDeploymentForStaticSiteAsync(Id.ResourceGroupName, Id.Name, staticSiteZipDeploymentEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new StaticSiteCreateZipDeploymentForStaticSiteOperation(_clientDiagnostics, Pipeline, _staticSitesRestClient.CreateCreateZipDeploymentForStaticSiteRequest(Id.ResourceGroupName, Id.Name, staticSiteZipDeploymentEnvelope).Request, response);
+                var response = await _staticSitesRestClient.CreateZipDeploymentForStaticSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, staticSiteZipDeploymentEnvelope, cancellationToken).ConfigureAwait(false);
+                var operation = new StaticSiteCreateZipDeploymentForStaticSiteOperation(_clientDiagnostics, Pipeline, _staticSitesRestClient.CreateCreateZipDeploymentForStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, staticSiteZipDeploymentEnvelope).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1105,8 +1105,8 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _staticSitesRestClient.CreateZipDeploymentForStaticSite(Id.ResourceGroupName, Id.Name, staticSiteZipDeploymentEnvelope, cancellationToken);
-                var operation = new StaticSiteCreateZipDeploymentForStaticSiteOperation(_clientDiagnostics, Pipeline, _staticSitesRestClient.CreateCreateZipDeploymentForStaticSiteRequest(Id.ResourceGroupName, Id.Name, staticSiteZipDeploymentEnvelope).Request, response);
+                var response = _staticSitesRestClient.CreateZipDeploymentForStaticSite(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, staticSiteZipDeploymentEnvelope, cancellationToken);
+                var operation = new StaticSiteCreateZipDeploymentForStaticSiteOperation(_clientDiagnostics, Pipeline, _staticSitesRestClient.CreateCreateZipDeploymentForStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, staticSiteZipDeploymentEnvelope).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

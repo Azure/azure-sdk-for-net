@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService
         internal HostingEnvironmentRecommendationCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _recommendationsRestClient = new RecommendationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _recommendationsRestClient = new RecommendationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _recommendationsRestClient.GetRuleDetailsByHostingEnvironment(Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken);
+                var response = _recommendationsRestClient.GetRuleDetailsByHostingEnvironment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HostingEnvironmentRecommendation(Parent, response.Value), response.GetRawResponse());
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _recommendationsRestClient.GetRuleDetailsByHostingEnvironmentAsync(Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken).ConfigureAwait(false);
+                var response = await _recommendationsRestClient.GetRuleDetailsByHostingEnvironmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new HostingEnvironmentRecommendation(Parent, response.Value), response.GetRawResponse());
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _recommendationsRestClient.GetRuleDetailsByHostingEnvironment(Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken: cancellationToken);
+                var response = _recommendationsRestClient.GetRuleDetailsByHostingEnvironment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<HostingEnvironmentRecommendation>(null, response.GetRawResponse())
                     : Response.FromValue(new HostingEnvironmentRecommendation(this, response.Value), response.GetRawResponse());
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _recommendationsRestClient.GetRuleDetailsByHostingEnvironmentAsync(Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _recommendationsRestClient.GetRuleDetailsByHostingEnvironmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<HostingEnvironmentRecommendation>(null, response.GetRawResponse())
                     : Response.FromValue(new HostingEnvironmentRecommendation(this, response.Value), response.GetRawResponse());

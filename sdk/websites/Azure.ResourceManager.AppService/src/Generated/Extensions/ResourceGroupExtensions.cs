@@ -100,14 +100,14 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        private static ResourceHealthMetadataRestOperations GetResourceHealthMetadataRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        private static ResourceHealthMetadataRestOperations GetResourceHealthMetadataRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
         {
-            return new ResourceHealthMetadataRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+            return new ResourceHealthMetadataRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
 
-        private static WebSiteManagementRestOperations GetWebSiteManagementRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        private static WebSiteManagementRestOperations GetWebSiteManagementRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
         {
-            return new WebSiteManagementRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+            return new WebSiteManagementRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/resourceHealthMetadata
@@ -122,14 +122,14 @@ namespace Azure.ResourceManager.AppService
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetResourceHealthMetadataRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
+                var restOperations = GetResourceHealthMetadataRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 async Task<Page<ResourceHealthMetadataData>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetResourceHealthMetadatas");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListByResourceGroupAsync(resourceGroup.Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListByResourceGroupAsync(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListByResourceGroupNextPageAsync(nextLink, resourceGroup.Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListByResourceGroupNextPageAsync(nextLink, resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -170,14 +170,14 @@ namespace Azure.ResourceManager.AppService
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetResourceHealthMetadataRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
+                var restOperations = GetResourceHealthMetadataRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 Page<ResourceHealthMetadataData> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetResourceHealthMetadatas");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListByResourceGroup(resourceGroup.Id.ResourceGroupName, cancellationToken: cancellationToken);
+                        var response = restOperations.ListByResourceGroup(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.AppService
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListByResourceGroupNextPage(nextLink, resourceGroup.Id.ResourceGroupName, cancellationToken: cancellationToken);
+                        var response = restOperations.ListByResourceGroupNextPage(nextLink, resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -228,8 +228,8 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
-                    var response = await restOperations.MoveAsync(resourceGroup.Id.ResourceGroupName, moveResourceEnvelope, cancellationToken).ConfigureAwait(false);
+                    var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    var response = await restOperations.MoveAsync(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, moveResourceEnvelope, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
                 catch (Exception e)
@@ -263,8 +263,8 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
-                    var response = restOperations.Move(resourceGroup.Id.ResourceGroupName, moveResourceEnvelope, cancellationToken);
+                    var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    var response = restOperations.Move(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, moveResourceEnvelope, cancellationToken);
                     return response;
                 }
                 catch (Exception e)
@@ -298,8 +298,8 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
-                    var response = await restOperations.ValidateAsync(resourceGroup.Id.ResourceGroupName, validateRequest, cancellationToken).ConfigureAwait(false);
+                    var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    var response = await restOperations.ValidateAsync(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, validateRequest, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
                 catch (Exception e)
@@ -333,8 +333,8 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
-                    var response = restOperations.Validate(resourceGroup.Id.ResourceGroupName, validateRequest, cancellationToken);
+                    var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    var response = restOperations.Validate(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, validateRequest, cancellationToken);
                     return response;
                 }
                 catch (Exception e)
@@ -368,8 +368,8 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
-                    var response = await restOperations.ValidateMoveAsync(resourceGroup.Id.ResourceGroupName, moveResourceEnvelope, cancellationToken).ConfigureAwait(false);
+                    var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    var response = await restOperations.ValidateMoveAsync(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, moveResourceEnvelope, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
                 catch (Exception e)
@@ -403,8 +403,8 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
-                    var response = restOperations.ValidateMove(resourceGroup.Id.ResourceGroupName, moveResourceEnvelope, cancellationToken);
+                    var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    var response = restOperations.ValidateMove(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, moveResourceEnvelope, cancellationToken);
                     return response;
                 }
                 catch (Exception e)

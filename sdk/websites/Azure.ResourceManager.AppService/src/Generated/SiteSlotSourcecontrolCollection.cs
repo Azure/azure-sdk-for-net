@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotSourcecontrolCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.CreateOrUpdateSourceControlSlot(Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteSourceControl, cancellationToken);
-                var operation = new WebAppCreateOrUpdateSourceControlSlotOperation(Parent, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateCreateOrUpdateSourceControlSlotRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteSourceControl).Request, response);
+                var response = _webAppsRestClient.CreateOrUpdateSourceControlSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteSourceControl, cancellationToken);
+                var operation = new WebAppCreateOrUpdateSourceControlSlotOperation(Parent, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateCreateOrUpdateSourceControlSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteSourceControl).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.CreateOrUpdateSourceControlSlotAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteSourceControl, cancellationToken).ConfigureAwait(false);
-                var operation = new WebAppCreateOrUpdateSourceControlSlotOperation(Parent, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateCreateOrUpdateSourceControlSlotRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteSourceControl).Request, response);
+                var response = await _webAppsRestClient.CreateOrUpdateSourceControlSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteSourceControl, cancellationToken).ConfigureAwait(false);
+                var operation = new WebAppCreateOrUpdateSourceControlSlotOperation(Parent, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateCreateOrUpdateSourceControlSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteSourceControl).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetSourceControlSlot(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _webAppsRestClient.GetSourceControlSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteSlotSourcecontrol(Parent, response.Value), response.GetRawResponse());
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetSourceControlSlotAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webAppsRestClient.GetSourceControlSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new SiteSlotSourcecontrol(Parent, response.Value), response.GetRawResponse());
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetSourceControlSlot(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                var response = _webAppsRestClient.GetSourceControlSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<SiteSlotSourcecontrol>(null, response.GetRawResponse())
                     : Response.FromValue(new SiteSlotSourcecontrol(this, response.Value), response.GetRawResponse());
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetSourceControlSlotAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _webAppsRestClient.GetSourceControlSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<SiteSlotSourcecontrol>(null, response.GetRawResponse())
                     : Response.FromValue(new SiteSlotSourcecontrol(this, response.Value), response.GetRawResponse());

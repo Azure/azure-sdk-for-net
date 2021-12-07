@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         internal StaticSiteCustomDomainOverviewARMResourceCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _staticSitesRestClient = new StaticSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _staticSitesRestClient = new StaticSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _staticSitesRestClient.CreateOrUpdateStaticSiteCustomDomain(Id.ResourceGroupName, Id.Name, domainName, staticSiteCustomDomainRequestPropertiesEnvelope, cancellationToken);
-                var operation = new StaticSiteCreateOrUpdateStaticSiteCustomDomainOperation(Parent, _clientDiagnostics, Pipeline, _staticSitesRestClient.CreateCreateOrUpdateStaticSiteCustomDomainRequest(Id.ResourceGroupName, Id.Name, domainName, staticSiteCustomDomainRequestPropertiesEnvelope).Request, response);
+                var response = _staticSitesRestClient.CreateOrUpdateStaticSiteCustomDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, staticSiteCustomDomainRequestPropertiesEnvelope, cancellationToken);
+                var operation = new StaticSiteCreateOrUpdateStaticSiteCustomDomainOperation(Parent, _clientDiagnostics, Pipeline, _staticSitesRestClient.CreateCreateOrUpdateStaticSiteCustomDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, staticSiteCustomDomainRequestPropertiesEnvelope).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _staticSitesRestClient.CreateOrUpdateStaticSiteCustomDomainAsync(Id.ResourceGroupName, Id.Name, domainName, staticSiteCustomDomainRequestPropertiesEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new StaticSiteCreateOrUpdateStaticSiteCustomDomainOperation(Parent, _clientDiagnostics, Pipeline, _staticSitesRestClient.CreateCreateOrUpdateStaticSiteCustomDomainRequest(Id.ResourceGroupName, Id.Name, domainName, staticSiteCustomDomainRequestPropertiesEnvelope).Request, response);
+                var response = await _staticSitesRestClient.CreateOrUpdateStaticSiteCustomDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, staticSiteCustomDomainRequestPropertiesEnvelope, cancellationToken).ConfigureAwait(false);
+                var operation = new StaticSiteCreateOrUpdateStaticSiteCustomDomainOperation(Parent, _clientDiagnostics, Pipeline, _staticSitesRestClient.CreateCreateOrUpdateStaticSiteCustomDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, staticSiteCustomDomainRequestPropertiesEnvelope).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _staticSitesRestClient.GetStaticSiteCustomDomain(Id.ResourceGroupName, Id.Name, domainName, cancellationToken);
+                var response = _staticSitesRestClient.GetStaticSiteCustomDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new StaticSiteCustomDomainOverviewARMResource(Parent, response.Value), response.GetRawResponse());
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _staticSitesRestClient.GetStaticSiteCustomDomainAsync(Id.ResourceGroupName, Id.Name, domainName, cancellationToken).ConfigureAwait(false);
+                var response = await _staticSitesRestClient.GetStaticSiteCustomDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new StaticSiteCustomDomainOverviewARMResource(Parent, response.Value), response.GetRawResponse());
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _staticSitesRestClient.GetStaticSiteCustomDomain(Id.ResourceGroupName, Id.Name, domainName, cancellationToken: cancellationToken);
+                var response = _staticSitesRestClient.GetStaticSiteCustomDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<StaticSiteCustomDomainOverviewARMResource>(null, response.GetRawResponse())
                     : Response.FromValue(new StaticSiteCustomDomainOverviewARMResource(this, response.Value), response.GetRawResponse());
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _staticSitesRestClient.GetStaticSiteCustomDomainAsync(Id.ResourceGroupName, Id.Name, domainName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _staticSitesRestClient.GetStaticSiteCustomDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<StaticSiteCustomDomainOverviewARMResource>(null, response.GetRawResponse())
                     : Response.FromValue(new StaticSiteCustomDomainOverviewARMResource(this, response.Value), response.GetRawResponse());
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = _staticSitesRestClient.ListStaticSiteCustomDomains(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _staticSitesRestClient.ListStaticSiteCustomDomains(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new StaticSiteCustomDomainOverviewARMResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = _staticSitesRestClient.ListStaticSiteCustomDomainsNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _staticSitesRestClient.ListStaticSiteCustomDomainsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new StaticSiteCustomDomainOverviewARMResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await _staticSitesRestClient.ListStaticSiteCustomDomainsAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _staticSitesRestClient.ListStaticSiteCustomDomainsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new StaticSiteCustomDomainOverviewARMResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await _staticSitesRestClient.ListStaticSiteCustomDomainsNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _staticSitesRestClient.ListStaticSiteCustomDomainsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new StaticSiteCustomDomainOverviewARMResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

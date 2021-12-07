@@ -20,7 +20,6 @@ namespace Azure.ResourceManager.AppService
 {
     internal partial class GlobalRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
@@ -31,13 +30,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public GlobalRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-02-01")
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public GlobalRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null, string apiVersion = "2021-02-01")
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
@@ -45,7 +42,7 @@ namespace Azure.ResourceManager.AppService
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetDeletedWebAppRequest(string deletedSiteId)
+        internal HttpMessage CreateGetDeletedWebAppRequest(string subscriptionId, string deletedSiteId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -64,17 +61,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get deleted app for a subscription. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
-        public async Task<Response<DeletedSiteData>> GetDeletedWebAppAsync(string deletedSiteId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="deletedSiteId"/> is null. </exception>
+        public async Task<Response<DeletedSiteData>> GetDeletedWebAppAsync(string subscriptionId, string deletedSiteId, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (deletedSiteId == null)
             {
                 throw new ArgumentNullException(nameof(deletedSiteId));
             }
 
-            using var message = CreateGetDeletedWebAppRequest(deletedSiteId);
+            using var message = CreateGetDeletedWebAppRequest(subscriptionId, deletedSiteId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -93,17 +95,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get deleted app for a subscription. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
-        public Response<DeletedSiteData> GetDeletedWebApp(string deletedSiteId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="deletedSiteId"/> is null. </exception>
+        public Response<DeletedSiteData> GetDeletedWebApp(string subscriptionId, string deletedSiteId, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (deletedSiteId == null)
             {
                 throw new ArgumentNullException(nameof(deletedSiteId));
             }
 
-            using var message = CreateGetDeletedWebAppRequest(deletedSiteId);
+            using var message = CreateGetDeletedWebAppRequest(subscriptionId, deletedSiteId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -121,7 +128,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateGetDeletedWebAppSnapshotsRequest(string deletedSiteId)
+        internal HttpMessage CreateGetDeletedWebAppSnapshotsRequest(string subscriptionId, string deletedSiteId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -141,17 +148,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get all deleted apps for a subscription. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
-        public async Task<Response<IReadOnlyList<Snapshot>>> GetDeletedWebAppSnapshotsAsync(string deletedSiteId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="deletedSiteId"/> is null. </exception>
+        public async Task<Response<IReadOnlyList<Snapshot>>> GetDeletedWebAppSnapshotsAsync(string subscriptionId, string deletedSiteId, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (deletedSiteId == null)
             {
                 throw new ArgumentNullException(nameof(deletedSiteId));
             }
 
-            using var message = CreateGetDeletedWebAppSnapshotsRequest(deletedSiteId);
+            using var message = CreateGetDeletedWebAppSnapshotsRequest(subscriptionId, deletedSiteId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -173,17 +185,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get all deleted apps for a subscription. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
-        public Response<IReadOnlyList<Snapshot>> GetDeletedWebAppSnapshots(string deletedSiteId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="deletedSiteId"/> is null. </exception>
+        public Response<IReadOnlyList<Snapshot>> GetDeletedWebAppSnapshots(string subscriptionId, string deletedSiteId, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (deletedSiteId == null)
             {
                 throw new ArgumentNullException(nameof(deletedSiteId));
             }
 
-            using var message = CreateGetDeletedWebAppSnapshotsRequest(deletedSiteId);
+            using var message = CreateGetDeletedWebAppSnapshotsRequest(subscriptionId, deletedSiteId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -204,7 +221,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateGetSubscriptionOperationWithAsyncResponseRequest(string location, string operationId)
+        internal HttpMessage CreateGetSubscriptionOperationWithAsyncResponseRequest(string subscriptionId, string location, string operationId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -225,12 +242,17 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Gets an operation in a subscription and given region. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="location"> Location name. </param>
         /// <param name="operationId"> Operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="operationId"/> is null. </exception>
-        public async Task<Response> GetSubscriptionOperationWithAsyncResponseAsync(string location, string operationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, or <paramref name="operationId"/> is null. </exception>
+        public async Task<Response> GetSubscriptionOperationWithAsyncResponseAsync(string subscriptionId, string location, string operationId, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
@@ -240,7 +262,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(operationId));
             }
 
-            using var message = CreateGetSubscriptionOperationWithAsyncResponseRequest(location, operationId);
+            using var message = CreateGetSubscriptionOperationWithAsyncResponseRequest(subscriptionId, location, operationId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -252,12 +274,17 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Gets an operation in a subscription and given region. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="location"> Location name. </param>
         /// <param name="operationId"> Operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="operationId"/> is null. </exception>
-        public Response GetSubscriptionOperationWithAsyncResponse(string location, string operationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, or <paramref name="operationId"/> is null. </exception>
+        public Response GetSubscriptionOperationWithAsyncResponse(string subscriptionId, string location, string operationId, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
@@ -267,7 +294,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(operationId));
             }
 
-            using var message = CreateGetSubscriptionOperationWithAsyncResponseRequest(location, operationId);
+            using var message = CreateGetSubscriptionOperationWithAsyncResponseRequest(subscriptionId, location, operationId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

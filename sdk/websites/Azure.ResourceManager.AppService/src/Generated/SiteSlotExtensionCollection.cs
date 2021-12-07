@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotExtensionCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.CreateMSDeployOperationSlot(Id.ResourceGroupName, Id.Parent.Name, Id.Name, msDeploy, cancellationToken);
-                var operation = new WebAppCreateMSDeployOperationSlotOperation(Parent, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateCreateMSDeployOperationSlotRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, msDeploy).Request, response);
+                var response = _webAppsRestClient.CreateMSDeployOperationSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, msDeploy, cancellationToken);
+                var operation = new WebAppCreateMSDeployOperationSlotOperation(Parent, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateCreateMSDeployOperationSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, msDeploy).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.CreateMSDeployOperationSlotAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, msDeploy, cancellationToken).ConfigureAwait(false);
-                var operation = new WebAppCreateMSDeployOperationSlotOperation(Parent, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateCreateMSDeployOperationSlotRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, msDeploy).Request, response);
+                var response = await _webAppsRestClient.CreateMSDeployOperationSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, msDeploy, cancellationToken).ConfigureAwait(false);
+                var operation = new WebAppCreateMSDeployOperationSlotOperation(Parent, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateCreateMSDeployOperationSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, msDeploy).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetMSDeployStatusSlot(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _webAppsRestClient.GetMSDeployStatusSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteSlotExtension(Parent, response.Value), response.GetRawResponse());
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetMSDeployStatusSlotAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webAppsRestClient.GetMSDeployStatusSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new SiteSlotExtension(Parent, response.Value), response.GetRawResponse());
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetMSDeployStatusSlot(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                var response = _webAppsRestClient.GetMSDeployStatusSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<SiteSlotExtension>(null, response.GetRawResponse())
                     : Response.FromValue(new SiteSlotExtension(this, response.Value), response.GetRawResponse());
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetMSDeployStatusSlotAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _webAppsRestClient.GetMSDeployStatusSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<SiteSlotExtension>(null, response.GetRawResponse())
                     : Response.FromValue(new SiteSlotExtension(this, response.Value), response.GetRawResponse());

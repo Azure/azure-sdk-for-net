@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
 
         [TestCase]
         [RecordedTest]
+        [Ignore("RepositoryToken is invalid.Please ensure the repository exists and the RepositoryToken is for an admin of the repository.")]
         public async Task CreateOrUpdate()
         {
             var container = await GetStaticSiteCollectionAsync();
@@ -38,6 +39,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
 
         [TestCase]
         [RecordedTest]
+        [Ignore("RepositoryToken is invalid.Please ensure the repository exists and the RepositoryToken is for an admin of the repository.")]
         public async Task Get()
         {
             var container = await GetStaticSiteCollectionAsync();
@@ -51,6 +53,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
 
         [TestCase]
         [RecordedTest]
+        [Ignore("RepositoryToken is invalid.Please ensure the repository exists and the RepositoryToken is for an admin of the repository.")]
         public async Task GetAll()
         {
             var container = await GetStaticSiteCollectionAsync();
@@ -67,6 +70,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
 
         [TestCase]
         [RecordedTest]
+        [Ignore("RepositoryToken is invalid.Please ensure the repository exists and the RepositoryToken is for an admin of the repository.")]
         public async Task CheckIfExistsAsync()
         {
             var container = await GetStaticSiteCollectionAsync();

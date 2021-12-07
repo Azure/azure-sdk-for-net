@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteExtensionCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.CreateMSDeployOperation(Id.ResourceGroupName, Id.Name, msDeploy, cancellationToken);
-                var operation = new WebAppCreateMSDeployOperationOperation(Parent, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateCreateMSDeployOperationRequest(Id.ResourceGroupName, Id.Name, msDeploy).Request, response);
+                var response = _webAppsRestClient.CreateMSDeployOperation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msDeploy, cancellationToken);
+                var operation = new WebAppCreateMSDeployOperationOperation(Parent, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateCreateMSDeployOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msDeploy).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.CreateMSDeployOperationAsync(Id.ResourceGroupName, Id.Name, msDeploy, cancellationToken).ConfigureAwait(false);
-                var operation = new WebAppCreateMSDeployOperationOperation(Parent, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateCreateMSDeployOperationRequest(Id.ResourceGroupName, Id.Name, msDeploy).Request, response);
+                var response = await _webAppsRestClient.CreateMSDeployOperationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msDeploy, cancellationToken).ConfigureAwait(false);
+                var operation = new WebAppCreateMSDeployOperationOperation(Parent, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateCreateMSDeployOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msDeploy).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetMSDeployStatus(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webAppsRestClient.GetMSDeployStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteExtension(Parent, response.Value), response.GetRawResponse());
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetMSDeployStatusAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webAppsRestClient.GetMSDeployStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new SiteExtension(Parent, response.Value), response.GetRawResponse());
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetMSDeployStatus(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                var response = _webAppsRestClient.GetMSDeployStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<SiteExtension>(null, response.GetRawResponse())
                     : Response.FromValue(new SiteExtension(this, response.Value), response.GetRawResponse());
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetMSDeployStatusAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _webAppsRestClient.GetMSDeployStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<SiteExtension>(null, response.GetRawResponse())
                     : Response.FromValue(new SiteExtension(this, response.Value), response.GetRawResponse());

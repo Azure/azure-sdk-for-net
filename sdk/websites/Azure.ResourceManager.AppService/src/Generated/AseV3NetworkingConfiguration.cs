@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
             _data = resource;
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _appServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _appServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="AseV3NetworkingConfiguration"/> class. </summary>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         {
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _appServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _appServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="AseV3NetworkingConfiguration"/> class. </summary>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService
         internal AseV3NetworkingConfiguration(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _appServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _appServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _appServiceEnvironmentsRestClient.GetAseV3NetworkingConfigurationAsync(Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceEnvironmentsRestClient.GetAseV3NetworkingConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new AseV3NetworkingConfiguration(this, response.Value), response.GetRawResponse());
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _appServiceEnvironmentsRestClient.GetAseV3NetworkingConfiguration(Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                var response = _appServiceEnvironmentsRestClient.GetAseV3NetworkingConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AseV3NetworkingConfiguration(this, response.Value), response.GetRawResponse());
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _appServiceEnvironmentsRestClient.UpdateAseNetworkingConfigurationAsync(Id.ResourceGroupName, Id.Parent.Name, aseNetworkingConfiguration, cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceEnvironmentsRestClient.UpdateAseNetworkingConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, aseNetworkingConfiguration, cancellationToken).ConfigureAwait(false);
                 var operation = new AppServiceEnvironmentUpdateAseNetworkingConfigurationOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _appServiceEnvironmentsRestClient.UpdateAseNetworkingConfiguration(Id.ResourceGroupName, Id.Parent.Name, aseNetworkingConfiguration, cancellationToken);
+                var response = _appServiceEnvironmentsRestClient.UpdateAseNetworkingConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, aseNetworkingConfiguration, cancellationToken);
                 var operation = new AppServiceEnvironmentUpdateAseNetworkingConfigurationOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);

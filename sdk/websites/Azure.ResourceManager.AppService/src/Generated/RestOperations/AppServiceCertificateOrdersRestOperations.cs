@@ -20,7 +20,6 @@ namespace Azure.ResourceManager.AppService
 {
     internal partial class AppServiceCertificateOrdersRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
@@ -31,13 +30,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public AppServiceCertificateOrdersRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-02-01")
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public AppServiceCertificateOrdersRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null, string apiVersion = "2021-02-01")
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
@@ -45,7 +42,7 @@ namespace Azure.ResourceManager.AppService
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateListRequest()
+        internal HttpMessage CreateListRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -63,10 +60,17 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for List all certificate orders in a subscription. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<Models.AppServiceCertificateOrderCollection>> ListAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public async Task<Response<Models.AppServiceCertificateOrderCollection>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest();
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateListRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -83,10 +87,17 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for List all certificate orders in a subscription. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Models.AppServiceCertificateOrderCollection> List(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public Response<Models.AppServiceCertificateOrderCollection> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest();
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateListRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -102,7 +113,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateValidatePurchaseInformationRequest(AppServiceCertificateOrderData appServiceCertificateOrder)
+        internal HttpMessage CreateValidatePurchaseInformationRequest(string subscriptionId, AppServiceCertificateOrderData appServiceCertificateOrder)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -124,17 +135,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Validate information for a certificate order. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="appServiceCertificateOrder"> Information for a certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="appServiceCertificateOrder"/> is null. </exception>
-        public async Task<Response> ValidatePurchaseInformationAsync(AppServiceCertificateOrderData appServiceCertificateOrder, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="appServiceCertificateOrder"/> is null. </exception>
+        public async Task<Response> ValidatePurchaseInformationAsync(string subscriptionId, AppServiceCertificateOrderData appServiceCertificateOrder, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (appServiceCertificateOrder == null)
             {
                 throw new ArgumentNullException(nameof(appServiceCertificateOrder));
             }
 
-            using var message = CreateValidatePurchaseInformationRequest(appServiceCertificateOrder);
+            using var message = CreateValidatePurchaseInformationRequest(subscriptionId, appServiceCertificateOrder);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -146,17 +162,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Validate information for a certificate order. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="appServiceCertificateOrder"> Information for a certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="appServiceCertificateOrder"/> is null. </exception>
-        public Response ValidatePurchaseInformation(AppServiceCertificateOrderData appServiceCertificateOrder, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="appServiceCertificateOrder"/> is null. </exception>
+        public Response ValidatePurchaseInformation(string subscriptionId, AppServiceCertificateOrderData appServiceCertificateOrder, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (appServiceCertificateOrder == null)
             {
                 throw new ArgumentNullException(nameof(appServiceCertificateOrder));
             }
 
-            using var message = CreateValidatePurchaseInformationRequest(appServiceCertificateOrder);
+            using var message = CreateValidatePurchaseInformationRequest(subscriptionId, appServiceCertificateOrder);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -167,7 +188,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateListByResourceGroupRequest(string resourceGroupName)
+        internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -187,17 +208,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get certificate orders in a resource group. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<Models.AppServiceCertificateOrderCollection>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        public async Task<Response<Models.AppServiceCertificateOrderCollection>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListByResourceGroupRequest(resourceGroupName);
+            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -214,17 +240,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get certificate orders in a resource group. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<Models.AppServiceCertificateOrderCollection> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        public Response<Models.AppServiceCertificateOrderCollection> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListByResourceGroupRequest(resourceGroupName);
+            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -240,7 +271,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string certificateOrderName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string certificateOrderName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -261,12 +292,17 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get a certificate order. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order.. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="certificateOrderName"/> is null. </exception>
-        public async Task<Response<AppServiceCertificateOrderData>> GetAsync(string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="certificateOrderName"/> is null. </exception>
+        public async Task<Response<AppServiceCertificateOrderData>> GetAsync(string subscriptionId, string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -276,7 +312,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(certificateOrderName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, certificateOrderName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, certificateOrderName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -295,12 +331,17 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get a certificate order. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order.. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="certificateOrderName"/> is null. </exception>
-        public Response<AppServiceCertificateOrderData> Get(string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="certificateOrderName"/> is null. </exception>
+        public Response<AppServiceCertificateOrderData> Get(string subscriptionId, string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -310,7 +351,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(certificateOrderName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, certificateOrderName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, certificateOrderName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -328,7 +369,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string certificateOrderName, AppServiceCertificateOrderData certificateDistinguishedName)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, AppServiceCertificateOrderData certificateDistinguishedName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -353,13 +394,18 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Create or update a certificate purchase order. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
         /// <param name="certificateDistinguishedName"> Distinguished name to use for the certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="certificateDistinguishedName"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string certificateOrderName, AppServiceCertificateOrderData certificateDistinguishedName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="certificateDistinguishedName"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string certificateOrderName, AppServiceCertificateOrderData certificateDistinguishedName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -373,7 +419,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(certificateDistinguishedName));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, certificateOrderName, certificateDistinguishedName);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, certificateOrderName, certificateDistinguishedName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -386,13 +432,18 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Create or update a certificate purchase order. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
         /// <param name="certificateDistinguishedName"> Distinguished name to use for the certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="certificateDistinguishedName"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string certificateOrderName, AppServiceCertificateOrderData certificateDistinguishedName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="certificateDistinguishedName"/> is null. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string certificateOrderName, AppServiceCertificateOrderData certificateDistinguishedName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -406,7 +457,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(certificateDistinguishedName));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, certificateOrderName, certificateDistinguishedName);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, certificateOrderName, certificateDistinguishedName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -418,7 +469,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string certificateOrderName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string certificateOrderName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -439,12 +490,17 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Delete an existing certificate order. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="certificateOrderName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="certificateOrderName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -454,7 +510,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(certificateOrderName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, certificateOrderName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, certificateOrderName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -467,12 +523,17 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Delete an existing certificate order. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="certificateOrderName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="certificateOrderName"/> is null. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -482,7 +543,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(certificateOrderName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, certificateOrderName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, certificateOrderName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -494,7 +555,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string certificateOrderName, AppServiceCertificateOrderPatch certificateDistinguishedName)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, AppServiceCertificateOrderPatch certificateDistinguishedName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -519,13 +580,18 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Create or update a certificate purchase order. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
         /// <param name="certificateDistinguishedName"> Distinguished name to use for the certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="certificateDistinguishedName"/> is null. </exception>
-        public async Task<Response<AppServiceCertificateOrderData>> UpdateAsync(string resourceGroupName, string certificateOrderName, AppServiceCertificateOrderPatch certificateDistinguishedName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="certificateDistinguishedName"/> is null. </exception>
+        public async Task<Response<AppServiceCertificateOrderData>> UpdateAsync(string subscriptionId, string resourceGroupName, string certificateOrderName, AppServiceCertificateOrderPatch certificateDistinguishedName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -539,7 +605,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(certificateDistinguishedName));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, certificateOrderName, certificateDistinguishedName);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, certificateOrderName, certificateDistinguishedName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -556,13 +622,18 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Create or update a certificate purchase order. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
         /// <param name="certificateDistinguishedName"> Distinguished name to use for the certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="certificateDistinguishedName"/> is null. </exception>
-        public Response<AppServiceCertificateOrderData> Update(string resourceGroupName, string certificateOrderName, AppServiceCertificateOrderPatch certificateDistinguishedName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="certificateDistinguishedName"/> is null. </exception>
+        public Response<AppServiceCertificateOrderData> Update(string subscriptionId, string resourceGroupName, string certificateOrderName, AppServiceCertificateOrderPatch certificateDistinguishedName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -576,7 +647,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(certificateDistinguishedName));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, certificateOrderName, certificateDistinguishedName);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, certificateOrderName, certificateDistinguishedName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -592,7 +663,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateListCertificatesRequest(string resourceGroupName, string certificateOrderName)
+        internal HttpMessage CreateListCertificatesRequest(string subscriptionId, string resourceGroupName, string certificateOrderName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -614,12 +685,17 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for List all certificates associated with a certificate order. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="certificateOrderName"/> is null. </exception>
-        public async Task<Response<AppServiceCertificateCollection>> ListCertificatesAsync(string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="certificateOrderName"/> is null. </exception>
+        public async Task<Response<AppServiceCertificateCollection>> ListCertificatesAsync(string subscriptionId, string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -629,7 +705,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(certificateOrderName));
             }
 
-            using var message = CreateListCertificatesRequest(resourceGroupName, certificateOrderName);
+            using var message = CreateListCertificatesRequest(subscriptionId, resourceGroupName, certificateOrderName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -646,12 +722,17 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for List all certificates associated with a certificate order. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="certificateOrderName"/> is null. </exception>
-        public Response<AppServiceCertificateCollection> ListCertificates(string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="certificateOrderName"/> is null. </exception>
+        public Response<AppServiceCertificateCollection> ListCertificates(string subscriptionId, string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -661,7 +742,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(certificateOrderName));
             }
 
-            using var message = CreateListCertificatesRequest(resourceGroupName, certificateOrderName);
+            using var message = CreateListCertificatesRequest(subscriptionId, resourceGroupName, certificateOrderName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -677,7 +758,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateGetCertificateRequest(string resourceGroupName, string certificateOrderName, string name)
+        internal HttpMessage CreateGetCertificateRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, string name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -700,13 +781,18 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get the certificate associated with a certificate order. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
         /// <param name="name"> Name of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="name"/> is null. </exception>
-        public async Task<Response<AppServiceCertificateResourceData>> GetCertificateAsync(string resourceGroupName, string certificateOrderName, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="name"/> is null. </exception>
+        public async Task<Response<AppServiceCertificateResourceData>> GetCertificateAsync(string subscriptionId, string resourceGroupName, string certificateOrderName, string name, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -720,7 +806,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var message = CreateGetCertificateRequest(resourceGroupName, certificateOrderName, name);
+            using var message = CreateGetCertificateRequest(subscriptionId, resourceGroupName, certificateOrderName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -739,13 +825,18 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get the certificate associated with a certificate order. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
         /// <param name="name"> Name of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="name"/> is null. </exception>
-        public Response<AppServiceCertificateResourceData> GetCertificate(string resourceGroupName, string certificateOrderName, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="name"/> is null. </exception>
+        public Response<AppServiceCertificateResourceData> GetCertificate(string subscriptionId, string resourceGroupName, string certificateOrderName, string name, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -759,7 +850,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var message = CreateGetCertificateRequest(resourceGroupName, certificateOrderName, name);
+            using var message = CreateGetCertificateRequest(subscriptionId, resourceGroupName, certificateOrderName, name);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -777,7 +868,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateCertificateRequest(string resourceGroupName, string certificateOrderName, string name, AppServiceCertificateResourceData keyVaultCertificate)
+        internal HttpMessage CreateCreateOrUpdateCertificateRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, string name, AppServiceCertificateResourceData keyVaultCertificate)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -804,14 +895,19 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Creates or updates a certificate and associates with key vault secret. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
         /// <param name="name"> Name of the certificate. </param>
         /// <param name="keyVaultCertificate"> Key vault certificate resource Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, <paramref name="name"/>, or <paramref name="keyVaultCertificate"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateCertificateAsync(string resourceGroupName, string certificateOrderName, string name, AppServiceCertificateResourceData keyVaultCertificate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, <paramref name="name"/>, or <paramref name="keyVaultCertificate"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateCertificateAsync(string subscriptionId, string resourceGroupName, string certificateOrderName, string name, AppServiceCertificateResourceData keyVaultCertificate, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -829,7 +925,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(keyVaultCertificate));
             }
 
-            using var message = CreateCreateOrUpdateCertificateRequest(resourceGroupName, certificateOrderName, name, keyVaultCertificate);
+            using var message = CreateCreateOrUpdateCertificateRequest(subscriptionId, resourceGroupName, certificateOrderName, name, keyVaultCertificate);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -842,14 +938,19 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Creates or updates a certificate and associates with key vault secret. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
         /// <param name="name"> Name of the certificate. </param>
         /// <param name="keyVaultCertificate"> Key vault certificate resource Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, <paramref name="name"/>, or <paramref name="keyVaultCertificate"/> is null. </exception>
-        public Response CreateOrUpdateCertificate(string resourceGroupName, string certificateOrderName, string name, AppServiceCertificateResourceData keyVaultCertificate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, <paramref name="name"/>, or <paramref name="keyVaultCertificate"/> is null. </exception>
+        public Response CreateOrUpdateCertificate(string subscriptionId, string resourceGroupName, string certificateOrderName, string name, AppServiceCertificateResourceData keyVaultCertificate, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -867,7 +968,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(keyVaultCertificate));
             }
 
-            using var message = CreateCreateOrUpdateCertificateRequest(resourceGroupName, certificateOrderName, name, keyVaultCertificate);
+            using var message = CreateCreateOrUpdateCertificateRequest(subscriptionId, resourceGroupName, certificateOrderName, name, keyVaultCertificate);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -879,7 +980,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateDeleteCertificateRequest(string resourceGroupName, string certificateOrderName, string name)
+        internal HttpMessage CreateDeleteCertificateRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, string name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -902,13 +1003,18 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Delete the certificate associated with a certificate order. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
         /// <param name="name"> Name of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="name"/> is null. </exception>
-        public async Task<Response> DeleteCertificateAsync(string resourceGroupName, string certificateOrderName, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="name"/> is null. </exception>
+        public async Task<Response> DeleteCertificateAsync(string subscriptionId, string resourceGroupName, string certificateOrderName, string name, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -922,7 +1028,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var message = CreateDeleteCertificateRequest(resourceGroupName, certificateOrderName, name);
+            using var message = CreateDeleteCertificateRequest(subscriptionId, resourceGroupName, certificateOrderName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -935,13 +1041,18 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Delete the certificate associated with a certificate order. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
         /// <param name="name"> Name of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="name"/> is null. </exception>
-        public Response DeleteCertificate(string resourceGroupName, string certificateOrderName, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="name"/> is null. </exception>
+        public Response DeleteCertificate(string subscriptionId, string resourceGroupName, string certificateOrderName, string name, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -955,7 +1066,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var message = CreateDeleteCertificateRequest(resourceGroupName, certificateOrderName, name);
+            using var message = CreateDeleteCertificateRequest(subscriptionId, resourceGroupName, certificateOrderName, name);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -967,7 +1078,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateCertificateRequest(string resourceGroupName, string certificateOrderName, string name, AppServiceCertificatePatch keyVaultCertificate)
+        internal HttpMessage CreateUpdateCertificateRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, string name, AppServiceCertificatePatch keyVaultCertificate)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -994,14 +1105,19 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Creates or updates a certificate and associates with key vault secret. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
         /// <param name="name"> Name of the certificate. </param>
         /// <param name="keyVaultCertificate"> Key vault certificate resource Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, <paramref name="name"/>, or <paramref name="keyVaultCertificate"/> is null. </exception>
-        public async Task<Response<AppServiceCertificateResourceData>> UpdateCertificateAsync(string resourceGroupName, string certificateOrderName, string name, AppServiceCertificatePatch keyVaultCertificate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, <paramref name="name"/>, or <paramref name="keyVaultCertificate"/> is null. </exception>
+        public async Task<Response<AppServiceCertificateResourceData>> UpdateCertificateAsync(string subscriptionId, string resourceGroupName, string certificateOrderName, string name, AppServiceCertificatePatch keyVaultCertificate, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1019,7 +1135,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(keyVaultCertificate));
             }
 
-            using var message = CreateUpdateCertificateRequest(resourceGroupName, certificateOrderName, name, keyVaultCertificate);
+            using var message = CreateUpdateCertificateRequest(subscriptionId, resourceGroupName, certificateOrderName, name, keyVaultCertificate);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1036,14 +1152,19 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Creates or updates a certificate and associates with key vault secret. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
         /// <param name="name"> Name of the certificate. </param>
         /// <param name="keyVaultCertificate"> Key vault certificate resource Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, <paramref name="name"/>, or <paramref name="keyVaultCertificate"/> is null. </exception>
-        public Response<AppServiceCertificateResourceData> UpdateCertificate(string resourceGroupName, string certificateOrderName, string name, AppServiceCertificatePatch keyVaultCertificate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, <paramref name="name"/>, or <paramref name="keyVaultCertificate"/> is null. </exception>
+        public Response<AppServiceCertificateResourceData> UpdateCertificate(string subscriptionId, string resourceGroupName, string certificateOrderName, string name, AppServiceCertificatePatch keyVaultCertificate, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1061,7 +1182,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(keyVaultCertificate));
             }
 
-            using var message = CreateUpdateCertificateRequest(resourceGroupName, certificateOrderName, name, keyVaultCertificate);
+            using var message = CreateUpdateCertificateRequest(subscriptionId, resourceGroupName, certificateOrderName, name, keyVaultCertificate);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1077,7 +1198,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateReissueRequest(string resourceGroupName, string certificateOrderName, ReissueCertificateOrderRequest reissueCertificateOrderRequest)
+        internal HttpMessage CreateReissueRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, ReissueCertificateOrderRequest reissueCertificateOrderRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1103,13 +1224,18 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Reissue an existing certificate order. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
         /// <param name="reissueCertificateOrderRequest"> Parameters for the reissue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="reissueCertificateOrderRequest"/> is null. </exception>
-        public async Task<Response> ReissueAsync(string resourceGroupName, string certificateOrderName, ReissueCertificateOrderRequest reissueCertificateOrderRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="reissueCertificateOrderRequest"/> is null. </exception>
+        public async Task<Response> ReissueAsync(string subscriptionId, string resourceGroupName, string certificateOrderName, ReissueCertificateOrderRequest reissueCertificateOrderRequest, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1123,7 +1249,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(reissueCertificateOrderRequest));
             }
 
-            using var message = CreateReissueRequest(resourceGroupName, certificateOrderName, reissueCertificateOrderRequest);
+            using var message = CreateReissueRequest(subscriptionId, resourceGroupName, certificateOrderName, reissueCertificateOrderRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1135,13 +1261,18 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Reissue an existing certificate order. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
         /// <param name="reissueCertificateOrderRequest"> Parameters for the reissue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="reissueCertificateOrderRequest"/> is null. </exception>
-        public Response Reissue(string resourceGroupName, string certificateOrderName, ReissueCertificateOrderRequest reissueCertificateOrderRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="reissueCertificateOrderRequest"/> is null. </exception>
+        public Response Reissue(string subscriptionId, string resourceGroupName, string certificateOrderName, ReissueCertificateOrderRequest reissueCertificateOrderRequest, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1155,7 +1286,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(reissueCertificateOrderRequest));
             }
 
-            using var message = CreateReissueRequest(resourceGroupName, certificateOrderName, reissueCertificateOrderRequest);
+            using var message = CreateReissueRequest(subscriptionId, resourceGroupName, certificateOrderName, reissueCertificateOrderRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1166,7 +1297,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateRenewRequest(string resourceGroupName, string certificateOrderName, RenewCertificateOrderRequest renewCertificateOrderRequest)
+        internal HttpMessage CreateRenewRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, RenewCertificateOrderRequest renewCertificateOrderRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1192,13 +1323,18 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Renew an existing certificate order. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
         /// <param name="renewCertificateOrderRequest"> Renew parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="renewCertificateOrderRequest"/> is null. </exception>
-        public async Task<Response> RenewAsync(string resourceGroupName, string certificateOrderName, RenewCertificateOrderRequest renewCertificateOrderRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="renewCertificateOrderRequest"/> is null. </exception>
+        public async Task<Response> RenewAsync(string subscriptionId, string resourceGroupName, string certificateOrderName, RenewCertificateOrderRequest renewCertificateOrderRequest, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1212,7 +1348,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(renewCertificateOrderRequest));
             }
 
-            using var message = CreateRenewRequest(resourceGroupName, certificateOrderName, renewCertificateOrderRequest);
+            using var message = CreateRenewRequest(subscriptionId, resourceGroupName, certificateOrderName, renewCertificateOrderRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1224,13 +1360,18 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Renew an existing certificate order. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
         /// <param name="renewCertificateOrderRequest"> Renew parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="renewCertificateOrderRequest"/> is null. </exception>
-        public Response Renew(string resourceGroupName, string certificateOrderName, RenewCertificateOrderRequest renewCertificateOrderRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="renewCertificateOrderRequest"/> is null. </exception>
+        public Response Renew(string subscriptionId, string resourceGroupName, string certificateOrderName, RenewCertificateOrderRequest renewCertificateOrderRequest, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1244,7 +1385,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(renewCertificateOrderRequest));
             }
 
-            using var message = CreateRenewRequest(resourceGroupName, certificateOrderName, renewCertificateOrderRequest);
+            using var message = CreateRenewRequest(subscriptionId, resourceGroupName, certificateOrderName, renewCertificateOrderRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1255,7 +1396,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateResendEmailRequest(string resourceGroupName, string certificateOrderName)
+        internal HttpMessage CreateResendEmailRequest(string subscriptionId, string resourceGroupName, string certificateOrderName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1277,12 +1418,17 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Resend certificate email. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="certificateOrderName"/> is null. </exception>
-        public async Task<Response> ResendEmailAsync(string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="certificateOrderName"/> is null. </exception>
+        public async Task<Response> ResendEmailAsync(string subscriptionId, string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1292,7 +1438,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(certificateOrderName));
             }
 
-            using var message = CreateResendEmailRequest(resourceGroupName, certificateOrderName);
+            using var message = CreateResendEmailRequest(subscriptionId, resourceGroupName, certificateOrderName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1304,12 +1450,17 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Resend certificate email. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="certificateOrderName"/> is null. </exception>
-        public Response ResendEmail(string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="certificateOrderName"/> is null. </exception>
+        public Response ResendEmail(string subscriptionId, string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1319,7 +1470,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(certificateOrderName));
             }
 
-            using var message = CreateResendEmailRequest(resourceGroupName, certificateOrderName);
+            using var message = CreateResendEmailRequest(subscriptionId, resourceGroupName, certificateOrderName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1330,7 +1481,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateResendRequestEmailsRequest(string resourceGroupName, string certificateOrderName, NameIdentifier nameIdentifier)
+        internal HttpMessage CreateResendRequestEmailsRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, NameIdentifier nameIdentifier)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1356,13 +1507,18 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Resend domain verification ownership email containing steps on how to verify a domain for a given certificate order. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
         /// <param name="nameIdentifier"> Email address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="nameIdentifier"/> is null. </exception>
-        public async Task<Response> ResendRequestEmailsAsync(string resourceGroupName, string certificateOrderName, NameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="nameIdentifier"/> is null. </exception>
+        public async Task<Response> ResendRequestEmailsAsync(string subscriptionId, string resourceGroupName, string certificateOrderName, NameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1376,7 +1532,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(nameIdentifier));
             }
 
-            using var message = CreateResendRequestEmailsRequest(resourceGroupName, certificateOrderName, nameIdentifier);
+            using var message = CreateResendRequestEmailsRequest(subscriptionId, resourceGroupName, certificateOrderName, nameIdentifier);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1388,13 +1544,18 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Resend domain verification ownership email containing steps on how to verify a domain for a given certificate order. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
         /// <param name="nameIdentifier"> Email address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="nameIdentifier"/> is null. </exception>
-        public Response ResendRequestEmails(string resourceGroupName, string certificateOrderName, NameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="nameIdentifier"/> is null. </exception>
+        public Response ResendRequestEmails(string subscriptionId, string resourceGroupName, string certificateOrderName, NameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1408,7 +1569,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(nameIdentifier));
             }
 
-            using var message = CreateResendRequestEmailsRequest(resourceGroupName, certificateOrderName, nameIdentifier);
+            using var message = CreateResendRequestEmailsRequest(subscriptionId, resourceGroupName, certificateOrderName, nameIdentifier);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1419,7 +1580,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateRetrieveSiteSealRequest(string resourceGroupName, string certificateOrderName, SiteSealRequest siteSealRequest)
+        internal HttpMessage CreateRetrieveSiteSealRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, SiteSealRequest siteSealRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1445,13 +1606,18 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> This method is used to obtain the site seal information for an issued certificate. A site seal is a graphic that the certificate purchaser can embed on their web site to show their visitors information about their SSL certificate. If a web site visitor clicks on the site seal image, a pop-up page is displayed that contains detailed information about the SSL certificate. The site seal token is used to link the site seal graphic image to the appropriate certificate details pop-up page display when a user clicks on the site seal. The site seal images are expected to be static images and hosted by the reseller, to minimize delays for customer page load times. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
         /// <param name="siteSealRequest"> Site seal request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="siteSealRequest"/> is null. </exception>
-        public async Task<Response<SiteSeal>> RetrieveSiteSealAsync(string resourceGroupName, string certificateOrderName, SiteSealRequest siteSealRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="siteSealRequest"/> is null. </exception>
+        public async Task<Response<SiteSeal>> RetrieveSiteSealAsync(string subscriptionId, string resourceGroupName, string certificateOrderName, SiteSealRequest siteSealRequest, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1465,7 +1631,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(siteSealRequest));
             }
 
-            using var message = CreateRetrieveSiteSealRequest(resourceGroupName, certificateOrderName, siteSealRequest);
+            using var message = CreateRetrieveSiteSealRequest(subscriptionId, resourceGroupName, certificateOrderName, siteSealRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1482,13 +1648,18 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> This method is used to obtain the site seal information for an issued certificate. A site seal is a graphic that the certificate purchaser can embed on their web site to show their visitors information about their SSL certificate. If a web site visitor clicks on the site seal image, a pop-up page is displayed that contains detailed information about the SSL certificate. The site seal token is used to link the site seal graphic image to the appropriate certificate details pop-up page display when a user clicks on the site seal. The site seal images are expected to be static images and hosted by the reseller, to minimize delays for customer page load times. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
         /// <param name="siteSealRequest"> Site seal request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="siteSealRequest"/> is null. </exception>
-        public Response<SiteSeal> RetrieveSiteSeal(string resourceGroupName, string certificateOrderName, SiteSealRequest siteSealRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="siteSealRequest"/> is null. </exception>
+        public Response<SiteSeal> RetrieveSiteSeal(string subscriptionId, string resourceGroupName, string certificateOrderName, SiteSealRequest siteSealRequest, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1502,7 +1673,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(siteSealRequest));
             }
 
-            using var message = CreateRetrieveSiteSealRequest(resourceGroupName, certificateOrderName, siteSealRequest);
+            using var message = CreateRetrieveSiteSealRequest(subscriptionId, resourceGroupName, certificateOrderName, siteSealRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1518,7 +1689,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateVerifyDomainOwnershipRequest(string resourceGroupName, string certificateOrderName)
+        internal HttpMessage CreateVerifyDomainOwnershipRequest(string subscriptionId, string resourceGroupName, string certificateOrderName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1540,12 +1711,17 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Verify domain ownership for this certificate order. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="certificateOrderName"/> is null. </exception>
-        public async Task<Response> VerifyDomainOwnershipAsync(string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="certificateOrderName"/> is null. </exception>
+        public async Task<Response> VerifyDomainOwnershipAsync(string subscriptionId, string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1555,7 +1731,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(certificateOrderName));
             }
 
-            using var message = CreateVerifyDomainOwnershipRequest(resourceGroupName, certificateOrderName);
+            using var message = CreateVerifyDomainOwnershipRequest(subscriptionId, resourceGroupName, certificateOrderName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1567,12 +1743,17 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Verify domain ownership for this certificate order. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="certificateOrderName"/> is null. </exception>
-        public Response VerifyDomainOwnership(string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="certificateOrderName"/> is null. </exception>
+        public Response VerifyDomainOwnership(string subscriptionId, string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1582,7 +1763,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(certificateOrderName));
             }
 
-            using var message = CreateVerifyDomainOwnershipRequest(resourceGroupName, certificateOrderName);
+            using var message = CreateVerifyDomainOwnershipRequest(subscriptionId, resourceGroupName, certificateOrderName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1593,7 +1774,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateRetrieveCertificateActionsRequest(string resourceGroupName, string name)
+        internal HttpMessage CreateRetrieveCertificateActionsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1615,12 +1796,17 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Retrieve the list of certificate actions. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        public async Task<Response<IReadOnlyList<CertificateOrderAction>>> RetrieveCertificateActionsAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        public async Task<Response<IReadOnlyList<CertificateOrderAction>>> RetrieveCertificateActionsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1630,7 +1816,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var message = CreateRetrieveCertificateActionsRequest(resourceGroupName, name);
+            using var message = CreateRetrieveCertificateActionsRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1652,12 +1838,17 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Retrieve the list of certificate actions. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        public Response<IReadOnlyList<CertificateOrderAction>> RetrieveCertificateActions(string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        public Response<IReadOnlyList<CertificateOrderAction>> RetrieveCertificateActions(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1667,7 +1858,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var message = CreateRetrieveCertificateActionsRequest(resourceGroupName, name);
+            using var message = CreateRetrieveCertificateActionsRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1688,7 +1879,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateRetrieveCertificateEmailHistoryRequest(string resourceGroupName, string name)
+        internal HttpMessage CreateRetrieveCertificateEmailHistoryRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1710,12 +1901,17 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Retrieve email history. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        public async Task<Response<IReadOnlyList<CertificateEmail>>> RetrieveCertificateEmailHistoryAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        public async Task<Response<IReadOnlyList<CertificateEmail>>> RetrieveCertificateEmailHistoryAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1725,7 +1921,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var message = CreateRetrieveCertificateEmailHistoryRequest(resourceGroupName, name);
+            using var message = CreateRetrieveCertificateEmailHistoryRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1747,12 +1943,17 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Retrieve email history. </summary>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        public Response<IReadOnlyList<CertificateEmail>> RetrieveCertificateEmailHistory(string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        public Response<IReadOnlyList<CertificateEmail>> RetrieveCertificateEmailHistory(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1762,7 +1963,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var message = CreateRetrieveCertificateEmailHistoryRequest(resourceGroupName, name);
+            using var message = CreateRetrieveCertificateEmailHistoryRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1783,7 +1984,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1799,16 +2000,21 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for List all certificate orders in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<Models.AppServiceCertificateOrderCollection>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        public async Task<Response<Models.AppServiceCertificateOrderCollection>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
 
-            using var message = CreateListNextPageRequest(nextLink);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1826,16 +2032,21 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for List all certificate orders in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<Models.AppServiceCertificateOrderCollection> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        public Response<Models.AppServiceCertificateOrderCollection> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
 
-            using var message = CreateListNextPageRequest(nextLink);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1851,7 +2062,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string resourceGroupName)
+        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1867,21 +2078,26 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get certificate orders in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<Models.AppServiceCertificateOrderCollection>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        public async Task<Response<Models.AppServiceCertificateOrderCollection>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, resourceGroupName);
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1899,21 +2115,26 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get certificate orders in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<Models.AppServiceCertificateOrderCollection> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        public Response<Models.AppServiceCertificateOrderCollection> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, resourceGroupName);
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1929,7 +2150,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateListCertificatesNextPageRequest(string nextLink, string resourceGroupName, string certificateOrderName)
+        internal HttpMessage CreateListCertificatesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string certificateOrderName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1945,15 +2166,20 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for List all certificates associated with a certificate order. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="certificateOrderName"/> is null. </exception>
-        public async Task<Response<AppServiceCertificateCollection>> ListCertificatesNextPageAsync(string nextLink, string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="certificateOrderName"/> is null. </exception>
+        public async Task<Response<AppServiceCertificateCollection>> ListCertificatesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -1964,7 +2190,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(certificateOrderName));
             }
 
-            using var message = CreateListCertificatesNextPageRequest(nextLink, resourceGroupName, certificateOrderName);
+            using var message = CreateListCertificatesNextPageRequest(nextLink, subscriptionId, resourceGroupName, certificateOrderName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1982,15 +2208,20 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for List all certificates associated with a certificate order. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="certificateOrderName"/> is null. </exception>
-        public Response<AppServiceCertificateCollection> ListCertificatesNextPage(string nextLink, string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="certificateOrderName"/> is null. </exception>
+        public Response<AppServiceCertificateCollection> ListCertificatesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -2001,7 +2232,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(certificateOrderName));
             }
 
-            using var message = CreateListCertificatesNextPageRequest(nextLink, resourceGroupName, certificateOrderName);
+            using var message = CreateListCertificatesNextPageRequest(nextLink, subscriptionId, resourceGroupName, certificateOrderName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
