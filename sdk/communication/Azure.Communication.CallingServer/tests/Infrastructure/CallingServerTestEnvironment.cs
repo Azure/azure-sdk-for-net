@@ -28,7 +28,7 @@ namespace Azure.Communication.CallingServer.Tests
         /// <summary>
         /// The download url required to download the file.
         /// </summary>
-        public Uri DownloadEndPoint => new Uri (GetRecordedVariable(DownloadUrl, options => options.IsSecret()));
+        public string DownloadEndPoint => GetRecordedVariable(DownloadUrl, options => options.IsSecret());
 
         /// <summary>
         /// The user id required to add the paticipant in a call.

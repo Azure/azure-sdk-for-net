@@ -5,11 +5,11 @@
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-ced21e2a7b6336459975e6b84224161f-9975bba4b57fd549-00",
-        "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20211206.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "traceparent": "00-51425b6bc8575c4f8e038c1ee5e10230-6a863cfc09b61b4e-00",
+        "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20211207.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-request-id": "cd002cf02ed0d71058acb8578da152c5",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 06 Dec 2021 14:39:43 GMT",
+        "x-ms-date": "Tue, 07 Dec 2021 06:50:37 GMT",
         "x-ms-host": "acstelephonyportaltesting.communication.azure.com",
         "x-ms-return-client-request-id": "true"
       },
@@ -17,7 +17,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 06 Dec 2021 14:39:42 GMT",
+        "Date": "Tue, 07 Dec 2021 06:50:36 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains"
       },

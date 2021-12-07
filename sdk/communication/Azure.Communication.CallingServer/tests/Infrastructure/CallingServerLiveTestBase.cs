@@ -29,8 +29,13 @@ namespace Azure.Communication.CallingServer.Tests
         // Random Gen Guid
         protected const string GROUP_IDENTIFIER = "2a44d970-568f-11ec-9b6b-f50b63e7bd11";
 
-        // Random Gen Guid
-        protected const string USER_IDENTIFIER = "0000000e-2ddd-081c-570c-113a0d00e4d8";
+        /**
+             * For recording tests we need to make sure the USER_IDENTIFIER
+             * matches the recorded USER_IDENTIFIER, or the call will fail.
+             */
+        protected const string USER_IDENTIFIER = "0000000e-3321-ffd1-69ff-9c3a0d000f47";
+
+        protected const string DOWNLOAD_END_POINT = "https://us-storage.asm.skype.com/v1/objects/Sanitized/content/acsmetadata";
 
         protected string GetAudioFileUrl()
         {
@@ -39,6 +44,15 @@ namespace Azure.Communication.CallingServer.Tests
                 return TestEnvironment.AudioFileUri;
             }
             return TestEnvironment.AudioFileUrl;
+        }
+
+        protected string GetDownloadEndPointUrl()
+        {
+            if (Mode != RecordedTestMode.Playback)
+            {
+                return TestEnvironment.DownloadEndPoint;
+            }
+            return DOWNLOAD_END_POINT;
         }
 
         protected string GetResourceId()
@@ -108,12 +122,12 @@ namespace Azure.Communication.CallingServer.Tests
 
         protected string GetDeleteUrl()
         {
-            return "https://us-storage.asm.skype.com/v1/objects/0-wus-d10-dd8078b2cf30fa268e6327b164b99277";
+            return "https://us-storage.asm.skype.com/v1/objects/0-wus-d1-1de25ef48bcabee59f6e66372e3a7349";
         }
 
         protected string GetAsyncDeleteUrl()
         {
-            return "https://us-storage.asm.skype.com/v1/objects/0-wus-d1-7eda37310bb72038f8ff75a4c2145c40";
+            return "https://us-storage.asm.skype.com/v1/objects/0-wus-d1-0ae7a7b652cbc8e716a17e91c554cea3";
         }
 
         public CallingServerLiveTestBase(bool isAsync) : base(isAsync)
@@ -265,7 +279,7 @@ namespace Azure.Communication.CallingServer.Tests
             var playAudioOptions = new PlayAudioOptions()
             {
                 OperationContext = "de346f03-7f8d-41ab-a232-cc5e14990769",
-                Loop = false,
+                Loop = true,
                 AudioFileId = "ebb1d98d-fd86-4204-800c-f7bdfc2e515c"
             };
 
