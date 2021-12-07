@@ -411,7 +411,7 @@ function EnsureCustomSource($package) {
   return $package
 }
 
-function Update-dotnet-DocsMsPackages($DocsRepoLocation, $DocsMetadata) {
+function Update-dotnet-DocsMsPackages($DocsRepoLocation, $DocsMetadata, $PackageSourceOverride, $DocValidationImageId) {
   UpdateDocsMsPackages `
     (Join-Path $DocsRepoLocation 'bundlepackages/azure-dotnet-preview.csv') `
     'preview' `
