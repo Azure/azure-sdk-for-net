@@ -51,11 +51,6 @@ namespace Microsoft.Azure.WebJobs
         {
             get { return SdkObject.Credentials.AccountName; }
         }
-        public virtual Uri BlobEndpoint => SdkObject.BlobEndpoint;
-        public virtual CloudQueueClient CreateCloudQueueClient()
-        {
-            return new CloudQueueClient(SdkObject.QueueStorageUri, SdkObject.Credentials, _delegatingHandlerProvider?.Create());
-        }
         public virtual CloudTableClient CreateCloudTableClient()
         {
             var restConfiguration = new RestExecutorConfiguration()

@@ -13,10 +13,6 @@ namespace FakeStorage
         internal StorageCredentials _creds = new StorageCredentials("fakeaccount", "key1");
         internal TableStorageCredentials _tableCreds = new TableStorageCredentials("fakeaccount", "key1");
         public string Name => _creds.AccountName;
-        public CloudQueueClient CreateCloudQueueClient()
-        {
-            return new FakeQueueClient(this);
-        }
         public CloudTableClient CreateCloudTableClient()
         {
             return new FakeTableClient(this);
