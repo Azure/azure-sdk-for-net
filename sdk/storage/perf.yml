@@ -1,6 +1,9 @@
 variables:
-  NugetSecurityAnalysisWarningLevel: 'none'
-  skipComponentGovernanceDetection: 'true'
+  - template: ../variables/globals.yml
+  - name: NugetSecurityAnalysisWarningLevel
+    value: 'none'
+  - name: skipComponentGovernanceDetection
+    value: 'true'
 
 pool:
   name: "azsdk-pool-mms-ubuntu-2004-perf"
