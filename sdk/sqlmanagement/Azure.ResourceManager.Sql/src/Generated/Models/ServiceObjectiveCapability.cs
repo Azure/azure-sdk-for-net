@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Sql.Models
             SupportedMaxSizes = new ChangeTrackingList<MaxSizeRangeCapability>();
             SupportedLicenseTypes = new ChangeTrackingList<LicenseTypeCapability>();
             SupportedMinCapacities = new ChangeTrackingList<MinCapacityCapability>();
+            SupportedMaintenanceConfigurations = new ChangeTrackingList<MaintenanceConfigurationCapability>();
         }
 
         /// <summary> Initializes a new instance of ServiceObjectiveCapability. </summary>
@@ -34,9 +35,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="supportedAutoPauseDelay"> Supported time range for auto pause delay. </param>
         /// <param name="supportedMinCapacities"> List of supported min capacities. </param>
         /// <param name="computeModel"> The compute model. </param>
+        /// <param name="supportedMaintenanceConfigurations"> List of supported maintenance configurations. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal ServiceObjectiveCapability(Guid? id, string name, IReadOnlyList<MaxSizeRangeCapability> supportedMaxSizes, PerformanceLevelCapability performanceLevel, Sku sku, IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes, MaxSizeCapability includedMaxSize, bool? zoneRedundant, AutoPauseDelayTimeRange supportedAutoPauseDelay, IReadOnlyList<MinCapacityCapability> supportedMinCapacities, string computeModel, CapabilityStatus? status, string reason)
+        internal ServiceObjectiveCapability(Guid? id, string name, IReadOnlyList<MaxSizeRangeCapability> supportedMaxSizes, PerformanceLevelCapability performanceLevel, Sku sku, IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes, MaxSizeCapability includedMaxSize, bool? zoneRedundant, AutoPauseDelayTimeRange supportedAutoPauseDelay, IReadOnlyList<MinCapacityCapability> supportedMinCapacities, string computeModel, IReadOnlyList<MaintenanceConfigurationCapability> supportedMaintenanceConfigurations, CapabilityStatus? status, string reason)
         {
             Id = id;
             Name = name;
@@ -49,6 +51,7 @@ namespace Azure.ResourceManager.Sql.Models
             SupportedAutoPauseDelay = supportedAutoPauseDelay;
             SupportedMinCapacities = supportedMinCapacities;
             ComputeModel = computeModel;
+            SupportedMaintenanceConfigurations = supportedMaintenanceConfigurations;
             Status = status;
             Reason = reason;
         }
@@ -75,6 +78,8 @@ namespace Azure.ResourceManager.Sql.Models
         public IReadOnlyList<MinCapacityCapability> SupportedMinCapacities { get; }
         /// <summary> The compute model. </summary>
         public string ComputeModel { get; }
+        /// <summary> List of supported maintenance configurations. </summary>
+        public IReadOnlyList<MaintenanceConfigurationCapability> SupportedMaintenanceConfigurations { get; }
         /// <summary> The status of the capability. </summary>
         public CapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>

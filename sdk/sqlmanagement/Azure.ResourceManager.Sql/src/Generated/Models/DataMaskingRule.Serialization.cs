@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -80,9 +81,9 @@ namespace Azure.ResourceManager.Sql.Models
         {
             Optional<string> location = default;
             Optional<string> kind = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
             Optional<string> id0 = default;
             Optional<string> aliasName = default;
             Optional<DataMaskingRuleState> ruleState = default;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -205,7 +206,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new DataMaskingRule(id.Value, name.Value, type.Value, location.Value, kind.Value, id0.Value, aliasName.Value, Optional.ToNullable(ruleState), schemaName.Value, tableName.Value, columnName.Value, Optional.ToNullable(maskingFunction), numberFrom.Value, numberTo.Value, prefixSize.Value, suffixSize.Value, replacementString.Value);
+            return new DataMaskingRule(id, name, type, location.Value, kind.Value, id0.Value, aliasName.Value, Optional.ToNullable(ruleState), schemaName.Value, tableName.Value, columnName.Value, Optional.ToNullable(maskingFunction), numberFrom.Value, numberTo.Value, prefixSize.Value, suffixSize.Value, replacementString.Value);
         }
     }
 }

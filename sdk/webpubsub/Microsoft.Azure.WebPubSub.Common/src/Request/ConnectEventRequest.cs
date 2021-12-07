@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
 namespace Microsoft.Azure.WebPubSub.Common
@@ -11,6 +11,7 @@ namespace Microsoft.Azure.WebPubSub.Common
     /// <summary>
     /// Connect event request.
     /// </summary>
+    [DataContract]
     [JsonConverter(typeof(ConnectEventRequestJsonConverter))]
     public sealed class ConnectEventRequest : WebPubSubEventRequest
     {
@@ -23,24 +24,28 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// User Claims.
         /// </summary>
         [JsonPropertyName(ClaimsProperty)]
+        [DataMember(Name = ClaimsProperty)]
         public IReadOnlyDictionary<string, string[]> Claims { get; }
 
         /// <summary>
         /// Request query.
         /// </summary>
         [JsonPropertyName(QueryProperty)]
+        [DataMember(Name = QueryProperty)]
         public IReadOnlyDictionary<string, string[]> Query { get; }
 
         /// <summary>
         /// Supported subprotocols.
         /// </summary>
         [JsonPropertyName(SubprotocolsProperty)]
+        [DataMember(Name = SubprotocolsProperty)]
         public IReadOnlyList<string> Subprotocols { get; }
 
         /// <summary>
         /// Client certificates.
         /// </summary>
         [JsonPropertyName(ClientCertificatesProperty)]
+        [DataMember(Name = ClientCertificatesProperty)]
         public IReadOnlyList<WebPubSubClientCertificate> ClientCertificates { get; }
 
         /// <summary>

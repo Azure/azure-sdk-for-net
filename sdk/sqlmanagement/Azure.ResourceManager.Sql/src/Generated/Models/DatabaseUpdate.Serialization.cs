@@ -113,20 +113,40 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("readScale");
                 writer.WriteStringValue(ReadScale.Value.ToString());
             }
-            if (Optional.IsDefined(ReadReplicaCount))
+            if (Optional.IsDefined(HighAvailabilityReplicaCount))
             {
-                writer.WritePropertyName("readReplicaCount");
-                writer.WriteNumberValue(ReadReplicaCount.Value);
+                writer.WritePropertyName("highAvailabilityReplicaCount");
+                writer.WriteNumberValue(HighAvailabilityReplicaCount.Value);
+            }
+            if (Optional.IsDefined(SecondaryType))
+            {
+                writer.WritePropertyName("secondaryType");
+                writer.WriteStringValue(SecondaryType.Value.ToString());
             }
             if (Optional.IsDefined(AutoPauseDelay))
             {
                 writer.WritePropertyName("autoPauseDelay");
                 writer.WriteNumberValue(AutoPauseDelay.Value);
             }
+            if (Optional.IsDefined(RequestedBackupStorageRedundancy))
+            {
+                writer.WritePropertyName("requestedBackupStorageRedundancy");
+                writer.WriteStringValue(RequestedBackupStorageRedundancy.Value.ToString());
+            }
             if (Optional.IsDefined(MinCapacity))
             {
                 writer.WritePropertyName("minCapacity");
                 writer.WriteNumberValue(MinCapacity.Value);
+            }
+            if (Optional.IsDefined(MaintenanceConfigurationId))
+            {
+                writer.WritePropertyName("maintenanceConfigurationId");
+                writer.WriteStringValue(MaintenanceConfigurationId);
+            }
+            if (Optional.IsDefined(IsLedgerOn))
+            {
+                writer.WritePropertyName("isLedgerOn");
+                writer.WriteBooleanValue(IsLedgerOn.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

@@ -57,6 +57,7 @@
     "deserializable",
     "deserializes",
     "diagnoser",
+    "dotnetcli",
     "dont",
     "dtmf",
     "epsg",
@@ -172,6 +173,12 @@
       ]
     },
     {
+      "filename": "**/sdk/webpubsub/**/*.cs",
+      "words": [
+        "skus"
+      ]
+    },
+    {
       "filename": "**/sdk/resources/Azure.ResourceManager.Resources/api/*.cs",
       "words": ["Puid"]
     },
@@ -181,7 +188,11 @@
         "Droppeded",
         "CIAS",
         "Vcores",
-        "Unrestorable"
+        "Unrestorable",
+        "Stdev",
+        "Ntext",
+        "Nvarchar",
+        "Stdev"
       ]
     },
     {
@@ -225,6 +236,12 @@
       ]
     },
     {
+      "filename": "**/sdk/synapse/**/*.md",
+      "words": [
+        "abfss"
+      ]
+    },
+    {
       "filename": "**/sdk/textanalytics/**/*.cs",
       "words": [
         "Brcpf",
@@ -233,6 +250,21 @@
         "Eugps",
         "Plregon",
         "Usuk"
+      ]
+    },
+    {
+      "filename": "**/sdk/websites/**/*.cs",
+      "words": [
+        "Ipssl",
+        "Skus",
+        "Kube",
+        "Metadatas",
+        "Unparked",
+        "Proto",
+        "Zilla",
+        "Guage",
+        "Plex",
+        "Vstsrm"
       ]
     }
   ],

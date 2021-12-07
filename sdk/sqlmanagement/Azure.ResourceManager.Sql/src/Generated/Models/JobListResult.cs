@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of JobListResult. </summary>
         internal JobListResult()
         {
-            Value = new ChangeTrackingList<Job>();
+            Value = new ChangeTrackingList<SqlJobData>();
         }
 
         /// <summary> Initializes a new instance of JobListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal JobListResult(IReadOnlyList<Job> value, string nextLink)
+        internal JobListResult(IReadOnlyList<SqlJobData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<Job> Value { get; }
+        public IReadOnlyList<SqlJobData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

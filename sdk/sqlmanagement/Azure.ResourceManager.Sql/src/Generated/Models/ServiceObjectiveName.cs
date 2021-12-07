@@ -10,12 +10,12 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The name of the service objective to assign to the database. </summary>
-    public readonly partial struct ServiceObjectiveName : IEquatable<ServiceObjectiveName>
+    /// <summary> The serviceLevelObjective for SLO usage metric. </summary>
+    internal readonly partial struct ServiceObjectiveName : IEquatable<ServiceObjectiveName>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ServiceObjectiveName"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceObjectiveName"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServiceObjectiveName(string value)
         {

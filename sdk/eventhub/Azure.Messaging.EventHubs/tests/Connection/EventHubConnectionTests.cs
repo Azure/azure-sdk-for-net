@@ -567,7 +567,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventHubCredential = new EventHubTokenCredential(credential);
             var connection = new EventHubConnection(fullyQualifiedNamespace, path, credential);
 
-            Assert.That(() => connection.CreateTransportClient(fullyQualifiedNamespace, path, eventHubCredential, options), Throws.Nothing);
+            Assert.That(() => connection.CreateTransportClient(fullyQualifiedNamespace, path, TimeSpan.FromDays(1), eventHubCredential, options), Throws.Nothing);
         }
 
         /// <summary>
@@ -590,7 +590,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventHubCredential = new EventHubTokenCredential(credential);
             var connection = new EventHubConnection(fullyQualifiedNamespace, path, credential);
 
-            Assert.That(() => connection.CreateTransportClient(fullyQualifiedNamespace, path, eventHubCredential, options), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => connection.CreateTransportClient(fullyQualifiedNamespace, path, TimeSpan.FromDays(1), eventHubCredential, options), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -920,7 +920,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
             }
 
-            internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace, string eventHubName, EventHubTokenCredential credential, EventHubConnectionOptions options)
+            internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace, string eventHubName, TimeSpan operationTimeout, EventHubTokenCredential credential, EventHubConnectionOptions options)
             {
                 TransportClientOptions = options;
                 _transportClient = new ObservableTransportClientMock();
@@ -1018,6 +1018,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace,
                                                                    string eventHubName,
+                                                                   TimeSpan operationTimeout,
                                                                    EventHubTokenCredential credential,
                                                                    EventHubConnectionOptions options)
             {

@@ -1,14 +1,12 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.1.0 (2021-11-24)
 
 ### Bugs Fixed
+- Changed the `ConnectionContext`'s `ConnectionStates` to correctly serialize as proper JSON when used with JavaScript.
 
-### Other Changes
+### Breaking Changes
+- JavaScript developers using `request.connectionContext.states` no longer need to `JSON.parse(...)` its values.  The values are already valid JSON.
 
 ## 1.0.0 (2021-11-09)
 

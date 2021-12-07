@@ -20,11 +20,11 @@ namespace Azure.Core.TestFramework
             "Content-Type"
         };
 
-        private bool _compareBodies;
+        public bool CompareBodies { get; }
 
         public RecordMatcher(bool compareBodies = true)
         {
-            _compareBodies = compareBodies;
+            CompareBodies = compareBodies;
 
             if (!compareBodies)
             {
@@ -105,7 +105,7 @@ namespace Azure.Core.TestFramework
                 if (!entry.IsTrack1Recording)
                 {
                     score += CompareHeaderDictionaries(request.Request.Headers, entry.Request.Headers, IgnoredHeaders);
-                    score += CompareBodies(request.Request.Body, entry.Request.Body);
+                    score += CalculateCompareBodies(request.Request.Body, entry.Request.Body);
                 }
 
                 if (score == 0)
@@ -123,9 +123,9 @@ namespace Azure.Core.TestFramework
             throw new TestRecordingMismatchException(GenerateException(request, bestScoreEntry));
         }
 
-        private int CompareBodies(byte[] requestBody, byte[] responseBody, StringBuilder descriptionBuilder = null)
+        private int CalculateCompareBodies(byte[] requestBody, byte[] responseBody, StringBuilder descriptionBuilder = null)
         {
-            if (!_compareBodies)
+            if (!CompareBodies)
             {
                 return 0;
             }
@@ -221,7 +221,7 @@ namespace Azure.Core.TestFramework
 
             builder.AppendLine("Body differences:");
 
-            CompareBodies(request.Request.Body, bestScoreEntry.Request.Body, builder);
+            CalculateCompareBodies(request.Request.Body, bestScoreEntry.Request.Body, builder);
 
             return builder.ToString();
         }

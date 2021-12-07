@@ -39,15 +39,15 @@ namespace Azure.Storage.Blobs.Test
         /// </summary>
         private byte[] EncryptData(byte[] data, byte[] key, byte[] iv)
         {
-            using (var aesProvider = new AesCryptoServiceProvider() { Key = key, IV = iv })
-            using (var encryptor = aesProvider.CreateEncryptor())
-            using (var memStream = new MemoryStream())
-            using (var cryptoStream = new CryptoStream(memStream, encryptor, CryptoStreamMode.Write))
-            {
-                cryptoStream.Write(data, 0, data.Length);
-                cryptoStream.FlushFinalBlock();
-                return memStream.ToArray();
-            }
+            using var aesProvider = Aes.Create();
+            aesProvider.Key = key;
+            aesProvider.IV = iv;
+            using var encryptor = aesProvider.CreateEncryptor();
+            using var memStream = new MemoryStream();
+            using var cryptoStream = new CryptoStream(memStream, encryptor, CryptoStreamMode.Write);
+            cryptoStream.Write(data, 0, data.Length);
+            cryptoStream.FlushFinalBlock();
+            return memStream.ToArray();
         }
 
         private async Task<IKeyEncryptionKey> GetKeyvaultIKeyEncryptionKey()
@@ -126,7 +126,11 @@ namespace Azure.Storage.Blobs.Test
             {
                 const int keySizeBits = 256;
                 var bytes = new byte[keySizeBits >> 3];
+#if NET6_0_OR_GREATER
+                RandomNumberGenerator.Create().GetBytes(bytes);
+#else
                 new RNGCryptoServiceProvider().GetBytes(bytes);
+#endif
                 userKeyBytes = bytes;
             }
             keyId ??= Guid.NewGuid().ToString();
@@ -623,7 +627,11 @@ namespace Azure.Storage.Blobs.Test
 
             const int keySizeBits = 256;
             var keyEncryptionKeyBytes = new byte[keySizeBits >> 3];
-            new RNGCryptoServiceProvider().GetBytes(keyEncryptionKeyBytes);
+#if NET6_0_OR_GREATER
+            RandomNumberGenerator.Create().GetBytes(keyEncryptionKeyBytes);
+#else
+                new RNGCryptoServiceProvider().GetBytes(keyEncryptionKeyBytes);
+#endif
             var keyId = Guid.NewGuid().ToString();
 
             var mockKey = GetTrackOneIKey(keyEncryptionKeyBytes, keyId).Object;
@@ -671,7 +679,11 @@ namespace Azure.Storage.Blobs.Test
 
             const int keySizeBits = 256;
             var keyEncryptionKeyBytes = new byte[keySizeBits >> 3];
-            new RNGCryptoServiceProvider().GetBytes(keyEncryptionKeyBytes);
+#if NET6_0_OR_GREATER
+            RandomNumberGenerator.Create().GetBytes(keyEncryptionKeyBytes);
+#else
+                new RNGCryptoServiceProvider().GetBytes(keyEncryptionKeyBytes);
+#endif
             var keyId = Guid.NewGuid().ToString();
 
             var mockKey = this.GetIKeyEncryptionKey(s_cancellationToken, keyEncryptionKeyBytes, keyId).Object;
