@@ -12,7 +12,7 @@ namespace Azure.Communication.NetworkTraversal.Tests
 {
     public class CommunicationRelayClientLiveTestBase : RecordedTestBase<CommunicationRelayClientTestEnvironment>
     {
-        public CommunicationRelayClientLiveTestBase(bool isAsync) : base(isAsync, useLegacyTransport: true)
+        public CommunicationRelayClientLiveTestBase(bool isAsync) : base(isAsync)
             => Sanitizer = new CommunicationRelayClientRecordedTestSanitizer();
 
         /// <summary>
