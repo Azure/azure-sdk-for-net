@@ -88,9 +88,6 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}
-        /// OperationId: Zones_Get
         /// <summary> Gets a DNS zone. Retrieves the zone properties, but not the record sets within the zone. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<Zone>> GetAsync(CancellationToken cancellationToken = default)
@@ -111,9 +108,6 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}
-        /// OperationId: Zones_Get
         /// <summary> Gets a DNS zone. Retrieves the zone properties, but not the record sets within the zone. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Zone> Get(CancellationToken cancellationToken = default)
@@ -150,9 +144,6 @@ namespace Azure.ResourceManager.Dns
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}
-        /// OperationId: Zones_Delete
         /// <summary> Deletes a DNS zone. WARNING: All DNS records in the zone will also be deleted. This operation cannot be undone. </summary>
         /// <param name="ifMatch"> The etag of the DNS zone. Omit this value to always delete the current zone. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -176,9 +167,6 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}
-        /// OperationId: Zones_Delete
         /// <summary> Deletes a DNS zone. WARNING: All DNS records in the zone will also be deleted. This operation cannot be undone. </summary>
         /// <param name="ifMatch"> The etag of the DNS zone. Omit this value to always delete the current zone. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -374,9 +362,6 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}
-        /// OperationId: Zones_Update
         /// <summary> Updates a DNS zone. Does not modify DNS records within the zone. </summary>
         /// <param name="parameters"> Parameters supplied to the Update operation. </param>
         /// <param name="ifMatch"> The etag of the DNS zone. Omit this value to always overwrite the current zone. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
@@ -403,9 +388,6 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}
-        /// OperationId: Zones_Update
         /// <summary> Updates a DNS zone. Does not modify DNS records within the zone. </summary>
         /// <param name="parameters"> Parameters supplied to the Update operation. </param>
         /// <param name="ifMatch"> The etag of the DNS zone. Omit this value to always overwrite the current zone. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
@@ -432,9 +414,6 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/recordsets
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}
-        /// OperationId: RecordSets_ListByDnsZone
         /// <summary> Lists all record sets in a DNS zone. </summary>
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name that has to be used to filter the record set enumerations. If this parameter is specified, Enumeration will return only records that end with .&lt;recordSetNameSuffix&gt;. </param>
@@ -475,9 +454,6 @@ namespace Azure.ResourceManager.Dns
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/recordsets
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}
-        /// OperationId: RecordSets_ListByDnsZone
         /// <summary> Lists all record sets in a DNS zone. </summary>
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name that has to be used to filter the record set enumerations. If this parameter is specified, Enumeration will return only records that end with .&lt;recordSetNameSuffix&gt;. </param>
@@ -518,9 +494,6 @@ namespace Azure.ResourceManager.Dns
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/all
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}
-        /// OperationId: RecordSets_ListAllByDnsZone
         /// <summary> Lists all record sets in a DNS zone. </summary>
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordSetNameSuffix"> The suffix label of the record set name that has to be used to filter the record set enumerations. If this parameter is specified, Enumeration will return only records that end with .&lt;recordSetNameSuffix&gt;. </param>
@@ -561,9 +534,6 @@ namespace Azure.ResourceManager.Dns
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/all
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}
-        /// OperationId: RecordSets_ListAllByDnsZone
         /// <summary> Lists all record sets in a DNS zone. </summary>
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordSetNameSuffix"> The suffix label of the record set name that has to be used to filter the record set enumerations. If this parameter is specified, Enumeration will return only records that end with .&lt;recordSetNameSuffix&gt;. </param>

@@ -32,9 +32,6 @@ namespace Azure.ResourceManager.Dns
             return new DnsResourceReferenceRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dnszones
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Zones_List
         /// <summary> Lists the Zones for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="top"> The maximum number of DNS zones to return. If not specified, returns up to 100 zones. </param>
@@ -81,9 +78,6 @@ namespace Azure.ResourceManager.Dns
             );
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dnszones
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Zones_List
         /// <summary> Lists the Zones for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="top"> The maximum number of DNS zones to return. If not specified, returns up to 100 zones. </param>
@@ -158,9 +152,6 @@ namespace Azure.ResourceManager.Dns
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/getDnsResourceReference
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DnsResourceReference_GetByTargetResources
         /// <summary> Returns the DNS records specified by the referencing targetResourceIds. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="parameters"> Properties for dns resource reference request. </param>
@@ -193,9 +184,6 @@ namespace Azure.ResourceManager.Dns
             ).ConfigureAwait(false);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/getDnsResourceReference
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DnsResourceReference_GetByTargetResources
         /// <summary> Returns the DNS records specified by the referencing targetResourceIds. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="parameters"> Properties for dns resource reference request. </param>

@@ -46,9 +46,6 @@ namespace Azure.ResourceManager.Dns
 
         // Collection level operations.
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Zones_CreateOrUpdate
         /// <summary> Creates or updates a DNS zone. Does not modify DNS records within the zone. </summary>
         /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
         /// <param name="parameters"> Parameters supplied to the CreateOrUpdate operation. </param>
@@ -85,9 +82,6 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Zones_CreateOrUpdate
         /// <summary> Creates or updates a DNS zone. Does not modify DNS records within the zone. </summary>
         /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
         /// <param name="parameters"> Parameters supplied to the CreateOrUpdate operation. </param>
@@ -124,9 +118,6 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Zones_Get
         /// <summary> Gets a DNS zone. Retrieves the zone properties, but not the record sets within the zone. </summary>
         /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -154,9 +145,6 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Zones_Get
         /// <summary> Gets a DNS zone. Retrieves the zone properties, but not the record sets within the zone. </summary>
         /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -288,9 +276,6 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Zones_ListByResourceGroup
         /// <summary> Lists the DNS zones within a resource group. </summary>
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -330,9 +315,6 @@ namespace Azure.ResourceManager.Dns
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Zones_ListByResourceGroup
         /// <summary> Lists the DNS zones within a resource group. </summary>
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
