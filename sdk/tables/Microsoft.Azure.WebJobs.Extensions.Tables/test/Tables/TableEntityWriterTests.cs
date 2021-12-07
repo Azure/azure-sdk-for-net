@@ -7,7 +7,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Tables
 {
     public class TableEntityWriterTests
     {
-        [Fact]
+        [Fact(Skip = "TODO")]
         public void FlushAfterAdd_PersistsEntity()
         {
             // Arrange
