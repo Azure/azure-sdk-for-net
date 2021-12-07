@@ -12,7 +12,7 @@
         "x-ms-client-request-id": "f067053a-14ee-a2d7-e06b-eec48bff5467",
         "x-ms-date": "Wed, 24 Nov 2021 23:39:16 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-02-12"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -24,7 +24,7 @@
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "f067053a-14ee-a2d7-e06b-eec48bff5467",
         "x-ms-request-id": "d4479889-701e-003e-348c-e14dbd000000",
-        "x-ms-version": "2021-02-12"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -43,7 +43,7 @@
         "x-ms-client-request-id": "3bee8f74-6d4d-fed5-ae35-47de892da179",
         "x-ms-date": "Wed, 24 Nov 2021 23:39:16 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-02-12"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": [],
       "StatusCode": 201,
@@ -58,7 +58,7 @@
         "x-ms-content-crc64": "AAAAAAAAAAA=",
         "x-ms-request-id": "d447989c-701e-003e-428c-e14dbd000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2021-02-12",
+        "x-ms-version": "2021-04-10",
         "x-ms-version-id": "2021-11-24T23:39:16.6168224Z"
       },
       "ResponseBody": []
@@ -78,7 +78,7 @@
         "x-ms-date": "Wed, 24 Nov 2021 23:39:16 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-tags": "testkey=testvalue",
-        "x-ms-version": "2021-02-12"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": [],
       "StatusCode": 201,
@@ -93,7 +93,7 @@
         "x-ms-content-crc64": "AAAAAAAAAAA=",
         "x-ms-request-id": "d44798a8-701e-003e-4e8c-e14dbd000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2021-02-12",
+        "x-ms-version": "2021-04-10",
         "x-ms-version-id": "2021-11-24T23:39:16.7067721Z"
       },
       "ResponseBody": []
@@ -112,7 +112,7 @@
         "x-ms-date": "Wed, 24 Nov 2021 23:39:16 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-tags": "testkey=testvalue",
-        "x-ms-version": "2021-02-12"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": "\uFEFF\u003CBlockList /\u003E",
       "StatusCode": 201,
@@ -126,7 +126,7 @@
         "x-ms-content-crc64": "g0vf2Kdg954=",
         "x-ms-request-id": "d44798bc-701e-003e-618c-e14dbd000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2021-02-12",
+        "x-ms-version": "2021-04-10",
         "x-ms-version-id": "2021-11-24T23:39:16.8726782Z"
       },
       "ResponseBody": []
@@ -142,7 +142,7 @@
         "x-ms-client-request-id": "5673984f-1a45-7f30-1a3c-e6849710ca93",
         "x-ms-date": "Wed, 24 Nov 2021 23:39:16 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-02-12"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -154,7 +154,7 @@
         "Vary": "Origin",
         "x-ms-client-request-id": "5673984f-1a45-7f30-1a3c-e6849710ca93",
         "x-ms-request-id": "d44798d2-701e-003e-758c-e14dbd000000",
-        "x-ms-version": "2021-02-12"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\n",
@@ -172,7 +172,7 @@
         "x-ms-client-request-id": "f66324d2-4a24-8f63-9406-6e69a4732398",
         "x-ms-date": "Wed, 24 Nov 2021 23:39:16 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-02-12"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -182,7 +182,7 @@
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "f66324d2-4a24-8f63-9406-6e69a4732398",
         "x-ms-request-id": "d44798e1-701e-003e-018c-e14dbd000000",
-        "x-ms-version": "2021-02-12"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }
