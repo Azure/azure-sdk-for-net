@@ -1,7 +1,6 @@
 variables:
   NugetSecurityAnalysisWarningLevel: 'none'
   skipComponentGovernanceDetection: 'true'
-  System.Debug: 'true'
 
 pool:
   name: "azsdk-pool-mms-ubuntu-2004-perf"
