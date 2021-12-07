@@ -16,9 +16,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> This operation creates or updates a policy definition in the given management group with the given name. </summary>
-    public partial class PolicyDefinitionCreateOrUpdateAtManagementGroupOperation : Operation<PolicyDefinition>
+    public partial class PolicyDefinitionCreateOrUpdateAtManagementGroupOperation : Operation<ManagementGroupPolicyDefinition>
     {
-        private readonly OperationOrResponseInternals<PolicyDefinition> _operation;
+        private readonly OperationOrResponseInternals<ManagementGroupPolicyDefinition> _operation;
 
         /// <summary> Initializes a new instance of PolicyDefinitionCreateOrUpdateAtManagementGroupOperation for mocking. </summary>
         protected PolicyDefinitionCreateOrUpdateAtManagementGroupOperation()
@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal PolicyDefinitionCreateOrUpdateAtManagementGroupOperation(ArmResource operationsBase, Response<PolicyDefinitionData> response)
         {
-            _operation = new OperationOrResponseInternals<PolicyDefinition>(Response.FromValue(new PolicyDefinition(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<ManagementGroupPolicyDefinition>(Response.FromValue(new ManagementGroupPolicyDefinition(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override PolicyDefinition Value => _operation.Value;
+        public override ManagementGroupPolicyDefinition Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Resources.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<PolicyDefinition>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<ManagementGroupPolicyDefinition>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<PolicyDefinition>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<ManagementGroupPolicyDefinition>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

@@ -18,52 +18,52 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A Class representing a ManagementLockObject along with the instance operations that can be performed on it. </summary>
-    public partial class ManagementLockObject : ArmResource
+    /// <summary> A Class representing a SubscriptionPolicyDefinition along with the instance operations that can be performed on it. </summary>
+    public partial class SubscriptionPolicyDefinition : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ManagementLocksRestOperations _managementLocksRestClient;
-        private readonly ManagementLockObjectData _data;
+        private readonly PolicyDefinitionsRestOperations _policyDefinitionsRestClient;
+        private readonly PolicyDefinitionData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ManagementLockObject"/> class for mocking. </summary>
-        protected ManagementLockObject()
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionPolicyDefinition"/> class for mocking. </summary>
+        protected SubscriptionPolicyDefinition()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagementLockObject"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "SubscriptionPolicyDefinition"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal ManagementLockObject(ArmResource options, ManagementLockObjectData resource) : base(options, resource.Id)
+        internal SubscriptionPolicyDefinition(ArmResource options, PolicyDefinitionData resource) : base(options, resource.Id)
         {
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managementLocksRestClient = new ManagementLocksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _policyDefinitionsRestClient = new PolicyDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ManagementLockObject"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionPolicyDefinition"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ManagementLockObject(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal SubscriptionPolicyDefinition(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managementLocksRestClient = new ManagementLocksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _policyDefinitionsRestClient = new PolicyDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ManagementLockObject"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionPolicyDefinition"/> class. </summary>
         /// <param name="clientOptions"> The client options to build client context. </param>
         /// <param name="credential"> The credential to build client context. </param>
         /// <param name="uri"> The uri to build client context. </param>
         /// <param name="pipeline"> The pipeline to build client context. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ManagementLockObject(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        internal SubscriptionPolicyDefinition(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managementLocksRestClient = new ManagementLocksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _policyDefinitionsRestClient = new PolicyDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Authorization/locks";
+        public static readonly ResourceType ResourceType = "Microsoft.Authorization/policyDefinitions";
 
         /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ManagementLockObjectData Data
+        public virtual PolicyDefinitionData Data
         {
             get
             {
@@ -83,18 +83,18 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Get a management lock by scope. </summary>
+        /// <summary> This operation retrieves the policy definition in the given subscription with the given name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ManagementLockObject>> GetAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<SubscriptionPolicyDefinition>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementLockObject.Get");
+            using var scope = _clientDiagnostics.CreateScope("SubscriptionPolicyDefinition.Get");
             scope.Start();
             try
             {
-                var response = await _managementLocksRestClient.GetByScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _policyDefinitionsRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagementLockObject(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionPolicyDefinition(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -103,18 +103,18 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Get a management lock by scope. </summary>
+        /// <summary> This operation retrieves the policy definition in the given subscription with the given name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagementLockObject> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SubscriptionPolicyDefinition> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementLockObject.Get");
+            using var scope = _clientDiagnostics.CreateScope("SubscriptionPolicyDefinition.Get");
             scope.Start();
             try
             {
-                var response = _managementLocksRestClient.GetByScope(Id.Parent, Id.Name, cancellationToken);
+                var response = _policyDefinitionsRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagementLockObject(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionPolicyDefinition(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,17 +139,17 @@ namespace Azure.ResourceManager.Resources
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
-        /// <summary> Delete a management lock by scope. </summary>
+        /// <summary> This operation deletes the policy definition in the given subscription with the given name. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ManagementLockDeleteByScopeOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<PolicyDefinitionDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementLockObject.Delete");
+            using var scope = _clientDiagnostics.CreateScope("SubscriptionPolicyDefinition.Delete");
             scope.Start();
             try
             {
-                var response = await _managementLocksRestClient.DeleteByScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagementLockDeleteByScopeOperation(response);
+                var response = await _policyDefinitionsRestClient.DeleteAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new PolicyDefinitionDeleteOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -161,17 +161,17 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Delete a management lock by scope. </summary>
+        /// <summary> This operation deletes the policy definition in the given subscription with the given name. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ManagementLockDeleteByScopeOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual PolicyDefinitionDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementLockObject.Delete");
+            using var scope = _clientDiagnostics.CreateScope("SubscriptionPolicyDefinition.Delete");
             scope.Start();
             try
             {
-                var response = _managementLocksRestClient.DeleteByScope(Id.Parent, Id.Name, cancellationToken);
-                var operation = new ManagementLockDeleteByScopeOperation(response);
+                var response = _policyDefinitionsRestClient.Delete(Id.SubscriptionId, Id.Name, cancellationToken);
+                var operation = new PolicyDefinitionDeleteOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

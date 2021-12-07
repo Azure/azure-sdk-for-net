@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateGetAllRequest(string filter)
+        internal HttpMessage CreateListRequest(string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -133,9 +133,9 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation retrieves a list of all the data policy manifests that match the optional given $filter. Valid values for $filter are: &quot;$filter=namespace eq &apos;{0}&apos;&quot;. If $filter is not provided, the unfiltered list includes all data policy manifests for data resource types. If $filter=namespace is provided, the returned list only includes all data policy manifests that have a namespace matching the provided value. </summary>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &quot;namespace eq &apos;{value}&apos;&quot;. If $filter is not provided, no filtering is performed. If $filter=namespace eq &apos;{value}&apos; is provided, the returned list only includes all data policy manifests that have a namespace matching the provided value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DataPolicyManifestListResult>> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataPolicyManifestListResult>> ListAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllRequest(filter);
+            using var message = CreateListRequest(filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation retrieves a list of all the data policy manifests that match the optional given $filter. Valid values for $filter are: &quot;$filter=namespace eq &apos;{0}&apos;&quot;. If $filter is not provided, the unfiltered list includes all data policy manifests for data resource types. If $filter=namespace is provided, the returned list only includes all data policy manifests that have a namespace matching the provided value. </summary>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &quot;namespace eq &apos;{value}&apos;&quot;. If $filter is not provided, no filtering is performed. If $filter=namespace eq &apos;{value}&apos; is provided, the returned list only includes all data policy manifests that have a namespace matching the provided value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DataPolicyManifestListResult> GetAll(string filter = null, CancellationToken cancellationToken = default)
+        public Response<DataPolicyManifestListResult> List(string filter = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllRequest(filter);
+            using var message = CreateListRequest(filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string filter)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -191,14 +191,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &quot;namespace eq &apos;{value}&apos;&quot;. If $filter is not provided, no filtering is performed. If $filter=namespace eq &apos;{value}&apos; is provided, the returned list only includes all data policy manifests that have a namespace matching the provided value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<DataPolicyManifestListResult>> GetAllNextPageAsync(string nextLink, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataPolicyManifestListResult>> ListNextPageAsync(string nextLink, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, filter);
+            using var message = CreateListNextPageRequest(nextLink, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -219,14 +219,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &quot;namespace eq &apos;{value}&apos;&quot;. If $filter is not provided, no filtering is performed. If $filter=namespace eq &apos;{value}&apos; is provided, the returned list only includes all data policy manifests that have a namespace matching the provided value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<DataPolicyManifestListResult> GetAllNextPage(string nextLink, string filter = null, CancellationToken cancellationToken = default)
+        public Response<DataPolicyManifestListResult> ListNextPage(string nextLink, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, filter);
+            using var message = CreateListNextPageRequest(nextLink, filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -12,25 +12,69 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class to add extension methods to ArmClient. </summary>
     public static partial class ArmClientExtensions
     {
-        #region PolicyDefinition
-        /// <summary> Gets an object representing a PolicyDefinition along with the instance operations that can be performed on it but with no data. </summary>
+        #region SubscriptionPolicyDefinition
+        /// <summary> Gets an object representing a SubscriptionPolicyDefinition along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PolicyDefinition" /> object. </returns>
-        public static PolicyDefinition GetPolicyDefinition(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SubscriptionPolicyDefinition" /> object. </returns>
+        public static SubscriptionPolicyDefinition GetSubscriptionPolicyDefinition(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PolicyDefinition(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SubscriptionPolicyDefinition(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region PolicySetDefinition
-        /// <summary> Gets an object representing a PolicySetDefinition along with the instance operations that can be performed on it but with no data. </summary>
+        #region TenantPolicyDefinition
+        /// <summary> Gets an object representing a TenantPolicyDefinition along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PolicySetDefinition" /> object. </returns>
-        public static PolicySetDefinition GetPolicySetDefinition(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TenantPolicyDefinition" /> object. </returns>
+        public static TenantPolicyDefinition GetTenantPolicyDefinition(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PolicySetDefinition(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new TenantPolicyDefinition(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region ManagementGroupPolicyDefinition
+        /// <summary> Gets an object representing a ManagementGroupPolicyDefinition along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ManagementGroupPolicyDefinition" /> object. </returns>
+        public static ManagementGroupPolicyDefinition GetManagementGroupPolicyDefinition(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagementGroupPolicyDefinition(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region SubscriptionPolicySetDefinition
+        /// <summary> Gets an object representing a SubscriptionPolicySetDefinition along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SubscriptionPolicySetDefinition" /> object. </returns>
+        public static SubscriptionPolicySetDefinition GetSubscriptionPolicySetDefinition(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SubscriptionPolicySetDefinition(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region TenantPolicySetDefinition
+        /// <summary> Gets an object representing a TenantPolicySetDefinition along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TenantPolicySetDefinition" /> object. </returns>
+        public static TenantPolicySetDefinition GetTenantPolicySetDefinition(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new TenantPolicySetDefinition(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region ManagementGroupPolicySetDefinition
+        /// <summary> Gets an object representing a ManagementGroupPolicySetDefinition along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ManagementGroupPolicySetDefinition" /> object. </returns>
+        public static ManagementGroupPolicySetDefinition GetManagementGroupPolicySetDefinition(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagementGroupPolicySetDefinition(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -75,17 +119,6 @@ namespace Azure.ResourceManager.Resources
         public static ManagementLockObject GetManagementLockObject(this ArmClient armClient, ResourceIdentifier id)
         {
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagementLockObject(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
-        #region ResourceLink
-        /// <summary> Gets an object representing a ResourceLink along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceLink" /> object. </returns>
-        public static ResourceLink GetResourceLink(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ResourceLink(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
     }

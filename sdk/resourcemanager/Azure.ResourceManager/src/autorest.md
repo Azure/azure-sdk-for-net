@@ -101,20 +101,12 @@ model-namespace: false
 public-clients: false
 head-as-boolean: false
 payload-flattening-threshold: 2
-operation-group-to-resource-type:
-  ResourceLinks: Microsoft.Resources/links
-  DataPolicyManifests: Microsoft.Authorization/dataPolicyManifests
-#   Providers: Microsoft.Resources/providers
-operation-group-to-resource:
-  ResourceLinks: ResourceLink
-  DataPolicyManifests: DataPolicyManifest
-operation-group-to-parent:
-  PolicyAssignments: tenant
-  PolicyDefinitions: tenant
-  PolicySetDefinitions: tenant
-  PolicyExemptions: tenant
-  ManagementLocks: tenant
-  ResourceLinks: tenant
+request-path-to-scope-resource-types:
+  /{scope}/providers/Microsoft.Authorization/locks/{lockName}: subscriptions;resourceGroups;*
+#   /{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}: subscriptions;resourceGroups;managementGroups;tenant;*
+#   /{scope}/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}: subscriptions;resourceGroups;managementGroups;tenant;*
+# request-path-to-parent:
+#   /{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}: 
 operation-groups-to-omit:
   Deployments;DeploymentOperations;AuthorizationOperations
 directive:
@@ -131,11 +123,18 @@ directive:
   - remove-operation: ManagementLocks_GetAtResourceGroupLevel
   - remove-operation: ManagementLocks_GetAtResourceLevel
   - remove-operation: ManagementLocks_GetAtSubscriptionLevel
-  - remove-operation: ResourceLinks_ListAtSubscription
+  - remove-operation: ManagementLocks_ListAtResourceGroupLevel
+  - remove-operation: ManagementLocks_ListAtResourceLevel
+  - remove-operation: ManagementLocks_ListAtSubscriptionLevel
+#   - remove-operation: ResourceLinks_ListAtSubscription
   - from: policyAssignments.json
     where: $.definitions.Identity.properties.type["x-ms-enum"]
     transform: $["name"] = "PolicyAssignmentIdentityType"
   - rename-model:
       from: Identity
       to: PolicyAssignmentIdentity
+  - from: locks.json
+    where: $.paths..parameters[?(@.name === "scope")]
+    transform: >
+      $["x-ms-skip-url-encoding"] = true
 ```

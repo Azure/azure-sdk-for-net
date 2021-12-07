@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -16,16 +15,16 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ResourceLinkResult DeserializeResourceLinkResult(JsonElement element)
         {
-            IReadOnlyList<ResourceLinkData> value = default;
+            IReadOnlyList<ResourceLink> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<ResourceLinkData> array = new List<ResourceLinkData>();
+                    List<ResourceLink> array = new List<ResourceLink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceLinkData.DeserializeResourceLinkData(item));
+                        array.Add(ResourceLink.DeserializeResourceLink(item));
                     }
                     value = array;
                     continue;

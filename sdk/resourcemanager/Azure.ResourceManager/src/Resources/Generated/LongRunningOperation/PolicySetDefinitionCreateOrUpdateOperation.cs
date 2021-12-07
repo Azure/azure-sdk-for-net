@@ -16,9 +16,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> This operation creates or updates a policy set definition in the given subscription with the given name. </summary>
-    public partial class PolicySetDefinitionCreateOrUpdateOperation : Operation<PolicySetDefinition>
+    public partial class PolicySetDefinitionCreateOrUpdateOperation : Operation<SubscriptionPolicySetDefinition>
     {
-        private readonly OperationOrResponseInternals<PolicySetDefinition> _operation;
+        private readonly OperationOrResponseInternals<SubscriptionPolicySetDefinition> _operation;
 
         /// <summary> Initializes a new instance of PolicySetDefinitionCreateOrUpdateOperation for mocking. </summary>
         protected PolicySetDefinitionCreateOrUpdateOperation()
@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal PolicySetDefinitionCreateOrUpdateOperation(ArmResource operationsBase, Response<PolicySetDefinitionData> response)
         {
-            _operation = new OperationOrResponseInternals<PolicySetDefinition>(Response.FromValue(new PolicySetDefinition(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<SubscriptionPolicySetDefinition>(Response.FromValue(new SubscriptionPolicySetDefinition(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override PolicySetDefinition Value => _operation.Value;
+        public override SubscriptionPolicySetDefinition Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Resources.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<PolicySetDefinition>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<SubscriptionPolicySetDefinition>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<PolicySetDefinition>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<SubscriptionPolicySetDefinition>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

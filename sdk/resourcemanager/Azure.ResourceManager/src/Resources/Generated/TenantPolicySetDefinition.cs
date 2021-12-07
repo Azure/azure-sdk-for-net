@@ -18,52 +18,52 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A Class representing a ResourceLink along with the instance operations that can be performed on it. </summary>
-    public partial class ResourceLink : ArmResource
+    /// <summary> A Class representing a TenantPolicySetDefinition along with the instance operations that can be performed on it. </summary>
+    public partial class TenantPolicySetDefinition : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ResourceLinksRestOperations _restClient;
-        private readonly ResourceLinkData _data;
+        private readonly PolicySetDefinitionsRestOperations _policySetDefinitionsRestClient;
+        private readonly PolicySetDefinitionData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ResourceLink"/> class for mocking. </summary>
-        protected ResourceLink()
+        /// <summary> Initializes a new instance of the <see cref="TenantPolicySetDefinition"/> class for mocking. </summary>
+        protected TenantPolicySetDefinition()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ResourceLink"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "TenantPolicySetDefinition"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal ResourceLink(ArmResource options, ResourceLinkData resource) : base(options, resource.Id)
+        internal TenantPolicySetDefinition(ArmResource options, PolicySetDefinitionData resource) : base(options, resource.Id)
         {
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ResourceLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _policySetDefinitionsRestClient = new PolicySetDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ResourceLink"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TenantPolicySetDefinition"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ResourceLink(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal TenantPolicySetDefinition(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ResourceLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _policySetDefinitionsRestClient = new PolicySetDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ResourceLink"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TenantPolicySetDefinition"/> class. </summary>
         /// <param name="clientOptions"> The client options to build client context. </param>
         /// <param name="credential"> The credential to build client context. </param>
         /// <param name="uri"> The uri to build client context. </param>
         /// <param name="pipeline"> The pipeline to build client context. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ResourceLink(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        internal TenantPolicySetDefinition(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ResourceLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _policySetDefinitionsRestClient = new PolicySetDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Resources/links";
+        public static readonly ResourceType ResourceType = "Microsoft.Authorization/policySetDefinitions";
 
         /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ResourceLinkData Data
+        public virtual PolicySetDefinitionData Data
         {
             get
             {
@@ -83,18 +83,18 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Gets a resource link with the specified ID. </summary>
+        /// <summary> This operation retrieves the built-in policy set definition with the given name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ResourceLink>> GetAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<TenantPolicySetDefinition>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ResourceLink.Get");
+            using var scope = _clientDiagnostics.CreateScope("TenantPolicySetDefinition.Get");
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id, cancellationToken).ConfigureAwait(false);
+                var response = await _policySetDefinitionsRestClient.GetBuiltInAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ResourceLink(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TenantPolicySetDefinition(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -103,18 +103,18 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Gets a resource link with the specified ID. </summary>
+        /// <summary> This operation retrieves the built-in policy set definition with the given name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ResourceLink> Get(CancellationToken cancellationToken = default)
+        public virtual Response<TenantPolicySetDefinition> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ResourceLink.Get");
+            using var scope = _clientDiagnostics.CreateScope("TenantPolicySetDefinition.Get");
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id, cancellationToken);
+                var response = _policySetDefinitionsRestClient.GetBuiltIn(Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceLink(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TenantPolicySetDefinition(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -137,50 +137,6 @@ namespace Azure.ResourceManager.Resources
         public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
-        }
-
-        /// <summary> Deletes a resource link with the specified ID. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ResourceLinkDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ResourceLink.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.DeleteAsync(Id, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceLinkDeleteOperation(response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a resource link with the specified ID. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ResourceLinkDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ResourceLink.Delete");
-            scope.Start();
-            try
-            {
-                var response = _restClient.Delete(Id, cancellationToken);
-                var operation = new ResourceLinkDeleteOperation(response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

@@ -19,11 +19,12 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing collection of DataPolicyManifest and their operations over a Tenant. </summary>
+    /// <summary> A class representing collection of DataPolicyManifest and their operations over its parent. </summary>
     public partial class DataPolicyManifestCollection : ArmCollection, IEnumerable<DataPolicyManifest>, IAsyncEnumerable<DataPolicyManifest>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DataPolicyManifestsRestOperations _restClient;
+        private readonly DataPolicyManifestsRestOperations _dataPolicyManifestsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="DataPolicyManifestCollection"/> class for mocking. </summary>
         protected DataPolicyManifestCollection()
@@ -35,44 +36,30 @@ namespace Azure.ResourceManager.Resources
         internal DataPolicyManifestCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new DataPolicyManifestsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-        }
-
-        IEnumerator<DataPolicyManifest> IEnumerable<DataPolicyManifest>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<DataPolicyManifest> IAsyncEnumerable<DataPolicyManifest>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            _dataPolicyManifestsRestClient = new DataPolicyManifestsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceIdentifier.RootResourceIdentifier.ResourceType;
+        protected override ResourceType ValidResourceType => Tenant.ResourceType;
 
         // Collection level operations.
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> This operation retrieves the data policy manifest with the given policy mode. </summary>
         /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
         public virtual Response<DataPolicyManifest> Get(string policyMode, CancellationToken cancellationToken = default)
         {
+            if (policyMode == null)
+            {
+                throw new ArgumentNullException(nameof(policyMode));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestCollection.Get");
             scope.Start();
             try
             {
-                if (policyMode == null)
-                {
-                    throw new ArgumentNullException(nameof(policyMode));
-                }
-
-                var response = _restClient.GetByPolicyMode(policyMode, cancellationToken: cancellationToken);
+                var response = _dataPolicyManifestsRestClient.GetByPolicyMode(policyMode, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DataPolicyManifest(Parent, response.Value), response.GetRawResponse());
@@ -84,21 +71,22 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> This operation retrieves the data policy manifest with the given policy mode. </summary>
         /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
         public async virtual Task<Response<DataPolicyManifest>> GetAsync(string policyMode, CancellationToken cancellationToken = default)
         {
+            if (policyMode == null)
+            {
+                throw new ArgumentNullException(nameof(policyMode));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestCollection.Get");
             scope.Start();
             try
             {
-                if (policyMode == null)
-                {
-                    throw new ArgumentNullException(nameof(policyMode));
-                }
-
-                var response = await _restClient.GetByPolicyModeAsync(policyMode, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _dataPolicyManifestsRestClient.GetByPolicyModeAsync(policyMode, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new DataPolicyManifest(Parent, response.Value), response.GetRawResponse());
@@ -112,19 +100,20 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
         public virtual Response<DataPolicyManifest> GetIfExists(string policyMode, CancellationToken cancellationToken = default)
         {
+            if (policyMode == null)
+            {
+                throw new ArgumentNullException(nameof(policyMode));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (policyMode == null)
-                {
-                    throw new ArgumentNullException(nameof(policyMode));
-                }
-
-                var response = _restClient.GetByPolicyMode(policyMode, cancellationToken: cancellationToken);
+                var response = _dataPolicyManifestsRestClient.GetByPolicyMode(policyMode, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<DataPolicyManifest>(null, response.GetRawResponse())
                     : Response.FromValue(new DataPolicyManifest(this, response.Value), response.GetRawResponse());
@@ -138,19 +127,20 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
         public async virtual Task<Response<DataPolicyManifest>> GetIfExistsAsync(string policyMode, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestCollection.GetIfExists");
+            if (policyMode == null)
+            {
+                throw new ArgumentNullException(nameof(policyMode));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (policyMode == null)
-                {
-                    throw new ArgumentNullException(nameof(policyMode));
-                }
-
-                var response = await _restClient.GetByPolicyModeAsync(policyMode, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _dataPolicyManifestsRestClient.GetByPolicyModeAsync(policyMode, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<DataPolicyManifest>(null, response.GetRawResponse())
                     : Response.FromValue(new DataPolicyManifest(this, response.Value), response.GetRawResponse());
@@ -164,18 +154,19 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string policyMode, CancellationToken cancellationToken = default)
         {
+            if (policyMode == null)
+            {
+                throw new ArgumentNullException(nameof(policyMode));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestCollection.CheckIfExists");
             scope.Start();
             try
             {
-                if (policyMode == null)
-                {
-                    throw new ArgumentNullException(nameof(policyMode));
-                }
-
                 var response = GetIfExists(policyMode, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -188,18 +179,19 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string policyMode, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestCollection.CheckIfExists");
+            if (policyMode == null)
+            {
+                throw new ArgumentNullException(nameof(policyMode));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (policyMode == null)
-                {
-                    throw new ArgumentNullException(nameof(policyMode));
-                }
-
                 var response = await GetIfExistsAsync(policyMode, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -222,7 +214,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAll(filter, cancellationToken: cancellationToken);
+                    var response = _dataPolicyManifestsRestClient.List(filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DataPolicyManifest(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -237,7 +229,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllNextPage(nextLink, filter, cancellationToken: cancellationToken);
+                    var response = _dataPolicyManifestsRestClient.ListNextPage(nextLink, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DataPolicyManifest(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -261,7 +253,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllAsync(filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _dataPolicyManifestsRestClient.ListAsync(filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DataPolicyManifest(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -276,7 +268,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllNextPageAsync(nextLink, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _dataPolicyManifestsRestClient.ListNextPageAsync(nextLink, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DataPolicyManifest(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -288,7 +280,22 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        IEnumerator<DataPolicyManifest> IEnumerable<DataPolicyManifest>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<DataPolicyManifest> IAsyncEnumerable<DataPolicyManifest>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, DataPolicyManifest, DataPolicyManifestData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, DataPolicyManifest, DataPolicyManifestData> Construct() { }
     }
 }

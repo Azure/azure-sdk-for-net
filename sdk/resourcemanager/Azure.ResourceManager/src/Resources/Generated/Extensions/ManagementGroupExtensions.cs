@@ -12,23 +12,23 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class to add extension methods to ManagementGroup. </summary>
     public static partial class ManagementGroupExtensions
     {
-        #region PolicyDefinition
-        /// <summary> Gets an object representing a PolicyDefinitionCollection along with the instance operations that can be performed on it. </summary>
+        #region ManagementGroupPolicyDefinition
+        /// <summary> Gets an object representing a ManagementGroupPolicyDefinitionCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="managementGroup"> The <see cref="ManagementGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="PolicyDefinitionCollection" /> object. </returns>
-        public static PolicyDefinitionCollection GetPolicyDefinitions(this ManagementGroup managementGroup)
+        /// <returns> Returns a <see cref="ManagementGroupPolicyDefinitionCollection" /> object. </returns>
+        public static ManagementGroupPolicyDefinitionCollection GetManagementGroupPolicyDefinitions(this ManagementGroup managementGroup)
         {
-            return new PolicyDefinitionCollection(managementGroup);
+            return new ManagementGroupPolicyDefinitionCollection(managementGroup);
         }
         #endregion
 
-        #region PolicySetDefinition
-        /// <summary> Gets an object representing a PolicySetDefinitionCollection along with the instance operations that can be performed on it. </summary>
+        #region ManagementGroupPolicySetDefinition
+        /// <summary> Gets an object representing a ManagementGroupPolicySetDefinitionCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="managementGroup"> The <see cref="ManagementGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="PolicySetDefinitionCollection" /> object. </returns>
-        public static PolicySetDefinitionCollection GetPolicySetDefinitions(this ManagementGroup managementGroup)
+        /// <returns> Returns a <see cref="ManagementGroupPolicySetDefinitionCollection" /> object. </returns>
+        public static ManagementGroupPolicySetDefinitionCollection GetManagementGroupPolicySetDefinitions(this ManagementGroup managementGroup)
         {
-            return new PolicySetDefinitionCollection(managementGroup);
+            return new ManagementGroupPolicySetDefinitionCollection(managementGroup);
         }
         #endregion
 

@@ -5,88 +5,267 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
+using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class to add extension methods to Tenant. </summary>
     public static partial class TenantExtensions
     {
-        #region PolicyDefinition
-        /// <summary> Gets an object representing a PolicyDefinition along with the instance operations that can be performed on it but with no data. </summary>
+        #region TenantPolicyDefinition
+        /// <summary> Gets an object representing a TenantPolicyDefinitionCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PolicyDefinition" /> object. </returns>
-        public static PolicyDefinition GetPolicyDefinition(this Tenant tenant, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TenantPolicyDefinitionCollection" /> object. </returns>
+        public static TenantPolicyDefinitionCollection GetTenantPolicyDefinitions(this Tenant tenant)
         {
-            return new PolicyDefinition(tenant, id);
+            return new TenantPolicyDefinitionCollection(tenant);
         }
         #endregion
 
-        #region PolicySetDefinition
-        /// <summary> Gets an object representing a PolicySetDefinition along with the instance operations that can be performed on it but with no data. </summary>
+        #region TenantPolicySetDefinition
+        /// <summary> Gets an object representing a TenantPolicySetDefinitionCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PolicySetDefinition" /> object. </returns>
-        public static PolicySetDefinition GetPolicySetDefinition(this Tenant tenant, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TenantPolicySetDefinitionCollection" /> object. </returns>
+        public static TenantPolicySetDefinitionCollection GetTenantPolicySetDefinitions(this Tenant tenant)
         {
-            return new PolicySetDefinition(tenant, id);
+            return new TenantPolicySetDefinitionCollection(tenant);
         }
         #endregion
 
         #region PolicyAssignment
-        /// <summary> Gets an object representing a PolicyAssignment along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a PolicyAssignmentCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PolicyAssignment" /> object. </returns>
-        public static PolicyAssignment GetPolicyAssignment(this Tenant tenant, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PolicyAssignmentCollection" /> object. </returns>
+        public static PolicyAssignmentCollection GetPolicyAssignments(this Tenant tenant)
         {
-            return new PolicyAssignment(tenant, id);
+            return new PolicyAssignmentCollection(tenant);
         }
         #endregion
 
         #region PolicyExemption
-        /// <summary> Gets an object representing a PolicyExemption along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a PolicyExemptionCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PolicyExemption" /> object. </returns>
-        public static PolicyExemption GetPolicyExemption(this Tenant tenant, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PolicyExemptionCollection" /> object. </returns>
+        public static PolicyExemptionCollection GetPolicyExemptions(this Tenant tenant)
         {
-            return new PolicyExemption(tenant, id);
+            return new PolicyExemptionCollection(tenant);
         }
         #endregion
 
         #region DataPolicyManifest
-        /// <summary> Gets an object representing a DataPolicyManifest along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a DataPolicyManifestCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataPolicyManifest" /> object. </returns>
-        public static DataPolicyManifest GetDataPolicyManifest(this Tenant tenant, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataPolicyManifestCollection" /> object. </returns>
+        public static DataPolicyManifestCollection GetDataPolicyManifests(this Tenant tenant)
         {
-            return new DataPolicyManifest(tenant, id);
+            return new DataPolicyManifestCollection(tenant);
         }
         #endregion
 
-        #region ManagementLockObject
-        /// <summary> Gets an object representing a ManagementLockObject along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagementLockObject" /> object. </returns>
-        public static ManagementLockObject GetManagementLockObject(this Tenant tenant, ResourceIdentifier id)
+        private static ResourceLinksRestOperations GetResourceLinksRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
         {
-            return new ManagementLockObject(tenant, id);
+            return new ResourceLinksRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
-        #endregion
 
-        #region ResourceLink
-        /// <summary> Gets an object representing a ResourceLink along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Deletes a resource link with the specified ID. </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceLink" /> object. </returns>
-        public static ResourceLink GetResourceLink(this Tenant tenant, ResourceIdentifier id)
+        /// <param name="linkId"> The fully qualified ID of the resource link. Use the format, /subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/{provider-namespace}/{resource-type}/{resource-name}/Microsoft.Resources/links/{link-name}. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
+        public static async Task<Response> DeleteResourceLinkAsync(this Tenant tenant, ResourceIdentifier linkId, CancellationToken cancellationToken = default)
         {
-            return new ResourceLink(tenant, id);
+            if (linkId == null)
+            {
+                throw new ArgumentNullException(nameof(linkId));
+            }
+
+            return await tenant.UseClientContext(async (baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                using var scope = clientDiagnostics.CreateScope("TenantExtensions.DeleteResourceLink");
+                scope.Start();
+                try
+                {
+                    var restOperations = GetResourceLinksRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    var response = await restOperations.DeleteAsync(linkId, cancellationToken).ConfigureAwait(false);
+                    return response;
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            ).ConfigureAwait(false);
         }
-        #endregion
+
+        /// <summary> Deletes a resource link with the specified ID. </summary>
+        /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
+        /// <param name="linkId"> The fully qualified ID of the resource link. Use the format, /subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/{provider-namespace}/{resource-type}/{resource-name}/Microsoft.Resources/links/{link-name}. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
+        public static Response DeleteResourceLink(this Tenant tenant, ResourceIdentifier linkId, CancellationToken cancellationToken = default)
+        {
+            if (linkId == null)
+            {
+                throw new ArgumentNullException(nameof(linkId));
+            }
+
+            return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                using var scope = clientDiagnostics.CreateScope("TenantExtensions.DeleteResourceLink");
+                scope.Start();
+                try
+                {
+                    var restOperations = GetResourceLinksRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    var response = restOperations.Delete(linkId, cancellationToken);
+                    return response;
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            );
+        }
+
+        /// <summary> Creates or updates a resource link between the specified resources. </summary>
+        /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
+        /// <param name="linkId"> The fully qualified ID of the resource link. Use the format, /subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/{provider-namespace}/{resource-type}/{resource-name}/Microsoft.Resources/links/{link-name}. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink. </param>
+        /// <param name="properties"> Properties for resource link. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
+        public static async Task<Response<ResourceLink>> CreateOrUpdateResourceLinkAsync(this Tenant tenant, ResourceIdentifier linkId, ResourceLinkProperties properties = null, CancellationToken cancellationToken = default)
+        {
+            if (linkId == null)
+            {
+                throw new ArgumentNullException(nameof(linkId));
+            }
+
+            return await tenant.UseClientContext(async (baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                using var scope = clientDiagnostics.CreateScope("TenantExtensions.CreateOrUpdateResourceLink");
+                scope.Start();
+                try
+                {
+                    var restOperations = GetResourceLinksRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    var response = await restOperations.CreateOrUpdateAsync(linkId, properties, cancellationToken).ConfigureAwait(false);
+                    return response;
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            ).ConfigureAwait(false);
+        }
+
+        /// <summary> Creates or updates a resource link between the specified resources. </summary>
+        /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
+        /// <param name="linkId"> The fully qualified ID of the resource link. Use the format, /subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/{provider-namespace}/{resource-type}/{resource-name}/Microsoft.Resources/links/{link-name}. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink. </param>
+        /// <param name="properties"> Properties for resource link. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
+        public static Response<ResourceLink> CreateOrUpdateResourceLink(this Tenant tenant, ResourceIdentifier linkId, ResourceLinkProperties properties = null, CancellationToken cancellationToken = default)
+        {
+            if (linkId == null)
+            {
+                throw new ArgumentNullException(nameof(linkId));
+            }
+
+            return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                using var scope = clientDiagnostics.CreateScope("TenantExtensions.CreateOrUpdateResourceLink");
+                scope.Start();
+                try
+                {
+                    var restOperations = GetResourceLinksRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    var response = restOperations.CreateOrUpdate(linkId, properties, cancellationToken);
+                    return response;
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            );
+        }
+
+        /// <summary> Gets a resource link with the specified ID. </summary>
+        /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
+        /// <param name="linkId"> The fully qualified Id of the resource link. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
+        public static async Task<Response<ResourceLink>> GetResourceLinkAsync(this Tenant tenant, ResourceIdentifier linkId, CancellationToken cancellationToken = default)
+        {
+            if (linkId == null)
+            {
+                throw new ArgumentNullException(nameof(linkId));
+            }
+
+            return await tenant.UseClientContext(async (baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetResourceLink");
+                scope.Start();
+                try
+                {
+                    var restOperations = GetResourceLinksRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    var response = await restOperations.GetAsync(linkId, cancellationToken).ConfigureAwait(false);
+                    return response;
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            ).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a resource link with the specified ID. </summary>
+        /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
+        /// <param name="linkId"> The fully qualified Id of the resource link. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
+        public static Response<ResourceLink> GetResourceLink(this Tenant tenant, ResourceIdentifier linkId, CancellationToken cancellationToken = default)
+        {
+            if (linkId == null)
+            {
+                throw new ArgumentNullException(nameof(linkId));
+            }
+
+            return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetResourceLink");
+                scope.Start();
+                try
+                {
+                    var restOperations = GetResourceLinksRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    var response = restOperations.Get(linkId, cancellationToken);
+                    return response;
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            );
+        }
     }
 }
