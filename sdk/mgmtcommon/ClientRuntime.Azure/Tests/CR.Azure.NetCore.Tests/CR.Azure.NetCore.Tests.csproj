@@ -8,9 +8,9 @@
     <PackageTags>Rest ClientRuntime Azure Test $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netcoreapp1.1|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netcoreapp3.1|AnyCPU'">
     <NoWarn>1701;1702;1705</NoWarn>
   </PropertyGroup>
 

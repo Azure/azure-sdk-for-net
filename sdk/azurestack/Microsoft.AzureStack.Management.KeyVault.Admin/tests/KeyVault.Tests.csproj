@@ -6,9 +6,6 @@
     <AssemblyName>KeyVault.Admin.Tests</AssemblyName>
     <VersionPrefix>1.0.0</VersionPrefix>    
   </PropertyGroup>
-  <!--<PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>-->
 
   <ItemGroup>
     <ProjectReference Include="..\src\Microsoft.AzureStack.Management.KeyVault.Admin.csproj" />

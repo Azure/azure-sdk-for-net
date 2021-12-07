@@ -1,11 +1,16 @@
 # Release History
 
-## 1.0.0-preview.2 (Unreleased)
+## 1.0.0-beta.2 (Unreleased)
 
-- Accept header added to all requests.
-- Collections are now always initialized and collection properties are readonly by default.
+### Features Added
 
-## 1.0.0-preview.1
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.1 (2021-12-01)
 
 This package follows the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html) which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
 
@@ -21,7 +26,6 @@ This is a Public Preview version, so expect incompatible changes in subsequent r
 
 > NOTE: For more information about unified authentication, please refer to [Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet)
 
-### Migration from Previous Version of Azure Management SDK
 
 #### Package Name
 The package name has been changed from `Microsoft.Azure.Management.EventHub` to `Azure.ResourceManager.EventHubs`
@@ -85,39 +89,55 @@ var createEventHubResponse = this.EventHubManagementClient.EventHubs.CreateOrUpd
 ```
 
 After upgrade:
-```csharp
+```C# Snippet:ChangeLog_Sample
 using Azure.Identity;
-using Azure.ResourceManager.EventHubs;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.EventHubs.Models;
 
- var eventHubsManagementClient = new EventHubsManagementClient(subscriptionId, new DefaultAzureCredential());
- var namespacesOperations = eventHubsManagementClient.Namespaces;
- var eventHubsOperations = eventHubsManagementClient.EventHubs;
+string namespaceName = "myNamespace";
+string eventhubName = "myEventhub";
+string resourceGroupName = "myResourceGroup";
+ArmClient client = new ArmClient(new DefaultAzureCredential());
+Subscription subscription = await client.GetDefaultSubscriptionAsync();
+ResourceGroup resourceGroup = subscription.GetResourceGroups().Get(resourceGroupName);
+//create namespace
+EventHubNamespaceData parameters = new EventHubNamespaceData(Location.WestUS)
+{
+    Sku = new Sku(SkuName.Standard)
+    {
+        Tier = SkuTier.Standard,
+    }
+};
+parameters.Tags.Add("tag1", "value1");
+parameters.Tags.Add("tag2", "value2");
+EventHubNamespaceCollection eHNamespaceCollection = resourceGroup.GetEventHubNamespaces();
+EventHubNamespace eventHubNamespace = eHNamespaceCollection.CreateOrUpdate(namespaceName, parameters).Value;
 
- var createNamespaceResponse = await namespacesOperations.StartCreateOrUpdateAsync(
-     resourceGroup,
-     namespaceName,
-     new EHNamespace()
-     {
-         Location = "westus",
-         Sku = new Sku(SkuName.Standard)
-         {
-             Tier = SkuTier.Standard,
-         },
-         Tags = new Dictionary<string, string>()
-         {
-             {"tag1", "value1"},
-             {"tag2", "value2"}
-         }
-     });
- await createNamespaceResponse.WaitForCompletionAsync();
-
- // Create Eventhub
- Eventhub eventHub = await eventHubsOperations.CreateOrUpdateAsync(
-     resourceGroup,
-     namespaceName,
-     venthubName,
-     new Eventhub() { MessageRetentionInDays = 5 });
+//create eventhub
+EventHubCollection eventHubCollection = eventHubNamespace.GetEventHubs();
+EventHubData eventHubData = new EventHubData()
+{
+    MessageRetentionInDays = 4,
+    PartitionCount = 4,
+    Status = EntityStatus.Active,
+    CaptureDescription = new CaptureDescription()
+    {
+        Enabled = true,
+        Encoding = EncodingCaptureDescription.Avro,
+        IntervalInSeconds = 120,
+        SizeLimitInBytes = 10485763,
+        Destination = new EventHubDestination()
+        {
+            Name = "EventHubArchive.AzureBlockBlob",
+            BlobContainer = "Container",
+            ArchiveNameFormat = "{Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}",
+            StorageAccountResourceId = subscription.Id.ToString() + "/resourcegroups/v-ajnavtest/providers/Microsoft.Storage/storageAccounts/testingsdkeventhubnew"
+        },
+        SkipEmptyArchives = true
+    }
+};
+EventHub eventHub = eventHubCollection.CreateOrUpdate(eventhubName, eventHubData).Value;
 ```
 
 #### Object Model Changes
@@ -126,7 +146,7 @@ Example: Create an AuthorizationRule Model
 
 Before upgrade:
 ```csharp
-var createAutorizationRuleParameter = new AuthorizationRule()
+var createAuthorizationRuleParameter = new AuthorizationRule()
     {
         Rights = new List<string>() { AccessRights.Listen, AccessRights.Send }
     };
@@ -134,8 +154,7 @@ var createAutorizationRuleParameter = new AuthorizationRule()
 
 After upgrade:
 ```csharp
-var createAutorizationRuleParameter = new AuthorizationRule()
-    {
-        Rights = new List<AccessRights>() { AccessRights.Listen,AccessRights.Send}
-    };
+var createAuthorizationRuleParameter = new AuthorizationRuleData();
+createAuthorizationRuleParameter.Rights.Add(AccessRights.Listen);
+createAuthorizationRuleParameter.Rights.Add(AccessRights.Send);
 ```

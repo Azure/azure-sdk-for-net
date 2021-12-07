@@ -59,7 +59,6 @@
       "RequestHeaders": {
         "Accept": "application/vnd.microsoft.appconfig.kv\u002Bjson",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "Date": "Mon, 08 Feb 2021 19:13:52 GMT",
         "Sync-Token": "zAJw6V16=MDozIzY4NzE0NTA=",
         "traceparent": "00-9bfba15901c71841863cf86007395e2b-5f5e90920dce014c-00",

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
 namespace Microsoft.Azure.WebPubSub.Common
@@ -9,17 +10,20 @@ namespace Microsoft.Azure.WebPubSub.Common
     /// <summary>
     /// User message event request.
     /// </summary>
+    [DataContract]
     public sealed class UserEventRequest : WebPubSubEventRequest
     {
         /// <summary>
         /// Message content.
         /// </summary>
+        [DataMember(Name = "data")]
         [JsonPropertyName("data"), JsonConverter(typeof(BinaryDataJsonConverter))]
         public BinaryData Data { get; }
 
         /// <summary>
         /// Message data type.
         /// </summary>
+        [DataMember(Name = "dataType")]
         [JsonPropertyName("dataType"), JsonConverter(typeof(JsonStringEnumConverter))]
         public WebPubSubDataType DataType { get; }
 
@@ -56,8 +60,14 @@ namespace Microsoft.Azure.WebPubSub.Common
             return new EventErrorResponse(code, message);
         }
 
-        internal UserEventRequest(WebPubSubConnectionContext connectionContext, BinaryData data, WebPubSubDataType dataType)
-            : base(connectionContext)
+        /// <summary>
+        /// The user event request
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="data"></param>
+        /// <param name="dataType"></param>
+        public UserEventRequest(WebPubSubConnectionContext context, BinaryData data, WebPubSubDataType dataType)
+            : base(context)
         {
             Data = data;
             DataType = dataType;

@@ -65,7 +65,10 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <param name="provisioningState">The provisioned state of the
         /// resource. Possible values include: 'Running', 'Creating',
         /// 'Deleting', 'Succeeded', 'Failed', 'Moving', 'Canceled'</param>
-        public EventHubDataConnection(string eventHubResourceId, string consumerGroup, string id = default(string), string name = default(string), string type = default(string), string location = default(string), SystemData systemData = default(SystemData), string tableName = default(string), string mappingRuleName = default(string), string dataFormat = default(string), IList<string> eventSystemProperties = default(IList<string>), string compression = default(string), string provisioningState = default(string))
+        /// <param name="managedIdentityResourceId">The resource ID of a
+        /// managed identity (system or user assigned) to be used to
+        /// authenticate with event hub.</param>
+        public EventHubDataConnection(string eventHubResourceId, string consumerGroup, string id = default(string), string name = default(string), string type = default(string), string location = default(string), SystemData systemData = default(SystemData), string tableName = default(string), string mappingRuleName = default(string), string dataFormat = default(string), IList<string> eventSystemProperties = default(IList<string>), string compression = default(string), string provisioningState = default(string), string managedIdentityResourceId = default(string))
             : base(id, name, type, location, systemData)
         {
             EventHubResourceId = eventHubResourceId;
@@ -76,6 +79,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
             EventSystemProperties = eventSystemProperties;
             Compression = compression;
             ProvisioningState = provisioningState;
+            ManagedIdentityResourceId = managedIdentityResourceId;
             CustomInit();
         }
 
@@ -141,6 +145,13 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resource ID of a managed identity (system or user
+        /// assigned) to be used to authenticate with event hub.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.managedIdentityResourceId")]
+        public string ManagedIdentityResourceId { get; set; }
 
         /// <summary>
         /// Validate the object.

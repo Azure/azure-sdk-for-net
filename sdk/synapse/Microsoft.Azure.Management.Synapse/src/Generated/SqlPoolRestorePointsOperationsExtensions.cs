@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='sqlPoolName'>
             /// SQL pool name
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='sqlPoolName'>
             /// SQL pool name
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='sqlPoolName'>
             /// SQL pool name
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='sqlPoolName'>
             /// SQL pool name
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='sqlPoolName'>
             /// SQL pool name
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='sqlPoolName'>
             /// SQL pool name
@@ -187,7 +187,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='sqlPoolName'>
             /// SQL pool name
@@ -210,7 +210,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='sqlPoolName'>
             /// SQL pool name
@@ -236,7 +236,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='sqlPoolName'>
             /// SQL pool name
@@ -259,7 +259,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='sqlPoolName'>
             /// SQL pool name

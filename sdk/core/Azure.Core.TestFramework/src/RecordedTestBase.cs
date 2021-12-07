@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 using Castle.DynamicProxy;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
@@ -14,9 +16,15 @@ namespace Azure.Core.TestFramework
 {
     public abstract class RecordedTestBase : ClientTestBase
     {
+        static RecordedTestBase()
+        {
+            // remove once https://github.com/Azure/azure-sdk-for-net/pull/25328 is shipped
+            ServicePointManager.Expect100Continue = false;
+        }
+
         protected RecordedTestSanitizer Sanitizer { get; set; }
 
-        protected RecordMatcher Matcher { get; set; }
+        protected internal RecordMatcher Matcher { get; set; }
 
         public TestRecording Recording { get; private set; }
 
@@ -54,29 +62,49 @@ namespace Azure.Core.TestFramework
             }
         }
         private bool _saveDebugRecordingsOnFailure;
+
+        private TestProxy _proxy;
+
+        private readonly bool _useLegacyTransport;
+        private DateTime _testStartTime;
+
         protected bool ValidateClientInstrumentation { get; set; }
 
-        protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync)
+        protected override DateTime TestStartTime => _testStartTime;
+
+        protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null, bool useLegacyTransport = false) : base(isAsync)
         {
             Sanitizer = new RecordedTestSanitizer();
             Matcher = new RecordMatcher();
             Mode = mode ?? TestEnvironment.GlobalTestMode;
+            _useLegacyTransport = useLegacyTransport;
+        }
+
+        protected async Task<TestRecording> CreateTestRecordingAsync(RecordedTestMode mode, string sessionFile,
+            RecordedTestSanitizer sanitizer, RecordMatcher matcher)
+        {
+            var recording = new TestRecording(mode, sessionFile, sanitizer, matcher, _proxy, _useLegacyTransport);
+            await recording.InitializeProxySettingsAsync();
+            return recording;
         }
 
         public T InstrumentClientOptions<T>(T clientOptions, TestRecording recording = default) where T : ClientOptions
         {
             recording ??= Recording;
-            clientOptions.Transport = recording.CreateTransport(clientOptions.Transport);
+
             if (Mode == RecordedTestMode.Playback)
             {
                 // Not making the timeout zero so retry code still goes async
                 clientOptions.Retry.Delay = TimeSpan.FromMilliseconds(10);
                 clientOptions.Retry.Mode = RetryMode.Fixed;
             }
+
+            clientOptions.Transport = recording.CreateTransport(clientOptions.Transport);
+
             return clientOptions;
         }
 
-        protected string GetSessionFilePath()
+        protected internal string GetSessionFilePath()
         {
             TestContext.TestAdapter testAdapter = TestContext.CurrentContext.Test;
 
@@ -99,6 +127,15 @@ namespace Azure.Core.TestFramework
                 fileName);
         }
 
+        public override void GlobalTimeoutTearDown()
+        {
+            // Only enforce the timeout on playback.
+            if (Mode == RecordedTestMode.Playback)
+            {
+                base.GlobalTimeoutTearDown();
+            }
+        }
+
         /// <summary>
         /// Add a static <see cref="Diagnostics.AzureEventSourceListener"/> which will redirect SDK logging
         /// to Console.Out for easy debugging.
@@ -110,28 +147,37 @@ namespace Azure.Core.TestFramework
         /// This will run once before any tests.
         /// </summary>
         [OneTimeSetUp]
-        public void StartLoggingEvents()
+        public void InitializeRecordedTestClass()
         {
             if (Mode == RecordedTestMode.Live || Debugger.IsAttached)
             {
                 Logger = new TestLogger();
             }
+
+            if (!_useLegacyTransport && Mode != RecordedTestMode.Live)
+            {
+                _proxy = TestProxy.Start();
+            }
         }
 
         /// <summary>
-        /// Stop logging events and do necessary cleanup.
+        /// Do necessary cleanup.
         /// This will run once after all tests have finished.
         /// </summary>
         [OneTimeTearDown]
-        public void StopLoggingEvents()
+        public void TearDownRecordedTestClass()
         {
             Logger?.Dispose();
             Logger = null;
+            _proxy?.Stop();
         }
 
         [SetUp]
-        public virtual void StartTestRecording()
+        public virtual async Task StartTestRecordingAsync()
         {
+            // initialize test start time in case test is skipped
+            _testStartTime = DateTime.UtcNow;
+
             // Only create test recordings for the latest version of the service
             TestContext.TestAdapter test = TestContext.CurrentContext.Test;
             if (Mode != RecordedTestMode.Live &&
@@ -146,15 +192,17 @@ namespace Azure.Core.TestFramework
                 throw new IgnoreException((string) test.Properties.Get("_SkipLive"));
             }
 
-            Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
+            Recording = await CreateTestRecordingAsync(Mode, GetSessionFilePath(), Sanitizer, Matcher);
             ValidateClientInstrumentation = Recording.HasRequests;
+
+            // don't include test proxy overhead as part of test time
+            _testStartTime = DateTime.UtcNow;
         }
 
         [TearDown]
-        public virtual void StopTestRecording()
+        public virtual async Task StopTestRecordingAsync()
         {
             bool testPassed = TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Passed;
-
             if (ValidateClientInstrumentation && testPassed)
             {
                 throw new InvalidOperationException("The test didn't instrument any clients but had recordings. Please call InstrumentClient for the client being recorded.");
@@ -164,7 +212,12 @@ namespace Azure.Core.TestFramework
 #if DEBUG
             save |= SaveDebugRecordingsOnFailure;
 #endif
-            Recording?.Dispose(save);
+            if (Recording != null)
+            {
+                await Recording.DisposeAsync(save);
+            }
+
+            _proxy?.CheckForErrors();
         }
 
         protected internal override object InstrumentClient(Type clientType, object client, IEnumerable<IInterceptor> preInterceptors)
@@ -197,6 +250,48 @@ namespace Azure.Core.TestFramework
                 managementInterceptor,
                 new GetOriginalInterceptor(operation),
                 new OperationInterceptor(Mode == RecordedTestMode.Playback));
+        }
+
+        /// <summary>
+        /// A number of our tests have built in delays while we wait an expected
+        /// amount of time for a service operation to complete and this method
+        /// allows us to wait (unless we're playing back recordings, which can
+        /// complete immediately).
+        /// </summary>
+        /// <param name="milliseconds">The number of milliseconds to wait.</param>
+        /// <param name="playbackDelayMilliseconds">
+        /// An optional number of milliseconds to wait if we're playing back a
+        /// recorded test.  This is useful for allowing client side events to
+        /// get processed.
+        /// </param>
+        /// <returns>A task that will (optionally) delay.</returns>
+        public Task Delay(int milliseconds = 1000, int? playbackDelayMilliseconds = null) =>
+            Delay(Mode, milliseconds, playbackDelayMilliseconds);
+
+        /// <summary>
+        /// A number of our tests have built in delays while we wait an expected
+        /// amount of time for a service operation to complete and this method
+        /// allows us to wait (unless we're playing back recordings, which can
+        /// complete immediately).
+        /// </summary>
+        /// <param name="milliseconds">The number of milliseconds to wait.</param>
+        /// <param name="playbackDelayMilliseconds">
+        /// An optional number of milliseconds to wait if we're playing back a
+        /// recorded test.  This is useful for allowing client side events to
+        /// get processed.
+        /// </param>
+        /// <returns>A task that will (optionally) delay.</returns>
+        public static Task Delay(RecordedTestMode mode, int milliseconds = 1000, int? playbackDelayMilliseconds = null)
+        {
+            if (mode != RecordedTestMode.Playback)
+            {
+                return Task.Delay(milliseconds);
+            }
+            else if (playbackDelayMilliseconds != null)
+            {
+                return Task.Delay(playbackDelayMilliseconds.Value);
+            }
+            return Task.CompletedTask;
         }
 
         protected TestRetryHelper TestRetryHelper => new TestRetryHelper(Mode == RecordedTestMode.Playback);

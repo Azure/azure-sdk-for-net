@@ -5,50 +5,42 @@
 
 #nullable disable
 
-using System;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The database usages. </summary>
-    public partial class DatabaseUsage
+    /// <summary> Usage metric of a database. </summary>
+    public partial class DatabaseUsage : Resource
     {
         /// <summary> Initializes a new instance of DatabaseUsage. </summary>
-        internal DatabaseUsage()
+        public DatabaseUsage()
         {
         }
 
         /// <summary> Initializes a new instance of DatabaseUsage. </summary>
-        /// <param name="name"> The name of the usage metric. </param>
-        /// <param name="resourceName"> The name of the resource. </param>
-        /// <param name="displayName"> The usage metric display name. </param>
-        /// <param name="currentValue"> The current value of the usage metric. </param>
-        /// <param name="limit"> The current limit of the usage metric. </param>
-        /// <param name="unit"> The units of the usage metric. </param>
-        /// <param name="nextResetTime"> The next reset time for the usage metric (ISO8601 format). </param>
-        internal DatabaseUsage(string name, string resourceName, string displayName, double? currentValue, double? limit, string unit, DateTimeOffset? nextResetTime)
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
+        /// <param name="displayName"> User-readable name of the metric. </param>
+        /// <param name="currentValue"> Current value of the metric. </param>
+        /// <param name="limit"> Boundary value of the metric. </param>
+        /// <param name="unit"> Unit of the metric. </param>
+        internal DatabaseUsage(ResourceIdentifier id, string name, ResourceType type, string displayName, double? currentValue, double? limit, string unit) : base(id, name, type)
         {
-            Name = name;
-            ResourceName = resourceName;
             DisplayName = displayName;
             CurrentValue = currentValue;
             Limit = limit;
             Unit = unit;
-            NextResetTime = nextResetTime;
         }
 
-        /// <summary> The name of the usage metric. </summary>
-        public string Name { get; }
-        /// <summary> The name of the resource. </summary>
-        public string ResourceName { get; }
-        /// <summary> The usage metric display name. </summary>
+        /// <summary> User-readable name of the metric. </summary>
         public string DisplayName { get; }
-        /// <summary> The current value of the usage metric. </summary>
+        /// <summary> Current value of the metric. </summary>
         public double? CurrentValue { get; }
-        /// <summary> The current limit of the usage metric. </summary>
+        /// <summary> Boundary value of the metric. </summary>
         public double? Limit { get; }
-        /// <summary> The units of the usage metric. </summary>
+        /// <summary> Unit of the metric. </summary>
         public string Unit { get; }
-        /// <summary> The next reset time for the usage metric (ISO8601 format). </summary>
-        public DateTimeOffset? NextResetTime { get; }
     }
 }

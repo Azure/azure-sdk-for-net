@@ -1,14 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <UseNewMgmtFramework>false</UseNewMgmtFramework>
-    <IsMgmtSubLibrary>false</IsMgmtSubLibrary>
-  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.ResourceManager.Network"/>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.ResourceManager.CosmosDB.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager.Resources"/>
-    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="$(MgmtAutorestVersion)" PrivateAssets="All" />
   </ItemGroup>
 </Project>

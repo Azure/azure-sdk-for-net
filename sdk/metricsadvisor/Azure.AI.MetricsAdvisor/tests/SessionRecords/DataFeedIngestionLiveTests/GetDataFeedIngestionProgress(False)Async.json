@@ -1,13 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/dataFeeds/9860df01-e740-40ec-94a2-6351813552ba/ingestionProgress",
+      "RequestUri": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/dataFeeds/151e5444-449f-441e-8b64-988f21c5d054/ingestionProgress",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-a0d93f6477eb474681bf4bccd3dc7d6c-d65bace5d20c1f4c-00",
-        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210119.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-c8d0b202fd08694eab07d41aebe69e04-a48428d51c16b545-00",
+        "User-Agent": [
+          "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20211118.1",
+          "(.NET 5.0.12; Microsoft Windows 10.0.22000)"
+        ],
         "x-api-key": "Sanitized",
         "x-ms-client-request-id": "50ab3fbd6913e01d85d3d4769b5c4579",
         "x-ms-return-client-request-id": "true"
@@ -15,23 +18,23 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "37f960b0-af65-4de1-8f42-636ffd11cf8e",
+        "apim-request-id": "88d301ef-36e3-4b03-9b76-e7e3464ab0ac",
         "Content-Length": "96",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 19 Jan 2021 17:58:16 GMT",
+        "Date": "Thu, 18 Nov 2021 17:48:34 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "203",
-        "x-request-id": "37f960b0-af65-4de1-8f42-636ffd11cf8e"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "260",
+        "X-Request-ID": "88d301ef-36e3-4b03-9b76-e7e3464ab0ac"
       },
       "ResponseBody": {
-        "latestSuccessTimestamp": "2021-01-18T00:00:00Z",
-        "latestActiveTimestamp": "2021-01-18T00:00:00Z"
+        "latestSuccessTimestamp": "2021-11-16T00:00:00Z",
+        "latestActiveTimestamp": "2021-11-17T00:00:00Z"
       }
     }
   ],
   "Variables": {
-    "METRICSADVISOR_ACCOUNT_NAME": "js-metrics-advisor",
+    "METRICSADVISOR_ACCOUNT_NAME": "ga-metrics-advisor",
     "METRICSADVISOR_ENDPOINT_SUFFIX": null,
     "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
     "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",

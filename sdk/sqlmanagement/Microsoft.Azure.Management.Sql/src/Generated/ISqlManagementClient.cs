@@ -73,11 +73,6 @@ namespace Microsoft.Azure.Management.Sql
         IRecoverableDatabasesOperations RecoverableDatabases { get; }
 
         /// <summary>
-        /// Gets the IServerConnectionPoliciesOperations.
-        /// </summary>
-        IServerConnectionPoliciesOperations ServerConnectionPolicies { get; }
-
-        /// <summary>
         /// Gets the IDataMaskingPoliciesOperations.
         /// </summary>
         IDataMaskingPoliciesOperations DataMaskingPolicies { get; }
@@ -293,16 +288,6 @@ namespace Microsoft.Azure.Management.Sql
         ICapabilitiesOperations Capabilities { get; }
 
         /// <summary>
-        /// Gets the ILongTermRetentionBackupsOperations.
-        /// </summary>
-        ILongTermRetentionBackupsOperations LongTermRetentionBackups { get; }
-
-        /// <summary>
-        /// Gets the ILongTermRetentionManagedInstanceBackupsOperations.
-        /// </summary>
-        ILongTermRetentionManagedInstanceBackupsOperations LongTermRetentionManagedInstanceBackups { get; }
-
-        /// <summary>
         /// Gets the ILongTermRetentionPoliciesOperations.
         /// </summary>
         ILongTermRetentionPoliciesOperations LongTermRetentionPolicies { get; }
@@ -431,11 +416,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IManagedInstancePrivateLinkResourcesOperations.
         /// </summary>
         IManagedInstancePrivateLinkResourcesOperations ManagedInstancePrivateLinkResources { get; }
-
-        /// <summary>
-        /// Gets the IManagedInstancesOperations.
-        /// </summary>
-        IManagedInstancesOperations ManagedInstances { get; }
 
         /// <summary>
         /// Gets the IManagedInstanceTdeCertificatesOperations.
@@ -643,6 +623,31 @@ namespace Microsoft.Azure.Management.Sql
         IOutboundFirewallRulesOperations OutboundFirewallRules { get; }
 
         /// <summary>
+        /// Gets the IServersOperations.
+        /// </summary>
+        IServersOperations Servers { get; }
+
+        /// <summary>
+        /// Gets the IUsagesOperations.
+        /// </summary>
+        IUsagesOperations Usages { get; }
+
+        /// <summary>
+        /// Gets the ILongTermRetentionBackupsOperations.
+        /// </summary>
+        ILongTermRetentionBackupsOperations LongTermRetentionBackups { get; }
+
+        /// <summary>
+        /// Gets the ILongTermRetentionManagedInstanceBackupsOperations.
+        /// </summary>
+        ILongTermRetentionManagedInstanceBackupsOperations LongTermRetentionManagedInstanceBackups { get; }
+
+        /// <summary>
+        /// Gets the IManagedInstancesOperations.
+        /// </summary>
+        IManagedInstancesOperations ManagedInstances { get; }
+
+        /// <summary>
         /// Gets the IRestorableDroppedDatabasesOperations.
         /// </summary>
         IRestorableDroppedDatabasesOperations RestorableDroppedDatabases { get; }
@@ -653,14 +658,9 @@ namespace Microsoft.Azure.Management.Sql
         IRestorableDroppedManagedDatabasesOperations RestorableDroppedManagedDatabases { get; }
 
         /// <summary>
-        /// Gets the IServersOperations.
+        /// Gets the IServerConnectionPoliciesOperations.
         /// </summary>
-        IServersOperations Servers { get; }
-
-        /// <summary>
-        /// Gets the IUsagesOperations.
-        /// </summary>
-        IUsagesOperations Usages { get; }
+        IServerConnectionPoliciesOperations ServerConnectionPolicies { get; }
 
     }
 }

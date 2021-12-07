@@ -6,11 +6,17 @@ dotnet restore $RepoRoot\eng\service.proj
 
 Push-Location $PSScriptRoot
 
-$diff = git diff --name-only main -- $RepoRoot\sdk\core\Azure.Core\src\Shared\
+$diff = git diff --name-only upstream/main -- $RepoRoot/sdk/core/Azure.Core/src/Shared/
+
+Write-Host "Building solution for projects referencing shared source:"
+Write-Host $diff
+
 $sharedFiles = $diff -split "\n"
 For ($i=0; $i -lt $sharedFiles.Length; $i++) {
     $sharedFiles[$i] = Split-Path $sharedFiles[$i] -Leaf
 }
+
+
 $sharedFilesPattern =  Join-String -Separator "|" -InputObject $sharedFiles
 $sharedFilesPattern = ("'" + $sharedFilesPattern + "'")
 
@@ -45,11 +51,13 @@ try
     }
 
     # Do another pass to get all projects that reference the ones discovered in the first pass. This will typically be test projects.
+    Write-Host "Checking for additional projects that reference shared source"
     $foundProjectsPattern = Join-String -Separator "|" -InputObject $projects
     $foundProjectsPattern = $foundProjectsPattern.Replace("\", "\\\\").Replace(".", "\.")
 
     $projectsIncludingRefs = $dirs | %{ 
         $assetsFile = "$_\project.assets.json"
+        Write-Host -NoNewline "."
 
         if (!(Test-Path $assetsFile))
         {
@@ -66,8 +74,14 @@ try
     }
 
     $len = $projectsIncludingRefs.Length
-    dotnet sln $slnName add $projectsIncludingRefs[0..($len/2)]
-    dotnet sln $slnName add $projectsIncludingRefs[($len/2 + 1)..($len-1)]
+    if ($len -gt 20)
+    {
+        dotnet sln $slnName add $projectsIncludingRefs[0..($len/2)]
+        dotnet sln $slnName add $projectsIncludingRefs[($len/2 + 1)..($len-1)]
+    } else
+    {
+        dotnet sln $slnName add $projectsIncludingRefs
+    }
 }
 catch{
     Write-Host $_

@@ -18,7 +18,7 @@ To create an notebook, first create one or more `NotebookCell` with contents, an
 
 ```C# Snippet:ConfigureNotebookResource
 string notebookName = "Test-Notebook";
-var cell = new NotebookCell("code", new NotebookMetadata (), new string[] {
+var cell = new NotebookCell("code", new NotebookMetadata(), new string[] {
     "from azureml.opendatasets import NycTlcYellow\n",
     "\n",
     "data = NycTlcYellow()\n",

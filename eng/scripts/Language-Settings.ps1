@@ -254,7 +254,10 @@ function GetExistingPackageVersions ($PackageName, $GroupId=$null)
     return $existingVersion.versions
   }
   catch {
-    LogError "Failed to retrieve package versions. `n$_"
+    if ($_.Exception.Response.StatusCode -ne 404) 
+    {
+      LogError "Failed to retrieve package versions for ${PackageName}. $($_.Exception.Message)"
+    }
     return $null
   }
 }
@@ -517,4 +520,11 @@ function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
     $outputLines += Get-DocsCiLine $package
   }
   Set-Content -Path $DocConfigFile -Value $outputLines
+}
+
+function Import-Dev-Cert-net
+{
+  Write-Host "Importing dev certificate"
+  dotnet dev-certs https --clean --import eng/common/testproxy/dotnet-devcert.pfx --password="password"
+  dotnet dev-certs https --trust
 }

@@ -17,13 +17,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
         public async Task DatasetSample()
         {
             #region Snippet:CreateDatasetClientPrep
+#if SNIPPET
             // Replace the string below with your actual endpoint url.
             string endpoint = "<my-endpoint-url>";
-            /*@@*/endpoint = TestEnvironment.EndpointUrl;
-
             string storageName = "<my-storage-name>";
-            /*@@*/storageName = TestEnvironment.WorkspaceName + "-WorkspaceDefaultStorage";
-
+#else
+            string endpoint = TestEnvironment.EndpointUrl;
+            string storageName = TestEnvironment.WorkspaceName + "-WorkspaceDefaultStorage";
+#endif
             string dataSetName = "Test-Dataset";
             #endregion
 
