@@ -28,7 +28,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Infrastructure
             BodyRegexSanitizers.Add(
                 new BodyRegexSanitizer(
                     "[^\\r](?<break>\\n)",
-                                        "\r\n"))
+                    "\r\n"))
                 {
                     GroupForReplace = "break"
                 });
