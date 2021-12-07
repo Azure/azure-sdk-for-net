@@ -80,8 +80,6 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             await rule1.DeleteAsync();
             await rule2.DeleteAsync();
-            await serviceBusSubscription.DeleteAsync();
-            await serviceBusNamespace.DeleteAsync();
         }
     }
 }
