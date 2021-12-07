@@ -226,12 +226,12 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Add a participant to the call. </summary>
         /// <param name="participant"> The identity of participant to be added to the call. </param>
-        /// <param name="alternateCallerId">The phone number to use when adding a pstn participant.</param>
+        /// <param name="alternateCallerId">The phone number identifier to use when adding a pstn participant. </param>
         /// <param name="operationContext">The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="participant"/> is null. </exception>
-        public virtual async Task<Response<AddParticipantResult>> AddParticipantAsync(CommunicationIdentifier participant, string alternateCallerId = default, string operationContext = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AddParticipantResult>> AddParticipantAsync(CommunicationIdentifier participant, PhoneNumberIdentifier alternateCallerId = default, string operationContext = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(AddParticipant)}");
             scope.Start();
@@ -240,7 +240,7 @@ namespace Azure.Communication.CallingServer
                 return await RestClient.AddParticipantAsync(
                     callConnectionId: CallConnectionId,
                     participant: CommunicationIdentifierSerializer.Serialize(participant),
-                    alternateCallerId: alternateCallerId == null ? null : new PhoneNumberIdentifierModel(alternateCallerId),
+                    alternateCallerId: alternateCallerId == null ? null : new PhoneNumberIdentifierModel(alternateCallerId.PhoneNumber),
                     operationContext: operationContext,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
@@ -254,12 +254,12 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Add a participant to the call. </summary>
         /// <param name="participant"> The identity of participant to be added to the call. </param>
-        /// <param name="alternateCallerId">The phone number to use when adding a pstn participant.</param>
+        /// <param name="alternateCallerId">The phone number identifier to use when adding a pstn participant. </param>
         /// <param name="operationContext">The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="participant"/> is null. </exception>
-        public virtual Response<AddParticipantResult> AddParticipant(CommunicationIdentifier participant, string alternateCallerId = default, string operationContext = default, CancellationToken cancellationToken = default)
+        public virtual Response<AddParticipantResult> AddParticipant(CommunicationIdentifier participant, PhoneNumberIdentifier alternateCallerId = default, string operationContext = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(AddParticipant)}");
             scope.Start();
@@ -268,7 +268,7 @@ namespace Azure.Communication.CallingServer
                 return RestClient.AddParticipant(
                     callConnectionId: CallConnectionId,
                     participant: CommunicationIdentifierSerializer.Serialize(participant),
-                    alternateCallerId: alternateCallerId == null ? null : new PhoneNumberIdentifierModel(alternateCallerId),
+                    alternateCallerId: alternateCallerId == null ? null : new PhoneNumberIdentifierModel(alternateCallerId.PhoneNumber),
                     operationContext: operationContext,
                     cancellationToken: cancellationToken
                     );
@@ -328,12 +328,12 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Transfer the call to a participant. </summary>
         /// <param name="targetParticipant"> The target participant. </param>
-        /// <param name="alternateCallerId">The phone number to use when transferring to a pstn participant.</param>
+        /// <param name="alternateCallerId">The phone number identifier to use when transferring to a pstn participant. </param>
         /// <param name="userToUserInformation">The user to user information payload. </param>
         /// <param name="operationContext"> The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<TransferCallResult>> TransferToParticipantAsync(CommunicationIdentifier targetParticipant, string alternateCallerId = default, string userToUserInformation = default, string operationContext = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TransferCallResult>> TransferToParticipantAsync(CommunicationIdentifier targetParticipant, PhoneNumberIdentifier alternateCallerId = default, string userToUserInformation = default, string operationContext = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(TransferToParticipantAsync)}");
             scope.Start();
@@ -342,7 +342,7 @@ namespace Azure.Communication.CallingServer
                 return await RestClient.TransferToParticipantAsync(
                     callConnectionId: CallConnectionId,
                     targetParticipant: CommunicationIdentifierSerializer.Serialize(targetParticipant),
-                    alternateCallerId: alternateCallerId == null ? null : new PhoneNumberIdentifierModel(alternateCallerId),
+                    alternateCallerId: alternateCallerId == null ? null : new PhoneNumberIdentifierModel(alternateCallerId.PhoneNumber),
                     userToUserInformation: userToUserInformation,
                     operationContext: operationContext,
                     cancellationToken: cancellationToken
@@ -357,12 +357,12 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Transfer the call to a participant. </summary>
         /// <param name="targetParticipant"> The target participant. </param>
-        /// <param name="alternateCallerId">The phone number to use when transferring to a pstn participant.</param>
+        /// <param name="alternateCallerId">The phone number identifier to use when transferring to a pstn participant. </param>
         /// <param name="userToUserInformation">The user to user information payload. </param>
         /// <param name="operationContext"> The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<TransferCallResult> TransferToParticipant(CommunicationIdentifier targetParticipant, string alternateCallerId = default, string userToUserInformation = default, string operationContext = default, CancellationToken cancellationToken = default)
+        public virtual Response<TransferCallResult> TransferToParticipant(CommunicationIdentifier targetParticipant, PhoneNumberIdentifier alternateCallerId = default, string userToUserInformation = default, string operationContext = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(TransferToParticipant)}");
             scope.Start();
@@ -371,7 +371,7 @@ namespace Azure.Communication.CallingServer
                 return RestClient.TransferToParticipant(
                     callConnectionId: CallConnectionId,
                     targetParticipant: CommunicationIdentifierSerializer.Serialize(targetParticipant),
-                    alternateCallerId: alternateCallerId == null ? null : new PhoneNumberIdentifierModel(alternateCallerId),
+                    alternateCallerId: alternateCallerId == null ? null : new PhoneNumberIdentifierModel(alternateCallerId.PhoneNumber),
                     userToUserInformation: userToUserInformation,
                     operationContext: operationContext,
                     cancellationToken: cancellationToken
