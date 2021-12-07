@@ -1,12 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System.Linq;
-using Azure.Core;
 using Azure.Maps.Search.Models;
 
 namespace Azure.Maps.Search.Tests
@@ -75,6 +73,34 @@ namespace Azure.Maps.Search.Tests
             });
 
             Assert.AreEqual("Moke Lake Road", searchResult.Value.Results.First().Address.StreetName);
+        }
+
+        [RecordedTest]
+        public async Task CanSearchStructuredAddress()
+        {
+            var client = CreateClient();
+            var address = new StructuredAddress {
+                CountryCode = "US",
+                StreetNumber = "15127",
+                StreetName = "NE 24th Street",
+                Municipality = "Redmond",
+                CountrySubdivision = "WA",
+                PostalCode = "98052"
+            };
+            var searchResult = await client.SearchStructuredAddressAsync(address);
+            Assert.AreEqual("15127 Northeast 24th Street, Redmond, WA 98052", searchResult.Value.Results.First().Address.FreeformAddress);
+        }
+
+        [RecordedTest]
+        public async Task CanSearchStructuredPartialAddress()
+        {
+            var client = CreateClient();
+            var address = new StructuredAddress {
+                CountryCode = "NZ",
+                Municipality = "Closeburn"
+            };
+            var searchResult = await client.SearchStructuredAddressAsync(address);
+            Assert.AreEqual("South Island", searchResult.Value.Results.First().Address.CountrySubdivision);
         }
 
         [RecordedTest]

@@ -1,0 +1,1626 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/search/fuzzy/batch/json?api-version=1.0",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "190",
+        "Content-Type": "application/json",
+        "traceparent": "00-f448fe695a67a54fbe5d4ad0ce235d4e-7a29cd640b180c48-00",
+        "User-Agent": [
+          "azsdk-net-Maps.Search/1.0.0-alpha.20211208.1",
+          "(.NET 5.0.10; Darwin 21.1.0 Darwin Kernel Version 21.1.0: Wed Oct 13 17:33:23 PDT 2021; root:xnu-8019.41.5~1/RELEASE_X86_64)"
+        ],
+        "x-ms-client-id": "6a782b5b-631c-450d-9aa4-e561679d0d28",
+        "x-ms-client-request-id": "d4fe9fff6de9bb1674d1f2e501971d60",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "batchItems": [
+          {
+            "query": "??api-version=1.0\u0026query=coffee\u0026lat=25.04\u0026lon=121.56\u0026language=en"
+          },
+          {
+            "query": "??api-version=1.0\u0026query=pizza\u0026lat=25.04\u0026lon=121.56"
+          }
+        ]
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Content-Length": "2",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 07 Dec 2021 19:45:29 GMT",
+        "Location": "https://atlas.microsoft.com/search/fuzzy/batch/a7c75dc4-a6c4-4ab5-afcf-5378887b77e6?api-version=1.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: DF3D8C2DA94841A18510A63CE20A6C9B Ref B: TPE30EDGE0621 Ref C: 2021-12-07T19:45:29Z"
+      },
+      "ResponseBody": "\u0022\u0022"
+    },
+    {
+      "RequestUri": "https://atlas.microsoft.com/search/fuzzy/batch/a7c75dc4-a6c4-4ab5-afcf-5378887b77e6?api-version=1.0",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Maps.Search/1.0.0-alpha.20211208.1",
+          "(.NET 5.0.10; Darwin 21.1.0 Darwin Kernel Version 21.1.0: Wed Oct 13 17:33:23 PDT 2021; root:xnu-8019.41.5~1/RELEASE_X86_64)"
+        ],
+        "x-ms-client-id": "6a782b5b-631c-450d-9aa4-e561679d0d28",
+        "x-ms-client-request-id": "5384a41dba4eb2c65c45af934a519400",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Tue, 07 Dec 2021 19:45:29 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: E1D93DC8EA8A48A599875B781E187DF4 Ref B: TPE30EDGE0621 Ref C: 2021-12-07T19:45:29Z"
+      },
+      "ResponseBody": {
+        "batchItems": [
+          {
+            "statusCode": 200,
+            "response": {
+              "summary": {
+                "query": "coffee",
+                "queryType": "NON_NEAR",
+                "queryTime": 164,
+                "numResults": 10,
+                "offset": 0,
+                "totalResults": 1793854,
+                "fuzzyLevel": 1,
+                "geoBias": {
+                  "lat": 25.04,
+                  "lon": 121.56
+                }
+              },
+              "results": [
+                {
+                  "type": "POI",
+                  "id": "g6JpZK8xNTgwMDkwMDIwNDI5NjOhY6NUV06hdqdVbmlmaWVk",
+                  "score": 2.5745277405,
+                  "dist": 25.406019685372517,
+                  "info": "search:ta:158009002042963-TW",
+                  "poi": {
+                    "name": "li de fan dian Cafe",
+                    "phone": "\u002B886 2 2723 6458",
+                    "categorySet": [
+                      {
+                        "id": 9376002
+                      }
+                    ],
+                    "url": "tw.leaderhotel.com/cafe83-dr-sun-memorial-hall/",
+                    "categories": [
+                      "caf\u00E9",
+                      "caf\u00E9/pub"
+                    ],
+                    "classifications": [
+                      {
+                        "code": "CAFE_PUB",
+                        "names": [
+                          {
+                            "nameLocale": "en-US",
+                            "name": "caf\u00E9"
+                          },
+                          {
+                            "nameLocale": "en-US",
+                            "name": "caf\u00E9/pub"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "address": {
+                    "municipalitySubdivision": "Xinyi District",
+                    "municipality": "Taipei City",
+                    "countrySubdivision": "Taipei City",
+                    "postalCode": "110",
+                    "countryCode": "TW",
+                    "country": "Taiwan",
+                    "countryCodeISO3": "TWN",
+                    "freeformAddress": "Xinyi District, Taipei City 110",
+                    "localName": "Xinyi District"
+                  },
+                  "position": {
+                    "lat": 25.03997,
+                    "lon": 121.55975
+                  },
+                  "viewport": {
+                    "topLeftPoint": {
+                      "lat": 25.04087,
+                      "lon": 121.55876
+                    },
+                    "btmRightPoint": {
+                      "lat": 25.03907,
+                      "lon": 121.56074
+                    }
+                  },
+                  "entryPoints": [
+                    {
+                      "type": "main",
+                      "position": {
+                        "lat": 25.03997,
+                        "lon": 121.55961
+                      }
+                    }
+                  ],
+                  "dataSources": {
+                    "poiDetails": [
+                      {
+                        "id": "Rm91cnNxdWFyZTo0Y2QyYTI2YTRhYTlmMDRkNjcyYzU4Y2I=",
+                        "sourceName": "Foursquare"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "POI",
+                  "id": "g6JpZK8xNTgwMDkwMDE3NzI1NzahY6NUV06hdqdVbmlmaWVk",
+                  "score": 2.5745136738,
+                  "dist": 210.19656900399005,
+                  "info": "search:ta:158009001772576-TW",
+                  "poi": {
+                    "name": "bu lang ni ka fei",
+                    "phone": "\u002B886 2 8786 0833",
+                    "categorySet": [
+                      {
+                        "id": 9376002
+                      }
+                    ],
+                    "categories": [
+                      "caf\u00E9",
+                      "caf\u00E9/pub"
+                    ],
+                    "classifications": [
+                      {
+                        "code": "CAFE_PUB",
+                        "names": [
+                          {
+                            "nameLocale": "en-US",
+                            "name": "caf\u00E9"
+                          },
+                          {
+                            "nameLocale": "en-US",
+                            "name": "caf\u00E9/pub"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "address": {
+                    "streetNumber": "3",
+                    "streetName": "Yixian Road Lane 42",
+                    "municipalitySubdivision": "Xinyi District",
+                    "municipality": "Taipei City",
+                    "countrySubdivision": "Taipei City",
+                    "postalCode": "110",
+                    "extendedPostalCode": "11071",
+                    "countryCode": "TW",
+                    "country": "Taiwan",
+                    "countryCodeISO3": "TWN",
+                    "freeformAddress": "3, Yixian Road Lane 42, Xinyi District, Taipei City 11071",
+                    "localName": "Xinyi District"
+                  },
+                  "position": {
+                    "lat": 25.0403,
+                    "lon": 121.56206
+                  },
+                  "viewport": {
+                    "topLeftPoint": {
+                      "lat": 25.0412,
+                      "lon": 121.56107
+                    },
+                    "btmRightPoint": {
+                      "lat": 25.0394,
+                      "lon": 121.56305
+                    }
+                  },
+                  "entryPoints": [
+                    {
+                      "type": "main",
+                      "position": {
+                        "lat": 25.04022,
+                        "lon": 121.56206
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "POI",
+                  "id": "g6JpZK8xNTgwMDkwMDIwMTU5MTChY6NUV06hdqdVbmlmaWVk",
+                  "score": 2.5745129585,
+                  "dist": 215.7406818963919,
+                  "info": "search:ta:158009002015910-TW",
+                  "poi": {
+                    "name": "Brownies Cafe",
+                    "categorySet": [
+                      {
+                        "id": 9376002
+                      }
+                    ],
+                    "categories": [
+                      "caf\u00E9",
+                      "caf\u00E9/pub"
+                    ],
+                    "classifications": [
+                      {
+                        "code": "CAFE_PUB",
+                        "names": [
+                          {
+                            "nameLocale": "en-US",
+                            "name": "caf\u00E9"
+                          },
+                          {
+                            "nameLocale": "en-US",
+                            "name": "caf\u00E9/pub"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "address": {
+                    "streetName": "Yixian Road Lane 42",
+                    "municipalitySubdivision": "Xinyi District",
+                    "municipality": "Taipei City",
+                    "countrySubdivision": "Taipei City",
+                    "postalCode": "110",
+                    "extendedPostalCode": "11071",
+                    "countryCode": "TW",
+                    "country": "Taiwan",
+                    "countryCodeISO3": "TWN",
+                    "freeformAddress": "Yixian Road Lane 42, Xinyi District, Taipei City 11071",
+                    "localName": "Xinyi District"
+                  },
+                  "position": {
+                    "lat": 25.04038,
+                    "lon": 121.5621
+                  },
+                  "viewport": {
+                    "topLeftPoint": {
+                      "lat": 25.04128,
+                      "lon": 121.56111
+                    },
+                    "btmRightPoint": {
+                      "lat": 25.03948,
+                      "lon": 121.56309
+                    }
+                  },
+                  "entryPoints": [
+                    {
+                      "type": "main",
+                      "position": {
+                        "lat": 25.04022,
+                        "lon": 121.5621
+                      }
+                    }
+                  ],
+                  "dataSources": {
+                    "poiDetails": [
+                      {
+                        "id": "Rm91cnNxdWFyZTo0YmEzMjAwN2Y5NjRhNTIwYmYyYzM4ZTM=",
+                        "sourceName": "Foursquare"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "POI",
+                  "id": "g6JpZK8xNTgwMDkwMDE3NzEyNDmhY6NUV06hdqdVbmlmaWVk",
+                  "score": 2.5745120049,
+                  "dist": 220.53575977520217,
+                  "info": "search:ta:158009001771249-TW",
+                  "poi": {
+                    "name": "fa dou ka fei qing shi guan",
+                    "categorySet": [
+                      {
+                        "id": 9376006
+                      }
+                    ],
+                    "categories": [
+                      "caf\u00E9/pub",
+                      "coffee shop"
+                    ],
+                    "classifications": [
+                      {
+                        "code": "CAFE_PUB",
+                        "names": [
+                          {
+                            "nameLocale": "en-US",
+                            "name": "coffee shop"
+                          },
+                          {
+                            "nameLocale": "en-US",
+                            "name": "caf\u00E9/pub"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "address": {
+                    "streetNumber": "6",
+                    "streetName": "Yixian Road Lane 50",
+                    "municipalitySubdivision": "Xinyi District",
+                    "municipality": "Taipei City",
+                    "countrySubdivision": "Taipei City",
+                    "postalCode": "110",
+                    "extendedPostalCode": "11071",
+                    "countryCode": "TW",
+                    "country": "Taiwan",
+                    "countryCodeISO3": "TWN",
+                    "freeformAddress": "6, Yixian Road Lane 50, Xinyi District, Taipei City 11071",
+                    "localName": "Xinyi District"
+                  },
+                  "position": {
+                    "lat": 25.04056,
+                    "lon": 121.5621
+                  },
+                  "viewport": {
+                    "topLeftPoint": {
+                      "lat": 25.04146,
+                      "lon": 121.56111
+                    },
+                    "btmRightPoint": {
+                      "lat": 25.03966,
+                      "lon": 121.56309
+                    }
+                  },
+                  "entryPoints": [
+                    {
+                      "type": "main",
+                      "position": {
+                        "lat": 25.04064,
+                        "lon": 121.5621
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "POI",
+                  "id": "g6JpZK8xNTgwMDkwMDE3MTA5MjihY6NUV06hdqdVbmlmaWVk",
+                  "score": 2.5745120049,
+                  "dist": 220.53575977520217,
+                  "info": "search:ta:158009001710928-TW",
+                  "poi": {
+                    "name": "ou li jiang ka fei guan",
+                    "categorySet": [
+                      {
+                        "id": 9376006
+                      }
+                    ],
+                    "categories": [
+                      "caf\u00E9/pub",
+                      "coffee shop"
+                    ],
+                    "classifications": [
+                      {
+                        "code": "CAFE_PUB",
+                        "names": [
+                          {
+                            "nameLocale": "en-US",
+                            "name": "coffee shop"
+                          },
+                          {
+                            "nameLocale": "en-US",
+                            "name": "caf\u00E9/pub"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "address": {
+                    "streetNumber": "6",
+                    "streetName": "Yixian Road Lane 50",
+                    "municipalitySubdivision": "Xinyi District",
+                    "municipality": "Taipei City",
+                    "countrySubdivision": "Taipei City",
+                    "postalCode": "110",
+                    "extendedPostalCode": "11071",
+                    "countryCode": "TW",
+                    "country": "Taiwan",
+                    "countryCodeISO3": "TWN",
+                    "freeformAddress": "6, Yixian Road Lane 50, Xinyi District, Taipei City 11071",
+                    "localName": "Xinyi District"
+                  },
+                  "position": {
+                    "lat": 25.04056,
+                    "lon": 121.5621
+                  },
+                  "viewport": {
+                    "topLeftPoint": {
+                      "lat": 25.04146,
+                      "lon": 121.56111
+                    },
+                    "btmRightPoint": {
+                      "lat": 25.03966,
+                      "lon": 121.56309
+                    }
+                  },
+                  "entryPoints": [
+                    {
+                      "type": "main",
+                      "position": {
+                        "lat": 25.04064,
+                        "lon": 121.5621
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "POI",
+                  "id": "g6JpZK8xNTgwMDkwMDE4MTc5MzehY6NUV06hdqdVbmlmaWVk",
+                  "score": 2.5745120049,
+                  "dist": 220.53575977520217,
+                  "info": "search:ta:158009001817937-TW",
+                  "poi": {
+                    "name": "da lun ka fei guo ji you xian gong si",
+                    "categorySet": [
+                      {
+                        "id": 9376006
+                      }
+                    ],
+                    "categories": [
+                      "caf\u00E9/pub",
+                      "coffee shop"
+                    ],
+                    "classifications": [
+                      {
+                        "code": "CAFE_PUB",
+                        "names": [
+                          {
+                            "nameLocale": "en-US",
+                            "name": "coffee shop"
+                          },
+                          {
+                            "nameLocale": "en-US",
+                            "name": "caf\u00E9/pub"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "address": {
+                    "streetNumber": "6",
+                    "streetName": "Yixian Road Lane 50",
+                    "municipalitySubdivision": "Xinyi District",
+                    "municipality": "Taipei City",
+                    "countrySubdivision": "Taipei City",
+                    "postalCode": "110",
+                    "extendedPostalCode": "11071",
+                    "countryCode": "TW",
+                    "country": "Taiwan",
+                    "countryCodeISO3": "TWN",
+                    "freeformAddress": "6, Yixian Road Lane 50, Xinyi District, Taipei City 11071",
+                    "localName": "Xinyi District"
+                  },
+                  "position": {
+                    "lat": 25.04056,
+                    "lon": 121.5621
+                  },
+                  "viewport": {
+                    "topLeftPoint": {
+                      "lat": 25.04146,
+                      "lon": 121.56111
+                    },
+                    "btmRightPoint": {
+                      "lat": 25.03966,
+                      "lon": 121.56309
+                    }
+                  },
+                  "entryPoints": [
+                    {
+                      "type": "main",
+                      "position": {
+                        "lat": 25.04064,
+                        "lon": 121.5621
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "POI",
+                  "id": "g6JpZK8xNTgwMDkwMDE3ODk2MTOhY6NUV06hdqdVbmlmaWVk",
+                  "score": 2.5745120049,
+                  "dist": 220.53575977520217,
+                  "info": "search:ta:158009001789613-TW",
+                  "poi": {
+                    "name": "louisacoffee yi xian dian",
+                    "phone": "\u002B886 2 8780 4613",
+                    "categorySet": [
+                      {
+                        "id": 9376006
+                      }
+                    ],
+                    "categories": [
+                      "caf\u00E9/pub",
+                      "coffee shop"
+                    ],
+                    "classifications": [
+                      {
+                        "code": "CAFE_PUB",
+                        "names": [
+                          {
+                            "nameLocale": "en-US",
+                            "name": "coffee shop"
+                          },
+                          {
+                            "nameLocale": "en-US",
+                            "name": "caf\u00E9/pub"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "address": {
+                    "streetNumber": "6",
+                    "streetName": "Yixian Road Lane 50",
+                    "municipalitySubdivision": "Xinyi District",
+                    "municipality": "Taipei City",
+                    "countrySubdivision": "Taipei City",
+                    "postalCode": "110",
+                    "extendedPostalCode": "11071",
+                    "countryCode": "TW",
+                    "country": "Taiwan",
+                    "countryCodeISO3": "TWN",
+                    "freeformAddress": "6, Yixian Road Lane 50, Xinyi District, Taipei City 11071",
+                    "localName": "Xinyi District"
+                  },
+                  "position": {
+                    "lat": 25.04056,
+                    "lon": 121.5621
+                  },
+                  "viewport": {
+                    "topLeftPoint": {
+                      "lat": 25.04146,
+                      "lon": 121.56111
+                    },
+                    "btmRightPoint": {
+                      "lat": 25.03966,
+                      "lon": 121.56309
+                    }
+                  },
+                  "entryPoints": [
+                    {
+                      "type": "main",
+                      "position": {
+                        "lat": 25.04064,
+                        "lon": 121.5621
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "POI",
+                  "id": "g6JpZK8xNTgwMDkwMDIzNjAzMDGhY6NUV06hdqdVbmlmaWVk",
+                  "score": 2.574511528,
+                  "dist": 223.75504816419632,
+                  "info": "search:ta:158009002360301-TW",
+                  "poi": {
+                    "name": "Louisa Coffee",
+                    "categorySet": [
+                      {
+                        "id": 9376006
+                      }
+                    ],
+                    "categories": [
+                      "caf\u00E9/pub",
+                      "coffee shop"
+                    ],
+                    "classifications": [
+                      {
+                        "code": "CAFE_PUB",
+                        "names": [
+                          {
+                            "nameLocale": "en-US",
+                            "name": "coffee shop"
+                          },
+                          {
+                            "nameLocale": "en-US",
+                            "name": "caf\u00E9/pub"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "address": {
+                    "streetName": "Yixian Road Lane 50",
+                    "municipalitySubdivision": "Xinyi District",
+                    "municipality": "Taipei City",
+                    "countrySubdivision": "Taipei City",
+                    "postalCode": "110",
+                    "extendedPostalCode": "11071",
+                    "countryCode": "TW",
+                    "country": "Taiwan",
+                    "countryCodeISO3": "TWN",
+                    "freeformAddress": "Yixian Road Lane 50, Xinyi District, Taipei City 11071",
+                    "localName": "Xinyi District"
+                  },
+                  "position": {
+                    "lat": 25.0406,
+                    "lon": 121.56212
+                  },
+                  "viewport": {
+                    "topLeftPoint": {
+                      "lat": 25.0415,
+                      "lon": 121.56113
+                    },
+                    "btmRightPoint": {
+                      "lat": 25.0397,
+                      "lon": 121.56311
+                    }
+                  },
+                  "entryPoints": [
+                    {
+                      "type": "main",
+                      "position": {
+                        "lat": 25.04064,
+                        "lon": 121.56212
+                      }
+                    }
+                  ],
+                  "dataSources": {
+                    "poiDetails": [
+                      {
+                        "id": "Rm91cnNxdWFyZTo0ZTMyNTUwZjUyYjE1MWQ1Njg2YzQ2MTk=",
+                        "sourceName": "Foursquare"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "POI",
+                  "id": "g6JpZK8xNTgwMDkwMDE4MDg1MTShY6NUV06hdqdVbmlmaWVk",
+                  "score": 2.5745081902,
+                  "dist": 246.3834124259707,
+                  "info": "search:ta:158009001808514-TW",
+                  "poi": {
+                    "name": "yi xian yuan",
+                    "phone": "\u002B886 2 2729 0217",
+                    "categorySet": [
+                      {
+                        "id": 9376005
+                      }
+                    ],
+                    "categories": [
+                      "caf\u00E9/pub",
+                      "tea house"
+                    ],
+                    "classifications": [
+                      {
+                        "code": "CAFE_PUB",
+                        "names": [
+                          {
+                            "nameLocale": "en-US",
+                            "name": "caf\u00E9/pub"
+                          },
+                          {
+                            "nameLocale": "en-US",
+                            "name": "tea house"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "address": {
+                    "streetNumber": "16",
+                    "streetName": "Yixian Road Lane 50",
+                    "municipalitySubdivision": "Xinyi District",
+                    "municipality": "Taipei City",
+                    "countrySubdivision": "Taipei City",
+                    "postalCode": "110",
+                    "extendedPostalCode": "11071",
+                    "countryCode": "TW",
+                    "country": "Taiwan",
+                    "countryCodeISO3": "TWN",
+                    "freeformAddress": "16, Yixian Road Lane 50, Xinyi District, Taipei City 11071",
+                    "localName": "Xinyi District"
+                  },
+                  "position": {
+                    "lat": 25.04032,
+                    "lon": 121.56242
+                  },
+                  "viewport": {
+                    "topLeftPoint": {
+                      "lat": 25.04122,
+                      "lon": 121.56143
+                    },
+                    "btmRightPoint": {
+                      "lat": 25.03942,
+                      "lon": 121.56341
+                    }
+                  },
+                  "entryPoints": [
+                    {
+                      "type": "main",
+                      "position": {
+                        "lat": 25.04064,
+                        "lon": 121.56243
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "POI",
+                  "id": "g6JpZK8xNTgwMDkwMDE3MTA4MjShY6NUV06hdqdVbmlmaWVk",
+                  "score": 2.5745069981,
+                  "dist": 254.26640562212833,
+                  "info": "search:ta:158009001710824-TW",
+                  "poi": {
+                    "name": "yi ke ka fei yi xian dian",
+                    "phone": "\u002B886 2 2345 0714",
+                    "brands": [
+                      {
+                        "name": "Ikari Coffee"
+                      }
+                    ],
+                    "categorySet": [
+                      {
+                        "id": 9376002
+                      }
+                    ],
+                    "url": "www.ikari.com.tw/store/query/",
+                    "categories": [
+                      "caf\u00E9",
+                      "caf\u00E9/pub"
+                    ],
+                    "classifications": [
+                      {
+                        "code": "CAFE_PUB",
+                        "names": [
+                          {
+                            "nameLocale": "en-US",
+                            "name": "caf\u00E9"
+                          },
+                          {
+                            "nameLocale": "en-US",
+                            "name": "caf\u00E9/pub"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "address": {
+                    "streetNumber": "12",
+                    "streetName": "Yixian Road Lane 50",
+                    "municipalitySubdivision": "Xinyi District",
+                    "municipality": "Taipei City",
+                    "countrySubdivision": "Taipei City",
+                    "postalCode": "110",
+                    "extendedPostalCode": "11071",
+                    "countryCode": "TW",
+                    "country": "Taiwan",
+                    "countryCodeISO3": "TWN",
+                    "freeformAddress": "12, Yixian Road Lane 50, Xinyi District, Taipei City 11071",
+                    "localName": "Xinyi District"
+                  },
+                  "position": {
+                    "lat": 25.04047,
+                    "lon": 121.56247
+                  },
+                  "viewport": {
+                    "topLeftPoint": {
+                      "lat": 25.04137,
+                      "lon": 121.56148
+                    },
+                    "btmRightPoint": {
+                      "lat": 25.03957,
+                      "lon": 121.56346
+                    }
+                  },
+                  "entryPoints": [
+                    {
+                      "type": "main",
+                      "position": {
+                        "lat": 25.04064,
+                        "lon": 121.56248
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "statusCode": 200,
+            "response": {
+              "summary": {
+                "query": "pizza",
+                "queryType": "NON_NEAR",
+                "queryTime": 100,
+                "numResults": 10,
+                "offset": 0,
+                "totalResults": 376112,
+                "fuzzyLevel": 1,
+                "geoBias": {
+                  "lat": 25.04,
+                  "lon": 121.56
+                }
+              },
+              "results": [
+                {
+                  "type": "POI",
+                  "id": "g6JpZK8xNTgwMDkwMDI0MDQwODihY6NUV06hdqdVbmlmaWVk",
+                  "score": 2.5745081902,
+                  "dist": 246.86290933521866,
+                  "info": "search:ta:158009002404088-TW",
+                  "poi": {
+                    "name": "Aunt Sus Pizza House",
+                    "phone": "\u002B886 2 2740 2328",
+                    "categorySet": [
+                      {
+                        "id": 7315036
+                      }
+                    ],
+                    "categories": [
+                      "pizza",
+                      "restaurant"
+                    ],
+                    "classifications": [
+                      {
+                        "code": "RESTAURANT",
+                        "names": [
+                          {
+                            "nameLocale": "en-US",
+                            "name": "restaurant"
+                          },
+                          {
+                            "nameLocale": "en-US",
+                            "name": "pizza"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "address": {
+                    "streetName": "Guangfu South Road",
+                    "municipalitySubdivision": "Xinyi District",
+                    "municipality": "Taipei City",
+                    "countrySubdivision": "Taipei City",
+                    "postalCode": "110",
+                    "countryCode": "TW",
+                    "country": "Taiwan",
+                    "countryCodeISO3": "TWN",
+                    "freeformAddress": "Guangfu South Road, Xinyi District, Taipei City 110",
+                    "localName": "Xinyi District"
+                  },
+                  "position": {
+                    "lat": 25.03921,
+                    "lon": 121.55771
+                  },
+                  "viewport": {
+                    "topLeftPoint": {
+                      "lat": 25.04011,
+                      "lon": 121.55672
+                    },
+                    "btmRightPoint": {
+                      "lat": 25.03831,
+                      "lon": 121.5587
+                    }
+                  },
+                  "entryPoints": [
+                    {
+                      "type": "main",
+                      "position": {
+                        "lat": 25.03921,
+                        "lon": 121.55763
+                      }
+                    }
+                  ],
+                  "dataSources": {
+                    "poiDetails": [
+                      {
+                        "id": "Rm91cnNxdWFyZTo0YmRhYzhhNjJhM2EwZjQ3ZDlmNWFiYjY=",
+                        "sourceName": "Foursquare"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "POI",
+                  "id": "g6JpZK8xNTgwMDkwMDE3NjM1NTKhY6NUV06hdqdVbmlmaWVk",
+                  "score": 2.5745072365,
+                  "dist": 252.06781526470812,
+                  "info": "search:ta:158009001763552-TW",
+                  "poi": {
+                    "name": "Pizza PARK",
+                    "phone": "\u002B886 2 8786 7771",
+                    "categorySet": [
+                      {
+                        "id": 7315036
+                      }
+                    ],
+                    "categories": [
+                      "pizza",
+                      "restaurant"
+                    ],
+                    "classifications": [
+                      {
+                        "code": "RESTAURANT",
+                        "names": [
+                          {
+                            "nameLocale": "en-US",
+                            "name": "restaurant"
+                          },
+                          {
+                            "nameLocale": "en-US",
+                            "name": "pizza"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "address": {
+                    "streetNumber": "15",
+                    "streetName": "Yixian Road Lane 26",
+                    "municipalitySubdivision": "Xinyi District",
+                    "municipality": "Taipei City",
+                    "countrySubdivision": "Taipei City",
+                    "postalCode": "110",
+                    "extendedPostalCode": "11071",
+                    "countryCode": "TW",
+                    "country": "Taiwan",
+                    "countryCodeISO3": "TWN",
+                    "freeformAddress": "15, Yixian Road Lane 26, Xinyi District, Taipei City 11071",
+                    "localName": "Xinyi District"
+                  },
+                  "position": {
+                    "lat": 25.03954,
+                    "lon": 121.56245
+                  },
+                  "viewport": {
+                    "topLeftPoint": {
+                      "lat": 25.04044,
+                      "lon": 121.56146
+                    },
+                    "btmRightPoint": {
+                      "lat": 25.03864,
+                      "lon": 121.56344
+                    }
+                  },
+                  "entryPoints": [
+                    {
+                      "type": "main",
+                      "position": {
+                        "lat": 25.03944,
+                        "lon": 121.56245
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "POI",
+                  "id": "g6JpZK8xNTgwMDkwMDIwMDg0MTmhY6NUV06hdqdVbmlmaWVk",
+                  "score": 2.5745017529,
+                  "dist": 283.8655915312879,
+                  "info": "search:ta:158009002008419-TW",
+                  "poi": {
+                    "name": "\u5FC5\u52DD\u5BA2 Pizza Hut \u6B61\u6A02\u5427",
+                    "phone": "\u002B886 2 2776 6600",
+                    "brands": [
+                      {
+                        "name": "Pizza Hut"
+                      }
+                    ],
+                    "categorySet": [
+                      {
+                        "id": 7315036
+                      }
+                    ],
+                    "categories": [
+                      "pizza",
+                      "restaurant"
+                    ],
+                    "classifications": [
+                      {
+                        "code": "RESTAURANT",
+                        "names": [
+                          {
+                            "nameLocale": "en-US",
+                            "name": "restaurant"
+                          },
+                          {
+                            "nameLocale": "en-US",
+                            "name": "pizza"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "address": {
+                    "streetName": "\u5149\u5FA9\u5357\u8DEF",
+                    "municipalitySubdivision": "\u4FE1\u7FA9\u5340",
+                    "municipality": "\u53F0\u5317\u5E02",
+                    "countrySubdivision": "\u53F0\u5317\u5E02",
+                    "postalCode": "110",
+                    "countryCode": "TW",
+                    "country": "\u53F0\u7063",
+                    "countryCodeISO3": "TWN",
+                    "freeformAddress": "\u5149\u5FA9\u5357\u8DEF, \u4FE1\u7FA9\u5340, \u53F0\u5317\u5E02 110",
+                    "localName": "\u4FE1\u7FA9\u5340"
+                  },
+                  "position": {
+                    "lat": 25.0415,
+                    "lon": 121.55772
+                  },
+                  "viewport": {
+                    "topLeftPoint": {
+                      "lat": 25.0424,
+                      "lon": 121.55673
+                    },
+                    "btmRightPoint": {
+                      "lat": 25.0406,
+                      "lon": 121.55871
+                    }
+                  },
+                  "entryPoints": [
+                    {
+                      "type": "main",
+                      "position": {
+                        "lat": 25.0415,
+                        "lon": 121.55769
+                      }
+                    }
+                  ],
+                  "dataSources": {
+                    "poiDetails": [
+                      {
+                        "id": "Rm91cnNxdWFyZTo0YmM1ZGJlYzQxY2I3NmIwNTVlNjNlNmY=",
+                        "sourceName": "Foursquare"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "POI",
+                  "id": "g6JpZK8xNTgwMDkwMDA3MzQ5NDKhY6NUV06hdqdVbmlmaWVk",
+                  "score": 2.574501276,
+                  "dist": 286.84260397011974,
+                  "info": "search:ta:158009000734942-TW",
+                  "poi": {
+                    "name": "\u8607\u963F\u59E8\u6BD4\u85A9\u5C4B",
+                    "phone": "\u002B886 2 2740 2328",
+                    "categorySet": [
+                      {
+                        "id": 7315036
+                      }
+                    ],
+                    "categories": [
+                      "pizza",
+                      "restaurant"
+                    ],
+                    "classifications": [
+                      {
+                        "code": "RESTAURANT",
+                        "names": [
+                          {
+                            "nameLocale": "en-US",
+                            "name": "restaurant"
+                          },
+                          {
+                            "nameLocale": "en-US",
+                            "name": "pizza"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "address": {
+                    "streetNumber": "300",
+                    "streetName": "\u5149\u5FA9\u5357\u8DEF",
+                    "municipalitySubdivision": "\u5927\u5B89\u5340",
+                    "municipality": "\u53F0\u5317\u5E02",
+                    "countrySubdivision": "\u53F0\u5317\u5E02",
+                    "postalCode": "106",
+                    "extendedPostalCode": "10694",
+                    "countryCode": "TW",
+                    "country": "\u53F0\u7063",
+                    "countryCodeISO3": "TWN",
+                    "freeformAddress": "300, \u5149\u5FA9\u5357\u8DEF, \u5927\u5B89\u5340, \u53F0\u5317\u5E02 10694",
+                    "localName": "\u5927\u5B89\u5340"
+                  },
+                  "position": {
+                    "lat": 25.03908,
+                    "lon": 121.55734
+                  },
+                  "viewport": {
+                    "topLeftPoint": {
+                      "lat": 25.03998,
+                      "lon": 121.55635
+                    },
+                    "btmRightPoint": {
+                      "lat": 25.03818,
+                      "lon": 121.55833
+                    }
+                  },
+                  "entryPoints": [
+                    {
+                      "type": "main",
+                      "position": {
+                        "lat": 25.03908,
+                        "lon": 121.55752
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "POI",
+                  "id": "g6JpZK8xNTgwMDkwMDE3NTczMTWhY6NUV06hdqdVbmlmaWVk",
+                  "score": 2.574495554,
+                  "dist": 316.67915209694536,
+                  "info": "search:ta:158009001757315-TW",
+                  "poi": {
+                    "name": "\u660E\u6708\u5149Faust pizza lounge",
+                    "phone": "\u002B886 2 2758 7687",
+                    "categorySet": [
+                      {
+                        "id": 7315036
+                      }
+                    ],
+                    "categories": [
+                      "pizza",
+                      "restaurant"
+                    ],
+                    "classifications": [
+                      {
+                        "code": "RESTAURANT",
+                        "names": [
+                          {
+                            "nameLocale": "en-US",
+                            "name": "restaurant"
+                          },
+                          {
+                            "nameLocale": "en-US",
+                            "name": "pizza"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "address": {
+                    "streetNumber": "502-1",
+                    "streetName": "\u4EC1\u611B\u8DEF\u56DB\u6BB5",
+                    "municipalitySubdivision": "\u4FE1\u7FA9\u5340",
+                    "municipality": "\u53F0\u5317\u5E02",
+                    "countrySubdivision": "\u53F0\u5317\u5E02",
+                    "postalCode": "110",
+                    "extendedPostalCode": "11073",
+                    "countryCode": "TW",
+                    "country": "\u53F0\u7063",
+                    "countryCodeISO3": "TWN",
+                    "freeformAddress": "502-1, \u4EC1\u611B\u8DEF\u56DB\u6BB5, \u4FE1\u7FA9\u5340, \u53F0\u5317\u5E02 11073",
+                    "localName": "\u4FE1\u7FA9\u5340"
+                  },
+                  "position": {
+                    "lat": 25.0373,
+                    "lon": 121.561
+                  },
+                  "viewport": {
+                    "topLeftPoint": {
+                      "lat": 25.0382,
+                      "lon": 121.56001
+                    },
+                    "btmRightPoint": {
+                      "lat": 25.0364,
+                      "lon": 121.56199
+                    }
+                  },
+                  "entryPoints": [
+                    {
+                      "type": "main",
+                      "position": {
+                        "lat": 25.03746,
+                        "lon": 121.561
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "POI",
+                  "id": "g6JpZK8xNTgwMDkwMDIxNTAwMzahY6NUV06hdqdVbmlmaWVk",
+                  "score": 2.5744931698,
+                  "dist": 328.05495196724667,
+                  "info": "search:ta:158009002150036-TW",
+                  "poi": {
+                    "name": "Pizza Hut Guangfu Store",
+                    "phone": "\u002B886 2 2776 6600",
+                    "brands": [
+                      {
+                        "name": "Pizza Hut"
+                      }
+                    ],
+                    "categorySet": [
+                      {
+                        "id": 7315036
+                      }
+                    ],
+                    "categories": [
+                      "pizza",
+                      "restaurant"
+                    ],
+                    "classifications": [
+                      {
+                        "code": "RESTAURANT",
+                        "names": [
+                          {
+                            "nameLocale": "en-US",
+                            "name": "restaurant"
+                          },
+                          {
+                            "nameLocale": "en-US",
+                            "name": "pizza"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "address": {
+                    "streetNumber": "341",
+                    "streetName": "Zhongxiao East Road Section 4",
+                    "municipalitySubdivision": "Da\u0027an District",
+                    "municipality": "Taipei City",
+                    "countrySubdivision": "Taipei City",
+                    "postalCode": "106",
+                    "extendedPostalCode": "10696",
+                    "countryCode": "TW",
+                    "country": "Taiwan",
+                    "countryCodeISO3": "TWN",
+                    "freeformAddress": "341, Zhongxiao East Road Section 4, Da\u0027an District, Taipei City 10696",
+                    "localName": "Da\u0027an District"
+                  },
+                  "position": {
+                    "lat": 25.04158,
+                    "lon": 121.55725
+                  },
+                  "viewport": {
+                    "topLeftPoint": {
+                      "lat": 25.04248,
+                      "lon": 121.55626
+                    },
+                    "btmRightPoint": {
+                      "lat": 25.04068,
+                      "lon": 121.55824
+                    }
+                  },
+                  "entryPoints": [
+                    {
+                      "type": "main",
+                      "position": {
+                        "lat": 25.0414,
+                        "lon": 121.55738
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "POI",
+                  "id": "g6JpZK8xNTgwMDkwMDIwMzA5NjihY6NUV06hdqdVbmlmaWVk",
+                  "score": 2.5744917393,
+                  "dist": 335.1368630822374,
+                  "info": "search:ta:158009002030968-TW",
+                  "poi": {
+                    "name": "Rialto Handmade Pizza",
+                    "phone": "\u002B886 2 2778 1536",
+                    "categorySet": [
+                      {
+                        "id": 7315036
+                      }
+                    ],
+                    "categories": [
+                      "pizza",
+                      "restaurant"
+                    ],
+                    "classifications": [
+                      {
+                        "code": "RESTAURANT",
+                        "names": [
+                          {
+                            "nameLocale": "en-US",
+                            "name": "restaurant"
+                          },
+                          {
+                            "nameLocale": "en-US",
+                            "name": "pizza"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "address": {
+                    "streetName": "Guangfu South Road Lane 260",
+                    "municipalitySubdivision": "Da\u0027an District",
+                    "municipality": "Taipei City",
+                    "countrySubdivision": "Taipei City",
+                    "postalCode": "106",
+                    "extendedPostalCode": "10694",
+                    "countryCode": "TW",
+                    "country": "Taiwan",
+                    "countryCodeISO3": "TWN",
+                    "freeformAddress": "Guangfu South Road Lane 260, Da\u0027an District, Taipei City 10694",
+                    "localName": "Da\u0027an District"
+                  },
+                  "position": {
+                    "lat": 25.04019,
+                    "lon": 121.55668
+                  },
+                  "viewport": {
+                    "topLeftPoint": {
+                      "lat": 25.04109,
+                      "lon": 121.55569
+                    },
+                    "btmRightPoint": {
+                      "lat": 25.03929,
+                      "lon": 121.55767
+                    }
+                  },
+                  "entryPoints": [
+                    {
+                      "type": "main",
+                      "position": {
+                        "lat": 25.04019,
+                        "lon": 121.55672
+                      }
+                    }
+                  ],
+                  "dataSources": {
+                    "poiDetails": [
+                      {
+                        "id": "Rm91cnNxdWFyZTo0ZTYyZmJiNjE0OTU2NzZkNTVmZTM3Yzk=",
+                        "sourceName": "Foursquare"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "POI",
+                  "id": "g6JpZK8xNTgwMDkwMDE3Mzk5ODShY6NUV06hdqdVbmlmaWVk",
+                  "score": 2.5744719505,
+                  "dist": 416.3646392939992,
+                  "info": "search:ta:158009001739984-TW",
+                  "poi": {
+                    "name": "fifteen15\u90A3\u4E0D\u52D2\u65AF\u62AB\u85A9\u5C4B\u5149\u5FA9\u5E97",
+                    "phone": "\u002B886 2 2731 8908",
+                    "categorySet": [
+                      {
+                        "id": 7315036
+                      }
+                    ],
+                    "categories": [
+                      "pizza",
+                      "restaurant"
+                    ],
+                    "classifications": [
+                      {
+                        "code": "RESTAURANT",
+                        "names": [
+                          {
+                            "nameLocale": "en-US",
+                            "name": "restaurant"
+                          },
+                          {
+                            "nameLocale": "en-US",
+                            "name": "pizza"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "address": {
+                    "streetNumber": "36",
+                    "streetName": "\u5149\u5FA9\u5357\u8DEF280\u5DF7",
+                    "municipalitySubdivision": "\u5927\u5B89\u5340",
+                    "municipality": "\u53F0\u5317\u5E02",
+                    "countrySubdivision": "\u53F0\u5317\u5E02",
+                    "postalCode": "106",
+                    "extendedPostalCode": "10694",
+                    "countryCode": "TW",
+                    "country": "\u53F0\u7063",
+                    "countryCodeISO3": "TWN",
+                    "freeformAddress": "36, \u5149\u5FA9\u5357\u8DEF280\u5DF7, \u5927\u5B89\u5340, \u53F0\u5317\u5E02 10694",
+                    "localName": "\u5927\u5B89\u5340"
+                  },
+                  "position": {
+                    "lat": 25.03986,
+                    "lon": 121.55587
+                  },
+                  "viewport": {
+                    "topLeftPoint": {
+                      "lat": 25.04076,
+                      "lon": 121.55488
+                    },
+                    "btmRightPoint": {
+                      "lat": 25.03896,
+                      "lon": 121.55686
+                    }
+                  },
+                  "entryPoints": [
+                    {
+                      "type": "main",
+                      "position": {
+                        "lat": 25.0398,
+                        "lon": 121.55587
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "POI",
+                  "id": "g6JpZK8xNTgwMDkwMDIwNDI4MDChY6NUV06hdqdVbmlmaWVk",
+                  "score": 2.5744695663,
+                  "dist": 424.2507001879787,
+                  "info": "search:ta:158009002042800-TW",
+                  "poi": {
+                    "name": "Salto Pizzeria Napoletana",
+                    "categorySet": [
+                      {
+                        "id": 7315036
+                      }
+                    ],
+                    "categories": [
+                      "pizza",
+                      "restaurant"
+                    ],
+                    "classifications": [
+                      {
+                        "code": "RESTAURANT",
+                        "names": [
+                          {
+                            "nameLocale": "en-US",
+                            "name": "restaurant"
+                          },
+                          {
+                            "nameLocale": "en-US",
+                            "name": "pizza"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "address": {
+                    "streetName": "Guangfu South Road Lane 260",
+                    "municipalitySubdivision": "Da\u0027an District",
+                    "municipality": "Taipei City",
+                    "countrySubdivision": "Taipei City",
+                    "postalCode": "106",
+                    "extendedPostalCode": "10694",
+                    "countryCode": "TW",
+                    "country": "Taiwan",
+                    "countryCodeISO3": "TWN",
+                    "freeformAddress": "Guangfu South Road Lane 260, Da\u0027an District, Taipei City 10694",
+                    "localName": "Da\u0027an District"
+                  },
+                  "position": {
+                    "lat": 25.04009,
+                    "lon": 121.55579
+                  },
+                  "viewport": {
+                    "topLeftPoint": {
+                      "lat": 25.04099,
+                      "lon": 121.5548
+                    },
+                    "btmRightPoint": {
+                      "lat": 25.03919,
+                      "lon": 121.55678
+                    }
+                  },
+                  "entryPoints": [
+                    {
+                      "type": "main",
+                      "position": {
+                        "lat": 25.04029,
+                        "lon": 121.55578
+                      }
+                    }
+                  ],
+                  "dataSources": {
+                    "poiDetails": [
+                      {
+                        "id": "Rm91cnNxdWFyZTo1NzYzNzYxZjQ5OGVjMTIzYjk1OWRjZDI=",
+                        "sourceName": "Foursquare"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "POI",
+                  "id": "g6JpZK8xNTgwMDkwMDIwMzk2MzehY6NUV06hdqdVbmlmaWVk",
+                  "score": 2.5744464397,
+                  "dist": 502.46629131739394,
+                  "info": "search:ta:158009002039637-TW",
+                  "poi": {
+                    "name": "Al Dente Cucina",
+                    "phone": "\u002B886 2 2763 1716",
+                    "categorySet": [
+                      {
+                        "id": 7315036
+                      }
+                    ],
+                    "categories": [
+                      "pizza",
+                      "restaurant"
+                    ],
+                    "classifications": [
+                      {
+                        "code": "RESTAURANT",
+                        "names": [
+                          {
+                            "nameLocale": "en-US",
+                            "name": "restaurant"
+                          },
+                          {
+                            "nameLocale": "en-US",
+                            "name": "pizza"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "address": {
+                    "streetName": "Zhongxiao East Road Section 4 Lane 559",
+                    "municipalitySubdivision": "Xinyi District",
+                    "municipality": "Taipei City",
+                    "countrySubdivision": "Taipei City",
+                    "postalCode": "110",
+                    "countryCode": "TW",
+                    "country": "Taiwan",
+                    "countryCodeISO3": "TWN",
+                    "freeformAddress": "Zhongxiao East Road Section 4 Lane 559, Xinyi District, Taipei City 110",
+                    "localName": "Xinyi District"
+                  },
+                  "position": {
+                    "lat": 25.04306,
+                    "lon": 121.56367
+                  },
+                  "viewport": {
+                    "topLeftPoint": {
+                      "lat": 25.04396,
+                      "lon": 121.56268
+                    },
+                    "btmRightPoint": {
+                      "lat": 25.04216,
+                      "lon": 121.56466
+                    }
+                  },
+                  "entryPoints": [
+                    {
+                      "type": "main",
+                      "position": {
+                        "lat": 25.04306,
+                        "lon": 121.56366
+                      }
+                    }
+                  ],
+                  "dataSources": {
+                    "poiDetails": [
+                      {
+                        "id": "Rm91cnNxdWFyZTo0ZDI4NDAxZTg0OWYzNzA0ZWVjYjcxNDE=",
+                        "sourceName": "Foursquare"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "summary": {
+          "successfulRequests": 2,
+          "totalRequests": 2
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "6a782b5b-631c-450d-9aa4-e561679d0d28",
+    "ENDPOINT_URL": null,
+    "RandomSeed": "2144247060"
+  }
+}

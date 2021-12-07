@@ -1,0 +1,796 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/search/fuzzy/json?api-version=1.0\u0026query=coffee\u0026lat=25.04\u0026lon=121.56\u0026language=en",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-023177f556a58942a47e4f41d08f96dc-9174a21904675746-00",
+        "User-Agent": [
+          "azsdk-net-Maps.Search/1.0.0-alpha.20211208.1",
+          "(.NET 5.0.10; Darwin 21.1.0 Darwin Kernel Version 21.1.0: Wed Oct 13 17:33:23 PDT 2021; root:xnu-8019.41.5~1/RELEASE_X86_64)"
+        ],
+        "x-ms-client-id": "6a782b5b-631c-450d-9aa4-e561679d0d28",
+        "x-ms-client-request-id": "daea917bbec3c46495d810f7938bf81b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "10803",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 07 Dec 2021 19:45:30 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: FD2FA252E7F748CD94D74B952A4E4C41 Ref B: TPE30EDGE0621 Ref C: 2021-12-07T19:45:30Z"
+      },
+      "ResponseBody": {
+        "summary": {
+          "query": "coffee",
+          "queryType": "NON_NEAR",
+          "queryTime": 160,
+          "numResults": 10,
+          "offset": 0,
+          "totalResults": 1793854,
+          "fuzzyLevel": 1,
+          "geoBias": {
+            "lat": 25.04,
+            "lon": 121.56
+          }
+        },
+        "results": [
+          {
+            "type": "POI",
+            "id": "g6JpZK8xNTgwMDkwMDIwNDI5NjOhY6NUV06hdqdVbmlmaWVk",
+            "score": 2.5745277405,
+            "dist": 25.406019685372517,
+            "info": "search:ta:158009002042963-TW",
+            "poi": {
+              "name": "li de fan dian Cafe",
+              "phone": "\u002B886 2 2723 6458",
+              "categorySet": [
+                {
+                  "id": 9376002
+                }
+              ],
+              "url": "tw.leaderhotel.com/cafe83-dr-sun-memorial-hall/",
+              "categories": [
+                "caf\u00E9",
+                "caf\u00E9/pub"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "Xinyi District, Taipei City 110",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.03997,
+              "lon": 121.55975
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.04087,
+                "lon": 121.55876
+              },
+              "btmRightPoint": {
+                "lat": 25.03907,
+                "lon": 121.56074
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 25.03997,
+                  "lon": 121.55961
+                }
+              }
+            ],
+            "dataSources": {
+              "poiDetails": [
+                {
+                  "id": "Rm91cnNxdWFyZTo0Y2QyYTI2YTRhYTlmMDRkNjcyYzU4Y2I=",
+                  "sourceName": "Foursquare"
+                }
+              ]
+            }
+          },
+          {
+            "type": "POI",
+            "id": "g6JpZK8xNTgwMDkwMDE3NzI1NzahY6NUV06hdqdVbmlmaWVk",
+            "score": 2.5745136738,
+            "dist": 210.19656900399005,
+            "info": "search:ta:158009001772576-TW",
+            "poi": {
+              "name": "bu lang ni ka fei",
+              "phone": "\u002B886 2 8786 0833",
+              "categorySet": [
+                {
+                  "id": 9376002
+                }
+              ],
+              "categories": [
+                "caf\u00E9",
+                "caf\u00E9/pub"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "3",
+              "streetName": "Yixian Road Lane 42",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "extendedPostalCode": "11071",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "3, Yixian Road Lane 42, Xinyi District, Taipei City 11071",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.0403,
+              "lon": 121.56206
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.0412,
+                "lon": 121.56107
+              },
+              "btmRightPoint": {
+                "lat": 25.0394,
+                "lon": 121.56305
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 25.04022,
+                  "lon": 121.56206
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "g6JpZK8xNTgwMDkwMDIwMTU5MTChY6NUV06hdqdVbmlmaWVk",
+            "score": 2.5745129585,
+            "dist": 215.7406818963919,
+            "info": "search:ta:158009002015910-TW",
+            "poi": {
+              "name": "Brownies Cafe",
+              "categorySet": [
+                {
+                  "id": 9376002
+                }
+              ],
+              "categories": [
+                "caf\u00E9",
+                "caf\u00E9/pub"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetName": "Yixian Road Lane 42",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "extendedPostalCode": "11071",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "Yixian Road Lane 42, Xinyi District, Taipei City 11071",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.04038,
+              "lon": 121.5621
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.04128,
+                "lon": 121.56111
+              },
+              "btmRightPoint": {
+                "lat": 25.03948,
+                "lon": 121.56309
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 25.04022,
+                  "lon": 121.5621
+                }
+              }
+            ],
+            "dataSources": {
+              "poiDetails": [
+                {
+                  "id": "Rm91cnNxdWFyZTo0YmEzMjAwN2Y5NjRhNTIwYmYyYzM4ZTM=",
+                  "sourceName": "Foursquare"
+                }
+              ]
+            }
+          },
+          {
+            "type": "POI",
+            "id": "g6JpZK8xNTgwMDkwMDE3NzEyNDmhY6NUV06hdqdVbmlmaWVk",
+            "score": 2.5745120049,
+            "dist": 220.53575977520217,
+            "info": "search:ta:158009001771249-TW",
+            "poi": {
+              "name": "fa dou ka fei qing shi guan",
+              "categorySet": [
+                {
+                  "id": 9376006
+                }
+              ],
+              "categories": [
+                "caf\u00E9/pub",
+                "coffee shop"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "coffee shop"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "6",
+              "streetName": "Yixian Road Lane 50",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "extendedPostalCode": "11071",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "6, Yixian Road Lane 50, Xinyi District, Taipei City 11071",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.04056,
+              "lon": 121.5621
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.04146,
+                "lon": 121.56111
+              },
+              "btmRightPoint": {
+                "lat": 25.03966,
+                "lon": 121.56309
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 25.04064,
+                  "lon": 121.5621
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "g6JpZK8xNTgwMDkwMDE3MTA5MjihY6NUV06hdqdVbmlmaWVk",
+            "score": 2.5745120049,
+            "dist": 220.53575977520217,
+            "info": "search:ta:158009001710928-TW",
+            "poi": {
+              "name": "ou li jiang ka fei guan",
+              "categorySet": [
+                {
+                  "id": 9376006
+                }
+              ],
+              "categories": [
+                "caf\u00E9/pub",
+                "coffee shop"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "coffee shop"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "6",
+              "streetName": "Yixian Road Lane 50",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "extendedPostalCode": "11071",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "6, Yixian Road Lane 50, Xinyi District, Taipei City 11071",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.04056,
+              "lon": 121.5621
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.04146,
+                "lon": 121.56111
+              },
+              "btmRightPoint": {
+                "lat": 25.03966,
+                "lon": 121.56309
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 25.04064,
+                  "lon": 121.5621
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "g6JpZK8xNTgwMDkwMDE4MTc5MzehY6NUV06hdqdVbmlmaWVk",
+            "score": 2.5745120049,
+            "dist": 220.53575977520217,
+            "info": "search:ta:158009001817937-TW",
+            "poi": {
+              "name": "da lun ka fei guo ji you xian gong si",
+              "categorySet": [
+                {
+                  "id": 9376006
+                }
+              ],
+              "categories": [
+                "caf\u00E9/pub",
+                "coffee shop"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "coffee shop"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "6",
+              "streetName": "Yixian Road Lane 50",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "extendedPostalCode": "11071",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "6, Yixian Road Lane 50, Xinyi District, Taipei City 11071",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.04056,
+              "lon": 121.5621
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.04146,
+                "lon": 121.56111
+              },
+              "btmRightPoint": {
+                "lat": 25.03966,
+                "lon": 121.56309
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 25.04064,
+                  "lon": 121.5621
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "g6JpZK8xNTgwMDkwMDE3ODk2MTOhY6NUV06hdqdVbmlmaWVk",
+            "score": 2.5745120049,
+            "dist": 220.53575977520217,
+            "info": "search:ta:158009001789613-TW",
+            "poi": {
+              "name": "louisacoffee yi xian dian",
+              "phone": "\u002B886 2 8780 4613",
+              "categorySet": [
+                {
+                  "id": 9376006
+                }
+              ],
+              "categories": [
+                "caf\u00E9/pub",
+                "coffee shop"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "coffee shop"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "6",
+              "streetName": "Yixian Road Lane 50",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "extendedPostalCode": "11071",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "6, Yixian Road Lane 50, Xinyi District, Taipei City 11071",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.04056,
+              "lon": 121.5621
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.04146,
+                "lon": 121.56111
+              },
+              "btmRightPoint": {
+                "lat": 25.03966,
+                "lon": 121.56309
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 25.04064,
+                  "lon": 121.5621
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "g6JpZK8xNTgwMDkwMDIzNjAzMDGhY6NUV06hdqdVbmlmaWVk",
+            "score": 2.574511528,
+            "dist": 223.75504816419632,
+            "info": "search:ta:158009002360301-TW",
+            "poi": {
+              "name": "Louisa Coffee",
+              "categorySet": [
+                {
+                  "id": 9376006
+                }
+              ],
+              "categories": [
+                "caf\u00E9/pub",
+                "coffee shop"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "coffee shop"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetName": "Yixian Road Lane 50",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "extendedPostalCode": "11071",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "Yixian Road Lane 50, Xinyi District, Taipei City 11071",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.0406,
+              "lon": 121.56212
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.0415,
+                "lon": 121.56113
+              },
+              "btmRightPoint": {
+                "lat": 25.0397,
+                "lon": 121.56311
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 25.04064,
+                  "lon": 121.56212
+                }
+              }
+            ],
+            "dataSources": {
+              "poiDetails": [
+                {
+                  "id": "Rm91cnNxdWFyZTo0ZTMyNTUwZjUyYjE1MWQ1Njg2YzQ2MTk=",
+                  "sourceName": "Foursquare"
+                }
+              ]
+            }
+          },
+          {
+            "type": "POI",
+            "id": "g6JpZK8xNTgwMDkwMDE4MDg1MTShY6NUV06hdqdVbmlmaWVk",
+            "score": 2.5745081902,
+            "dist": 246.3834124259707,
+            "info": "search:ta:158009001808514-TW",
+            "poi": {
+              "name": "yi xian yuan",
+              "phone": "\u002B886 2 2729 0217",
+              "categorySet": [
+                {
+                  "id": 9376005
+                }
+              ],
+              "categories": [
+                "caf\u00E9/pub",
+                "tea house"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "tea house"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "16",
+              "streetName": "Yixian Road Lane 50",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "extendedPostalCode": "11071",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "16, Yixian Road Lane 50, Xinyi District, Taipei City 11071",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.04032,
+              "lon": 121.56242
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.04122,
+                "lon": 121.56143
+              },
+              "btmRightPoint": {
+                "lat": 25.03942,
+                "lon": 121.56341
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 25.04064,
+                  "lon": 121.56243
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "g6JpZK8xNTgwMDkwMDE3MTA4MjShY6NUV06hdqdVbmlmaWVk",
+            "score": 2.5745069981,
+            "dist": 254.26640562212833,
+            "info": "search:ta:158009001710824-TW",
+            "poi": {
+              "name": "yi ke ka fei yi xian dian",
+              "phone": "\u002B886 2 2345 0714",
+              "brands": [
+                {
+                  "name": "Ikari Coffee"
+                }
+              ],
+              "categorySet": [
+                {
+                  "id": 9376002
+                }
+              ],
+              "url": "www.ikari.com.tw/store/query/",
+              "categories": [
+                "caf\u00E9",
+                "caf\u00E9/pub"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "12",
+              "streetName": "Yixian Road Lane 50",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "extendedPostalCode": "11071",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "12, Yixian Road Lane 50, Xinyi District, Taipei City 11071",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.04047,
+              "lon": 121.56247
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.04137,
+                "lon": 121.56148
+              },
+              "btmRightPoint": {
+                "lat": 25.03957,
+                "lon": 121.56346
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 25.04064,
+                  "lon": 121.56248
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "6a782b5b-631c-450d-9aa4-e561679d0d28",
+    "ENDPOINT_URL": null,
+    "RandomSeed": "1472355985"
+  }
+}
