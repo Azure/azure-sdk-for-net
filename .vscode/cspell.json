@@ -251,6 +251,21 @@
         "Plregon",
         "Usuk"
       ]
+    },
+    {
+      "filename": "**/sdk/websites/**/*.cs",
+      "words": [
+        "Ipssl",
+        "Skus",
+        "Kube",
+        "Metadatas",
+        "Unparked",
+        "Proto",
+        "Zilla",
+        "Guage",
+        "Plex",
+        "Vstsrm"
+      ]
     }
   ],
   "allowCompoundWords": true
