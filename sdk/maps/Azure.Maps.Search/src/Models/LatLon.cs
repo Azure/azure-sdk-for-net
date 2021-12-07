@@ -35,7 +35,7 @@ namespace Azure.Maps.Search.Models
         public double Longitude => this.Lon;
 
         /// <summary> LatLong comma-seperated string representation: lat,lng </summary>
-        public override string ToString() => $"{this.Lat},${this.Lon}";
+        public override string ToString() => $"{this.Lat},{this.Lon}";
 
         /// <summary> LatLong representation as array </summary>
         public static implicit operator double[](LatLon latLong) => new double[] { latLong.Lat, latLong.Lon };
