@@ -3856,32 +3856,6 @@ namespace Azure.Storage.Files.Shares.Tests
             }
         }
 
-        [Ignore("Service bug")]
-        [RecordedTest]
-        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
-        public async Task RenameAsync_ContentType()
-        {
-            // Arrange
-            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
-            ShareFileClient sourceFile = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
-            await sourceFile.CreateAsync(Constants.KB);
-            string destFileName = GetNewFileName();
-
-            ShareFileRenameOptions options = new ShareFileRenameOptions
-            {
-                ContentType = "contentType"
-            };
-
-            // Act
-            ShareFileClient destFile = await sourceFile.RenameAsync(
-                destinationPath: test.Directory.Name + "/" + destFileName,
-                options: options);
-
-            // Assert
-            Response<ShareFileProperties> response = await destFile.GetPropertiesAsync();
-            Assert.AreEqual(options.ContentType, response.Value.ContentType);
-        }
-
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task RenameAsync_NonAsciiSourceAndDestination()

@@ -47,12 +47,5 @@ namespace Azure.Storage.Files.Shares.Models
         /// Optional file permission to set on the destination file or directory.
         /// </summary>
         public string FilePermission { get; set; }
-
-        /// <summary>
-        /// Optional. Not applicable for directories.  Sets the file’s content type. If this property is not specified on the request,
-        /// then the property will be cleared for the file. Subsequent calls to Get File Properties will not return this property,
-        /// unless it is explicitly set on the file again.
-        /// </summary>
-        public string ContentType { get; set; }
     }
 }

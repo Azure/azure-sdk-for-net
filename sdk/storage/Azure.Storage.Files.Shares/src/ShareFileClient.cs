@@ -5942,11 +5942,6 @@ namespace Azure.Storage.Files.Shares
                         IgnoreReadOnly = options?.IgnoreReadOnly
                     };
 
-                    FileHttpHeaders fileHttpHeaders = new FileHttpHeaders
-                    {
-                        FileContentType = options?.ContentType
-                    };
-
                     if (async)
                     {
                         response = await destFileClient.FileRestClient.RenameAsync(
@@ -5958,7 +5953,6 @@ namespace Azure.Storage.Files.Shares
                             filePermission: options?.FilePermission,
                             filePermissionKey: options?.SmbProperties?.FilePermissionKey,
                             copyFileSmbInfo: copyFileSmbInfo,
-                            fileHttpHeaders: fileHttpHeaders,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -5973,7 +5967,6 @@ namespace Azure.Storage.Files.Shares
                             filePermission: options?.FilePermission,
                             filePermissionKey: options?.SmbProperties?.FilePermissionKey,
                             copyFileSmbInfo: copyFileSmbInfo,
-                            fileHttpHeaders: fileHttpHeaders,
                             cancellationToken: cancellationToken);
                     }
 
