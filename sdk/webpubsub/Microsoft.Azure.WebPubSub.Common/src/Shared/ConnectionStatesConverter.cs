@@ -16,7 +16,7 @@ namespace Microsoft.Azure.WebPubSub.Common
     /// </summary>
     internal class ConnectionStatesConverter : JsonConverter<IReadOnlyDictionary<string, BinaryData>>
     {
-        private static readonly Dictionary<string, BinaryData> _defaultDict = new();
+        private static readonly Dictionary<string, BinaryData> EmptyDictionary = new();
 
         public static JsonSerializerOptions Options = RegisterSerializerOptions();
 
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.WebPubSub.Common
             {
                 // States not set via SDK and users need to read from Header themselves.
                 // Avoid partial results and return a non-null value.
-                return _defaultDict;
+                return EmptyDictionary;
             }
         }
 
