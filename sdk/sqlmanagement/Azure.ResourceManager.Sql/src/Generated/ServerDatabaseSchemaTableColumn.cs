@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerDatabaseSchemaTableColumnSensitivityLabel" /> object. </returns>
         public ServerDatabaseSchemaTableColumnSensitivityLabel GetServerDatabaseSchemaTableColumnSensitivityLabel()
         {
-            return new ServerDatabaseSchemaTableColumnSensitivityLabel(this, Id + "/sensitivityLabels/current");
+            return new ServerDatabaseSchemaTableColumnSensitivityLabel(this, new ResourceIdentifier(Id.ToString() + "/sensitivityLabels/current"));
         }
         #endregion
     }
