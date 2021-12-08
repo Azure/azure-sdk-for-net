@@ -35,10 +35,12 @@ namespace Compute.Tests
         [Trait("Name", "CreateRpcAndRestorePoints")]
         public void CreateRpcAndRestorePoints()
         {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                EnsureClientsInitialized(context);
                 string location = "centraluseuap";
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", location);                
+                EnsureClientsInitialized(context);
                 var rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
                 VirtualMachine inputVM;
@@ -167,6 +169,7 @@ namespace Compute.Tests
                 finally
                 {
                     m_ResourcesClient.ResourceGroups.Delete(rgName);
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
                 }
             }
         }
