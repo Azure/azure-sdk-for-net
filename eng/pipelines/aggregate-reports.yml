@@ -44,10 +44,10 @@ stages:
             # the pipeline yellow if spelling errors are detected but do not block.
             continueOnError: true
 
-          - template: /eng/common/pipelines/templates/steps/verify-links.yml
-            parameters:
-              Directory: ""
-              CheckLinkGuidance: $true
+          #- template: /eng/common/pipelines/templates/steps/verify-links.yml
+          #  parameters:
+          #    Directory: ""
+          #    CheckLinkGuidance: $true
 
           - pwsh: |
               New-Item -Path '$(Build.ArtifactStagingDirectory)' -Name 'reports' -ItemType 'directory'

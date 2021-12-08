@@ -3,7 +3,8 @@ param (
     [string] $WorkingDirectory,
     [Parameter(Mandatory=$True)]
     [string] $NupkgFilesDestination,
-    [string] $NugetSource="https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json"
+    [string] $NugetSource="https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json",
+    [string] $FeedId="azure-sdk-for-net"
 )
 
 . (Join-Path $PSScriptRoot ".." common scripts common.ps1)
@@ -11,37 +12,50 @@ param (
 $allPackages = Get-AllPkgProperties
 $trackTwoPackages = $allPackages.Where({ $_.IsNewSdk })
 
+LogDebug "Number of track two packages $($trackTwoPackages.Count)"
+
 Push-Location $WorkingDirectory
 $nugetPackagesPath = Join-Path $WorkingDirectory nugetPackages
 New-Item -Path $WorkingDirectory -Type "directory" -Name "nugetPackages"
 
-$packagesInFeed = Find-Package -Source $NugetSource -AllVersion -AllowPrereleaseVersions
+$packagesInFeed = Get-PackagesInArtifactFeed -FeedId $FeedId -IncludeAllVersions $true
+LogDebug "Number of packages in dev feed $($packagesInFeed.Count)"
 
 foreach ($package in $trackTwoPackages)
 {
-  $allVersionsInFeed = $packagesInFeed.Where({ ($_.Name -eq $package.Name) })
-  $alphaVersionsInFeed = $allVersionsInFeed.Where({ ($_.Version -like "*-alpha.*") })
+  $pkg = $packagesInFeed.Where({ ($_.Name -eq $package.Name) })
+  $pkgVersions = $pkg.versions.version
+  LogDebug "Number version available for $($package.Name) : $($pkgVersions.Count)"
 
-  # Use the latest alpha version where it is available
-  if ($alphaVersionsInFeed.Count -gt 0)
+  $alphaVersions = $pkgVersions.Where({ ($_ -like "*-alpha.*") })
+  LogDebug "Number alpha version available for $($package.Name) : $($alphaVersions.Count)"
+
+  $versionsSorted = @()
+
+  # Use the latest alpha version where it is available otherwise use latest version
+  if ($alphaVersions.Count -gt 0)
   {
-    $alphaVersionsSorted = [AzureEngSemanticVersion]::SortVersionStrings($alphaVersionsInFeed.Version)
-    $latestDevVersion = $alphaVersionsSorted[0]
+    $versionsSorted = [AzureEngSemanticVersion]::SortVersionStrings($alphaVersions)
   }
-  else
+  elseif ($pkgVersions.Count -gt 0)
   {
-    $allVersionsSorted = [AzureEngSemanticVersion]::SortVersionStrings($allVersionsInFeed.Version)
-    $latestDevVersion = $allVersionsSorted[0]
+    $versionsSorted = [AzureEngSemanticVersion]::SortVersionStrings($pkgVersions)
   }
 
-  nuget install $package.Name `
+  if($versionsSorted.Count -gt 0)
+  {
+    $latestDevVersion = $versionsSorted[0]
+    LogDebug "Instaling $($package.Name) $($latestDevVersion)"
+
+    nuget install $package.Name `
     -Version $latestDevVersion `
     -OutputDirectory $nugetPackagesPath `
     -Prerelease `
     -Source $NugetSource `
     -DependencyVersion Ignore `
     -DirectDownload `
-    -NoCache `
+    -NoCache 
+  }
 }
 
 $nupkgDirPath = Join-Path $WorkingDirectory $NupkgFilesDestination

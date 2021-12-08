@@ -158,5 +158,64 @@ function Add-RetentionLease {
           -Headers (Get-DevOpsApiHeaders -Base64EncodedToken $Base64EncodedAuthToken) `
           -MaximumRetryCount 3 `
           -ContentType "application/json"
+}
 
+function Get-PackagesInArtifactFeed {
+  param (
+    $Organization="azure-sdk",
+    $Project="public",
+    [Parameter(Mandatory = $true)]
+    $FeedId,
+    $ApiVersion="6.1-preview.1",
+    $IncludeAllVersions="false",
+    $Base64EncodedAuthToken
+  )
+
+  $uri = "https://feeds.dev.azure.com/$Organization/$Project/_apis/packaging/Feeds/$FeedId/packages?api-version=$ApiVersion&includeAllVersions=$IncludeAllVersions"
+
+  $packages = Invoke-RestMethod `
+    -Method GET `
+    -Uri $uri `
+    -Headers (Get-DevOpsApiHeaders -Base64EncodedToken $Base64EncodedAuthToken) `
+    -MaximumRetryCount 3
+
+  return $packages.value
+}
+
+function Get-PackageInArtifactFeed {
+  param (
+    $Organization="azure-sdk",
+    $Project="public",
+    [Parameter(Mandatory = $true)]
+    $FeedId,
+    $ApiVersion="6.1-preview.1",
+    $IncludeAllVersions="false",
+    [Parameter(Mandatory = $true)]
+    $PackageName,
+    $Base64EncodedAuthToken
+  )
+
+  $packages = Get-PackagesInArtifactFeed -Organization $Organization -Project $Project -FeedId $FeedId `
+    -ApiVersion $ApiVersion -IncludeAllVersions $IncludeAllVersions -Base64EncodedAuthToken $Base64EncodedAuthToken
+
+  return $packages.Where({$_.name -eq $PackageName})
+}
+
+function Get-PackageVersionsInArtifactFeed {
+  param (
+    $Organization="azure-sdk",
+    $Project="public",
+    [Parameter(Mandatory = $true)]
+    $FeedId,
+    $ApiVersion="6.1-preview.1",
+    $IncludeAllVersions="true",
+    [Parameter(Mandatory = $true)]
+    $PackageName,
+    $Base64EncodedAuthToken
+  )
+
+  $package = Get-PackageInArtifactFeed -Organization $Organization -Project $Project -FeedId $FeedId `
+    -ApiVersion $ApiVersion -IncludeAllVersions $IncludeAllVersions -PackageName $PackageName -Base64EncodedAuthToken $Base64EncodedAuthToken
+  
+  return $package.versions
 }
