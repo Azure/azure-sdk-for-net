@@ -72,6 +72,7 @@ namespace Azure.ResourceManager
     public sealed partial class ResourceIdentifier : System.IComparable<Azure.ResourceManager.ResourceIdentifier>, System.IEquatable<Azure.ResourceManager.ResourceIdentifier>
     {
         public static readonly Azure.ResourceManager.ResourceIdentifier Root;
+        public static readonly Azure.ResourceManager.ResourceIdentifier RootResourceIdentifier;
         public ResourceIdentifier(string resourceId) { }
         public Azure.ResourceManager.Resources.Models.Location Location { get { throw null; } }
         public string Name { get { throw null; } }
