@@ -2,11 +2,8 @@ param (
     [Parameter(Mandatory=$True)]
     [string] $WorkingDirectory,
     [Parameter(Mandatory=$True)]
-    [string] $AllNupkgFilesDestination,
-    [Parameter(Mandatory=$True)]
-    [string] $AzureSDKNupkgFilesDestination,
-    [string] $NugetSource="https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json",
-    [string] $FallBackSource = "https://api.nuget.org/v3/index.json"
+    [string] $NupkgFilesDestination,
+    [string] $NugetSource="https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json"
 )
 
 . (Join-Path $PSScriptRoot ".." common scripts common.ps1)
@@ -18,30 +15,36 @@ Push-Location $WorkingDirectory
 $nugetPackagesPath = Join-Path $WorkingDirectory nugetPackages
 New-Item -Path $WorkingDirectory -Type "directory" -Name "nugetPackages"
 
+$packagesInFeed = Find-Package -Source $NugetSource -AllVersion -AllowPrereleaseVersions
+
 foreach ($package in $trackTwoPackages)
 {
-  nuget install $package.Name `
-  -OutputDirectory $nugetPackagesPath `
-  -Prerelease `
-  -Source $NugetSource `
-  -FallBackSource $FallBackSource `
-  -DirectDownload `
-  -ExcludeVersion `
-  -NoCache `
-}
+  $allVersionsInFeed = $packagesInFeed.Where({ ($_.Name -eq $package.Name) })
+  $alphaVersionsInFeed = $allVersionsInFeed.Where({ ($_.Version -like "*-alpha.*") })
 
-$allNupkgDirPath = Join-Path $WorkingDirectory $AllNupkgFilesDestination
-New-Item -Path $WorkingDirectory -Type "directory" -Name $AllNupkgFilesDestination
-
-$azureSdkNupkgDirPath = Join-Path $WorkingDirectory $AzureSDKNupkgFilesDestination
-New-Item -Path $WorkingDirectory -Type "directory" -Name $AzureSDKNupkgFilesDestination
-
-$allDownloadedNupkgFiles = Get-ChildItem -Path $nugetPackagesPath -Include *.nupkg -Recurse
-foreach ($file in $allDownloadedNupkgFiles)
-{
-  Copy-Item -Path $file.FullName -Destination $allNupkgDirPath
-  if ($trackTwoPackages.Name -contains $file.BaseName)
+  # Use the latest alpha version where it is available
+  if ($alphaVersionsInFeed.Count -gt 0)
   {
-    Copy-Item -Path $file.FullName -Destination $azureSdkNupkgDirPath
+    $alphaVersionsSorted = [AzureEngSemanticVersion]::SortVersionStrings($alphaVersionsInFeed.Version)
+    $latestDevVersion = $alphaVersionsSorted[0]
   }
+  else
+  {
+    $allVersionsSorted = [AzureEngSemanticVersion]::SortVersionStrings($allVersionsInFeed.Version)
+    $latestDevVersion = $allVersionsSorted[0]
+  }
+
+  nuget install $package.Name `
+    -Version $latestDevVersion `
+    -OutputDirectory $nugetPackagesPath `
+    -Prerelease `
+    -Source $NugetSource `
+    -DependencyVersion Ignore `
+    -DirectDownload `
+    -NoCache `
 }
+
+$nupkgDirPath = Join-Path $WorkingDirectory $NupkgFilesDestination
+New-Item -Path $WorkingDirectory -Type "directory" -Name $NupkgFilesDestination
+
+Get-ChildItem -Path $nugetPackagesPath -Include *.nupkg -Recurse | Copy-Item -Destination $nupkgDirPath

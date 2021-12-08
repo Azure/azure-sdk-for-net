@@ -31,8 +31,7 @@ stages:
               filePath: 'eng/scripts/DownloadDevPackages.ps1'
               arguments: >
                 -WorkingDirectory '$(Build.ArtifactStagingDirectory)'
-                -AllNupkgFilesDestination 'allNupkgFiles'
-                -AzureSDKNupkgFilesDestination 'azureSdkNupkgFiles'
+                -NupkgFilesDestination 'nupkgFiles'
 
           - pwsh: |
               npx cspell lint `
@@ -60,7 +59,7 @@ stages:
               pwsh: true
               filePath: 'eng/scripts/dependencies/AnalyzeDeps.ps1'
               arguments: >
-                -PackagesPath '$(Build.ArtifactStagingDirectory)/azureSdkNupkgFiles'
+                -PackagesPath '$(Build.ArtifactStagingDirectory)/nupkgFiles'
                 -LockfilePath '$(Build.SourcesDirectory)/eng/Packages.Data.props'
                 -OutPath '$(Build.ArtifactStagingDirectory)/reports/dependencies.html'
                 -DumpPath '$(Build.ArtifactStagingDirectory)/reports'
@@ -71,7 +70,7 @@ stages:
               pwsh: true
               filePath: 'eng/scripts/dependencies/generate-deps.ps1'
               arguments: >
-                -PackagesPath '$(Build.ArtifactStagingDirectory)/allNupkgFiles'
+                -PackagesPath '$(Build.ArtifactStagingDirectory)/nupkgFiles'
                 -DepsOutputFile '$(Build.ArtifactStagingDirectory)/reports/azure-sdk.deps.json'
                 -ProjectRefPath '$(Build.ArtifactStagingDirectory)/reports'
 
