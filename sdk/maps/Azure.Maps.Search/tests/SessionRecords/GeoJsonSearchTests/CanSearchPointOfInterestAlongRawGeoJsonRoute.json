@@ -1,0 +1,850 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/search/alongRoute/json?api-version=1.0\u0026query=park\u0026maxDetourTime=1000",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "247",
+        "Content-Type": "application/json",
+        "traceparent": "00-cb9f793bcd09d045ab679fd249ecb8e0-3fe1322bd4605a48-00",
+        "User-Agent": [
+          "azsdk-net-Maps.Search/1.0.0-alpha.20211208.1",
+          "(.NET 5.0.10; Darwin 21.1.0 Darwin Kernel Version 21.1.0: Wed Oct 13 17:33:23 PDT 2021; root:xnu-8019.41.5~1/RELEASE_X86_64)"
+        ],
+        "x-ms-client-id": "6a782b5b-631c-450d-9aa4-e561679d0d28",
+        "x-ms-client-request-id": "cef7085c0d9e5e89d47741da158ee6be",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "route": {
+          "coordinates": [
+            [
+              121.03684902191162,
+              24.809729582963467
+            ],
+            [
+              121.03638768196106,
+              24.808979706076794
+            ],
+            [
+              121.03898406028748,
+              24.808083743328694
+            ],
+            [
+              121.03933811187744,
+              24.808940751309397
+            ],
+            [
+              121.03684902191162,
+              24.809729582963467
+            ]
+          ],
+          "type": "LineString"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "11288",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 08 Dec 2021 09:25:30 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": [
+          "Accept-Encoding",
+          "X-HTTP-Method-Override"
+        ],
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: 710B7DA43ACB457A9C6F712BD411F5AD Ref B: TPE30EDGE0419 Ref C: 2021-12-08T09:25:30Z"
+      },
+      "ResponseBody": {
+        "summary": {
+          "query": "park",
+          "queryType": "NON_NEAR",
+          "queryTime": 133,
+          "numResults": 10,
+          "offset": 0,
+          "totalResults": 10,
+          "fuzzyLevel": 1
+        },
+        "results": [
+          {
+            "type": "POI",
+            "id": "g6JpZK8xNTgwMDkwMDIwMjA1OTmhY6NUV06hdqdVbmlmaWVk",
+            "score": 2.9973676205,
+            "dist": 245.21981803194754,
+            "info": "search:ta:158009002020599-TW",
+            "poi": {
+              "name": "\u6C34\u5733\u516C\u5712",
+              "categorySet": [
+                {
+                  "id": 9362008
+                }
+              ],
+              "categories": [
+                "park",
+                "park recreation area"
+              ],
+              "classifications": [
+                {
+                  "code": "PARK_RECREATION_AREA",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "park recreation area"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "park"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetName": "\u5FA9\u8208\u4E8C\u8DEF",
+              "municipalitySubdivision": "\u7AF9\u5317\u5E02",
+              "municipality": "\u65B0\u7AF9\u7E23",
+              "countrySubdivision": "\u53F0\u7063",
+              "postalCode": "302",
+              "extendedPostalCode": "30271",
+              "countryCode": "TW",
+              "country": "\u53F0\u7063",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "\u5FA9\u8208\u4E8C\u8DEF, \u7AF9\u5317\u5E02, \u65B0\u7AF9\u7E23 30271",
+              "localName": "\u7AF9\u5317\u5E02"
+            },
+            "position": {
+              "lat": 24.81076,
+              "lon": 121.0349
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 24.81166,
+                "lon": 121.03391
+              },
+              "btmRightPoint": {
+                "lat": 24.80986,
+                "lon": 121.03589
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 24.81086,
+                  "lon": 121.03497
+                }
+              }
+            ],
+            "dataSources": {
+              "poiDetails": [
+                {
+                  "id": "Rm91cnNxdWFyZTo0ZDZiMjVjODYxMDdmMDRkZDVkNDJiN2E=",
+                  "sourceName": "Foursquare"
+                }
+              ]
+            },
+            "detourTime": -93,
+            "detourDistance": 673
+          },
+          {
+            "type": "POI",
+            "id": "g6JpZK8xNTgwMDkwMDMxNTU1ODChY6NUV06hdqdVbmlmaWVk",
+            "score": 2.9965052605,
+            "dist": 453.3501266656622,
+            "info": "search:ev:158009003155580",
+            "poi": {
+              "name": "\u5104\u5BB6\u5177\u6279\u767C\u5009\u5EAB\u65B0\u7AF9",
+              "phone": "\u002B886 3 657 8646",
+              "categorySet": [
+                {
+                  "id": 7309
+                }
+              ],
+              "categories": [
+                "electric vehicle station"
+              ],
+              "classifications": [
+                {
+                  "code": "ELECTRIC_VEHICLE_STATION",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "electric vehicle station"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetName": "\u6771\u8208\u8DEF\u4E00\u6BB5",
+              "municipalitySubdivision": "Zhubei City",
+              "municipality": "Hsinchu County",
+              "countrySubdivision": "\u53F0\u7063",
+              "postalCode": "302",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "\u6771\u8208\u8DEF\u4E00\u6BB5, Zhubei City, Hsinchu County 302",
+              "localName": "Zhubei City"
+            },
+            "position": {
+              "lat": 24.81357,
+              "lon": 121.03822
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 24.81447,
+                "lon": 121.03723
+              },
+              "btmRightPoint": {
+                "lat": 24.81267,
+                "lon": 121.03921
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 24.81382,
+                  "lon": 121.03832
+                }
+              }
+            ],
+            "chargingPark": {
+              "connectors": [
+                {
+                  "connectorType": "IEC62196Type2CableAttached",
+                  "ratedPowerKW": 7.4,
+                  "voltageV": 230,
+                  "currentA": 32,
+                  "currentType": "AC1"
+                }
+              ]
+            },
+            "detourTime": -46,
+            "detourDistance": 1201
+          },
+          {
+            "type": "POI",
+            "id": "g6JpZK8xNTgwMDkwMDMxNTUzOTChY6NUV06hdqdVbmlmaWVk",
+            "score": 2.9973125458,
+            "dist": 258.5016569470979,
+            "info": "search:ev:158009003155390",
+            "poi": {
+              "name": "\u65B0\u7AF9\u7AF9\u5317\u8D85\u7D1A\u5145\u96FB\u7AD9",
+              "categorySet": [
+                {
+                  "id": 7309
+                }
+              ],
+              "categories": [
+                "electric vehicle station"
+              ],
+              "classifications": [
+                {
+                  "code": "ELECTRIC_VEHICLE_STATION",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "electric vehicle station"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetName": "Wenxing Road",
+              "municipalitySubdivision": "Zhubei City",
+              "municipality": "Hsinchu County",
+              "countrySubdivision": "\u53F0\u7063",
+              "postalCode": "302",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "Wenxing Road, Zhubei City, Hsinchu County 302",
+              "localName": "Zhubei City"
+            },
+            "position": {
+              "lat": 24.80751,
+              "lon": 121.03616
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 24.80841,
+                "lon": 121.03517
+              },
+              "btmRightPoint": {
+                "lat": 24.80661,
+                "lon": 121.03715
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 24.80723,
+                  "lon": 121.03602
+                }
+              }
+            ],
+            "chargingPark": {
+              "connectors": [
+                {
+                  "connectorType": "Tesla"
+                }
+              ]
+            },
+            "detourTime": -22,
+            "detourDistance": 296
+          },
+          {
+            "type": "POI",
+            "id": "g6JpZK8xNTgwMDkwMDAwNjUxMzWhY6NUV06hdqdVbmlmaWVk",
+            "score": 2.9981482029,
+            "dist": 55.60865826330686,
+            "info": "search:ta:158009000065135-TW",
+            "poi": {
+              "name": "Shui Zhen Sen Lin Park",
+              "categorySet": [
+                {
+                  "id": 9362008
+                }
+              ],
+              "categories": [
+                "park",
+                "park recreation area"
+              ],
+              "classifications": [
+                {
+                  "code": "PARK_RECREATION_AREA",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "park recreation area"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "park"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetName": "Jiafeng 11th Road Section 1",
+              "municipalitySubdivision": "Zhubei City",
+              "municipality": "Hsinchu County",
+              "countrySubdivision": "\u53F0\u7063",
+              "postalCode": "302",
+              "extendedPostalCode": "30273",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "Jiafeng 11th Road Section 1, Zhubei City, Hsinchu County 30273",
+              "localName": "Zhubei City"
+            },
+            "position": {
+              "lat": 24.80923,
+              "lon": 121.03686
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 24.81013,
+                "lon": 121.03587
+              },
+              "btmRightPoint": {
+                "lat": 24.80833,
+                "lon": 121.03785
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 24.80948,
+                  "lon": 121.03629
+                }
+              }
+            ],
+            "detourTime": 0,
+            "detourDistance": 0
+          },
+          {
+            "type": "POI",
+            "id": "g6JpZK8xNTgwMDkwMDE3NzM0NDGhY6NUV06hdqdVbmlmaWVk",
+            "score": 2.997220993,
+            "dist": 280.6723287431745,
+            "info": "search:ta:158009001773441-TW",
+            "poi": {
+              "name": "\u6728\u6A02\u5730MULEDY Playground\u7AF9\u53176\u002B\u65D7\u8266\u9928",
+              "phone": "\u002B886 3 668 8709",
+              "categorySet": [
+                {
+                  "id": 9902002
+                }
+              ],
+              "categories": [
+                "amusement arcade",
+                "amusement park"
+              ],
+              "classifications": [
+                {
+                  "code": "AMUSEMENT_PARK",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "amusement park"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "amusement arcade"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "168",
+              "streetName": "\u5FA9\u8208\u4E09\u8DEF\u4E8C\u6BB5",
+              "municipalitySubdivision": "\u7AF9\u5317\u5E02",
+              "municipality": "\u65B0\u7AF9\u7E23",
+              "countrySubdivision": "\u53F0\u7063",
+              "postalCode": "302",
+              "extendedPostalCode": "30273",
+              "countryCode": "TW",
+              "country": "\u53F0\u7063",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "168, \u5FA9\u8208\u4E09\u8DEF\u4E8C\u6BB5, \u7AF9\u5317\u5E02, \u65B0\u7AF9\u7E23 30273",
+              "localName": "\u7AF9\u5317\u5E02"
+            },
+            "position": {
+              "lat": 24.80761,
+              "lon": 121.03822
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 24.80851,
+                "lon": 121.03723
+              },
+              "btmRightPoint": {
+                "lat": 24.80671,
+                "lon": 121.03921
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 24.80787,
+                  "lon": 121.03831
+                }
+              }
+            ],
+            "detourTime": 7,
+            "detourDistance": -39
+          },
+          {
+            "type": "POI",
+            "id": "g6JpZK8xNTgwMDkwMDMxNTU4MzGhY6NUV06hdqdVbmlmaWVk",
+            "score": 2.9972057343,
+            "dist": 284.3986712426577,
+            "info": "search:ev:158009003155831",
+            "poi": {
+              "name": "6\u002BPLAZA\u5EE3\u5834",
+              "phone": "\u002B886 3 620 8168",
+              "categorySet": [
+                {
+                  "id": 7309
+                }
+              ],
+              "categories": [
+                "electric vehicle station"
+              ],
+              "classifications": [
+                {
+                  "code": "ELECTRIC_VEHICLE_STATION",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "electric vehicle station"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetName": "\u5FA9\u8208\u4E09\u8DEF\u4E8C\u6BB5",
+              "municipalitySubdivision": "Zhubei City",
+              "municipality": "Hsinchu County",
+              "countrySubdivision": "\u53F0\u7063",
+              "postalCode": "302",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "\u5FA9\u8208\u4E09\u8DEF\u4E8C\u6BB5, Zhubei City, Hsinchu County 302",
+              "localName": "Zhubei City"
+            },
+            "position": {
+              "lat": 24.80763,
+              "lon": 121.03831
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 24.80853,
+                "lon": 121.03732
+              },
+              "btmRightPoint": {
+                "lat": 24.80673,
+                "lon": 121.0393
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 24.80785,
+                  "lon": 121.03839
+                }
+              }
+            ],
+            "chargingPark": {
+              "connectors": [
+                {
+                  "connectorType": "IEC62196Type2CableAttached",
+                  "ratedPowerKW": 11,
+                  "voltageV": 400,
+                  "currentA": 16,
+                  "currentType": "AC3"
+                }
+              ]
+            },
+            "detourTime": 7,
+            "detourDistance": -39
+          },
+          {
+            "type": "POI",
+            "id": "g6JpZK8xNTgwMDkwMDIwMzcyNDihY6NUV06hdqdVbmlmaWVk",
+            "score": 2.9956450462,
+            "dist": 659.6146115097823,
+            "info": "search:ta:158009002037248-TW",
+            "poi": {
+              "name": "\u6C34\u5733\u516C\u5712",
+              "categorySet": [
+                {
+                  "id": 9362008
+                }
+              ],
+              "categories": [
+                "park",
+                "park recreation area"
+              ],
+              "classifications": [
+                {
+                  "code": "PARK_RECREATION_AREA",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "park recreation area"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "park"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetName": "\u516D\u5BB6\u4E94\u8DEF\u4E8C\u6BB5",
+              "municipalitySubdivision": "\u7AF9\u5317\u5E02",
+              "municipality": "\u65B0\u7AF9\u7E23",
+              "countrySubdivision": "\u53F0\u7063",
+              "postalCode": "302",
+              "extendedPostalCode": "30274",
+              "countryCode": "TW",
+              "country": "\u53F0\u7063",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "\u516D\u5BB6\u4E94\u8DEF\u4E8C\u6BB5, \u7AF9\u5317\u5E02, \u65B0\u7AF9\u7E23 30274",
+              "localName": "\u7AF9\u5317\u5E02"
+            },
+            "position": {
+              "lat": 24.80619,
+              "lon": 121.03209
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 24.80709,
+                "lon": 121.0311
+              },
+              "btmRightPoint": {
+                "lat": 24.80529,
+                "lon": 121.03308
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 24.80612,
+                  "lon": 121.03204
+                }
+              }
+            ],
+            "dataSources": {
+              "poiDetails": [
+                {
+                  "id": "Rm91cnNxdWFyZTo0ZGQzYzhkYWQyMmRjOTZiZTgwZTBhNjQ=",
+                  "sourceName": "Foursquare"
+                }
+              ]
+            },
+            "detourTime": 105,
+            "detourDistance": 878
+          },
+          {
+            "type": "POI",
+            "id": "g6JpZK8xNTgwMDkwMDExMjUyNTihY6NUV06hdqdVbmlmaWVk",
+            "score": 2.9918990135,
+            "dist": 1542.08012995871,
+            "info": "search:ev:158009001125258",
+            "poi": {
+              "name": "Tesla\u65B0\u7AF9\u8C50\u9091\u559C\u4F86\u767B\u5927\u98EF\u5E97\u96FB\u52D5\u8ECA\u5145\u96FB\u7AD9",
+              "phone": "\u002B886 3 620 6000",
+              "categorySet": [
+                {
+                  "id": 7309
+                }
+              ],
+              "categories": [
+                "electric vehicle station"
+              ],
+              "classifications": [
+                {
+                  "code": "ELECTRIC_VEHICLE_STATION",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "electric vehicle station"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "265",
+              "streetName": "\u5149\u660E\u516D\u8DEF\u6771\u4E00\u6BB5",
+              "municipalitySubdivision": "Zhubei City",
+              "municipality": "Hsinchu County",
+              "countrySubdivision": "\u53F0\u7063",
+              "postalCode": "302",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "265, \u5149\u660E\u516D\u8DEF\u6771\u4E00\u6BB5, Zhubei City, Hsinchu County 302",
+              "localName": "Zhubei City"
+            },
+            "position": {
+              "lat": 24.82057,
+              "lon": 121.0282
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 24.82147,
+                "lon": 121.02721
+              },
+              "btmRightPoint": {
+                "lat": 24.81967,
+                "lon": 121.02919
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 24.82008,
+                  "lon": 121.02802
+                }
+              }
+            ],
+            "chargingPark": {
+              "connectors": [
+                {
+                  "connectorType": "Tesla"
+                }
+              ]
+            },
+            "detourTime": 401,
+            "detourDistance": 3781
+          },
+          {
+            "type": "POI",
+            "id": "g6JpZK8xNTgwMDkwMDMxNTU3MjOhY6NUV06hdqdVbmlmaWVk",
+            "score": 2.9917838573,
+            "dist": 1568.7970740009787,
+            "info": "search:ev:158009003155723",
+            "poi": {
+              "name": "\u6B50\u5320\u7CFB\u7D71\u5BB6\u5177\u65B0\u7AF9\u5C55\u793A\u4E2D\u5FC3",
+              "phone": "\u002B886 3 550 9788",
+              "categorySet": [
+                {
+                  "id": 7309
+                }
+              ],
+              "categories": [
+                "electric vehicle station"
+              ],
+              "classifications": [
+                {
+                  "code": "ELECTRIC_VEHICLE_STATION",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "electric vehicle station"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetName": "\u81EA\u5F37\u5357\u8DEF",
+              "municipalitySubdivision": "Zhubei City",
+              "municipality": "Hsinchu County",
+              "countrySubdivision": "\u53F0\u7063",
+              "postalCode": "302",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "\u81EA\u5F37\u5357\u8DEF, Zhubei City, Hsinchu County 302",
+              "localName": "Zhubei City"
+            },
+            "position": {
+              "lat": 24.81399,
+              "lon": 121.0234
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 24.81489,
+                "lon": 121.02241
+              },
+              "btmRightPoint": {
+                "lat": 24.81309,
+                "lon": 121.02439
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 24.81392,
+                  "lon": 121.02356
+                }
+              }
+            ],
+            "chargingPark": {
+              "connectors": [
+                {
+                  "connectorType": "IEC62196Type2CableAttached",
+                  "ratedPowerKW": 22,
+                  "voltageV": 400,
+                  "currentA": 32,
+                  "currentType": "AC3"
+                }
+              ]
+            },
+            "detourTime": 454,
+            "detourDistance": 3544
+          },
+          {
+            "type": "POI",
+            "id": "g6JpZK8xNTgwMDkwMDIxNTk2MTehY6NUV06hdqdVbmlmaWVk",
+            "score": 2.9904134274,
+            "dist": 1885.2472392273637,
+            "info": "search:ta:158009002159617-TW",
+            "poi": {
+              "name": "\u5927\u806F\u76DF\u6253\u64CA\u7DF4\u7FD2\u5834",
+              "categorySet": [
+                {
+                  "id": 7374009
+                }
+              ],
+              "categories": [
+                "baseball",
+                "stadium"
+              ],
+              "classifications": [
+                {
+                  "code": "STADIUM",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "baseball"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "stadium"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetName": "\u6210\u529F\u4E8C\u8857",
+              "municipalitySubdivision": "\u7AF9\u5317\u5E02",
+              "municipality": "\u65B0\u7AF9\u7E23",
+              "countrySubdivision": "\u53F0\u7063",
+              "postalCode": "302",
+              "extendedPostalCode": "30264",
+              "countryCode": "TW",
+              "country": "\u53F0\u7063",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "\u6210\u529F\u4E8C\u8857, \u7AF9\u5317\u5E02, \u65B0\u7AF9\u7E23 30264",
+              "localName": "\u7AF9\u5317\u5E02"
+            },
+            "position": {
+              "lat": 24.82013,
+              "lon": 121.02346
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 24.82103,
+                "lon": 121.02247
+              },
+              "btmRightPoint": {
+                "lat": 24.81923,
+                "lon": 121.02445
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 24.82007,
+                  "lon": 121.02343
+                }
+              }
+            ],
+            "dataSources": {
+              "poiDetails": [
+                {
+                  "id": "Rm91cnNxdWFyZTo0YjljNjBmOGY5NjRhNTIwM2I2NDM2ZTM=",
+                  "sourceName": "Foursquare"
+                }
+              ]
+            },
+            "detourTime": 613,
+            "detourDistance": 4516
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "6a782b5b-631c-450d-9aa4-e561679d0d28",
+    "ENDPOINT_URL": null,
+    "RandomSeed": "2028258581"
+  }
+}
