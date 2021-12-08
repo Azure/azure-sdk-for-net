@@ -16,6 +16,8 @@ namespace Microsoft.Azure.WebPubSub.Common
     /// </summary>
     internal class ConnectionStatesConverter : JsonConverter<IReadOnlyDictionary<string, BinaryData>>
     {
+        private static readonly Dictionary<string, BinaryData> _defaultDict = new();
+
         public static JsonSerializerOptions Options = RegisterSerializerOptions();
 
         /// <inheritdoc/>
@@ -23,21 +25,21 @@ namespace Microsoft.Azure.WebPubSub.Common
         {
             try
             {
-                var dic = new Dictionary<string, BinaryData>();
+                var dict = new Dictionary<string, BinaryData>();
                 var element = JsonDocument.ParseValue(ref reader).RootElement;
                 foreach (var elementInfo in element.EnumerateObject())
                 {
                     // Use Base64 decode mapping to encode to avoid data loss.
                     var decoded = elementInfo.Value.GetBytesFromBase64();
-                    dic.Add(elementInfo.Name, BinaryData.FromBytes(decoded));
+                    dict.Add(elementInfo.Name, BinaryData.FromBytes(decoded));
                 }
-                return dic;
+                return dict;
             }
             catch
             {
                 // States not set via SDK and users need to read from Header themselves.
                 // Avoid partial results and return a non-null value.
-                return default;
+                return _defaultDict;
             }
         }
 
