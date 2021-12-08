@@ -6,11 +6,11 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Protocols;
-using Microsoft.Azure.WebJobs.Host.Tables;
 using Microsoft.Azure.Cosmos.Table;
+using Microsoft.Azure.WebJobs.Extensions.Tables;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
+namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 {
     public class TableEntityCollectorBinderTests
     {

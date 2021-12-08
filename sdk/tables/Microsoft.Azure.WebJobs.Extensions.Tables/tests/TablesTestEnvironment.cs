@@ -3,7 +3,7 @@
 
 using Azure.Core.TestFramework;
 
-namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
+namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 {
     public class TablesTestEnvironment: TestEnvironment
     {

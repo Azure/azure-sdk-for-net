@@ -4,10 +4,9 @@
 using System;
 using System.Reflection;
 using Microsoft.Azure.WebJobs.Host.Bindings;
-using Microsoft.Azure.WebJobs.Host.Tables;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
+namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 {
     public class PocoEntityArgumentBindingProviderTests
     {

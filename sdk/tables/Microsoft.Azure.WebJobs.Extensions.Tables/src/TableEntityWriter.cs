@@ -1,5 +1,6 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,34 +10,42 @@ using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 //using Microsoft.Azure.Storage;
 using Microsoft.Azure.Cosmos.Table;
-namespace Microsoft.Azure.WebJobs.Host.Tables
+
+namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
     internal class TableEntityWriter<T> : ICollector<T>, IAsyncCollector<T>, IWatcher
         where T : ITableEntity
     {
         private readonly CloudTable _table;
+
         /// <summary>
         /// Max batch size is an azure limitation on how many entries can be in each batch.
         /// </summary>
         public const int MaxBatchSize = 100;
+
         /// <summary>
         /// How many different partition keys to cache offline before flushing.
         /// This means the max offline cache size is (MaxPartitionWidth * (MaxBatchSize-1)) entries.
         /// </summary>
         public const int MaxPartitionWidth = 1000;
+
         private readonly Dictionary<string, Dictionary<string, TableOperation>> _map =
             new Dictionary<string, Dictionary<string, TableOperation>>();
+
         private readonly TableParameterLog _log;
         private readonly Stopwatch _watch = new Stopwatch();
+
         public TableEntityWriter(CloudTable table, TableParameterLog log)
         {
             _table = table;
             _log = log;
         }
+
         public TableEntityWriter(CloudTable table)
             : this(table, new TableParameterLog())
         {
         }
+
         public void Add(T item)
         {
 // TODO
@@ -44,6 +53,7 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
             AddAsync(item, CancellationToken.None).GetAwaiter().GetResult();
 #pragma warning restore AZC0102
         }
+
         public async Task AddAsync(T item, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Careful:
@@ -63,9 +73,11 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
                     // Offline cache is too large. Clear some room
                     await FlushAsync(cancellationToken).ConfigureAwait(false);
                 }
+
                 partition = new Dictionary<string, TableOperation>();
                 _map[partitionKey] = partition;
             }
+
             var itemCopy = Copy(item);
             if (partition.ContainsKey(rowKey))
             {
@@ -75,6 +87,7 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
                 partition = new Dictionary<string, TableOperation>();
                 _map[partitionKey] = partition;
             }
+
             _log.EntitiesWritten++;
             if (String.IsNullOrEmpty(itemCopy.ETag))
             {
@@ -88,26 +101,31 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
             {
                 partition.Add(rowKey, _table.CreateReplaceOperation(itemCopy));
             }
+
             if (partition.Count >= MaxBatchSize)
             {
                 await FlushPartitionAsync(partition, cancellationToken).ConfigureAwait(false);
                 _map.Remove(partitionKey);
             }
         }
+
         private static ITableEntity Copy(ITableEntity item)
         {
             var props = TableEntityValueBinder.DeepClone(item.WriteEntity(null));
             DynamicTableEntity copy = new DynamicTableEntity(item.PartitionKey, item.RowKey, item.ETag, props);
             return copy;
         }
+
         public virtual async Task FlushAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             foreach (var kv in _map)
             {
                 await FlushPartitionAsync(kv.Value, cancellationToken).ConfigureAwait(false);
             }
+
             _map.Clear();
         }
+
         internal virtual async Task FlushPartitionAsync(Dictionary<string, TableOperation> partition,
             CancellationToken cancellationToken)
         {
@@ -125,6 +143,7 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
                 }
             }
         }
+
         internal virtual async Task ExecuteBatchAndCreateTableIfNotExistsAsync(
             Dictionary<string, TableOperation> partition, CancellationToken cancellationToken)
         {
@@ -133,6 +152,7 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
             {
                 batch.Add(operation);
             }
+
             if (batch.Count > 0)
             {
                 StorageException exception = null;
@@ -147,8 +167,10 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
                     {
                         throw new StorageException(e.GetDetailedErrorMessage(), e);
                     }
+
                     exception = e;
                 }
+
                 if (exception != null)
                 {
                     // Make sure the table exists
@@ -165,6 +187,7 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
                 }
             }
         }
+
         public ParameterLog GetStatus()
         {
             if (_log.EntitiesWritten > 0)

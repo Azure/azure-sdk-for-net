@@ -3,10 +3,9 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Microsoft.Azure.WebJobs.Host.Converters;
 using Microsoft.Azure.Cosmos.Table;
 
-namespace Microsoft.Azure.WebJobs.Host.Tables.Converters
+namespace Microsoft.Azure.WebJobs.Extensions.Tables.Converters
 {
     internal class EntityPropertyToEnumConverter<TProperty> : IConverter<EntityProperty, TProperty>
     {

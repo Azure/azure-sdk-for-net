@@ -3,13 +3,12 @@
 
 using System;
 using Microsoft.Azure.WebJobs.Host.Converters;
-using Microsoft.Azure.WebJobs.Host.Tables;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Azure.Cosmos.Table;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
+namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 {
     public class TToEntityPropertyConverterFactoryTests
     {

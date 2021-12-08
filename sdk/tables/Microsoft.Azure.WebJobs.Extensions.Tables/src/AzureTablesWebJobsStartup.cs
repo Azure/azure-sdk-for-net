@@ -5,15 +5,15 @@ using Microsoft.Azure.WebJobs.Extensions.Storage;
 using Microsoft.Azure.WebJobs.Hosting;
 using Microsoft.Extensions.Hosting;
 
-[assembly: WebJobsStartup(typeof(AzureStorageWebJobsStartup))]
+[assembly: WebJobsStartup(typeof(AzureTablesWebJobsStartup))]
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage
 {
-    public class AzureStorageWebJobsStartup : IWebJobsStartup
+    internal class AzureTablesWebJobsStartup : IWebJobsStartup
     {
         public void Configure(IWebJobsBuilder builder)
         {
-            builder.AddAzureStorage();
+            builder.AddAzureTables();
         }
     }
 }

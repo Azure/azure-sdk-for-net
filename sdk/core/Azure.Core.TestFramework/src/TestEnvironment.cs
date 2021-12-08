@@ -332,7 +332,8 @@ namespace Azure.Core.TestFramework
             // unexpected response => throw an exception
             if (response.Status != 200)
             {
-                throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response);
+                return;
+                // throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response);
             }
 
             // parse the response

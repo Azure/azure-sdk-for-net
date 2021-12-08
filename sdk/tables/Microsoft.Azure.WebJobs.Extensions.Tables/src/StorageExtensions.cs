@@ -1,12 +1,12 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 using System;
 using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.Cosmos.Table;
-namespace Microsoft.Azure.WebJobs
+
+namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
     internal static class StorageExtensions
     {
@@ -17,45 +17,38 @@ namespace Microsoft.Azure.WebJobs
             {
                 throw new ArgumentNullException(nameof(path));
             }
+
             BindingTemplateExtensions.ValidateContractCompatibility(path.ParameterNames, bindingDataContract);
         }
-        public static Task<TableResult> ExecuteAsync(this CloudTable table, TableOperation operation, CancellationToken cancellationToken)
-        {
-            return table.ExecuteAsync(operation, null, null, cancellationToken);
-        }
+
         public static TableOperation CreateInsertOperation(this CloudTable sdk, ITableEntity entity)
         {
             var sdkOperation = TableOperation.Insert(entity);
             return sdkOperation;
         }
+
         public static TableOperation CreateInsertOrReplaceOperation(this CloudTable sdk, ITableEntity entity)
         {
             var sdkOperation = TableOperation.InsertOrReplace(entity);
             return sdkOperation;
         }
+
         public static TableOperation CreateReplaceOperation(this CloudTable sdk, ITableEntity entity)
         {
             var sdkOperation = TableOperation.Replace(entity);
             return sdkOperation;
         }
+
         public static TableOperation CreateRetrieveOperation<TElement>(this CloudTable table, string partitionKey, string rowKey)
-    where TElement : ITableEntity, new()
+            where TElement : ITableEntity, new()
         {
             return Retrieve<TElement>(partitionKey, rowKey);
         }
+
         public static TableOperation Retrieve<TElement>(string partitionKey, string rowKey) where TElement : ITableEntity, new()
         {
             TableOperation sdkOperation = TableOperation.Retrieve<TElement>(partitionKey, rowKey);
             return sdkOperation;
-        }
-        public static Task<TableBatchResult> ExecuteBatchAsync(this CloudTable sdk, TableBatchOperation batch,
-    CancellationToken cancellationToken)
-        {
-            return sdk.ExecuteBatchAsync(batch, cancellationToken);
-        }
-        public static Task CreateIfNotExistsAsync(this CloudTable sdk, CancellationToken cancellationToken)
-        {
-            return sdk.CreateIfNotExistsAsync(requestOptions: null, operationContext: null, cancellationToken: cancellationToken);
         }
     }
 }

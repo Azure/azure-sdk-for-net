@@ -1,11 +1,11 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using Microsoft.Azure.Cosmos.Table;
-namespace Microsoft.Azure.WebJobs.Host.Tables
+
+namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
     internal static class TableExtensions
     {
@@ -23,35 +23,42 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
             {
                 throw new ArgumentNullException(nameof(exception));
             }
+
             RequestResult result = exception.RequestInformation;
             if (result == null)
             {
                 return false;
             }
+
             if (result.HttpStatusCode != 404)
             {
                 return false;
             }
+
             StorageExtendedErrorInformation extendedInformation = result.ExtendedErrorInformation;
             if (extendedInformation == null)
             {
                 return false;
             }
+
             return extendedInformation.ErrorCode == "TableNotFound";
         }
+
         public static string GetDetailedErrorMessage(this StorageException exception)
         {
             if (exception == null)
             {
                 throw new ArgumentNullException(nameof(exception));
             }
+
             string message = exception.Message;
             if (exception.RequestInformation != null)
             {
                 message += $" (HTTP status code {exception.RequestInformation.HttpStatusCode.ToString(CultureInfo.InvariantCulture)}: "
-                    + $"{exception.RequestInformation.ExtendedErrorInformation?.ErrorCode}. "
-                    + $"{exception.RequestInformation.ExtendedErrorInformation?.ErrorMessage})";
+                           + $"{exception.RequestInformation.ExtendedErrorInformation?.ErrorCode}. "
+                           + $"{exception.RequestInformation.ExtendedErrorInformation?.ErrorMessage})";
             }
+
             return message;
         }
     }

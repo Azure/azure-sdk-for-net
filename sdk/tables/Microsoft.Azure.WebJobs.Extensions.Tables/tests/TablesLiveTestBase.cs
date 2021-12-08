@@ -8,13 +8,14 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Microsoft.Azure.Cosmos.Table;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
+namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 {
     public class TablesLiveTestBase : LiveTestBase<TablesTestEnvironment>
     {
@@ -23,7 +24,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         protected const string RowKey = "RK";
         private readonly Random _random = new();
         protected string TableName;
-        protected StorageAccount Account;
+        private protected StorageAccount Account;
         protected CloudTable CloudTable;
 
         [SetUp]
@@ -73,7 +74,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                     {
                         builder.Services.AddSingleton<IJobActivator>(new FakeActivator(instance));
                     }
-                    builder.AddAzureStorage();
+                    builder.AddAzureTables();
                 }, programType)
                 .ConfigureAppConfiguration(builder =>
                 {

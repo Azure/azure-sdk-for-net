@@ -4,20 +4,20 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using Microsoft.Azure.WebJobs.Host.Tables;
+using Microsoft.Azure.WebJobs.Host.Converters;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Azure.Cosmos.Table;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
+namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 {
-    public class PocoToTableEntityConverterTests
+    public class TableEntityToPocoConverterTests
     {
         [Test]
         public void Create_ReturnsInstance()
         {
             // Act
-            IConverter<Poco, ITableEntity> converter = PocoToTableEntityConverter<Poco>.Create();
+            IConverter<ITableEntity, Poco> converter = TableEntityToPocoConverter<Poco>.Create();
             // Assert
             Assert.NotNull(converter);
         }
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
         {
             // Act & Assert
             ExceptionAssert.ThrowsInvalidOperation(
-                () => PocoToTableEntityConverter<PocoWithNonStringPartitionKey>.Create(),
+                () => TableEntityToPocoConverter<PocoWithNonStringPartitionKey>.Create(),
                 "If the PartitionKey property is present, it must be a String.");
         }
 
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
         {
             // Act & Assert
             ExceptionAssert.ThrowsInvalidOperation(
-                () => PocoToTableEntityConverter<PocoWithIndexerPartitionKey>.Create(),
+                () => TableEntityToPocoConverter<PocoWithIndexerPartitionKey>.Create(),
                 "If the PartitionKey property is present, it must not be an indexer.");
         }
 
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
         public void Create_IfRowKeyIsNonString_Throws()
         {
             // Act & Assert
-            ExceptionAssert.ThrowsInvalidOperation(() => PocoToTableEntityConverter<PocoWithNonStringRowKey>.Create(),
+            ExceptionAssert.ThrowsInvalidOperation(() => TableEntityToPocoConverter<PocoWithNonStringRowKey>.Create(),
                 "If the RowKey property is present, it must be a String.");
         }
 
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
         public void Create_IfRowKeyHasIndexParameters_Throws()
         {
             // Act & Assert
-            ExceptionAssert.ThrowsInvalidOperation(() => PocoToTableEntityConverter<PocoWithIndexerRowKey>.Create(),
+            ExceptionAssert.ThrowsInvalidOperation(() => TableEntityToPocoConverter<PocoWithIndexerRowKey>.Create(),
                 "If the RowKey property is present, it must not be an indexer.");
         }
 
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
         {
             // Act & Assert
             ExceptionAssert.ThrowsInvalidOperation(
-                () => PocoToTableEntityConverter<PocoWithNonDateTimeOffsetTimestamp>.Create(),
+                () => TableEntityToPocoConverter<PocoWithNonDateTimeOffsetTimestamp>.Create(),
                 "If the Timestamp property is present, it must be a DateTimeOffset.");
         }
 
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
         public void Create_IfTimestampHasIndexParameters_Throws()
         {
             // Act & Assert
-            ExceptionAssert.ThrowsInvalidOperation(() => PocoToTableEntityConverter<PocoWithIndexerTimestamp>.Create(),
+            ExceptionAssert.ThrowsInvalidOperation(() => TableEntityToPocoConverter<PocoWithIndexerTimestamp>.Create(),
                 "If the Timestamp property is present, it must not be an indexer.");
         }
 
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
         public void Create_IfETagIsNonString_Throws()
         {
             // Act & Assert
-            ExceptionAssert.ThrowsInvalidOperation(() => PocoToTableEntityConverter<PocoWithNonStringETag>.Create(),
+            ExceptionAssert.ThrowsInvalidOperation(() => TableEntityToPocoConverter<PocoWithNonStringETag>.Create(),
                 "If the ETag property is present, it must be a String.");
         }
 
@@ -85,18 +85,18 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
         public void Create_IfETagHasIndexParameters_Throws()
         {
             // Act & Assert
-            ExceptionAssert.ThrowsInvalidOperation(() => PocoToTableEntityConverter<PocoWithIndexerETag>.Create(),
+            ExceptionAssert.ThrowsInvalidOperation(() => TableEntityToPocoConverter<PocoWithIndexerETag>.Create(),
                 "If the ETag property is present, it must not be an indexer.");
         }
 
         [Test]
-        public void Convert_IfInputIsNull_ReturnsNull()
+        public void Convert_IfInputIsNull_ReturnsDefault()
         {
             // Arrange
-            IConverter<Poco, ITableEntity> product = CreateProductUnderTest<Poco>();
-            Poco input = null;
+            IConverter<ITableEntity, Poco> product = CreateProductUnderTest<Poco>();
+            ITableEntity entity = null;
             // Act
-            ITableEntity actual = product.Convert(input);
+            Poco actual = product.Convert(entity);
             // Assert
             Assert.Null(actual);
         }
@@ -106,54 +106,55 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithPartitionKey, ITableEntity> product = CreateProductUnderTest<PocoWithPartitionKey>();
-            PocoWithPartitionKey input = new PocoWithPartitionKey
+            IConverter<ITableEntity, PocoWithPartitionKey> product = CreateProductUnderTest<PocoWithPartitionKey>();
+            DynamicTableEntity entity = new DynamicTableEntity
             {
                 PartitionKey = expectedPartitionKey
             };
             // Act
-            ITableEntity actual = product.Convert(input);
+            PocoWithPartitionKey actual = product.Convert(entity);
             // Assert
             Assert.NotNull(actual);
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
 
         [Test]
-        public void Convert_IfPartitionKeyIsReadOnly_PopulatesPartitionKey()
+        public void Convert_IfPartitionKeyIsWriteOnly_PopulatesPartitionKey()
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithReadOnlyPartitionKey, ITableEntity> product =
-                CreateProductUnderTest<PocoWithReadOnlyPartitionKey>();
-            PocoWithReadOnlyPartitionKey input = new PocoWithReadOnlyPartitionKey
-            {
-                WritePartitionKey = expectedPartitionKey
-            };
-            // Act
-            ITableEntity actual = product.Convert(input);
-            // Assert
-            Assert.NotNull(actual);
-            Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
-        }
-
-        [Test]
-        public void Convert_DoesNotIncludePartitionKeyInDictionary()
-        {
-            // Arrange
-            const string expectedPartitionKey = "PK";
-            IConverter<PocoWithPartitionKey, ITableEntity> product = CreateProductUnderTest<PocoWithPartitionKey>();
-            PocoWithPartitionKey input = new PocoWithPartitionKey
+            IConverter<ITableEntity, PocoWithWriteOnlyPartitionKey> product =
+                CreateProductUnderTest<PocoWithWriteOnlyPartitionKey>();
+            DynamicTableEntity entity = new DynamicTableEntity
             {
                 PartitionKey = expectedPartitionKey
             };
             // Act
-            ITableEntity actual = product.Convert(input);
+            PocoWithWriteOnlyPartitionKey actual = product.Convert(entity);
+            // Assert
+            Assert.NotNull(actual);
+            Assert.AreSame(expectedPartitionKey, actual.ReadPartitionKey);
+        }
+
+        [Test]
+        public void Convert_IfDictionaryContainsPartitionKey_PopulatesFromOfficialPartitionKey()
+        {
+            // Arrange
+            const string expectedPartitionKey = "PK";
+            IConverter<ITableEntity, PocoWithPartitionKey> product = CreateProductUnderTest<PocoWithPartitionKey>();
+            DynamicTableEntity entity = new DynamicTableEntity
+            {
+                PartitionKey = expectedPartitionKey,
+                Properties = new Dictionary<string, EntityProperty>
+                {
+                    { "PartitionKey", new EntityProperty("UnexpectedPK") }
+                }
+            };
+            // Act
+            PocoWithPartitionKey actual = product.Convert(entity);
             // Assert
             Assert.NotNull(actual);
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
-            IDictionary<string, EntityProperty> properties = actual.WriteEntity(operationContext: null);
-            Assert.NotNull(properties);
-            Assert.False(properties.ContainsKey("PartitionKey"));
         }
 
         [Test]
@@ -161,35 +162,35 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
         {
             // Arrange
             const string expectedRowKey = "RK";
-            IConverter<PocoWithPrivatePartitionKey, ITableEntity> product =
+            IConverter<ITableEntity, PocoWithPrivatePartitionKey> product =
                 CreateProductUnderTest<PocoWithPrivatePartitionKey>();
-            PocoWithPrivatePartitionKey input = new PocoWithPrivatePartitionKey
-            {
-                PartitionKeyPublic = "UnexpectedPK",
-                RowKey = expectedRowKey
-            };
-            // Act
-            ITableEntity actual = product.Convert(input);
-            // Assert
-            Assert.NotNull(actual);
-            Assert.Null(actual.PartitionKey);
-            Assert.AreSame(expectedRowKey, actual.RowKey);
-        }
-
-        [Test]
-        public void Convert_IfPartitionKeyGetterIsPrivate_Ignores()
-        {
-            // Arrange
-            const string expectedRowKey = "RK";
-            IConverter<PocoWithPrivatePartitionKeyGetter, ITableEntity> product =
-                CreateProductUnderTest<PocoWithPrivatePartitionKeyGetter>();
-            PocoWithPrivatePartitionKeyGetter input = new PocoWithPrivatePartitionKeyGetter
+            DynamicTableEntity entity = new DynamicTableEntity
             {
                 PartitionKey = "UnexpectedPK",
                 RowKey = expectedRowKey
             };
             // Act
-            ITableEntity actual = product.Convert(input);
+            PocoWithPrivatePartitionKey actual = product.Convert(entity);
+            // Assert
+            Assert.NotNull(actual);
+            Assert.Null(actual.PartitionKeyPublic);
+            Assert.AreSame(expectedRowKey, actual.RowKey);
+        }
+
+        [Test]
+        public void Convert_IfPartitionKeySetterIsPrivate_Ignores()
+        {
+            // Arrange
+            const string expectedRowKey = "RK";
+            IConverter<ITableEntity, PocoWithPrivatePartitionKeySetter> product =
+                CreateProductUnderTest<PocoWithPrivatePartitionKeySetter>();
+            DynamicTableEntity entity = new DynamicTableEntity
+            {
+                PartitionKey = "UnexpectedPK",
+                RowKey = expectedRowKey
+            };
+            // Act
+            PocoWithPrivatePartitionKeySetter actual = product.Convert(entity);
             // Assert
             Assert.NotNull(actual);
             Assert.Null(actual.PartitionKey);
@@ -201,38 +202,36 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
         {
             // Arrange
             const string expectedRowKey = "RK";
-            IConverter<PocoWithStaticPartitionKey, ITableEntity> product =
+            IConverter<ITableEntity, PocoWithStaticPartitionKey> product =
                 CreateProductUnderTest<PocoWithStaticPartitionKey>();
-            PocoWithStaticPartitionKey.PartitionKey = "UnexpectedPK";
-            PocoWithStaticPartitionKey input = new PocoWithStaticPartitionKey
+            DynamicTableEntity entity = new DynamicTableEntity
             {
+                PartitionKey = "UnexpectedPK",
                 RowKey = expectedRowKey
             };
             // Act
-            ITableEntity actual = product.Convert(input);
+            PocoWithStaticPartitionKey actual = product.Convert(entity);
             // Assert
             Assert.NotNull(actual);
-            Assert.Null(actual.PartitionKey);
+            Assert.Null(PocoWithStaticPartitionKey.PartitionKey);
             Assert.AreSame(expectedRowKey, actual.RowKey);
         }
 
         [Test]
-        public void Convert_IfPartitionKeyIsWriteOnly_Ignores()
+        public void Convert_IfPartitionKeyIsReadOnly_Ignores()
         {
             // Arrange
             const string expectedRowKey = "RK";
-            IConverter<PocoWithWriteOnlyPartitionKey, ITableEntity> product =
-                CreateProductUnderTest<PocoWithWriteOnlyPartitionKey>();
-            PocoWithWriteOnlyPartitionKey input = new PocoWithWriteOnlyPartitionKey
+            IConverter<ITableEntity, PocoWithReadOnlyPartitionKey> product =
+                CreateProductUnderTest<PocoWithReadOnlyPartitionKey>();
+            DynamicTableEntity entity = new DynamicTableEntity
             {
-                PartitionKey = "IgnorePK",
                 RowKey = expectedRowKey
             };
             // Act
-            ITableEntity actual = product.Convert(input);
+            PocoWithReadOnlyPartitionKey actual = product.Convert(entity);
             // Assert
             Assert.NotNull(actual);
-            Assert.Null(actual.PartitionKey);
             Assert.AreSame(expectedRowKey, actual.RowKey);
         }
 
@@ -241,53 +240,55 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
         {
             // Arrange
             const string expectedRowKey = "RK";
-            IConverter<PocoWithRowKey, ITableEntity> product = CreateProductUnderTest<PocoWithRowKey>();
-            PocoWithRowKey input = new PocoWithRowKey
+            IConverter<ITableEntity, PocoWithRowKey> product = CreateProductUnderTest<PocoWithRowKey>();
+            DynamicTableEntity entity = new DynamicTableEntity
             {
                 RowKey = expectedRowKey
             };
             // Act
-            ITableEntity actual = product.Convert(input);
+            PocoWithRowKey actual = product.Convert(entity);
             // Assert
             Assert.NotNull(actual);
             Assert.AreSame(expectedRowKey, actual.RowKey);
         }
 
         [Test]
-        public void Convert_IfRowKeyIsReadOnly_PopulatesRowKey()
+        public void Convert_IfRowKeyIsWriteOnly_PopulatesRowKey()
         {
             // Arrange
             const string expectedRowKey = "RK";
-            IConverter<PocoWithReadOnlyRowKey, ITableEntity> product = CreateProductUnderTest<PocoWithReadOnlyRowKey>();
-            PocoWithReadOnlyRowKey input = new PocoWithReadOnlyRowKey
-            {
-                WriteRowKey = expectedRowKey
-            };
-            // Act
-            ITableEntity actual = product.Convert(input);
-            // Assert
-            Assert.NotNull(actual);
-            Assert.AreSame(expectedRowKey, actual.RowKey);
-        }
-
-        [Test]
-        public void Convert_DoesNotIncludeRowKeyInDictionary()
-        {
-            // Arrange
-            const string expectedRowKey = "RK";
-            IConverter<PocoWithRowKey, ITableEntity> product = CreateProductUnderTest<PocoWithRowKey>();
-            PocoWithRowKey input = new PocoWithRowKey
+            IConverter<ITableEntity, PocoWithWriteOnlyRowKey> product =
+                CreateProductUnderTest<PocoWithWriteOnlyRowKey>();
+            DynamicTableEntity entity = new DynamicTableEntity
             {
                 RowKey = expectedRowKey
             };
             // Act
-            ITableEntity actual = product.Convert(input);
+            PocoWithWriteOnlyRowKey actual = product.Convert(entity);
+            // Assert
+            Assert.NotNull(actual);
+            Assert.AreSame(expectedRowKey, actual.ReadRowKey);
+        }
+
+        [Test]
+        public void Convert_IfDictionaryContainsRowKey_PopulatesFromOfficialRowKey()
+        {
+            // Arrange
+            const string expectedRowKey = "RK";
+            IConverter<ITableEntity, PocoWithRowKey> product = CreateProductUnderTest<PocoWithRowKey>();
+            DynamicTableEntity entity = new DynamicTableEntity
+            {
+                RowKey = expectedRowKey,
+                Properties = new Dictionary<string, EntityProperty>
+                {
+                    { "RowKey", new EntityProperty("UnexpectedRK") }
+                }
+            };
+            // Act
+            PocoWithRowKey actual = product.Convert(entity);
             // Assert
             Assert.NotNull(actual);
             Assert.AreSame(expectedRowKey, actual.RowKey);
-            IDictionary<string, EntityProperty> properties = actual.WriteEntity(operationContext: null);
-            Assert.NotNull(properties);
-            Assert.False(properties.ContainsKey("RowKey"));
         }
 
         [Test]
@@ -295,34 +296,34 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithPrivateRowKey, ITableEntity> product = CreateProductUnderTest<PocoWithPrivateRowKey>();
-            PocoWithPrivateRowKey input = new PocoWithPrivateRowKey
-            {
-                PartitionKey = expectedPartitionKey,
-                RowKeyPublic = "UnexpectedRK"
-            };
-            // Act
-            ITableEntity actual = product.Convert(input);
-            // Assert
-            Assert.NotNull(actual);
-            Assert.Null(actual.RowKey);
-            Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
-        }
-
-        [Test]
-        public void Convert_IfRowKeyGetterIsPrivate_Ignores()
-        {
-            // Arrange
-            const string expectedPartitionKey = "PK";
-            IConverter<PocoWithPrivateRowKeyGetter, ITableEntity> product =
-                CreateProductUnderTest<PocoWithPrivateRowKeyGetter>();
-            PocoWithPrivateRowKeyGetter input = new PocoWithPrivateRowKeyGetter
+            IConverter<ITableEntity, PocoWithPrivateRowKey> product = CreateProductUnderTest<PocoWithPrivateRowKey>();
+            DynamicTableEntity entity = new DynamicTableEntity
             {
                 PartitionKey = expectedPartitionKey,
                 RowKey = "UnexpectedRK"
             };
             // Act
-            ITableEntity actual = product.Convert(input);
+            PocoWithPrivateRowKey actual = product.Convert(entity);
+            // Assert
+            Assert.NotNull(actual);
+            Assert.Null(actual.RowKeyPublic);
+            Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
+        }
+
+        [Test]
+        public void Convert_IfRowKeySetterIsPrivate_Ignores()
+        {
+            // Arrange
+            const string expectedPartitionKey = "PK";
+            IConverter<ITableEntity, PocoWithPrivateRowKeySetter> product =
+                CreateProductUnderTest<PocoWithPrivateRowKeySetter>();
+            DynamicTableEntity entity = new DynamicTableEntity
+            {
+                PartitionKey = expectedPartitionKey,
+                RowKey = "UnexpectedRK"
+            };
+            // Act
+            PocoWithPrivateRowKeySetter actual = product.Convert(entity);
             // Assert
             Assert.NotNull(actual);
             Assert.Null(actual.RowKey);
@@ -334,37 +335,34 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithStaticRowKey, ITableEntity> product = CreateProductUnderTest<PocoWithStaticRowKey>();
-            PocoWithStaticRowKey.RowKey = "UnexpectedRK";
-            PocoWithStaticRowKey input = new PocoWithStaticRowKey
+            IConverter<ITableEntity, PocoWithStaticRowKey> product = CreateProductUnderTest<PocoWithStaticRowKey>();
+            DynamicTableEntity entity = new DynamicTableEntity
             {
-                PartitionKey = expectedPartitionKey
+                PartitionKey = expectedPartitionKey,
+                RowKey = "UnexpectedRK"
             };
             // Act
-            ITableEntity actual = product.Convert(input);
+            PocoWithStaticRowKey actual = product.Convert(entity);
             // Assert
             Assert.NotNull(actual);
-            Assert.Null(actual.RowKey);
+            Assert.Null(PocoWithStaticRowKey.RowKey);
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
 
         [Test]
-        public void Convert_IfRowKeyIsWriteOnly_Ignores()
+        public void Convert_IfRowKeyIsReadOnly_Ignores()
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithWriteOnlyRowKey, ITableEntity> product =
-                CreateProductUnderTest<PocoWithWriteOnlyRowKey>();
-            PocoWithWriteOnlyRowKey input = new PocoWithWriteOnlyRowKey
+            IConverter<ITableEntity, PocoWithReadOnlyRowKey> product = CreateProductUnderTest<PocoWithReadOnlyRowKey>();
+            DynamicTableEntity entity = new DynamicTableEntity
             {
-                PartitionKey = expectedPartitionKey,
-                RowKey = "IgnoreRK"
+                PartitionKey = expectedPartitionKey
             };
             // Act
-            ITableEntity actual = product.Convert(input);
+            PocoWithReadOnlyRowKey actual = product.Convert(entity);
             // Assert
             Assert.NotNull(actual);
-            Assert.Null(actual.RowKey);
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
 
@@ -373,13 +371,13 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
         {
             // Arrange
             DateTimeOffset expectedTimestamp = DateTimeOffset.Now;
-            IConverter<PocoWithTimestamp, ITableEntity> product = CreateProductUnderTest<PocoWithTimestamp>();
-            PocoWithTimestamp input = new PocoWithTimestamp
+            IConverter<ITableEntity, PocoWithTimestamp> product = CreateProductUnderTest<PocoWithTimestamp>();
+            DynamicTableEntity entity = new DynamicTableEntity
             {
                 Timestamp = expectedTimestamp
             };
             // Act
-            ITableEntity actual = product.Convert(input);
+            PocoWithTimestamp actual = product.Convert(entity);
             // Assert
             Assert.NotNull(actual);
             Assert.AreEqual(expectedTimestamp, actual.Timestamp);
@@ -387,43 +385,44 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
         }
 
         [Test]
-        public void Convert_IfTimestampIsReadOnly_PopulatesTimestamp()
+        public void Convert_IfTimestampIsWriteOnly_PopulatesTimestamp()
         {
             // Arrange
             DateTimeOffset expectedTimestamp = DateTimeOffset.Now;
-            IConverter<PocoWithReadOnlyTimestamp, ITableEntity> product =
-                CreateProductUnderTest<PocoWithReadOnlyTimestamp>();
-            PocoWithReadOnlyTimestamp input = new PocoWithReadOnlyTimestamp
-            {
-                WriteTimestamp = expectedTimestamp
-            };
-            // Act
-            ITableEntity actual = product.Convert(input);
-            // Assert
-            Assert.NotNull(actual);
-            Assert.AreEqual(expectedTimestamp, actual.Timestamp);
-            Assert.AreEqual(expectedTimestamp.Offset, actual.Timestamp.Offset);
-        }
-
-        [Test]
-        public void Convert_DoesNotIncludeTimestampInDictionary()
-        {
-            // Arrange
-            DateTimeOffset expectedTimestamp = DateTimeOffset.Now;
-            IConverter<PocoWithTimestamp, ITableEntity> product = CreateProductUnderTest<PocoWithTimestamp>();
-            PocoWithTimestamp input = new PocoWithTimestamp
+            IConverter<ITableEntity, PocoWithWriteOnlyTimestamp> product =
+                CreateProductUnderTest<PocoWithWriteOnlyTimestamp>();
+            DynamicTableEntity entity = new DynamicTableEntity
             {
                 Timestamp = expectedTimestamp
             };
             // Act
-            ITableEntity actual = product.Convert(input);
+            PocoWithWriteOnlyTimestamp actual = product.Convert(entity);
+            // Assert
+            Assert.NotNull(actual);
+            Assert.AreEqual(expectedTimestamp, actual.ReadTimestamp);
+            Assert.AreEqual(expectedTimestamp.Offset, actual.ReadTimestamp.Offset);
+        }
+
+        [Test]
+        public void Convert_IfDictionaryContainsTimestamp_PopulatesFromOfficialTimestamp()
+        {
+            // Arrange
+            DateTimeOffset expectedTimestamp = DateTimeOffset.Now;
+            IConverter<ITableEntity, PocoWithTimestamp> product = CreateProductUnderTest<PocoWithTimestamp>();
+            DynamicTableEntity entity = new DynamicTableEntity
+            {
+                Timestamp = expectedTimestamp,
+                Properties = new Dictionary<string, EntityProperty>
+                {
+                    { "Timestamp", new EntityProperty(DateTimeOffset.MinValue) }
+                }
+            };
+            // Act
+            PocoWithTimestamp actual = product.Convert(entity);
             // Assert
             Assert.NotNull(actual);
             Assert.AreEqual(expectedTimestamp, actual.Timestamp);
             Assert.AreEqual(expectedTimestamp.Offset, actual.Timestamp.Offset);
-            IDictionary<string, EntityProperty> properties = actual.WriteEntity(operationContext: null);
-            Assert.NotNull(properties);
-            Assert.False(properties.ContainsKey("Timestamp"));
         }
 
         [Test]
@@ -431,35 +430,35 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithPrivateTimestamp, ITableEntity> product =
+            IConverter<ITableEntity, PocoWithPrivateTimestamp> product =
                 CreateProductUnderTest<PocoWithPrivateTimestamp>();
-            PocoWithPrivateTimestamp input = new PocoWithPrivateTimestamp
-            {
-                PartitionKey = expectedPartitionKey,
-                TimestampPublic = DateTimeOffset.Now
-            };
-            // Act
-            ITableEntity actual = product.Convert(input);
-            // Assert
-            Assert.NotNull(actual);
-            Assert.AreEqual(default(DateTimeOffset), actual.Timestamp);
-            Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
-        }
-
-        [Test]
-        public void Convert_IfTimestampGetterIsPrivate_Ignores()
-        {
-            // Arrange
-            const string expectedPartitionKey = "PK";
-            IConverter<PocoWithPrivateTimestampGetter, ITableEntity> product =
-                CreateProductUnderTest<PocoWithPrivateTimestampGetter>();
-            PocoWithPrivateTimestampGetter input = new PocoWithPrivateTimestampGetter
+            DynamicTableEntity entity = new DynamicTableEntity
             {
                 PartitionKey = expectedPartitionKey,
                 Timestamp = DateTimeOffset.Now
             };
             // Act
-            ITableEntity actual = product.Convert(input);
+            PocoWithPrivateTimestamp actual = product.Convert(entity);
+            // Assert
+            Assert.NotNull(actual);
+            Assert.AreEqual(default(DateTimeOffset), actual.TimestampPublic);
+            Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
+        }
+
+        [Test]
+        public void Convert_IfTimestampSetterIsPrivate_Ignores()
+        {
+            // Arrange
+            const string expectedPartitionKey = "PK";
+            IConverter<ITableEntity, PocoWithPrivateTimestampSetter> product =
+                CreateProductUnderTest<PocoWithPrivateTimestampSetter>();
+            DynamicTableEntity entity = new DynamicTableEntity
+            {
+                PartitionKey = expectedPartitionKey,
+                Timestamp = DateTimeOffset.Now
+            };
+            // Act
+            PocoWithPrivateTimestampSetter actual = product.Convert(entity);
             // Assert
             Assert.NotNull(actual);
             Assert.AreEqual(default(DateTimeOffset), actual.Timestamp);
@@ -471,38 +470,36 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithStaticTimestamp, ITableEntity> product =
+            IConverter<ITableEntity, PocoWithStaticTimestamp> product =
                 CreateProductUnderTest<PocoWithStaticTimestamp>();
-            PocoWithStaticTimestamp.Timestamp = DateTimeOffset.Now;
-            PocoWithStaticTimestamp input = new PocoWithStaticTimestamp
-            {
-                PartitionKey = expectedPartitionKey
-            };
-            // Act
-            ITableEntity actual = product.Convert(input);
-            // Assert
-            Assert.NotNull(actual);
-            Assert.AreEqual(default(DateTimeOffset), actual.Timestamp);
-            Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
-        }
-
-        [Test]
-        public void Convert_IfTimestampIsWriteOnly_Ignores()
-        {
-            // Arrange
-            const string expectedPartitionKey = "PK";
-            IConverter<PocoWithWriteOnlyTimestamp, ITableEntity> product =
-                CreateProductUnderTest<PocoWithWriteOnlyTimestamp>();
-            PocoWithWriteOnlyTimestamp input = new PocoWithWriteOnlyTimestamp
+            DynamicTableEntity entity = new DynamicTableEntity
             {
                 PartitionKey = expectedPartitionKey,
                 Timestamp = DateTimeOffset.Now
             };
             // Act
-            ITableEntity actual = product.Convert(input);
+            PocoWithStaticTimestamp actual = product.Convert(entity);
             // Assert
             Assert.NotNull(actual);
-            Assert.AreEqual(default(DateTimeOffset), actual.Timestamp);
+            Assert.AreEqual(default(DateTimeOffset), PocoWithStaticTimestamp.Timestamp);
+            Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
+        }
+
+        [Test]
+        public void Convert_IfTimestampIsReadOnly_Ignores()
+        {
+            // Arrange
+            const string expectedPartitionKey = "PK";
+            IConverter<ITableEntity, PocoWithReadOnlyTimestamp> product =
+                CreateProductUnderTest<PocoWithReadOnlyTimestamp>();
+            DynamicTableEntity entity = new DynamicTableEntity
+            {
+                PartitionKey = expectedPartitionKey
+            };
+            // Act
+            PocoWithReadOnlyTimestamp actual = product.Convert(entity);
+            // Assert
+            Assert.NotNull(actual);
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
 
@@ -511,53 +508,54 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
         {
             // Arrange
             string expectedETag = "abc";
-            IConverter<PocoWithETag, ITableEntity> product = CreateProductUnderTest<PocoWithETag>();
-            PocoWithETag input = new PocoWithETag
+            IConverter<ITableEntity, PocoWithETag> product = CreateProductUnderTest<PocoWithETag>();
+            DynamicTableEntity entity = new DynamicTableEntity
             {
                 ETag = expectedETag
             };
             // Act
-            ITableEntity actual = product.Convert(input);
+            PocoWithETag actual = product.Convert(entity);
             // Assert
             Assert.NotNull(actual);
             Assert.AreSame(expectedETag, actual.ETag);
         }
 
         [Test]
-        public void Convert_IfETagIsReadOnly_PopulatesETag()
+        public void Convert_IfETagIsWriteOnly_PopulatesETag()
         {
             // Arrange
             string expectedETag = "abc";
-            IConverter<PocoWithReadOnlyETag, ITableEntity> product = CreateProductUnderTest<PocoWithReadOnlyETag>();
-            PocoWithReadOnlyETag input = new PocoWithReadOnlyETag
-            {
-                WriteETag = expectedETag
-            };
-            // Act
-            ITableEntity actual = product.Convert(input);
-            // Assert
-            Assert.NotNull(actual);
-            Assert.AreSame(expectedETag, actual.ETag);
-        }
-
-        [Test]
-        public void Convert_DoesNotIncludeETagInDictionary()
-        {
-            // Arrange
-            const string expectedETag = "RK";
-            IConverter<PocoWithETag, ITableEntity> product = CreateProductUnderTest<PocoWithETag>();
-            PocoWithETag input = new PocoWithETag
+            IConverter<ITableEntity, PocoWithWriteOnlyETag> product = CreateProductUnderTest<PocoWithWriteOnlyETag>();
+            DynamicTableEntity entity = new DynamicTableEntity
             {
                 ETag = expectedETag
             };
             // Act
-            ITableEntity actual = product.Convert(input);
+            PocoWithWriteOnlyETag actual = product.Convert(entity);
+            // Assert
+            Assert.NotNull(actual);
+            Assert.AreSame(expectedETag, actual.ReadETag);
+        }
+
+        [Test]
+        public void Convert_IfDictionaryContainsETag_PopulatesFromOfficialETag()
+        {
+            // Arrange
+            const string expectedETag = "ETag";
+            IConverter<ITableEntity, PocoWithETag> product = CreateProductUnderTest<PocoWithETag>();
+            DynamicTableEntity entity = new DynamicTableEntity
+            {
+                ETag = expectedETag,
+                Properties = new Dictionary<string, EntityProperty>
+                {
+                    { "ETag", new EntityProperty("UnexpectedETag") }
+                }
+            };
+            // Act
+            PocoWithETag actual = product.Convert(entity);
             // Assert
             Assert.NotNull(actual);
             Assert.AreSame(expectedETag, actual.ETag);
-            IDictionary<string, EntityProperty> properties = actual.WriteEntity(operationContext: null);
-            Assert.NotNull(properties);
-            Assert.False(properties.ContainsKey("ETag"));
         }
 
         [Test]
@@ -565,34 +563,34 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithPrivateETag, ITableEntity> product = CreateProductUnderTest<PocoWithPrivateETag>();
-            PocoWithPrivateETag input = new PocoWithPrivateETag
-            {
-                PartitionKey = expectedPartitionKey,
-                ETagPublic = "UnexpectedETag"
-            };
-            // Act
-            ITableEntity actual = product.Convert(input);
-            // Assert
-            Assert.NotNull(actual);
-            Assert.Null(actual.ETag);
-            Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
-        }
-
-        [Test]
-        public void Convert_IfETagGetterIsPrivate_Ignores()
-        {
-            // Arrange
-            const string expectedPartitionKey = "PK";
-            IConverter<PocoWithPrivateETagGetter, ITableEntity> product =
-                CreateProductUnderTest<PocoWithPrivateETagGetter>();
-            PocoWithPrivateETagGetter input = new PocoWithPrivateETagGetter
+            IConverter<ITableEntity, PocoWithPrivateETag> product = CreateProductUnderTest<PocoWithPrivateETag>();
+            DynamicTableEntity entity = new DynamicTableEntity
             {
                 PartitionKey = expectedPartitionKey,
                 ETag = "UnexpectedETag"
             };
             // Act
-            ITableEntity actual = product.Convert(input);
+            PocoWithPrivateETag actual = product.Convert(entity);
+            // Assert
+            Assert.NotNull(actual);
+            Assert.Null(actual.ETagPublic);
+            Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
+        }
+
+        [Test]
+        public void Convert_IfETagSetterIsPrivate_Ignores()
+        {
+            // Arrange
+            const string expectedPartitionKey = "PK";
+            IConverter<ITableEntity, PocoWithPrivateETagSetter> product =
+                CreateProductUnderTest<PocoWithPrivateETagSetter>();
+            DynamicTableEntity entity = new DynamicTableEntity
+            {
+                PartitionKey = expectedPartitionKey,
+                ETag = "UnexpectedETag"
+            };
+            // Act
+            PocoWithPrivateETagSetter actual = product.Convert(entity);
             // Assert
             Assert.NotNull(actual);
             Assert.Null(actual.ETag);
@@ -604,36 +602,34 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithStaticETag, ITableEntity> product = CreateProductUnderTest<PocoWithStaticETag>();
-            PocoWithStaticETag.ETag = "UnexpectedETag";
-            PocoWithStaticETag input = new PocoWithStaticETag
+            IConverter<ITableEntity, PocoWithStaticETag> product = CreateProductUnderTest<PocoWithStaticETag>();
+            DynamicTableEntity entity = new DynamicTableEntity
             {
-                PartitionKey = expectedPartitionKey
+                PartitionKey = expectedPartitionKey,
+                ETag = "UnexpectedETag"
             };
             // Act
-            ITableEntity actual = product.Convert(input);
+            PocoWithStaticETag actual = product.Convert(entity);
             // Assert
             Assert.NotNull(actual);
-            Assert.Null(actual.ETag);
+            Assert.Null(PocoWithStaticETag.ETag);
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
 
         [Test]
-        public void Convert_IfETagIsWriteOnly_Ignores()
+        public void Convert_IfETagIsReadOnly_Ignores()
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithWriteOnlyETag, ITableEntity> product = CreateProductUnderTest<PocoWithWriteOnlyETag>();
-            PocoWithWriteOnlyETag input = new PocoWithWriteOnlyETag
+            IConverter<ITableEntity, PocoWithReadOnlyETag> product = CreateProductUnderTest<PocoWithReadOnlyETag>();
+            DynamicTableEntity entity = new DynamicTableEntity
             {
-                PartitionKey = expectedPartitionKey,
-                ETag = "IgnoreETag"
+                PartitionKey = expectedPartitionKey
             };
             // Act
-            ITableEntity actual = product.Convert(input);
+            PocoWithReadOnlyETag actual = product.Convert(entity);
             // Assert
             Assert.NotNull(actual);
-            Assert.Null(actual.ETag);
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
 
@@ -642,46 +638,40 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
         {
             // Arrange
             int? expectedOtherProperty = 123;
-            IConverter<PocoWithOtherProperty, ITableEntity> product = CreateProductUnderTest<PocoWithOtherProperty>();
-            PocoWithOtherProperty input = new PocoWithOtherProperty
+            IConverter<ITableEntity, PocoWithOtherProperty> product = CreateProductUnderTest<PocoWithOtherProperty>();
+            DynamicTableEntity entity = new DynamicTableEntity
             {
-                OtherProperty = expectedOtherProperty
+                Properties = new Dictionary<string, EntityProperty>
+                {
+                    { "OtherProperty", new EntityProperty(expectedOtherProperty) }
+                }
             };
             // Act
-            ITableEntity actual = product.Convert(input);
+            PocoWithOtherProperty actual = product.Convert(entity);
             // Assert
             Assert.NotNull(actual);
-            IDictionary<string, EntityProperty> properties = actual.WriteEntity(operationContext: null);
-            Assert.NotNull(properties);
-            Assert.True(properties.ContainsKey("OtherProperty"));
-            EntityProperty otherProperty = properties["OtherProperty"];
-            Assert.NotNull(otherProperty);
-            Assert.AreEqual(EdmType.Int32, otherProperty.PropertyType);
-            Assert.AreEqual(expectedOtherProperty, otherProperty.Int32Value);
+            Assert.AreEqual(expectedOtherProperty, actual.OtherProperty);
         }
 
         [Test]
-        public void Convert_IfOtherPropertyIsReadOnly_PopulatesOtherProperty()
+        public void Convert_IfOtherPropertyIsWriteOnly_PopulatesOtherProperty()
         {
             // Arrange
             int? expectedOtherProperty = 123;
-            IConverter<PocoWithReadOnlyOtherProperty, ITableEntity> product =
-                CreateProductUnderTest<PocoWithReadOnlyOtherProperty>();
-            PocoWithReadOnlyOtherProperty input = new PocoWithReadOnlyOtherProperty
+            IConverter<ITableEntity, PocoWithWriteOnlyOtherProperty> product =
+                CreateProductUnderTest<PocoWithWriteOnlyOtherProperty>();
+            DynamicTableEntity entity = new DynamicTableEntity
             {
-                WriteOtherProperty = expectedOtherProperty
+                Properties = new Dictionary<string, EntityProperty>
+                {
+                    { "OtherProperty", new EntityProperty(expectedOtherProperty) }
+                }
             };
             // Act
-            ITableEntity actual = product.Convert(input);
+            PocoWithWriteOnlyOtherProperty actual = product.Convert(entity);
             // Assert
             Assert.NotNull(actual);
-            IDictionary<string, EntityProperty> properties = actual.WriteEntity(operationContext: null);
-            Assert.NotNull(properties);
-            Assert.True(properties.ContainsKey("OtherProperty"));
-            EntityProperty otherProperty = properties["OtherProperty"];
-            Assert.NotNull(otherProperty);
-            Assert.AreEqual(EdmType.Int32, otherProperty.PropertyType);
-            Assert.AreEqual(expectedOtherProperty, otherProperty.Int32Value);
+            Assert.AreEqual(expectedOtherProperty, actual.ReadOtherProperty);
         }
 
         [Test]
@@ -689,42 +679,44 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithPrivateOtherProperty, ITableEntity> product =
+            IConverter<ITableEntity, PocoWithPrivateOtherProperty> product =
                 CreateProductUnderTest<PocoWithPrivateOtherProperty>();
-            PocoWithPrivateOtherProperty input = new PocoWithPrivateOtherProperty
+            DynamicTableEntity entity = new DynamicTableEntity
             {
                 PartitionKey = expectedPartitionKey,
-                OtherPropertyPublic = 456
+                Properties = new Dictionary<string, EntityProperty>
+                {
+                    { "OtherProperty", new EntityProperty(456) }
+                }
             };
             // Act
-            ITableEntity actual = product.Convert(input);
+            PocoWithPrivateOtherProperty actual = product.Convert(entity);
             // Assert
             Assert.NotNull(actual);
-            IDictionary<string, EntityProperty> properties = actual.WriteEntity(operationContext: null);
-            Assert.NotNull(properties);
-            Assert.False(properties.ContainsKey("OtherProperty"));
+            Assert.Null(actual.OtherPropertyPublic);
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
 
         [Test]
-        public void Convert_IfOtherPropertyGetterIsPrivate_Ignores()
+        public void Convert_IfOtherPropertySetterIsPrivate_Ignores()
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithPrivateOtherPropertyGetter, ITableEntity> product =
-                CreateProductUnderTest<PocoWithPrivateOtherPropertyGetter>();
-            PocoWithPrivateOtherPropertyGetter input = new PocoWithPrivateOtherPropertyGetter
+            IConverter<ITableEntity, PocoWithPrivateOtherPropertySetter> product =
+                CreateProductUnderTest<PocoWithPrivateOtherPropertySetter>();
+            DynamicTableEntity entity = new DynamicTableEntity
             {
                 PartitionKey = expectedPartitionKey,
-                OtherProperty = 456
+                Properties = new Dictionary<string, EntityProperty>
+                {
+                    { "OtherProperty", new EntityProperty(456) }
+                }
             };
             // Act
-            ITableEntity actual = product.Convert(input);
+            PocoWithPrivateOtherPropertySetter actual = product.Convert(entity);
             // Assert
             Assert.NotNull(actual);
-            IDictionary<string, EntityProperty> properties = actual.WriteEntity(operationContext: null);
-            Assert.NotNull(properties);
-            Assert.False(properties.ContainsKey("OtherProperty"));
+            Assert.Null(actual.OtherProperty);
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
 
@@ -733,42 +725,43 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithStaticOtherProperty, ITableEntity> product =
+            IConverter<ITableEntity, PocoWithStaticOtherProperty> product =
                 CreateProductUnderTest<PocoWithStaticOtherProperty>();
-            PocoWithStaticOtherProperty.OtherProperty = 456;
-            PocoWithStaticOtherProperty input = new PocoWithStaticOtherProperty
+            DynamicTableEntity entity = new DynamicTableEntity
             {
-                PartitionKey = expectedPartitionKey
+                PartitionKey = expectedPartitionKey,
+                Properties = new Dictionary<string, EntityProperty>
+                {
+                    { "OtherProperty", new EntityProperty(456) }
+                }
             };
             // Act
-            ITableEntity actual = product.Convert(input);
+            PocoWithStaticOtherProperty actual = product.Convert(entity);
             // Assert
             Assert.NotNull(actual);
-            IDictionary<string, EntityProperty> properties = actual.WriteEntity(operationContext: null);
-            Assert.NotNull(properties);
-            Assert.False(properties.ContainsKey("OtherProperty"));
+            Assert.Null(PocoWithStaticOtherProperty.OtherProperty);
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
 
         [Test]
-        public void Convert_IfOtherPropertyIsWriteOnly_Ignores()
+        public void Convert_IfOtherPropertyIsReadOnly_Ignores()
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithWriteOnlyOtherProperty, ITableEntity> product =
-                CreateProductUnderTest<PocoWithWriteOnlyOtherProperty>();
-            PocoWithWriteOnlyOtherProperty input = new PocoWithWriteOnlyOtherProperty
+            IConverter<ITableEntity, PocoWithReadOnlyOtherProperty> product =
+                CreateProductUnderTest<PocoWithReadOnlyOtherProperty>();
+            DynamicTableEntity entity = new DynamicTableEntity
             {
                 PartitionKey = expectedPartitionKey,
-                OtherProperty = 456
+                Properties = new Dictionary<string, EntityProperty>
+                {
+                    { "OtherProperty", new EntityProperty(456) }
+                }
             };
             // Act
-            ITableEntity actual = product.Convert(input);
+            PocoWithReadOnlyOtherProperty actual = product.Convert(entity);
             // Assert
             Assert.NotNull(actual);
-            IDictionary<string, EntityProperty> properties = actual.WriteEntity(operationContext: null);
-            Assert.NotNull(properties);
-            Assert.False(properties.ContainsKey("OtherProperty"));
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
 
@@ -777,91 +770,88 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithIndexerOtherProperty, ITableEntity> product =
+            IConverter<ITableEntity, PocoWithIndexerOtherProperty> product =
                 CreateProductUnderTest<PocoWithIndexerOtherProperty>();
-            PocoWithIndexerOtherProperty input = new PocoWithIndexerOtherProperty
+            DynamicTableEntity entity = new DynamicTableEntity
             {
-                PartitionKey = expectedPartitionKey
+                PartitionKey = expectedPartitionKey,
+                Properties = new Dictionary<string, EntityProperty>
+                {
+                    { "OtherProperty", new EntityProperty(456) }
+                }
             };
             // Act
-            ITableEntity actual = product.Convert(input);
+            PocoWithIndexerOtherProperty actual = product.Convert(entity);
             // Assert
             Assert.NotNull(actual);
-            IDictionary<string, EntityProperty> properties = actual.WriteEntity(operationContext: null);
-            Assert.NotNull(properties);
-            Assert.False(properties.ContainsKey("OtherProperty"));
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
 
         [Test]
-        public void ConvertsPartitionKey_IfPocoHasPartitionKeyProperty_ReturnsTrue()
+        public void Convert_IfWriteEntityReturnsNull_DoesNotPopulateOtherProperties()
         {
             // Arrange
-            PocoToTableEntityConverter<PocoWithPartitionKey> product = CreateProductUnderTest<PocoWithPartitionKey>();
+            const string expectedPartitionKey = "PK";
+            IConverter<ITableEntity, PocoWithPartitionKeyAndOtherProperty> product =
+                CreateProductUnderTest<PocoWithPartitionKeyAndOtherProperty>();
+            DynamicTableEntity entity = new DynamicTableEntity
+            {
+                PartitionKey = expectedPartitionKey,
+                Properties = null
+            };
+            Assert.Null(entity.WriteEntity(operationContext: null)); // Guard
             // Act
-            bool convertsPartitionKey = product.ConvertsPartitionKey;
+            PocoWithPartitionKeyAndOtherProperty actual = product.Convert(entity);
             // Assert
-            Assert.True(convertsPartitionKey);
+            Assert.NotNull(actual);
+            Assert.Null(actual.OtherProperty);
+            Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
 
         [Test]
-        public void ConvertsPartitionKey_IfPocoDoesNotHavePartitionKeyProperty_ReturnsFalse()
+        public void Convert_IfOtherPropertyIsNotPresentInDictionary_DoesNotPopulateOtherProperty()
         {
             // Arrange
-            PocoToTableEntityConverter<Poco> product = CreateProductUnderTest<Poco>();
+            const string expectedPartitionKey = "PK";
+            IConverter<ITableEntity, PocoWithPartitionKeyAndOtherProperty> product =
+                CreateProductUnderTest<PocoWithPartitionKeyAndOtherProperty>();
+            DynamicTableEntity entity = new DynamicTableEntity
+            {
+                PartitionKey = expectedPartitionKey
+            };
             // Act
-            bool convertsPartitionKey = product.ConvertsPartitionKey;
+            PocoWithPartitionKeyAndOtherProperty actual = product.Convert(entity);
             // Assert
-            Assert.False(convertsPartitionKey);
+            Assert.NotNull(actual);
+            Assert.Null(actual.OtherProperty);
+            Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
 
         [Test]
-        public void ConvertsRowKey_IfPocoHasRowKeyProperty_ReturnsTrue()
+        public void Convert_IfExtraPropertyIsPresentInDictionary_Ignores()
         {
             // Arrange
-            PocoToTableEntityConverter<PocoWithRowKey> product = CreateProductUnderTest<PocoWithRowKey>();
+            const string expectedPartitionKey = "PK";
+            IConverter<ITableEntity, PocoWithPartitionKey> product = CreateProductUnderTest<PocoWithPartitionKey>();
+            DynamicTableEntity entity = new DynamicTableEntity
+            {
+                PartitionKey = expectedPartitionKey,
+                Properties = new Dictionary<string, EntityProperty>
+                {
+                    { "ExtraProperty", new EntityProperty("abc") }
+                }
+            };
             // Act
-            bool convertsRowKey = product.ConvertsRowKey;
+            PocoWithPartitionKey actual = product.Convert(entity);
             // Assert
-            Assert.True(convertsRowKey);
+            Assert.NotNull(actual);
+            Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
         }
 
-        [Test]
-        public void ConvertsRowKey_IfPocoDoesNotHaveRowKeyProperty_ReturnsFalse()
+        private static TableEntityToPocoConverter<TOutput> CreateProductUnderTest<TOutput>()
+            where TOutput : new()
         {
-            // Arrange
-            PocoToTableEntityConverter<Poco> product = CreateProductUnderTest<Poco>();
-            // Act
-            bool convertsRowKey = product.ConvertsRowKey;
-            // Assert
-            Assert.False(convertsRowKey);
-        }
-
-        [Test]
-        public void ConvertsETag_IfPocoHasETagProperty_ReturnsTrue()
-        {
-            // Arrange
-            PocoToTableEntityConverter<PocoWithETag> product = CreateProductUnderTest<PocoWithETag>();
-            // Act
-            bool convertsETag = product.ConvertsETag;
-            // Assert
-            Assert.True(convertsETag);
-        }
-
-        [Test]
-        public void ConvertsETag_IfPocoDoesNotHaveETagProperty_ReturnsFalse()
-        {
-            // Arrange
-            PocoToTableEntityConverter<Poco> product = CreateProductUnderTest<Poco>();
-            // Act
-            bool convertsETag = product.ConvertsETag;
-            // Assert
-            Assert.False(convertsETag);
-        }
-
-        private static PocoToTableEntityConverter<TInput> CreateProductUnderTest<TInput>()
-        {
-            var product = PocoToTableEntityConverter<TInput>.Create();
+            TableEntityToPocoConverter<TOutput> product = TableEntityToPocoConverter<TOutput>.Create();
             Assert.NotNull(product); // Guard
             return product;
         }
@@ -935,18 +925,18 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             public string PartitionKey { get; set; }
         }
 
-        private class PocoWithReadOnlyPartitionKey
+        private class PocoWithWriteOnlyPartitionKey
         {
             private string _partitionKey;
 
             public string PartitionKey
             {
-                get { return _partitionKey; }
+                set { _partitionKey = value; }
             }
 
-            public string WritePartitionKey
+            public string ReadPartitionKey
             {
-                set { _partitionKey = value; }
+                get { return _partitionKey; }
             }
         }
 
@@ -963,9 +953,9 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             public string RowKey { get; set; }
         }
 
-        private class PocoWithPrivatePartitionKeyGetter
+        private class PocoWithPrivatePartitionKeySetter
         {
-            public string PartitionKey { private get; set; }
+            public string PartitionKey { get; private set; }
             public string RowKey { get; set; }
         }
 
@@ -975,11 +965,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             public string RowKey { get; set; }
         }
 
-        private class PocoWithWriteOnlyPartitionKey
+        private class PocoWithReadOnlyPartitionKey
         {
             public string PartitionKey
             {
-                set { }
+                get { return null; }
             }
 
             public string RowKey { get; set; }
@@ -990,18 +980,18 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             public string RowKey { get; set; }
         }
 
-        private class PocoWithReadOnlyRowKey
+        private class PocoWithWriteOnlyRowKey
         {
             private string _rowKey;
 
             public string RowKey
             {
-                get { return _rowKey; }
+                set { _rowKey = value; }
             }
 
-            public string WriteRowKey
+            public string ReadRowKey
             {
-                set { _rowKey = value; }
+                get { return _rowKey; }
             }
         }
 
@@ -1017,10 +1007,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             }
         }
 
-        private class PocoWithPrivateRowKeyGetter
+        private class PocoWithPrivateRowKeySetter
         {
             public string PartitionKey { get; set; }
-            public string RowKey { private get; set; }
+            public string RowKey { get; private set; }
         }
 
         private class PocoWithStaticRowKey
@@ -1029,13 +1019,13 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             public static string RowKey { get; set; }
         }
 
-        private class PocoWithWriteOnlyRowKey
+        private class PocoWithReadOnlyRowKey
         {
             public string PartitionKey { get; set; }
 
             public string RowKey
             {
-                set { }
+                get { return null; }
             }
         }
 
@@ -1044,18 +1034,18 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             public DateTimeOffset Timestamp { get; set; }
         }
 
-        private class PocoWithReadOnlyTimestamp
+        private class PocoWithWriteOnlyTimestamp
         {
             private DateTimeOffset _timestamp;
 
             public DateTimeOffset Timestamp
             {
-                get { return _timestamp; }
+                set { _timestamp = value; }
             }
 
-            public DateTimeOffset WriteTimestamp
+            public DateTimeOffset ReadTimestamp
             {
-                set { _timestamp = value; }
+                get { return _timestamp; }
             }
         }
 
@@ -1071,10 +1061,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             }
         }
 
-        private class PocoWithPrivateTimestampGetter
+        private class PocoWithPrivateTimestampSetter
         {
             public string PartitionKey { get; set; }
-            public DateTimeOffset Timestamp { private get; set; }
+            public DateTimeOffset Timestamp { get; private set; }
         }
 
         private class PocoWithStaticTimestamp
@@ -1083,13 +1073,13 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             public static DateTimeOffset Timestamp { get; set; }
         }
 
-        private class PocoWithWriteOnlyTimestamp
+        private class PocoWithReadOnlyTimestamp
         {
             public string PartitionKey { get; set; }
 
             public DateTimeOffset Timestamp
             {
-                set { }
+                get { return default(DateTimeOffset); }
             }
         }
 
@@ -1098,18 +1088,18 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             public string ETag { get; set; }
         }
 
-        private class PocoWithReadOnlyETag
+        private class PocoWithWriteOnlyETag
         {
             private string _eTag;
 
             public string ETag
             {
-                get { return _eTag; }
+                set { _eTag = value; }
             }
 
-            public string WriteETag
+            public string ReadETag
             {
-                set { _eTag = value; }
+                get { return _eTag; }
             }
         }
 
@@ -1125,10 +1115,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             }
         }
 
-        private class PocoWithPrivateETagGetter
+        private class PocoWithPrivateETagSetter
         {
             public string PartitionKey { get; set; }
-            public string ETag { private get; set; }
+            public string ETag { get; private set; }
         }
 
         private class PocoWithStaticETag
@@ -1137,13 +1127,13 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             public static string ETag { get; set; }
         }
 
-        private class PocoWithWriteOnlyETag
+        private class PocoWithReadOnlyETag
         {
             public string PartitionKey { get; set; }
 
             public string ETag
             {
-                set { }
+                get { return default(string); }
             }
         }
 
@@ -1152,18 +1142,18 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             public int? OtherProperty { get; set; }
         }
 
-        private class PocoWithReadOnlyOtherProperty
+        private class PocoWithWriteOnlyOtherProperty
         {
             private int? _otherProperty;
 
             public int? OtherProperty
             {
-                get { return _otherProperty; }
+                set { _otherProperty = value; }
             }
 
-            public int? WriteOtherProperty
+            public int? ReadOtherProperty
             {
-                set { _otherProperty = value; }
+                get { return _otherProperty; }
             }
         }
 
@@ -1179,10 +1169,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             }
         }
 
-        private class PocoWithPrivateOtherPropertyGetter
+        private class PocoWithPrivateOtherPropertySetter
         {
             public string PartitionKey { get; set; }
-            public int? OtherProperty { private get; set; }
+            public int? OtherProperty { get; private set; }
         }
 
         private class PocoWithStaticOtherProperty
@@ -1191,13 +1181,13 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
             public static int? OtherProperty { get; set; }
         }
 
-        private class PocoWithWriteOnlyOtherProperty
+        private class PocoWithReadOnlyOtherProperty
         {
             public string PartitionKey { get; set; }
 
             public int? OtherProperty
             {
-                set { }
+                get { return null; }
             }
         }
 
@@ -1211,6 +1201,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
                 get { return null; }
                 set { }
             }
+        }
+
+        private class PocoWithPartitionKeyAndOtherProperty
+        {
+            public string PartitionKey { get; set; }
+            public int? OtherProperty { get; set; }
         }
     }
 }

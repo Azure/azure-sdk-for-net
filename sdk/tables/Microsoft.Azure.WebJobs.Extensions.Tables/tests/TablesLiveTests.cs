@@ -11,14 +11,15 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Azure.Cosmos.Table;
-using Microsoft.Azure.WebJobs.Host.FunctionalTests;
+using Microsoft.Azure.WebJobs.Host;
+using Microsoft.Azure.WebJobs.Extensions.Tables.Tests;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.WebJobs.Host.UnitTests.Tables
+namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 {
     public class TablesLiveTests: TablesLiveTestBase
     {
