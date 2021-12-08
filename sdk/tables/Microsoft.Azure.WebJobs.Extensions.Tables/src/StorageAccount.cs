@@ -3,7 +3,7 @@
 
 using System;
 using Microsoft.Azure.Cosmos.Table;
-using Microsoft.Azure.WebJobs.Extensions.Storage;
+using Microsoft.Azure.WebJobs.Extensions.Tables;
 using CloudStorageAccount = Microsoft.Azure.Storage.CloudStorageAccount;
 using TableStorageAccount = Microsoft.Azure.Cosmos.Table.CloudStorageAccount;
 

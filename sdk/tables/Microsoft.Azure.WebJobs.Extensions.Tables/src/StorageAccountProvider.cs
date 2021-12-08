@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using Microsoft.Azure.WebJobs.Extensions.Storage;
+using Microsoft.Azure.WebJobs.Extensions.Tables;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Configuration;
 using CloudStorageAccount = Microsoft.Azure.Storage.CloudStorageAccount;

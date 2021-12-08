@@ -17,8 +17,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
         public ParameterizedTableEntityPath(BindingTemplate tableNameTemplate, BindingTemplate partitionKeyTemplate,
             BindingTemplate rowKeyTemplate)
         {
-            Debug.Assert(tableNameTemplate.HasParameters || partitionKeyTemplate.HasParameters
-                                                         || rowKeyTemplate.HasParameters);
+            Debug.Assert(tableNameTemplate.HasParameters || partitionKeyTemplate.HasParameters || rowKeyTemplate.HasParameters);
             _tableNameTemplate = tableNameTemplate;
             _partitionKeyTemplate = partitionKeyTemplate;
             _rowKeyTemplate = rowKeyTemplate;
