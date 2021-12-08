@@ -11,6 +11,9 @@
     <ExcludeFromBuild>false</ExcludeFromBuild>
     <ExcludeFromTest>false</ExcludeFromTest>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netcoreapp2.0|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Microsoft.Azure.Management.Subscription.csproj" />
@@ -29,6 +32,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ScenarioTests\" />
+    <PackageReference Update="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" />
+    <PackageReference Update="xunit" Version="2.4.2-pre.12" />
   </ItemGroup>
 </Project>
