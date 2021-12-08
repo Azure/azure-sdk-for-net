@@ -1,0 +1,347 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000?api-version=2019-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-f0211a4300751d4fbcf9c61bb798e228-4c46ec4be09dbb4f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20211207.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "489a040ebcdf3b40b1898d7bbd3e8a7d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "403",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 08 Dec 2021 03:22:51 GMT",
+        "ETag": "W/\u0022193-XMviJqaGXohjOV1XjmYhUY8VLpk\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "00000000-0000-0000-0000-000000000000",
+        "tenantId": "0000000-0000-0000-0000-000000000000",
+        "displayName": "Name of the subscription",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup?api-version=2019-10-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "81",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20211207.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "a971c5c09b86cc132d6b2c4fbfdc7907",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "Azure.ResourceManager.Resources.Subscription",
+        "tags": {
+          "test": "env"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "254",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 08 Dec 2021 03:22:51 GMT",
+        "ETag": "W/\u0022fe-aZEo2isVQc1LUmWdignDK6uZSqI\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup",
+        "location": "eastus",
+        "managedBy": null,
+        "name": "myResourceGroup",
+        "properties": {
+          "provisioningState": "Succeeded"
+        },
+        "tags": {},
+        "type": "Microsoft.Resources/resourceGroups"
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myDisk?api-version=2020-12-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "289",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20211207.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "1e8c2608748d248a1a21d6a7983526c1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "westus",
+        "properties": {
+          "creationData": {
+            "createOption": "Empty"
+          },
+          "diskSizeGB": 200,
+          "networkAccessPolicy": "AllowPrivate",
+          "diskAccessId": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskAccesses/{existing-diskAccess-name}"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "2369",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 08 Dec 2021 03:22:51 GMT",
+        "ETag": "W/\u0022941-pzs0AnQHxw4uHzBqfS\u002B/7nMPmd8\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myDisk",
+        "name": "myDisk",
+        "type": "aaaa",
+        "location": "aaaaaaaaaaaaaa",
+        "tags": {
+          "key5658": "aaaaaaaaaaaaaaaaaaa"
+        },
+        "managedBy": "aaaaaaaaaaaaaaaaaaaaaaaaa",
+        "managedByExtended": [
+          "aaaaaaaaaaaaaaaa"
+        ],
+        "sku": {
+          "name": "Standard_LRS",
+          "tier": "aaaaaaaaaaaaaa"
+        },
+        "zones": [
+          "aaaaaaaaaaaaa"
+        ],
+        "extendedLocation": {
+          "name": "myDisk",
+          "type": "EdgeZone"
+        },
+        "properties": {
+          "timeCreated": "2021-12-08T03:22:51.348Z",
+          "osType": "Windows",
+          "hyperVGeneration": "V1",
+          "purchasePlan": {
+            "name": "myDisk",
+            "publisher": "aaaa",
+            "product": "aaaaaaaaaaaaa",
+            "promotionCode": "aaaaaaaaaaaaaaaaa"
+          },
+          "creationData": {
+            "createOption": "Empty",
+            "storageAccountId": "aaaaaaaaaaaaaaaaaaaaaa",
+            "imageReference": {
+              "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName",
+              "lun": 10
+            },
+            "galleryImageReference": {
+              "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName",
+              "lun": 25
+            },
+            "sourceUri": "aaaaaaaaaaaaaaaaaaa",
+            "sourceResourceId": "aaaaaaaaaaaa",
+            "sourceUniqueId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "uploadSizeBytes": 5,
+            "logicalSectorSize": 14
+          },
+          "diskSizeGB": 20,
+          "diskSizeBytes": 24,
+          "uniqueId": "aaaaaaaaaaaaaaa",
+          "encryptionSettingsCollection": {
+            "enabled": true,
+            "encryptionSettings": [
+              {
+                "diskEncryptionKey": {
+                  "sourceVault": {
+                    "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName"
+                  },
+                  "secretUrl": "aaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "keyEncryptionKey": {
+                  "sourceVault": {
+                    "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName"
+                  },
+                  "keyUrl": "aaaaaaaaaaaaaa"
+                }
+              }
+            ],
+            "encryptionSettingsVersion": "aaaaaaaaa"
+          },
+          "provisioningState": "Succeeded",
+          "diskIOPSReadWrite": 16,
+          "diskMBpsReadWrite": 30,
+          "diskIOPSReadOnly": 4,
+          "diskMBpsReadOnly": 15,
+          "diskState": "Unattached",
+          "encryption": {
+            "diskEncryptionSetId": "aaaaaaaaaaaaaaaaaaaaaaaaa",
+            "type": "EncryptionAtRestWithPlatformKey"
+          },
+          "maxShares": 1,
+          "shareInfo": [
+            {
+              "vmUri": "aa"
+            }
+          ],
+          "networkAccessPolicy": "AllowAll",
+          "diskAccessId": "aaaaaaaaaaaaaaaaaa",
+          "tier": "aaaa",
+          "burstingEnabled": true,
+          "propertyUpdatesInProgress": {
+            "targetTier": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "supportsHibernation": true,
+          "securityProfile": {
+            "securityType": "TrustedLaunch"
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myDisk?api-version=2020-12-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20211207.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "9772850f6cb14cef3b4d8e64c56b33f8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "2286",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 08 Dec 2021 03:22:51 GMT",
+        "ETag": "W/\u00228ee-kiruznJ/JLKCRolqeqFougnddPk\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myDisk",
+        "name": "myDisk",
+        "type": "aaa",
+        "location": "aaaaaaaaaaaaaa",
+        "tags": {
+          "key6412": "aaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "managedBy": "aaaaaaaaaa",
+        "managedByExtended": [
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        ],
+        "sku": {
+          "name": "Standard_LRS",
+          "tier": "aaaaaaa"
+        },
+        "zones": [
+          "a"
+        ],
+        "extendedLocation": {
+          "name": "myDisk",
+          "type": "EdgeZone"
+        },
+        "properties": {
+          "timeCreated": "2021-12-08T03:22:51.369Z",
+          "osType": "Windows",
+          "hyperVGeneration": "V1",
+          "purchasePlan": {
+            "name": "myDisk",
+            "publisher": "aaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "product": "aa",
+            "promotionCode": "aaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "creationData": {
+            "createOption": "Empty",
+            "storageAccountId": "aaaaaaaaaaaaa",
+            "imageReference": {
+              "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName",
+              "lun": 18
+            },
+            "galleryImageReference": {
+              "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName",
+              "lun": 11
+            },
+            "sourceUri": "aa",
+            "sourceResourceId": "aaaaaaaaaaaaaaaaaa",
+            "sourceUniqueId": "aaaaaaa",
+            "uploadSizeBytes": 23,
+            "logicalSectorSize": 25
+          },
+          "diskSizeGB": 19,
+          "diskSizeBytes": 26,
+          "uniqueId": "aaaaaaaaa",
+          "encryptionSettingsCollection": {
+            "enabled": true,
+            "encryptionSettings": [
+              {
+                "diskEncryptionKey": {
+                  "sourceVault": {
+                    "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName"
+                  },
+                  "secretUrl": "aaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "keyEncryptionKey": {
+                  "sourceVault": {
+                    "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName"
+                  },
+                  "keyUrl": "aaaaaaaaaaaaaa"
+                }
+              }
+            ],
+            "encryptionSettingsVersion": "aaaaaaaaaaaaaaa"
+          },
+          "provisioningState": "Succeeded",
+          "diskIOPSReadWrite": 30,
+          "diskMBpsReadWrite": 4,
+          "diskIOPSReadOnly": 20,
+          "diskMBpsReadOnly": 19,
+          "diskState": "Unattached",
+          "encryption": {
+            "diskEncryptionSetId": "aa",
+            "type": "EncryptionAtRestWithPlatformKey"
+          },
+          "maxShares": 11,
+          "shareInfo": [
+            {
+              "vmUri": "a"
+            }
+          ],
+          "networkAccessPolicy": "AllowAll",
+          "diskAccessId": "aaaaaaaaaa",
+          "tier": "aaaaaaaaa",
+          "burstingEnabled": true,
+          "propertyUpdatesInProgress": {
+            "targetTier": "aaaaaaaa"
+          },
+          "supportsHibernation": true,
+          "securityProfile": {
+            "securityType": "TrustedLaunch"
+          }
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "915029471",
+    "RESOURCE_MANAGER_URL": "https://localhost:8443",
+    "SUBSCRIPTION_ID": "00000000-0000-0000-0000-000000000000"
+  }
+}

@@ -1,0 +1,236 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000?api-version=2019-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-42ddae2fbbc5ba4f819deaa714ddfb47-c6e7852af0bd254c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20211207.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "22f6a41ad96bd4149f1ce2360a113fad",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "403",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 08 Dec 2021 03:41:17 GMT",
+        "ETag": "W/\u0022193-XMviJqaGXohjOV1XjmYhUY8VLpk\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "00000000-0000-0000-0000-000000000000",
+        "tenantId": "0000000-0000-0000-0000-000000000000",
+        "displayName": "Name of the subscription",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup?api-version=2019-10-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "81",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20211207.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "1e2cd652420721e55e37dbbedbd59c5b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "Azure.ResourceManager.Resources.Subscription",
+        "tags": {
+          "test": "env"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "254",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 08 Dec 2021 03:41:17 GMT",
+        "ETag": "W/\u0022fe-aZEo2isVQc1LUmWdignDK6uZSqI\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup",
+        "location": "eastus",
+        "managedBy": null,
+        "name": "myResourceGroup",
+        "properties": {
+          "provisioningState": "Succeeded"
+        },
+        "tags": {},
+        "type": "Microsoft.Resources/resourceGroups"
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/myGalleryName?api-version=2020-09-30",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "137",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20211207.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "9115d359d5c2729a24649c6e72964619",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "westus",
+        "properties": {
+          "description": "This is the gallery description.",
+          "sharingProfile": {
+            "permissions": "Groups"
+          }
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "506",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 08 Dec 2021 03:41:17 GMT",
+        "ETag": "W/\u00221fa-2p95uL747bJOwskhzVN8bobx9IU\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/myGalleryName",
+        "name": "myGalleryName",
+        "type": "aaaaaaaaaaaaaaaaaa",
+        "location": "aaaaaaaaaaaaaaa",
+        "tags": {
+          "key7960": "aaaaaa"
+        },
+        "properties": {
+          "description": "aaaaaaaaaaaaaaaaaaaaaaaa",
+          "identifier": {
+            "uniqueName": "aaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "provisioningState": "Succeeded",
+          "sharingProfile": {
+            "permissions": "Private",
+            "groups": [
+              {
+                "type": "Subscriptions",
+                "ids": [
+                  "aaaaaaaaaaaaaaaaaaaaaaaa"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/myGalleryName/applications/myGalleryApplicationName?api-version=2020-09-30",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "265",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20211207.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "36dd8780aefb7ceb3cb9faa2a676aec8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "westus",
+        "properties": {
+          "description": "This is the gallery application description.",
+          "eula": "This is the gallery application EULA.",
+          "privacyStatementUri": "myPrivacyStatementUri}",
+          "releaseNoteUri": "myReleaseNoteUri",
+          "supportedOSType": "Windows"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "494",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 08 Dec 2021 03:41:17 GMT",
+        "ETag": "W/\u00221ee-ERaOzamPFOKalfOAEYpEG28JUYw\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/myGalleryName/applications/myGalleryApplicationName",
+        "name": "myGalleryApplicationName",
+        "type": "aaaaaaaaaaaaaaaaaaaa",
+        "location": "aaaaaaaaaaaaa",
+        "tags": {
+          "key9220": "aaaa"
+        },
+        "properties": {
+          "description": "aaaaaa",
+          "eula": "aaaaaaa",
+          "privacyStatementUri": "aaaaaaaaaaaaaaaaaaaaa",
+          "releaseNoteUri": "aaaa",
+          "endOfLifeDate": "2021-12-08T03:41:17.195Z",
+          "supportedOSType": "Windows"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/myGalleryName/applications/myGalleryApplicationName?api-version=2020-09-30",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20211207.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "ebeed16b0fb8fc1da881d51a12423048",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "529",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 08 Dec 2021 03:41:17 GMT",
+        "ETag": "W/\u0022211-OgQfxQP6wo0XznO9VLwevUDXWCo\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/myGalleryName/applications/myGalleryApplicationName",
+        "name": "myGalleryApplicationName",
+        "type": "aaa",
+        "location": "a",
+        "tags": {
+          "key8467": "aaaaaaaaa"
+        },
+        "properties": {
+          "description": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "eula": "aaaaaaaaaaaaaaaaaaaaaaaaa",
+          "privacyStatementUri": "aaaaaaaaaaaaaaaa",
+          "releaseNoteUri": "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "endOfLifeDate": "2021-12-08T03:41:17.218Z",
+          "supportedOSType": "Windows"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "578955612",
+    "RESOURCE_MANAGER_URL": "https://localhost:8443",
+    "SUBSCRIPTION_ID": "00000000-0000-0000-0000-000000000000"
+  }
+}

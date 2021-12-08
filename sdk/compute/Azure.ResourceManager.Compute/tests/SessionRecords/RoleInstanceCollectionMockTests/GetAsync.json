@@ -1,0 +1,276 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000?api-version=2019-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-dd71503c3263c04b85adcc3b1e3e2c56-78edfe1a2b5bff4e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20211207.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "07c19e22902507ba305bbdb9ed679465",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "403",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 08 Dec 2021 03:25:45 GMT",
+        "ETag": "W/\u0022193-XMviJqaGXohjOV1XjmYhUY8VLpk\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "00000000-0000-0000-0000-000000000000",
+        "tenantId": "0000000-0000-0000-0000-000000000000",
+        "displayName": "Name of the subscription",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/ConstosoRG?api-version=2019-10-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "81",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20211207.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "de52f58a11c9ee37da5e3aaceeb80e1a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "Azure.ResourceManager.Resources.Subscription",
+        "tags": {
+          "test": "env"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "244",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 08 Dec 2021 03:25:45 GMT",
+        "ETag": "W/\u0022f4-ol1ALFgfBZNiZ8L7ti\u002BQc4kcmAg\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/ConstosoRG",
+        "location": "eastus",
+        "managedBy": null,
+        "name": "ConstosoRG",
+        "properties": {
+          "provisioningState": "Succeeded"
+        },
+        "tags": {},
+        "type": "Microsoft.Resources/resourceGroups"
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}?api-version=2021-03-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "173",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20211207.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "8a6f0470a59af7d2a776bbd55d547975",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "packageUrl": "{PackageUrl}",
+          "configuration": "{ServiceConfiguration}",
+          "upgradeMode": "Auto",
+          "roleProfile": {},
+          "networkProfile": {}
+        },
+        "tags": {},
+        "location": "westus"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "2224",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 08 Dec 2021 03:25:45 GMT",
+        "ETag": "W/\u00228b0-QwEce8n7OW5qozSvBX8sOarh960\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/%7Bcs-name%7D",
+        "name": "%7Bcs-name%7D",
+        "type": "aaaaaaaaaaaa",
+        "location": "aaaaaaaaaaaaaaaaaaaaaaa",
+        "tags": {
+          "key488": "aaaaaaaaaaa"
+        },
+        "properties": {
+          "packageUrl": "aaa",
+          "configuration": "aaaaaaaaaaaaaaaaaaaa",
+          "configurationUrl": "aaaaaaaaaaaaaaaa",
+          "startCloudService": true,
+          "allowModelOverride": true,
+          "upgradeMode": "Auto",
+          "roleProfile": {
+            "roles": [
+              {
+                "name": "%7Bcs-name%7D",
+                "sku": {
+                  "name": "%7Bcs-name%7D",
+                  "tier": "aaaaaaaaaaaaaaaaaaaaaaa",
+                  "capacity": 27
+                }
+              }
+            ]
+          },
+          "osProfile": {
+            "secrets": [
+              {
+                "sourceVault": {
+                  "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName"
+                },
+                "vaultCertificates": [
+                  {
+                    "certificateUrl": "aaaaaaa"
+                  }
+                ]
+              }
+            ]
+          },
+          "networkProfile": {
+            "loadBalancerConfigurations": [
+              {
+                "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName",
+                "name": "%7Bcs-name%7D",
+                "properties": {
+                  "frontendIPConfigurations": [
+                    {
+                      "name": "%7Bcs-name%7D",
+                      "properties": {
+                        "publicIPAddress": {
+                          "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName"
+                        },
+                        "subnet": {
+                          "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName"
+                        },
+                        "privateIPAddress": "aaaaaaaaaaaaaaaaaaaaaaa"
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            "swappableCloudService": {
+              "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName"
+            }
+          },
+          "extensionProfile": {
+            "extensions": [
+              {
+                "name": "%7Bcs-name%7D",
+                "properties": {
+                  "publisher": "aaaaaaaaaaaaaaaaaaaa",
+                  "type": "aaaaaaaaaaaaaaaaaaaaaaaa",
+                  "typeHandlerVersion": "aaaaaaaaaaaaaaaaa",
+                  "autoUpgradeMinorVersion": true,
+                  "settings": "a",
+                  "protectedSettings": "aaaaaaaaaaa",
+                  "protectedSettingsFromKeyVault": {
+                    "sourceVault": {
+                      "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName"
+                    },
+                    "secretUrl": "aaaaaaaaaaaaaaaaa"
+                  },
+                  "forceUpdateTag": "aaaaaaaaaaaa",
+                  "provisioningState": "Succeeded",
+                  "rolesAppliedTo": [
+                    "aaaaaaaaaaaaaaaa"
+                  ]
+                }
+              }
+            ]
+          },
+          "provisioningState": "Succeeded",
+          "uniqueId": "aaaaaa"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/%257Bcs-name%257D/roleInstances/{roleInstance-name}?api-version=2021-03-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20211207.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "e948a24d09f7e4cb225b365356619086",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "778",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 08 Dec 2021 03:25:45 GMT",
+        "ETag": "W/\u002230a-\u002BxHxoa/I4ntxs0Srg2nxIjA76/Q\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/%257Bcs-name%257D/roleInstances/%7BroleInstance-name%7D",
+        "name": "%7BroleInstance-name%7D",
+        "type": "aaaaaaaaaaa",
+        "location": "aaaaaaaaaaaaaaaaaaaa",
+        "tags": {
+          "key1826": "aaaaaaaaaa"
+        },
+        "sku": {
+          "name": "%7BroleInstance-name%7D",
+          "tier": "aaaaaaaaaaaaaaaaaaaa"
+        },
+        "properties": {
+          "networkProfile": {
+            "networkInterfaces": [
+              {
+                "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName"
+              }
+            ]
+          },
+          "instanceView": {
+            "platformUpdateDomain": 26,
+            "platformFaultDomain": 25,
+            "privateId": "aaaaa",
+            "statuses": [
+              {
+                "code": "a",
+                "displayStatus": "aaaaaaaaa",
+                "message": "aaaaaaaa",
+                "time": "2021-12-08T03:25:45.217Z",
+                "level": "Info"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1650971276",
+    "RESOURCE_MANAGER_URL": "https://localhost:8443",
+    "SUBSCRIPTION_ID": "00000000-0000-0000-0000-000000000000"
+  }
+}

@@ -1,0 +1,316 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000?api-version=2019-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-956e92d284115c45a78161b6d88d4b1f-136e8111d80e664c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20211207.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "7f7c538d9f427edc47acabf6a26950c5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "403",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 08 Dec 2021 03:22:10 GMT",
+        "ETag": "W/\u0022193-XMviJqaGXohjOV1XjmYhUY8VLpk\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "00000000-0000-0000-0000-000000000000",
+        "tenantId": "0000000-0000-0000-0000-000000000000",
+        "displayName": "Name of the subscription",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup?api-version=2019-10-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "81",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20211207.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "8a538777b593ef453c6cf5b65fcafbb6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "Azure.ResourceManager.Resources.Subscription",
+        "tags": {
+          "test": "env"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "254",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 08 Dec 2021 03:22:10 GMT",
+        "ETag": "W/\u0022fe-aZEo2isVQc1LUmWdignDK6uZSqI\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup",
+        "location": "eastus",
+        "managedBy": null,
+        "name": "myResourceGroup",
+        "properties": {
+          "provisioningState": "Succeeded"
+        },
+        "tags": {},
+        "type": "Microsoft.Resources/resourceGroups"
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Compute/hostGroups/myDedicatedHostGroup?api-version=2021-03-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "130",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20211207.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "b5f1ff009c5f9f889371b0ad8f0192ea",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {
+          "department": "finance"
+        },
+        "location": "westus",
+        "properties": {
+          "platformFaultDomainCount": 3,
+          "supportAutomaticPlacement": true
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "836",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 08 Dec 2021 03:22:10 GMT",
+        "ETag": "W/\u0022344-5LEmTENuITiwEpmdYGKL7K6m9mw\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Compute/hostGroups/myDedicatedHostGroup",
+        "name": "myDedicatedHostGroup",
+        "type": "aaaaaaaa",
+        "location": "aaaaaa",
+        "tags": {
+          "key2287": "aa"
+        },
+        "properties": {
+          "platformFaultDomainCount": 23,
+          "hosts": [
+            {
+              "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName"
+            }
+          ],
+          "instanceView": {
+            "hosts": [
+              {
+                "assetId": "aaaaaaaaaaaaaaaaaaaaaaaaa",
+                "availableCapacity": {
+                  "allocatableVMs": [
+                    {
+                      "vmSize": "aaaaaaaaaaaaaaaa",
+                      "count": 24
+                    }
+                  ]
+                },
+                "statuses": [
+                  {
+                    "code": "aaa",
+                    "level": "Info",
+                    "displayStatus": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "message": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "time": "2021-12-08T03:22:10.180Z"
+                  }
+                ],
+                "name": "myDedicatedHostGroup"
+              }
+            ]
+          },
+          "supportAutomaticPlacement": true
+        },
+        "zones": [
+          "aaaaaaaaaa"
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Compute/hostGroups/myDedicatedHostGroup/hosts/myDedicatedHost?api-version=2021-03-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "115",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20211207.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "0d49ba0b3bbcd79a0e8c42d5aa251e7c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "sku": {
+          "name": "DSv3-Type1"
+        },
+        "tags": {
+          "department": "HR"
+        },
+        "location": "westus",
+        "properties": {
+          "platformFaultDomain": 1
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "978",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 08 Dec 2021 03:22:10 GMT",
+        "ETag": "W/\u00223d2-6N5kVzKBqNqSak9x6fUK8HyjJEE\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Compute/hostGroups/myDedicatedHostGroup/hosts/myDedicatedHost",
+        "name": "myDedicatedHost",
+        "type": "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "location": "aaaa",
+        "tags": {
+          "key5530": "aaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "properties": {
+          "platformFaultDomain": 0,
+          "autoReplaceOnFailure": true,
+          "hostId": "aaaaa",
+          "virtualMachines": [
+            {
+              "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName"
+            }
+          ],
+          "licenseType": "None",
+          "provisioningTime": "2021-12-08T03:22:10.203Z",
+          "provisioningState": "Succeeded",
+          "instanceView": {
+            "assetId": "aaaaaaaaaa",
+            "availableCapacity": {
+              "allocatableVMs": [
+                {
+                  "vmSize": "aaaaaaaaaaa",
+                  "count": 9
+                }
+              ]
+            },
+            "statuses": [
+              {
+                "code": "aaaaaaa",
+                "level": "Info",
+                "displayStatus": "aaaaaaaaaaaaaaaaaaaa",
+                "message": "aaaaaa",
+                "time": "2021-12-08T03:22:10.203Z"
+              }
+            ]
+          }
+        },
+        "sku": {
+          "name": "myDedicatedHost",
+          "tier": "aaaaaaaaaaaaaaaaaaaaaaaaa",
+          "capacity": 20
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Compute/hostGroups/myDedicatedHostGroup/hosts/myDedicatedHost?api-version=2021-03-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20211207.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "a4aa0adaee80c5f96419a6d259b2f56d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "957",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 08 Dec 2021 03:22:10 GMT",
+        "ETag": "W/\u00223bd-YH2r4ZWK1rbPgexXTJ7FnNAE4/A\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Compute/hostGroups/myDedicatedHostGroup/hosts/myDedicatedHost",
+        "name": "myDedicatedHost",
+        "type": "aaaaaaaaaa",
+        "location": "aaaaaaa",
+        "tags": {
+          "key4041": "aaaaaaaaaa"
+        },
+        "properties": {
+          "platformFaultDomain": 0,
+          "autoReplaceOnFailure": true,
+          "hostId": "aaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "virtualMachines": [
+            {
+              "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName"
+            }
+          ],
+          "licenseType": "None",
+          "provisioningTime": "2021-12-08T03:22:10.238Z",
+          "provisioningState": "Succeeded",
+          "instanceView": {
+            "assetId": "aaaaaaaaaaaaaaaa",
+            "availableCapacity": {
+              "allocatableVMs": [
+                {
+                  "vmSize": "aaaaaaaa",
+                  "count": 13
+                }
+              ]
+            },
+            "statuses": [
+              {
+                "code": "aaaaa",
+                "level": "Info",
+                "displayStatus": "aaaaaaaaaaaaaaaaaaaaaaaa",
+                "message": "aaaaaaaaaa",
+                "time": "2021-12-08T03:22:10.238Z"
+              }
+            ]
+          }
+        },
+        "sku": {
+          "name": "myDedicatedHost",
+          "tier": "aaaaa",
+          "capacity": 24
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1119757000",
+    "RESOURCE_MANAGER_URL": "https://localhost:8443",
+    "SUBSCRIPTION_ID": "00000000-0000-0000-0000-000000000000"
+  }
+}

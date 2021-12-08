@@ -1,0 +1,23 @@
+{
+  "OutputFolder": ".",
+  "Namespace": "Azure.ResourceManager.Compute",
+  "LibraryName": "Compute",
+  "SharedSourceFolders": [
+    "..\\Generator.Shared",
+    "..\\Azure.Core.Shared"
+  ],
+  "azure-arm": true,
+  "public-clients": true,
+  "head-as-boolean": true,
+  "ListException": [
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}",
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}",
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}",
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsFamilies/{osFamilyName}"
+  ],
+  "OverrideOperationName": {
+    "VirtualMachineScaleSets_Start": "PowerOn",
+    "VirtualMachineScaleSetVMs_Start": "PowerOn",
+    "CloudServices_Start": "PowerOn"
+  }
+}
