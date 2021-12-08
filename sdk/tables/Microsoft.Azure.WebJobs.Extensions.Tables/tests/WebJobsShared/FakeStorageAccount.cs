@@ -9,10 +9,6 @@ namespace Microsoft.Azure.WebJobs
     public class FakeStorageAccount : StorageAccount
     {
         private FakeStorage.FakeAccount _account2 = new FakeStorage.FakeAccount();
-        public override CloudQueueClient CreateCloudQueueClient()
-        {
-            return _account2.CreateCloudQueueClient();
-        }
         public override CloudTableClient CreateCloudTableClient()
         {
             return _account2.CreateCloudTableClient();

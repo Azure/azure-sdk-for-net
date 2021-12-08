@@ -4,11 +4,9 @@ namespace Microsoft.Azure.WebJobs
     {
         public StorageAccount() { }
         public StorageAccount(Microsoft.Azure.WebJobs.Extensions.Storage.IDelegatingHandlerProvider delegatingHandlerProvider) { }
-        public virtual System.Uri BlobEndpoint { get { throw null; } }
         public virtual string Name { get { throw null; } }
         public Microsoft.Azure.Storage.CloudStorageAccount SdkObject { get { throw null; } protected set { } }
         public Microsoft.Azure.Cosmos.Table.CloudStorageAccount TableSdkObject { get { throw null; } protected set { } }
-        public virtual Microsoft.Azure.Storage.Queue.CloudQueueClient CreateCloudQueueClient() { throw null; }
         public virtual Microsoft.Azure.Cosmos.Table.CloudTableClient CreateCloudTableClient() { throw null; }
         public virtual bool IsDevelopmentStorageAccount() { throw null; }
         public static Microsoft.Azure.WebJobs.StorageAccount New(Microsoft.Azure.Storage.CloudStorageAccount account, Microsoft.Azure.Cosmos.Table.CloudStorageAccount tableAccount = null, Microsoft.Azure.WebJobs.Extensions.Storage.IDelegatingHandlerProvider delegatingHandlerProvider = null) { throw null; }
