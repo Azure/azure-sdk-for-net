@@ -35,7 +35,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             if (!TryParseAndValidate(value, out path))
             {
                 throw new InvalidOperationException("Table entity identifiers must be in the format " +
-                                                    "TableName/PartitionKey/RowKey and must meet table naming requirements.");
+                    "TableName/PartitionKey/RowKey and must meet table naming requirements.");
             }
 
             return path;
