@@ -1,15 +1,8 @@
 # Release History
 
 ## 12.9.0-beta.3 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+- Added support for service version 2021-04-10.
 - Fixed a memory leak in ShareFileClient.UploadAsync().
-
-### Other Changes
 
 ## 12.9.0-beta.2 (2021-11-30)
 - Added support for service version 2021-02-12.
