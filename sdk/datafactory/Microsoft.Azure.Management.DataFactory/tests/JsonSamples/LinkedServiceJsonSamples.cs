@@ -2095,6 +2095,39 @@ namespace DataFactory.Tests.JsonSamples
 ";
 
         [JsonSample]
+        public const string GoogleAdsLinkedService = @"
+{
+    name: ""GoogleAdWordsLinkedService"",
+    properties: {
+        type: ""GoogleAdWords"",
+        typeProperties: {
+            connectionProperties: {
+                clientCustomerID : ""myclientCustomerID"",
+                developerToken : {
+                    type: ""SecureString"",
+                    value: ""some secret""
+                },
+                authenticationType : ""ServiceAuthentication"",
+                refreshToken : {
+                    type: ""SecureString"",
+                    value: ""some secret""
+                },
+                clientId : ""myclientId"",
+                clientSecret : {
+                    type: ""SecureString"",
+                    value: ""some secret""
+                },
+                email : ""myemail"",
+                keyFilePath : ""mykeyFilePath"",
+                trustedCertPath : ""mytrustedCertPath"",
+                useSystemTrustStore : true
+            }
+        }
+    }
+}
+";
+
+        [JsonSample]
         public const string GreenplumLinkedService = @"
 {
     name: ""GreenplumLinkedService"",
