@@ -205,7 +205,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 context = new WebPubSubConnectionContext(eventType, eventName, hub, connectionId, userId, signature, origin, states, headers);
                 return true;
             }
-            catch (Exception)
+            catch
             {
                 context = null;
                 return false;
