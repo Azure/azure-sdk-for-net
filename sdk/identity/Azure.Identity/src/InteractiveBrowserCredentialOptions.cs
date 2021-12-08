@@ -53,5 +53,10 @@ namespace Azure.Identity
         /// Avoids the account prompt and pre-populates the username of the account to login.
         /// </summary>
         public string LoginHint { get; set; }
+
+        /// <summary>
+        /// When set to true the <see cref="InteractiveBrowserCredential"/> will use the system authentication broker instead of the system browser when available.
+        /// </summary>
+        public bool PreferBroker { get; set; }
     }
 }

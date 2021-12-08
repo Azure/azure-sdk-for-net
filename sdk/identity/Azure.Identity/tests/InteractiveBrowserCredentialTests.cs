@@ -48,6 +48,15 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public void RespectsPreferBroker([Values(true, false)] bool preferBroker)
+        {
+            var credential = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { PreferBroker = preferBroker });
+
+            Assert.NotNull(credential.Client);
+            Assert.AreEqual(preferBroker, credential.Client.EnableBroker);
+        }
+
+        [Test]
         public async Task InteractiveBrowserAcquireTokenSilentException()
         {
             string expInnerExMessage = Guid.NewGuid().ToString();

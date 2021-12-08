@@ -3,6 +3,8 @@
 ## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added authentication broker support to the `InteractiveBrowserCredential`
+    - Added the `PreferBroker` property on `InteractiveBrowserCredentialOptions`
 
 ### Breaking Changes
 

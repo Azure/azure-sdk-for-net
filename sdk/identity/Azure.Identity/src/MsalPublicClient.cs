@@ -15,13 +15,16 @@ namespace Azure.Identity
     {
         internal string RedirectUrl { get; }
 
+        internal bool EnableBroker { get; }
+
         protected MsalPublicClient()
         { }
 
-        public MsalPublicClient(CredentialPipeline pipeline, string tenantId, string clientId, string redirectUrl, ITokenCacheOptions cacheOptions, bool isPiiLoggingEnabled)
+        public MsalPublicClient(CredentialPipeline pipeline, string tenantId, string clientId, string redirectUrl, ITokenCacheOptions cacheOptions, bool isPiiLoggingEnabled, bool enableBroker = false)
             : base(pipeline, tenantId, clientId, isPiiLoggingEnabled, cacheOptions)
         {
             RedirectUrl = redirectUrl;
+            EnableBroker = enableBroker;
         }
 
         protected override ValueTask<IPublicClientApplication> CreateClientAsync(bool async, CancellationToken cancellationToken)
@@ -46,6 +49,11 @@ namespace Azure.Identity
             if (!string.IsNullOrEmpty(RedirectUrl))
             {
                 pubAppBuilder = pubAppBuilder.WithRedirectUri(RedirectUrl);
+            }
+
+            if (EnableBroker)
+            {
+                pubAppBuilder = pubAppBuilder.WithBroker();
             }
 
             if (clientCapabilities.Length > 0)
