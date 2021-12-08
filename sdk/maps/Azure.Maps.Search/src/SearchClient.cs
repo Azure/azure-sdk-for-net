@@ -1110,7 +1110,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestAlongRouteAsync(string query, int maxDetourTime, GeoJsonLineString route, SearchAlongRouteOptions options = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchAlongRoute");
+            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterestAlongRoute");
             scope.Start();
             try
             {
@@ -1136,7 +1136,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SearchAddressResult> SearchPointOfInterestAlongRoute(string query, int maxDetourTime, GeoJsonLineString route, SearchAlongRouteOptions options = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchAlongRoute");
+            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterestAlongRoute");
             scope.Start();
             try
             {
