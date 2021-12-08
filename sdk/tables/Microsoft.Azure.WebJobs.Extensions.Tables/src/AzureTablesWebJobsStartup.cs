@@ -1,19 +1,19 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.WebJobs.Extensions.Storage;
+using Microsoft.Azure.WebJobs.Extensions.Tables;
 using Microsoft.Azure.WebJobs.Hosting;
 using Microsoft.Extensions.Hosting;
 
-[assembly: WebJobsStartup(typeof(AzureStorageWebJobsStartup))]
+[assembly: WebJobsStartup(typeof(AzureTablesWebJobsStartup))]
 
-namespace Microsoft.Azure.WebJobs.Extensions.Storage
+namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
-    public class AzureStorageWebJobsStartup : IWebJobsStartup
+    internal class AzureTablesWebJobsStartup : IWebJobsStartup
     {
         public void Configure(IWebJobsBuilder builder)
         {
-            builder.AddAzureStorage();
+            builder.AddAzureTables();
         }
     }
 }

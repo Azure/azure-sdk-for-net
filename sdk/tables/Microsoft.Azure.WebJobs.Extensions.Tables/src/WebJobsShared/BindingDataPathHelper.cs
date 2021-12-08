@@ -1,9 +1,11 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 using System;
 using System.Globalization;
 using Newtonsoft.Json.Linq;
-namespace Microsoft.Azure.WebJobs.Host.Bindings
+
+namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
     /// <summary>
     /// Class containing helper methods for path binding
@@ -24,6 +26,7 @@ namespace Microsoft.Azure.WebJobs.Host.Bindings
             {
                 format = null; // normalize.
             }
+
             if (parameterValue != null)
             {
                 switch (Type.GetTypeCode(parameterValue.GetType()))
@@ -64,6 +67,7 @@ namespace Microsoft.Azure.WebJobs.Host.Bindings
                                 return ((Guid)parameterValue).ToString(format, CultureInfo.InvariantCulture);
                             }
                         }
+
                         if (parameterValue is Newtonsoft.Json.Linq.JToken)
                         {
                             // Only accept primitive Json values. Don't accept complex objects.
@@ -72,9 +76,11 @@ namespace Microsoft.Azure.WebJobs.Host.Bindings
                                 return parameterValue.ToString();
                             }
                         }
+
                         return null;
                 }
             }
+
             return null;
         }
     }

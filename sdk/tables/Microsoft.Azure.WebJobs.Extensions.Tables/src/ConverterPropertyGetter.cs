@@ -2,9 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using Microsoft.Azure.WebJobs.Host.Converters;
+using Microsoft.Azure.WebJobs.Host;
 
-namespace Microsoft.Azure.WebJobs.Host.Tables
+namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
     internal class ConverterPropertyGetter<TReflected, TProperty, TConvertedProperty>
         : IPropertyGetter<TReflected, TConvertedProperty>
@@ -15,18 +15,8 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
         public ConverterPropertyGetter(IPropertyGetter<TReflected, TProperty> propertyGetter,
             IConverter<TProperty, TConvertedProperty> converter)
         {
-            if (propertyGetter == null)
-            {
-                throw new ArgumentNullException(nameof(propertyGetter));
-            }
-            
-            if (converter == null)
-            {
-                throw new ArgumentNullException(nameof(converter));
-            }
-
-            _converter = converter;
-            _propertyGetter = propertyGetter;
+            _converter = converter ?? throw new ArgumentNullException(nameof(converter));
+            _propertyGetter = propertyGetter ?? throw new ArgumentNullException(nameof(propertyGetter));
         }
 
         public TConvertedProperty GetValue(TReflected instance)

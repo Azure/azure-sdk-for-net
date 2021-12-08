@@ -3,7 +3,7 @@
 
 namespace Microsoft.Azure.WebJobs
 {
-    public class FakeStorageAccountProvider : StorageAccountProvider
+    internal class FakeStorageAccountProvider : StorageAccountProvider
     {
         private readonly StorageAccount _account;
         public FakeStorageAccountProvider(StorageAccount account)

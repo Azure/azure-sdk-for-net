@@ -6,7 +6,7 @@ using Microsoft.Azure.Storage.Queue;
 
 namespace Microsoft.Azure.WebJobs
 {
-    public class FakeStorageAccount : StorageAccount
+    internal class FakeStorageAccount : StorageAccount
     {
         private FakeStorage.FakeAccount _account2 = new FakeStorage.FakeAccount();
         public override CloudTableClient CreateCloudTableClient()

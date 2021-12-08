@@ -7,18 +7,19 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Azure.WebJobs.Description;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Azure.WebJobs.Host.Protocols;
-using Microsoft.Azure.Cosmos.Table;
 using Newtonsoft.Json.Linq;
 
-namespace Microsoft.Azure.WebJobs.Host.Tables.Config
+namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
     [Extension("AzureStorageTables", "Tables")]
     internal class TablesExtensionConfigProvider : IExtensionConfigProvider
     {
-        private StorageAccountProvider _accountProvider;
+        private readonly StorageAccountProvider _accountProvider;
         private readonly INameResolver _nameResolver;
 
         // Property names on TableAttribute
@@ -50,12 +51,12 @@ namespace Microsoft.Azure.WebJobs.Host.Tables.Config
                 .AddOpenConverter<object, ITableEntity>(typeof(ObjectToITableEntityConverter<>));
 
             binding.WhenIsNull(RowKeyProperty)
-                    .SetPostResolveHook(ToParameterDescriptorForCollector)
-                    .BindToInput<CloudTable>(builder);
+                .SetPostResolveHook(ToParameterDescriptorForCollector)
+                .BindToInput<CloudTable>(builder);
 
-            binding.BindToCollector<ITableEntity>(BuildFromTableAttribute); 
+            binding.BindToCollector<ITableEntity>(BuildFromTableAttribute);
 
-            binding.WhenIsNotNull(PartitionKeyProperty).WhenIsNotNull(RowKeyProperty)            
+            binding.WhenIsNotNull(PartitionKeyProperty).WhenIsNotNull(RowKeyProperty)
                 .BindToInput<JObject>(builder);
             binding.BindToInput<JArray>(builder);
             binding.Bind(original);
@@ -263,6 +264,7 @@ namespace Microsoft.Azure.WebJobs.Host.Tables.Config
                 {
                     tableQuery.TakeCount = attribute.Take;
                 }
+
                 int countRemaining = attribute.Take;
 
                 JArray entityArray = new JArray();
@@ -286,8 +288,7 @@ namespace Microsoft.Azure.WebJobs.Host.Tables.Config
                             break;
                         }
                     }
-                }
-                while (token != null);
+                } while (token != null);
 
                 return entityArray;
             }
