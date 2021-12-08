@@ -153,8 +153,6 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             VerifyNamespaceProperties(namespace2, true);
             Assert.AreEqual(namespace1.Id.ResourceGroupName, _resourceGroup.Id.Name);
             Assert.AreEqual(namespace2.Id.ResourceGroupName, resourceGroup.Id.Name);
-
-            await namespace2.DeleteAsync();
         }
 
         [Test]
