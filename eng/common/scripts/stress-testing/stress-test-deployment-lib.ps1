@@ -63,7 +63,7 @@ function DeployStressTests(
     [string]$deployId = 'local',
     [switch]$login,
     [string]$subscription = '',
-    [switch]$ci
+    [switch]$CI
 ) {
     if ($environment -eq 'test') {
         if ($clusterGroup -or $subscription) {
@@ -89,19 +89,25 @@ function DeployStressTests(
         if (!$clusterGroup -or !$subscription) {
             throw "clusterGroup and subscription parameters must be specified when logging into an environment that is not test or prod."
         }
-        Login $subscription $clusterGroup $pushImages
+        Login -subscription $subscription -clusterGroup $clusterGroup -pushImages:$pushImages
     }
 
     RunOrExitOnFailure helm repo add stress-test-charts https://stresstestcharts.blob.core.windows.net/helm/
     Run helm repo update
     if ($LASTEXITCODE) { return $LASTEXITCODE }
 
-    $pkgs = FindStressPackages $searchDirectory $filters $CI
+    $pkgs = FindStressPackages -directory $searchDirectory -filters $filters -CI:$CI
     Write-Host "" "Found $($pkgs.Length) stress test packages:"
     Write-Host $pkgs.Directory ""
     foreach ($pkg in $pkgs) {
         Write-Host "Deploying stress test at '$($pkg.Directory)'"
-        DeployStressPackage $pkg $deployId $environment $repository $pushImages $login
+        DeployStressPackage `
+            -pkg $pkg `
+            -deployId $deployId `
+            -environment $environment `
+            -repositoryBase $repository `
+            -pushImages:$pushImages `
+            -login:$login
     }
 
     Write-Host "Releases deployed by $deployId"
