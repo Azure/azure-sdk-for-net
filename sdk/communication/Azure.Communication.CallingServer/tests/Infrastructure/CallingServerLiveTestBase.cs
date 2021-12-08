@@ -24,18 +24,17 @@ namespace Azure.Communication.CallingServer.Tests
         protected const string TO_USER_IDENTIFIER = "0000000e-2f93-61fb-69ff-9c3a0d00d765";
 
         // From ACS Resource "immutableResourceId".
-        protected const string RESOURCE_IDENTIFIER = "ab12b0ea-85ea-4f83-b0b6-84d90209c7c4";
+        protected const string RESOURCE_IDENTIFIER = "016a7064-0581-40b9-be73-6dde64d69d72";
 
         // Random Gen Guid
-        protected const string GROUP_IDENTIFIER = "2a44d970-568f-11ec-9b6b-f50b63e7bd11";
+        protected const string GROUP_IDENTIFIER = "0000000e-385d-f003-0cf9-9c3a0d00224e";
 
-        /**
-             * For recording tests we need to make sure the USER_IDENTIFIER
-             * matches the recorded USER_IDENTIFIER, or the call will fail.
-             */
+        // Random Gen Guid
         protected const string USER_IDENTIFIER = "0000000e-3321-ffd1-69ff-9c3a0d000f47";
 
         protected const string DOWNLOAD_END_POINT = "https://us-storage.asm.skype.com/v1/objects/Sanitized/content/acsmetadata";
+
+        protected const string DELETE_END_POINT = "https://us-storage.asm.skype.com/v1/objects/Sanitized";
 
         protected string GetAudioFileUrl()
         {
@@ -57,7 +56,7 @@ namespace Azure.Communication.CallingServer.Tests
 
         protected string GetResourceId()
         {
-            if (Mode == RecordedTestMode.Live)
+            if (Mode != RecordedTestMode.Playback)
             {
                 return TestEnvironment.ResourceIdentifier;
             }
@@ -122,12 +121,20 @@ namespace Azure.Communication.CallingServer.Tests
 
         protected string GetDeleteUrl()
         {
-            return "https://us-storage.asm.skype.com/v1/objects/0-wus-d1-1de25ef48bcabee59f6e66372e3a7349";
+            if (Mode != RecordedTestMode.Playback)
+            {
+                return TestEnvironment.DeleteEndPoint;
+            }
+            return DELETE_END_POINT;
         }
 
         protected string GetAsyncDeleteUrl()
         {
-            return "https://us-storage.asm.skype.com/v1/objects/0-wus-d1-0ae7a7b652cbc8e716a17e91c554cea3";
+            if (Mode != RecordedTestMode.Playback)
+            {
+                return TestEnvironment.AsyncDeleteEndPoint;
+            }
+            return DELETE_END_POINT;
         }
 
         public CallingServerLiveTestBase(bool isAsync) : base(isAsync)

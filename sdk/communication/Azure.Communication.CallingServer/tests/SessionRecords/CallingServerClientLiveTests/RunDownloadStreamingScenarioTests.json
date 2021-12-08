@@ -5,11 +5,11 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-f2e9d6b72dd92f4e9431f6a45dae3342-33af477ebc7d9244-00",
-        "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20211207.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "traceparent": "00-de2dc018c99159489a1de639257d2983-3517ecdc6b57ea4c-00",
+        "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20211208.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-request-id": "d7089f8f28790e97304776ae656dd4ec",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 07 Dec 2021 07:10:44 GMT",
+        "x-ms-date": "Wed, 08 Dec 2021 07:49:46 GMT",
         "x-ms-host": "acstelephonyportaltesting.communication.azure.com",
         "x-ms-return-client-request-id": "true"
       },
@@ -25,7 +25,7 @@
         "Content-Length": "838",
         "Content-Range": "bytes 0-837/838",
         "Content-Type": "application/octet-stream",
-        "Date": "Tue, 07 Dec 2021 07:10:45 GMT",
+        "Date": "Wed, 08 Dec 2021 07:49:47 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains"
       },

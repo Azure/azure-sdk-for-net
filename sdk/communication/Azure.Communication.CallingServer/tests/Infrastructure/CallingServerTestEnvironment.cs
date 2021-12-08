@@ -25,6 +25,20 @@ namespace Azure.Communication.CallingServer.Tests
 
         public const string AudioUrl = "AUDIO_FILE_URL";
 
+        public const string DeleteUrl = "DELETE_ENDPOINT";
+
+        public const string AsyncDeleteUrl = "ASYNC_DELETE_ENDPOINT";
+
+        /// <summary>
+        /// The delete url required to delete the file.
+        /// </summary>
+        public string DeleteEndPoint => GetRecordedVariable(DeleteUrl, options => options.IsSecret());
+
+        /// <summary>
+        /// The async delete url required to delete the file.
+        /// </summary>
+        public string AsyncDeleteEndPoint => GetRecordedVariable(AsyncDeleteUrl, options => options.IsSecret());
+
         /// <summary>
         /// The download url required to download the file.
         /// </summary>
