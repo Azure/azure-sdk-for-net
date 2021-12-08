@@ -2,6 +2,7 @@
 
 ## 12.9.0-beta.3 (Unreleased)
 - Added support for service version 2021-04-10.
+- Added support for ShareDirectoryClient.Rename() and ShareFileClient.Rename().
 - Fixed a memory leak in ShareFileClient.UploadAsync().
 
 ## 12.9.0-beta.2 (2021-11-30)
