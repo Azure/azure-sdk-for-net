@@ -6,6 +6,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 arm-core: true
 namespace: Azure.ResourceManager
+output-folder: $(this-folder)/Generated
 input-file:
 # temporarily using a local file to work around an autorest bug that loses extensions during deduplication of schemas
 #  - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/ac3be41ee22ada179ab7b970e98f1289188b3bae/specification/common-types/resource-management/v2/types.json

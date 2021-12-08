@@ -536,6 +536,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         }
 
         [TestCase]
+        public void TestConnectionStatesConverter_SystemText_InvalidReturnEmpty()
+        {
+            var jsonOption = new SystemJson.JsonSerializerOptions();
+            jsonOption.Converters.Add(new ConnectionStatesConverter());
+            var input = new Dictionary<string, string>
+                {
+                    { "aKey", "aValue" },
+                    { "bKey", "123" },
+                    { "cKey", DateTime.Now.ToString() }
+                };
+            var serialized = SystemJson.JsonSerializer.Serialize(input);
+            var deserialized = SystemJson.JsonSerializer.Deserialize<IReadOnlyDictionary<string, BinaryData>>(serialized, jsonOption);
+
+            Assert.NotNull(deserialized);
+            Assert.AreEqual(0, deserialized.Count);
+        }
+
+        [TestCase]
         public void TestConnectionStatesEncodeDecode()
         {
             var testTime = DateTime.Parse("2021-11-10 4:23:55");

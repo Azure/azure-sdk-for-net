@@ -938,7 +938,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlAgentConfiguration" /> object. </returns>
         public SqlAgentConfiguration GetSqlAgentConfiguration()
         {
-            return new SqlAgentConfiguration(this, Id + "/sqlAgent/current");
+            return new SqlAgentConfiguration(this, new ResourceIdentifier(Id.ToString() + "/sqlAgent/current"));
         }
         #endregion
 

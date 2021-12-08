@@ -207,7 +207,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 dataType = GetDataType(mediaType);
                 return true;
             }
-            catch (Exception)
+            catch
             {
                 dataType = WebPubSubDataType.Binary;
                 return false;

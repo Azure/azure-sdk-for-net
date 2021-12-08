@@ -3757,7 +3757,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotResourceHealthMetadata" /> object. </returns>
         public SiteSlotResourceHealthMetadata GetSiteSlotResourceHealthMetadata()
         {
-            return new SiteSlotResourceHealthMetadata(this, Id + "/resourceHealthMetadata/default");
+            return new SiteSlotResourceHealthMetadata(this, new ResourceIdentifier(Id.ToString() + "/resourceHealthMetadata/default"));
         }
         #endregion
 
@@ -3777,7 +3777,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotBasicPublishingCredentialsPolicyFtp" /> object. </returns>
         public SiteSlotBasicPublishingCredentialsPolicyFtp GetSiteSlotBasicPublishingCredentialsPolicyFtp()
         {
-            return new SiteSlotBasicPublishingCredentialsPolicyFtp(this, Id + "/basicPublishingCredentialsPolicies/ftp");
+            return new SiteSlotBasicPublishingCredentialsPolicyFtp(this, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/ftp"));
         }
         #endregion
 
@@ -3787,7 +3787,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotBasicPublishingCredentialsPolicyScm" /> object. </returns>
         public SiteSlotBasicPublishingCredentialsPolicyScm GetSiteSlotBasicPublishingCredentialsPolicyScm()
         {
-            return new SiteSlotBasicPublishingCredentialsPolicyScm(this, Id + "/basicPublishingCredentialsPolicies/scm");
+            return new SiteSlotBasicPublishingCredentialsPolicyScm(this, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/scm"));
         }
         #endregion
 
@@ -3817,7 +3817,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotConfigLogs" /> object. </returns>
         public SiteSlotConfigLogs GetSiteSlotConfigLogs()
         {
-            return new SiteSlotConfigLogs(this, Id + "/config/logs");
+            return new SiteSlotConfigLogs(this, new ResourceIdentifier(Id.ToString() + "/config/logs"));
         }
         #endregion
 
@@ -3827,7 +3827,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotConfigWeb" /> object. </returns>
         public SiteSlotConfigWeb GetSiteSlotConfigWeb()
         {
-            return new SiteSlotConfigWeb(this, Id + "/config/web");
+            return new SiteSlotConfigWeb(this, new ResourceIdentifier(Id.ToString() + "/config/web"));
         }
         #endregion
 
@@ -3927,7 +3927,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotNetworkConfig" /> object. </returns>
         public SiteSlotNetworkConfig GetSiteSlotNetworkConfig()
         {
-            return new SiteSlotNetworkConfig(this, Id + "/networkConfig/virtualNetwork");
+            return new SiteSlotNetworkConfig(this, new ResourceIdentifier(Id.ToString() + "/networkConfig/virtualNetwork"));
         }
         #endregion
 

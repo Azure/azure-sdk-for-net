@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "NetworkVirtualApplianceSku"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal NetworkVirtualApplianceSku(ArmResource options, NetworkVirtualApplianceSkuData resource) : base(options, resource.Id)
+        internal NetworkVirtualApplianceSku(ArmResource options, NetworkVirtualApplianceSkuData resource) : base(options, new ResourceIdentifier(resource.Id))
         {
             HasData = true;
             _data = resource;
