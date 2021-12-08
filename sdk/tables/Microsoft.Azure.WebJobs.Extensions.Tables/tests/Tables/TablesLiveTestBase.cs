@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
-using Microsoft.Azure.WebJobs.Host.UnitTests.Tables;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -80,7 +79,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 {
                     builder.AddInMemoryCollection(new Dictionary<string, string>()
                     {
-                        {"Table", TableName}
+                        {"Table", TableName},
+                        {"AzureWebJobsStorage", TestEnvironment.StorageConnectionString}
                     });
                 });
 
