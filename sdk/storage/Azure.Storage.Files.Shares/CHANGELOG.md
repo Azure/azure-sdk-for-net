@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed a memory leak in ShareFileClient.UploadAsync().
 
 ### Other Changes
 
