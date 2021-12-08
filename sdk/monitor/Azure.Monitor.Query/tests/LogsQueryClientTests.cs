@@ -207,20 +207,20 @@ namespace Azure.Monitor.Query.Tests
             LogsTableRow[] rowArray = new LogsTableRow[] { logsTableRow };
             LogsTable logsTable = MonitorQueryModelFactory.LogsTable("tester", logsTableColumns.AsEnumerable(), rowArray.AsEnumerable());
 
-            Assert.AreEqual(logsTable.Name, "tester");
-            Assert.AreEqual(logsTable.Rows.Count, 1);
+            Assert.AreEqual("tester", logsTable.Name);
+            Assert.AreEqual(1, logsTable.Rows.Count);
             //Assert.AreEqual(logsTable.Rows[0].ToString(), "[\"row1\",123,43.56,false]");
             //todo: assert each value
-            Assert.AreEqual(logsTable.Columns.Count, 4);
+            Assert.AreEqual(4, logsTable.Columns.Count);
 
-            Assert.AreEqual(logsTable.Columns[0].Name, "column1");
-            Assert.AreEqual(logsTable.Columns[0].Type.ToString(), "string");
-            Assert.AreEqual(logsTable.Columns[1].Name, "column2");
-            Assert.AreEqual(logsTable.Columns[1].Type.ToString(), "int");
-            Assert.AreEqual(logsTable.Columns[2].Name, "column3");
-            Assert.AreEqual(logsTable.Columns[2].Type.ToString(), "real");
-            Assert.AreEqual(logsTable.Columns[3].Name, "column4");
-            Assert.AreEqual(logsTable.Columns[3].Type.ToString(), "bool");
+            Assert.AreEqual("column1", logsTable.Columns[0].Name);
+            Assert.AreEqual("string", logsTable.Columns[0].Type.ToString());
+            Assert.AreEqual("column2", logsTable.Columns[1].Name);
+            Assert.AreEqual("int", logsTable.Columns[1].Type.ToString());
+            Assert.AreEqual("column3", logsTable.Columns[2].Name);
+            Assert.AreEqual("real", logsTable.Columns[2].Type.ToString());
+            Assert.AreEqual("column4", logsTable.Columns[3].Name);
+            Assert.AreEqual("bool", logsTable.Columns[3].Type.ToString());
         }
     }
 }
