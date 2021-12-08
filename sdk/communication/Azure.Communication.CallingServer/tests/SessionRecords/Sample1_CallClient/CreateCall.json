@@ -8,30 +8,30 @@
         "Authorization": "Sanitized",
         "Content-Length": "2",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Communication.Identity/1.1.0-alpha.20211025.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "User-Agent": "azsdk-net-Communication.Identity/1.1.0-alpha.20211207.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-request-id": "f7c8910f9c6fa503ddd8b7582e6d4d17",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 26 Oct 2021 21:28:53 GMT",
+        "x-ms-date": "Tue, 07 Dec 2021 19:44:30 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {},
       "StatusCode": 201,
       "ResponseHeaders": {
-        "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-03-31-preview1, 2021-10-31-preview",
+        "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-03-31-preview1, 2021-10-31-preview, 2021-11-01",
         "Content-Length": "101",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 26 Oct 2021 21:28:54 GMT",
-        "MS-CV": "fXBvRRWVdUWKIquy2MkxcQ.0",
+        "Date": "Tue, 07 Dec 2021 19:44:30 GMT",
+        "MS-CV": "uYCi1O3tAEq8HRknvzZ\u002BRA.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0FnN4YQAAAACiERXQJupHQLLXdZDMM1JoV1NURURHRTA4MDgAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "0nrmvYQAAAABR/YMCc8uyR7PkJzw73ltDV1NURURHRTA4MjAAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
         "x-ms-client-request-id": "f7c8910f9c6fa503ddd8b7582e6d4d17",
-        "X-Processing-Time": "134ms"
+        "X-Processing-Time": "43ms"
       },
       "ResponseBody": {
         "identity": {
-          "id": "8:acs:016a7064-0581-40b9-be73-6dde64d69d72_0000000d-5e63-3474-460b-454822000469"
+          "id": "8:acs:016a7064-0581-40b9-be73-6dde64d69d72_0000000e-364e-b8e1-ec8d-08482200376b"
         }
       }
     },
@@ -43,10 +43,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "346",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20211026.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20211207.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-request-id": "a585200bb309794fd62f46729d5801ec",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 26 Oct 2021 21:28:54 GMT",
+        "x-ms-date": "Tue, 07 Dec 2021 19:44:31 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -59,7 +59,7 @@
         ],
         "source": {
           "communicationUser": {
-            "id": "8:acs:016a7064-0581-40b9-be73-6dde64d69d72_0000000d-5e63-3474-460b-454822000469"
+            "id": "8:acs:016a7064-0581-40b9-be73-6dde64d69d72_0000000e-364e-b8e1-ec8d-08482200376b"
           }
         },
         "callbackUri": "https://dummy.ngrok.io/api/incident/callback?SecretKey=helloworld",
@@ -75,14 +75,14 @@
       "ResponseHeaders": {
         "Content-Length": "59",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 26 Oct 2021 21:28:55 GMT",
-        "X-Azure-Ref": "0FnN4YQAAAAArT8bpsgtEQr9lzrf9JSm4V1NURURHRTA4MDgAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "Date": "Tue, 07 Dec 2021 19:44:31 GMT",
+        "X-Azure-Ref": "0n7mvYQAAAAC/L/YvrXi1TKYSFeimMhd/V1NURURHRTA4MjAAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Microsoft-Skype-Chain-ID": "c2bdf385-0afb-4c3c-b5f4-aa5f8c4f0fcc",
+        "X-Microsoft-Skype-Chain-ID": "df4c8f54-d8ad-4128-a792-1f3599277dce",
         "x-ms-client-request-id": "a585200bb309794fd62f46729d5801ec"
       },
       "ResponseBody": {
-        "callConnectionId": "681f1300-d684-4da7-a6af-58a0d6e8e9cd"
+        "callConnectionId": "a9201300-471c-41d4-b4cc-fe9b28e682c1"
       }
     }
   ],
