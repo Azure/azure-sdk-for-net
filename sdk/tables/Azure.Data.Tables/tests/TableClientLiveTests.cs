@@ -689,7 +689,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(entityResults.First().Timestamp, Is.TypeOf<DateTimeOffset>(), "The entity property should be of type DateTimeOffset?");
             Assert.That(entityResults.First().Timestamp, Is.Not.Null, "The entity property should not be null");
             Assert.That(entityResults.First()[StringTypePropertyName], Is.TypeOf<string>(), "The entity property should be of type string");
-            Assert.That(entityResults.First()[DateTypePropertyName], Is.TypeOf<DateTime>(), "The entity property should be of type DateTime");
+            Assert.That(entityResults.First()[DateTypePropertyName], Is.TypeOf<DateTimeOffset>(), "The entity property should be of type DateTime");
             Assert.That(entityResults.First()[GuidTypePropertyName], Is.TypeOf<Guid>(), "The entity property should be of type Guid");
             Assert.That(entityResults.First()[BinaryTypePropertyName], Is.TypeOf<byte[]>(), "The entity property should be of type byte[]");
             Assert.That(entityResults.First()[Int64TypePropertyName], Is.TypeOf<long>(), "The entity property should be of type int64");
@@ -718,7 +718,7 @@ namespace Azure.Data.Tables.Tests
                 .ConfigureAwait(false);
 
             Assert.That(entityResults.First()[StringTypePropertyName], Is.TypeOf<string>(), "The entity property should be of type string");
-            Assert.That(entityResults.First()[DateTypePropertyName], Is.TypeOf<DateTime>(), "The entity property should be of type DateTime");
+            Assert.That(entityResults.First()[DateTypePropertyName], Is.TypeOf<DateTimeOffset>(), "The entity property should be of type DateTime");
             Assert.That(entityResults.First()[GuidTypePropertyName], Is.TypeOf<Guid>(), "The entity property should be of type Guid");
             Assert.That(entityResults.First()[BinaryTypePropertyName], Is.TypeOf<byte[]>(), "The entity property should be of type byte[]");
             Assert.That(entityResults.First()[Int64TypePropertyName], Is.TypeOf<long>(), "The entity property should be of type int64");

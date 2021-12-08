@@ -89,7 +89,7 @@ namespace Azure.Data.Tables
                 entity[annotation] = typeAnnotationsWithKeys[annotation].TypeAnnotation switch
                 {
                     TableConstants.Odata.EdmBinary => Convert.FromBase64String(entity[annotation] as string),
-                    TableConstants.Odata.EdmDateTime => DateTime.Parse(entity[annotation] as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind),
+                    TableConstants.Odata.EdmDateTime => DateTimeOffset.Parse(entity[annotation] as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind),
                     TableConstants.Odata.EdmGuid => Guid.Parse(entity[annotation] as string),
                     TableConstants.Odata.EdmInt64 => long.Parse(entity[annotation] as string, CultureInfo.InvariantCulture),
                     TableConstants.Odata.EdmDouble => double.Parse(entity[annotation] as string, CultureInfo.InvariantCulture),
