@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         }
         [Test]
         [RecordedTest]
+        [Ignore("Need further investigation")]
         public async Task CreateGetUpdateDeleteDisasterRecovery()
         {
             _resourceGroup = await CreateResourceGroupAsync();
