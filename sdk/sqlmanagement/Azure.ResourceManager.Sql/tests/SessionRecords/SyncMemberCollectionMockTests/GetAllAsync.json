@@ -1,0 +1,353 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000?api-version=2019-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-6a6f068c45a89148bc7716359ba220e8-3e27d3f6e0dbe94b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20211208.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "55acf3a658648a86a8d5c1646bc591ed",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "403",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 08 Dec 2021 07:26:13 GMT",
+        "ETag": "W/\u0022193-XMviJqaGXohjOV1XjmYhUY8VLpk\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "00000000-0000-0000-0000-000000000000",
+        "tenantId": "0000000-0000-0000-0000-000000000000",
+        "displayName": "Name of the subscription",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/syncgroupcrud-65440?api-version=2019-10-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "81",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20211208.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "642d33313c903df60a4baa0e910e2c82",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "Azure.ResourceManager.Resources.Subscription",
+        "tags": {
+          "test": "env"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "262",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 08 Dec 2021 07:26:13 GMT",
+        "ETag": "W/\u0022106-CoU7ZPWkkdrGPBtl12ek5x5eJjI\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/syncgroupcrud-65440",
+        "location": "eastus",
+        "managedBy": null,
+        "name": "syncgroupcrud-65440",
+        "properties": {
+          "provisioningState": "Succeeded"
+        },
+        "tags": {},
+        "type": "Microsoft.Resources/resourceGroups"
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/syncgroupcrud-65440/providers/Microsoft.Sql/servers/syncgroupcrud-8475?api-version=2021-02-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "396",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager.Sql/1.0.0-alpha.20211208.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "1f1e8e1fe318ea30bed6d6d4167a868e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "japaneast",
+        "properties": {
+          "administratorLogin": "dummylogin",
+          "administratorLoginPassword": "PLACEHOLDER",
+          "publicNetworkAccess": "Enabled",
+          "administrators": {
+            "principalType": "User",
+            "login": "bob@contoso.com",
+            "sid": "00000011-1111-2222-2222-123456789111",
+            "tenantId": "00000011-1111-2222-2222-123456789111",
+            "azureADOnlyAuthentication": true
+          },
+          "restrictOutboundNetworkAccess": "Enabled"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "1955",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 08 Dec 2021 07:26:13 GMT",
+        "ETag": "W/\u00227a3-UeJ98nYgYx0EVH35DnvIKKaVDjY\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/syncgroupcrud-65440/providers/Microsoft.Sql/servers/syncgroupcrud-8475",
+        "name": "syncgroupcrud-8475",
+        "type": "aa",
+        "location": "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "tags": {
+          "key4265": "aaaaaaaaaaaaaaaaaa"
+        },
+        "identity": {
+          "userAssignedIdentities": {
+            "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/00000000-0000-0000-0000-000000000000/providers/Microsoft.ManagedIdentity/userAssignedIdentities/key2637": {
+              "principalId": "00000000-0000-0000-0000-000000000000",
+              "clientId": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "principalId": "00000000-0000-0000-0000-000000000000",
+          "type": "None",
+          "tenantId": "00000000-0000-0000-0000-000000000000"
+        },
+        "kind": "aaaaaaaaaaaaaaaaaaaa",
+        "properties": {
+          "administratorLogin": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "administratorLoginPassword": "aaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version": "a",
+          "state": "aaaaaaaaaaaaaaaaa",
+          "fullyQualifiedDomainName": "aaaaaaa",
+          "privateEndpointConnections": [
+            {
+              "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName",
+              "properties": {
+                "privateEndpoint": {
+                  "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName"
+                },
+                "privateLinkServiceConnectionState": {
+                  "status": "Approved",
+                  "description": "aaaaaaaaaaaaaaaaaaaaa",
+                  "actionsRequired": "None"
+                },
+                "provisioningState": "Succeeded"
+              }
+            }
+          ],
+          "minimalTlsVersion": "aaaaaaaaaaaaaa",
+          "publicNetworkAccess": "Enabled",
+          "workspaceFeature": "Connected",
+          "primaryUserAssignedIdentityId": "aaaaaaaaaaaaaaaaaa",
+          "federatedClientId": "00000000-0000-0000-0000-000000000000",
+          "keyId": "aaaaaaaaaaaaaaaaaaaaa",
+          "administrators": {
+            "administratorType": "ActiveDirectory",
+            "principalType": "User",
+            "login": "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "sid": "00000000-0000-0000-0000-000000000000",
+            "tenantId": "00000000-0000-0000-0000-000000000000",
+            "azureADOnlyAuthentication": true
+          },
+          "restrictOutboundNetworkAccess": "Enabled"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/syncgroupcrud-65440/providers/Microsoft.Sql/servers/syncgroupcrud-8475/databases/syncgroupcrud-4328?api-version=2021-02-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "103",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager.Sql/1.0.0-alpha.20211208.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "dd453fa971a64ed40242a6ba6622268f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "sku": {
+          "name": "BC",
+          "family": "Gen4",
+          "capacity": 2
+        },
+        "tags": {},
+        "location": "southeastasia",
+        "properties": {}
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "1904",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 08 Dec 2021 07:26:13 GMT",
+        "ETag": "W/\u0022770-dkjX7kzHMwVmbHJHLBL74PEbMTQ\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/syncgroupcrud-65440/providers/Microsoft.Sql/servers/syncgroupcrud-8475/databases/syncgroupcrud-4328",
+        "name": "syncgroupcrud-4328",
+        "type": "aaaaaaaaaaaaa",
+        "location": "a",
+        "tags": {
+          "key9639": "aaaaaaaaaaaaaaaaaaa"
+        },
+        "sku": {
+          "name": "syncgroupcrud-4328",
+          "tier": "aaaaaaaaaaaaaaaaaa",
+          "size": "aaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "family": "aaa",
+          "capacity": 7
+        },
+        "kind": "aaaaaaaaa",
+        "managedBy": "aaaaaaaaaaaaaaaaaaaaaaaa",
+        "properties": {
+          "createMode": "Default",
+          "collation": "aaaaaaaaaaaaaaaaaaaaaaaa",
+          "maxSizeBytes": 29,
+          "sampleName": "AdventureWorksLT",
+          "elasticPoolId": "aaaaaaaaaaaaaaaaaaaaaa",
+          "sourceDatabaseId": "aa",
+          "status": "Online",
+          "databaseId": "00000000-0000-0000-0000-000000000000",
+          "creationDate": "2021-12-08T07:26:13.338Z",
+          "currentServiceObjectiveName": "aaaaaa",
+          "requestedServiceObjectiveName": "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "defaultSecondaryLocation": "aaaaaaa",
+          "failoverGroupId": "aaaa",
+          "restorePointInTime": "2021-12-08T07:26:13.338Z",
+          "sourceDatabaseDeletionDate": "2021-12-08T07:26:13.338Z",
+          "recoveryServicesRecoveryPointId": "aaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "longTermRetentionBackupResourceId": "aaaaaaaa",
+          "recoverableDatabaseId": "aaaaaaaaaaaaaaaaaaaaaa",
+          "restorableDroppedDatabaseId": "aaaaaaaaaaaaaaa",
+          "catalogCollation": "DATABASE_DEFAULT",
+          "zoneRedundant": true,
+          "licenseType": "LicenseIncluded",
+          "maxLogSizeBytes": 5,
+          "earliestRestoreDate": "2021-12-08T07:26:13.338Z",
+          "readScale": "Enabled",
+          "highAvailabilityReplicaCount": 15,
+          "secondaryType": "Geo",
+          "currentSku": {
+            "name": "syncgroupcrud-4328",
+            "tier": "aaaaaaaaaaa",
+            "size": "aaaaaa",
+            "family": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "capacity": 3
+          },
+          "autoPauseDelay": 27,
+          "currentBackupStorageRedundancy": "Geo",
+          "requestedBackupStorageRedundancy": "Geo",
+          "minCapacity": 29,
+          "pausedDate": "2021-12-08T07:26:13.338Z",
+          "resumedDate": "2021-12-08T07:26:13.338Z",
+          "maintenanceConfigurationId": "aaaaa",
+          "isLedgerOn": true,
+          "isInfraEncryptionEnabled": true
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/syncgroupcrud-65440/providers/Microsoft.Sql/servers/syncgroupcrud-8475/databases/syncgroupcrud-4328/syncGroups/syncgroupcrud-3187?api-version=2020-11-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "315",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager.Sql/1.0.0-alpha.20211208.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "d72a3bdca8359de85dbb34d0c80e04da",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "interval": -1,
+          "conflictResolutionPolicy": "HubWin",
+          "syncDatabaseId": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/syncgroupcrud-3521/providers/Microsoft.Sql/servers/syncgroupcrud-8475/databases/syncgroupcrud-4328",
+          "hubDatabaseUserName": "hubUser",
+          "usePrivateLinkConnection": true
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "925",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 08 Dec 2021 07:26:13 GMT",
+        "ETag": "W/\u002239d-jPkBf2xXrfWivJ1f74wHrz\u002B89sI\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/syncgroupcrud-65440/providers/Microsoft.Sql/servers/syncgroupcrud-8475/databases/syncgroupcrud-4328/syncGroups/syncgroupcrud-3187",
+        "name": "syncgroupcrud-3187",
+        "type": "aaaaaaaaaaaaaaaaaaaaaaa",
+        "sku": {
+          "name": "syncgroupcrud-3187",
+          "tier": "aaaaaaaaaaaaaaa",
+          "size": "aa",
+          "family": "aaaaaaaaaaaaaaaaaaaa",
+          "capacity": 7
+        },
+        "properties": {
+          "interval": 5,
+          "lastSyncTime": "2021-12-08T07:26:13.347Z",
+          "conflictResolutionPolicy": "HubWin",
+          "syncDatabaseId": "aa",
+          "hubDatabaseUserName": "aaaaaaaaaaa",
+          "hubDatabasePassword": "aaaaaaaaaaaa",
+          "syncState": "NotReady",
+          "schema": {
+            "tables": [
+              {
+                "columns": [
+                  {
+                    "quotedName": "aaaaaaaaaaaaaaaaaaa",
+                    "dataSize": "aaaaaaaaaaaaaaaa",
+                    "dataType": "a"
+                  }
+                ],
+                "quotedName": "aaaa"
+              }
+            ],
+            "masterSyncMemberName": "aaaaaaa"
+          },
+          "enableConflictLogging": true,
+          "conflictLoggingRetentionInDays": 15,
+          "usePrivateLinkConnection": true,
+          "privateEndpointName": "aaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1810731317",
+    "RESOURCE_MANAGER_URL": "https://localhost:8443",
+    "SUBSCRIPTION_ID": "00000000-0000-0000-0000-000000000000"
+  }
+}

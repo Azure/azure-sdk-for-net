@@ -1,0 +1,293 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000?api-version=2019-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-362d15f87733f945afa30dee503be424-94ff7b534ba9634b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20211208.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "63d40398fd0d954713653d694eaa08e5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "403",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 08 Dec 2021 07:23:14 GMT",
+        "ETag": "W/\u0022193-XMviJqaGXohjOV1XjmYhUY8VLpk\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "00000000-0000-0000-0000-000000000000",
+        "tenantId": "0000000-0000-0000-0000-000000000000",
+        "displayName": "Name of the subscription",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/workloadinsight-demos?api-version=2019-10-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "81",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20211208.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "5ea769fc0124e3b9932e7c24559bc9e0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "Azure.ResourceManager.Resources.Subscription",
+        "tags": {
+          "test": "env"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "266",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 08 Dec 2021 07:23:14 GMT",
+        "ETag": "W/\u002210a-WKFElEu9Wsy9ysLcytL/a1NEG5A\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/workloadinsight-demos",
+        "location": "eastus",
+        "managedBy": null,
+        "name": "workloadinsight-demos",
+        "properties": {
+          "provisioningState": "Succeeded"
+        },
+        "tags": {},
+        "type": "Microsoft.Resources/resourceGroups"
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/workloadinsight-demos/providers/Microsoft.Sql/servers/misosisvr?api-version=2021-02-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "396",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager.Sql/1.0.0-alpha.20211208.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "29d6635e638bd0c659891900c7f66ac8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "japaneast",
+        "properties": {
+          "administratorLogin": "dummylogin",
+          "administratorLoginPassword": "PLACEHOLDER",
+          "publicNetworkAccess": "Enabled",
+          "administrators": {
+            "principalType": "User",
+            "login": "bob@contoso.com",
+            "sid": "00000011-1111-2222-2222-123456789111",
+            "tenantId": "00000011-1111-2222-2222-123456789111",
+            "azureADOnlyAuthentication": true
+          },
+          "restrictOutboundNetworkAccess": "Enabled"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "1876",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 08 Dec 2021 07:23:14 GMT",
+        "ETag": "W/\u0022754-kPIzCSO2sGEoCuTnLTd97OZjv0k\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/workloadinsight-demos/providers/Microsoft.Sql/servers/misosisvr",
+        "name": "misosisvr",
+        "type": "aaaaaaaaaaaaaaaaaa",
+        "location": "aaaaaaaaaaaaaaaaaaaaaa",
+        "tags": {
+          "key6032": "aaaaaa"
+        },
+        "identity": {
+          "userAssignedIdentities": {
+            "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/00000000-0000-0000-0000-000000000000/providers/Microsoft.ManagedIdentity/userAssignedIdentities/key500": {
+              "principalId": "00000000-0000-0000-0000-000000000000",
+              "clientId": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "principalId": "00000000-0000-0000-0000-000000000000",
+          "type": "None",
+          "tenantId": "00000000-0000-0000-0000-000000000000"
+        },
+        "kind": "aaaaaa",
+        "properties": {
+          "administratorLogin": "aaaaaaaaaaaaaaaa",
+          "administratorLoginPassword": "aaaaaaaaaaaaa",
+          "version": "aaaaaa",
+          "state": "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "fullyQualifiedDomainName": "aaaaaaaaaaaaaaaaa",
+          "privateEndpointConnections": [
+            {
+              "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName",
+              "properties": {
+                "privateEndpoint": {
+                  "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName"
+                },
+                "privateLinkServiceConnectionState": {
+                  "status": "Approved",
+                  "description": "a",
+                  "actionsRequired": "None"
+                },
+                "provisioningState": "Succeeded"
+              }
+            }
+          ],
+          "minimalTlsVersion": "aaaaaaaaaaaaaaaaaaaaaa",
+          "publicNetworkAccess": "Enabled",
+          "workspaceFeature": "Connected",
+          "primaryUserAssignedIdentityId": "aaaaaaaa",
+          "federatedClientId": "00000000-0000-0000-0000-000000000000",
+          "keyId": "aaaaaaaaaaaaa",
+          "administrators": {
+            "administratorType": "ActiveDirectory",
+            "principalType": "User",
+            "login": "aaaaaaaaaa",
+            "sid": "00000000-0000-0000-0000-000000000000",
+            "tenantId": "00000000-0000-0000-0000-000000000000",
+            "azureADOnlyAuthentication": true
+          },
+          "restrictOutboundNetworkAccess": "Enabled"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/workloadinsight-demos/providers/Microsoft.Sql/servers/misosisvr/advisors/CreateIndex?api-version=2020-11-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.Sql/1.0.0-alpha.20211208.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "eb0b5c9cded4995aa3d7049ae8b81c9c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "2105",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 08 Dec 2021 07:23:14 GMT",
+        "ETag": "W/\u0022839-FU5JPQhD28ZT9BNas521xvts10Q\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/workloadinsight-demos/providers/Microsoft.Sql/servers/misosisvr/advisors/CreateIndex",
+        "name": "CreateIndex",
+        "type": "aaaa",
+        "kind": "aaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "location": "aaaaaaaaaaaaaaaaa",
+        "properties": {
+          "advisorStatus": "GA",
+          "autoExecuteStatus": "Enabled",
+          "autoExecuteStatusInheritedFrom": "Default",
+          "recommendationsStatus": "aaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "lastChecked": "2021-12-08T07:23:14.117Z",
+          "recommendedActions": [
+            {
+              "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName",
+              "name": "CreateIndex",
+              "type": "aaaaaaaaaaaaa",
+              "kind": "aaaaaaaaaaaaaaaaaaaaaaaa",
+              "location": "aaaaaaaaaaaaa",
+              "properties": {
+                "recommendationReason": "aaa",
+                "validSince": "2021-12-08T07:23:14.117Z",
+                "lastRefresh": "2021-12-08T07:23:14.117Z",
+                "state": {
+                  "currentValue": "Active",
+                  "actionInitiatedBy": "User",
+                  "lastModified": "2021-12-08T07:23:14.117Z"
+                },
+                "isExecutableAction": true,
+                "isRevertableAction": true,
+                "isArchivedAction": true,
+                "executeActionStartTime": "2021-12-08T07:23:14.117Z",
+                "executeActionDuration": "aaaaaaaaaa",
+                "revertActionStartTime": "2021-12-08T07:23:14.117Z",
+                "revertActionDuration": "aaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "executeActionInitiatedBy": "User",
+                "executeActionInitiatedTime": "2021-12-08T07:23:14.117Z",
+                "revertActionInitiatedBy": "User",
+                "revertActionInitiatedTime": "2021-12-08T07:23:14.117Z",
+                "score": 6,
+                "implementationDetails": {
+                  "method": "TSql",
+                  "script": "aaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "errorDetails": {
+                  "errorCode": "aaaaaaaa",
+                  "isRetryable": "Yes"
+                },
+                "estimatedImpact": [
+                  {
+                    "dimensionName": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "unit": "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "absoluteValue": 5,
+                    "changeValueAbsolute": 21,
+                    "changeValueRelative": 28
+                  }
+                ],
+                "observedImpact": [
+                  {
+                    "dimensionName": "aaaaaaaaaaaaaaaaaaa",
+                    "unit": "aaaaaaaaaaaaaaaaaaaa",
+                    "absoluteValue": 25,
+                    "changeValueAbsolute": 22,
+                    "changeValueRelative": 27
+                  }
+                ],
+                "timeSeries": [
+                  {
+                    "metricName": "aaaaaaaaa",
+                    "unit": "aaaaaaaaaaaaaaaaaaa",
+                    "timeGrain": "aaaaaaaaaaaaaaaaaaaaaaaa",
+                    "startTime": "2021-12-08T07:23:14.117Z",
+                    "value": 13
+                  }
+                ],
+                "linkedObjects": [
+                  "aaaaaaaaaaaaaaa"
+                ],
+                "details": {
+                  "key859": {}
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1723258562",
+    "RESOURCE_MANAGER_URL": "https://localhost:8443",
+    "SUBSCRIPTION_ID": "00000000-0000-0000-0000-000000000000"
+  }
+}
