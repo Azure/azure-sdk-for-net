@@ -44,14 +44,14 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// </summary>
         /// <param name="clientErrorDetails"> Information about the cause of a ClientError AssetConversionStatus. </param>
         /// <param name="serverErrorDetails"> Information about the cause of a ServerError AssetConversionStatus. </param>
-        /// <param name="conversionErrorCode">The error code of the AOA asset conversion job</param>
+        /// <param name="conversionErrorCode">The error code of the AOA asset conversion job.</param>
         /// <param name="jobId"> Identifier for the AOA Asset Conversion Job. </param>
         /// <param name="outputModelUri"> The URI for downloading the generated AOA Model. </param>
-        /// <param name="assetConversionStatus"> The status of the AOA asset conversion job </param>
+        /// <param name="assetConversionStatus"> The status of the AOA asset conversion job. </param>
         /// <param name="assetFileType"> The file type of the original 3D asset. Examples include: &quot;ply&quot;, &quot;obj&quot;, &quot;fbx&quot;, &quot;glb&quot;, &quot;gltf&quot;, etc. </param>
         /// <param name="uploadedInputAssetUri"> The Uri to the Asset to be ingested by the AOA Asset Conversion Service. This asset needs to have been uploaded to the service using an endpoint provided from a call to the GetUploadUri API. </param>
         /// <param name="accountId"> Identifier for the Account owning the AOA asset conversion Job. </param>
-        /// <param name="assetConversionConfiguration"> The configuration of the AOA asset conversion job </param>
+        /// <param name="assetConversionConfiguration"> The configuration of the AOA asset conversion job. </param>
         /// <returns> A new instance of the <see cref="AssetConversionProperties"/> for mocking purposes. </returns>
         public static AssetConversionProperties AssetConversionProperties(
             string clientErrorDetails,

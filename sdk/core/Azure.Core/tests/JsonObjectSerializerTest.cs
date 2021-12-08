@@ -158,12 +158,12 @@ namespace Azure.Core.Tests
 
         public class Model
         {
-#if NET5_0
+#if NET5_0_OR_GREATER
             [JsonIgnore(Condition = JsonIgnoreCondition.Never)]
 #endif
             public string A { get; set; }
 
-#if NET5_0
+#if NET5_0_OR_GREATER
             [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 #endif
             public int B { get; set; }
@@ -190,14 +190,14 @@ namespace Azure.Core.Tests
 
             public int F;
 
-#if NET5_0
+#if NET5_0_OR_GREATER
             [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
 #else
             [JsonIgnore]
 #endif
             public int IgnoredG { get; set; }
 
-#if NET5_0
+#if NET5_0_OR_GREATER
             [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 #endif
             public string H { get; set; }

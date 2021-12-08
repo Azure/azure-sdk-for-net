@@ -1,23 +1,3 @@
-[CmdletBinding(DefaultParameterSetName = 'Default')]
-param(
-    [string]$SearchDirectory,
-    [hashtable]$Filters,
-    [string]$Environment,
-    [string]$Repository,
-    [switch]$PushImages,
-    [string]$ClusterGroup,
-    [string]$DeployId,
-
-    [Parameter(ParameterSetName = 'DoLogin', Mandatory = $true)]
-    [switch]$Login,
-
-    [Parameter(ParameterSetName = 'DoLogin')]
-    [string]$Subscription,
-
-    # Default to true in Azure Pipelines environments
-    [switch] $CI = ($null -ne $env:SYSTEM_TEAMPROJECTID)
-)
-
 $ErrorActionPreference = 'Stop'
 
 . $PSScriptRoot/find-all-stress-packages.ps1
@@ -47,7 +27,7 @@ function RunOrExitOnFailure()
     }
 }
 
-function Login([string]$subscription, [string]$clusterGroup, [boolean]$pushImages)
+function Login([string]$subscription, [string]$clusterGroup, [switch]$pushImages)
 {
     Write-Host "Logging in to subscription, cluster and container registry"
     az account show *> $null
@@ -77,13 +57,38 @@ function DeployStressTests(
     [string]$searchDirectory = '.',
     [hashtable]$filters = @{},
     [string]$environment = 'test',
-    [string]$repository = 'images',
-    [boolean]$pushImages = $false,
-    [string]$clusterGroup = 'rg-stress-cluster-test',
+    [string]$repository = '',
+    [switch]$pushImages,
+    [string]$clusterGroup = '',
     [string]$deployId = 'local',
-    [string]$subscription = 'Azure SDK Developer Playground'
+    [switch]$login,
+    [string]$subscription = '',
+    [switch]$ci
 ) {
-    if ($PSCmdlet.ParameterSetName -eq 'DoLogin') {
+    if ($environment -eq 'test') {
+        if ($clusterGroup -or $subscription) {
+            Write-Warning "Overriding cluster group and subscription with defaults for 'test' environment."
+        }
+        $clusterGroup = 'rg-stress-cluster-test'
+        $subscription = 'Azure SDK Developer Playground'
+    } elseif ($environment -eq 'prod') {
+        if ($clusterGroup -or $subscription) {
+            Write-Warning "Overriding cluster group and subscription with defaults for 'prod' environment."
+        }
+        $clusterGroup = 'rg-stress-cluster-prod'
+        $subscription = 'Azure SDK Test Resources'
+    }
+
+    if (!$repository) {
+        $repository = if ($env:USER) { $env:USER } else { "${env:USERNAME}" }
+        # Remove spaces, etc. that may be in $namespace
+        $repository -replace '\W'
+    }
+
+    if ($login) {
+        if (!$clusterGroup -or !$subscription) {
+            throw "clusterGroup and subscription parameters must be specified when logging into an environment that is not test or prod."
+        }
         Login $subscription $clusterGroup $pushImages
     }
 
@@ -96,7 +101,7 @@ function DeployStressTests(
     Write-Host $pkgs.Directory ""
     foreach ($pkg in $pkgs) {
         Write-Host "Deploying stress test at '$($pkg.Directory)'"
-        DeployStressPackage $pkg $deployId $environment $repository $pushImages
+        DeployStressPackage $pkg $deployId $environment $repository $pushImages $login
     }
 
     Write-Host "Releases deployed by $deployId"
@@ -117,8 +122,9 @@ function DeployStressPackage(
     [object]$pkg,
     [string]$deployId,
     [string]$environment,
-    [string]$repository,
-    [boolean]$pushImages
+    [string]$repositoryBase,
+    [switch]$pushImages,
+    [switch]$login
 ) {
     $registry = RunOrExitOnFailure az acr list -g $clusterGroup --subscription $subscription -o json
     $registryName = ($registry | ConvertFrom-Json).name
@@ -131,26 +137,23 @@ function DeployStressPackage(
         if ($LASTEXITCODE) { return }
     }
 
+    $imageTag = "${registryName}.azurecr.io"
+    if ($repositoryBase) {
+        $imageTag += "/$repositoryBase"
+    }
+    $imageTag += "/$($pkg.Namespace)/$($pkg.ReleaseName):${deployId}"
+
     if ($pushImages) {
-        $dockerFiles = Get-ChildItem "$($pkg.Directory)/Dockerfile*"
-        foreach ($dockerFile in $dockerFiles) {
-            # Infer docker image name from parent directory name, if file is named `Dockerfile`
-            # or from suffix, is file is named like `Dockerfile.myimage` (for multiple dockerfiles).
-            $prefix, $imageName = $dockerFile.Name.Split(".")
-            if (!$imageName) {
-                $imageName = $dockerFile.Directory.Name
+        Write-Host "Building and pushing stress test docker image '$imageTag'"
+        $dockerFile = Get-ChildItem "$($pkg.Directory)/Dockerfile"
+        Run docker build -t $imageTag -f $dockerFile.FullName $dockerFile.DirectoryName
+        if ($LASTEXITCODE) { return }
+        Run docker push $imageTag
+        if ($LASTEXITCODE) {
+            if ($login) {
+                Write-Warning "If docker push is failing due to authentication issues, try calling this script with '-Login'"
             }
-            $imageTag = "${registryName}.azurecr.io/$($repository.ToLower())/$($imageName):$deployId"
-            Write-Host "Building and pushing stress test docker image '$imageTag'"
-            Run docker build -t $imageTag -f $dockerFile.FullName $dockerFile.DirectoryName
-            if ($LASTEXITCODE) { return }
-            Run docker push $imageTag
-            if ($LASTEXITCODE) {
-                if ($PSCmdlet.ParameterSetName -ne 'DoLogin') {
-                    Write-Warning "If docker push is failing due to authentication issues, try calling this script with '-Login'"
-                }
-                return
-            }
+            return
         }
     }
 
@@ -162,8 +165,7 @@ function DeployStressPackage(
     Run helm upgrade $pkg.ReleaseName $pkg.Directory `
         -n $pkg.Namespace `
         --install `
-        --set repository=$registryName.azurecr.io/$repository `
-        --set tag=$deployId `
+        --set image=$imageTag `
         --set stress-test-addons.env=$environment
     if ($LASTEXITCODE) {
         # Issues like 'UPGRADE FAILED: another operation (install/upgrade/rollback) is in progress'

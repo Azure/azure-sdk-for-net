@@ -14,51 +14,51 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
         private System.Numerics.Vector4 data;
 
         /// <summary>
-        /// Creates a autorest-defined Vector4 given its Numerics equivalent
+        /// Creates a autorest-defined Vector4 given its Numerics equivalent.
         /// </summary>
-        /// <param name="vector">The numerics vector</param>
+        /// <param name="vector">The numerics vector.</param>
         internal Vector4(System.Numerics.Vector4 vector)
         {
             data = vector;
         }
 
         /// <summary>
-        /// Creates a autorest-defined Vector4 given its fields
+        /// Creates a autorest-defined Vector4 given its fields.
         /// </summary>
-        /// <param name="x">X component</param>
-        /// <param name="y">Y component</param>
-        /// <param name="z">Z component</param>
-        /// <param name="w">W component</param>
+        /// <param name="x">X component.</param>
+        /// <param name="y">Y component.</param>
+        /// <param name="z">Z component.</param>
+        /// <param name="w">W component.</param>
         internal Vector4(float x, float y, float z, float w)
         {
             data = new System.Numerics.Vector4(x, y, z, w);
         }
 
         /// <summary>
-        /// X component
+        /// X component.
         /// </summary>
         public float X { get { return data.X; } set { data.X = value; } }
 
         /// <summary>
-        /// Y component
+        /// Y component.
         /// </summary>
         public float Y { get { return data.Y; } set { data.Y = value; } }
 
         /// <summary>
-        /// Z component
+        /// Z component.
         /// </summary>
         public float Z { get { return data.Z; } set { data.Z = value; } }
 
         /// <summary>
-        /// W component
+        /// W component.
         /// </summary>
         public float W { get { return data.W; } set { data.W = value; } }
 
         /// <summary>
-        /// Assesses equality with another vector
+        /// Assesses equality with another vector.
         /// </summary>
-        /// <param name="other">The other vector being compared to</param>
-        /// <returns>Whether the two are equal</returns>
+        /// <param name="other">The other vector being compared to.</param>
+        /// <returns>Whether the two are equal.</returns>
         public bool Equals(Vector4 other)
         {
             return this.data.Equals(other.data);

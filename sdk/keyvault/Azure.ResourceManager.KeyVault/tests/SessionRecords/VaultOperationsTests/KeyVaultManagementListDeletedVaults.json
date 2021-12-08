@@ -5088,6 +5088,7 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "Content-Length": "0",
         "traceparent": "00-6ce963b773fe9046b859ce04d42b59ac-1b8f53f26af03e4a-00",
         "User-Agent": "azsdk-net-ResourceManager.KeyVault/1.0.0-alpha.20200924.1 (.NET Framework 4.8.4220.0; Microsoft Windows 10.0.19041 )",
         "x-ms-client-request-id": "f9fcb86de3522daaed309e2e40cf5a86",
@@ -5338,6 +5339,7 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "Content-Length": "0",
         "traceparent": "00-5eca394b54a59f478a7d0e63fd96fc7e-36fde578ecc6864b-00",
         "User-Agent": "azsdk-net-ResourceManager.KeyVault/1.0.0-alpha.20200924.1 (.NET Framework 4.8.4220.0; Microsoft Windows 10.0.19041 )",
         "x-ms-client-request-id": "770356046e4bc6f248655c9c09d57213",
@@ -5552,6 +5554,7 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "Content-Length": "0",
         "traceparent": "00-d46857891c436d45a488691683971d91-39659f742ff9f946-00",
         "User-Agent": "azsdk-net-ResourceManager.KeyVault/1.0.0-alpha.20200924.1 (.NET Framework 4.8.4220.0; Microsoft Windows 10.0.19041 )",
         "x-ms-client-request-id": "afdaed4c334991d8544d2bfd305331d8",

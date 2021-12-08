@@ -1086,7 +1086,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerAutomaticTuning" /> object. </returns>
         public ServerAutomaticTuning GetServerAutomaticTuning()
         {
-            return new ServerAutomaticTuning(this, Id + "/automaticTuning/current");
+            return new ServerAutomaticTuning(this, new ResourceIdentifier(Id.ToString() + "/automaticTuning/current"));
         }
         #endregion
 

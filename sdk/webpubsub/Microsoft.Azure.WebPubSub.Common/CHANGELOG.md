@@ -1,14 +1,12 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0 (2021-11-24)
 
 ### Features Added
+- Add a `ConnectionStates` dictionary to `WebPubSubConnectionContext` to manage connection state.
 
 ### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- The serialization format of `WebPubSubConnectionContext.States` has changed to be proper JSON intead of an object with nested values encoded as JSON strings.
 
 ## 1.0.0 (2021-11-09)
 

@@ -1,18 +1,50 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://heathskvtest.vault.azure.net/keys/1370449546?api-version=7.3-preview",
+      "RequestUri": "https://jolovkeyvault.vault.azure.net/keys/1778793211?api-version=7.3-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "traceparent": "00-d606abef260f2a4bb1a888d2e09d6cfc-68cce9f4328ef740-00",
+        "User-Agent": "azsdk-net-Security.KeyVault.Keys/4.3.0-alpha.20211117.1 (.NET 5.0.12; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "8b91251087f3f8ee986d941ac13da258",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 401,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "97",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 18 Nov 2021 03:45:27 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
+        "WWW-Authenticate": "Bearer authorization=\u0022https://login.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47\u0022, resource=\u0022https://vault.azure.net\u0022",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "8b91251087f3f8ee986d941ac13da258",
+        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=73.239.230.18;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-region": "westus2",
+        "x-ms-keyvault-service-version": "1.9.150.1",
+        "x-ms-request-id": "a95486fe-eb82-49b6-a5a0-99072f10dc97",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "Unauthorized",
+          "message": "AKV10000: Request is missing a Bearer or PoP token."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://jolovkeyvault.vault.azure.net/keys/1778793211?api-version=7.3-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
-        "traceparent": "00-9029cc26e7e6f04e804c24e5f2355992-17a939133c3c2243-00",
-        "User-Agent": [
-          "azsdk-net-Security.KeyVault.Keys/4.3.0-alpha.20210713.1",
-          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "f1913ecb6fb63c9c929f46d2bb7fa645",
+        "traceparent": "00-d606abef260f2a4bb1a888d2e09d6cfc-68cce9f4328ef740-00",
+        "User-Agent": "azsdk-net-Security.KeyVault.Keys/4.3.0-alpha.20211117.1 (.NET 5.0.12; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "8b91251087f3f8ee986d941ac13da258",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -21,28 +53,30 @@
         "Cache-Control": "no-cache",
         "Content-Length": "298",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 14 Jul 2021 02:00:56 GMT",
+        "Date": "Thu, 18 Nov 2021 03:45:28 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "f1913ecb6fb63c9c929f46d2bb7fa645",
-        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=InterNetwork;",
+        "x-ms-client-request-id": "8b91251087f3f8ee986d941ac13da258",
+        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=73.239.230.18;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-rbac-assignment-id": "f88d2540-3791-59b6-bfb5-b88fba7bb322",
+        "x-ms-keyvault-rbac-cache": "ra_age=1008;da_age=1008;rd_age=1008;brd_age=674;ra_notif_age=3936;dec_lev=2;",
         "x-ms-keyvault-region": "westus2",
-        "x-ms-keyvault-service-version": "1.9.12.0",
-        "x-ms-request-id": "1c6a086b-ba5e-4691-a953-b2b4f2b86021",
+        "x-ms-keyvault-service-version": "1.9.150.1",
+        "x-ms-request-id": "3b9cfd30-9314-47e6-9278-5fe6d885d39d",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
         "error": {
           "code": "KeyNotFound",
-          "message": "A key with (name/id) 1370449546 was not found in this key vault. If you recently deleted this key you may be able to recover it using the correct recovery command. For help resolving this issue, please see https://go.microsoft.com/fwlink/?linkid=2125182"
+          "message": "A key with (name/id) 1778793211 was not found in this key vault. If you recently deleted this key you may be able to recover it using the correct recovery command. For help resolving this issue, please see https://go.microsoft.com/fwlink/?linkid=2125182"
         }
       }
     }
   ],
   "Variables": {
-    "AZURE_KEYVAULT_URL": "https://heathskvtest.vault.azure.net/",
-    "RandomSeed": "432911924"
+    "AZURE_KEYVAULT_URL": "https://jolovkeyvault.vault.azure.net/",
+    "RandomSeed": "1157123079"
   }
 }
