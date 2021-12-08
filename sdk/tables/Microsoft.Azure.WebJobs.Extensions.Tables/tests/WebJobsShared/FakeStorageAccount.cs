@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Microsoft.Azure.Cosmos.Table;
-using Microsoft.Azure.Storage.Queue;
 
 namespace Microsoft.Azure.WebJobs
 {
@@ -13,7 +12,5 @@ namespace Microsoft.Azure.WebJobs
         {
             return _account2.CreateCloudTableClient();
         }
-        public override string Name => _account2.Name;
-        public override bool IsDevelopmentStorageAccount() { return true; }
     }
 }

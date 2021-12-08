@@ -7,7 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.Cosmos.Table;
-using Microsoft.Azure.WebJobs.Extensions.Tables;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
@@ -173,9 +172,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
         private CloudTableClient CreateTableClient()
         {
-            // StorageClientFactory clientFactory = new StorageClientFactory();
-            // IStorageTableClient client = new StorageAccount(CloudStorageAccount.DevelopmentStorageAccount, clientFactory).CreateTableClient();
-            var account = StorageAccount.New(null, CloudStorageAccount.DevelopmentStorageAccount);
+            var account = StorageAccount.New(CloudStorageAccount.DevelopmentStorageAccount);
             return account.CreateCloudTableClient();
         }
     }

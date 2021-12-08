@@ -2,9 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 using System;
 using Microsoft.Azure.Cosmos.Table;
-using Microsoft.Azure.Storage.Blob;
-using Microsoft.Azure.Storage.Queue;
-using StorageCredentials = Microsoft.Azure.Storage.Auth.StorageCredentials;
 using TableStorageCredentials = Microsoft.Azure.Cosmos.Table.StorageCredentials;
 namespace FakeStorage
 {

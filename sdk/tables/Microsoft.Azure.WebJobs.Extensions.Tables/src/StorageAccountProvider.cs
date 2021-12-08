@@ -5,7 +5,6 @@ using System;
 using Microsoft.Azure.WebJobs.Extensions.Tables;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Configuration;
-using CloudStorageAccount = Microsoft.Azure.Storage.CloudStorageAccount;
 using TableStorageAccount = Microsoft.Azure.Cosmos.Table.CloudStorageAccount;
 
 namespace Microsoft.Azure.WebJobs
@@ -53,17 +52,12 @@ namespace Microsoft.Azure.WebJobs
                 throw new InvalidOperationException($"Storage account connection string '{IConfigurationExtensions.GetPrefixedConnectionStringName(name)}' does not exist. Make sure that it is a defined App Setting.");
             }
 
-            if (!CloudStorageAccount.TryParse(connectionString, out CloudStorageAccount cloudStorageAccount))
-            {
-                throw new InvalidOperationException($"Storage account connection string for '{IConfigurationExtensions.GetPrefixedConnectionStringName(name)}' is invalid");
-            }
-
             if (!TableStorageAccount.TryParse(connectionString, out TableStorageAccount tableStorageAccount))
             {
                 throw new InvalidOperationException($"Storage account connection string for '{IConfigurationExtensions.GetPrefixedConnectionStringName(name)}' is invalid");
             }
 
-            return StorageAccount.New(cloudStorageAccount, tableStorageAccount, _delegatingHandlerProvider);
+            return StorageAccount.New(tableStorageAccount, _delegatingHandlerProvider);
         }
 
         /// <summary>

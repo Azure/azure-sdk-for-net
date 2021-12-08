@@ -110,7 +110,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             //StorageClientFactory clientFactory = new StorageClientFactory();
             //IStorageTableClient client = new StorageAccount(CloudStorageAccount.DevelopmentStorageAccount, clientFactory).CreateTableClient();
             // return client;
-            var account = StorageAccount.New(null, CloudStorageAccount.DevelopmentStorageAccount);
+            var account = StorageAccount.New(CloudStorageAccount.DevelopmentStorageAccount);
             return account.CreateCloudTableClient();
         }
     }

@@ -4,7 +4,6 @@
 using System;
 using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Azure.WebJobs.Extensions.Tables;
-using CloudStorageAccount = Microsoft.Azure.Storage.CloudStorageAccount;
 using TableStorageAccount = Microsoft.Azure.Cosmos.Table.CloudStorageAccount;
 
 namespace Microsoft.Azure.WebJobs
@@ -17,12 +16,6 @@ namespace Microsoft.Azure.WebJobs
     internal class StorageAccount
     {
         private readonly IDelegatingHandlerProvider _delegatingHandlerProvider;
-
-        /// <summary>
-        /// Get the real azure storage account. Only use this if you explicitly need to bind to the <see cref="CloudStorageAccount"/>,
-        /// else use the virtuals.
-        /// </summary>
-        public CloudStorageAccount SdkObject { get; protected set; }
 
         public TableStorageAccount TableSdkObject { get; protected set; }
 
@@ -37,26 +30,14 @@ namespace Microsoft.Azure.WebJobs
 
         public static StorageAccount NewFromConnectionString(string accountConnectionString)
         {
-            var account = CloudStorageAccount.Parse(accountConnectionString);
             var tableAccount = TableStorageAccount.Parse(accountConnectionString);
-            return New(account, tableAccount);
+            return New(tableAccount);
         }
 
-        public static StorageAccount New(CloudStorageAccount account, TableStorageAccount tableAccount = null, IDelegatingHandlerProvider delegatingHandlerProvider = null)
+        public static StorageAccount New(TableStorageAccount tableAccount = null, IDelegatingHandlerProvider delegatingHandlerProvider = null)
         {
-            return new StorageAccount(delegatingHandlerProvider) { SdkObject = account, TableSdkObject = tableAccount };
+            return new StorageAccount(delegatingHandlerProvider) { TableSdkObject = tableAccount };
         }
-
-        public virtual bool IsDevelopmentStorageAccount()
-        {
-            // see the section "Addressing local storage resources" in http://msdn.microsoft.com/en-us/library/windowsazure/hh403989.aspx
-            return String.Equals(
-                SdkObject.BlobEndpoint.PathAndQuery.TrimStart('/'),
-                SdkObject.Credentials.AccountName,
-                StringComparison.OrdinalIgnoreCase);
-        }
-
-        public virtual string Name => SdkObject.Credentials.AccountName;
 
         public virtual CloudTableClient CreateCloudTableClient()
         {
@@ -70,5 +51,7 @@ namespace Microsoft.Azure.WebJobs
             };
             return new CloudTableClient(TableSdkObject.TableStorageUri, TableSdkObject.Credentials, configuration);
         }
+
+        public string Name => TableSdkObject.TableEndpoint.AbsoluteUri;
     }
 }
