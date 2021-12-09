@@ -25,7 +25,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             _parameterName = parameterName;
             _argumentBinding = argumentBinding;
             _client = client;
-            _accountName = TableClient.GetAccountName(client);
+            _accountName = TableClientHelpers.GetAccountName(client);
             _path = path;
             _converter = CreateConverter(client, path);
         }
@@ -76,8 +76,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 throw new InvalidOperationException("Unable to convert value to TableEntityContext.");
             }
 
-            TableClient.ValidateAzureTableKeyValue(entityContext.PartitionKey);
-            TableClient.ValidateAzureTableKeyValue(entityContext.RowKey);
+            TableClientHelpers.ValidateAzureTableKeyValue(entityContext.PartitionKey);
+            TableClientHelpers.ValidateAzureTableKeyValue(entityContext.RowKey);
             return BindEntityAsync(entityContext, context);
         }
 

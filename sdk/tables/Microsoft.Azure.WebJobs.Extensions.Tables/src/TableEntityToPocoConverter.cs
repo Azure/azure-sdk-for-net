@@ -94,7 +94,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             foreach (PropertyInfo property in properties)
             {
                 Debug.Assert(property != null);
-                if (TableClient.IsSystemProperty(property.Name) || !property.CanWrite ||
+                if (TableClientHelpers.IsSystemProperty(property.Name) || !property.CanWrite ||
                     property.GetIndexParameters().Length != 0 || !property.HasPublicSetMethod())
                 {
                     continue;

@@ -17,7 +17,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
     // Naming rules:
     // RowKey  - no \,/, #, ?, less than 1 kb in size
     // Table name is restrictive, must match: "^[A-Za-z][A-Za-z0-9]{2,62}$"
-    internal static class TableClient
+    internal static class TableClientHelpers
     {
         private static readonly char[] InvalidKeyValueCharacters = GetInvalidTableKeyValueCharacters();
 

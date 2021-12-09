@@ -305,8 +305,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 // JObject case should have been claimed by another converter. 
                 // So we can statically enforce an ITableEntity compatible contract
                 var t = typeof(TElement);
-                TableClient.VerifyContainsProperty(t, "RowKey");
-                TableClient.VerifyContainsProperty(t, "PartitionKey");
+                TableClientHelpers.VerifyContainsProperty(t, "RowKey");
+                TableClientHelpers.VerifyContainsProperty(t, "PartitionKey");
             }
 
             public ITableEntity Convert(TElement item)

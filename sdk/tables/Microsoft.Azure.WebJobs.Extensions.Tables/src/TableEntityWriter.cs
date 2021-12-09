@@ -62,8 +62,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             // 3. Validate rowkey on the client so we get a nice error instead of the cryptic 400 from auzre.
             string partitionKey = item.PartitionKey;
             string rowKey = item.RowKey;
-            TableClient.ValidateAzureTableKeyValue(partitionKey);
-            TableClient.ValidateAzureTableKeyValue(rowKey);
+            TableClientHelpers.ValidateAzureTableKeyValue(partitionKey);
+            TableClientHelpers.ValidateAzureTableKeyValue(rowKey);
             Dictionary<string, TableOperation> partition;
             if (!_map.TryGetValue(partitionKey, out partition))
             {
