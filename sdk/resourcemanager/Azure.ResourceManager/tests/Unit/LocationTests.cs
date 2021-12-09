@@ -115,15 +115,6 @@ namespace Azure.ResourceManager.Tests
             Location loc2 = right;
             Assert.AreEqual(expected, loc1.Equals(loc2));
             Assert.AreEqual(expected, loc1.GetHashCode() == loc2?.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({loc1.GetHashCode()}, {loc2?.GetHashCode()})");
-
-            if (expected)
-            {
-                Assert.AreEqual(0, loc1.CompareTo(loc2));
-            }
-            else
-            {
-                Assert.AreNotEqual(0, loc1.CompareTo(loc2));
-            }
         }
 
         [Test]
@@ -158,15 +149,6 @@ namespace Azure.ResourceManager.Tests
         {
             Location location = left;
             Assert.AreEqual(expected, location.Equals(right));
-
-            if (expected)
-            {
-                Assert.AreEqual(0, location.CompareTo(right));
-            }
-            else
-            {
-                Assert.AreNotEqual(0, location.CompareTo(right));
-            }
         }
 
         [TestCase("", "")]
@@ -178,50 +160,6 @@ namespace Azure.ResourceManager.Tests
         {
             Location location1 = name;
             Assert.AreEqual(expected, location1.ToString());
-        }
-
-        [TestCase("West US", "West US", 0)]
-        [TestCase("West US", "west-us", -1)]
-        [TestCase("West US", "westus", -1)]
-        [TestCase("Central Europe", "Central Europe", 0)]
-        [TestCase("Central Europe", "central-europe", -1)]
-        [TestCase("Central Europe", "centraleurope", -1)]
-        [TestCase("South US", "East US", 1)]
-        [TestCase("South US", "east-us", 1)]
-        [TestCase("South US", "West US", -1)]
-        [TestCase("South US", "west-us", -1)]
-        [TestCase("South US", null, 1)]
-        public void CompareToObject(string left, string right, int expected)
-        {
-            Location location1 = left;
-            Location location2 = right;
-            Assert.AreEqual(expected, location1.CompareTo(location2));
-            if (right != null)
-            {
-                Assert.AreEqual(expected * -1, location2.CompareTo(location1));
-            }
-        }
-
-        [TestCase("West US", "West US", 0)]
-        [TestCase("West US", "west-us", -1)]
-        [TestCase("West US", "westus", -1)]
-        [TestCase("Central Europe", "Central Europe", 0)]
-        [TestCase("Central Europe", "central-europe", -1)]
-        [TestCase("Central Europe", "centraleurope", -1)]
-        [TestCase("South US", "East US", 1)]
-        [TestCase("South US", "east-us", 1)]
-        [TestCase("South US", "West US", -1)]
-        [TestCase("South US", "west-us", -1)]
-        [TestCase("South US", null, 1)]
-        public void CompareToString(string left, string right, int expected)
-        {
-            Location location1 = left;
-            Assert.AreEqual(expected, location1.CompareTo(right));
-            if (right != null)
-            {
-                location1 = right;
-                Assert.AreEqual(expected * -1, location1.CompareTo(left));
-            }
         }
 
         [TestCase("West US", "West US", null)]
@@ -250,83 +188,11 @@ namespace Azure.ResourceManager.Tests
         }
 
         [Test]
-        public void LessThanNull()
-        {
-            Location loc = Location.WestUS2;
-            Assert.IsTrue(null < loc);
-            Assert.IsFalse(loc < null);
-        }
-
-        [Test]
-        public void LessThanOrEqualNull()
-        {
-            Location loc = Location.WestUS2;
-            Assert.IsTrue(null <= loc);
-            Assert.IsFalse(loc <= null);
-        }
-
-        [Test]
-        public void GreaterThanNull()
-        {
-            Location loc = Location.WestUS2;
-            Assert.IsFalse(null > loc);
-            Assert.IsTrue(loc > null);
-        }
-
-        [Test]
-        public void GreaterThanOrEqualNull()
-        {
-            Location loc = Location.WestUS2;
-            Assert.IsFalse(null >= loc);
-            Assert.IsTrue(loc >= null);
-        }
-
-        [Test]
         public void EqualOperatorNull()
         {
             Location loc = Location.WestUS2;
             Assert.IsFalse(loc == null);
             Assert.IsFalse(null == loc);
-        }
-
-        [TestCase(false, "WESTUS2", "EASTUS2")]
-        [TestCase(true, "EASTUS2", "WESTUS2")]
-        [TestCase(false, "WESTUS2", "WESTUS2")]
-        public void LessThanOperator(bool expected, string string1, string string2)
-        {
-            Location loc1 = string1;
-            Location loc2 = string2;
-            Assert.AreEqual(expected, loc1 < loc2);
-        }
-
-        [TestCase(false, "WESTUS2", "EASTUS2")]
-        [TestCase(true, "EASTUS2", "WESTUS2")]
-        [TestCase(true, "WESTUS2", "WESTUS2")]
-        public void LessThanOrEqualOperator(bool expected, string string1, string string2)
-        {
-            Location loc1 = string1;
-            Location loc2 = string2;
-            Assert.AreEqual(expected, loc1 <= loc2);
-        }
-
-        [TestCase(true, "WESTUS2", "EASTUS2")]
-        [TestCase(false, "EASTUS2", "WESTUS2")]
-        [TestCase(false, "WESTUS2", "WESTUS2")]
-        public void GreaterThanOperator(bool expected, string string1, string string2)
-        {
-            Location loc1 = string1;
-            Location loc2 = string2;
-            Assert.AreEqual(expected, loc1 > loc2);
-        }
-
-        [TestCase(true, "WESTUS2", "EASTUS2")]
-        [TestCase(false, "EASTUS2", "WESTUS2")]
-        [TestCase(true, "WESTUS2", "WESTUS2")]
-        public void GreaterThanOrEqualOperator(bool expected, string string1, string string2)
-        {
-            Location loc1 = string1;
-            Location loc2 = string2;
-            Assert.AreEqual(expected, loc1 >= loc2);
         }
 
         [TestCase(false, "WESTUS2", "EASTUS2")]

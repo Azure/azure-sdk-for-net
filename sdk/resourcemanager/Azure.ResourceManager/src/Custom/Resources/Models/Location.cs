@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary>
     /// Represents an Azure geography region where supported resource providers live.
     /// </summary>
-    public partial class Location : IEquatable<Location>, IComparable<Location>
+    public partial class Location : IEquatable<Location>
     {
         private static Dictionary<string, Location> PublicCloudLocations { get; } = new Dictionary<string, Location>();
 
@@ -313,21 +313,6 @@ namespace Azure.ResourceManager.Resources.Models
             return other.ToString();
         }
 
-        /// <summary>
-        /// Compares this Location name to another Location to expose if it is greater, less or equal than this one.
-        /// </summary>
-        /// <param name="other"> Location object or name as a string. </param>
-        /// <returns> -1 for less than, 0 for equals, 1 for greater than. </returns>
-        public int CompareTo(Location other)
-        {
-            if (ReferenceEquals(other, null))
-            {
-                return 1;
-            }
-
-            return string.Compare(Name, other.Name, StringComparison.InvariantCulture);
-        }
-
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
@@ -380,50 +365,6 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Location left, Location right)
         {
             return !(left == right);
-        }
-
-        /// <summary>
-        /// Compares one <see cref="Location"/> with another instance.
-        /// </summary>
-        /// <param name="left"> The object on the left side of the operator. </param>
-        /// <param name="right"> The object on the right side of the operator. </param>
-        /// <returns> True if the left object is less than the right. </returns>
-        public static bool operator <(Location left, Location right)
-        {
-            return ReferenceEquals(left, null) ? !ReferenceEquals(right, null) : left.CompareTo(right) < 0;
-        }
-
-        /// <summary>
-        /// Compares one <see cref="Location"/> with another instance.
-        /// </summary>
-        /// <param name="left"> The object on the left side of the operator. </param>
-        /// <param name="right"> The object on the right side of the operator. </param>
-        /// <returns> True if the left object is less than or equal to the right. </returns>
-        public static bool operator <=(Location left, Location right)
-        {
-            return ReferenceEquals(left, null) || left.CompareTo(right) <= 0;
-        }
-
-        /// <summary>
-        /// Compares one <see cref="Location"/> with another instance.
-        /// </summary>
-        /// <param name="left"> The object on the left side of the operator. </param>
-        /// <param name="right"> The object on the right side of the operator. </param>
-        /// <returns> True if the left object is greater than the right. </returns>
-        public static bool operator >(Location left, Location right)
-        {
-            return !ReferenceEquals(left, null) && left.CompareTo(right) > 0;
-        }
-
-        /// <summary>
-        /// Compares one <see cref="Location"/> with another instance.
-        /// </summary>
-        /// <param name="left"> The object on the left side of the operator. </param>
-        /// <param name="right"> The object on the right side of the operator. </param>
-        /// <returns> True if the left object is greater than or equal to the right. </returns>
-        public static bool operator >=(Location left, Location right)
-        {
-            return ReferenceEquals(left, null) ? ReferenceEquals(right, null) : left.CompareTo(right) >= 0;
         }
     }
 }
