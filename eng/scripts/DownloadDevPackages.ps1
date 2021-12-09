@@ -3,7 +3,8 @@ param (
     [string] $WorkingDirectory,
     [Parameter(Mandatory=$True)]
     [string] $NupkgFilesDestination,
-    [string] $NugetSource="https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json",
+    # Install-Package requires a v2 nuget feed.
+    [string] $NugetSource="https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v2",
     [string] $FeedId="azure-sdk-for-net"
 )
 
@@ -12,49 +13,53 @@ param (
 $allPackages = Get-AllPkgProperties
 $trackTwoPackages = $allPackages.Where({ $_.IsNewSdk })
 
-LogDebug "Number of track two packages $($trackTwoPackages.Count)"
+Write-Host "Number of track two packages $($trackTwoPackages.Count)"
 
 Push-Location $WorkingDirectory
 $nugetPackagesPath = Join-Path $WorkingDirectory nugetPackages
 New-Item -Path $WorkingDirectory -Type "directory" -Name "nugetPackages"
 
-$packagesInFeed = Get-PackagesInArtifactFeed -FeedId $FeedId -IncludeAllVersions $true
-LogDebug "Number of packages in dev feed $($packagesInFeed.Count)"
 
 foreach ($package in $trackTwoPackages)
 {
-  $pkg = $packagesInFeed.Where({ ($_.Name -eq $package.Name) })
-  $pkgVersions = $pkg.versions.version
-  LogDebug "Number version available for $($package.Name) : $($pkgVersions.Count)"
+  $packageVersion = [AzureEngSemanticVersion]::ParseVersionString($package.Version)
+  $packageVersion.IsPreRelease = $false # Clear prerelease so ToString strips it prerelease label.
+  $packageVersionBase = $packageVersion.ToString()
 
-  $alphaVersions = $pkgVersions.Where({ ($_ -like "*-alpha.*") })
-  LogDebug "Number alpha version available for $($package.Name) : $($alphaVersions.Count)"
-
-  $versionsSorted = @()
-
-  # Use the latest alpha version where it is available otherwise use latest version
-  if ($alphaVersions.Count -gt 0)
-  {
-    $versionsSorted = [AzureEngSemanticVersion]::SortVersionStrings($alphaVersions)
-  }
-  elseif ($pkgVersions.Count -gt 0)
-  {
-    $versionsSorted = [AzureEngSemanticVersion]::SortVersionStrings($pkgVersions)
-  }
-
-  if($versionsSorted.Count -gt 0)
-  {
-    $latestDevVersion = $versionsSorted[0]
-    LogDebug "Instaling $($package.Name) $($latestDevVersion)"
-
-    nuget install $package.Name `
-    -Version $latestDevVersion `
-    -OutputDirectory $nugetPackagesPath `
-    -Prerelease `
+  # To workaround some older invalid packages (i.e. Iot->IoT renamed packages) start the alpha version range to start at 6/21
+  $installedPackage = Install-Package -Name $package.Name `
     -Source $NugetSource `
-    -DependencyVersion Ignore `
-    -DirectDownload `
-    -NoCache 
+    -AllowPrereleaseVersions `
+    -MinimumVersion "$packageVersionBase-alpha.202106" `
+    -MaximumVersion "$packageVersionBase-alphab" `
+    -Destination $nugetPackagesPath `
+    -Force `
+    -SkipDependencies `
+    -ErrorAction Ignore
+
+  if ($installedPackage)
+  {
+    Write-Host "Installed $($installedPackage.Name) $($installedPackage.Version)"
+  }
+  else 
+  {
+    # Install the latest available version if no alpha version is found
+    $latestInstalledPackage  = Install-Package -Name $package.Name `
+      -Source $NugetSource `
+      -AllowPrereleaseVersions `
+      -Destination $nugetPackagesPath `
+      -Force `
+      -SkipDependencies `
+      -ErrorAction Ignore
+
+    if ($latestInstalledPackage)
+    {
+      Write-Host "Installed latest version $($latestInstalledPackage.Name) $($latestInstalledPackage.Version)"
+    }
+    else
+    {
+      Write-Host "Did not find any matching package $($package.Name)"
+    }
   }
 }
 
