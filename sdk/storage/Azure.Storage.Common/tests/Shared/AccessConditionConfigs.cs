@@ -42,6 +42,15 @@ namespace Azure.Storage.Test.Shared
                 new AccessConditionParameters { LeaseId = ReceivedLeaseId }
             };
 
+        public IEnumerable<AccessConditionParameters> AccessConditionsFail_Data
+            => new[]
+            {
+                new AccessConditionParameters { IfModifiedSince = NewDate },
+                new AccessConditionParameters { IfUnmodifiedSince = OldDate },
+                new AccessConditionParameters { Match = GarbageETag },
+                new AccessConditionParameters { NoneMatch = ReceivedETag }
+            };
+
         public IEnumerable<AccessConditionParameters> GetAccessConditionsFail_Data(string garbageLeaseId)
             => new[]
             {

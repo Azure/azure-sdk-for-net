@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed a an issue when using `TableEntity.GetDateTime` that resulted in an `InvalidOperationException` exception. ([#25323](https://github.com/Azure/azure-sdk-for-net/issues/25323)) 
 
 ### Other Changes
 

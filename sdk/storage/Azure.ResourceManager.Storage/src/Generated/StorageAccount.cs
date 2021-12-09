@@ -778,7 +778,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="ManagementPolicy" /> object. </returns>
         public ManagementPolicy GetManagementPolicy()
         {
-            return new ManagementPolicy(this, Id + "/managementPolicies/default");
+            return new ManagementPolicy(this, new ResourceIdentifier(Id.ToString() + "/managementPolicies/default"));
         }
         #endregion
 
@@ -828,7 +828,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="BlobService" /> object. </returns>
         public BlobService GetBlobService()
         {
-            return new BlobService(this, Id + "/blobServices/default");
+            return new BlobService(this, new ResourceIdentifier(Id.ToString() + "/blobServices/default"));
         }
         #endregion
 
@@ -838,7 +838,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="FileService" /> object. </returns>
         public FileService GetFileService()
         {
-            return new FileService(this, Id + "/fileServices/default");
+            return new FileService(this, new ResourceIdentifier(Id.ToString() + "/fileServices/default"));
         }
         #endregion
 
@@ -848,7 +848,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="QueueService" /> object. </returns>
         public QueueService GetQueueService()
         {
-            return new QueueService(this, Id + "/queueServices/default");
+            return new QueueService(this, new ResourceIdentifier(Id.ToString() + "/queueServices/default"));
         }
         #endregion
 
@@ -858,7 +858,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="TableService" /> object. </returns>
         public TableService GetTableService()
         {
-            return new TableService(this, Id + "/tableServices/default");
+            return new TableService(this, new ResourceIdentifier(Id.ToString() + "/tableServices/default"));
         }
         #endregion
     }

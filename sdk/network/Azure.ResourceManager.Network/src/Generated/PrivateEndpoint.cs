@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "PrivateEndpoint"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal PrivateEndpoint(ArmResource options, PrivateEndpointData resource) : base(options, resource.Id)
+        internal PrivateEndpoint(ArmResource options, PrivateEndpointData resource) : base(options, new ResourceIdentifier(resource.Id))
         {
             HasData = true;
             _data = resource;
