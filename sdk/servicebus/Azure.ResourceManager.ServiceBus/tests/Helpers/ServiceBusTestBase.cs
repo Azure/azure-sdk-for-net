@@ -9,6 +9,7 @@ using Azure.ResourceManager.TestFramework;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.ResourceManager.ServiceBus.Models;
+using System.Net.NetworkInformation;
 
 namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
 {
@@ -76,6 +77,14 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
             {
                 Assert.AreEqual(DefaultLocation, sBNamespace.Data.Location);
                 Assert.AreEqual(SkuTier.Standard, sBNamespace.Data.Sku.Tier);
+            }
+        }
+
+        public void IgnoreTestInLiveMode()
+        {
+            if (Mode == RecordedTestMode.Live)
+            {
+                Assert.Ignore();
             }
         }
     }

@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         [SetUp]
         public async Task CreateNamespaceAndGetQueueCollection()
         {
+            IgnoreTestInLiveMode();
             _resourceGroup = await CreateResourceGroupAsync();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
@@ -38,6 +39,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         [RecordedTest]
         public async Task CreateDeleteQueue()
         {
+            IgnoreTestInLiveMode();
             //create queue
             string queueName = Recording.GenerateAssetName("queue");
             ServiceBusQueue queue = (await _queueCollection.CreateOrUpdateAsync(queueName, new ServiceBusQueueData())).Value;
@@ -62,6 +64,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         [RecordedTest]
         public async Task GetAllQueues()
         {
+            IgnoreTestInLiveMode();
             //create ten queues
             for (int i = 0; i < 10; i++)
             {
@@ -80,6 +83,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         [RecordedTest]
         public async Task UpdateQueue()
         {
+            IgnoreTestInLiveMode();
             //create queue
             string queueName = Recording.GenerateAssetName("queue");
             ServiceBusQueue queue = (await _queueCollection.CreateOrUpdateAsync(queueName, new ServiceBusQueueData())).Value;
@@ -99,6 +103,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         [RecordedTest]
         public async Task QueueCreateGetUpdateDeleteAuthorizationRule()
         {
+            IgnoreTestInLiveMode();
             //create queue
             string queueName = Recording.GenerateAssetName("queue");
             ServiceBusQueue queue = (await _queueCollection.CreateOrUpdateAsync(queueName, new ServiceBusQueueData())).Value;
@@ -154,6 +159,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         [RecordedTest]
         public async Task QueueAuthorizationRuleRegenerateKey()
         {
+            IgnoreTestInLiveMode();
             //create queue
             string queueName = Recording.GenerateAssetName("queue");
             ServiceBusQueue queue = (await _queueCollection.CreateOrUpdateAsync(queueName, new ServiceBusQueueData())).Value;

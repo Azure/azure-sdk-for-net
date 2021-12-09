@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         [RecordedTest]
         public async Task CreateDeleteNamespace()
         {
+            IgnoreTestInLiveMode();
             //create namespace and wait for completion
             string namespaceName = await CreateValidNamespaceName(namespacePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
@@ -51,6 +52,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         [RecordedTest]
         public async Task CreateNamespaceWithZoneRedundant()
         {
+            IgnoreTestInLiveMode();
             //create namespace and wait for completion
             string namespaceName = await CreateValidNamespaceName(namespacePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
@@ -72,6 +74,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         [RecordedTest]
         public async Task UpdateNamespace()
         {
+            IgnoreTestInLiveMode();
             //create namespace
             string namespaceName = await CreateValidNamespaceName(namespacePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
@@ -98,6 +101,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         [RecordedTest]
         public async Task GetAllNamespaces()
         {
+            IgnoreTestInLiveMode();
             //create two namespaces
             _resourceGroup = await CreateResourceGroupAsync();
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
@@ -127,6 +131,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         [RecordedTest]
         public async Task GetNamespacesInSubscription()
         {
+            IgnoreTestInLiveMode();
             //create two namespaces in two resourcegroups
             string namespaceName1 = await CreateValidNamespaceName(namespacePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
@@ -159,6 +164,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         [RecordedTest]
         public async Task GetPrivateLinkResources()
         {
+            IgnoreTestInLiveMode();
             //create namespace
             _resourceGroup = await CreateResourceGroupAsync();
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
@@ -219,6 +225,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         [RecordedTest]
         public async Task NamespaceCreateGetUpdateDeleteAuthorizationRule()
         {
+            IgnoreTestInLiveMode();
             //create namespace
             _resourceGroup = await CreateResourceGroupAsync();
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
@@ -283,6 +290,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         [RecordedTest]
         public async Task NamespaceAuthorizationRuleRegenerateKey()
         {
+            IgnoreTestInLiveMode();
             //create namespace
             _resourceGroup = await CreateResourceGroupAsync();
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
@@ -324,6 +332,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         [RecordedTest]
         public async Task SetGetNetworkRuleSets()
         {
+            IgnoreTestInLiveMode();
             //create namespace with premium
             _resourceGroup = await CreateResourceGroupAsync();
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
@@ -405,6 +414,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         [RecordedTest]
         public async Task StandardToPremiumMigration()
         {
+            IgnoreTestInLiveMode();
             //create namespace with premium
             _resourceGroup = await CreateResourceGroupAsync();
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();

@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         [SetUp]
         public async Task CreateNamespaceAndGetTopicCollection()
         {
+            IgnoreTestInLiveMode();
             _resourceGroup = await CreateResourceGroupAsync();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
@@ -41,6 +42,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         [RecordedTest]
         public async Task CreateDeleteTopic()
         {
+            IgnoreTestInLiveMode();
             //create topic
             string topicName = Recording.GenerateAssetName("topic");
             ServiceBusTopic topic = (await _topicCollection.CreateOrUpdateAsync(topicName, new ServiceBusTopicData())).Value;
@@ -65,6 +67,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         [RecordedTest]
         public async Task GetAllTopics()
         {
+            IgnoreTestInLiveMode();
             //create ten queues
             for (int i = 0; i < 10; i++)
             {
@@ -83,6 +86,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         [RecordedTest]
         public async Task UpdateTopic()
         {
+            IgnoreTestInLiveMode();
             //create topic
             string topicName = Recording.GenerateAssetName("topic");
             ServiceBusTopic topic = (await _topicCollection.CreateOrUpdateAsync(topicName, new ServiceBusTopicData())).Value;
@@ -99,6 +103,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         [RecordedTest]
         public async Task TopicCreateGetUpdateDeleteAuthorizationRule()
         {
+            IgnoreTestInLiveMode();
             //create topic
             string topicName = Recording.GenerateAssetName("topic");
             ServiceBusTopic topic = (await _topicCollection.CreateOrUpdateAsync(topicName, new ServiceBusTopicData())).Value;
@@ -154,6 +159,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         [RecordedTest]
         public async Task TopicAuthorizationRuleRegenerateKey()
         {
+            IgnoreTestInLiveMode();
             //create topic
             string topicName = Recording.GenerateAssetName("topic");
             ServiceBusTopic topic = (await _topicCollection.CreateOrUpdateAsync(topicName, new ServiceBusTopicData())).Value;

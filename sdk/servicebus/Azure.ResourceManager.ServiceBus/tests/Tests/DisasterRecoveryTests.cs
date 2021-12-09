@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         }
         [Test]
         [RecordedTest]
-        [Ignore("Need further investigation")]
         public async Task CreateGetUpdateDeleteDisasterRecovery()
         {
+            IgnoreTestInLiveMode();
             _resourceGroup = await CreateResourceGroupAsync();
             //create namespace1
             string namespaceName1 = await CreateValidNamespaceName("testnamespacemgmt");

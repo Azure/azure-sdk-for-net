@@ -19,6 +19,8 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         [RecordedTest]
         public async Task CreateGetUpdateDeleteRule()
         {
+            IgnoreTestInLiveMode();
+
             const string strSqlExp = "myproperty=test";
 
             //create namespace

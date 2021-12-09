@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         [RecordedTest]
         public async Task CreateGetUpdateDeleteSubscription()
         {
+            IgnoreTestInLiveMode();
             //create namespace
             ResourceGroup resourceGroup = await CreateResourceGroupAsync();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
