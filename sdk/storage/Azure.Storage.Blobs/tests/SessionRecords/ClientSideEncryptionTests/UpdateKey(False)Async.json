@@ -12,7 +12,7 @@
         "x-ms-client-request-id": "7cc94d9f-a84b-067e-4fcf-049273f1e780",
         "x-ms-date": "Wed, 01 Dec 2021 23:32:42 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -24,7 +24,7 @@
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "7cc94d9f-a84b-067e-4fcf-049273f1e780",
         "x-ms-request-id": "15ce098a-701e-002e-260b-e788d5000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -43,7 +43,7 @@
         "x-ms-date": "Wed, 01 Dec 2021 23:32:42 GMT",
         "x-ms-meta-encryptiondata": "{\u0022EncryptionMode\u0022:\u0022bar\u0022,\u0022WrappedContentKey\u0022:{\u0022KeyId\u0022:\u0022bd992aa4-23e3-ad99-81e0-60cc51fedc3f\u0022,\u0022EncryptedKey\u0022:\u0022Eq3AoVowYoyUKmPz6F5Gu10gsTGY0L8Ym\\u002B7JHlwDtuw=\u0022,\u0022Algorithm\u0022:\u0022some algorithm name\u0022},\u0022EncryptionAgent\u0022:{\u0022Protocol\u0022:\u00221.0\u0022,\u0022EncryptionAlgorithm\u0022:\u0022foo\u0022},\u0022ContentEncryptionIV\u0022:\u0022zIPypDdYvVxAdVvAliPwhPvTgI3s4ImnQ4BjVma61g0=\u0022,\u0022KeyWrappingMetadata\u0022:{\u0022fizz\u0022:\u0022buzz\u0022}}",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": "XFT8VBf6nlNPIRzWpriGnDqmrg6g9btBNMc3fZJJdxX6JyA68pE6faUgQTMDlrSj5\u002BZCvBGL0maYuh9QwiDABqkH3H6XTKqobDFpf7SHPp4SlJasBrsDblW6oTdy6bqEYDqK/Lk2C5s8mVDgIlOyEHuBPS6KEwDtA24p3apyNoJ25B55/ULk3Ij7cG1rIkwBB5G88KyM\u002Bkw6nPhLDC7wymLNaj40OBI4nWCmjqOSguAiJ9UZtUXV6unRPmFJmM9ZCqYKnbgOzc5\u002Bg1NM5WuppxkYKeVY1xQd\u002BIBUY/qx7wSQTIT9iOUnFFkGmjLyiQR\u002BKJZHMW/qATOR7aQ4uWrUzJRPu5nnqx808BWLUTziKm571Tpkar2UpkpQa5tA71rvMs2dos5rln13EkFaXrD3r8I2vOMvcGLXuxROlz\u002BD9AC6nB5uRIegED\u002B97Fd7OUeaWbzZCTJ2v8Jrxue5HP898x5An8KRiGs6lqykcoMKW4HMtD6DqerORNxcA32g5vQ/f/g5OpqFCNBRnnOG0U0/YGtm7GjBuko0clvmNYXtmq\u002B3ZPKK0SDmR6ttMgp2R3OOHaISOfqLfsWuBcg/n9NKYwTEzmxatI9Kf6S9U4c/vSvoVxjj2mC0K\u002BYs28xYp6jXIs4GsXgGNGgTx7lVzis\u002Bb0ecVki7Z4mkEKKGLtjD8tf85TC5OAyy4SOvzxKmXl277myEu1BgG7pFYqHVfwWPT9XiWej6hTY76nUkC5h2/bFFy0BsPjaGnMp2c9Zq3GIdH4A8xAV0wWk1SdHbOw8iz2TwkLTFIxGfW7wegxFg0A4TB\u002BwXOTir0QrWN/Rlq2C6U6RxekytV/xunWlIVT1X1XnCyDQjCpUsRL6p7uscObBbZDBs7lXBZa/vqZvPYnvMf2J7ouIslkgPRTaNA2kRUmO47fEN6uYkAWOENGH5XOJC3W\u002BJoJfNL83nXakeNGFG3VY4FnWKv5R7V6F\u002BqGLnFehUSib5iLHM6r4jJo09BcwCPlYLwUZstx3bDUn1T4ZrAEfAyuk6TFWlayu3Z5kGPlHUfGoL3FSi55MJHntn15s3tyVFfDrjx/EBZlYatVCD1M73IdIcYCPzHuNWMC7aPZOPgLBzwcEX8LR5Cnb\u002BhzJDhUmscLXIGlYCUl5XjZfCJijCijWfEBMM4DAeo1at9ZaxE6vlLczdx2VZcW9iv2MdtuNNO/38o3U2n4\u002BFqncAVF3Ipnrr3Phc5MPQRZ6jqiDNAexyYLmYtG81ro49WBzuWR0RmRnoMdnq8Vc5LF3XkvVvuKmKjfOkL/ELti5qHoum4uyBkhAG5c8Sh29hX4cRXhyYzqBzY8spbWon3XurgNLLk0pxVgDlaNLZdwaEQg==",
       "StatusCode": 201,
@@ -58,7 +58,7 @@
         "x-ms-content-crc64": "iPuKaCHzBrI=",
         "x-ms-request-id": "15ce09a8-701e-002e-370b-e788d5000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2021-04-10",
+        "x-ms-version": "2021-06-08",
         "x-ms-version-id": "2021-12-01T23:32:42.4237733Z"
       },
       "ResponseBody": []
@@ -74,7 +74,7 @@
         "x-ms-client-request-id": "b3574572-ba76-dd0c-9d72-195706c301b5",
         "x-ms-date": "Wed, 01 Dec 2021 23:32:42 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -100,7 +100,7 @@
         "x-ms-meta-encryptiondata": "{\u0022EncryptionMode\u0022:\u0022bar\u0022,\u0022WrappedContentKey\u0022:{\u0022KeyId\u0022:\u0022bd992aa4-23e3-ad99-81e0-60cc51fedc3f\u0022,\u0022EncryptedKey\u0022:\u0022Eq3AoVowYoyUKmPz6F5Gu10gsTGY0L8Ym\\u002B7JHlwDtuw=\u0022,\u0022Algorithm\u0022:\u0022some algorithm name\u0022},\u0022EncryptionAgent\u0022:{\u0022Protocol\u0022:\u00221.0\u0022,\u0022EncryptionAlgorithm\u0022:\u0022foo\u0022},\u0022ContentEncryptionIV\u0022:\u0022zIPypDdYvVxAdVvAliPwhPvTgI3s4ImnQ4BjVma61g0=\u0022,\u0022KeyWrappingMetadata\u0022:{\u0022fizz\u0022:\u0022buzz\u0022}}",
         "x-ms-request-id": "15ce09cf-701e-002e-580b-e788d5000000",
         "x-ms-server-encrypted": "true",
-        "x-ms-version": "2021-04-10",
+        "x-ms-version": "2021-06-08",
         "x-ms-version-id": "2021-12-01T23:32:42.4237733Z"
       },
       "ResponseBody": []
@@ -115,7 +115,7 @@
         "x-ms-client-request-id": "15ee6a46-bf6b-570b-d751-ef865b2eb40c",
         "x-ms-date": "Wed, 01 Dec 2021 23:32:42 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -141,7 +141,7 @@
         "x-ms-meta-encryptiondata": "{\u0022EncryptionMode\u0022:\u0022bar\u0022,\u0022WrappedContentKey\u0022:{\u0022KeyId\u0022:\u0022bd992aa4-23e3-ad99-81e0-60cc51fedc3f\u0022,\u0022EncryptedKey\u0022:\u0022Eq3AoVowYoyUKmPz6F5Gu10gsTGY0L8Ym\\u002B7JHlwDtuw=\u0022,\u0022Algorithm\u0022:\u0022some algorithm name\u0022},\u0022EncryptionAgent\u0022:{\u0022Protocol\u0022:\u00221.0\u0022,\u0022EncryptionAlgorithm\u0022:\u0022foo\u0022},\u0022ContentEncryptionIV\u0022:\u0022zIPypDdYvVxAdVvAliPwhPvTgI3s4ImnQ4BjVma61g0=\u0022,\u0022KeyWrappingMetadata\u0022:{\u0022fizz\u0022:\u0022buzz\u0022}}",
         "x-ms-request-id": "15ce09e7-701e-002e-680b-e788d5000000",
         "x-ms-server-encrypted": "true",
-        "x-ms-version": "2021-04-10",
+        "x-ms-version": "2021-06-08",
         "x-ms-version-id": "2021-12-01T23:32:42.4237733Z"
       },
       "ResponseBody": []
@@ -158,7 +158,7 @@
         "x-ms-date": "Wed, 01 Dec 2021 23:32:42 GMT",
         "x-ms-meta-encryptiondata": "{\u0022EncryptionMode\u0022:\u0022bar\u0022,\u0022WrappedContentKey\u0022:{\u0022KeyId\u0022:\u002202dc723f-da14-bdc7-7d94-908ad3a38d97\u0022,\u0022EncryptedKey\u0022:\u0022Sw285rUFn2OLDQxS0xKEJJscBFQBOqeIXq9gzPrpEiA=\u0022,\u0022Algorithm\u0022:\u0022some algorithm name\u0022},\u0022EncryptionAgent\u0022:{\u0022Protocol\u0022:\u00221.0\u0022,\u0022EncryptionAlgorithm\u0022:\u0022foo\u0022},\u0022ContentEncryptionIV\u0022:\u0022zIPypDdYvVxAdVvAliPwhPvTgI3s4ImnQ4BjVma61g0=\u0022,\u0022KeyWrappingMetadata\u0022:{\u0022fizz\u0022:\u0022buzz\u0022}}",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -171,7 +171,7 @@
         "x-ms-client-request-id": "9b116d96-ecd4-454a-e1de-1028fd89922b",
         "x-ms-request-id": "15ce09f7-701e-002e-750b-e788d5000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2021-04-10",
+        "x-ms-version": "2021-06-08",
         "x-ms-version-id": "2021-12-01T23:32:42.6096678Z"
       },
       "ResponseBody": []
@@ -187,7 +187,7 @@
         "x-ms-client-request-id": "eeefd603-191d-0737-f57b-dd98639188aa",
         "x-ms-date": "Wed, 01 Dec 2021 23:32:42 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -213,7 +213,7 @@
         "x-ms-meta-encryptiondata": "{\u0022EncryptionMode\u0022:\u0022bar\u0022,\u0022WrappedContentKey\u0022:{\u0022KeyId\u0022:\u002202dc723f-da14-bdc7-7d94-908ad3a38d97\u0022,\u0022EncryptedKey\u0022:\u0022Sw285rUFn2OLDQxS0xKEJJscBFQBOqeIXq9gzPrpEiA=\u0022,\u0022Algorithm\u0022:\u0022some algorithm name\u0022},\u0022EncryptionAgent\u0022:{\u0022Protocol\u0022:\u00221.0\u0022,\u0022EncryptionAlgorithm\u0022:\u0022foo\u0022},\u0022ContentEncryptionIV\u0022:\u0022zIPypDdYvVxAdVvAliPwhPvTgI3s4ImnQ4BjVma61g0=\u0022,\u0022KeyWrappingMetadata\u0022:{\u0022fizz\u0022:\u0022buzz\u0022}}",
         "x-ms-request-id": "15ce0a11-701e-002e-0a0b-e788d5000000",
         "x-ms-server-encrypted": "true",
-        "x-ms-version": "2021-04-10",
+        "x-ms-version": "2021-06-08",
         "x-ms-version-id": "2021-12-01T23:32:42.6096678Z"
       },
       "ResponseBody": []
@@ -229,7 +229,7 @@
         "x-ms-client-request-id": "2725260f-a39a-ce0d-ed24-59483f9c6f1f",
         "x-ms-date": "Wed, 01 Dec 2021 23:32:42 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -239,7 +239,7 @@
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "2725260f-a39a-ce0d-ed24-59483f9c6f1f",
         "x-ms-request-id": "15ce0a1f-701e-002e-160b-e788d5000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     }
