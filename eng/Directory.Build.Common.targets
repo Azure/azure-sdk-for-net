@@ -135,6 +135,12 @@
     <IsTestProject Condition="'$(IsTestSupportProject)' == 'true'">false</IsTestProject>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(InheritDocEnabled)' != 'false' and '$(TargetFramework)' == 'netstandard2.0'">
+    <NoWarn>
+      $(NoWarn);IDT001<!-- InheritDoc related to malformed XML in netstandard.xml -->
+    </NoWarn>
+  </PropertyGroup>
+
   <Import Project="$(DefaultReferenceTargets)" Condition="Exists('$(DefaultReferenceTargets)') And '$(ImportDefaultReferences)'=='true'" />
 
   <Import Project="ApiListing.targets" />
@@ -181,8 +187,11 @@
   </ItemGroup>
   
   <!--TODO: end-->
+
   <!-- *********** Management Client Library Override section ************* -->
   <ItemGroup Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' != 'true'">
+
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
     
     <!-- TODO: Review these file references-->

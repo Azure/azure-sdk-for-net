@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of RestorePointListResult. </summary>
         internal RestorePointListResult()
         {
-            Value = new ChangeTrackingList<RestorePoint>();
+            Value = new ChangeTrackingList<RestorePointData>();
         }
 
         /// <summary> Initializes a new instance of RestorePointListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal RestorePointListResult(IReadOnlyList<RestorePoint> value, string nextLink)
+        internal RestorePointListResult(IReadOnlyList<RestorePointData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<RestorePoint> Value { get; }
+        public IReadOnlyList<RestorePointData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

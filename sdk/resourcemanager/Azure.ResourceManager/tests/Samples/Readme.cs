@@ -43,7 +43,6 @@ ArmClient armClient = new ArmClient(new DefaultAzureCredential());
         {
             #region Snippet:Readme_CastToBaseResourceIdentifier
             string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet";
-            // Assume we don't know what type of resource id we have we can cast to the base type
             ResourceIdentifier id = new ResourceIdentifier(resourceId);
             Console.WriteLine($"Subscription: {id.SubscriptionId}");
             Console.WriteLine($"ResourceGroup: {id.ResourceGroupName}");

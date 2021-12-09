@@ -88,6 +88,68 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void SetStateSucceeds()
+        {
+            var operationInternal = CreateOperation(isOfT, UpdateResult.Pending);
+            if (operationInternal is OperationInternal oi)
+            {
+                oi.SetState(OperationState.Success(mockResponse));
+            }
+            else if (operationInternal is OperationInternal<int> oit)
+            {
+                oit.SetState(OperationState<int>.Success(mockResponse, 1));
+            }
+
+            Assert.IsTrue(operationInternal.HasCompleted);
+            if (operationInternal is OperationInternal<int> oit2)
+            {
+                Assert.IsTrue(oit2.HasValue);
+                Assert.AreEqual(1, oit2.Value);
+            }
+        }
+
+        [Test]
+        public void SetStateIsPending()
+        {
+            var operationInternal = CreateOperation(isOfT, UpdateResult.Pending);
+            if (operationInternal is OperationInternal oi)
+            {
+                oi.SetState(OperationState.Pending(mockResponse));
+            }
+            else if (operationInternal is OperationInternal<int> oit)
+            {
+                oit.SetState(OperationState<int>.Pending(mockResponse));
+            }
+
+            Assert.IsFalse(operationInternal.HasCompleted);
+            if (operationInternal is OperationInternal<int> oit2)
+            {
+                Assert.IsFalse(oit2.HasValue);
+            }
+        }
+
+        [Test]
+        public void SetStateFails()
+        {
+            var operationInternal = CreateOperation(isOfT, UpdateResult.Pending);
+            if (operationInternal is OperationInternal oi)
+            {
+                oi.SetState(OperationState.Failure(mockResponse));
+            }
+            else if (operationInternal is OperationInternal<int> oit)
+            {
+                oit.SetState(OperationState<int>.Failure(mockResponse));
+            }
+
+            Assert.IsTrue(operationInternal.HasCompleted);
+            if (operationInternal is OperationInternal<int> oit2)
+            {
+                Assert.IsFalse(oit2.HasValue);
+                Assert.Throws<RequestFailedException>(() => _ = oit2.Value);
+            }
+        }
+
+        [Test]
         public async Task UpdateStatusWhenOperationIsPending([Values(true, false)] bool async)
         {
             var operationInternal = CreateOperation(isOfT, UpdateResult.Pending, mockResponseFactory);

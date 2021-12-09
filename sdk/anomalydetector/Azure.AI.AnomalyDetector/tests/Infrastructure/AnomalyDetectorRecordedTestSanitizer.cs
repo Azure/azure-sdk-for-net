@@ -13,25 +13,7 @@ namespace Azure.AI.AnomalyDetector.Tests
         {
             AddJsonPathSanitizer("$..accessToken");
             AddJsonPathSanitizer("$..source");
-        }
-
-        public override void SanitizeHeaders(IDictionary<string, string[]> headers)
-        {
-            if (headers.ContainsKey(Constants.AuthorizationHeader))
-            {
-                headers[Constants.AuthorizationHeader] = new[] { SanitizeValue };
-            }
-
-            base.SanitizeHeaders(headers);
-        }
-
-        public override string SanitizeVariable(string variableName, string environmentVariableValue)
-        {
-            return variableName switch
-            {
-                AnomalyDetectorTestEnvironment.ApiKeyEnvironmentVariableName => SanitizeValue,
-                _ => base.SanitizeVariable(variableName, environmentVariableValue)
-            };
+            SanitizedHeaders.Add(Constants.AuthorizationHeader);
         }
     }
 }

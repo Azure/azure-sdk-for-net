@@ -1,5 +1,8 @@
 # Release History
 
+## 12.9.0-beta.3 (Unreleased)
+- Added support for service version 2021-04-10.
+
 ## 12.9.0-beta.2 (2021-11-30)
 - Added supprot for service version 2021-02-12.
 - Added support for listing system file systems with DataLakeServiceClient.GetFileSystems() and .GetFileSystemsAsync().
