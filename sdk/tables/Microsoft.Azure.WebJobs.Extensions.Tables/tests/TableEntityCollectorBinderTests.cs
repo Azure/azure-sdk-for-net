@@ -21,7 +21,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             public int TimesFlushed { get; set; }
 
             public StubTableEntityWriter()
-                : base(new TableClient(new Uri("http://localhost:10000/account/table")))
+                : base(new TableClient(new Uri("https://localhost:10000/account/table")))
             {
                 TimesFlushed = 0;
                 TimesPartitionFlushed = 0;

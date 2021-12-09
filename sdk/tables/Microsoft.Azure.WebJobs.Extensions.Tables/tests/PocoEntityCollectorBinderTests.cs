@@ -23,7 +23,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         internal class StubTableEntityWriter : TableEntityWriter<ITableEntity>
         {
             public StubTableEntityWriter()
-                : base(new TableClient(new Uri("http://localhost:10000/account/table")))
+                : base(new TableClient(new Uri("https://localhost:10000/account/table")))
             {
             }
 

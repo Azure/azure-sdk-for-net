@@ -116,10 +116,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 
                 jsonObject.Add(entityProperty.Key, value);
             }
-
-            jsonObject.Add("PartitionKey", tableEntity.PartitionKey);
-            jsonObject.Add("RowKey", tableEntity.RowKey);
-
             return jsonObject;
         }
 
