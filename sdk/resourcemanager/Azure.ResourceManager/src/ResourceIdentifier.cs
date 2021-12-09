@@ -29,11 +29,6 @@ namespace Azure.ResourceManager
         public static readonly ResourceIdentifier Root = new ResourceIdentifier(null, Tenant.ResourceType, string.Empty);
 
         /// <summary>
-        /// The root of the resource hierarchy.
-        /// </summary>
-        public static readonly ResourceIdentifier RootResourceIdentifier = new ResourceIdentifier(null, Tenant.ResourceType, string.Empty);
-
-        /// <summary>
         /// For internal use only.
         /// </summary>
         /// <param name="parent"> The parent resource for this resource. </param>
