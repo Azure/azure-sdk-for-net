@@ -1,24 +1,14 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 using System;
-using System.IO;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Azure.Cosmos.Table;
+using Microsoft.Azure.WebJobs.Extensions.Tables;
+
 namespace Microsoft.Azure.WebJobs
 {
     internal static class TableExtensions
     {
-        public static async Task<CloudTable> CreateTableAsync(this StorageAccount account, string tableName)
-        {
-            CloudTableClient client = account.CreateCloudTableClient();
-            CloudTable table = client.GetTableReference(tableName);
-            await table.CreateIfNotExistsAsync().ConfigureAwait(false);
-            return table;
-        }
         public static void InsertOrReplace(this CloudTable table, ITableEntity entity)
         {
             if (table == null)

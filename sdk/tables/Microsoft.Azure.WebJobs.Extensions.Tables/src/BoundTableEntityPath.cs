@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.Azure.WebJobs.Host.Tables
+namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
     internal class BoundTableEntityPath : IBindableTableEntityPath
     {
@@ -15,30 +15,15 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
             _innerPath = innerPath;
         }
 
-        public string TableNamePattern
-        {
-            get { return _innerPath.TableName; }
-        }
+        public string TableNamePattern => _innerPath.TableName;
 
-        public string PartitionKeyPattern
-        {
-            get { return _innerPath.PartitionKey; }
-        }
+        public string PartitionKeyPattern => _innerPath.PartitionKey;
 
-        public string RowKeyPattern
-        {
-            get { return _innerPath.RowKey; }
-        }
+        public string RowKeyPattern => _innerPath.RowKey;
 
-        public bool IsBound
-        {
-            get { return true; }
-        }
+        public bool IsBound => true;
 
-        public IEnumerable<string> ParameterNames
-        {
-            get { return Enumerable.Empty<string>(); }
-        }
+        public IEnumerable<string> ParameterNames => Enumerable.Empty<string>();
 
         public TableEntityPath Bind(IReadOnlyDictionary<string, object> bindingData)
         {

@@ -1,11 +1,13 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+
 namespace Microsoft.Azure.WebJobs.Host
 {
     // Original code here: https://github.com/aspnet/Common/blob/dev/src/Microsoft.Extensions.PropertyHelper.Sources/PropertyHelper.cs
@@ -13,20 +15,28 @@ namespace Microsoft.Azure.WebJobs.Host
     {
         private static readonly MethodInfo CallPropertyGetterOpenGenericMethod =
             typeof(PropertyHelper).GetTypeInfo().GetDeclaredMethod(nameof(CallPropertyGetter));
+
         private static readonly MethodInfo CallPropertyGetterByReferenceOpenGenericMethod =
             typeof(PropertyHelper).GetTypeInfo().GetDeclaredMethod(nameof(CallPropertyGetterByReference));
+
         private static readonly MethodInfo CallNullSafePropertyGetterOpenGenericMethod =
             typeof(PropertyHelper).GetTypeInfo().GetDeclaredMethod(nameof(CallNullSafePropertyGetter));
+
         private static readonly MethodInfo CallNullSafePropertyGetterByReferenceOpenGenericMethod =
             typeof(PropertyHelper).GetTypeInfo().GetDeclaredMethod(nameof(CallNullSafePropertyGetterByReference));
+
         private static readonly MethodInfo CallPropertySetterOpenGenericMethod =
             typeof(PropertyHelper).GetTypeInfo().GetDeclaredMethod(nameof(CallPropertySetter));
+
         // Using an array rather than IEnumerable, as target will be called on the hot path numerous times.
         private static readonly ConcurrentDictionary<Type, PropertyHelper[]> PropertiesCache =
             new ConcurrentDictionary<Type, PropertyHelper[]>();
+
         private static readonly ConcurrentDictionary<Type, PropertyHelper[]> VisiblePropertiesCache =
             new ConcurrentDictionary<Type, PropertyHelper[]>();
+
         private Action<object, object> _valueSetter;
+
         /// <summary>
         /// Initializes a fast <see cref="PropertyHelper"/>.
         /// This constructor does not cache the helper. For caching, use <see cref="GetProperties(object)"/>.
@@ -37,24 +47,30 @@ namespace Microsoft.Azure.WebJobs.Host
             {
                 throw new ArgumentNullException(nameof(property));
             }
+
             Property = property;
             Name = property.Name;
             ValueGetter = MakeFastPropertyGetter(property);
         }
+
         // Delegate type for a by-ref property getter
         private delegate TValue ByRefFunc<TDeclaringType, TValue>(ref TDeclaringType arg);
+
         /// <summary>
         /// Gets the backing <see cref="PropertyInfo"/>.
         /// </summary>
         public PropertyInfo Property { get; }
+
         /// <summary>
         /// Gets (or sets in derived types) the property name.
         /// </summary>
         public virtual string Name { get; protected set; }
+
         /// <summary>
         /// Gets the property value getter.
         /// </summary>
         public Func<object, object> ValueGetter { get; }
+
         /// <summary>
         /// Gets the property value setter.
         /// </summary>
@@ -66,9 +82,11 @@ namespace Microsoft.Azure.WebJobs.Host
                 {
                     _valueSetter = MakeFastPropertySetter(Property);
                 }
+
                 return _valueSetter;
             }
         }
+
         /// <summary>
         /// Returns the property value for the specified <paramref name="instance"/>.
         /// </summary>
@@ -78,6 +96,7 @@ namespace Microsoft.Azure.WebJobs.Host
         {
             return ValueGetter(instance);
         }
+
         /// <summary>
         /// Sets the property value for the specified <paramref name="instance" />.
         /// </summary>
@@ -87,6 +106,7 @@ namespace Microsoft.Azure.WebJobs.Host
         {
             ValueSetter(instance, value);
         }
+
         /// <summary>
         /// Creates and caches fast property helpers that expose getters for every public get property on the
         /// underlying type.
@@ -98,6 +118,7 @@ namespace Microsoft.Azure.WebJobs.Host
         {
             return GetProperties(instance.GetType());
         }
+
         /// <summary>
         /// Creates and caches fast property helpers that expose getters for every public get property on the
         /// specified type.
@@ -109,6 +130,7 @@ namespace Microsoft.Azure.WebJobs.Host
         {
             return GetProperties(type, CreateInstance, PropertiesCache);
         }
+
         /// <summary>
         /// <para>
         /// Creates and caches fast property helpers that expose getters for every non-hidden get property
@@ -127,6 +149,7 @@ namespace Microsoft.Azure.WebJobs.Host
         {
             return GetVisibleProperties(instance.GetType(), CreateInstance, PropertiesCache, VisiblePropertiesCache);
         }
+
         /// <summary>
         /// <para>
         /// Creates and caches fast property helpers that expose getters for every non-hidden get property
@@ -145,6 +168,7 @@ namespace Microsoft.Azure.WebJobs.Host
         {
             return GetVisibleProperties(type, CreateInstance, PropertiesCache, VisiblePropertiesCache);
         }
+
         /// <summary>
         /// Creates a single fast property getter. The result is not cached.
         /// </summary>
@@ -162,6 +186,7 @@ namespace Microsoft.Azure.WebJobs.Host
                 CallPropertyGetterOpenGenericMethod,
                 CallPropertyGetterByReferenceOpenGenericMethod);
         }
+
         /// <summary>
         /// Creates a single fast property getter which is safe for a null input object. The result is not cached.
         /// </summary>
@@ -179,6 +204,7 @@ namespace Microsoft.Azure.WebJobs.Host
                 CallNullSafePropertyGetterOpenGenericMethod,
                 CallNullSafePropertyGetterByReferenceOpenGenericMethod);
         }
+
         private static Func<object, object> MakeFastPropertyGetter(
             PropertyInfo propertyInfo,
             MethodInfo propertyGetterWrapperMethod,
@@ -217,6 +243,7 @@ namespace Microsoft.Azure.WebJobs.Host
                     propertyGetterWrapperMethod);
             }
         }
+
         private static Func<object, object> MakeFastPropertyGetter(
             Type openGenericDelegateType,
             MethodInfo propertyGetMethod,
@@ -232,6 +259,7 @@ namespace Microsoft.Azure.WebJobs.Host
                 propertyGetterDelegate);
             return (Func<object, object>)accessorDelegate;
         }
+
         /// <summary>
         /// Creates a single fast property setter for reference types. The result is not cached.
         /// </summary>
@@ -266,6 +294,7 @@ namespace Microsoft.Azure.WebJobs.Host
                     typeof(Action<object, object>), propertySetterAsAction);
             return (Action<object, object>)callPropertySetterDelegate;
         }
+
         /// <summary>
         /// Given an object, adds each instance property with a public get method as a key and its
         /// associated value to a dictionary.
@@ -285,6 +314,7 @@ namespace Microsoft.Azure.WebJobs.Host
             {
                 return new Dictionary<string, object>(dictionary, StringComparer.OrdinalIgnoreCase);
             }
+
             dictionary = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
             if (value != null)
             {
@@ -293,12 +323,15 @@ namespace Microsoft.Azure.WebJobs.Host
                     dictionary[helper.Name] = helper.GetValue(value);
                 }
             }
+
             return dictionary;
         }
+
         private static PropertyHelper CreateInstance(PropertyInfo property)
         {
             return new PropertyHelper(property);
         }
+
         // Called via reflection
         private static object CallPropertyGetter<TDeclaringType, TValue>(
             Func<TDeclaringType, TValue> getter,
@@ -306,6 +339,7 @@ namespace Microsoft.Azure.WebJobs.Host
         {
             return getter((TDeclaringType)target);
         }
+
         // Called via reflection
         private static object CallPropertyGetterByReference<TDeclaringType, TValue>(
             ByRefFunc<TDeclaringType, TValue> getter,
@@ -314,6 +348,7 @@ namespace Microsoft.Azure.WebJobs.Host
             var unboxed = (TDeclaringType)target;
             return getter(ref unboxed);
         }
+
         // Called via reflection
         private static object CallNullSafePropertyGetter<TDeclaringType, TValue>(
             Func<TDeclaringType, TValue> getter,
@@ -323,8 +358,10 @@ namespace Microsoft.Azure.WebJobs.Host
             {
                 return null;
             }
+
             return getter((TDeclaringType)target);
         }
+
         // Called via reflection
         private static object CallNullSafePropertyGetterByReference<TDeclaringType, TValue>(
             ByRefFunc<TDeclaringType, TValue> getter,
@@ -334,9 +371,11 @@ namespace Microsoft.Azure.WebJobs.Host
             {
                 return null;
             }
+
             var unboxed = (TDeclaringType)target;
             return getter(ref unboxed);
         }
+
         private static void CallPropertySetter<TDeclaringType, TValue>(
             Action<TDeclaringType, TValue> setter,
             object target,
@@ -344,6 +383,7 @@ namespace Microsoft.Azure.WebJobs.Host
         {
             setter((TDeclaringType)target, (TValue)value);
         }
+
         protected static PropertyHelper[] GetVisibleProperties(
             Type type,
             Func<PropertyInfo, PropertyHelper> createPropertyHelper,
@@ -355,6 +395,7 @@ namespace Microsoft.Azure.WebJobs.Host
             {
                 return result;
             }
+
             // The simple and common case, this is normal POCO object - no need to allocate.
             var allPropertiesDefinedOnType = true;
             var allProperties = GetProperties(type, createPropertyHelper, allPropertiesCache);
@@ -366,12 +407,14 @@ namespace Microsoft.Azure.WebJobs.Host
                     break;
                 }
             }
+
             if (allPropertiesDefinedOnType)
             {
                 result = allProperties;
                 visiblePropertiesCache.TryAdd(type, result);
                 return result;
             }
+
             // There's some inherited properties here, so we need to check for hiding via 'new'.
             var filteredProperties = new List<PropertyHelper>(allProperties.Length);
             foreach (var propertyHelper in allProperties)
@@ -382,6 +425,7 @@ namespace Microsoft.Azure.WebJobs.Host
                     filteredProperties.Add(propertyHelper);
                     continue;
                 }
+
                 // If this property was declared on a base type then look for the definition closest to the
                 // the type to see if we should include it.
                 var ignoreProperty = false;
@@ -398,17 +442,21 @@ namespace Microsoft.Azure.WebJobs.Host
                         ignoreProperty = true;
                         break;
                     }
+
                     currentTypeInfo = currentTypeInfo.BaseType?.GetTypeInfo();
                 }
+
                 if (!ignoreProperty)
                 {
                     filteredProperties.Add(propertyHelper);
                 }
             }
+
             result = filteredProperties.ToArray();
             visiblePropertiesCache.TryAdd(type, result);
             return result;
         }
+
         protected static PropertyHelper[] GetProperties(
             Type type,
             Func<PropertyInfo, PropertyHelper> createPropertyHelper,
@@ -429,18 +477,21 @@ namespace Microsoft.Azure.WebJobs.Host
                     properties = properties.Concat(typeInfo.ImplementedInterfaces.SelectMany(
                         interfaceType => interfaceType.GetRuntimeProperties().Where(IsInterestingProperty)));
                 }
+
                 helpers = properties.Select(p => createPropertyHelper(p)).ToArray();
                 cache.TryAdd(type, helpers);
             }
+
             return helpers;
         }
+
         // Indexed properties are not useful (or valid) for grabbing properties off an object.
         private static bool IsInterestingProperty(PropertyInfo property)
         {
             return property.GetIndexParameters().Length == 0 &&
-                property.GetMethod != null &&
-                property.GetMethod.IsPublic &&
-                !property.GetMethod.IsStatic;
+                   property.GetMethod != null &&
+                   property.GetMethod.IsPublic &&
+                   !property.GetMethod.IsStatic;
         }
     }
 }

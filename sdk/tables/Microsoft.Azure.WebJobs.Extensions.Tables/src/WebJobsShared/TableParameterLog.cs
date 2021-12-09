@@ -1,6 +1,8 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 using System;
+
 #if PUBLICPROTOCOL
 namespace Microsoft.Azure.WebJobs.Protocols
 #else
@@ -17,13 +19,15 @@ namespace Microsoft.Azure.WebJobs.Host.Protocols
     {
         /// <summary>Gets or sets the number of entities inserted or replaced.</summary>
         public int EntitiesWritten { get; set; }
+
         /// <summary>Gets or sets the number of entities updated.</summary>
         [Obsolete("Use the EntitiesWritten property instead.")]
         public int EntitiesUpdated
         {
-            get { return EntitiesWritten; }
-            set { EntitiesWritten = value; }
+            get => EntitiesWritten;
+            set => EntitiesWritten = value;
         }
+
         /// <summary>Gets or sets the approximate amount of time spent performing write I/O.</summary>
         public TimeSpan ElapsedWriteTime { get; set; }
     }

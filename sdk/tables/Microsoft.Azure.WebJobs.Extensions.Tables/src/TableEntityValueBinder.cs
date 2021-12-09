@@ -1,5 +1,6 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -9,7 +10,8 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.Cosmos.Table;
-namespace Microsoft.Azure.WebJobs.Host.Tables
+
+namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
     internal class TableEntityValueBinder : IValueBinder, IWatchable, IWatcher
     {
@@ -17,6 +19,7 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
         private readonly ITableEntity _value;
         private readonly Type _valueType;
         private readonly IDictionary<string, EntityProperty> _originalProperties;
+
         public TableEntityValueBinder(TableEntityContext entityContext, ITableEntity entity, Type valueType)
         {
             _entityContext = entityContext;
@@ -24,25 +27,18 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
             _valueType = valueType;
             _originalProperties = DeepClone(entity.WriteEntity(null));
         }
-        public Type Type
-        {
-            get { return _valueType; }
-        }
-        public IWatcher Watcher
-        {
-            get { return this; }
-        }
-        public bool HasChanged
-        {
-            get
-            {
-                return HasChanges(_originalProperties, _value.WriteEntity(operationContext: null));
-            }
-        }
+
+        public Type Type => _valueType;
+
+        public IWatcher Watcher => this;
+
+        public bool HasChanged => HasChanges(_originalProperties, _value.WriteEntity(operationContext: null));
+
         public Task<object> GetValueAsync()
         {
             return Task.FromResult<object>(_value);
         }
+
         public Task SetValueAsync(object value, CancellationToken cancellationToken)
         {
             // Not ByRef, so can ignore value argument.
@@ -51,22 +47,27 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
                 throw new InvalidOperationException(
                     "When binding to a table entity, the partition key and row key must not be changed.");
             }
+
             if (HasChanged)
             {
                 var table = _entityContext.Table;
                 var operation = table.CreateReplaceOperation(_value);
                 return table.ExecuteAsync(operation, cancellationToken);
             }
+
             return Task.FromResult(0);
         }
+
         public string ToInvokeString()
         {
             return _entityContext.ToInvokeString();
         }
+
         public ParameterLog GetStatus()
         {
             return HasChanged ? new TableParameterLog { EntitiesWritten = 1 } : null;
         }
+
         internal static bool HasChanges(IDictionary<string, EntityProperty> originalProperties,
             IDictionary<string, EntityProperty> currentProperties)
         {
@@ -74,10 +75,12 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
             {
                 return true;
             }
+
             if (!Enumerable.SequenceEqual(originalProperties.Keys, currentProperties.Keys))
             {
                 return true;
             }
+
             foreach (string key in currentProperties.Keys)
             {
                 EntityProperty originalValue = originalProperties[key];
@@ -93,26 +96,32 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
                         continue;
                     }
                 }
+
                 if (!originalValue.Equals(newValue))
                 {
                     return true;
                 }
             }
+
             return false;
         }
+
         internal static IDictionary<string, EntityProperty> DeepClone(IDictionary<string, EntityProperty> value)
         {
             if (value == null)
             {
                 return null;
             }
+
             IDictionary<string, EntityProperty> clone = new Dictionary<string, EntityProperty>();
             foreach (KeyValuePair<string, EntityProperty> item in value)
             {
                 clone.Add(item.Key, DeepClone(item.Value));
             }
+
             return clone;
         }
+
         internal static EntityProperty DeepClone(EntityProperty property)
         {
             EdmType propertyType = property.PropertyType;
@@ -130,6 +139,7 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
                         clonedBytes = new byte[existingBytes.LongLength];
                         Array.Copy(existingBytes, clonedBytes, existingBytes.LongLength);
                     }
+
                     return new EntityProperty(clonedBytes);
                 case EdmType.Boolean:
                     return new EntityProperty(property.BooleanValue);

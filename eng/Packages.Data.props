@@ -85,7 +85,7 @@
     <PackageReference Update="Azure.Data.SchemaRegistry" Version="1.0.0" />
     <PackageReference Update="Azure.Messaging.EventHubs" Version="5.6.2" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.7.0" />
-    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.5.0" />
+    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.5.1" />
     <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.0.0" />
     <PackageReference Update="Azure.Identity" Version="1.5.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0" />
@@ -146,7 +146,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20211203.1" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20211209.1" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20210903.4" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="1.3.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" PrivateAssets="All" />

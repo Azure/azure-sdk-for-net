@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using System.Runtime.CompilerServices;
+
 [assembly: InternalsVisibleTo("Microsoft.Azure.WebJobs.Extensions.Tables.Tests, PublicKey=" +
                               "0024000004800000940000000602000000240000525341310004000001000100d15ddcb2968829" +
                               "5338af4b7686603fe614abd555e09efba8fb88ee09e1f7b1ccaeed2e8f823fa9eef3fdd60217fc" +
