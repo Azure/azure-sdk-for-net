@@ -19,7 +19,7 @@ namespace Azure.AI.Personalizer
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
-        private readonly bool _isLocalReference;
+        private readonly bool _isLocalInference;
         internal MultiSlotRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of MultiSlotClient for mocking. </summary>
@@ -52,12 +52,12 @@ namespace Azure.AI.Personalizer
         /// <summary> Initializes a new instance of PersonalizerClient. </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="isLocalReference"> A flag to determine whether to use local reference. </param>
+        /// <param name="isLocalInference"> A flag to determine whether to use local inference. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public MultiSlotClient(string endpoint, TokenCredential credential, bool isLocalReference, PersonalizerClientOptions options = null) :
+        public MultiSlotClient(string endpoint, TokenCredential credential, bool isLocalInference, PersonalizerClientOptions options = null) :
             this(endpoint, credential, options)
         {
-            _isLocalReference = isLocalReference;
+            _isLocalInference = isLocalInference;
         }
 
         /// <summary> Initializes a new instance of MultiSlotClient. </summary>
@@ -84,12 +84,12 @@ namespace Azure.AI.Personalizer
         /// <summary> Initializes a new instance of PersonalizerClient. </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="isLocalReference"> A flag to determine whether to use local reference. </param>
+        /// <param name="isLocalInference"> A flag to determine whether to use local inference. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public MultiSlotClient(string endpoint, AzureKeyCredential credential, bool isLocalReference, PersonalizerClientOptions options = null) :
+        public MultiSlotClient(string endpoint, AzureKeyCredential credential, bool isLocalInference, PersonalizerClientOptions options = null) :
             this(endpoint, credential, options)
         {
-            _isLocalReference = isLocalReference;
+            _isLocalInference = isLocalInference;
         }
 
         /// <summary> Initializes a new instance of MultiSlotClient. </summary>
