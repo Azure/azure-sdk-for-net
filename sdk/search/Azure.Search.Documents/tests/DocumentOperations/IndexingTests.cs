@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Azure.Core.GeoJson;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Models;
@@ -848,7 +847,18 @@ namespace Azure.Search.Documents.Tests
                     batch,
                     new IndexDocumentsOptions { ThrowOnAnyError = true }));
             Assert.AreEqual(400, ex.Status);
-            StringAssert.StartsWith("The request is invalid. Details: actions : 0: Document key cannot be missing or empty.", ex.Message);
+            StringAssert.StartsWith("The request is invalid.", ex.Message);
+
+            int errorJsonStartIndex = ex.Message.IndexOf("{");
+            int errorJsonEndIndex = ex.Message.LastIndexOf("}");
+            string errorJsonContent = ex.Message.Substring(errorJsonStartIndex, errorJsonEndIndex - errorJsonStartIndex + 1);
+
+            JsonElement errorElement = JsonDocument.Parse(errorJsonContent).RootElement.GetProperty("error");
+            StringAssert.AreEqualIgnoringCase("OperationNotAllowed", errorElement.GetProperty("code").GetString());
+            StringAssert.AreEqualIgnoringCase("The request is invalid.", errorElement.GetProperty("message").GetString());
+            JsonElement details = errorElement.GetProperty("details");
+            StringAssert.AreEqualIgnoringCase("MissingKeyField", details[0].GetProperty("code").GetString());
+            StringAssert.AreEqualIgnoringCase("0: Document key cannot be missing or empty. Parameters: actions", details[0].GetProperty("message").GetString());
         }
 
         [Test]
