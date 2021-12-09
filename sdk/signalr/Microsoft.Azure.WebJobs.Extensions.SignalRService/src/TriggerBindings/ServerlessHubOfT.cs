@@ -8,7 +8,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Azure.SignalR.Management;
 
@@ -40,6 +39,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         /// </summary>
         public ClientManager ClientManager => _hubContext.ClientManager;
 
+        /// <summary>
+        /// Get the name of the hub.
+        /// </summary>
+        public string HubName => typeof(T).Name;
+
         protected ServerlessHub(ServiceHubContext<T> serviceHubContext = null)
         {
             if (serviceHubContext is null)
@@ -65,7 +69,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         /// <summary>
         /// Get claim list from a JWT.
         /// </summary>
-        protected static IList<Claim> GetClaims(string jwt)
+        protected IList<Claim> GetClaims(string jwt)
         {
             if (jwt.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
             {
