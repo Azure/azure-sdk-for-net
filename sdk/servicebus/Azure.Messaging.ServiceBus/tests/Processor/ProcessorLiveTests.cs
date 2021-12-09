@@ -918,13 +918,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     // increase concurrency
                     if (count == 150)
                     {
-                        Assert.LessOrEqual(processor._tasks.Where(t => !t.Task.IsCompleted).Count(), 1);
+                        Assert.LessOrEqual(processor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), 1);
                         processor.UpdateConcurrency(10);
                         Assert.AreEqual(10, processor.MaxConcurrentCalls);
                     }
                     if (count == 175)
                     {
-                        Assert.GreaterOrEqual(processor._tasks.Where(t => !t.Task.IsCompleted).Count(), 5);
+                        Assert.GreaterOrEqual(processor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), 5);
                     }
                 }
 

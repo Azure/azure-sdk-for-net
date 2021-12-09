@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "4d8c1e48-81a9-50ca-ba40-b1b7e0989184",
         "x-ms-date": "Wed, 17 Feb 2021 18:55:02 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "4d8c1e48-81a9-50ca-ba40-b1b7e0989184",
         "x-ms-request-id": "cf0478f5-001e-0034-735e-05e90a000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -50,7 +50,7 @@
         "x-ms-client-request-id": "3b6e2f22-a8e2-43b7-2374-c2ee51bf506b",
         "x-ms-date": "Wed, 17 Feb 2021 18:55:03 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": "﻿<QueryRequest><QueryType>SQL</QueryType><Expression>SELECT _2 from BlobStorage WHERE _1 &gt; 250;</Expression></QueryRequest>",
       "StatusCode": 404,
@@ -65,7 +65,7 @@
         "x-ms-client-request-id": "3b6e2f22-a8e2-43b7-2374-c2ee51bf506b",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "cf047906-001e-0034-7f5e-05e90a000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?>\n",
@@ -88,7 +88,7 @@
         "x-ms-client-request-id": "d0e88ea6-9ae0-e008-00fc-f5707846a5d1",
         "x-ms-date": "Wed, 17 Feb 2021 18:55:03 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -101,7 +101,7 @@
         ],
         "x-ms-client-request-id": "d0e88ea6-9ae0-e008-00fc-f5707846a5d1",
         "x-ms-request-id": "cf04792e-001e-0034-1e5e-05e90a000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

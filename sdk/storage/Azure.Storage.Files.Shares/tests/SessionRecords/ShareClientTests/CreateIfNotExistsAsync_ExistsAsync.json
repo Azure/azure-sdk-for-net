@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "9d8ef369-ea4b-bf0f-f549-a9034f18090c",
         "x-ms-date": "Wed, 14 Oct 2020 23:18:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "9d8ef369-ea4b-bf0f-f549-a9034f18090c",
         "x-ms-request-id": "6e013f23-301a-000a-4080-a23535000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -46,7 +46,7 @@
         "x-ms-client-request-id": "922bf762-6aa1-b240-eda4-d847526f4322",
         "x-ms-date": "Wed, 14 Oct 2020 23:18:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -62,7 +62,7 @@
         "x-ms-client-request-id": "922bf762-6aa1-b240-eda4-d847526f4322",
         "x-ms-error-code": "ShareAlreadyExists",
         "x-ms-request-id": "6e013f26-301a-000a-4180-a23535000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ShareAlreadyExists</Code><Message>The specified share already exists.\n",
@@ -84,7 +84,7 @@
         "x-ms-date": "Wed, 14 Oct 2020 23:18:45 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -98,7 +98,7 @@
         ],
         "x-ms-client-request-id": "57a098a3-77ec-006b-5238-b2840260b971",
         "x-ms-request-id": "6e013f27-301a-000a-4280-a23535000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

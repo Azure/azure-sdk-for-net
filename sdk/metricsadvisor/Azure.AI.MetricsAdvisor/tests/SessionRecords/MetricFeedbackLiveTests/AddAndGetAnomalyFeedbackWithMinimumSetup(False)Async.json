@@ -1,55 +1,47 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/feedback/metric",
+      "RequestUri": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/feedback/metric",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "253",
+        "Content-Length": "274",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-b9793c43dbfb7b4e8b7bd0be98fb5932-e91bf3e5840f2a46-00",
-        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210119.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-04c17ee45c37b644891ab7475042f3c8-a9ba3eef5178b447-00",
+        "User-Agent": [
+          "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20211118.1",
+          "(.NET 5.0.12; Microsoft Windows 10.0.22000)"
+        ],
         "x-api-key": "Sanitized",
         "x-ms-client-request-id": "c7b1134784660d8014ead549346daece",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": {
-        "startTime": "2020-09-26T00:00:00Z",
-        "endTime": "2020-09-29T00:00:00Z",
-        "value": {
-          "anomalyValue": "AutoDetect"
-        },
-        "feedbackType": "Anomaly",
-        "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
-        "dimensionFilter": {
-          "dimension": {
-            "city": "Delhi",
-            "category": "Handmade"
-          }
-        }
-      },
+      "RequestBody": "{\u0022startTime\u0022:\u00222020-09-26T00:00:00Z\u0022,\u0022endTime\u0022:\u00222020-09-29T00:00:00Z\u0022,\u0022value\u0022:{\u0022anomalyValue\u0022:\u0022AutoDetect\u0022},\u0022feedbackType\u0022:\u0022Anomaly\u0022,\u0022metricId\u0022:\u0022390d1139-98fb-45af-b831-8d5ad61b150a\u0022,\u0022dimensionFilter\u0022:{\u0022dimension\u0022:{\u0022region\u0022:\u0022Cairo\u0022,\u0022category\u0022:\u0022Shoes Handbags \u0026 Sunglasses\u0022}}}",
       "StatusCode": 201,
       "ResponseHeaders": {
-        "apim-request-id": "a230021c-edb8-4768-9c3a-a3fd1e2a3477",
+        "apim-request-id": "c4ec170f-5b0c-41fb-9e0a-fc9470f78152",
         "Content-Length": "0",
-        "Date": "Tue, 19 Jan 2021 17:42:53 GMT",
-        "Location": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/feedback/metric/8935fa65-b9a2-4332-92ac-ceaed102e385",
+        "Date": "Thu, 18 Nov 2021 17:48:44 GMT",
+        "Location": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/feedback/metric/9080bb32-07d2-4df1-961e-34a8c5311157",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "336",
-        "x-request-id": "a230021c-edb8-4768-9c3a-a3fd1e2a3477"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "497",
+        "X-Request-ID": "c4ec170f-5b0c-41fb-9e0a-fc9470f78152"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/feedback/metric/8935fa65-b9a2-4332-92ac-ceaed102e385",
+      "RequestUri": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/feedback/metric/9080bb32-07d2-4df1-961e-34a8c5311157",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-cfaea4cfc05a7740b57219d0ab2ed069-5593f0a72b0bbe46-00",
-        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210119.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-04c17ee45c37b644891ab7475042f3c8-dc42d3334d0abb41-00",
+        "User-Agent": [
+          "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20211118.1",
+          "(.NET 5.0.12; Microsoft Windows 10.0.22000)"
+        ],
         "x-api-key": "Sanitized",
         "x-ms-client-request-id": "b84e0369d6f7d934338f4bae9fa2e7bc",
         "x-ms-return-client-request-id": "true"
@@ -57,24 +49,24 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "e94af438-d8b0-427d-b0bf-7d516ef4e2d3",
-        "Content-Length": "464",
+        "apim-request-id": "2f0604d0-79d0-4f24-b279-bd423a69df31",
+        "Content-Length": "401",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 19 Jan 2021 17:42:53 GMT",
+        "Date": "Thu, 18 Nov 2021 17:48:44 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "126",
-        "x-request-id": "e94af438-d8b0-427d-b0bf-7d516ef4e2d3"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "107",
+        "X-Request-ID": "2f0604d0-79d0-4f24-b279-bd423a69df31"
       },
       "ResponseBody": {
-        "feedbackId": "8935fa65-b9a2-4332-92ac-ceaed102e385",
-        "createdTime": "2021-01-19T17:42:54.662Z",
+        "feedbackId": "9080bb32-07d2-4df1-961e-34a8c5311157",
+        "createdTime": "2021-11-18T17:48:45.216Z",
         "userPrincipal": "foo@contoso.com",
-        "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+        "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
         "dimensionFilter": {
           "dimension": {
-            "city": "Delhi",
-            "category": "Handmade"
+            "region": "Cairo",
+            "category": "Shoes Handbags \u0026 Sunglasses"
           }
         },
         "feedbackType": "Anomaly",
@@ -82,15 +74,13 @@
         "endTime": "2020-09-29T00:00:00Z",
         "value": {
           "anomalyValue": "AutoDetect"
-        },
-        "anomalyDetectionConfigurationId": null,
-        "anomalyDetectionConfigurationSnapshot": null
+        }
       }
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-01-19T09:42:54.9123835-08:00",
-    "METRICSADVISOR_ACCOUNT_NAME": "js-metrics-advisor",
+    "DateTimeOffsetNow": "2021-11-18T09:48:45.4497841-08:00",
+    "METRICSADVISOR_ACCOUNT_NAME": "ga-metrics-advisor",
     "METRICSADVISOR_ENDPOINT_SUFFIX": null,
     "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
     "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",

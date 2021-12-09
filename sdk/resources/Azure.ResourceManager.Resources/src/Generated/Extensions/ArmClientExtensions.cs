@@ -12,25 +12,14 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class to add extension methods to ArmClient. </summary>
     public static partial class ArmClientExtensions
     {
-        #region DeploymentExtended
-        /// <summary> Gets an object representing a DeploymentExtended along with the instance operations that can be performed on it but with no data. </summary>
+        #region Deployment
+        /// <summary> Gets an object representing a Deployment along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeploymentExtended" /> object. </returns>
-        public static DeploymentExtended GetDeploymentExtended(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="Deployment" /> object. </returns>
+        public static Deployment GetDeployment(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DeploymentExtended(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
-        #region DeploymentOperation
-        /// <summary> Gets an object representing a DeploymentOperation along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeploymentOperation" /> object. </returns>
-        public static DeploymentOperation GetDeploymentOperation(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DeploymentOperation(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Deployment(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 

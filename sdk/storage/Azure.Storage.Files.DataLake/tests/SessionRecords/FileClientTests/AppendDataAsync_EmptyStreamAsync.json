@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "be3e407e-eb6d-a1ea-64cc-50efbbea548b",
         "x-ms-date": "Fri, 19 Feb 2021 19:58:16 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "be3e407e-eb6d-a1ea-64cc-50efbbea548b",
         "x-ms-request-id": "4691f2df-401e-0056-6ff9-068eb0000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -48,7 +48,7 @@
         "x-ms-client-request-id": "42b50ebf-7b2b-2326-8ee2-16d4d33f7452",
         "x-ms-date": "Fri, 19 Feb 2021 19:58:17 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -63,7 +63,7 @@
         ],
         "x-ms-client-request-id": "42b50ebf-7b2b-2326-8ee2-16d4d33f7452",
         "x-ms-request-id": "d66aae9f-f01f-0088-09f9-069a56000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -83,7 +83,7 @@
         "x-ms-client-request-id": "1eebdb9f-a25c-fd5d-c02e-8fe88ab49d04",
         "x-ms-date": "Fri, 19 Feb 2021 19:58:17 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": [],
       "StatusCode": 400,
@@ -98,7 +98,7 @@
         "x-ms-client-request-id": "1eebdb9f-a25c-fd5d-c02e-8fe88ab49d04",
         "x-ms-error-code": "InvalidHeaderValue",
         "x-ms-request-id": "d66aaeb6-f01f-0088-20f9-069a56000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": "{\"error\":{\"code\":\"InvalidHeaderValue\",\"message\":\"The value for one of the HTTP headers is not in the correct format.\\nRequestId:d66aaeb6-f01f-0088-20f9-069a56000000\\nTime:2021-02-19T19:58:16.4460689Z\",\"detail\":{\"HeaderName\":\"Content-Length\", \"HeaderValue\":\"0\"}}}"
     },
@@ -116,7 +116,7 @@
         "x-ms-client-request-id": "f73555bd-5554-44f6-6a78-1469a6d8c747",
         "x-ms-date": "Fri, 19 Feb 2021 19:58:17 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -129,7 +129,7 @@
         ],
         "x-ms-client-request-id": "f73555bd-5554-44f6-6a78-1469a6d8c747",
         "x-ms-request-id": "4691f389-401e-0056-03f9-068eb0000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

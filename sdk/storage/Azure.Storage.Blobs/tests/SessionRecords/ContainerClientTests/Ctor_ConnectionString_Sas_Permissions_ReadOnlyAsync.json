@@ -1,7 +1,7 @@
 ﻿{
   "Entries": [
     {
-      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-935a4901-9dc6-de42-00e7-15cc793d784c?sv=2020-12-06&ss=bfqt&srt=sco&spr=https&se=2021-02-17T03%3A31%3A18Z&sp=r&sig=Sanitized&restype=container",
+      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-935a4901-9dc6-de42-00e7-15cc793d784c?sv=2021-04-10&ss=bfqt&srt=sco&spr=https&se=2021-02-17T03%3A31%3A18Z&sp=r&sig=Sanitized&restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -12,7 +12,7 @@
         ],
         "x-ms-client-request-id": "b1dd5317-b933-cd58-1d58-291072c0772a",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 403,
@@ -27,7 +27,7 @@
         "x-ms-client-request-id": "b1dd5317-b933-cd58-1d58-291072c0772a",
         "x-ms-error-code": "AuthorizationPermissionMismatch",
         "x-ms-request-id": "ae8a2106-c01e-003b-51d4-049f66000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>AuthorizationPermissionMismatch</Code><Message>This request is not authorized to perform this operation using this permission.\n",

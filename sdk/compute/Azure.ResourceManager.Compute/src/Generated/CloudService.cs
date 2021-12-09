@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -24,10 +23,9 @@ namespace Azure.ResourceManager.Compute
     public partial class CloudService : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly CloudServicesRestOperations _restClient;
+        private readonly CloudServicesRestOperations _cloudServicesRestClient;
+        private readonly CloudServicesUpdateDomainRestOperations _cloudServicesUpdateDomainRestClient;
         private readonly CloudServiceData _data;
-        private CloudServiceRoleInstancesRestOperations _cloudServiceRoleInstancesRestClient { get; }
-        private CloudServiceRolesRestOperations _cloudServiceRolesRestClient { get; }
 
         /// <summary> Initializes a new instance of the <see cref="CloudService"/> class for mocking. </summary>
         protected CloudService()
@@ -42,9 +40,8 @@ namespace Azure.ResourceManager.Compute
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new CloudServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _cloudServiceRoleInstancesRestClient = new CloudServiceRoleInstancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _cloudServiceRolesRestClient = new CloudServiceRolesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _cloudServicesRestClient = new CloudServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _cloudServicesUpdateDomainRestClient = new CloudServicesUpdateDomainRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="CloudService"/> class. </summary>
@@ -53,9 +50,8 @@ namespace Azure.ResourceManager.Compute
         internal CloudService(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new CloudServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _cloudServiceRoleInstancesRestClient = new CloudServiceRoleInstancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _cloudServiceRolesRestClient = new CloudServiceRolesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _cloudServicesRestClient = new CloudServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _cloudServicesUpdateDomainRestClient = new CloudServicesUpdateDomainRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="CloudService"/> class. </summary>
@@ -67,9 +63,8 @@ namespace Azure.ResourceManager.Compute
         internal CloudService(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new CloudServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _cloudServiceRoleInstancesRestClient = new CloudServiceRoleInstancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _cloudServiceRolesRestClient = new CloudServiceRolesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _cloudServicesRestClient = new CloudServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _cloudServicesUpdateDomainRestClient = new CloudServicesUpdateDomainRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -101,7 +96,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _cloudServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new CloudService(this, response.Value), response.GetRawResponse());
@@ -121,7 +116,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _cloudServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CloudService(this, response.Value), response.GetRawResponse());
@@ -158,8 +153,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CloudServiceDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _cloudServicesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CloudServiceDeleteOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -180,8 +175,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new CloudServiceDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _cloudServicesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new CloudServiceDeleteOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -211,8 +206,8 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _cloudServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CloudService(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -240,8 +235,8 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _cloudServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new CloudService(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -269,8 +264,8 @@ namespace Azure.ResourceManager.Compute
                 await TagResource.DeleteAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _cloudServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CloudService(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -298,8 +293,8 @@ namespace Azure.ResourceManager.Compute
                 TagResource.Delete(cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _cloudServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new CloudService(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -326,8 +321,8 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _cloudServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CloudService(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -354,8 +349,8 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _cloudServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new CloudService(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -363,340 +358,6 @@ namespace Azure.ResourceManager.Compute
                 scope.Failed(e);
                 throw;
             }
-        }
-        /// <summary> Gets the status of a cloud service. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CloudServiceInstanceView>> GetInstanceViewAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("CloudService.GetInstanceView");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.GetInstanceViewAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets the status of a cloud service. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CloudServiceInstanceView> GetInstanceView(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("CloudService.GetInstanceView");
-            scope.Start();
-            try
-            {
-                var response = _restClient.GetInstanceView(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a role instance from a cloud service. </summary>
-        /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RoleInstance>> GetCloudServiceRoleInstanceAsync(InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("CloudService.GetCloudServiceRoleInstance");
-            scope.Start();
-            try
-            {
-                var response = await _cloudServiceRoleInstancesRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a role instance from a cloud service. </summary>
-        /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RoleInstance> GetCloudServiceRoleInstance(InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("CloudService.GetCloudServiceRoleInstance");
-            scope.Start();
-            try
-            {
-                var response = _cloudServiceRoleInstancesRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Retrieves information about the run-time state of a role instance in a cloud service. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RoleInstanceView>> GetCloudServiceRoleInstanceInstanceViewAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("CloudService.GetCloudServiceRoleInstanceInstanceView");
-            scope.Start();
-            try
-            {
-                var response = await _cloudServiceRoleInstancesRestClient.GetInstanceViewAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Retrieves information about the run-time state of a role instance in a cloud service. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RoleInstanceView> GetCloudServiceRoleInstanceInstanceView(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("CloudService.GetCloudServiceRoleInstanceInstanceView");
-            scope.Start();
-            try
-            {
-                var response = _cloudServiceRoleInstancesRestClient.GetInstanceView(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a remote desktop file for a role instance in a cloud service. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Stream>> GetCloudServiceRoleInstanceRemoteDesktopFileAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("CloudService.GetCloudServiceRoleInstanceRemoteDesktopFile");
-            scope.Start();
-            try
-            {
-                var response = await _cloudServiceRoleInstancesRestClient.GetRemoteDesktopFileAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a remote desktop file for a role instance in a cloud service. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Stream> GetCloudServiceRoleInstanceRemoteDesktopFile(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("CloudService.GetCloudServiceRoleInstanceRemoteDesktopFile");
-            scope.Start();
-            try
-            {
-                var response = _cloudServiceRoleInstancesRestClient.GetRemoteDesktopFile(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets the list of all role instances in a cloud service. Use nextLink property in the response to get the next page of role instances. Do this till nextLink is null to fetch all the role instances. </summary>
-        /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RoleInstance" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RoleInstance> GetCloudServiceRoleInstances(InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
-        {
-            Page<RoleInstance> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("CloudService.GetCloudServiceRoleInstances");
-                scope.Start();
-                try
-                {
-                    var response = _cloudServiceRoleInstancesRestClient.GetAll(Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RoleInstance> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("CloudService.GetCloudServiceRoleInstances");
-                scope.Start();
-                try
-                {
-                    var response = _cloudServiceRoleInstancesRestClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets the list of all role instances in a cloud service. Use nextLink property in the response to get the next page of role instances. Do this till nextLink is null to fetch all the role instances. </summary>
-        /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RoleInstance" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RoleInstance> GetCloudServiceRoleInstancesAsync(InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<RoleInstance>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("CloudService.GetCloudServiceRoleInstances");
-                scope.Start();
-                try
-                {
-                    var response = await _cloudServiceRoleInstancesRestClient.GetAllAsync(Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RoleInstance>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("CloudService.GetCloudServiceRoleInstances");
-                scope.Start();
-                try
-                {
-                    var response = await _cloudServiceRoleInstancesRestClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-        /// <summary> Gets a role from a cloud service. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CloudServiceRole>> GetCloudServiceRoleAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("CloudService.GetCloudServiceRole");
-            scope.Start();
-            try
-            {
-                var response = await _cloudServiceRolesRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a role from a cloud service. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CloudServiceRole> GetCloudServiceRole(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("CloudService.GetCloudServiceRole");
-            scope.Start();
-            try
-            {
-                var response = _cloudServiceRolesRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a list of all roles in a cloud service. Use nextLink property in the response to get the next page of roles. Do this till nextLink is null to fetch all the roles. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CloudServiceRole" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CloudServiceRole> GetCloudServiceRoles(CancellationToken cancellationToken = default)
-        {
-            Page<CloudServiceRole> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("CloudService.GetCloudServiceRoles");
-                scope.Start();
-                try
-                {
-                    var response = _cloudServiceRolesRestClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<CloudServiceRole> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("CloudService.GetCloudServiceRoles");
-                scope.Start();
-                try
-                {
-                    var response = _cloudServiceRolesRestClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets a list of all roles in a cloud service. Use nextLink property in the response to get the next page of roles. Do this till nextLink is null to fetch all the roles. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CloudServiceRole" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CloudServiceRole> GetCloudServiceRolesAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<CloudServiceRole>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("CloudService.GetCloudServiceRoles");
-                scope.Start();
-                try
-                {
-                    var response = await _cloudServiceRolesRestClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<CloudServiceRole>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("CloudService.GetCloudServiceRoles");
-                scope.Start();
-                try
-                {
-                    var response = await _cloudServiceRolesRestClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Update a cloud service. </summary>
@@ -709,8 +370,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CloudServiceUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = await _cloudServicesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new CloudServiceUpdateOperation(this, _clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -732,8 +393,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.Update(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new CloudServiceUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = _cloudServicesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var operation = new CloudServiceUpdateOperation(this, _clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -745,17 +406,53 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        /// <summary> Gets the status of a cloud service. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<CloudServiceInstanceView>> GetInstanceViewAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("CloudService.GetInstanceView");
+            scope.Start();
+            try
+            {
+                var response = await _cloudServicesRestClient.GetInstanceViewAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status of a cloud service. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<CloudServiceInstanceView> GetInstanceView(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("CloudService.GetInstanceView");
+            scope.Start();
+            try
+            {
+                var response = _cloudServicesRestClient.GetInstanceView(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Starts the cloud service. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<CloudServicePowerOnOperation> PowerOnAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<CloudServiceStartOperation> PowerOnAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CloudService.PowerOn");
             scope.Start();
             try
             {
-                var response = await _restClient.PowerOnAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CloudServicePowerOnOperation(_clientDiagnostics, Pipeline, _restClient.CreatePowerOnRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _cloudServicesRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CloudServiceStartOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -770,14 +467,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Starts the cloud service. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CloudServicePowerOnOperation PowerOn(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual CloudServiceStartOperation PowerOn(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CloudService.PowerOn");
             scope.Start();
             try
             {
-                var response = _restClient.PowerOn(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new CloudServicePowerOnOperation(_clientDiagnostics, Pipeline, _restClient.CreatePowerOnRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _cloudServicesRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new CloudServiceStartOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -798,8 +495,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.PowerOffAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CloudServicePowerOffOperation(_clientDiagnostics, Pipeline, _restClient.CreatePowerOffRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _cloudServicesRestClient.PowerOffAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CloudServicePowerOffOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreatePowerOffRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -820,8 +517,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.PowerOff(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new CloudServicePowerOffOperation(_clientDiagnostics, Pipeline, _restClient.CreatePowerOffRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _cloudServicesRestClient.PowerOff(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new CloudServicePowerOffOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreatePowerOffRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -843,8 +540,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.RestartAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CloudServiceRestartOperation(_clientDiagnostics, Pipeline, _restClient.CreateRestartRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = await _cloudServicesRestClient.RestartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new CloudServiceRestartOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -866,8 +563,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.Restart(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new CloudServiceRestartOperation(_clientDiagnostics, Pipeline, _restClient.CreateRestartRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = _cloudServicesRestClient.Restart(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var operation = new CloudServiceRestartOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -889,8 +586,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.ReimageAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CloudServiceReimageOperation(_clientDiagnostics, Pipeline, _restClient.CreateReimageRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = await _cloudServicesRestClient.ReimageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new CloudServiceReimageOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -912,8 +609,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.Reimage(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new CloudServiceReimageOperation(_clientDiagnostics, Pipeline, _restClient.CreateReimageRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = _cloudServicesRestClient.Reimage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var operation = new CloudServiceReimageOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -935,8 +632,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.RebuildAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CloudServiceRebuildOperation(_clientDiagnostics, Pipeline, _restClient.CreateRebuildRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = await _cloudServicesRestClient.RebuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new CloudServiceRebuildOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateRebuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -958,8 +655,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.Rebuild(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new CloudServiceRebuildOperation(_clientDiagnostics, Pipeline, _restClient.CreateRebuildRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = _cloudServicesRestClient.Rebuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var operation = new CloudServiceRebuildOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateRebuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -981,8 +678,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteInstancesAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CloudServiceDeleteInstancesOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteInstancesRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = await _cloudServicesRestClient.DeleteInstancesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new CloudServiceDeleteInstancesOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateDeleteInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1004,8 +701,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.DeleteInstances(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new CloudServiceDeleteInstancesOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteInstancesRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = _cloudServicesRestClient.DeleteInstances(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var operation = new CloudServiceDeleteInstancesOperation(_clientDiagnostics, Pipeline, _cloudServicesRestClient.CreateDeleteInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1017,11 +714,186 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets a list of UpdateDomains in the CloudService. </summary>
-        /// <returns> An object representing collection of UpdateDomains and their operations over a CloudService. </returns>
-        public UpdateDomainContainer GetUpdateDomains()
+        /// <summary> Updates the role instances in the specified update domain. </summary>
+        /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
+        /// <param name="parameters"> The update domain object. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<CloudServicesUpdateDomainWalkUpdateDomainOperation> WalkUpdateDomainCloudServicesUpdateDomainAsync(int updateDomain, UpdateDomain parameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            return new UpdateDomainContainer(this);
+            using var scope = _clientDiagnostics.CreateScope("CloudService.WalkUpdateDomainCloudServicesUpdateDomain");
+            scope.Start();
+            try
+            {
+                var response = await _cloudServicesUpdateDomainRestClient.WalkUpdateDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateDomain, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new CloudServicesUpdateDomainWalkUpdateDomainOperation(_clientDiagnostics, Pipeline, _cloudServicesUpdateDomainRestClient.CreateWalkUpdateDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateDomain, parameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
+
+        /// <summary> Updates the role instances in the specified update domain. </summary>
+        /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
+        /// <param name="parameters"> The update domain object. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual CloudServicesUpdateDomainWalkUpdateDomainOperation WalkUpdateDomainCloudServicesUpdateDomain(int updateDomain, UpdateDomain parameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("CloudService.WalkUpdateDomainCloudServicesUpdateDomain");
+            scope.Start();
+            try
+            {
+                var response = _cloudServicesUpdateDomainRestClient.WalkUpdateDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateDomain, parameters, cancellationToken);
+                var operation = new CloudServicesUpdateDomainWalkUpdateDomainOperation(_clientDiagnostics, Pipeline, _cloudServicesUpdateDomainRestClient.CreateWalkUpdateDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateDomain, parameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the specified update domain of a cloud service. Use nextLink property in the response to get the next page of update domains. Do this till nextLink is null to fetch all the update domains. </summary>
+        /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<UpdateDomain>> GetUpdateDomainCloudServicesUpdateDomainAsync(int updateDomain, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("CloudService.GetUpdateDomainCloudServicesUpdateDomain");
+            scope.Start();
+            try
+            {
+                var response = await _cloudServicesUpdateDomainRestClient.GetUpdateDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateDomain, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the specified update domain of a cloud service. Use nextLink property in the response to get the next page of update domains. Do this till nextLink is null to fetch all the update domains. </summary>
+        /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<UpdateDomain> GetUpdateDomainCloudServicesUpdateDomain(int updateDomain, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("CloudService.GetUpdateDomainCloudServicesUpdateDomain");
+            scope.Start();
+            try
+            {
+                var response = _cloudServicesUpdateDomainRestClient.GetUpdateDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateDomain, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a list of all update domains in a cloud service. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="UpdateDomain" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<UpdateDomain> GetUpdateDomainsCloudServicesUpdateDomainsAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<UpdateDomain>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("CloudService.GetUpdateDomainsCloudServicesUpdateDomains");
+                scope.Start();
+                try
+                {
+                    var response = await _cloudServicesUpdateDomainRestClient.ListUpdateDomainsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<UpdateDomain>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("CloudService.GetUpdateDomainsCloudServicesUpdateDomains");
+                scope.Start();
+                try
+                {
+                    var response = await _cloudServicesUpdateDomainRestClient.ListUpdateDomainsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Gets a list of all update domains in a cloud service. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="UpdateDomain" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<UpdateDomain> GetUpdateDomainsCloudServicesUpdateDomains(CancellationToken cancellationToken = default)
+        {
+            Page<UpdateDomain> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("CloudService.GetUpdateDomainsCloudServicesUpdateDomains");
+                scope.Start();
+                try
+                {
+                    var response = _cloudServicesUpdateDomainRestClient.ListUpdateDomains(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<UpdateDomain> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("CloudService.GetUpdateDomainsCloudServicesUpdateDomains");
+                scope.Start();
+                try
+                {
+                    var response = _cloudServicesUpdateDomainRestClient.ListUpdateDomainsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        #region RoleInstance
+
+        /// <summary> Gets a collection of RoleInstances in the CloudService. </summary>
+        /// <returns> An object representing collection of RoleInstances and their operations over a CloudService. </returns>
+        public RoleInstanceCollection GetRoleInstances()
+        {
+            return new RoleInstanceCollection(this);
+        }
+        #endregion
+
+        #region CloudServiceRole
+
+        /// <summary> Gets a collection of CloudServiceRoles in the CloudService. </summary>
+        /// <returns> An object representing collection of CloudServiceRoles and their operations over a CloudService. </returns>
+        public CloudServiceRoleCollection GetCloudServiceRoles()
+        {
+            return new CloudServiceRoleCollection(this);
+        }
+        #endregion
     }
 }

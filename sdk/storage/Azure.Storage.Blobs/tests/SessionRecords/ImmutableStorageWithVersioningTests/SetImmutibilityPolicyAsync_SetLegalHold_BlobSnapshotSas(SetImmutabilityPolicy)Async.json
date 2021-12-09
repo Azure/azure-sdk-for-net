@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "095d074b-512f-9ca7-8481-6521dfede904",
         "x-ms-date": "Wed, 11 Aug 2021 19:42:39 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": "k1tFKtitREK7ONyWEW5X/FvpD24/3RJE2zKyZA8mRUjeFl8WjX3fyfNwXreGjDP\u002BTY8z1UPNEbZJAE6l\u002B98ylfKTuPsOQG7eCkV7zn5avk//sxaA8m8FEAWpzY0uOc0UPsnE8tQ47w0gVMv9UkI37kL/pkjIsaKCjaf1ZXPhr9B3ZpC1lst7x8MJX52kCL7Ccd5KL5OFS4wmQWUtQoqZP6T7heuxglh2hN\u002BEv1IE3oXoM/OUloA88hsEjlRmTYQ5bx/4qILTEe\u002BG1Kq0AYs5ImLfRA\u002BWBakkvpPPrPQDEDZaS08yCzUDFSEEDsLWiPCPy2vxhgl1omp21OruA2T6gsN0WbU8BxYt3C7tkvbnTjWiQOGIEoks5KnkvDdLFBK8CYz\u002BYS47U8RVxKrahw9zj4a1S8KDcnA6R3UMV0vf4sccMYhq6ewGZ\u002B0dMk3fUlyZcSywlchPOZYbxBq5Lvt4deLivlaHCKaaruPVZj8iWvUYcuYeL0z/zPjxTiTRTDjxpLxr/ZMGEmiGFufketJX\u002BWklobsVWkaV4/JelbqByGGr48GCtlxhEWB9lxlkGlElmlW6rKt83El11hqgp3yuBU2GOZcQ1EMNw49bl8MtMMmgOfpkxhu1Lgd4DeBCwGrjz5HL3uC6FMYRrekbIUWGSKVRAG6CST8x0AuQmMdjygIld8cxYlLo5iQzUxgymgzC8sQ68MD7YYZSmQ7UKnz/ruLm9qp9VOVTaBlJT/Ym/zX\u002BzqYCKNpBKRZB3shEE7yoM6Q1S6RiRJ3f54enshKQLJrY1lzW/YUIpMyUPHYcD1VdoRtR8LORnIkIIkFSmncEsLIuaz1f0jYeLabXzQgmwtgySRD2PjzmRjnSzdtEtgpUkIvE7qMX/c/lMsIMuc6B4mBoH1BnDXF1SCQEjQRb2necgj18YtQ0G0xAEQt52YxqUet625a57YIZTqZ\u002BEnDKilhLbzeRBH\u002BLNAQEJvtm/G6XmjsZ4P7g45S6YhQutQjbdoezLWpV2Exr76eStMeGs1E353g0sKlZaoyi1qFrXX77KK90s88DQcHurvBXTi7NM6/C9s6Qp8XdWcLeswKrAJIpl4wYEgCCM6W2RgK5Ahxd1aLyqGava4HpllkMJY6/Q61eLreitSGuQMIp2WDDJFemgN5guFcreSsKLnumdg4W9wJUWtNluiCBQ2ikhZIgJnICZaSwXopWM7SLmIalCMq0E\u002BFebsqDQca\u002B3nTvh/SZ6gcJpBBpZph3/iYf2SGZ2zue73GwwrinfyTe8YAWZqzA8a5/nGO5S6xI5nCjZGekJAM4UZeC6CdPYSTsinQYYZd6X\u002BhzGT/X5KTFaNtHBBu8Ocx83RUUPQiGLzo/zQ==",
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         "x-ms-content-crc64": "9NooqAFr/Fw=",
         "x-ms-request-id": "b122a724-d01e-004a-0de9-8e693e000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "x-ms-version-id": "2021-08-11T19:42:39.2467868Z"
       },
       "ResponseBody": []
@@ -45,7 +45,7 @@
         "x-ms-client-request-id": "283a887f-36dd-6f9d-9093-0056c3e39f43",
         "x-ms-date": "Wed, 11 Aug 2021 19:42:39 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -59,13 +59,13 @@
         "x-ms-request-id": "b122a792-d01e-004a-6ae9-8e693e000000",
         "x-ms-request-server-encrypted": "false",
         "x-ms-snapshot": "2021-08-11T19:42:39.3298442Z",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "x-ms-version-id": "2021-08-11T19:42:39.3308442Z"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://kasobolcanadanetoauth.blob.core.windows.net/90185bea-b711-4aae-a98f-bb14f2a40111/test-blob-1ab23876-62f0-4422-6da4-8b8ebf523c50?snapshot=2021-08-11T19%3A42%3A39.3298442Z\u0026sv=2020-12-06\u0026se=2021-08-12T19%3A42%3A39Z\u0026sr=bs\u0026sp=i\u0026sig=Sanitized\u0026comp=immutabilityPolicies",
+      "RequestUri": "https://kasobolcanadanetoauth.blob.core.windows.net/90185bea-b711-4aae-a98f-bb14f2a40111/test-blob-1ab23876-62f0-4422-6da4-8b8ebf523c50?snapshot=2021-08-11T19%3A42%3A39.3298442Z\u0026sv=2021-04-10\u0026se=2021-08-12T19%3A42%3A39Z\u0026sr=bs\u0026sp=i\u0026sig=Sanitized\u0026comp=immutabilityPolicies",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -75,7 +75,7 @@
         "x-ms-immutability-policy-mode": "Unlocked",
         "x-ms-immutability-policy-until-date": "Wed, 11 Aug 2021 19:47:39 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -87,12 +87,12 @@
         "x-ms-immutability-policy-mode": "unlocked",
         "x-ms-immutability-policy-until-date": "Wed, 11 Aug 2021 19:47:39 GMT",
         "x-ms-request-id": "b122a7df-d01e-004a-2ae9-8e693e000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://kasobolcanadanetoauth.blob.core.windows.net/90185bea-b711-4aae-a98f-bb14f2a40111/test-blob-1ab23876-62f0-4422-6da4-8b8ebf523c50?snapshot=2021-08-11T19%3A42%3A39.3298442Z\u0026sv=2020-12-06\u0026se=2021-08-12T19%3A42%3A39Z\u0026sr=bs\u0026sp=i\u0026sig=Sanitized\u0026comp=legalhold",
+      "RequestUri": "https://kasobolcanadanetoauth.blob.core.windows.net/90185bea-b711-4aae-a98f-bb14f2a40111/test-blob-1ab23876-62f0-4422-6da4-8b8ebf523c50?snapshot=2021-08-11T19%3A42%3A39.3298442Z\u0026sv=2021-04-10\u0026se=2021-08-12T19%3A42%3A39Z\u0026sr=bs\u0026sp=i\u0026sig=Sanitized\u0026comp=legalhold",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -101,7 +101,7 @@
         "x-ms-client-request-id": "807df9af-4841-5f90-9766-db9934a19e7f",
         "x-ms-legal-hold": "false",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -112,12 +112,12 @@
         "x-ms-client-request-id": "807df9af-4841-5f90-9766-db9934a19e7f",
         "x-ms-legal-hold": "false",
         "x-ms-request-id": "b122a82d-d01e-004a-68e9-8e693e000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://kasobolcanadanetoauth.blob.core.windows.net/90185bea-b711-4aae-a98f-bb14f2a40111/test-blob-1ab23876-62f0-4422-6da4-8b8ebf523c50?snapshot=2021-08-11T19%3A42%3A39.3298442Z\u0026sv=2020-12-06\u0026se=2021-08-12T19%3A42%3A39Z\u0026sr=bs\u0026sp=i\u0026sig=Sanitized\u0026comp=immutabilityPolicies",
+      "RequestUri": "https://kasobolcanadanetoauth.blob.core.windows.net/90185bea-b711-4aae-a98f-bb14f2a40111/test-blob-1ab23876-62f0-4422-6da4-8b8ebf523c50?snapshot=2021-08-11T19%3A42%3A39.3298442Z\u0026sv=2021-04-10\u0026se=2021-08-12T19%3A42%3A39Z\u0026sr=bs\u0026sp=i\u0026sig=Sanitized\u0026comp=immutabilityPolicies",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -125,7 +125,7 @@
         "User-Agent": "azsdk-net-Storage.Blobs/12.10.0-alpha.20210811.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "5df6514e-969a-54f1-3540-614c787a1aa0",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -135,7 +135,7 @@
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "5df6514e-969a-54f1-3540-614c787a1aa0",
         "x-ms-request-id": "b122a8b5-d01e-004a-61e9-8e693e000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -150,7 +150,7 @@
         "x-ms-client-request-id": "e34a0b48-41aa-d5e4-cd00-4d0488070cb5",
         "x-ms-date": "Wed, 11 Aug 2021 19:42:39 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -161,7 +161,7 @@
         "x-ms-client-request-id": "e34a0b48-41aa-d5e4-cd00-4d0488070cb5",
         "x-ms-delete-type-permanent": "false",
         "x-ms-request-id": "b122a909-d01e-004a-2ee9-8e693e000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

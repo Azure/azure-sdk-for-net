@@ -1,12 +1,29 @@
 # Release History
 
-## 12.11.0-beta.1 (Unreleased)
+## 12.11.0-beta.3 (Unreleased)
+- Added support for service version 2021-04-10.
+- Added support for BlobContainerClient.FilterBlobsByTag().
+- Added support for BlobContainerClient.OpenWriteAsync().
+- Fixed bug where BlobSasBuilder.SetPermissions(string rawPermissions) was not properly handling the Permanent Delete ('y') and set Immutability Policy ('i') permissions.
+
+### Other Changes
+
+## 12.11.0-beta.2 (2021-11-30)
+- Added support for service version 2021-02-12
+- Added support for listing system containers with BlobServiceClient.GetBlobContainers() and .GetBlobContainersAsync().
+- Added support for blob names container invalid XML characters.
+- Added support for updating the key encryption key on a client-side encrypted blob.
+- Fixed a bug where BlobClient.Upload() and UploadAsync() when using client-side encryption would modify the Dictionary instance passed by the caller for blob metadata.
+- Fixed a bug where BlobClient.Upload() and UploadAsync() when using client-side encryption would not respect StorageTransferOptions.InitialTransferSize.
+
+## 12.11.0-beta.1 (2021-11-03)
 - Added support for service version 2020-12-06.
 - Added support for Encryption Scope SAS.
 - Added support for Encryption Scopes with BlobBaseClient.SyncCopyFromUriAsync().
 - Added support for generating SAS URLs with the Permanent Delete ('y') SAS permission.
 - Added support for SDK-calculated transactional hash checksums on data transfer.
 - Fixed bug where BlobContainerClient.GetBlobs() and .GetBlobsByHierarchyAsync() was not parsing the Object Replication Metadata correctly
+- Fixed bug / regression where the ETag values that had quotation marks surrounding it were being removed starting in version 12.9.0.
 
 ## 12.10.0 (2021-09-08)
 - Includes all features from 12.10.0-beta.1 and 12.10.0-beta.2.

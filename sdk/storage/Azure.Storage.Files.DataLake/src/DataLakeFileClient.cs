@@ -3287,6 +3287,11 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="Upload(Stream, bool, CancellationToken)"/>
         /// operation creates and uploads content to a file.
         ///
+        /// If the file already exists, then its content will not be overwritten.
+        /// The request will be sent with If-None-Match Header with the value of
+        /// the special wildcard. So if the file already exists a
+        /// <see cref="RequestFailedException"/> is expected to be thrown.
+        ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" >
         /// Update Path</see>.
@@ -3313,6 +3318,12 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="Upload(Stream, bool, CancellationToken)"/>
         /// operation creates and uploads content to a file.
+        ///
+        /// If the overwrite parameter is not specified and
+        /// the file already exists, then its content will not be overwritten.
+        /// The request will be sent with If-None-Match Header with the value of
+        /// the special wildcard. So if the file already exists a
+        /// <see cref="RequestFailedException"/> is expected to be thrown.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" >
@@ -3349,7 +3360,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="UploadAsync(Stream, DataLakeFileUploadOptions, CancellationToken)"/>
-        /// operation creates and uploads content to a file.If the file already exists, its content will be overwritten,
+        /// operation creates and uploads content to a file. If the file already exists, its content will be overwritten,
         /// unless otherwise specified in the <see cref="DataLakeFileUploadOptions.Conditions"/> or alternatively use
         /// <see cref="UploadAsync(Stream)"/>, <see cref="UploadAsync(Stream, bool, CancellationToken)"/>.
         ///
@@ -3449,6 +3460,11 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="UploadAsync(Stream, bool, CancellationToken)"/>
         /// operation creates and uploads content to a file.
         ///
+        /// If the file already exists, then its content will not be overwritten.
+        /// The request will be sent with If-None-Match Header with the value of
+        /// the special wildcard. So if the file already exists a
+        /// <see cref="RequestFailedException"/> is expected to be thrown.
+        ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" >
         /// Update Path</see>.
@@ -3476,6 +3492,12 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="UploadAsync(Stream, bool, CancellationToken)"/>
         /// operation creates and uploads content to a file.
+        ///
+        /// If the overwrite parameter is not specified and
+        /// the file already exists, then its content will not be overwritten.
+        /// The request will be sent with If-None-Match Header with the value of
+        /// the special wildcard. So if the file already exists a
+        /// <see cref="RequestFailedException"/> is expected to be thrown.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" >
@@ -3620,6 +3642,11 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="Upload(Stream, bool, CancellationToken)"/>
         /// operation creates and uploads content to a file.
         ///
+        /// If the file already exists, then its content will not be overwritten.
+        /// The request will be sent with If-None-Match Header with the value of
+        /// the special wildcard. So if the file already exists a
+        /// <see cref="RequestFailedException"/> is expected to be thrown.
+        ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" >
         /// Update Path</see>.
@@ -3647,6 +3674,12 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="Upload(Stream, bool, CancellationToken)"/>
         /// operation creates and uploads content to a file.
+        ///
+        /// If the overwrite parameter is not specified and
+        /// the file already exists, then its content will not be overwritten.
+        /// The request will be sent with If-None-Match Header with the value of
+        /// the special wildcard. So if the file already exists a
+        /// <see cref="RequestFailedException"/> is expected to be thrown.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" >
@@ -3789,6 +3822,11 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="UploadAsync(Stream, bool, CancellationToken)"/>
         /// operation creates and uploads content to a file.
         ///
+        /// If the file already exists, then its content will not be overwritten.
+        /// The request will be sent with If-None-Match Header with the value of
+        /// the special wildcard. So if the file already exists a
+        /// <see cref="RequestFailedException"/> is expected to be thrown.
+        ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" >
         /// Update Path</see>.
@@ -3816,6 +3854,12 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="UploadAsync(Stream, bool, CancellationToken)"/>
         /// operation creates and uploads content to a file.
+        ///
+        /// If the overwrite parameter is not specified and
+        /// the file already exists, then its content will not be overwritten.
+        /// The request will be sent with If-None-Match Header with the value of
+        /// the special wildcard. So if the file already exists a
+        /// <see cref="RequestFailedException"/> is expected to be thrown.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" >
@@ -3890,6 +3934,7 @@ namespace Azure.Storage.Files.DataLake
 
             return await uploader.UploadInternal(
                 content,
+                expectedContentLength: default,
                 options,
                 options.ProgressHandler,
                 async,

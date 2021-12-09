@@ -19,12 +19,12 @@ namespace Azure.Messaging.WebPubSub
     {
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly string _endpoint;
         private readonly string _hub;
-        private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of WebPubSubServiceClient for mocking. </summary>
         protected WebPubSubServiceClient()
@@ -32,20 +32,32 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary> Generate token for the client to connect Azure Web PubSub service. </summary>
-        /// <param name="options"> The request options. </param>
         /// <param name="userId"> User Id. </param>
         /// <param name="role"> Roles that the connection with the generated token will have. </param>
         /// <param name="minutesToExpire"> The expire time of the generated token. </param>
+        /// <param name="context"> The request context. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   token: string
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        internal virtual async Task<Response> GenerateClientTokenImplAsync(RequestOptions options, string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null)
+        internal virtual async Task<Response> GenerateClientTokenImplAsync(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GenerateClientTokenImpl");
@@ -53,7 +65,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateGenerateClientTokenImplRequest(userId, role, minutesToExpire);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -63,20 +75,32 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary> Generate token for the client to connect Azure Web PubSub service. </summary>
-        /// <param name="options"> The request options. </param>
         /// <param name="userId"> User Id. </param>
         /// <param name="role"> Roles that the connection with the generated token will have. </param>
         /// <param name="minutesToExpire"> The expire time of the generated token. </param>
+        /// <param name="context"> The request context. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   token: string
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        internal virtual Response GenerateClientTokenImpl(RequestOptions options, string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null)
+        internal virtual Response GenerateClientTokenImpl(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GenerateClientTokenImpl");
@@ -84,7 +108,81 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateGenerateClientTokenImplRequest(userId, role, minutesToExpire);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Close the connections in the hub. </summary>
+        /// <param name="excluded"> Exclude these connectionIds when closing the connections in the hub. </param>
+        /// <param name="reason"> The reason closing the client connection. </param>
+        /// <param name="context"> The request context. </param>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CloseAllConnectionsAsync(IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseAllConnections");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCloseAllConnectionsRequest(excluded, reason);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Close the connections in the hub. </summary>
+        /// <param name="excluded"> Exclude these connectionIds when closing the connections in the hub. </param>
+        /// <param name="reason"> The reason closing the client connection. </param>
+        /// <param name="context"> The request context. </param>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response CloseAllConnections(IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseAllConnections");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCloseAllConnectionsRequest(excluded, reason);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -97,10 +195,25 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> SendToAllAsync(RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestOptions options = null)
+        public virtual async Task<Response> SendToAllAsync(RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToAll");
@@ -108,7 +221,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateSendToAllRequest(content, contentType, excluded);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -121,10 +234,25 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response SendToAll(RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestOptions options = null)
+        public virtual Response SendToAll(RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToAll");
@@ -132,7 +260,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateSendToAllRequest(content, contentType, excluded);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -143,10 +271,25 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Check if the connection with the given connectionId exists. </summary>
         /// <param name="connectionId"> The connection Id. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        internal virtual async Task<Response> ConnectionExistsImplAsync(string connectionId, RequestOptions options = null)
+        internal virtual async Task<Response> ConnectionExistsImplAsync(string connectionId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.ConnectionExistsImpl");
@@ -154,7 +297,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateConnectionExistsImplRequest(connectionId);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -165,10 +308,25 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Check if the connection with the given connectionId exists. </summary>
         /// <param name="connectionId"> The connection Id. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        internal virtual Response ConnectionExistsImpl(string connectionId, RequestOptions options = null)
+        internal virtual Response ConnectionExistsImpl(string connectionId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.ConnectionExistsImpl");
@@ -176,7 +334,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateConnectionExistsImplRequest(connectionId);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -188,10 +346,25 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Close the client connection. </summary>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="reason"> The reason closing the client connection. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CloseConnectionAsync(string connectionId, string reason = null, RequestOptions options = null)
+        public virtual async Task<Response> CloseConnectionAsync(string connectionId, string reason = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseConnection");
@@ -199,7 +372,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateCloseConnectionRequest(connectionId, reason);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -211,10 +384,25 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Close the client connection. </summary>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="reason"> The reason closing the client connection. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response CloseConnection(string connectionId, string reason = null, RequestOptions options = null)
+        public virtual Response CloseConnection(string connectionId, string reason = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseConnection");
@@ -222,7 +410,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateCloseConnectionRequest(connectionId, reason);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -235,10 +423,25 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="connectionId"> The connection Id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> or <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> SendToConnectionAsync(string connectionId, RequestContent content, ContentType contentType, RequestOptions options = null)
+        public virtual async Task<Response> SendToConnectionAsync(string connectionId, RequestContent content, ContentType contentType, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToConnection");
@@ -246,7 +449,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateSendToConnectionRequest(connectionId, content, contentType);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -259,10 +462,25 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="connectionId"> The connection Id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> or <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response SendToConnection(string connectionId, RequestContent content, ContentType contentType, RequestOptions options = null)
+        public virtual Response SendToConnection(string connectionId, RequestContent content, ContentType contentType, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToConnection");
@@ -270,7 +488,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateSendToConnectionRequest(connectionId, content, contentType);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -281,10 +499,25 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Check if there are any client connections inside the given group. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        internal virtual async Task<Response> GroupExistsImplAsync(string group, RequestOptions options = null)
+        internal virtual async Task<Response> GroupExistsImplAsync(string group, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GroupExistsImpl");
@@ -292,7 +525,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateGroupExistsImplRequest(group);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -303,10 +536,25 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Check if there are any client connections inside the given group. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        internal virtual Response GroupExistsImpl(string group, RequestOptions options = null)
+        internal virtual Response GroupExistsImpl(string group, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GroupExistsImpl");
@@ -314,7 +562,85 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateGroupExistsImplRequest(group);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Close connections in the specific group. </summary>
+        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="excluded"> Exclude these connectionIds when closing the connections in the group. </param>
+        /// <param name="reason"> The reason closing the client connection. </param>
+        /// <param name="context"> The request context. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="group"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CloseGroupConnectionsAsync(string group, IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseGroupConnections");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCloseGroupConnectionsRequest(group, excluded, reason);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Close connections in the specific group. </summary>
+        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="excluded"> Exclude these connectionIds when closing the connections in the group. </param>
+        /// <param name="reason"> The reason closing the client connection. </param>
+        /// <param name="context"> The request context. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="group"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response CloseGroupConnections(string group, IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseGroupConnections");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCloseGroupConnectionsRequest(group, excluded, reason);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -328,10 +654,25 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> SendToGroupAsync(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestOptions options = null)
+        public virtual async Task<Response> SendToGroupAsync(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToGroup");
@@ -339,7 +680,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateSendToGroupRequest(group, content, contentType, excluded);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -353,10 +694,25 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response SendToGroup(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestOptions options = null)
+        public virtual Response SendToGroup(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToGroup");
@@ -364,7 +720,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateSendToGroupRequest(group, content, contentType, excluded);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -376,10 +732,25 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Add a connection to the target group. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="connectionId"> Target connection Id. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> AddConnectionToGroupAsync(string group, string connectionId, RequestOptions options = null)
+        public virtual async Task<Response> AddConnectionToGroupAsync(string group, string connectionId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.AddConnectionToGroup");
@@ -387,7 +758,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateAddConnectionToGroupRequest(group, connectionId);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -399,10 +770,25 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Add a connection to the target group. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="connectionId"> Target connection Id. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response AddConnectionToGroup(string group, string connectionId, RequestOptions options = null)
+        public virtual Response AddConnectionToGroup(string group, string connectionId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.AddConnectionToGroup");
@@ -410,7 +796,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateAddConnectionToGroupRequest(group, connectionId);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -422,10 +808,25 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Remove a connection from the target group. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="connectionId"> Target connection Id. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> RemoveConnectionFromGroupAsync(string group, string connectionId, RequestOptions options = null)
+        public virtual async Task<Response> RemoveConnectionFromGroupAsync(string group, string connectionId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveConnectionFromGroup");
@@ -433,7 +834,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateRemoveConnectionFromGroupRequest(group, connectionId);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -445,10 +846,25 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Remove a connection from the target group. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="connectionId"> Target connection Id. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response RemoveConnectionFromGroup(string group, string connectionId, RequestOptions options = null)
+        public virtual Response RemoveConnectionFromGroup(string group, string connectionId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveConnectionFromGroup");
@@ -456,7 +872,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateRemoveConnectionFromGroupRequest(group, connectionId);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -467,10 +883,25 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Check if there are any client connections connected for the given user. </summary>
         /// <param name="userId"> Target user Id. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        internal virtual async Task<Response> UserExistsImplAsync(string userId, RequestOptions options = null)
+        internal virtual async Task<Response> UserExistsImplAsync(string userId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.UserExistsImpl");
@@ -478,7 +909,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateUserExistsImplRequest(userId);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -489,10 +920,25 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Check if there are any client connections connected for the given user. </summary>
         /// <param name="userId"> Target user Id. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        internal virtual Response UserExistsImpl(string userId, RequestOptions options = null)
+        internal virtual Response UserExistsImpl(string userId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.UserExistsImpl");
@@ -500,7 +946,85 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateUserExistsImplRequest(userId);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Close connections for the specific user. </summary>
+        /// <param name="userId"> The user Id. </param>
+        /// <param name="excluded"> Exclude these connectionIds when closing the connections for the user. </param>
+        /// <param name="reason"> The reason closing the client connection. </param>
+        /// <param name="context"> The request context. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CloseUserConnectionsAsync(string userId, IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseUserConnections");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCloseUserConnectionsRequest(userId, excluded, reason);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Close connections for the specific user. </summary>
+        /// <param name="userId"> The user Id. </param>
+        /// <param name="excluded"> Exclude these connectionIds when closing the connections for the user. </param>
+        /// <param name="reason"> The reason closing the client connection. </param>
+        /// <param name="context"> The request context. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response CloseUserConnections(string userId, IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseUserConnections");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCloseUserConnectionsRequest(userId, excluded, reason);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -513,10 +1037,25 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="userId"> The user Id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> SendToUserAsync(string userId, RequestContent content, ContentType contentType, RequestOptions options = null)
+        public virtual async Task<Response> SendToUserAsync(string userId, RequestContent content, ContentType contentType, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToUser");
@@ -524,7 +1063,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateSendToUserRequest(userId, content, contentType);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -537,10 +1076,25 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="userId"> The user Id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response SendToUser(string userId, RequestContent content, ContentType contentType, RequestOptions options = null)
+        public virtual Response SendToUser(string userId, RequestContent content, ContentType contentType, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToUser");
@@ -548,7 +1102,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateSendToUserRequest(userId, content, contentType);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -560,10 +1114,25 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Add a user to the target group. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="userId"> Target user Id. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="userId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> AddUserToGroupAsync(string group, string userId, RequestOptions options = null)
+        public virtual async Task<Response> AddUserToGroupAsync(string group, string userId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.AddUserToGroup");
@@ -571,7 +1140,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateAddUserToGroupRequest(group, userId);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -583,10 +1152,25 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Add a user to the target group. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="userId"> Target user Id. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="userId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response AddUserToGroup(string group, string userId, RequestOptions options = null)
+        public virtual Response AddUserToGroup(string group, string userId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.AddUserToGroup");
@@ -594,7 +1178,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateAddUserToGroupRequest(group, userId);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -606,10 +1190,25 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Remove a user from the target group. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="userId"> Target user Id. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="userId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> RemoveUserFromGroupAsync(string group, string userId, RequestOptions options = null)
+        public virtual async Task<Response> RemoveUserFromGroupAsync(string group, string userId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromGroup");
@@ -617,7 +1216,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateRemoveUserFromGroupRequest(group, userId);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -629,10 +1228,25 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Remove a user from the target group. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="userId"> Target user Id. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="userId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response RemoveUserFromGroup(string group, string userId, RequestOptions options = null)
+        public virtual Response RemoveUserFromGroup(string group, string userId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromGroup");
@@ -640,7 +1254,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateRemoveUserFromGroupRequest(group, userId);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -651,10 +1265,25 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Remove a user from all groups. </summary>
         /// <param name="userId"> Target user Id. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> RemoveUserFromAllGroupsAsync(string userId, RequestOptions options = null)
+        public virtual async Task<Response> RemoveUserFromAllGroupsAsync(string userId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromAllGroups");
@@ -662,7 +1291,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateRemoveUserFromAllGroupsRequest(userId);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -673,10 +1302,25 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Remove a user from all groups. </summary>
         /// <param name="userId"> Target user Id. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response RemoveUserFromAllGroups(string userId, RequestOptions options = null)
+        public virtual Response RemoveUserFromAllGroups(string userId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromAllGroups");
@@ -684,7 +1328,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateRemoveUserFromAllGroupsRequest(userId);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -697,10 +1341,25 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. Allowed values: &quot;sendToGroup&quot; | &quot;joinLeaveGroup&quot;. </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, grant the permission to all the targets. If set, grant the permission to the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        internal virtual async Task<Response> GrantPermissionAsync(string permission, string connectionId, string targetName = null, RequestOptions options = null)
+        internal virtual async Task<Response> GrantPermissionAsync(string permission, string connectionId, string targetName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GrantPermission");
@@ -708,7 +1367,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateGrantPermissionRequest(permission, connectionId, targetName);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -721,10 +1380,25 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. Allowed values: &quot;sendToGroup&quot; | &quot;joinLeaveGroup&quot;. </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, grant the permission to all the targets. If set, grant the permission to the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        internal virtual Response GrantPermission(string permission, string connectionId, string targetName = null, RequestOptions options = null)
+        internal virtual Response GrantPermission(string permission, string connectionId, string targetName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GrantPermission");
@@ -732,7 +1406,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateGrantPermissionRequest(permission, connectionId, targetName);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -745,10 +1419,25 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. Allowed values: &quot;sendToGroup&quot; | &quot;joinLeaveGroup&quot;. </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, revoke the permission for all targets. If set, revoke the permission for the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        internal virtual async Task<Response> RevokePermissionAsync(string permission, string connectionId, string targetName = null, RequestOptions options = null)
+        internal virtual async Task<Response> RevokePermissionAsync(string permission, string connectionId, string targetName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RevokePermission");
@@ -756,7 +1445,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateRevokePermissionRequest(permission, connectionId, targetName);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -769,10 +1458,25 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. Allowed values: &quot;sendToGroup&quot; | &quot;joinLeaveGroup&quot;. </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, revoke the permission for all targets. If set, revoke the permission for the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        internal virtual Response RevokePermission(string permission, string connectionId, string targetName = null, RequestOptions options = null)
+        internal virtual Response RevokePermission(string permission, string connectionId, string targetName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RevokePermission");
@@ -780,7 +1484,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateRevokePermissionRequest(permission, connectionId, targetName);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -793,10 +1497,25 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. Allowed values: &quot;sendToGroup&quot; | &quot;joinLeaveGroup&quot;. </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, get the permission for all targets. If set, get the permission for the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        internal virtual async Task<Response> CheckPermissionAsync(string permission, string connectionId, string targetName = null, RequestOptions options = null)
+        internal virtual async Task<Response> CheckPermissionAsync(string permission, string connectionId, string targetName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CheckPermission");
@@ -804,7 +1523,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateCheckPermissionRequest(permission, connectionId, targetName);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -817,10 +1536,25 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. Allowed values: &quot;sendToGroup&quot; | &quot;joinLeaveGroup&quot;. </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, get the permission for all targets. If set, get the permission for the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        internal virtual Response CheckPermission(string permission, string connectionId, string targetName = null, RequestOptions options = null)
+        internal virtual Response CheckPermission(string permission, string connectionId, string targetName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CheckPermission");
@@ -828,7 +1562,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateCheckPermissionRequest(permission, connectionId, targetName);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -843,7 +1577,7 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/:generateToken", false);
@@ -862,13 +1596,38 @@ namespace Azure.Messaging.WebPubSub
             {
                 uri.AppendQuery("minutesToExpire", minutesToExpire.Value, true);
             }
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
             message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateCloseAllConnectionsRequest(IEnumerable<string> excluded, string reason)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(_hub, true);
+            uri.AppendPath("/:closeConnections", false);
+            if (excluded != null)
+            {
+                foreach (var param in excluded)
+                {
+                    uri.AppendQuery("excluded", param, true);
+                }
+            }
+            if (reason != null)
+            {
+                uri.AppendQuery("reason", reason, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
@@ -878,7 +1637,7 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/:send", false);
@@ -889,11 +1648,9 @@ namespace Azure.Messaging.WebPubSub
                     uri.AppendQuery("excluded", param, true);
                 }
             }
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
             message.ResponseClassifier = ResponseClassifier202.Instance;
@@ -906,7 +1663,7 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/:send", false);
@@ -917,11 +1674,9 @@ namespace Azure.Messaging.WebPubSub
                     uri.AppendQuery("excluded", param, true);
                 }
             }
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "text/plain");
             request.Content = content;
             message.ResponseClassifier = ResponseClassifier202.Instance;
@@ -934,16 +1689,14 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/connections/", false);
             uri.AppendPath(connectionId, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             message.ResponseClassifier = ResponseClassifier200404.Instance;
             return message;
         }
@@ -954,7 +1707,7 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/connections/", false);
@@ -963,12 +1716,10 @@ namespace Azure.Messaging.WebPubSub
             {
                 uri.AppendQuery("reason", reason, true);
             }
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
+            request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
@@ -978,17 +1729,15 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/connections/", false);
             uri.AppendPath(connectionId, true);
             uri.AppendPath("/:send", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
             message.ResponseClassifier = ResponseClassifier202.Instance;
@@ -1001,17 +1750,15 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/connections/", false);
             uri.AppendPath(connectionId, true);
             uri.AppendPath("/:send", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "text/plain");
             request.Content = content;
             message.ResponseClassifier = ResponseClassifier202.Instance;
@@ -1024,17 +1771,45 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/groups/", false);
             uri.AppendPath(group, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             message.ResponseClassifier = ResponseClassifier200404.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateCloseGroupConnectionsRequest(string group, IEnumerable<string> excluded, string reason)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(_hub, true);
+            uri.AppendPath("/groups/", false);
+            uri.AppendPath(group, true);
+            uri.AppendPath("/:closeConnections", false);
+            if (excluded != null)
+            {
+                foreach (var param in excluded)
+                {
+                    uri.AppendQuery("excluded", param, true);
+                }
+            }
+            if (reason != null)
+            {
+                uri.AppendQuery("reason", reason, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
@@ -1044,7 +1819,7 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/groups/", false);
@@ -1057,11 +1832,9 @@ namespace Azure.Messaging.WebPubSub
                     uri.AppendQuery("excluded", param, true);
                 }
             }
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
             message.ResponseClassifier = ResponseClassifier202.Instance;
@@ -1074,7 +1847,7 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/groups/", false);
@@ -1087,11 +1860,9 @@ namespace Azure.Messaging.WebPubSub
                     uri.AppendQuery("excluded", param, true);
                 }
             }
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "text/plain");
             request.Content = content;
             message.ResponseClassifier = ResponseClassifier202.Instance;
@@ -1104,18 +1875,16 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/groups/", false);
             uri.AppendPath(group, true);
             uri.AppendPath("/connections/", false);
             uri.AppendPath(connectionId, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             message.ResponseClassifier = ResponseClassifier200404.Instance;
             return message;
         }
@@ -1126,19 +1895,17 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/groups/", false);
             uri.AppendPath(group, true);
             uri.AppendPath("/connections/", false);
             uri.AppendPath(connectionId, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
+            request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
@@ -1148,17 +1915,45 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             message.ResponseClassifier = ResponseClassifier200404.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateCloseUserConnectionsRequest(string userId, IEnumerable<string> excluded, string reason)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(_hub, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendPath("/:closeConnections", false);
+            if (excluded != null)
+            {
+                foreach (var param in excluded)
+                {
+                    uri.AppendQuery("excluded", param, true);
+                }
+            }
+            if (reason != null)
+            {
+                uri.AppendQuery("reason", reason, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
@@ -1168,17 +1963,15 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendPath("/:send", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
             message.ResponseClassifier = ResponseClassifier202.Instance;
@@ -1191,17 +1984,15 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendPath("/:send", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "text/plain");
             request.Content = content;
             message.ResponseClassifier = ResponseClassifier202.Instance;
@@ -1214,18 +2005,16 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendPath("/groups/", false);
             uri.AppendPath(group, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             message.ResponseClassifier = ResponseClassifier200404.Instance;
             return message;
         }
@@ -1236,19 +2025,17 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendPath("/groups/", false);
             uri.AppendPath(group, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
+            request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
@@ -1258,18 +2045,16 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendPath("/groups", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
+            request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
@@ -1279,7 +2064,7 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/permissions/", false);
@@ -1290,11 +2075,9 @@ namespace Azure.Messaging.WebPubSub
             {
                 uri.AppendQuery("targetName", targetName, true);
             }
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
@@ -1305,7 +2088,7 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/permissions/", false);
@@ -1316,12 +2099,10 @@ namespace Azure.Messaging.WebPubSub
             {
                 uri.AppendQuery("targetName", targetName, true);
             }
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
+            request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
@@ -1331,7 +2112,7 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/permissions/", false);
@@ -1342,11 +2123,9 @@ namespace Azure.Messaging.WebPubSub
             {
                 uri.AppendQuery("targetName", targetName, true);
             }
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             message.ResponseClassifier = ResponseClassifier200404.Instance;
             return message;
         }
@@ -1360,6 +2139,19 @@ namespace Azure.Messaging.WebPubSub
                 return message.Response.Status switch
                 {
                     200 => false,
+                    _ => true
+                };
+            }
+        }
+        private sealed class ResponseClassifier204 : ResponseClassifier
+        {
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier204();
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                return message.Response.Status switch
+                {
+                    204 => false,
                     _ => true
                 };
             }

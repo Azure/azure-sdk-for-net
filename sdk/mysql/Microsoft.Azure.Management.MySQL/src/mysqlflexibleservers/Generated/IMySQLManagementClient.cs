@@ -83,9 +83,9 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
         IReplicasOperations Replicas { get; }
 
         /// <summary>
-        /// Gets the IServerKeysOperations.
+        /// Gets the IBackupsOperations.
         /// </summary>
-        IServerKeysOperations ServerKeys { get; }
+        IBackupsOperations Backups { get; }
 
         /// <summary>
         /// Gets the IFirewallRulesOperations.
@@ -103,11 +103,6 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
         IConfigurationsOperations Configurations { get; }
 
         /// <summary>
-        /// Gets the IServerParametersOperations.
-        /// </summary>
-        IServerParametersOperations ServerParameters { get; }
-
-        /// <summary>
         /// Gets the ILocationBasedCapabilitiesOperations.
         /// </summary>
         ILocationBasedCapabilitiesOperations LocationBasedCapabilities { get; }
@@ -121,6 +116,11 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
         /// Gets the ICheckNameAvailabilityOperations.
         /// </summary>
         ICheckNameAvailabilityOperations CheckNameAvailability { get; }
+
+        /// <summary>
+        /// Gets the IGetPrivateDnsZoneSuffixOperations.
+        /// </summary>
+        IGetPrivateDnsZoneSuffixOperations GetPrivateDnsZoneSuffix { get; }
 
         /// <summary>
         /// Gets the IOperations.

@@ -3,7 +3,9 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <Description>Microsoft Azure WebJobs SDK ServiceBus Extension</Description>
-    <Version>5.0.0-beta.7</Version>
+    <Version>5.3.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>5.2.0</ApiCompatVersion>
     <NoWarn>$(NoWarn);AZC0001;CS1591;SA1636;CA1507</NoWarn>
     <SignAssembly>true</SignAssembly>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>

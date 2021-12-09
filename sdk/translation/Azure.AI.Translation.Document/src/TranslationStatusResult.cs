@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text.Json;
 using Azure.AI.Translation.Document.Models;
 using Azure.Core;
 
@@ -13,6 +14,9 @@ namespace Azure.AI.Translation.Document
     [CodeGenModel("TranslationStatus")]
     public partial class TranslationStatusResult
     {
+        [CodeGenMember("Error")]
+        private readonly JsonElement _error;
+
         /// <summary>
         /// Id of the translation operation.
         /// </summary>
@@ -65,6 +69,11 @@ namespace Azure.AI.Translation.Document
         /// Total characters charged by the Document Translation service
         /// </summary>
         public long TotalCharactersCharged => Summary.TotalCharacterCharged;
+
+        /// <summary>
+        /// This contains an outer error with the error code, message, details, target and an inner error with more descriptive details.
+        /// </summary>
+        public ResponseError Error => _error.ValueKind == JsonValueKind.Undefined ? null : JsonSerializer.Deserialize<ResponseError>(_error.GetRawText());
 
         /// <summary> The Status Summary of the operation. </summary>
         [CodeGenMember("Summary")]

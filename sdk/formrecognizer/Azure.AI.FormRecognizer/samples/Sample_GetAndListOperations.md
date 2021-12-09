@@ -27,6 +27,11 @@ If the operation failed, the error information can be accessed using the `Error`
 ```C# Snippet:FormRecognizerSampleGetAndListOperations
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
+// Make sure there is at least one operation, so we are going to build a custom model.
+Uri trainingFileUri = <trainingFileUri>;
+BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri);
+await operation.WaitForCompletionAsync();
+
 // List the first ten or fewer operations that have been executed in the last 24h.
 AsyncPageable<ModelOperationInfo> modelOperations = client.GetOperationsAsync();
 
@@ -62,7 +67,7 @@ if (specificOperation.Status == DocumentOperationStatus.Succeeded)
 else if (specificOperation.Status == DocumentOperationStatus.Failed)
 {
     Console.WriteLine($"My {specificOperation.Kind} operation failed.");
-    DocumentAnalysisError error = specificOperation.Error;
+    ResponseError error = specificOperation.Error;
     Console.WriteLine($"Code: {error.Code}: Message: {error.Message}");
 }
 else

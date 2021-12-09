@@ -54,5 +54,7 @@ namespace Azure.Storage.Blobs.Models
         /// hashing on uploads.
         /// </summary>
         public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+
+        internal string OperationName { get; set; }
     }
 }

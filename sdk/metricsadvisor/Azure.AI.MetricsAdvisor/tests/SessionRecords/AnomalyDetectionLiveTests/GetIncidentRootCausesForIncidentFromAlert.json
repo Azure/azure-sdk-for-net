@@ -1,13 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/alert/anomaly/configurations/204a211a-c5f4-45f3-a30e-512fb25d1d2c/alerts/17571a77000/incidents",
+      "RequestUri": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/alert/anomaly/configurations/1c1575d8-b09e-40c3-a3c0-d459c64d8382/alerts/17bbd8dec00/incidents",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-03006ea142f68743aecf2a0c33f37faa-b5dbb9a308c3e34e-00",
-        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210512.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-7eeb7932e2cbb749a8612a958a18dccf-e98628f4eae28544-00",
+        "User-Agent": [
+          "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20211118.1",
+          "(.NET 5.0.12; Microsoft Windows 10.0.22000)"
+        ],
         "x-api-key": "Sanitized",
         "x-ms-client-request-id": "c816e09d1dcd01e80f7392b686213868",
         "x-ms-return-client-request-id": "true"
@@ -15,307 +18,91 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "f6de55a2-a95e-4072-8e1a-16b29e522fa6",
-        "Content-Length": "6744",
+        "apim-request-id": "00422acd-678c-44c5-aaa3-efc294d37c8f",
+        "Content-Length": "1541",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 12 May 2021 23:59:16 GMT",
+        "Date": "Thu, 18 Nov 2021 17:48:28 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "406",
-        "x-request-id": "f6de55a2-a95e-4072-8e1a-16b29e522fa6"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "329",
+        "X-Request-ID": "00422acd-678c-44c5-aaa3-efc294d37c8f"
       },
       "ResponseBody": {
         "value": [
           {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
-            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
-            "incidentId": "0f099f2089162cab683d305ad1a9cba8-17571a77000",
-            "startTime": "2020-10-29T00:00:00Z",
-            "lastTime": "2020-10-29T00:00:00Z",
+            "dataFeedId": "151e5444-449f-441e-8b64-988f21c5d054",
+            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
+            "anomalyDetectionConfigurationId": "efaee305-f049-43ec-9f9b-76026d55c14a",
+            "incidentId": "30612c95b4c216ef418956c5c6162691-17bbd8dec00",
+            "startTime": "2021-09-07T00:00:00Z",
+            "lastTime": "2021-09-07T00:00:00Z",
             "rootNode": {
               "dimension": {
-                "city": "Sao Paulo",
-                "category": "Grocery \u0026 Gourmet Food"
-              }
-            },
-            "property": {
-              "incidentStatus": "Resolved",
-              "valueOfRootNode": 3.4,
-              "expectedValueOfRootNode": 1.8564662412054167
-            }
-          },
-          {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
-            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
-            "incidentId": "15ee0a88ee90d2b7580b07acac9b5f1b-17571a77000",
-            "startTime": "2020-10-29T00:00:00Z",
-            "lastTime": "2020-10-29T00:00:00Z",
-            "rootNode": {
-              "dimension": {
-                "city": "Bengaluru",
-                "category": "Grocery \u0026 Gourmet Food"
+                "region": "Tianjin",
+                "category": "Home \u0026 Garden"
               }
             },
             "property": {
               "maxSeverity": "Low",
               "incidentStatus": "Active",
-              "valueOfRootNode": 0.2,
-              "expectedValueOfRootNode": 0.0
+              "valueOfRootNode": 18544.0,
+              "expectedValueOfRootNode": 18573.49119556344
             }
           },
           {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
-            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
-            "incidentId": "2b03e492fd98f311dac5754867352e2f-17571a77000",
-            "startTime": "2020-10-28T00:00:00Z",
-            "lastTime": "2020-10-29T00:00:00Z",
+            "dataFeedId": "151e5444-449f-441e-8b64-988f21c5d054",
+            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
+            "anomalyDetectionConfigurationId": "efaee305-f049-43ec-9f9b-76026d55c14a",
+            "incidentId": "4ec127166abf8387b2874bae49734ab1-17bbd8dec00",
+            "startTime": "2021-09-06T00:00:00Z",
+            "lastTime": "2021-09-07T00:00:00Z",
             "rootNode": {
               "dimension": {
-                "city": "Los Angeles",
-                "category": "Camera \u0026 Photo"
-              }
-            },
-            "property": {
-              "maxSeverity": "Low",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 0.4,
-              "expectedValueOfRootNode": 0.23381129349099047
-            }
-          },
-          {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
-            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
-            "incidentId": "2dfaa266fcd69f2019345aee741a23a4-17571a77000",
-            "startTime": "2020-10-29T00:00:00Z",
-            "lastTime": "2020-10-29T00:00:00Z",
-            "rootNode": {
-              "dimension": {
-                "city": "Tehran",
-                "category": "Grocery \u0026 Gourmet Food"
-              }
-            },
-            "property": {
-              "maxSeverity": "Low",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 0.6,
-              "expectedValueOfRootNode": 0.13304319424495817
-            }
-          },
-          {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
-            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
-            "incidentId": "323c79b4e6fc7e6aef0a75852c909fde-17571a77000",
-            "startTime": "2020-10-29T00:00:00Z",
-            "lastTime": "2020-10-29T00:00:00Z",
-            "rootNode": {
-              "dimension": {
-                "city": "Tokyo",
-                "category": "Electronics (Consumer)"
-              }
-            },
-            "property": {
-              "maxSeverity": "Low",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 0.2,
-              "expectedValueOfRootNode": 0.0
-            }
-          },
-          {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
-            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
-            "incidentId": "39545810eabd039e3c5bca795889e4d5-17571a77000",
-            "startTime": "2020-10-29T00:00:00Z",
-            "lastTime": "2020-10-29T00:00:00Z",
-            "rootNode": {
-              "dimension": {
-                "city": "Jakarta",
-                "category": "Electronics (Consumer)"
-              }
-            },
-            "property": {
-              "maxSeverity": "Low",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 0.6,
-              "expectedValueOfRootNode": 0.0
-            }
-          },
-          {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
-            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
-            "incidentId": "596c3ea953875e9e69bfe44b2f9c6d9c-17571a77000",
-            "startTime": "2020-10-29T00:00:00Z",
-            "lastTime": "2020-10-29T00:00:00Z",
-            "rootNode": {
-              "dimension": {
-                "city": "Istanbul",
-                "category": "Electronics (Accessories)"
-              }
-            },
-            "property": {
-              "incidentStatus": "Resolved",
-              "valueOfRootNode": 0.0,
-              "expectedValueOfRootNode": 5.89638307091832
-            }
-          },
-          {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
-            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
-            "incidentId": "5a0692283edccf37ce825b3a8d475f4e-17571a77000",
-            "startTime": "2020-10-29T00:00:00Z",
-            "lastTime": "2020-10-29T00:00:00Z",
-            "rootNode": {
-              "dimension": {
-                "city": "__SUM__",
+                "region": "__SUM__",
                 "category": "__SUM__"
               }
             },
             "property": {
               "maxSeverity": "High",
               "incidentStatus": "Active",
-              "valueOfRootNode": 79092033.4,
-              "expectedValueOfRootNode": 83904129.166464686
+              "valueOfRootNode": 65120708.60000002,
+              "expectedValueOfRootNode": 60928226.58873364
             }
           },
           {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
-            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
-            "incidentId": "740e015e72e8de201191854db904421b-17571a77000",
-            "startTime": "2020-10-29T00:00:00Z",
-            "lastTime": "2020-10-29T00:00:00Z",
+            "dataFeedId": "151e5444-449f-441e-8b64-988f21c5d054",
+            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
+            "anomalyDetectionConfigurationId": "efaee305-f049-43ec-9f9b-76026d55c14a",
+            "incidentId": "efe6bdf61f01a37d8ddbb133afde0756-17bbd8dec00",
+            "startTime": "2021-09-07T00:00:00Z",
+            "lastTime": "2021-09-07T00:00:00Z",
             "rootNode": {
               "dimension": {
-                "city": "Mexico City",
-                "category": "Automotive \u0026 Powersports"
-              }
-            },
-            "property": {
-              "incidentStatus": "Resolved",
-              "valueOfRootNode": 0.2,
-              "expectedValueOfRootNode": 0.0
-            }
-          },
-          {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
-            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
-            "incidentId": "ade81d2ff75a21ac9f496133d1484c89-17571a77000",
-            "startTime": "2020-10-29T00:00:00Z",
-            "lastTime": "2020-10-29T00:00:00Z",
-            "rootNode": {
-              "dimension": {
-                "city": "Rio de Janeiro",
-                "category": "Device Accessories"
-              }
-            },
-            "property": {
-              "incidentStatus": "Resolved",
-              "valueOfRootNode": 0.0,
-              "expectedValueOfRootNode": 0.21970638531468334
-            }
-          },
-          {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
-            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
-            "incidentId": "c3b1690cc5c7a724cb728eb74c084a4c-17571a77000",
-            "startTime": "2020-10-29T00:00:00Z",
-            "lastTime": "2020-10-29T00:00:00Z",
-            "rootNode": {
-              "dimension": {
-                "city": "Houston",
-                "category": "Automotive \u0026 Powersports"
-              }
-            },
-            "property": {
-              "incidentStatus": "Resolved",
-              "valueOfRootNode": 1.0,
-              "expectedValueOfRootNode": 0.012328166585182702
-            }
-          },
-          {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
-            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
-            "incidentId": "c87ace3b9f582c6a6142026c80f2de44-17571a77000",
-            "startTime": "2020-10-29T00:00:00Z",
-            "lastTime": "2020-10-29T00:00:00Z",
-            "rootNode": {
-              "dimension": {
-                "city": "Manila",
-                "category": "Electronics (Consumer)"
+                "region": "Istanbul",
+                "category": "Home \u0026 Garden"
               }
             },
             "property": {
               "maxSeverity": "Low",
               "incidentStatus": "Active",
-              "valueOfRootNode": 0.2,
-              "expectedValueOfRootNode": 0.0
-            }
-          },
-          {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
-            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
-            "incidentId": "ca46ba86922052929ece3d4c8794c442-17571a77000",
-            "startTime": "2020-10-29T00:00:00Z",
-            "lastTime": "2020-10-29T00:00:00Z",
-            "rootNode": {
-              "dimension": {
-                "city": "Mexico City",
-                "category": "Grocery \u0026 Gourmet Food"
-              }
-            },
-            "property": {
-              "maxSeverity": "Low",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 2.8,
-              "expectedValueOfRootNode": 0.32331066012917681
-            }
-          },
-          {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
-            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
-            "incidentId": "dd1566e6ab95777eab6d996389dba73d-17571a77000",
-            "startTime": "2020-10-29T00:00:00Z",
-            "lastTime": "2020-10-29T00:00:00Z",
-            "rootNode": {
-              "dimension": {
-                "city": "Lahore",
-                "category": "Electronics (Accessories)"
-              }
-            },
-            "property": {
-              "incidentStatus": "Resolved",
-              "valueOfRootNode": 0.0,
-              "expectedValueOfRootNode": 1.7619857385604643
-            }
-          },
-          {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
-            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
-            "incidentId": "f0b8fda3844b8d12d646fadbad496347-17571a77000",
-            "startTime": "2020-10-29T00:00:00Z",
-            "lastTime": "2020-10-29T00:00:00Z",
-            "rootNode": {
-              "dimension": {
-                "city": "Cairo",
-                "category": "Electronics (Consumer)"
-              }
-            },
-            "property": {
-              "maxSeverity": "Low",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 1.4,
-              "expectedValueOfRootNode": 0.00082077254676293527
+              "valueOfRootNode": 10715.2,
+              "expectedValueOfRootNode": 9806.569582296583
             }
           }
         ]
       }
     },
     {
-      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c/incidents/5a0692283edccf37ce825b3a8d475f4e-17571a77000/rootCause",
+      "RequestUri": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/efaee305-f049-43ec-9f9b-76026d55c14a/incidents/30612c95b4c216ef418956c5c6162691-17bbd8dec00/rootCause",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-bd28b2a70a8cbe4880ae9d3b27e51108-acffacab0510ce49-00",
-        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210512.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-e1d0f4645e94af418f3f37ff0ed1b56a-50d313e4b015c844-00",
+        "User-Agent": [
+          "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20211118.1",
+          "(.NET 5.0.12; Microsoft Windows 10.0.22000)"
+        ],
         "x-api-key": "Sanitized",
         "x-ms-client-request-id": "80a38acd669f32de3263a4ad827ffc5b",
         "x-ms-return-client-request-id": "true"
@@ -323,261 +110,34 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "e46df88e-c6de-4c99-b559-a095335577a7",
-        "Content-Length": "4931",
+        "apim-request-id": "8361199c-ecbf-4781-8703-5de1704c9721",
+        "Content-Length": "148",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 12 May 2021 23:59:16 GMT",
+        "Date": "Thu, 18 Nov 2021 17:48:28 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "369",
-        "x-request-id": "e46df88e-c6de-4c99-b559-a095335577a7"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "318",
+        "X-Request-ID": "8361199c-ecbf-4781-8703-5de1704c9721"
       },
       "ResponseBody": {
         "value": [
           {
             "rootCause": {
               "dimension": {
-                "category": "Shoes Handbags \u0026 Sunglasses",
-                "city": "Karachi"
+                "region": "Tianjin",
+                "category": "Home \u0026 Garden"
               }
             },
-            "path": [
-              "category",
-              "city"
-            ],
-            "score": 0.11089225174293765,
-            "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Karachi"
-          },
-          {
-            "rootCause": {
-              "dimension": {
-                "category": "Shoes Handbags \u0026 Sunglasses",
-                "city": "Mumbai"
-              }
-            },
-            "path": [
-              "category",
-              "city"
-            ],
-            "score": 0.042003840876839782,
-            "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Mumbai"
-          },
-          {
-            "rootCause": {
-              "dimension": {
-                "category": "Shoes Handbags \u0026 Sunglasses",
-                "city": "Beijing"
-              }
-            },
-            "path": [
-              "category",
-              "city"
-            ],
-            "score": 0.022965991387544238,
-            "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Beijing"
-          },
-          {
-            "rootCause": {
-              "dimension": {
-                "category": "Shoes Handbags \u0026 Sunglasses",
-                "city": "Delhi"
-              }
-            },
-            "path": [
-              "category",
-              "city"
-            ],
-            "score": 0.021664945755742737,
-            "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Delhi"
-          },
-          {
-            "rootCause": {
-              "dimension": {
-                "category": "Shoes Handbags \u0026 Sunglasses",
-                "city": "Tianjin"
-              }
-            },
-            "path": [
-              "category",
-              "city"
-            ],
-            "score": 0.012681768994856457,
-            "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Tianjin"
-          },
-          {
-            "rootCause": {
-              "dimension": {
-                "category": "Shoes Handbags \u0026 Sunglasses",
-                "city": "Miami"
-              }
-            },
-            "path": [
-              "category",
-              "city"
-            ],
-            "score": 0.0095021699028767226,
-            "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Miami"
-          },
-          {
-            "rootCause": {
-              "dimension": {
-                "category": "Shoes Handbags \u0026 Sunglasses",
-                "city": "Santiago"
-              }
-            },
-            "path": [
-              "category",
-              "city"
-            ],
-            "score": 0.00910792036807545,
-            "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Santiago"
-          },
-          {
-            "rootCause": {
-              "dimension": {
-                "category": "Shoes Handbags \u0026 Sunglasses",
-                "city": "Osaka"
-              }
-            },
-            "path": [
-              "category",
-              "city"
-            ],
-            "score": 0.0062310114852275333,
-            "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Osaka"
-          },
-          {
-            "rootCause": {
-              "dimension": {
-                "category": "Shoes Handbags \u0026 Sunglasses",
-                "city": "New York"
-              }
-            },
-            "path": [
-              "category",
-              "city"
-            ],
-            "score": 0.0053759057751610051,
-            "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = New York"
-          },
-          {
-            "rootCause": {
-              "dimension": {
-                "category": "Shoes Handbags \u0026 Sunglasses",
-                "city": "Dallas"
-              }
-            },
-            "path": [
-              "category",
-              "city"
-            ],
-            "score": 0.0035519659323802744,
-            "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Dallas"
-          },
-          {
-            "rootCause": {
-              "dimension": {
-                "category": "Shoes Handbags \u0026 Sunglasses",
-                "city": "Bogota"
-              }
-            },
-            "path": [
-              "category",
-              "city"
-            ],
-            "score": 0.0034541118505209134,
-            "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Bogota"
-          },
-          {
-            "rootCause": {
-              "dimension": {
-                "category": "Shoes Handbags \u0026 Sunglasses",
-                "city": "Lima"
-              }
-            },
-            "path": [
-              "category",
-              "city"
-            ],
-            "score": 0.0026728692603048554,
-            "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Lima"
-          },
-          {
-            "rootCause": {
-              "dimension": {
-                "category": "Shoes Handbags \u0026 Sunglasses",
-                "city": "Madrid"
-              }
-            },
-            "path": [
-              "category",
-              "city"
-            ],
-            "score": 0.0024158823559967124,
-            "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Madrid"
-          },
-          {
-            "rootCause": {
-              "dimension": {
-                "category": "Shoes Handbags \u0026 Sunglasses",
-                "city": "Hong Kong"
-              }
-            },
-            "path": [
-              "category",
-              "city"
-            ],
-            "score": 0.0023511967363784025,
-            "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Hong Kong"
-          },
-          {
-            "rootCause": {
-              "dimension": {
-                "category": "Shoes Handbags \u0026 Sunglasses",
-                "city": "Bangkok"
-              }
-            },
-            "path": [
-              "category",
-              "city"
-            ],
-            "score": 0.0015569996223966376,
-            "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Bangkok"
-          },
-          {
-            "rootCause": {
-              "dimension": {
-                "category": "Shoes Handbags \u0026 Sunglasses",
-                "city": "Shanghai"
-              }
-            },
-            "path": [
-              "category",
-              "city"
-            ],
-            "score": 0.0014399448421371086,
-            "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Shanghai"
-          },
-          {
-            "rootCause": {
-              "dimension": {
-                "category": "Shoes Handbags \u0026 Sunglasses",
-                "city": "Paris"
-              }
-            },
-            "path": [
-              "category",
-              "city"
-            ],
-            "score": 0.00090889266939275792,
-            "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Paris"
+            "path": [],
+            "score": 1.0,
+            "description": "No root cause insight."
           }
         ]
       }
     }
   ],
   "Variables": {
-    "METRICSADVISOR_ACCOUNT_NAME": "js-metrics-advisor",
+    "METRICSADVISOR_ACCOUNT_NAME": "ga-metrics-advisor",
     "METRICSADVISOR_ENDPOINT_SUFFIX": null,
     "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
     "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",

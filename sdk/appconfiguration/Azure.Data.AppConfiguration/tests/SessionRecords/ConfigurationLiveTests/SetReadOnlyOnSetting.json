@@ -65,6 +65,7 @@
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "Content-Length": "0",
         "Date": "Mon, 08 Feb 2021 19:13:49 GMT",
         "Sync-Token": "zAJw6V16=MDozIzY4NzEzNDQ=",
         "traceparent": "00-2881aeac49bfcb4c8853e5113b53151e-00a2e25d05ec9248-00",

@@ -13,7 +13,7 @@
         "x-ms-immutability-policy-mode": "Locked",
         "x-ms-immutability-policy-until-date": "Wed, 11 Aug 2021 19:42:40 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -25,7 +25,7 @@
         "x-ms-client-request-id": "5c461c2e-69ad-6a07-fb0a-4b7991ed6cb4",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "b1229a17-d01e-004a-33e9-8e693e000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\n",

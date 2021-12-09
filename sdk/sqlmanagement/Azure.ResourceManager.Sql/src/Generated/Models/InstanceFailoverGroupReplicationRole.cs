@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="InstanceFailoverGroupReplicationRole"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstanceFailoverGroupReplicationRole"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InstanceFailoverGroupReplicationRole(string value)
         {

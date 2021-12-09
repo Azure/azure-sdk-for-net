@@ -5,11 +5,11 @@
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Type": "application/json",
-        "traceparent": "00-2f9652fbc696c54892cec053f67617e4-c5e0767e8383a84c-00",
+        "Content-Length": "0",
+        "traceparent": "00-295905eacad5b84e81a747a68347d7d3-a18c046389d2e44a-00",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Keys/4.3.0-alpha.20211005.1",
-          "(.NET 5.0.10; Microsoft Windows 10.0.22000)"
+          "azsdk-net-Security.KeyVault.Keys/4.3.0-alpha.20211018.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
         ],
         "x-ms-client-request-id": "624947b1f86e7ea6adbb10f901a3426b",
         "x-ms-return-client-request-id": "true"
@@ -20,7 +20,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "97",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 06 Oct 2021 01:10:16 GMT",
+        "Date": "Mon, 18 Oct 2021 21:32:17 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
@@ -29,8 +29,8 @@
         "x-ms-client-request-id": "624947b1f86e7ea6adbb10f901a3426b",
         "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=InterNetwork;",
         "x-ms-keyvault-region": "westus2",
-        "x-ms-keyvault-service-version": "1.9.132.3",
-        "x-ms-request-id": "304d012d-bd6d-4eb8-b486-45d09a9a0808",
+        "x-ms-keyvault-service-version": "1.9.150.1",
+        "x-ms-request-id": "a7b33df3-f60d-4126-a3a8-5b4b62fdb7a2",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -48,10 +48,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "22",
         "Content-Type": "application/json",
-        "traceparent": "00-2f9652fbc696c54892cec053f67617e4-c5e0767e8383a84c-00",
+        "traceparent": "00-295905eacad5b84e81a747a68347d7d3-a18c046389d2e44a-00",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Keys/4.3.0-alpha.20211005.1",
-          "(.NET 5.0.10; Microsoft Windows 10.0.22000)"
+          "azsdk-net-Security.KeyVault.Keys/4.3.0-alpha.20211018.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
         ],
         "x-ms-client-request-id": "624947b1f86e7ea6adbb10f901a3426b",
         "x-ms-return-client-request-id": "true"
@@ -64,7 +64,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "295",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 06 Oct 2021 01:10:17 GMT",
+        "Date": "Mon, 18 Oct 2021 21:32:18 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
@@ -72,8 +72,8 @@
         "x-ms-client-request-id": "624947b1f86e7ea6adbb10f901a3426b",
         "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=InterNetwork;",
         "x-ms-keyvault-region": "westus2",
-        "x-ms-keyvault-service-version": "1.9.132.3",
-        "x-ms-request-id": "e531d23a-a28b-4309-be9b-9c32dab49d93",
+        "x-ms-keyvault-service-version": "1.9.150.1",
+        "x-ms-request-id": "2fd244a7-f225-4ec7-91d0-d05b444e38ec",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {

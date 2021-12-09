@@ -38,9 +38,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="provisioningState"> Resource state. </param>
         /// <param name="status"> Resource status. </param>
         /// <param name="restorePointInTime"> Snapshot time to restore. </param>
-        /// <param name="createMode"> What is this?. </param>
+        /// <param name="createMode">
+        /// Specifies the mode of sql pool creation.
+        /// 
+        /// Default: regular sql pool creation.
+        /// 
+        /// PointInTimeRestore: Creates a sql pool by restoring a point in time backup of an existing sql pool. sourceDatabaseId must be specified as the resource ID of the existing sql pool, and restorePointInTime must be specified.
+        /// 
+        /// Recovery: Creates a sql pool by a geo-replicated backup. sourceDatabaseId  must be specified as the recoverableDatabaseId to restore.
+        /// 
+        /// Restore: Creates a sql pool by restoring a backup of a deleted sql  pool. SourceDatabaseId should be the sql pool&apos;s original resource ID. SourceDatabaseId and sourceDatabaseDeletionDate must be specified.
+        /// </param>
         /// <param name="creationDate"> Date the SQL pool was created. </param>
-        internal SqlPool(string id, string name, string type, IDictionary<string, string> tags, string location, Sku sku, long? maxSizeBytes, string collation, string sourceDatabaseId, string recoverableDatabaseId, string provisioningState, string status, string restorePointInTime, string createMode, DateTimeOffset? creationDate) : base(id, name, type, tags, location)
+        internal SqlPool(string id, string name, string type, IDictionary<string, string> tags, string location, Sku sku, long? maxSizeBytes, string collation, string sourceDatabaseId, string recoverableDatabaseId, string provisioningState, string status, string restorePointInTime, CreateMode? createMode, DateTimeOffset? creationDate) : base(id, name, type, tags, location)
         {
             Sku = sku;
             MaxSizeBytes = maxSizeBytes;
@@ -70,8 +80,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public string Status { get; set; }
         /// <summary> Snapshot time to restore. </summary>
         public string RestorePointInTime { get; set; }
-        /// <summary> What is this?. </summary>
-        public string CreateMode { get; set; }
+        /// <summary>
+        /// Specifies the mode of sql pool creation.
+        /// 
+        /// Default: regular sql pool creation.
+        /// 
+        /// PointInTimeRestore: Creates a sql pool by restoring a point in time backup of an existing sql pool. sourceDatabaseId must be specified as the resource ID of the existing sql pool, and restorePointInTime must be specified.
+        /// 
+        /// Recovery: Creates a sql pool by a geo-replicated backup. sourceDatabaseId  must be specified as the recoverableDatabaseId to restore.
+        /// 
+        /// Restore: Creates a sql pool by restoring a backup of a deleted sql  pool. SourceDatabaseId should be the sql pool&apos;s original resource ID. SourceDatabaseId and sourceDatabaseDeletionDate must be specified.
+        /// </summary>
+        public CreateMode? CreateMode { get; set; }
         /// <summary> Date the SQL pool was created. </summary>
         public DateTimeOffset? CreationDate { get; set; }
     }

@@ -17,15 +17,14 @@ namespace Azure.Analytics.Purview.Catalog
     /// <summary> The PurviewEntities service client. </summary>
     public partial class PurviewEntities
     {
-        private static readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
-
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of PurviewEntities for mocking. </summary>
         protected PurviewEntities()
@@ -38,7 +37,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Map and array of collections are not well supported. E.g., array&lt;array&lt;int&gt;&gt;, array&lt;map&lt;string, int&gt;&gt;.
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -149,10 +148,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateOrUpdateAsync(RequestContent content, RequestOptions options = null)
+        public virtual async Task<Response> CreateOrUpdateAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdate");
@@ -160,7 +166,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateRequest(content);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -175,7 +181,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Map and array of collections are not well supported. E.g., array&lt;array&lt;int&gt;&gt;, array&lt;map&lt;string, int&gt;&gt;.
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -286,10 +292,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response CreateOrUpdate(RequestContent content, RequestOptions options = null)
+        public virtual Response CreateOrUpdate(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdate");
@@ -297,7 +310,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateRequest(content);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -308,10 +321,10 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> List entities in bulk identified by its GUIDs. </summary>
         /// <param name="guids"> An array of GUIDs of entities to create. </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="excludeRelationshipTypes"> An array of the relationship types need to be excluded from the response. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guids"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -373,10 +386,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetByGuidsAsync(IEnumerable<string> guids, RequestOptions options, bool? minExtInfo = null, bool? ignoreRelationships = null, IEnumerable<string> excludeRelationshipTypes = null)
+        public virtual async Task<Response> GetByGuidsAsync(IEnumerable<string> guids, bool? minExtInfo = null, bool? ignoreRelationships = null, IEnumerable<string> excludeRelationshipTypes = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuids");
@@ -384,7 +404,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateGetByGuidsRequest(guids, minExtInfo, ignoreRelationships, excludeRelationshipTypes);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -395,10 +415,10 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> List entities in bulk identified by its GUIDs. </summary>
         /// <param name="guids"> An array of GUIDs of entities to create. </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="excludeRelationshipTypes"> An array of the relationship types need to be excluded from the response. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guids"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -460,10 +480,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetByGuids(IEnumerable<string> guids, RequestOptions options, bool? minExtInfo = null, bool? ignoreRelationships = null, IEnumerable<string> excludeRelationshipTypes = null)
+        public virtual Response GetByGuids(IEnumerable<string> guids, bool? minExtInfo = null, bool? ignoreRelationships = null, IEnumerable<string> excludeRelationshipTypes = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuids");
@@ -471,7 +498,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateGetByGuidsRequest(guids, minExtInfo, ignoreRelationships, excludeRelationshipTypes);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -486,7 +513,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Map and array of collections are not well supported. E.g., array&lt;array&lt;int&gt;&gt;, array&lt;map&lt;string, int&gt;&gt;.
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -599,10 +626,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateOrUpdateEntitiesAsync(RequestContent content, RequestOptions options = null)
+        public virtual async Task<Response> CreateOrUpdateEntitiesAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdateEntities");
@@ -610,7 +644,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateEntitiesRequest(content);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -625,7 +659,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Map and array of collections are not well supported. E.g., array&lt;array&lt;int&gt;&gt;, array&lt;map&lt;string, int&gt;&gt;.
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -738,10 +772,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response CreateOrUpdateEntities(RequestContent content, RequestOptions options = null)
+        public virtual Response CreateOrUpdateEntities(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdateEntities");
@@ -749,7 +790,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateEntitiesRequest(content);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -760,7 +801,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Delete a list of entities in bulk identified by their GUIDs or unique attributes. </summary>
         /// <param name="guids"> An array of GUIDs of entities to delete. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guids"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -814,10 +855,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteByGuidsAsync(IEnumerable<string> guids, RequestOptions options = null)
+        public virtual async Task<Response> DeleteByGuidsAsync(IEnumerable<string> guids, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByGuids");
@@ -825,7 +873,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateDeleteByGuidsRequest(guids);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -836,7 +884,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Delete a list of entities in bulk identified by their GUIDs or unique attributes. </summary>
         /// <param name="guids"> An array of GUIDs of entities to delete. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guids"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -890,10 +938,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response DeleteByGuids(IEnumerable<string> guids, RequestOptions options = null)
+        public virtual Response DeleteByGuids(IEnumerable<string> guids, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByGuids");
@@ -901,7 +956,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateDeleteByGuidsRequest(guids);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -912,7 +967,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Associate a classification to multiple entities in bulk. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -937,10 +992,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   entityGuids: [string]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> AddClassificationAsync(RequestContent content, RequestOptions options = null)
+        public virtual async Task<Response> AddClassificationAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassification");
@@ -948,7 +1010,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateAddClassificationRequest(content);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -959,7 +1021,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Associate a classification to multiple entities in bulk. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -984,10 +1046,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   entityGuids: [string]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response AddClassification(RequestContent content, RequestOptions options = null)
+        public virtual Response AddClassification(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassification");
@@ -995,7 +1064,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateAddClassificationRequest(content);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -1006,9 +1075,9 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get complete definition of an entity given its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1068,10 +1137,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   }
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetByGuidAsync(string guid, RequestOptions options, bool? minExtInfo = null, bool? ignoreRelationships = null)
+        public virtual async Task<Response> GetByGuidAsync(string guid, bool? minExtInfo = null, bool? ignoreRelationships = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuid");
@@ -1079,7 +1155,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateGetByGuidRequest(guid, minExtInfo, ignoreRelationships);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1090,9 +1166,9 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get complete definition of an entity given its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1152,10 +1228,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   }
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetByGuid(string guid, RequestOptions options, bool? minExtInfo = null, bool? ignoreRelationships = null)
+        public virtual Response GetByGuid(string guid, bool? minExtInfo = null, bool? ignoreRelationships = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuid");
@@ -1163,7 +1246,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateGetByGuidRequest(guid, minExtInfo, ignoreRelationships);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -1181,7 +1264,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="name"> The name of the attribute. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/>, <paramref name="name"/>, or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1235,10 +1318,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> PartialUpdateEntityAttributeByGuidAsync(string guid, string name, RequestContent content, RequestOptions options = null)
+        public virtual async Task<Response> PartialUpdateEntityAttributeByGuidAsync(string guid, string name, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityAttributeByGuid");
@@ -1246,7 +1336,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreatePartialUpdateEntityAttributeByGuidRequest(guid, name, content);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1264,7 +1354,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="name"> The name of the attribute. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/>, <paramref name="name"/>, or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1318,10 +1408,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response PartialUpdateEntityAttributeByGuid(string guid, string name, RequestContent content, RequestOptions options = null)
+        public virtual Response PartialUpdateEntityAttributeByGuid(string guid, string name, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityAttributeByGuid");
@@ -1329,7 +1426,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreatePartialUpdateEntityAttributeByGuidRequest(guid, name, content);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -1340,7 +1437,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Delete an entity identified by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1394,10 +1491,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteByGuidAsync(string guid, RequestOptions options = null)
+        public virtual async Task<Response> DeleteByGuidAsync(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByGuid");
@@ -1405,7 +1509,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateDeleteByGuidRequest(guid);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1416,7 +1520,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Delete an entity identified by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1470,10 +1574,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response DeleteByGuid(string guid, RequestOptions options = null)
+        public virtual Response DeleteByGuid(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByGuid");
@@ -1481,7 +1592,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateDeleteByGuidRequest(guid);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -1493,7 +1604,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> List classifications for a given entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="classificationName"> The name of the classification. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1515,10 +1626,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetClassificationAsync(string guid, string classificationName, RequestOptions options)
+        public virtual async Task<Response> GetClassificationAsync(string guid, string classificationName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassification");
@@ -1526,7 +1644,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateGetClassificationRequest(guid, classificationName);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1538,7 +1656,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> List classifications for a given entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="classificationName"> The name of the classification. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1560,10 +1678,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetClassification(string guid, string classificationName, RequestOptions options)
+        public virtual Response GetClassification(string guid, string classificationName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassification");
@@ -1571,7 +1696,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateGetClassificationRequest(guid, classificationName);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -1583,10 +1708,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Delete a given classification from an existing entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="classificationName"> The name of the classification. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteClassificationAsync(string guid, string classificationName, RequestOptions options = null)
+        public virtual async Task<Response> DeleteClassificationAsync(string guid, string classificationName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteClassification");
@@ -1594,7 +1729,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateDeleteClassificationRequest(guid, classificationName);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1606,10 +1741,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Delete a given classification from an existing entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="classificationName"> The name of the classification. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response DeleteClassification(string guid, string classificationName, RequestOptions options = null)
+        public virtual Response DeleteClassification(string guid, string classificationName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteClassification");
@@ -1617,7 +1762,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateDeleteClassificationRequest(guid, classificationName);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -1628,7 +1773,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> List classifications for a given entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1641,10 +1786,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   totalCount: number
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetClassificationsAsync(string guid, RequestOptions options)
+        public virtual async Task<Response> GetClassificationsAsync(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassifications");
@@ -1652,7 +1804,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateGetClassificationsRequest(guid);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1663,7 +1815,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> List classifications for a given entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1676,10 +1828,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   totalCount: number
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetClassifications(string guid, RequestOptions options)
+        public virtual Response GetClassifications(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassifications");
@@ -1687,7 +1846,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateGetClassificationsRequest(guid);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -1699,7 +1858,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Add classifications to an existing entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -1721,10 +1880,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> AddClassificationsAsync(string guid, RequestContent content, RequestOptions options = null)
+        public virtual async Task<Response> AddClassificationsAsync(string guid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassifications");
@@ -1732,7 +1898,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateAddClassificationsRequest(guid, content);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1744,7 +1910,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Add classifications to an existing entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -1766,10 +1932,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response AddClassifications(string guid, RequestContent content, RequestOptions options = null)
+        public virtual Response AddClassifications(string guid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassifications");
@@ -1777,7 +1950,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateAddClassificationsRequest(guid, content);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -1789,7 +1962,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Update classifications to an existing entity represented by a guid. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -1811,10 +1984,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> UpdateClassificationsAsync(string guid, RequestContent content, RequestOptions options = null)
+        public virtual async Task<Response> UpdateClassificationsAsync(string guid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.UpdateClassifications");
@@ -1822,7 +2002,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateUpdateClassificationsRequest(guid, content);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1834,7 +2014,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Update classifications to an existing entity represented by a guid. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -1856,10 +2036,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response UpdateClassifications(string guid, RequestContent content, RequestOptions options = null)
+        public virtual Response UpdateClassifications(string guid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.UpdateClassifications");
@@ -1867,7 +2054,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateUpdateClassificationsRequest(guid, content);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -1885,10 +2072,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// GET /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1948,10 +2135,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   }
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetByUniqueAttributesAsync(string typeName, RequestOptions options, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrQualifiedName = null)
+        public virtual async Task<Response> GetByUniqueAttributesAsync(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByUniqueAttributes");
@@ -1959,7 +2153,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateGetByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrQualifiedName);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1977,10 +2171,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// GET /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -2040,10 +2234,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   }
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetByUniqueAttributes(string typeName, RequestOptions options, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrQualifiedName = null)
+        public virtual Response GetByUniqueAttributes(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByUniqueAttributes");
@@ -2051,7 +2252,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateGetByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrQualifiedName);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -2073,7 +2274,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -2184,10 +2385,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> PartialUpdateEntityByUniqueAttributesAsync(string typeName, RequestContent content, string attrQualifiedName = null, RequestOptions options = null)
+        public virtual async Task<Response> PartialUpdateEntityByUniqueAttributesAsync(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityByUniqueAttributes");
@@ -2195,7 +2403,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreatePartialUpdateEntityByUniqueAttributesRequest(typeName, content, attrQualifiedName);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2217,7 +2425,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -2328,10 +2536,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response PartialUpdateEntityByUniqueAttributes(string typeName, RequestContent content, string attrQualifiedName = null, RequestOptions options = null)
+        public virtual Response PartialUpdateEntityByUniqueAttributes(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityByUniqueAttributes");
@@ -2339,7 +2554,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreatePartialUpdateEntityByUniqueAttributesRequest(typeName, content, attrQualifiedName);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -2358,7 +2573,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -2412,10 +2627,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteByUniqueAttributeAsync(string typeName, string attrQualifiedName = null, RequestOptions options = null)
+        public virtual async Task<Response> DeleteByUniqueAttributeAsync(string typeName, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByUniqueAttribute");
@@ -2423,7 +2645,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateDeleteByUniqueAttributeRequest(typeName, attrQualifiedName);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2442,7 +2664,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -2496,10 +2718,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response DeleteByUniqueAttribute(string typeName, string attrQualifiedName = null, RequestOptions options = null)
+        public virtual Response DeleteByUniqueAttribute(string typeName, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByUniqueAttribute");
@@ -2507,7 +2736,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateDeleteByUniqueAttributeRequest(typeName, attrQualifiedName);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -2520,10 +2749,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="classificationName"> The name of the classification. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteClassificationByUniqueAttributeAsync(string typeName, string classificationName, string attrQualifiedName = null, RequestOptions options = null)
+        public virtual async Task<Response> DeleteClassificationByUniqueAttributeAsync(string typeName, string classificationName, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteClassificationByUniqueAttribute");
@@ -2531,7 +2770,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateDeleteClassificationByUniqueAttributeRequest(typeName, classificationName, attrQualifiedName);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2544,10 +2783,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="classificationName"> The name of the classification. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response DeleteClassificationByUniqueAttribute(string typeName, string classificationName, string attrQualifiedName = null, RequestOptions options = null)
+        public virtual Response DeleteClassificationByUniqueAttribute(string typeName, string classificationName, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteClassificationByUniqueAttribute");
@@ -2555,7 +2804,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateDeleteClassificationByUniqueAttributeRequest(typeName, classificationName, attrQualifiedName);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -2568,7 +2817,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -2590,10 +2839,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> AddClassificationsByUniqueAttributeAsync(string typeName, RequestContent content, string attrQualifiedName = null, RequestOptions options = null)
+        public virtual async Task<Response> AddClassificationsByUniqueAttributeAsync(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassificationsByUniqueAttribute");
@@ -2601,7 +2857,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateAddClassificationsByUniqueAttributeRequest(typeName, content, attrQualifiedName);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2614,7 +2870,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -2636,10 +2892,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response AddClassificationsByUniqueAttribute(string typeName, RequestContent content, string attrQualifiedName = null, RequestOptions options = null)
+        public virtual Response AddClassificationsByUniqueAttribute(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassificationsByUniqueAttribute");
@@ -2647,7 +2910,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateAddClassificationsByUniqueAttributeRequest(typeName, content, attrQualifiedName);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -2660,7 +2923,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -2682,10 +2945,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> UpdateClassificationsByUniqueAttributeAsync(string typeName, RequestContent content, string attrQualifiedName = null, RequestOptions options = null)
+        public virtual async Task<Response> UpdateClassificationsByUniqueAttributeAsync(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.UpdateClassificationsByUniqueAttribute");
@@ -2693,7 +2963,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateUpdateClassificationsByUniqueAttributeRequest(typeName, content, attrQualifiedName);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2706,7 +2976,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -2728,10 +2998,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response UpdateClassificationsByUniqueAttribute(string typeName, RequestContent content, string attrQualifiedName = null, RequestOptions options = null)
+        public virtual Response UpdateClassificationsByUniqueAttribute(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.UpdateClassificationsByUniqueAttribute");
@@ -2739,7 +3016,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateUpdateClassificationsByUniqueAttributeRequest(typeName, content, attrQualifiedName);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -2750,7 +3027,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Set classifications on entities in bulk. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -2758,10 +3035,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   guidHeaderMap: Dictionary&lt;string, AtlasEntityHeader&gt;
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> SetClassificationsAsync(RequestContent content, RequestOptions options = null)
+        public virtual async Task<Response> SetClassificationsAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.SetClassifications");
@@ -2769,7 +3053,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateSetClassificationsRequest(content);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2780,7 +3064,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Set classifications on entities in bulk. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -2788,10 +3072,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   guidHeaderMap: Dictionary&lt;string, AtlasEntityHeader&gt;
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response SetClassifications(RequestContent content, RequestOptions options = null)
+        public virtual Response SetClassifications(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.SetClassifications");
@@ -2799,7 +3090,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateSetClassificationsRequest(content);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -2822,10 +3113,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// GET /v2/entity/bulk/uniqueAttribute/type/hive_db?attr_0:qualifiedName=db1@cl1&amp;attr_2:qualifiedName=db2@cl1
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="attrNQualifiedName"> Qualified name of an entity. E.g. to find 2 entities you can set attrs_0:qualifiedName=db1@cl1&amp;attrs_2:qualifiedName=db2@cl1. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -2887,10 +3178,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetEntitiesByUniqueAttributesAsync(string typeName, RequestOptions options, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrNQualifiedName = null)
+        public virtual async Task<Response> GetEntitiesByUniqueAttributesAsync(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrNQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetEntitiesByUniqueAttributes");
@@ -2898,7 +3196,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateGetEntitiesByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2921,10 +3219,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// GET /v2/entity/bulk/uniqueAttribute/type/hive_db?attr_0:qualifiedName=db1@cl1&amp;attr_2:qualifiedName=db2@cl1
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="attrNQualifiedName"> Qualified name of an entity. E.g. to find 2 entities you can set attrs_0:qualifiedName=db1@cl1&amp;attrs_2:qualifiedName=db2@cl1. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -2986,10 +3284,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetEntitiesByUniqueAttributes(string typeName, RequestOptions options, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrNQualifiedName = null)
+        public virtual Response GetEntitiesByUniqueAttributes(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrNQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetEntitiesByUniqueAttributes");
@@ -2997,7 +3302,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateGetEntitiesByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -3008,7 +3313,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get entity header given its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -3056,10 +3361,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetHeaderAsync(string guid, RequestOptions options)
+        public virtual async Task<Response> GetHeaderAsync(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetHeader");
@@ -3067,7 +3379,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateGetHeaderRequest(guid);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3078,7 +3390,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get entity header given its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -3126,10 +3438,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetHeader(string guid, RequestOptions options)
+        public virtual Response GetHeader(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetHeader");
@@ -3137,7 +3456,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateGetHeaderRequest(guid);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -3153,7 +3472,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -3170,7 +3489,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk", false);
             foreach (var param in guids)
             {
@@ -3204,7 +3523,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -3221,7 +3540,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk", false);
             foreach (var param in guids)
             {
@@ -3240,9 +3559,10 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk/classification", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             message.ResponseClassifier = ResponseClassifier204.Instance;
@@ -3256,7 +3576,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             if (minExtInfo != null)
@@ -3280,7 +3600,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             uri.AppendQuery("name", name, true);
@@ -3299,7 +3619,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             request.Uri = uri;
@@ -3315,7 +3635,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             uri.AppendPath("/classification/", false);
@@ -3333,12 +3653,13 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             uri.AppendPath("/classification/", false);
             uri.AppendPath(classificationName, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
@@ -3350,7 +3671,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             uri.AppendPath("/classifications", false);
@@ -3367,11 +3688,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             uri.AppendPath("/classifications", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             message.ResponseClassifier = ResponseClassifier204.Instance;
@@ -3385,11 +3707,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             uri.AppendPath("/classifications", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             message.ResponseClassifier = ResponseClassifier204.Instance;
@@ -3403,7 +3726,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
             uri.AppendPath(typeName, true);
             if (minExtInfo != null)
@@ -3431,7 +3754,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
             uri.AppendPath(typeName, true);
             if (attrQualifiedName != null)
@@ -3453,7 +3776,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
             uri.AppendPath(typeName, true);
             if (attrQualifiedName != null)
@@ -3473,7 +3796,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
             uri.AppendPath(typeName, true);
             uri.AppendPath("/classification/", false);
@@ -3483,6 +3806,7 @@ namespace Azure.Analytics.Purview.Catalog
                 uri.AppendQuery("attr:qualifiedName", attrQualifiedName, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
@@ -3494,7 +3818,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
             uri.AppendPath(typeName, true);
             uri.AppendPath("/classifications", false);
@@ -3503,6 +3827,7 @@ namespace Azure.Analytics.Purview.Catalog
                 uri.AppendQuery("attr:qualifiedName", attrQualifiedName, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             message.ResponseClassifier = ResponseClassifier204.Instance;
@@ -3516,7 +3841,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
             uri.AppendPath(typeName, true);
             uri.AppendPath("/classifications", false);
@@ -3525,6 +3850,7 @@ namespace Azure.Analytics.Purview.Catalog
                 uri.AppendQuery("attr:qualifiedName", attrQualifiedName, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             message.ResponseClassifier = ResponseClassifier204.Instance;
@@ -3538,7 +3864,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk/setClassifications", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -3555,7 +3881,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk/uniqueAttribute/type/", false);
             uri.AppendPath(typeName, true);
             if (minExtInfo != null)
@@ -3583,7 +3909,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             uri.AppendPath("/header", false);

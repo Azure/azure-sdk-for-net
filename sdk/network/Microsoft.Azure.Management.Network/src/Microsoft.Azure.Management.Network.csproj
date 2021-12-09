@@ -10,18 +10,18 @@
 			Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.Network" (https://www.nuget.org/packages/Azure.ResourceManager.Network/). Please see the package changelog for more information.
 		</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>20.6.0</Version>
+		<Version>21.0.0</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>
 		<PackageReleaseNotes>
 		<![CDATA[
-			- Added new api version 2021-03-01
-			- Added new parameter to enable/disable BGP route translation for NAT VirtualWan VpnGateway
-			- Added Bastion Host Configuration Features
-			- Added PL ASG
-			- Implemented Private Endpoint configuration
-			- Added missing properties of ServiceEndpointPolicy
-			- Added new service tag details api
-			- Added 3 new properties to InboundNatRule resource
+			- Added new api version 2021-05-01
+			- Added routing intent resource
+			- Updated exclusion match variable enum to support new values
+			- Added new SKU values
+			- Updated WAF policy exclusions to include ruleset/rulegroup/rule hierarchy
+			- Vnet encryption: added NIC flag, vnet property, vnet peering property
+			- Fixed cycles in custom IP prefix
+			- Added missed property to LBAddress
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

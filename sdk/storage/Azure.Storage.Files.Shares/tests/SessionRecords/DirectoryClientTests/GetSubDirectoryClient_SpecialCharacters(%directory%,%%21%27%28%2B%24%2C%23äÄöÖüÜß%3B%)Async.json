@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "fcaedd7e-d7a2-578a-fa5d-91a5028cbafe",
         "x-ms-date": "Tue, 26 Jan 2021 19:27:13 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "fcaedd7e-d7a2-578a-fa5d-91a5028cbafe",
         "x-ms-request-id": "97d0d72c-f01a-006d-5d19-f46e89000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -51,7 +51,7 @@
         "x-ms-file-last-write-time": "Now",
         "x-ms-file-permission": "Inherit",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -74,7 +74,7 @@
         "x-ms-file-permission-key": "17860367565182308406*11459378189709739967",
         "x-ms-request-id": "97d0d72f-f01a-006d-5e19-f46e89000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -96,7 +96,7 @@
         "x-ms-file-last-write-time": "Now",
         "x-ms-file-permission": "Inherit",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -119,7 +119,7 @@
         "x-ms-file-permission-key": "17860367565182308406*11459378189709739967",
         "x-ms-request-id": "97d0d733-f01a-006d-6219-f46e89000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -136,7 +136,7 @@
         "x-ms-client-request-id": "5b2797ea-e174-c665-eb88-3f5163519e88",
         "x-ms-date": "Tue, 26 Jan 2021 19:27:13 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -160,7 +160,7 @@
         "x-ms-file-permission-key": "17860367565182308406*11459378189709739967",
         "x-ms-request-id": "10850b3d-d01a-0037-1219-f4086e000000",
         "x-ms-server-encrypted": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -177,7 +177,7 @@
         "x-ms-client-request-id": "2f0407f3-2ba8-491d-1643-d919294bc74c",
         "x-ms-date": "Tue, 26 Jan 2021 19:27:14 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -192,7 +192,7 @@
         "Vary": "Origin",
         "x-ms-client-request-id": "2f0407f3-2ba8-491d-1643-d919294bc74c",
         "x-ms-request-id": "10850b40-d01a-0037-1319-f4086e000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><EnumerationResults ServiceEndpoint=\"https://seanmcccanary3.file.core.windows.net/\" ShareName=\"test-share-d739d01f-1fae-b97f-aef3-5c88e96b89f9\" DirectoryPath=\"directory\"><Entries><Directory><Name>%21%27%28%2B%24%2C%23äÄöÖüÜß%3B</Name><Properties /></Directory></Entries><NextMarker /></EnumerationResults>"
     },
@@ -211,7 +211,7 @@
         "x-ms-date": "Tue, 26 Jan 2021 19:27:14 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -224,7 +224,7 @@
         ],
         "x-ms-client-request-id": "5b5df9e3-6f4c-f1df-6efe-e2bdc6fffb3e",
         "x-ms-request-id": "10850b41-d01a-0037-1419-f4086e000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

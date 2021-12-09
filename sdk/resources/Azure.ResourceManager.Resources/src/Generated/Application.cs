@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources
     public partial class Application : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ApplicationsRestOperations _restClient;
+        private readonly ApplicationsRestOperations _applicationsRestClient;
         private readonly ApplicationData _data;
 
         /// <summary> Initializes a new instance of the <see cref="Application"/> class for mocking. </summary>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ApplicationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _applicationsRestClient = new ApplicationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="Application"/> class. </summary>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Resources
         internal Application(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ApplicationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _applicationsRestClient = new ApplicationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="Application"/> class. </summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Resources
         internal Application(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ApplicationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _applicationsRestClient = new ApplicationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _applicationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new Application(this, response.Value), response.GetRawResponse());
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _applicationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Application(this, response.Value), response.GetRawResponse());
@@ -148,8 +148,8 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ApplicationDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _applicationsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ApplicationDeleteOperation(_clientDiagnostics, Pipeline, _applicationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -170,8 +170,8 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ApplicationDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _applicationsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ApplicationDeleteOperation(_clientDiagnostics, Pipeline, _applicationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -182,16 +182,17 @@ namespace Azure.ResourceManager.Resources
                 throw;
             }
         }
+
         /// <summary> Updates an existing managed application. The only value that can be updated via PATCH currently is the tags. </summary>
         /// <param name="parameters"> Parameters supplied to update an existing managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Application>> UpdateAsync(ApplicationPatchable parameters = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<Application>> UpdateAsync(ApplicationPatchable parameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("Application.Update");
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _applicationsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new Application(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -210,7 +211,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _restClient.Update(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var response = _applicationsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
                 return Response.FromValue(new Application(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -229,8 +230,8 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _restClient.RefreshPermissionsAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ApplicationRefreshPermissionsOperation(_clientDiagnostics, Pipeline, _restClient.CreateRefreshPermissionsRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _applicationsRestClient.RefreshPermissionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ApplicationRefreshPermissionsOperation(_clientDiagnostics, Pipeline, _applicationsRestClient.CreateRefreshPermissionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -251,8 +252,8 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _restClient.RefreshPermissions(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ApplicationRefreshPermissionsOperation(_clientDiagnostics, Pipeline, _restClient.CreateRefreshPermissionsRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _applicationsRestClient.RefreshPermissions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ApplicationRefreshPermissionsOperation(_clientDiagnostics, Pipeline, _applicationsRestClient.CreateRefreshPermissionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

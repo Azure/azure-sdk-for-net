@@ -10,6 +10,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,8 +19,10 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// An <see cref="HttpPipelineTransport"/> implementation that uses <see cref="HttpClient"/> as the transport.
     /// </summary>
-    public class HttpClientTransport : HttpPipelineTransport
+    public class HttpClientTransport : HttpPipelineTransport, IDisposable
     {
+        internal const string MessageForServerCertificateCallback = "MessageForServerCertificateCallback";
+
         // Internal for testing
         internal HttpClient Client { get; }
 
@@ -27,8 +30,14 @@ namespace Azure.Core.Pipeline
         /// Creates a new <see cref="HttpClientTransport"/> instance using default configuration.
         /// </summary>
         public HttpClientTransport() : this(CreateDefaultClient())
-        {
-        }
+        { }
+
+        /// <summary>
+        /// Creates a new <see cref="HttpClientTransport"/> instance using default configuration.
+        /// </summary>
+        /// <param name="options">The <see cref="HttpPipelineTransportOptions"/> that to configure the behavior of the transport.</param>
+        internal HttpClientTransport(HttpPipelineTransportOptions? options = null) : this(CreateDefaultClient(options))
+        { }
 
         /// <summary>
         /// Creates a new instance of <see cref="HttpClientTransport"/> using the provided client instance.
@@ -60,7 +69,7 @@ namespace Azure.Core.Pipeline
         /// <inheritdoc />
         public override void Process(HttpMessage message)
         {
-#if NET5_0
+#if NET5_0_OR_GREATER
             ProcessAsync(message, false).EnsureCompleted();
 #else
             // Intentionally blocking here
@@ -78,11 +87,12 @@ namespace Azure.Core.Pipeline
 #pragma warning restore CA1801
         {
             using HttpRequestMessage httpRequest = BuildRequestMessage(message);
+            SetPropertiesOrOptions<HttpMessage>(httpRequest, MessageForServerCertificateCallback, message);
             HttpResponseMessage responseMessage;
             Stream? contentStream = null;
             try
             {
-#if NET5_0
+#if NET5_0_OR_GREATER
                 if (!async)
                 {
                     // Sync HttpClient.Send is not supported on browser but neither is the sync-over-async
@@ -103,7 +113,7 @@ namespace Azure.Core.Pipeline
 
                 if (responseMessage.Content != null)
                 {
-#if NET5_0
+#if NET5_0_OR_GREATER
                     if (async)
                     {
                         contentStream = await responseMessage.Content.ReadAsStreamAsync(message.CancellationToken).ConfigureAwait(false);
@@ -132,9 +142,9 @@ namespace Azure.Core.Pipeline
             message.Response = new PipelineResponse(message.Request.ClientRequestId, responseMessage, contentStream);
         }
 
-        private static HttpClient CreateDefaultClient()
+        private static HttpClient CreateDefaultClient(HttpPipelineTransportOptions? options = null)
         {
-            var httpMessageHandler = CreateDefaultHandler();
+            var httpMessageHandler = CreateDefaultHandler(options);
             SetProxySettings(httpMessageHandler);
             ServicePointHelpers.SetLimits(httpMessageHandler);
 
@@ -145,7 +155,7 @@ namespace Azure.Core.Pipeline
             };
         }
 
-        private static HttpMessageHandler CreateDefaultHandler()
+        private static HttpMessageHandler CreateDefaultHandler(HttpPipelineTransportOptions? options = null)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
             {
@@ -153,15 +163,9 @@ namespace Azure.Core.Pipeline
             }
 
 #if NETCOREAPP
-            return new SocketsHttpHandler()
-            {
-                AllowAutoRedirect = false
-            };
+            return ApplyOptionsToHandler(new SocketsHttpHandler { AllowAutoRedirect = false }, options);
 #else
-            return new HttpClientHandler()
-            {
-                AllowAutoRedirect = false
-            };
+            return ApplyOptionsToHandler(new HttpClientHandler { AllowAutoRedirect = false }, options);
 #endif
         }
 
@@ -284,6 +288,10 @@ namespace Azure.Core.Pipeline
             public PipelineRequest()
             {
                 _requestMessage = new HttpRequestMessage();
+
+#if NETFRAMEWORK
+                _requestMessage.Headers.ExpectContinue = false;
+#endif
             }
 
             public override RequestMethod Method
@@ -380,12 +388,11 @@ namespace Azure.Core.Pipeline
                 // see https://github.com/dotnet/aspnetcore/blob/3143d9550014006080bb0def5b5c96608b025a13/src/Components/WebAssembly/WebAssembly/src/Http/WebAssemblyHttpRequestMessageExtensions.cs
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
                 {
-#pragma warning disable 618 // Options property is NET5+
-                    currentRequest.Properties.Add("WebAssemblyFetchOptions", new Dictionary<string, object> {
-                        { "cache", "no-store" }
-                    });
-                    currentRequest.Properties.Add("WebAssemblyEnableStreamingResponse", true);
-#pragma warning restore 618
+                    SetPropertiesOrOptions(
+                        currentRequest,
+                        "WebAssemblyFetchOptions",
+                        new Dictionary<string, object> { { "cache", "no-store" } });
+                    SetPropertiesOrOptions(currentRequest, "WebAssemblyEnableStreamingResponse", true);
                 }
 
                 _wasSent = true;
@@ -474,7 +481,7 @@ namespace Azure.Core.Pipeline
                     return PipelineContent!.TryComputeLength(out length);
                 }
 
-#if NET5_0
+#if NET5_0_OR_GREATER
                 protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context, CancellationToken cancellationToken)
                 {
                     Debug.Assert(PipelineContent != null);
@@ -541,6 +548,66 @@ namespace Azure.Core.Pipeline
             }
 
             public override string ToString() => _responseMessage.ToString();
+        }
+#if NETCOREAPP
+        private static SocketsHttpHandler ApplyOptionsToHandler(SocketsHttpHandler httpHandler, HttpPipelineTransportOptions? options)
+        {
+            if (options == null || RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
+            {
+                return httpHandler;
+            }
+
+            // ServerCertificateCustomValidationCallback
+            if (options.ServerCertificateCustomValidationCallback != null)
+            {
+                httpHandler.SslOptions.RemoteCertificateValidationCallback = (_, certificate, x509Chain, sslPolicyErrors) =>
+#pragma warning disable CA1416 // 'X509Certificate2' is unsupported on 'browser'
+                    options.ServerCertificateCustomValidationCallback(
+                        new ServerCertificateCustomValidationArgs(
+                            certificate is { } ? new X509Certificate2(certificate) : null,
+                            x509Chain,
+                            sslPolicyErrors));
+#pragma warning restore CA1416 // 'X509Certificate2' is unsupported on 'browser'
+            }
+            return httpHandler;
+        }
+#endif
+
+        private static HttpClientHandler ApplyOptionsToHandler(HttpClientHandler httpHandler, HttpPipelineTransportOptions? options)
+        {
+            if (options == null || RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
+            {
+                return httpHandler;
+            }
+
+            // ServerCertificateCustomValidationCallback
+            if (options.ServerCertificateCustomValidationCallback != null)
+            {
+                httpHandler.ServerCertificateCustomValidationCallback =
+                    (_, certificate2, x509Chain, sslPolicyErrors) =>
+                    {
+                        return options.ServerCertificateCustomValidationCallback(
+                            new ServerCertificateCustomValidationArgs(certificate2, x509Chain, sslPolicyErrors));
+                    };
+            }
+            return httpHandler;
+        }
+
+        internal override void DisposeInternal()
+        {
+            if (this != Shared)
+            {
+                Client.Dispose();
+            }
+        }
+
+        private static void SetPropertiesOrOptions<T>(HttpRequestMessage httpRequest, string name, T value)
+        {
+#if NET5_0_OR_GREATER
+            httpRequest.Options.Set(new HttpRequestOptionsKey<T>(name), value);
+#else
+            httpRequest.Properties[name] = value;
+#endif
         }
     }
 }

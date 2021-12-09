@@ -25,7 +25,6 @@ namespace Azure.Containers.ContainerRegistry
             Optional<bool> writeEnabled = default;
             Optional<bool> listEnabled = default;
             Optional<bool> readEnabled = default;
-            Optional<bool> teleportEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("registry"))
@@ -107,21 +106,11 @@ namespace Azure.Containers.ContainerRegistry
                             readEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("teleportEnabled"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            teleportEnabled = property0.Value.GetBoolean();
-                            continue;
-                        }
                     }
                     continue;
                 }
             }
-            return new ContainerRepositoryProperties(registry, imageName, createdTime, lastUpdateTime, manifestCount, tagCount, Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled), Optional.ToNullable(teleportEnabled));
+            return new ContainerRepositoryProperties(registry, imageName, createdTime, lastUpdateTime, manifestCount, tagCount, Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled));
         }
     }
 }

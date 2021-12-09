@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.Compute
     public partial class Gallery : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly GalleriesRestOperations _restClient;
+        private readonly GalleriesRestOperations _galleriesRestClient;
+        private readonly GallerySharingProfileRestOperations _gallerySharingProfileRestClient;
         private readonly GalleryData _data;
-        private GallerySharingProfileRestOperations _gallerySharingProfileRestClient { get; }
 
         /// <summary> Initializes a new instance of the <see cref="Gallery"/> class for mocking. </summary>
         protected Gallery()
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Compute
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new GalleriesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _gallerySharingProfileRestClient = new GallerySharingProfileRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _galleriesRestClient = new GalleriesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _gallerySharingProfileRestClient = new GallerySharingProfileRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="Gallery"/> class. </summary>
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Compute
         internal Gallery(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new GalleriesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _gallerySharingProfileRestClient = new GallerySharingProfileRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _galleriesRestClient = new GalleriesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _gallerySharingProfileRestClient = new GallerySharingProfileRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="Gallery"/> class. </summary>
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.Compute
         internal Gallery(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new GalleriesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _gallerySharingProfileRestClient = new GallerySharingProfileRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _galleriesRestClient = new GalleriesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _gallerySharingProfileRestClient = new GallerySharingProfileRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, select, cancellationToken).ConfigureAwait(false);
+                var response = await _galleriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, select, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new Gallery(this, response.Value), response.GetRawResponse());
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, select, cancellationToken);
+                var response = _galleriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, select, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Gallery(this, response.Value), response.GetRawResponse());
@@ -155,8 +155,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new GalleryDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _galleriesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new GalleryDeleteOperation(_clientDiagnostics, Pipeline, _galleriesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -177,8 +177,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new GalleryDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _galleriesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new GalleryDeleteOperation(_clientDiagnostics, Pipeline, _galleriesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -208,8 +208,8 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _galleriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new Gallery(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -237,8 +237,8 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _galleriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new Gallery(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -266,8 +266,8 @@ namespace Azure.ResourceManager.Compute
                 await TagResource.DeleteAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _galleriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new Gallery(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -295,8 +295,8 @@ namespace Azure.ResourceManager.Compute
                 TagResource.Delete(cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _galleriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new Gallery(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -323,8 +323,8 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _galleriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new Gallery(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -351,8 +351,8 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _galleriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new Gallery(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -378,8 +378,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Name, gallery, cancellationToken).ConfigureAwait(false);
-                var operation = new GalleryUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, gallery).Request, response);
+                var response = await _galleriesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gallery, cancellationToken).ConfigureAwait(false);
+                var operation = new GalleryUpdateOperation(this, _clientDiagnostics, Pipeline, _galleriesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gallery).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -407,8 +407,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.Update(Id.ResourceGroupName, Id.Name, gallery, cancellationToken);
-                var operation = new GalleryUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, gallery).Request, response);
+                var response = _galleriesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gallery, cancellationToken);
+                var operation = new GalleryUpdateOperation(this, _clientDiagnostics, Pipeline, _galleriesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gallery).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -420,18 +420,82 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets a list of GalleryImages in the Gallery. </summary>
-        /// <returns> An object representing collection of GalleryImages and their operations over a Gallery. </returns>
-        public GalleryImageContainer GetGalleryImages()
+        /// <summary> Update sharing profile of a gallery. </summary>
+        /// <param name="sharingUpdate"> Parameters supplied to the update gallery sharing profile. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sharingUpdate"/> is null. </exception>
+        public async virtual Task<GallerySharingProfileUpdateOperation> UpdateGallerySharingProfileAsync(SharingUpdate sharingUpdate, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            return new GalleryImageContainer(this);
+            if (sharingUpdate == null)
+            {
+                throw new ArgumentNullException(nameof(sharingUpdate));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("Gallery.UpdateGallerySharingProfile");
+            scope.Start();
+            try
+            {
+                var response = await _gallerySharingProfileRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharingUpdate, cancellationToken).ConfigureAwait(false);
+                var operation = new GallerySharingProfileUpdateOperation(_clientDiagnostics, Pipeline, _gallerySharingProfileRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharingUpdate).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Gets a list of GalleryApplications in the Gallery. </summary>
-        /// <returns> An object representing collection of GalleryApplications and their operations over a Gallery. </returns>
-        public GalleryApplicationContainer GetGalleryApplications()
+        /// <summary> Update sharing profile of a gallery. </summary>
+        /// <param name="sharingUpdate"> Parameters supplied to the update gallery sharing profile. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sharingUpdate"/> is null. </exception>
+        public virtual GallerySharingProfileUpdateOperation UpdateGallerySharingProfile(SharingUpdate sharingUpdate, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            return new GalleryApplicationContainer(this);
+            if (sharingUpdate == null)
+            {
+                throw new ArgumentNullException(nameof(sharingUpdate));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("Gallery.UpdateGallerySharingProfile");
+            scope.Start();
+            try
+            {
+                var response = _gallerySharingProfileRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharingUpdate, cancellationToken);
+                var operation = new GallerySharingProfileUpdateOperation(_clientDiagnostics, Pipeline, _gallerySharingProfileRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharingUpdate).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
+
+        #region GalleryImage
+
+        /// <summary> Gets a collection of GalleryImages in the Gallery. </summary>
+        /// <returns> An object representing collection of GalleryImages and their operations over a Gallery. </returns>
+        public GalleryImageCollection GetGalleryImages()
+        {
+            return new GalleryImageCollection(this);
+        }
+        #endregion
+
+        #region GalleryApplication
+
+        /// <summary> Gets a collection of GalleryApplications in the Gallery. </summary>
+        /// <returns> An object representing collection of GalleryApplications and their operations over a Gallery. </returns>
+        public GalleryApplicationCollection GetGalleryApplications()
+        {
+            return new GalleryApplicationCollection(this);
+        }
+        #endregion
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task ValidateHttpPipelines()
         {
-            await _client.DefaultSubscription
-                .GetResourceGroups().Construct(Location.WestUS)
+            Subscription subscription = await _client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
+            await subscription.GetResourceGroups().Construct(Location.WestUS)
                 .CreateOrUpdateAsync(_rgName);
-            await foreach (var rg in _client.DefaultSubscription.GetResourceGroups().GetAllAsync())
+            await foreach (var rg in subscription.GetResourceGroups().GetAllAsync())
             {
-                Assert.AreEqual(rg.Pipeline.GetHashCode(), _client.DefaultSubscription.Pipeline.GetHashCode());
+                Assert.AreEqual(rg.Pipeline.GetHashCode(), subscription.Pipeline.GetHashCode());
             }
         }
     }

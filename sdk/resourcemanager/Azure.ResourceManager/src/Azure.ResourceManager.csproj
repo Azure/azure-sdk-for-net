@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>1.0.0-beta.5</Version>
+    <Version>1.0.0-beta.6</Version>
     <PackageId>Azure.ResourceManager</PackageId>
     <Description>
       Azure management SDK for Azure resources.
@@ -9,6 +9,7 @@
     </Description>
     <PackageTags>azure;management;resource</PackageTags>
     <NoWarn>$(NoWarn);CA2214</NoWarn>
+    <UseDefaultNamespaceAndOutputFolder>false</UseDefaultNamespaceAndOutputFolder>
   </PropertyGroup>
 
   <ItemGroup>

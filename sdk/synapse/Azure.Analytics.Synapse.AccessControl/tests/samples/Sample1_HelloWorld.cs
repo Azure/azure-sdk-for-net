@@ -22,31 +22,40 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
         {
             #region Snippet:CreateAccessControlClient
             // Replace the string below with your actual endpoint url.
+#if SNIPPET
             string endpoint = "<my-endpoint-url>";
-            /*@@*/endpoint = TestEnvironment.EndpointUrl;
+#else
+            string endpoint = TestEnvironment.EndpointUrl;
+#endif
 
             RoleAssignmentsClient roleAssignmentsClient = new RoleAssignmentsClient(new Uri(endpoint), new DefaultAzureCredential());
             RoleDefinitionsClient definitionsClient = new RoleDefinitionsClient(new Uri(endpoint), new DefaultAzureCredential());
             #endregion
 
             #region Snippet:PrepCreateRoleAssignment
-            Response roleDefinitionsReponse = definitionsClient.ListRoleDefinitions(new());
-            BinaryData roleDefinitionsContent = roleDefinitionsReponse.Content;
+            Response roleDefinitionsResponse = definitionsClient.GetRoleDefinitions(new());
+            BinaryData roleDefinitionsContent = roleDefinitionsResponse.Content;
             JsonDocument roleDefinitionsJson = JsonDocument.Parse(roleDefinitionsContent.ToMemory());
 
             JsonElement adminRoleJson = roleDefinitionsJson.RootElement.EnumerateArray().
                 Single(role => role.GetProperty("name").ToString() == "Synapse Administrator");
             Guid adminRoleId = new Guid(adminRoleJson.GetProperty("id").ToString());
 
+#if SNIPPET
             string assignedScope = "workspaces/<my-workspace-name>";
-            /*@@*/assignedScope = "workspaces/" + TestEnvironment.WorkspaceName;
+#else
+            string assignedScope = "workspaces/" + TestEnvironment.WorkspaceName;
+#endif
 
             // Replace the string below with the ID you'd like to assign the role.
             Guid principalId = /*<my-principal-id>"*/ Guid.NewGuid();
 
             // Replace the string below with the ID of the assignment you'd like to use.
+#if SNIPPET
             string assignmentId = "<my-assignment-id>";
-            /*@@*/assignmentId = Guid.NewGuid().ToString();
+#else
+            string assignmentId = Guid.NewGuid().ToString();
+#endif
             #endregion
 
             #region Snippet:CreateRoleAssignment
@@ -74,7 +83,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             #endregion
 
             #region Snippet:ListRoleAssignments
-            Response roleAssignmentsResponse = roleAssignmentsClient.ListRoleAssignments(new());
+            Response roleAssignmentsResponse = roleAssignmentsClient.GetRoleAssignments();
             BinaryData roleAssignmentsContent = roleAssignmentsResponse.Content;
             JsonDocument roleAssignmentsJson = JsonDocument.Parse(roleAssignmentsContent.ToMemory());
 

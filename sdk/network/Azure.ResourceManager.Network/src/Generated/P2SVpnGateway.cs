@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network
     public partial class P2SVpnGateway : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly P2SVpnGatewaysRestOperations _restClient;
+        private readonly P2SVpnGatewaysRestOperations _p2sVpnGatewaysRestClient;
         private readonly P2SVpnGatewayData _data;
 
         /// <summary> Initializes a new instance of the <see cref="P2SVpnGateway"/> class for mocking. </summary>
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "P2SVpnGateway"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal P2SVpnGateway(ArmResource options, P2SVpnGatewayData resource) : base(options, resource.Id)
+        internal P2SVpnGateway(ArmResource options, P2SVpnGatewayData resource) : base(options, new ResourceIdentifier(resource.Id))
         {
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new P2SVpnGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _p2sVpnGatewaysRestClient = new P2SVpnGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="P2SVpnGateway"/> class. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network
         internal P2SVpnGateway(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new P2SVpnGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _p2sVpnGatewaysRestClient = new P2SVpnGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="P2SVpnGateway"/> class. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network
         internal P2SVpnGateway(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new P2SVpnGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _p2sVpnGatewaysRestClient = new P2SVpnGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _p2sVpnGatewaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new P2SVpnGateway(this, response.Value), response.GetRawResponse());
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _p2sVpnGatewaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new P2SVpnGateway(this, response.Value), response.GetRawResponse());
@@ -149,8 +149,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new P2SVpnGatewayDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _p2sVpnGatewaysRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new P2SVpnGatewayDeleteOperation(_clientDiagnostics, Pipeline, _p2sVpnGatewaysRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new P2SVpnGatewayDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _p2sVpnGatewaysRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new P2SVpnGatewayDeleteOperation(_clientDiagnostics, Pipeline, _p2sVpnGatewaysRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -189,19 +189,19 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="p2SVpnGatewayParameters"/> is null. </exception>
-        public async virtual Task<P2SVpnGatewayUpdateTagsOperation> UpdateTagsAsync(TagsObject p2SVpnGatewayParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<P2SVpnGatewayUpdateTagsOperation> UpdateAsync(TagsObject p2SVpnGatewayParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (p2SVpnGatewayParameters == null)
             {
                 throw new ArgumentNullException(nameof(p2SVpnGatewayParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.UpdateTags");
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.Update");
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, p2SVpnGatewayParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new P2SVpnGatewayUpdateTagsOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateTagsRequest(Id.ResourceGroupName, Id.Name, p2SVpnGatewayParameters).Request, response);
+                var response = await _p2sVpnGatewaysRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, p2SVpnGatewayParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new P2SVpnGatewayUpdateTagsOperation(this, _clientDiagnostics, Pipeline, _p2sVpnGatewaysRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, p2SVpnGatewayParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -218,19 +218,19 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="p2SVpnGatewayParameters"/> is null. </exception>
-        public virtual P2SVpnGatewayUpdateTagsOperation UpdateTags(TagsObject p2SVpnGatewayParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual P2SVpnGatewayUpdateTagsOperation Update(TagsObject p2SVpnGatewayParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (p2SVpnGatewayParameters == null)
             {
                 throw new ArgumentNullException(nameof(p2SVpnGatewayParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.UpdateTags");
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.Update");
             scope.Start();
             try
             {
-                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, p2SVpnGatewayParameters, cancellationToken);
-                var operation = new P2SVpnGatewayUpdateTagsOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateTagsRequest(Id.ResourceGroupName, Id.Name, p2SVpnGatewayParameters).Request, response);
+                var response = _p2sVpnGatewaysRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, p2SVpnGatewayParameters, cancellationToken);
+                var operation = new P2SVpnGatewayUpdateTagsOperation(this, _clientDiagnostics, Pipeline, _p2sVpnGatewaysRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, p2SVpnGatewayParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -251,8 +251,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.ResetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new P2SVpnGatewayResetOperation(_clientDiagnostics, Pipeline, _restClient.CreateResetRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _p2sVpnGatewaysRestClient.ResetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new P2SVpnGatewayResetOperation(_clientDiagnostics, Pipeline, _p2sVpnGatewaysRestClient.CreateResetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -273,8 +273,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.Reset(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new P2SVpnGatewayResetOperation(_clientDiagnostics, Pipeline, _restClient.CreateResetRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _p2sVpnGatewaysRestClient.Reset(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new P2SVpnGatewayResetOperation(_clientDiagnostics, Pipeline, _p2sVpnGatewaysRestClient.CreateResetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -302,8 +302,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.GenerateVpnProfileAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new P2SVpnGatewayGenerateVpnProfileOperation(_clientDiagnostics, Pipeline, _restClient.CreateGenerateVpnProfileRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = await _p2sVpnGatewaysRestClient.GenerateVpnProfileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new P2SVpnGatewayGenerateVpnProfileOperation(_clientDiagnostics, Pipeline, _p2sVpnGatewaysRestClient.CreateGenerateVpnProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -331,8 +331,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.GenerateVpnProfile(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new P2SVpnGatewayGenerateVpnProfileOperation(_clientDiagnostics, Pipeline, _restClient.CreateGenerateVpnProfileRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = _p2sVpnGatewaysRestClient.GenerateVpnProfile(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var operation = new P2SVpnGatewayGenerateVpnProfileOperation(_clientDiagnostics, Pipeline, _p2sVpnGatewaysRestClient.CreateGenerateVpnProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -353,8 +353,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.GetP2SVpnConnectionHealthAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new P2SVpnGatewayGetP2SVpnConnectionHealthOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetP2SVpnConnectionHealthRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _p2sVpnGatewaysRestClient.GetP2SVpnConnectionHealthAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new P2SVpnGatewayGetP2SVpnConnectionHealthOperation(_clientDiagnostics, Pipeline, _p2sVpnGatewaysRestClient.CreateGetP2SVpnConnectionHealthRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -375,8 +375,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.GetP2SVpnConnectionHealth(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new P2SVpnGatewayGetP2SVpnConnectionHealthOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetP2SVpnConnectionHealthRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _p2sVpnGatewaysRestClient.GetP2SVpnConnectionHealth(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new P2SVpnGatewayGetP2SVpnConnectionHealthOperation(_clientDiagnostics, Pipeline, _p2sVpnGatewaysRestClient.CreateGetP2SVpnConnectionHealthRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -404,8 +404,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.GetP2SVpnConnectionHealthDetailedAsync(Id.ResourceGroupName, Id.Name, request, cancellationToken).ConfigureAwait(false);
-                var operation = new P2SVpnGatewayGetP2SVpnConnectionHealthDetailedOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetP2SVpnConnectionHealthDetailedRequest(Id.ResourceGroupName, Id.Name, request).Request, response);
+                var response = await _p2sVpnGatewaysRestClient.GetP2SVpnConnectionHealthDetailedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken).ConfigureAwait(false);
+                var operation = new P2SVpnGatewayGetP2SVpnConnectionHealthDetailedOperation(_clientDiagnostics, Pipeline, _p2sVpnGatewaysRestClient.CreateGetP2SVpnConnectionHealthDetailedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -433,8 +433,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.GetP2SVpnConnectionHealthDetailed(Id.ResourceGroupName, Id.Name, request, cancellationToken);
-                var operation = new P2SVpnGatewayGetP2SVpnConnectionHealthDetailedOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetP2SVpnConnectionHealthDetailedRequest(Id.ResourceGroupName, Id.Name, request).Request, response);
+                var response = _p2sVpnGatewaysRestClient.GetP2SVpnConnectionHealthDetailed(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken);
+                var operation = new P2SVpnGatewayGetP2SVpnConnectionHealthDetailedOperation(_clientDiagnostics, Pipeline, _p2sVpnGatewaysRestClient.CreateGetP2SVpnConnectionHealthDetailedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -462,8 +462,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.DisconnectP2SVpnConnectionsAsync(Id.ResourceGroupName, Id.Name, request, cancellationToken).ConfigureAwait(false);
-                var operation = new P2SVpnGatewayDisconnectP2SVpnConnectionsOperation(_clientDiagnostics, Pipeline, _restClient.CreateDisconnectP2SVpnConnectionsRequest(Id.ResourceGroupName, Id.Name, request).Request, response);
+                var response = await _p2sVpnGatewaysRestClient.DisconnectP2SVpnConnectionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken).ConfigureAwait(false);
+                var operation = new P2SVpnGatewayDisconnectP2SVpnConnectionsOperation(_clientDiagnostics, Pipeline, _p2sVpnGatewaysRestClient.CreateDisconnectP2SVpnConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -491,8 +491,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.DisconnectP2SVpnConnections(Id.ResourceGroupName, Id.Name, request, cancellationToken);
-                var operation = new P2SVpnGatewayDisconnectP2SVpnConnectionsOperation(_clientDiagnostics, Pipeline, _restClient.CreateDisconnectP2SVpnConnectionsRequest(Id.ResourceGroupName, Id.Name, request).Request, response);
+                var response = _p2sVpnGatewaysRestClient.DisconnectP2SVpnConnections(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken);
+                var operation = new P2SVpnGatewayDisconnectP2SVpnConnectionsOperation(_clientDiagnostics, Pipeline, _p2sVpnGatewaysRestClient.CreateDisconnectP2SVpnConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

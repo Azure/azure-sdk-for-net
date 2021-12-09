@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/4a93ab078fba7f087116283c8ed169f9b8e30397/specification/storage/data-plane/Microsoft.FileStorage/preview/2020-10-02/file.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/d710fb7f40338ca6ef00e0a9680be0a3d4cf5059/specification/storage/data-plane/Microsoft.FileStorage/preview/2021-04-10/file.json
 # https://github.com/Azure/autorest/issues/4075
 skip-semantics-validation: true
 modelerfour:
@@ -134,4 +134,14 @@ directive:
 - from: swagger-document
   where: $..[?(@.operationId=='File_Download')]
   transform: $["x-csharp-buffer-response"] = false;
+```
+
+### Remove conditions parameter groupings
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    delete $.SourceLeaseId["x-ms-parameter-grouping"];
+    delete $.DestinationLeaseId["x-ms-parameter-grouping"];
 ```

@@ -91,7 +91,8 @@ namespace Azure.MixedReality.RemoteRendering
         /// <inheritdoc />
         public async override ValueTask<Response<RenderingSession>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
         {
-            return await WaitForCompletionAsync(TimeSpan.FromSeconds(10), cancellationToken).ConfigureAwait(false);
+            int pollingPeriodInSeconds = (_response.Value.Size == RenderingServerSize.Standard) ? 2 : 10;
+            return await WaitForCompletionAsync(TimeSpan.FromSeconds(pollingPeriodInSeconds), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />

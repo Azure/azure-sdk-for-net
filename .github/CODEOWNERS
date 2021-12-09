@@ -20,7 +20,7 @@
 /sdk/extensions/                                @pakrym
 
 # PRLabel: %EngSys
-/sdk/template/                                  @Azure/azure-sdk-eng
+/sdk/template/                                  @chidozieononiwu @weshaggard @benbp
 
 # Smoke tests
 /common/SmokeTests/                             @AlexGhiondea @schaabs @heaths @tg-msft @jsquire
@@ -130,7 +130,7 @@
 /sdk/cognitiveservices/Vision.Face/            @JinyuID @dipidoo @SteveMSFT @msyache @longli0 @ShaoAnLin @lulululululu
 
 # PRLabel: %Cognitive - Form Recognizer
-/sdk/formrecognizer/                            @kinelski @maririos
+/sdk/formrecognizer/                            @kinelski @jsquire @maririos
 
 # ServiceLabel: %Cognitive - Form Recognizer %Service Attention
 /sdk/cognitiveservices/FormRecognizer/            @ctstone @anrothMSFT
@@ -142,7 +142,7 @@
 /sdk/cognitiveservices/Knowledge.QnAMaker/            @bingisbestest @nerajput1607
 
 # PRLabel: %Cognitive - Text Analytics
-/sdk/textanalytics/                             @maririos
+/sdk/textanalytics/                            @kinelski @jsquire @maririos
 
 # ServiceLabel: %Cognitive - Text Analytics %Service Attention
 /sdk/cognitiveservices/Language.TextAnalytics/            @assafi
@@ -151,7 +151,7 @@
 #/<NotInRepo>/            @swmachan
 
 # PRLabel: %Cognitive - Translator
-/sdk/translation/                     @maririos
+/sdk/translation/                    @jsquire @maririos
 
 # ServiceLabel: %Cognitive - Speech %Service Attention
 #/<NotInRepo>/            @robch @oscholz
@@ -276,7 +276,7 @@
 
 # PRLabel: %Digital Twins
 # ServiceLabel: %Digital Twins %Service Attention
-/sdk/digitaltwins/                              @drwill-ms @azabbasi @johngallardo
+/sdk/digitaltwins/                              @johngallardo @efriesner @abhinav-ghai
 
 # PRLabel: %IoT Models Repository
 # ServiceLabel: %IoT Models Repository %Service Attention
@@ -327,7 +327,7 @@
 #/<NotInRepo>/            @madhurinms
 
 # PRLabel: %Iot
-/sdk/iot/                               @drwill-ms @timtay-microsoft @abhipsaMisra @azabbasi @jamdavi @andykwong-ms
+/sdk/iot/                               @drwill-ms @timtay-microsoft @abhipsaMisra @azabbasi @jamdavi @andykwong-ms @brycewang-microsoft
 
 # ServiceLabel: %IotCentral %Service Attention
 /sdk/iotcentral/Microsoft.Azure.Management.IotCentral/           @iluican @jlian
@@ -337,7 +337,7 @@
 
 # PRLabel: %IotHub
 # ServiceLabel: %IotHub %Service Attention
-/sdk/iothub/                            @drwill-ms @timtay-microsoft @abhipsaMisra @azabbasi @jamdavi @andykwong-ms
+/sdk/iothub/                            @drwill-ms @timtay-microsoft @abhipsaMisra @azabbasi @jamdavi @andykwong-ms @brycewang-microsoft
 
 # ServiceLabel: %IotHub %Service Attention
 /sdk/iothub/Microsoft.Azure.Management.IotHub/            @rkmanda @chieftn
@@ -393,8 +393,9 @@ sdk/labservices/Microsoft.Azure.Management.LabServices/           @Tanmayeekamat
 # ServiceLabel: %Monitor %Service Attention
 sdk/monitor/           @SameergMS @dadunl
 
-# PRLabel: %Monitor
+# PRLabel: %Monitor - Query
 sdk/monitor/Azure.Monitor.Query            @pakrym @nisha-bhatia
+sdk/monitor/ci.yml                         @pakrym @nisha-bhatia
 
 # PRLabel: %Monitor - ApplicationInsights
 # ServiceLabel: %Monitor - ApplicationInsights %Service Attention
@@ -584,10 +585,10 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 /sdk/storage/                                   @tg-msft
 
 # PRLabel: %Storage
-/sdk/storage/Azure.Storage.*/                   @amishra-dev @seanmcc-msft @amnguye @kasobol-msft @tg-msft
+/sdk/storage/Azure.Storage.*/                   @amishra-dev @seanmcc-msft @amnguye @tg-msft
 
 # PRLabel: %Storage
-/sdk/storage/Microsoft.Azure.WebJobs.*/         @amishra-dev @seanmcc-msft @amnguye @kasobol-msft @tg-msft @fabiocav @mathewc
+/sdk/storage/Microsoft.Azure.WebJobs.*/         @amishra-dev @seanmcc-msft @amnguye @tg-msft @fabiocav @mathewc
 
 # ServiceLabel: %Storage %Service Attention
 #/<NotInRepo>/                                   @xgithubtriage
@@ -658,10 +659,10 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 
 
 # ######## Eng Sys ######## 
-/eng/           @weshaggard @chidozieononiwu @danieljurek
-/eng/mgmt/      @allenjzhang @m-nash @markcowl
-/**/tests.yml   @benbp
-/**/ci.yml      @chidozieononiwu
+/eng/           @chidozieononiwu @weshaggard @benbp
+/eng/mgmt/      @ArthurMa1978 @m-nash @markcowl
+/**/tests.yml   @chidozieononiwu @weshaggard @benbp
+/**/ci.yml      @chidozieononiwu @weshaggard @benbp
 
 # Add owners for notifications for specific pipelines
 /eng/pipelines/aggregate-reports.yml            @AlexGhiondea @maririos

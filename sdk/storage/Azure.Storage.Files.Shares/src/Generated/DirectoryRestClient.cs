@@ -29,7 +29,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="url"> The URL of the service account, share, directory or file that is the target of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public DirectoryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2020-10-02")
+        public DirectoryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2021-04-10")
         {
             this.url = url ?? throw new ArgumentNullException(nameof(url));
             this.version = version ?? throw new ArgumentNullException(nameof(version));
@@ -688,6 +688,124 @@ namespace Azure.Storage.Files.Shares
             using var message = CreateForceCloseHandlesRequest(handleId, timeout, marker, sharesnapshot, recursive);
             _pipeline.Send(message, cancellationToken);
             var headers = new DirectoryForceCloseHandlesHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateRenameRequest(string renameSource, int? timeout, bool? replaceIfExists, bool? ignoreReadOnly, string sourceLeaseId, string destinationLeaseId, string filePermission, string filePermissionKey, CopyFileSmbInfo copyFileSmbInfo)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendQuery("restype", "directory", true);
+            uri.AppendQuery("comp", "rename", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-file-rename-source", renameSource);
+            if (replaceIfExists != null)
+            {
+                request.Headers.Add("x-ms-file-rename-replace-if-exists", replaceIfExists.Value);
+            }
+            if (ignoreReadOnly != null)
+            {
+                request.Headers.Add("x-ms-file-rename-ignore-readonly", ignoreReadOnly.Value);
+            }
+            if (sourceLeaseId != null)
+            {
+                request.Headers.Add("x-ms-source-lease-id", sourceLeaseId);
+            }
+            if (destinationLeaseId != null)
+            {
+                request.Headers.Add("x-ms-destination-lease-id", destinationLeaseId);
+            }
+            if (copyFileSmbInfo?.FileAttributes != null)
+            {
+                request.Headers.Add("x-ms-file-attributes", copyFileSmbInfo.FileAttributes);
+            }
+            if (copyFileSmbInfo?.FileCreationTime != null)
+            {
+                request.Headers.Add("x-ms-file-creation-time", copyFileSmbInfo.FileCreationTime);
+            }
+            if (copyFileSmbInfo?.FileLastWriteTime != null)
+            {
+                request.Headers.Add("x-ms-file-last-write-time", copyFileSmbInfo.FileLastWriteTime);
+            }
+            if (filePermission != null)
+            {
+                request.Headers.Add("x-ms-file-permission", filePermission);
+            }
+            if (filePermissionKey != null)
+            {
+                request.Headers.Add("x-ms-file-permission-key", filePermissionKey);
+            }
+            request.Headers.Add("Accept", "application/xml");
+            return message;
+        }
+
+        /// <summary> Renames a directory. </summary>
+        /// <param name="renameSource"> Required. Specifies the URI-style path of the source file, up to 2 KB in length. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="replaceIfExists"> Optional. A boolean value for if the destination file already exists, whether this request will overwrite the file or not. If true, the rename will succeed and will overwrite the destination file. If not provided or if false and the destination file does exist, the request will not overwrite the destination file. If provided and the destination file doesn’t exist, the rename will succeed. Note: This value does not override the x-ms-file-copy-ignore-read-only header value. </param>
+        /// <param name="ignoreReadOnly"> Optional. A boolean value that specifies whether the ReadOnly attribute on a preexisting destination file should be respected. If true, the rename will succeed, otherwise, a previous file at the destination with the ReadOnly attribute set will cause the rename to fail. </param>
+        /// <param name="sourceLeaseId"> Required if the source file has an active infinite lease. </param>
+        /// <param name="destinationLeaseId"> Required if the destination file has an active infinite lease. The lease ID specified for this header must match the lease ID of the destination file. If the request does not include the lease ID or it is not valid, the operation fails with status code 412 (Precondition Failed). If this header is specified and the destination file does not currently have an active lease, the operation will also fail with status code 412 (Precondition Failed). </param>
+        /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="copyFileSmbInfo"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="renameSource"/> is null. </exception>
+        public async Task<ResponseWithHeaders<DirectoryRenameHeaders>> RenameAsync(string renameSource, int? timeout = null, bool? replaceIfExists = null, bool? ignoreReadOnly = null, string sourceLeaseId = null, string destinationLeaseId = null, string filePermission = null, string filePermissionKey = null, CopyFileSmbInfo copyFileSmbInfo = null, CancellationToken cancellationToken = default)
+        {
+            if (renameSource == null)
+            {
+                throw new ArgumentNullException(nameof(renameSource));
+            }
+
+            using var message = CreateRenameRequest(renameSource, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, filePermission, filePermissionKey, copyFileSmbInfo);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new DirectoryRenameHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Renames a directory. </summary>
+        /// <param name="renameSource"> Required. Specifies the URI-style path of the source file, up to 2 KB in length. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="replaceIfExists"> Optional. A boolean value for if the destination file already exists, whether this request will overwrite the file or not. If true, the rename will succeed and will overwrite the destination file. If not provided or if false and the destination file does exist, the request will not overwrite the destination file. If provided and the destination file doesn’t exist, the rename will succeed. Note: This value does not override the x-ms-file-copy-ignore-read-only header value. </param>
+        /// <param name="ignoreReadOnly"> Optional. A boolean value that specifies whether the ReadOnly attribute on a preexisting destination file should be respected. If true, the rename will succeed, otherwise, a previous file at the destination with the ReadOnly attribute set will cause the rename to fail. </param>
+        /// <param name="sourceLeaseId"> Required if the source file has an active infinite lease. </param>
+        /// <param name="destinationLeaseId"> Required if the destination file has an active infinite lease. The lease ID specified for this header must match the lease ID of the destination file. If the request does not include the lease ID or it is not valid, the operation fails with status code 412 (Precondition Failed). If this header is specified and the destination file does not currently have an active lease, the operation will also fail with status code 412 (Precondition Failed). </param>
+        /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="copyFileSmbInfo"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="renameSource"/> is null. </exception>
+        public ResponseWithHeaders<DirectoryRenameHeaders> Rename(string renameSource, int? timeout = null, bool? replaceIfExists = null, bool? ignoreReadOnly = null, string sourceLeaseId = null, string destinationLeaseId = null, string filePermission = null, string filePermissionKey = null, CopyFileSmbInfo copyFileSmbInfo = null, CancellationToken cancellationToken = default)
+        {
+            if (renameSource == null)
+            {
+                throw new ArgumentNullException(nameof(renameSource));
+            }
+
+            using var message = CreateRenameRequest(renameSource, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, filePermission, filePermissionKey, copyFileSmbInfo);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new DirectoryRenameHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:

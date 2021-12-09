@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "b24b4311-5707-508d-d497-bae915bd2afd",
         "x-ms-date": "Tue, 24 Aug 2021 19:28:57 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "b24b4311-5707-508d-d497-bae915bd2afd",
         "x-ms-request-id": "aa545a89-b01a-000e-111e-99f372000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -51,7 +51,7 @@
         "x-ms-file-last-write-time": "Now",
         "x-ms-file-permission": "Inherit",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -74,7 +74,7 @@
         "x-ms-file-permission-key": "17860367565182308406*11459378189709739967",
         "x-ms-request-id": "aa545a8b-b01a-000e-121e-99f372000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -102,7 +102,7 @@
         "x-ms-file-last-write-time": "Preserve",
         "x-ms-file-permission": "Preserve",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -117,7 +117,7 @@
         "x-ms-client-request-id": "8b1ca8a7-4c86-c216-ba56-8290f44c6add",
         "x-ms-error-code": "ResourceNotFound",
         "x-ms-request-id": "aa545a8c-b01a-000e-131e-99f372000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EResourceNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified resource does not exist.\n",
@@ -140,7 +140,7 @@
         "x-ms-date": "Tue, 24 Aug 2021 19:28:58 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -153,7 +153,7 @@
         ],
         "x-ms-client-request-id": "f4f865f4-abce-d584-3a29-56326be008c3",
         "x-ms-request-id": "aa545a8d-b01a-000e-141e-99f372000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

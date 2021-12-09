@@ -24,8 +24,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        // TODO https://github.com/Azure/azure-sdk-for-net/issues/23369
-        public const string DefaultSasVersion = "2020-10-02";
+        public const string DefaultSasVersion = "2021-02-12";
 
         /// <summary>
         /// The default size of staged blocks when uploading small blobs.
@@ -174,6 +173,7 @@ namespace Azure.Storage
             public const string VersionId = "x-ms-version-id";
             public const string LeaseTime = "x-ms-lease-time";
             public const string LastModified = "Last-Modified";
+            public const string ETag = "ETag";
         }
 
         internal static class ErrorCodes
@@ -299,9 +299,19 @@ namespace Azure.Storage
             public const string BlobUriSuffix = Blob.UriSubDomain;
 
             /// <summary>
+            /// The blob URI suffix.
+            /// </summary>
+            public const string BlobUriPeriodSuffix = "." + Blob.UriSubDomain + ".";
+
+            /// <summary>
             /// The DFS URI suffix.
             /// </summary>
             public const string DfsUriSuffix = "dfs";
+
+            /// <summary>
+            /// The DFS URI suffix.
+            /// </summary>
+            public const string DfsUriPeriodSuffix = "." + DfsUriSuffix + ".";
 
             /// <summary>
             /// The key of the object json object returned for errors.
@@ -324,6 +334,7 @@ namespace Azure.Storage
             public const string AlreadyExists = "ContainerAlreadyExists";
             public const string FilesystemNotFound = "FilesystemNotFound";
             public const string PathNotFound = "PathNotFound";
+            public const string PathAlreadyExists = "PathAlreadyExists";
 
             /// <summary>
             /// Default concurrent transfers count.
@@ -570,13 +581,15 @@ namespace Azure.Storage
                 Sas.Permissions.Write,
                 Sas.Permissions.Delete,
                 Sas.Permissions.DeleteBlobVersion,
+                Sas.Permissions.PermanentDelete,
                 Sas.Permissions.List,
                 Sas.Permissions.Tag,
                 Sas.Permissions.Update,
                 Sas.Permissions.Process,
                 Sas.Permissions.FilterByTags,
                 Sas.Permissions.Move,
-                Sas.Permissions.Execute
+                Sas.Permissions.Execute,
+                Sas.Permissions.SetImmutabilityPolicy,
             };
 
             /// <summary>

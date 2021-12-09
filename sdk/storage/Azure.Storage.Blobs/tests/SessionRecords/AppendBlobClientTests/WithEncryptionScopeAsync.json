@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "7da1b75e-0216-8cab-1c5f-e7f03bc806a2",
         "x-ms-date": "Wed, 14 Apr 2021 19:10:37 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "7da1b75e-0216-8cab-1c5f-e7f03bc806a2",
         "x-ms-request-id": "1e11e9bc-801e-0048-6b61-31c7f5000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -50,7 +50,7 @@
         "x-ms-date": "Wed, 14 Apr 2021 19:10:37 GMT",
         "x-ms-encryption-scope": "seanscope1",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -67,7 +67,7 @@
         "x-ms-encryption-scope": "seanscope1",
         "x-ms-request-id": "1e11e9da-801e-0048-0261-31c7f5000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "x-ms-version-id": "2021-04-14T19:10:38.1300488Z"
       },
       "ResponseBody": []
@@ -90,7 +90,7 @@
         "x-ms-meta-meta": "data",
         "x-ms-meta-UPPER": "case",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 409,
@@ -105,7 +105,7 @@
         "x-ms-client-request-id": "f4944f42-8c90-4ab7-85ba-8491a8f347fe",
         "x-ms-error-code": "BlobUsesCustomerSpecifiedEncryption",
         "x-ms-request-id": "1e11e9f7-801e-0048-1b61-31c7f5000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>BlobUsesCustomerSpecifiedEncryption</Code><Message>The blob is encrypted with customer specified encryption, but it was not provided in the request.\n",
@@ -127,7 +127,7 @@
         "x-ms-client-request-id": "bf7d9e9f-09fc-d86c-e800-89bbf35398d8",
         "x-ms-date": "Wed, 14 Apr 2021 19:10:37 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -140,7 +140,7 @@
         ],
         "x-ms-client-request-id": "bf7d9e9f-09fc-d86c-e800-89bbf35398d8",
         "x-ms-request-id": "1e11ea21-801e-0048-4261-31c7f5000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

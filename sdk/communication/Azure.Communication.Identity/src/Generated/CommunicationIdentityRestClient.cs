@@ -31,7 +31,7 @@ namespace Azure.Communication.Identity
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CommunicationIdentityRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-03-31-preview1")
+        public CommunicationIdentityRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-10-31-preview")
         {
             this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
             this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
@@ -66,7 +66,7 @@ namespace Azure.Communication.Identity
             return message;
         }
 
-        /// <summary> Create a new identity. </summary>
+        /// <summary> Create a new identity, and optionally, an access token. </summary>
         /// <param name="createTokenWithScopes"> Also create access token for the created identity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<CommunicationUserIdentifierAndToken>> CreateAsync(IEnumerable<CommunicationTokenScope> createTokenWithScopes = null, CancellationToken cancellationToken = default)
@@ -87,7 +87,7 @@ namespace Azure.Communication.Identity
             }
         }
 
-        /// <summary> Create a new identity. </summary>
+        /// <summary> Create a new identity, and optionally, an access token. </summary>
         /// <param name="createTokenWithScopes"> Also create access token for the created identity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<CommunicationUserIdentifierAndToken> Create(IEnumerable<CommunicationTokenScope> createTokenWithScopes = null, CancellationToken cancellationToken = default)
@@ -246,8 +246,8 @@ namespace Azure.Communication.Identity
             return message;
         }
 
-        /// <summary> Exchange an AAD access token of a Teams user for a new ACS access token. </summary>
-        /// <param name="token"> Azure Active Directory access token to acquire a new ACS access token. </param>
+        /// <summary> Exchange an AAD access token of a Teams user for a new Communication Identity access token with a matching expiration time. </summary>
+        /// <param name="token"> AAD access token of a Teams User to acquire a new Communication Identity access token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="token"/> is null. </exception>
         public async Task<Response<CommunicationIdentityAccessToken>> ExchangeTeamsUserAccessTokenAsync(string token, CancellationToken cancellationToken = default)
@@ -273,8 +273,8 @@ namespace Azure.Communication.Identity
             }
         }
 
-        /// <summary> Exchange an AAD access token of a Teams user for a new ACS access token. </summary>
-        /// <param name="token"> Azure Active Directory access token to acquire a new ACS access token. </param>
+        /// <summary> Exchange an AAD access token of a Teams user for a new Communication Identity access token with a matching expiration time. </summary>
+        /// <param name="token"> AAD access token of a Teams User to acquire a new Communication Identity access token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="token"/> is null. </exception>
         public Response<CommunicationIdentityAccessToken> ExchangeTeamsUserAccessToken(string token, CancellationToken cancellationToken = default)

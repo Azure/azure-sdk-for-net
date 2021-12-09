@@ -23,7 +23,8 @@ namespace Azure.ResourceManager.Compute
     public partial class VirtualMachineScaleSet : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly VirtualMachineScaleSetsRestOperations _restClient;
+        private readonly VirtualMachineScaleSetsRestOperations _virtualMachineScaleSetsRestClient;
+        private readonly VirtualMachineScaleSetRollingUpgradesRestOperations _virtualMachineScaleSetRollingUpgradesRestClient;
         private readonly VirtualMachineScaleSetData _data;
 
         /// <summary> Initializes a new instance of the <see cref="VirtualMachineScaleSet"/> class for mocking. </summary>
@@ -39,7 +40,8 @@ namespace Azure.ResourceManager.Compute
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new VirtualMachineScaleSetsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _virtualMachineScaleSetsRestClient = new VirtualMachineScaleSetsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _virtualMachineScaleSetRollingUpgradesRestClient = new VirtualMachineScaleSetRollingUpgradesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="VirtualMachineScaleSet"/> class. </summary>
@@ -48,7 +50,8 @@ namespace Azure.ResourceManager.Compute
         internal VirtualMachineScaleSet(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new VirtualMachineScaleSetsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _virtualMachineScaleSetsRestClient = new VirtualMachineScaleSetsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _virtualMachineScaleSetRollingUpgradesRestClient = new VirtualMachineScaleSetRollingUpgradesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="VirtualMachineScaleSet"/> class. </summary>
@@ -60,7 +63,8 @@ namespace Azure.ResourceManager.Compute
         internal VirtualMachineScaleSet(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new VirtualMachineScaleSetsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _virtualMachineScaleSetsRestClient = new VirtualMachineScaleSetsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _virtualMachineScaleSetRollingUpgradesRestClient = new VirtualMachineScaleSetRollingUpgradesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -93,7 +97,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualMachineScaleSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new VirtualMachineScaleSet(this, response.Value), response.GetRawResponse());
@@ -114,7 +118,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, expand, cancellationToken);
+                var response = _virtualMachineScaleSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualMachineScaleSet(this, response.Value), response.GetRawResponse());
@@ -152,8 +156,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, forceDeletion, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name, forceDeletion).Request, response);
+                var response = await _virtualMachineScaleSetsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDeletion, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualMachineScaleSetDeleteOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDeletion).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -175,8 +179,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, forceDeletion, cancellationToken);
-                var operation = new VirtualMachineScaleSetDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name, forceDeletion).Request, response);
+                var response = _virtualMachineScaleSetsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDeletion, cancellationToken);
+                var operation = new VirtualMachineScaleSetDeleteOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDeletion).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -206,8 +210,8 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _virtualMachineScaleSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VirtualMachineScaleSet(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -235,8 +239,8 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _virtualMachineScaleSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new VirtualMachineScaleSet(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -264,8 +268,8 @@ namespace Azure.ResourceManager.Compute
                 await TagResource.DeleteAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _virtualMachineScaleSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VirtualMachineScaleSet(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -293,8 +297,8 @@ namespace Azure.ResourceManager.Compute
                 TagResource.Delete(cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _virtualMachineScaleSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new VirtualMachineScaleSet(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -321,8 +325,8 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _virtualMachineScaleSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VirtualMachineScaleSet(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -349,8 +353,8 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _virtualMachineScaleSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new VirtualMachineScaleSet(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -358,281 +362,6 @@ namespace Azure.ResourceManager.Compute
                 scope.Failed(e);
                 throw;
             }
-        }
-        /// <summary> Gets the status of a VM scale set instance. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VirtualMachineScaleSetInstanceView>> GetInstanceViewAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.GetInstanceView");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.GetInstanceViewAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets the status of a VM scale set instance. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VirtualMachineScaleSetInstanceView> GetInstanceView(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.GetInstanceView");
-            scope.Start();
-            try
-            {
-                var response = _restClient.GetInstanceView(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Manual platform update domain walk to update virtual machines in a service fabric virtual machine scale set. </summary>
-        /// <param name="platformUpdateDomain"> The platform update domain for which a manual recovery walk is requested. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RecoveryWalkResponse>> ForceRecoveryServiceFabricPlatformUpdateDomainWalkAsync(int platformUpdateDomain, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.ForceRecoveryServiceFabricPlatformUpdateDomainWalk");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.ForceRecoveryServiceFabricPlatformUpdateDomainWalkAsync(Id.ResourceGroupName, Id.Name, platformUpdateDomain, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Manual platform update domain walk to update virtual machines in a service fabric virtual machine scale set. </summary>
-        /// <param name="platformUpdateDomain"> The platform update domain for which a manual recovery walk is requested. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RecoveryWalkResponse> ForceRecoveryServiceFabricPlatformUpdateDomainWalk(int platformUpdateDomain, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.ForceRecoveryServiceFabricPlatformUpdateDomainWalk");
-            scope.Start();
-            try
-            {
-                var response = _restClient.ForceRecoveryServiceFabricPlatformUpdateDomainWalk(Id.ResourceGroupName, Id.Name, platformUpdateDomain, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Converts SinglePlacementGroup property to false for a existing virtual machine scale set. </summary>
-        /// <param name="parameters"> The input object for ConvertToSinglePlacementGroup API. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response> ConvertToSinglePlacementGroupAsync(VMScaleSetConvertToSinglePlacementGroupInput parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.ConvertToSinglePlacementGroup");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.ConvertToSinglePlacementGroupAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Converts SinglePlacementGroup property to false for a existing virtual machine scale set. </summary>
-        /// <param name="parameters"> The input object for ConvertToSinglePlacementGroup API. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response ConvertToSinglePlacementGroup(VMScaleSetConvertToSinglePlacementGroupInput parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.ConvertToSinglePlacementGroup");
-            scope.Start();
-            try
-            {
-                var response = _restClient.ConvertToSinglePlacementGroup(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a list of SKUs available for your VM scale set, including the minimum and maximum VM instances allowed for each SKU. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineScaleSetSku" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineScaleSetSku> GetSkus(CancellationToken cancellationToken = default)
-        {
-            Page<VirtualMachineScaleSetSku> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.GetSkus");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.GetSkus(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<VirtualMachineScaleSetSku> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.GetSkus");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.GetSkusNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets a list of SKUs available for your VM scale set, including the minimum and maximum VM instances allowed for each SKU. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineScaleSetSku" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineScaleSetSku> GetSkusAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<VirtualMachineScaleSetSku>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.GetSkus");
-                scope.Start();
-                try
-                {
-                    var response = await _restClient.GetSkusAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<VirtualMachineScaleSetSku>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.GetSkus");
-                scope.Start();
-                try
-                {
-                    var response = await _restClient.GetSkusNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets list of OS upgrades on a VM scale set instance. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="UpgradeOperationHistoricalStatusInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<UpgradeOperationHistoricalStatusInfo> GetOSUpgradeHistory(CancellationToken cancellationToken = default)
-        {
-            Page<UpgradeOperationHistoricalStatusInfo> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.GetOSUpgradeHistory");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.GetOSUpgradeHistory(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<UpgradeOperationHistoricalStatusInfo> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.GetOSUpgradeHistory");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.GetOSUpgradeHistoryNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets list of OS upgrades on a VM scale set instance. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="UpgradeOperationHistoricalStatusInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<UpgradeOperationHistoricalStatusInfo> GetOSUpgradeHistoryAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<UpgradeOperationHistoricalStatusInfo>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.GetOSUpgradeHistory");
-                scope.Start();
-                try
-                {
-                    var response = await _restClient.GetOSUpgradeHistoryAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<UpgradeOperationHistoricalStatusInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.GetOSUpgradeHistory");
-                scope.Start();
-                try
-                {
-                    var response = await _restClient.GetOSUpgradeHistoryNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Update a VM scale set. </summary>
@@ -651,8 +380,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = await _virtualMachineScaleSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualMachineScaleSetUpdateOperation(this, _clientDiagnostics, Pipeline, _virtualMachineScaleSetsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -680,8 +409,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.Update(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new VirtualMachineScaleSetUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = _virtualMachineScaleSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var operation = new VirtualMachineScaleSetUpdateOperation(this, _clientDiagnostics, Pipeline, _virtualMachineScaleSetsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -703,8 +432,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.DeallocateAsync(Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetDeallocateOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeallocateRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                var response = await _virtualMachineScaleSetsRestClient.DeallocateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualMachineScaleSetDeallocateOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetsRestClient.CreateDeallocateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -726,8 +455,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.Deallocate(Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken);
-                var operation = new VirtualMachineScaleSetDeallocateOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeallocateRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                var response = _virtualMachineScaleSetsRestClient.Deallocate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken);
+                var operation = new VirtualMachineScaleSetDeallocateOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetsRestClient.CreateDeallocateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -756,8 +485,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteInstancesAsync(Id.ResourceGroupName, Id.Name, vmInstanceIDs, forceDeletion, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetDeleteInstancesOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteInstancesRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs, forceDeletion).Request, response);
+                var response = await _virtualMachineScaleSetsRestClient.DeleteInstancesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, forceDeletion, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualMachineScaleSetDeleteInstancesOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetsRestClient.CreateDeleteInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, forceDeletion).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -786,8 +515,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.DeleteInstances(Id.ResourceGroupName, Id.Name, vmInstanceIDs, forceDeletion, cancellationToken);
-                var operation = new VirtualMachineScaleSetDeleteInstancesOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteInstancesRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs, forceDeletion).Request, response);
+                var response = _virtualMachineScaleSetsRestClient.DeleteInstances(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, forceDeletion, cancellationToken);
+                var operation = new VirtualMachineScaleSetDeleteInstancesOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetsRestClient.CreateDeleteInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, forceDeletion).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -797,6 +526,194 @@ namespace Azure.ResourceManager.Compute
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets the status of a VM scale set instance. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<VirtualMachineScaleSetInstanceView>> GetInstanceViewAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.GetInstanceView");
+            scope.Start();
+            try
+            {
+                var response = await _virtualMachineScaleSetsRestClient.GetInstanceViewAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status of a VM scale set instance. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<VirtualMachineScaleSetInstanceView> GetInstanceView(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.GetInstanceView");
+            scope.Start();
+            try
+            {
+                var response = _virtualMachineScaleSetsRestClient.GetInstanceView(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a list of SKUs available for your VM scale set, including the minimum and maximum VM instances allowed for each SKU. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="VirtualMachineScaleSetSku" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineScaleSetSku> GetSkusAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<VirtualMachineScaleSetSku>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.GetSkus");
+                scope.Start();
+                try
+                {
+                    var response = await _virtualMachineScaleSetsRestClient.ListSkusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<VirtualMachineScaleSetSku>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.GetSkus");
+                scope.Start();
+                try
+                {
+                    var response = await _virtualMachineScaleSetsRestClient.ListSkusNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Gets a list of SKUs available for your VM scale set, including the minimum and maximum VM instances allowed for each SKU. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="VirtualMachineScaleSetSku" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineScaleSetSku> GetSkus(CancellationToken cancellationToken = default)
+        {
+            Page<VirtualMachineScaleSetSku> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.GetSkus");
+                scope.Start();
+                try
+                {
+                    var response = _virtualMachineScaleSetsRestClient.ListSkus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<VirtualMachineScaleSetSku> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.GetSkus");
+                scope.Start();
+                try
+                {
+                    var response = _virtualMachineScaleSetsRestClient.ListSkusNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Gets list of OS upgrades on a VM scale set instance. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="UpgradeOperationHistoricalStatusInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<UpgradeOperationHistoricalStatusInfo> GetOSUpgradeHistoryAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<UpgradeOperationHistoricalStatusInfo>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.GetOSUpgradeHistory");
+                scope.Start();
+                try
+                {
+                    var response = await _virtualMachineScaleSetsRestClient.GetOSUpgradeHistoryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<UpgradeOperationHistoricalStatusInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.GetOSUpgradeHistory");
+                scope.Start();
+                try
+                {
+                    var response = await _virtualMachineScaleSetsRestClient.GetOSUpgradeHistoryNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Gets list of OS upgrades on a VM scale set instance. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="UpgradeOperationHistoricalStatusInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<UpgradeOperationHistoricalStatusInfo> GetOSUpgradeHistory(CancellationToken cancellationToken = default)
+        {
+            Page<UpgradeOperationHistoricalStatusInfo> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.GetOSUpgradeHistory");
+                scope.Start();
+                try
+                {
+                    var response = _virtualMachineScaleSetsRestClient.GetOSUpgradeHistory(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<UpgradeOperationHistoricalStatusInfo> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.GetOSUpgradeHistory");
+                scope.Start();
+                try
+                {
+                    var response = _virtualMachineScaleSetsRestClient.GetOSUpgradeHistoryNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Power off (stop) one or more virtual machines in a VM scale set. Note that resources are still attached and you are getting charged for the resources. Instead, use deallocate to release resources and avoid charges. </summary>
@@ -810,8 +727,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.PowerOffAsync(Id.ResourceGroupName, Id.Name, skipShutdown, vmInstanceIDs, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetPowerOffOperation(_clientDiagnostics, Pipeline, _restClient.CreatePowerOffRequest(Id.ResourceGroupName, Id.Name, skipShutdown, vmInstanceIDs).Request, response);
+                var response = await _virtualMachineScaleSetsRestClient.PowerOffAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipShutdown, vmInstanceIDs, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualMachineScaleSetPowerOffOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetsRestClient.CreatePowerOffRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipShutdown, vmInstanceIDs).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -834,8 +751,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.PowerOff(Id.ResourceGroupName, Id.Name, skipShutdown, vmInstanceIDs, cancellationToken);
-                var operation = new VirtualMachineScaleSetPowerOffOperation(_clientDiagnostics, Pipeline, _restClient.CreatePowerOffRequest(Id.ResourceGroupName, Id.Name, skipShutdown, vmInstanceIDs).Request, response);
+                var response = _virtualMachineScaleSetsRestClient.PowerOff(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipShutdown, vmInstanceIDs, cancellationToken);
+                var operation = new VirtualMachineScaleSetPowerOffOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetsRestClient.CreatePowerOffRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipShutdown, vmInstanceIDs).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -857,8 +774,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.RestartAsync(Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetRestartOperation(_clientDiagnostics, Pipeline, _restClient.CreateRestartRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                var response = await _virtualMachineScaleSetsRestClient.RestartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualMachineScaleSetRestartOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetsRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -880,8 +797,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.Restart(Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken);
-                var operation = new VirtualMachineScaleSetRestartOperation(_clientDiagnostics, Pipeline, _restClient.CreateRestartRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                var response = _virtualMachineScaleSetsRestClient.Restart(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken);
+                var operation = new VirtualMachineScaleSetRestartOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetsRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -897,14 +814,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualMachineScaleSetPowerOnOperation> PowerOnAsync(VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualMachineScaleSetStartOperation> PowerOnAsync(VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.PowerOn");
             scope.Start();
             try
             {
-                var response = await _restClient.PowerOnAsync(Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetPowerOnOperation(_clientDiagnostics, Pipeline, _restClient.CreatePowerOnRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                var response = await _virtualMachineScaleSetsRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualMachineScaleSetStartOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -920,14 +837,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualMachineScaleSetPowerOnOperation PowerOn(VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VirtualMachineScaleSetStartOperation PowerOn(VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.PowerOn");
             scope.Start();
             try
             {
-                var response = _restClient.PowerOn(Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken);
-                var operation = new VirtualMachineScaleSetPowerOnOperation(_clientDiagnostics, Pipeline, _restClient.CreatePowerOnRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                var response = _virtualMachineScaleSetsRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken);
+                var operation = new VirtualMachineScaleSetStartOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -949,8 +866,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.RedeployAsync(Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetRedeployOperation(_clientDiagnostics, Pipeline, _restClient.CreateRedeployRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                var response = await _virtualMachineScaleSetsRestClient.RedeployAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualMachineScaleSetRedeployOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetsRestClient.CreateRedeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -972,8 +889,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.Redeploy(Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken);
-                var operation = new VirtualMachineScaleSetRedeployOperation(_clientDiagnostics, Pipeline, _restClient.CreateRedeployRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                var response = _virtualMachineScaleSetsRestClient.Redeploy(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken);
+                var operation = new VirtualMachineScaleSetRedeployOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetsRestClient.CreateRedeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -995,8 +912,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.PerformMaintenanceAsync(Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetPerformMaintenanceOperation(_clientDiagnostics, Pipeline, _restClient.CreatePerformMaintenanceRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                var response = await _virtualMachineScaleSetsRestClient.PerformMaintenanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualMachineScaleSetPerformMaintenanceOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetsRestClient.CreatePerformMaintenanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1018,8 +935,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.PerformMaintenance(Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken);
-                var operation = new VirtualMachineScaleSetPerformMaintenanceOperation(_clientDiagnostics, Pipeline, _restClient.CreatePerformMaintenanceRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                var response = _virtualMachineScaleSetsRestClient.PerformMaintenance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken);
+                var operation = new VirtualMachineScaleSetPerformMaintenanceOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetsRestClient.CreatePerformMaintenanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1047,8 +964,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateInstancesAsync(Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetUpdateInstancesOperation(_clientDiagnostics, Pipeline, _restClient.CreateUpdateInstancesRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                var response = await _virtualMachineScaleSetsRestClient.UpdateInstancesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualMachineScaleSetUpdateInstancesOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetsRestClient.CreateUpdateInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1076,8 +993,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.UpdateInstances(Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken);
-                var operation = new VirtualMachineScaleSetUpdateInstancesOperation(_clientDiagnostics, Pipeline, _restClient.CreateUpdateInstancesRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                var response = _virtualMachineScaleSetsRestClient.UpdateInstances(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken);
+                var operation = new VirtualMachineScaleSetUpdateInstancesOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetsRestClient.CreateUpdateInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1099,8 +1016,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.ReimageAsync(Id.ResourceGroupName, Id.Name, vmScaleSetReimageInput, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetReimageOperation(_clientDiagnostics, Pipeline, _restClient.CreateReimageRequest(Id.ResourceGroupName, Id.Name, vmScaleSetReimageInput).Request, response);
+                var response = await _virtualMachineScaleSetsRestClient.ReimageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmScaleSetReimageInput, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualMachineScaleSetReimageOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetsRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmScaleSetReimageInput).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1122,8 +1039,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.Reimage(Id.ResourceGroupName, Id.Name, vmScaleSetReimageInput, cancellationToken);
-                var operation = new VirtualMachineScaleSetReimageOperation(_clientDiagnostics, Pipeline, _restClient.CreateReimageRequest(Id.ResourceGroupName, Id.Name, vmScaleSetReimageInput).Request, response);
+                var response = _virtualMachineScaleSetsRestClient.Reimage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmScaleSetReimageInput, cancellationToken);
+                var operation = new VirtualMachineScaleSetReimageOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetsRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmScaleSetReimageInput).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1145,8 +1062,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.ReimageAllAsync(Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetReimageAllOperation(_clientDiagnostics, Pipeline, _restClient.CreateReimageAllRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                var response = await _virtualMachineScaleSetsRestClient.ReimageAllAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualMachineScaleSetReimageAllOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetsRestClient.CreateReimageAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1168,11 +1085,99 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.ReimageAll(Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken);
-                var operation = new VirtualMachineScaleSetReimageAllOperation(_clientDiagnostics, Pipeline, _restClient.CreateReimageAllRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                var response = _virtualMachineScaleSetsRestClient.ReimageAll(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken);
+                var operation = new VirtualMachineScaleSetReimageAllOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetsRestClient.CreateReimageAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Manual platform update domain walk to update virtual machines in a service fabric virtual machine scale set. </summary>
+        /// <param name="platformUpdateDomain"> The platform update domain for which a manual recovery walk is requested. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<RecoveryWalkResponse>> ForceRecoveryServiceFabricPlatformUpdateDomainWalkAsync(int platformUpdateDomain, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.ForceRecoveryServiceFabricPlatformUpdateDomainWalk");
+            scope.Start();
+            try
+            {
+                var response = await _virtualMachineScaleSetsRestClient.ForceRecoveryServiceFabricPlatformUpdateDomainWalkAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, platformUpdateDomain, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Manual platform update domain walk to update virtual machines in a service fabric virtual machine scale set. </summary>
+        /// <param name="platformUpdateDomain"> The platform update domain for which a manual recovery walk is requested. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RecoveryWalkResponse> ForceRecoveryServiceFabricPlatformUpdateDomainWalk(int platformUpdateDomain, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.ForceRecoveryServiceFabricPlatformUpdateDomainWalk");
+            scope.Start();
+            try
+            {
+                var response = _virtualMachineScaleSetsRestClient.ForceRecoveryServiceFabricPlatformUpdateDomainWalk(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, platformUpdateDomain, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Converts SinglePlacementGroup property to false for a existing virtual machine scale set. </summary>
+        /// <param name="parameters"> The input object for ConvertToSinglePlacementGroup API. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<Response> ConvertToSinglePlacementGroupAsync(VMScaleSetConvertToSinglePlacementGroupInput parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.ConvertToSinglePlacementGroup");
+            scope.Start();
+            try
+            {
+                var response = await _virtualMachineScaleSetsRestClient.ConvertToSinglePlacementGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Converts SinglePlacementGroup property to false for a existing virtual machine scale set. </summary>
+        /// <param name="parameters"> The input object for ConvertToSinglePlacementGroup API. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response ConvertToSinglePlacementGroup(VMScaleSetConvertToSinglePlacementGroupInput parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.ConvertToSinglePlacementGroup");
+            scope.Start();
+            try
+            {
+                var response = _virtualMachineScaleSetsRestClient.ConvertToSinglePlacementGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -1197,8 +1202,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.SetOrchestrationServiceStateAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetSetOrchestrationServiceStateOperation(_clientDiagnostics, Pipeline, _restClient.CreateSetOrchestrationServiceStateRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = await _virtualMachineScaleSetsRestClient.SetOrchestrationServiceStateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualMachineScaleSetSetOrchestrationServiceStateOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetsRestClient.CreateSetOrchestrationServiceStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1226,8 +1231,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.SetOrchestrationServiceState(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new VirtualMachineScaleSetSetOrchestrationServiceStateOperation(_clientDiagnostics, Pipeline, _restClient.CreateSetOrchestrationServiceStateRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = _virtualMachineScaleSetsRestClient.SetOrchestrationServiceState(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var operation = new VirtualMachineScaleSetSetOrchestrationServiceStateOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetsRestClient.CreateSetOrchestrationServiceStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1239,32 +1244,166 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets a list of VirtualMachineScaleSetExtensions in the VirtualMachineScaleSet. </summary>
-        /// <returns> An object representing collection of VirtualMachineScaleSetExtensions and their operations over a VirtualMachineScaleSet. </returns>
-        public VirtualMachineScaleSetExtensionContainer GetVirtualMachineScaleSetExtensions()
+        /// <summary> Cancels the current virtual machine scale set rolling upgrade. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<VirtualMachineScaleSetRollingUpgradeCancelOperation> CancelVirtualMachineScaleSetRollingUpgradeAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            return new VirtualMachineScaleSetExtensionContainer(this);
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.CancelVirtualMachineScaleSetRollingUpgrade");
+            scope.Start();
+            try
+            {
+                var response = await _virtualMachineScaleSetRollingUpgradesRestClient.CancelAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualMachineScaleSetRollingUpgradeCancelOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetRollingUpgradesRestClient.CreateCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Gets an object representing a VirtualMachineScaleSetRollingUpgrade along with the instance operations that can be performed on it. </summary>
+        /// <summary> Cancels the current virtual machine scale set rolling upgrade. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual VirtualMachineScaleSetRollingUpgradeCancelOperation CancelVirtualMachineScaleSetRollingUpgrade(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.CancelVirtualMachineScaleSetRollingUpgrade");
+            scope.Start();
+            try
+            {
+                var response = _virtualMachineScaleSetRollingUpgradesRestClient.Cancel(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new VirtualMachineScaleSetRollingUpgradeCancelOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetRollingUpgradesRestClient.CreateCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Starts a rolling upgrade to move all virtual machine scale set instances to the latest available Platform Image OS version. Instances which are already running the latest available OS version are not affected. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<VirtualMachineScaleSetRollingUpgradeStartOSUpgradeOperation> StartOSUpgradeVirtualMachineScaleSetRollingUpgradeAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.StartOSUpgradeVirtualMachineScaleSetRollingUpgrade");
+            scope.Start();
+            try
+            {
+                var response = await _virtualMachineScaleSetRollingUpgradesRestClient.StartOSUpgradeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualMachineScaleSetRollingUpgradeStartOSUpgradeOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetRollingUpgradesRestClient.CreateStartOSUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Starts a rolling upgrade to move all virtual machine scale set instances to the latest available Platform Image OS version. Instances which are already running the latest available OS version are not affected. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual VirtualMachineScaleSetRollingUpgradeStartOSUpgradeOperation StartOSUpgradeVirtualMachineScaleSetRollingUpgrade(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.StartOSUpgradeVirtualMachineScaleSetRollingUpgrade");
+            scope.Start();
+            try
+            {
+                var response = _virtualMachineScaleSetRollingUpgradesRestClient.StartOSUpgrade(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new VirtualMachineScaleSetRollingUpgradeStartOSUpgradeOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetRollingUpgradesRestClient.CreateStartOSUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Starts a rolling upgrade to move all extensions for all virtual machine scale set instances to the latest available extension version. Instances which are already running the latest extension versions are not affected. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<VirtualMachineScaleSetRollingUpgradeStartExtensionUpgradeOperation> StartExtensionUpgradeVirtualMachineScaleSetRollingUpgradeAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.StartExtensionUpgradeVirtualMachineScaleSetRollingUpgrade");
+            scope.Start();
+            try
+            {
+                var response = await _virtualMachineScaleSetRollingUpgradesRestClient.StartExtensionUpgradeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualMachineScaleSetRollingUpgradeStartExtensionUpgradeOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetRollingUpgradesRestClient.CreateStartExtensionUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Starts a rolling upgrade to move all extensions for all virtual machine scale set instances to the latest available extension version. Instances which are already running the latest extension versions are not affected. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual VirtualMachineScaleSetRollingUpgradeStartExtensionUpgradeOperation StartExtensionUpgradeVirtualMachineScaleSetRollingUpgrade(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSet.StartExtensionUpgradeVirtualMachineScaleSetRollingUpgrade");
+            scope.Start();
+            try
+            {
+                var response = _virtualMachineScaleSetRollingUpgradesRestClient.StartExtensionUpgrade(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new VirtualMachineScaleSetRollingUpgradeStartExtensionUpgradeOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetRollingUpgradesRestClient.CreateStartExtensionUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        #region VirtualMachineScaleSetExtension
+
+        /// <summary> Gets a collection of VirtualMachineScaleSetExtensions in the VirtualMachineScaleSet. </summary>
+        /// <returns> An object representing collection of VirtualMachineScaleSetExtensions and their operations over a VirtualMachineScaleSet. </returns>
+        public VirtualMachineScaleSetExtensionCollection GetVirtualMachineScaleSetExtensions()
+        {
+            return new VirtualMachineScaleSetExtensionCollection(this);
+        }
+        #endregion
+
+        #region VirtualMachineScaleSetRollingUpgrade
+
+        /// <summary> Gets an object representing a VirtualMachineScaleSetRollingUpgrade along with the instance operations that can be performed on it in the VirtualMachineScaleSet. </summary>
         /// <returns> Returns a <see cref="VirtualMachineScaleSetRollingUpgrade" /> object. </returns>
         public VirtualMachineScaleSetRollingUpgrade GetVirtualMachineScaleSetRollingUpgrade()
         {
-            return new VirtualMachineScaleSetRollingUpgrade(this, Id + "/rollingUpgrades/latest");
+            return new VirtualMachineScaleSetRollingUpgrade(this, new ResourceIdentifier(Id.ToString() + "/rollingUpgrades/latest"));
         }
+        #endregion
 
-        /// <summary> Gets a list of VirtualMachineScaleSetVMExtensionVirtualMachineScaleSets in the VirtualMachineScaleSet. </summary>
-        /// <returns> An object representing collection of VirtualMachineScaleSetVMExtensionVirtualMachineScaleSets and their operations over a VirtualMachineScaleSet. </returns>
-        public VirtualMachineScaleSetVMExtensionVirtualMachineScaleSetContainer GetVirtualMachineScaleSetVMExtensionVirtualMachineScaleSets()
-        {
-            return new VirtualMachineScaleSetVMExtensionVirtualMachineScaleSetContainer(this);
-        }
+        #region VirtualMachineScaleSetVM
 
-        /// <summary> Gets a list of VirtualMachineScaleSetVMs in the VirtualMachineScaleSet. </summary>
+        /// <summary> Gets a collection of VirtualMachineScaleSetVMs in the VirtualMachineScaleSet. </summary>
         /// <returns> An object representing collection of VirtualMachineScaleSetVMs and their operations over a VirtualMachineScaleSet. </returns>
-        public VirtualMachineScaleSetVMContainer GetVirtualMachineScaleSetVMs()
+        public VirtualMachineScaleSetVMCollection GetVirtualMachineScaleSetVMs()
         {
-            return new VirtualMachineScaleSetVMContainer(this);
+            return new VirtualMachineScaleSetVMCollection(this);
         }
+        #endregion
     }
 }
