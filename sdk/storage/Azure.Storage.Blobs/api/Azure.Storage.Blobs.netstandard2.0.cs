@@ -70,6 +70,7 @@ namespace Azure.Storage.Blobs
             V2020_12_06 = 9,
             V2021_02_12 = 10,
             V2021_04_10 = 11,
+            V2021_06_08 = 12,
         }
     }
     public partial class BlobContainerClient
