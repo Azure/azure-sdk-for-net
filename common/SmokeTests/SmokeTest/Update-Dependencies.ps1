@@ -1,9 +1,10 @@
 param(
     [string]$ProjectFile = './SmokeTest.csproj',
-    [string]$ReferencesMetadataPath,
     [switch]$PreferDevVersion,
     [switch]$CI
 )
+
+. (Join-Path $PSScriptRoot ../../../eng/common/scripts/common.ps1)
 
 function Log-Warning($message) {
     if ($CI) {
@@ -18,7 +19,7 @@ function Log-Info($message) {
 }
 
 function AddPackageReference($csproj, $referenceNode, $packageInfo) {
-    $package = $packageInfo.ArtifactName
+    $package = $packageInfo.Name
     $version = $packageInfo.Version
 
     if ($PreferDevVersion -and $packageInfo.DevVersion) {
@@ -26,9 +27,9 @@ function AddPackageReference($csproj, $referenceNode, $packageInfo) {
     }
 
     if ($version -and $package) {
-        Log-Info "Adding a reference for: '$($package)', version:'$($version)'"
+        Log-Info "Adding a reference for: '$($package)', version:'$($version)'."
     } else {
-        Log-Warning "Missing artifact name or for '$($package)' [$($version)]"
+        Log-Warning "Missing artifact name or for '$($package)' [$($version)]."
         return 0
     }
 
@@ -59,17 +60,14 @@ $referenceNode = $csproj.SelectSingleNode('//Project/ItemGroup[@Label="SmokeTest
 # Clear all existing references.
 $referenceNode.InnerXml = ''
 
-# Load the JSON files and create references for each package.
-$refPath = Resolve-Path -Path $ReferencesMetadataPath
-Log-Info "Loading package information from: '$($refPath)"
+# Query the available packages and create references for each.
+Log-Info "Querying package information."
 
 $referenceUpdateCount = 0
 
-Get-ChildItem -Path $refPath -Filter "*.json"
-| Foreach-Object {
-    $packageInfo = ConvertFrom-Json (Get-Content $_.FullName -Raw)
-    $referenceUpdateCount += AddPackageReference $csproj $referenceNode $packageInfo
-}
+Get-AllPkgProperties
+| Where-Object { $_.IsNewSdk }
+| Foreach-Object { $referenceUpdateCount += AddPackageReference $csproj $referenceNode $_ }
 
 # Save the project and report the outcome.  If no refrences were added, consider this
 # an exception state and throw.  This is intended to prevent a smoke test run against an

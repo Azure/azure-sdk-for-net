@@ -1,35 +1,130 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFrameworks>netcoreapp3.1;net461;net6.0</TargetFrameworks>
     <LangVersion>latest</LangVersion>
+    <RestoreAdditionalProjectSources>
+      https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net
+    </RestoreAdditionalProjectSources>
   </PropertyGroup>
-
   <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
-
+  <ItemGroup>
+    <None Remove="Update-Dependencies.ps1" />
+  </ItemGroup>
   <ItemGroup Label="SmokeTestPackageReferences">
-    <!--
-      These references will not be included in scheduled smoke tests runs; they
-      will be replaced with a comprehensive set of the latest packages for the
-      current generation of SDKs.
-
-      The static set is included here to allow for local testing of the smoke tests project
-      without the need to run CI scripts to rewrite package references.
-    -->
-    <PackageReference Include="Azure.Identity" Version="1.5.0-beta.3" />
-    <PackageReference Include="Azure.Messaging.EventHubs" Version="5.6.2" />
-    <PackageReference Include="Azure.Messaging.EventHubs.Processor" Version="5.6.2" />
-    <PackageReference Include="Azure.Security.Keyvault.Secrets" Version="4.3.0-beta.1" />
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.9.1" />
-    <PackageReference Include="Microsoft.Azure.Amqp" Version="2.5.6" />
-    <PackageReference Include="Microsoft.Azure.Devices" Version="1.36.0" />
-    <PackageReference Include="Microsoft.Azure.DocumentDB.Core" Version="2.16.2" />
-    <PackageReference Include="Azure.Template" Version="1.0.3-beta.1218030" />
-
-    <!-- This is needed to resolve a build conflict and force the correct version -->
-    <PackageReference Include="System.Net.NameResolution" Version="4.3.0" />
+    <PackageReference Include="Azure.Verticals.AgriFood.Farming" Version="1.0.0-beta.2" />
+    <PackageReference Include="Azure.AI.AnomalyDetector" Version="3.0.0-preview.4" />
+    <PackageReference Include="Azure.Data.AppConfiguration" Version="1.3.0-beta.1" />
+    <PackageReference Include="Azure.ResourceManager.AppConfiguration" Version="1.0.0-beta.2" />
+    <PackageReference Include="Azure.Security.Attestation" Version="1.1.0-beta.1" />
+    <PackageReference Include="Azure.AI.Language.QuestionAnswering" Version="1.1.0-beta.1" />
+    <PackageReference Include="Azure.AI.Language.Conversations" Version="1.0.0-beta.2" />
+    <PackageReference Include="Azure.ResourceManager.Cdn" Version="1.0.0-beta.2" />
+    <PackageReference Include="Azure.Communication.Identity" Version="1.1.0-beta.2" />
+    <PackageReference Include="Azure.Communication.Chat" Version="1.2.0-beta.1" />
+    <PackageReference Include="Azure.Communication.Common" Version="1.1.0-beta.1" />
+    <PackageReference Include="Azure.Communication.NetworkTraversal" Version="1.0.0-beta.4" />
+    <PackageReference Include="Azure.Communication.PhoneNumbers" Version="1.0.2" />
+    <PackageReference Include="Azure.Communication.Sms" Version="1.0.2" />
+    <PackageReference Include="Azure.Communication.CallingServer" Version="1.0.0-beta.4" />
+    <PackageReference Include="Azure.ResourceManager.Communication" Version="1.1.0-beta.1" />
+    <PackageReference Include="Azure.Security.ConfidentialLedger" Version="1.0.0-beta.3" />
+    <PackageReference Include="Azure.Core.Amqp" Version="1.3.0-beta.1" />
+    <PackageReference Include="Azure.ResourceManager.Compute" Version="1.0.0-beta.5" />
+    <PackageReference Include="Microsoft.Azure.Core.NewtonsoftJson" Version="1.1.0-beta.1" />
+    <PackageReference Include="Azure.Containers.ContainerRegistry" Version="1.0.0-beta.6" />
+    <PackageReference Include="Microsoft.Azure.Core.Spatial.NewtonsoftJson" Version="1.1.0-beta.2" />
+    <PackageReference Include="Microsoft.Azure.Core.Spatial" Version="1.2.0-beta.2" />
+    <PackageReference Include="System.Memory.Data" Version="1.1.0-beta.1" />
+    <PackageReference Include="Azure.IoT.DeviceUpdate" Version="1.0.0-beta.3" />
+    <PackageReference Include="Azure.Core.Experimental" Version="0.1.0-preview.19" />
+    <PackageReference Include="Azure.ResourceManager.Dns" Version="1.0.0-preview.2" />
+    <PackageReference Include="Azure.Messaging.EventGrid" Version="4.8.0-beta.1" />
+    <PackageReference Include="Azure.Core" Version="1.22.0-beta.1" />
+    <PackageReference Include="Azure.ResourceManager.DeviceUpdate" Version="1.0.0-beta.2" />
+    <PackageReference Include="Azure.DigitalTwins.Core" Version="1.3.0-beta.1" />
+    <PackageReference Include="Azure.ResourceManager.CosmosDB" Version="1.0.0-beta.2" />
+    <PackageReference Include="Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents" Version="1.1.0-beta.1" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.EventGrid" Version="3.1.0-beta.1" />
+    <PackageReference Include="Azure.Messaging.EventHubs.Experimental" Version="0.1.0-beta.1" />
+    <PackageReference Include="Azure.ResourceManager.EventHubs" Version="1.0.0-beta.2" />
+    <PackageReference Include="Azure.Extensions.AspNetCore.DataProtection.Keys" Version="1.2.0-beta.1" />
+    <PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.3.0-beta.1" />
+    <PackageReference Include="Azure.Extensions.AspNetCore.DataProtection.Blobs" Version="1.3.0-beta.1" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.EventHubs" Version="5.1.0-beta.1" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Clients" Version="1.0.0-beta.1" />
+    <PackageReference Include="Microsoft.Extensions.Azure" Version="1.2.0-beta.1" />
+    <PackageReference Include="Azure.AI.FormRecognizer" Version="4.0.0-beta.3" />
+    <PackageReference Include="Azure.Messaging.EventHubs" Version="5.7.0-beta.2" />
+    <PackageReference Include="Azure.Messaging.EventHubs.Processor" Version="5.7.0-beta.2" />
+    <PackageReference Include="Azure.Identity" Version="1.6.0-beta.1" />
+    <PackageReference Include="Azure.ResourceManager.Insights" Version="1.0.0-preview.2" />
+    <PackageReference Include="Azure.Security.KeyVault.Administration" Version="4.1.0-beta.3" />
+    <PackageReference Include="Azure.IoT.Hub.Service" Version="1.0.0-preview.1" />
+    <PackageReference Include="Azure.ResourceManager.KeyVault" Version="1.0.0-beta.5" />
+    <PackageReference Include="Azure.Security.KeyVault.Keys" Version="4.3.0-beta.5" />
+    <PackageReference Include="Azure.Security.KeyVault.Certificates" Version="4.3.0-beta.3" />
+    <PackageReference Include="Azure.Security.KeyVault.Secrets" Version="4.3.0-beta.3" />
+    <PackageReference Include="Azure.AI.MetricsAdvisor" Version="1.2.0-beta.1" />
+    <PackageReference Include="Azure.Monitor.Query" Version="1.1.0-beta.1" />
+    <PackageReference Include="Azure.ResourceManager.MachineLearningServices" Version="1.0.0-beta.1" />
+    <PackageReference Include="Azure.MixedReality.ObjectAnchors.Conversion" Version="0.3.0-beta.2" />
+    <PackageReference Include="Azure.Analytics.Purview.Administration" Version="1.0.0-beta.2" />
+    <PackageReference Include="Azure.MixedReality.Authentication" Version="1.1.0-beta.1" />
+    <PackageReference Include="Azure.Monitor.OpenTelemetry.Exporter" Version="1.0.0-beta.4" />
+    <PackageReference Include="Azure.IoT.ModelsRepository" Version="1.0.0-preview.6" />
+    <PackageReference Include="Azure.AI.Personalizer" Version="2.0.0-beta.2" />
+    <PackageReference Include="Azure.ResourceManager.Network" Version="1.0.0-beta.5" />
+    <PackageReference Include="Azure.Analytics.Purview.Account" Version="1.0.0-beta.2" />
+    <PackageReference Include="Azure.Analytics.Purview.Scanning" Version="1.0.0-beta.3" />
+    <PackageReference Include="Azure.Analytics.Purview.Catalog" Version="1.0.0-beta.3" />
+    <PackageReference Include="Azure.Quantum.Jobs" Version="1.0.0-beta.3" />
+    <PackageReference Include="Azure.Data.SchemaRegistry" Version="1.1.0-beta.1" />
+    <PackageReference Include="Azure.ResourceManager" Version="1.0.0-beta.6" />
+    <PackageReference Include="Microsoft.Azure.Data.SchemaRegistry.ApacheAvro" Version="1.0.0-beta.5" />
+    <PackageReference Include="Azure.ResourceManager.Resources" Version="1.0.0-beta.5" />
+    <PackageReference Include="Azure.MixedReality.RemoteRendering" Version="1.2.0-beta.1" />
+    <PackageReference Include="Azure.Search.Documents" Version="11.4.0-beta.6" />
+    <PackageReference Include="Azure.ResourceManager.ServiceBus" Version="1.0.0-beta.2" />
+    <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.6.0-beta.1" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.ServiceBus" Version="5.3.0-beta.1" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.SignalRService" Version="1.7.0-beta.2" />
+    <PackageReference Include="Azure.ResourceManager.Storage" Version="1.0.0-beta.5" />
+    <PackageReference Include="Azure.Storage.Blobs.Batch" Version="12.8.0-beta.3" />
+    <PackageReference Include="Azure.ResourceManager.Sql" Version="1.0.0-beta.2" />
+    <PackageReference Include="Azure.Storage.Blobs.ChangeFeed" Version="12.0.0-preview.19" />
+    <PackageReference Include="Azure.Storage.Files.DataLake" Version="12.9.0-beta.3" />
+    <PackageReference Include="Azure.Storage.Common" Version="12.10.0-beta.3" />
+    <PackageReference Include="Azure.Storage.Files.Shares" Version="12.9.0-beta.3" />
+    <PackageReference Include="Azure.Storage.Internal.Avro" Version="12.0.0-preview.1" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.11.0-beta.3" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Storage.Common" Version="5.0.0-beta.1" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Storage" Version="5.0.0" />
+    <PackageReference Include="Azure.Storage.Queues" Version="12.9.0-beta.3" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Storage.Blobs" Version="5.0.0" />
+    <PackageReference Include="Azure.Analytics.Synapse.Monitoring" Version="1.0.0-beta.4" />
+    <PackageReference Include="Azure.Data.Tables" Version="12.4.0-beta.1" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Storage.Queues" Version="5.0.0" />
+    <PackageReference Include="Azure.Analytics.Synapse.Artifacts" Version="1.0.0-preview.13" />
+    <PackageReference Include="Azure.Analytics.Synapse.ManagedPrivateEndpoints" Version="1.0.0-beta.6" />
+    <PackageReference Include="Azure.Analytics.Synapse.AccessControl" Version="1.0.0-preview.6" />
+    <PackageReference Include="Azure.Analytics.Synapse.Spark" Version="1.0.0-preview.9" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Tables" Version="1.0.0-beta.1" />
+    <PackageReference Include="Azure.AI.Translation.Document" Version="1.0.0-beta.7" />
+    <PackageReference Include="Azure.Template" Version="1.0.3-beta.19" />
+    <PackageReference Include="Azure.Template.Generated" Version="1.0.0-beta.1" />
+    <PackageReference Include="Azure.Graph.Rbac" Version="1.0.0-preview.1" />
+    <PackageReference Include="Azure.ResourceManager.WebPubSub" Version="1.0.0-beta.2" />
+    <PackageReference Include="Azure.AI.TextAnalytics" Version="5.2.0-beta.3" />
+    <PackageReference Include="Azure.Media.VideoAnalyzer.Edge" Version="1.0.0-beta.6" />
+    <PackageReference Include="Azure.IoT.TimeSeriesInsights" Version="1.0.0-beta.2" />
+    <PackageReference Include="Azure.ResourceManager.AppService" Version="1.0.0-beta.1" />
+    <PackageReference Include="Azure.Messaging.WebPubSub" Version="1.1.0-beta.1" />
+    <PackageReference Include="Microsoft.Azure.WebPubSub.Common" Version="1.2.0-beta.1" />
+    <PackageReference Include="Microsoft.Azure.WebPubSub.AspNetCore" Version="1.0.0-beta.3" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.WebPubSub" Version="1.2.0-beta.1" />
   </ItemGroup>
 </Project>
