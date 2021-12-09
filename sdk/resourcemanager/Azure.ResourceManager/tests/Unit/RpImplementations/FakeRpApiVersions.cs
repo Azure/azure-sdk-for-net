@@ -1,8 +1,8 @@
 ﻿namespace Azure.ResourceManager.Tests
 {
-    internal class FakeRpApiVersions
+    public class FakeRpApiVersions
     {
-        internal FakeRpApiVersions()
+        public FakeRpApiVersions()
         {
             FakeResourceVersion = FakeResourceApiVersions.Default;
         }

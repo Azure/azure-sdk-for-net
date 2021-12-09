@@ -26,7 +26,7 @@ namespace Azure.ResourceManager
         /// </summary>
         internal const string DefaultUri = "https://management.azure.com";
         private Tenant _tenant;
-        private bool _hasLoadedResourcesFromApi;
+        private Dictionary<string, bool> _hasLoadedResourcesFromApi = new Dictionary<string, bool>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ArmClient"/> class for mocking.
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager
 
             ClientOptions = options.Clone();
 
-            LoadResourceVersionsFromRp();
+            //LoadResourceVersionsFromRp();
 
             _tenant = new Tenant(ClientOptions, Credential, BaseUri, Pipeline);
             _defaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId) ? null :
@@ -147,40 +147,40 @@ namespace Azure.ResourceManager
         /// </summary>
         /// <param name="resourceType"> The resource type to check. </param>
         /// <exception cref="InvalidOperationException"> Throws if the resource type is not recognized. </exception>
-        public string GetResourceVersion(ResourceType resourceType)
+        public virtual string GetResourceApiVersion(ResourceType resourceType)
         {
             string version;
             Dictionary<string, string> resourceVersions;
-            if (!ClientOptions.ResourceVersions.TryGetValue(resourceType.Namespace, out resourceVersions))
+            if (!ClientOptions.ResourceApiVersions.TryGetValue(resourceType.Namespace, out resourceVersions))
             {
-                if (!_hasLoadedResourcesFromApi)
+                if (!_hasLoadedResourcesFromApi.TryGetValue(resourceType.Namespace, out var hasLoadedNamespace) || !hasLoadedNamespace)
                 {
                     lock (s_getResourceVersionLock)
                     {
-                        if (!_hasLoadedResourcesFromApi)
+                        if (!_hasLoadedResourcesFromApi.TryGetValue(resourceType.Namespace, out hasLoadedNamespace) || !hasLoadedNamespace)
                         {
-                            LoadResourceVersionsFromApi(resourceType.Namespace);
+                            LoadResourceVersionsFromApi(resourceType.Namespace, out resourceVersions);
                         }
-                        _hasLoadedResourcesFromApi = true;
+                        _hasLoadedResourcesFromApi[resourceType.Namespace] = true;
                     }
                 }
             }
-            if (!ClientOptions.ResourceVersions[resourceType.Namespace].TryGetValue(resourceType, out version))
+            if (!resourceVersions.TryGetValue(resourceType.Type, out version))
             {
                 throw new InvalidOperationException($"Invalid resource type {resourceType}");
             }
             return version;
         }
 
-        private void LoadResourceVersionsFromApi(string resourceNamespace)
+        private void LoadResourceVersionsFromApi(string resourceNamespace, out Dictionary<string, string> resourceVersions)
         {
-            Dictionary<string, string> resourceVersions = new Dictionary<string, string>();
+            resourceVersions = new Dictionary<string, string>();
             Provider results = GetDefaultSubscription().GetProviders().Get(resourceNamespace);
             foreach (var type in results.Data.ResourceTypes)
             {
-                resourceVersions[new ResourceType(type.ResourceType)] = type.ApiVersions[0];
+                resourceVersions[type.ResourceType] = type.ApiVersions[0];
             }
-            ClientOptions.ResourceVersions.Add(resourceNamespace, resourceVersions);
+            ClientOptions.ResourceApiVersions.Add(resourceNamespace, resourceVersions);
         }
 
         private void LoadResourceVersionsFromRp()

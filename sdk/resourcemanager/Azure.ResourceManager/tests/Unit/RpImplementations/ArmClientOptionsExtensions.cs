@@ -1,10 +1,14 @@
-﻿namespace Azure.ResourceManager.Tests
+﻿using System.Collections.Generic;
+
+namespace Azure.ResourceManager.Tests
 {
     public static class AzureResourceManagerClientOptionsExtensions
     {
-        internal static FakeRpApiVersions FakeRestApiVersions(this ArmClientOptions azureResourceManagerClientOptions)
+        public static FakeRpApiVersions FakeRestApiVersions(this ArmClientOptions azureResourceManagerClientOptions)
         {
-            return azureResourceManagerClientOptions.GetOverrideObject<FakeRpApiVersions>(() => new FakeRpApiVersions()) as FakeRpApiVersions;
+            Dictionary<ResourceType, string> versions = new Dictionary<ResourceType, string>();
+            versions.Add(new ResourceType("Microsoft.fakedService/fakedApi"), FakeResourceApiVersions.Default);
+            return azureResourceManagerClientOptions.GetOverrideObject<FakeRpApiVersions>(() => versions) as FakeRpApiVersions;
         }
     }
 }

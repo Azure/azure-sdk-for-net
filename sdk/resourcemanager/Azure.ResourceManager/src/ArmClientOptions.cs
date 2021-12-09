@@ -16,7 +16,7 @@ namespace Azure.ResourceManager
     public sealed class ArmClientOptions : ClientOptions
 #pragma warning restore AZC0008 // ClientOptions should have a nested enum called ServiceVersion
     {
-        private readonly ConcurrentDictionary<Type, object> _overrides = new ConcurrentDictionary<Type, object>();
+        private readonly ConcurrentDictionary<Type, Dictionary<ResourceType, string>> _overrides = new ConcurrentDictionary<Type, Dictionary<ResourceType, string>>();
 
         /// <summary>
         /// Gets the ApiVersions object
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager
         /// <summary>
         /// Dictionary of ResourceType to version overrides.
         /// </summary>
-        public Dictionary<string, string> ResourceVersionOverrides { get; } = new Dictionary<string, string>();
+        public Dictionary<ResourceType, string> ResourceApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
 
-        internal Dictionary<string, Dictionary<string, string>> ResourceVersions { get; private set; } = new Dictionary<string, Dictionary<string, string>>();
+        internal Dictionary<string, Dictionary<string, string>> ResourceApiVersions { get; private set; } = new Dictionary<string, Dictionary<string, string>>();
 
         /// <summary>
         /// Gets override object.
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager
         /// <param name="objectConstructor"> A function used to construct a new object if none was found. </param>
         /// <returns> The override object. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public object GetOverrideObject<T>(Func<object> objectConstructor)
+        public object GetOverrideObject<T>(Func<Dictionary<ResourceType, string>> objectConstructor)
         {
             if (objectConstructor is null)
                 throw new ArgumentNullException(nameof(objectConstructor));
@@ -64,8 +64,31 @@ namespace Azure.ResourceManager
 
             copy.ApiVersions = ApiVersions.Clone();
             copy.Transport = Transport;
-            copy.ResourceVersions = ResourceVersions;
+            copy.ResourceApiVersions = ResourceApiVersions;
+
+            //copy overrrides
+            CopyApiVersions(copy, ResourceApiVersionOverrides);
+
+            //copy rp defaults
+            foreach (var rpDefaults in _overrides.Values)
+            {
+                CopyApiVersions(copy, rpDefaults);
+            }
+
             return copy;
+        }
+
+        private static void CopyApiVersions(ArmClientOptions copy, Dictionary<ResourceType, string> source)
+        {
+            foreach (var resourceType in source)
+            {
+                if (!copy.ResourceApiVersions.TryGetValue(resourceType.Key.Namespace, out var versionOverrides))
+                {
+                    versionOverrides = new Dictionary<string, string>();
+                    copy.ResourceApiVersions.Add(resourceType.Key.Namespace, versionOverrides);
+                }
+                versionOverrides[resourceType.Key.Type] = resourceType.Value;
+            }
         }
     }
 }

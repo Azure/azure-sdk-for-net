@@ -45,25 +45,26 @@ namespace Azure.ResourceManager
         private ConcurrentDictionary<string, string> _nonLoadedResourceToApiVersion = new ConcurrentDictionary<string, string>();
         private ConcurrentDictionary<string, string> _apiForNamespaceCache = new ConcurrentDictionary<string, string>();
 
-        private void BuildApiTable(ArmClientOptions clientOptions)
+        private static void BuildApiTable(ArmClientOptions clientOptions)
         {
-            var methods = GetExtensionMethods();
-            foreach (var method in methods)
-            {
-                if (method.Name.EndsWith("RestApiVersions", StringComparison.Ordinal))
-                {
-                    var apiObject = method.Invoke(null, new object[] { clientOptions });
-                    var properties = apiObject.GetType().GetProperties();
-                    foreach (var prop in properties)
-                    {
-                        if (prop.GetValue(apiObject) is ApiVersionsBase propVal)
-                        {
-                            var key = propVal.ResourceType;
-                            _loadedResourceToApiVersions.TryAdd(key.ToString(), new PropertyWrapper(prop, apiObject));
-                        }
-                    }
-                }
-            }
+            var x = clientOptions.ApiVersions;
+            //var methods = GetExtensionMethods();
+            //foreach (var method in methods)
+            //{
+            //    if (method.Name.EndsWith("RestApiVersions", StringComparison.Ordinal))
+            //    {
+            //        var apiObject = method.Invoke(null, new object[] { clientOptions });
+            //        var properties = apiObject.GetType().GetProperties();
+            //        foreach (var prop in properties)
+            //        {
+            //            if (prop.GetValue(apiObject) is ApiVersionsBase propVal)
+            //            {
+            //                var key = propVal.ResourceType;
+            //                _loadedResourceToApiVersions.TryAdd(key.ToString(), new PropertyWrapper(prop, apiObject));
+            //            }
+            //        }
+            //    }
+            //}
         }
 
         internal string GetApiVersionForNamespace(string nameSpace)

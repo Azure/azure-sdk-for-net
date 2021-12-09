@@ -1,19 +1,54 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
+using Castle.DynamicProxy;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests
 {
     class ArmClientTests : ResourceManagerTestBase
     {
+        class ProviderCounterPolicy : HttpPipelineSynchronousPolicy
+        {
+            //"https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute?api-version=2019-10-01"
+            private ConcurrentDictionary<string, int> counter = new ConcurrentDictionary<string, int>();
+            private Regex _resourceGroupPattern = new Regex(@"/subscriptions/[^/]+/providers/([^?/]+)\?api-version");
+
+            public int GetCount(string nameSpace)
+            {
+                return counter.TryGetValue(nameSpace, out var count) ? count : 0;
+            }
+
+            public override void OnSendingRequest(HttpMessage message)
+            {
+                if (message.Request.Method == RequestMethod.Get)
+                {
+                    var match = _resourceGroupPattern.Match(message.Request.Uri.ToString());
+                    if (match.Success)
+                    {
+                        var nameSpace = match.Groups[1].Value;
+                        if (!counter.TryGetValue(nameSpace, out var current))
+                        {
+                            counter.TryAdd(nameSpace, 1);
+                        }
+                        else
+                        {
+                            counter[nameSpace] = current + 1;
+                        }
+                    }
+                }
+            }
+        }
+
         private string _rgName;
         private readonly string _location = "southcentralus";
 
@@ -30,6 +65,79 @@ namespace Azure.ResourceManager.Tests
             var op = InstrumentOperation(subscription.GetResourceGroups().Construct(_location).CreateOrUpdate(_rgName, waitForCompletion: false));
             op.WaitForCompletion();
             await StopSessionRecordingAsync();
+        }
+
+        [RecordedTest]
+        [SyncOnly]
+        public void GetUsedResourceApiVersion()
+        {
+            ProviderCounterPolicy policy = new ProviderCounterPolicy();
+            ArmClientOptions options = new ArmClientOptions();
+            options.AddPolicy(policy, HttpPipelinePosition.PerCall);
+            var client = GetArmClient(options);
+            var version = client.GetResourceApiVersion(new ResourceType("Microsoft.Compute/virtualMachines"));
+            Assert.NotNull(version);
+            Assert.AreEqual(1, policy.GetCount("Microsoft.Compute"));
+            Assert.AreEqual(0, policy.GetCount("Microsoft.Network"));
+
+            version = client.GetResourceApiVersion(new ResourceType("Microsoft.Compute/availabilitySets"));
+            Assert.NotNull(version);
+            Assert.AreEqual(1, policy.GetCount("Microsoft.Compute"));
+            Assert.AreEqual(0, policy.GetCount("Microsoft.Network"));
+        }
+
+        [RecordedTest]
+        [SyncOnly]
+        public void GetUsedResourceApiVersionWithOverride()
+        {
+            ProviderCounterPolicy policy = new ProviderCounterPolicy();
+            ArmClientOptions options = new ArmClientOptions();
+            options.AddPolicy(policy, HttpPipelinePosition.PerCall);
+
+            string expectedVersion = "myVersion";
+            var computeResourceType = new ResourceType("Microsoft.Compute/virtualMachines");
+            options.ResourceApiVersionOverrides.Add(computeResourceType, expectedVersion);
+
+            var client = GetArmClient(options);
+            var version = client.GetResourceApiVersion(computeResourceType);
+            Assert.AreEqual(expectedVersion, version);
+            Assert.AreEqual(0, policy.GetCount("Microsoft.Compute"));
+            Assert.AreEqual(0, policy.GetCount("Microsoft.Network"));
+
+            policy = new ProviderCounterPolicy();
+            options = new ArmClientOptions();
+            options.AddPolicy(policy, HttpPipelinePosition.PerCall);
+
+            client = GetArmClient(options);
+            version = client.GetResourceApiVersion(computeResourceType);
+            Assert.AreNotEqual(expectedVersion, version);
+            Assert.AreEqual(1, policy.GetCount("Microsoft.Compute"));
+            Assert.AreEqual(0, policy.GetCount("Microsoft.Network"));
+        }
+
+        [RecordedTest]
+        [SyncOnly]
+        public void GetUsedResourceApiVersionWithRpDefault()
+        {
+            string expectedVersion = FakeResourceApiVersions.Default;
+            var fakeResourceType = new ResourceType("Microsoft.fakedService/fakedApi");
+
+            var version = Client.GetResourceApiVersion(fakeResourceType);
+            Assert.AreEqual(expectedVersion, version);
+        }
+
+        [RecordedTest]
+        [SyncOnly]
+        public void GetUsedResourceApiVersionInvalidResource()
+        {
+            Assert.Throws<InvalidOperationException>(() => { Client.GetResourceApiVersion(new ResourceType("Microsoft.Compute/fakeStuff")); });
+        }
+
+        [RecordedTest]
+        [SyncOnly]
+        public void GetUsedResourceApiVersionInvalidNamespace()
+        {
+            Assert.Throws<RequestFailedException>(() => { Client.GetResourceApiVersion(new ResourceType("Microsoft.Fake/fakeStuff")); });
         }
 
         [RecordedTest]
