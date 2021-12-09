@@ -16,17 +16,12 @@ namespace Azure.Maps.Search.Models
         }
 
         /// <summary> Initializes a new instance of OperatingHoursTimeRange. </summary>
-        /// <param name="startTime"> The point in the next 7 days range when a given POI is being opened, or the beginning of the range if it was opened before the range. </param>
-        /// <param name="endTime"> The point in the next 7 days range when a given POI is being closed, or the beginning of the range if it was closed before the range. </param>
-        internal OperatingHoursTimeRange(OperatingHoursTime startTime, OperatingHoursTime endTime)
+        /// <param name="rawStartTime"> The point in the next 7 days range when a given POI is being opened, or the beginning of the range if it was opened before the range. </param>
+        /// <param name="rawEndTime"> The point in the next 7 days range when a given POI is being closed, or the beginning of the range if it was closed before the range. </param>
+        internal OperatingHoursTimeRange(OperatingHoursTime rawStartTime, OperatingHoursTime rawEndTime)
         {
-            StartTime = startTime;
-            EndTime = endTime;
+            RawStartTime = rawStartTime;
+            RawEndTime = rawEndTime;
         }
-
-        /// <summary> The point in the next 7 days range when a given POI is being opened, or the beginning of the range if it was opened before the range. </summary>
-        public OperatingHoursTime StartTime { get; }
-        /// <summary> The point in the next 7 days range when a given POI is being closed, or the beginning of the range if it was closed before the range. </summary>
-        public OperatingHoursTime EndTime { get; }
     }
 }

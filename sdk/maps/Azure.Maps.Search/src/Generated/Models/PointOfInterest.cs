@@ -17,7 +17,7 @@ namespace Azure.Maps.Search.Models
         internal PointOfInterest()
         {
             CategorySet = new ChangeTrackingList<PointOfInterestCategorySet>();
-            Classifications = new ChangeTrackingList<Classification>();
+            Classifications = new ChangeTrackingList<PointOfInterestClassification>();
             Brands = new ChangeTrackingList<BrandName>();
         }
 
@@ -29,7 +29,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="classifications"> Classification array. </param>
         /// <param name="brands"> Brands array. The name of the brand for the POI being returned. </param>
         /// <param name="operatingHours"> Opening hours for a POI (Points of Interest). </param>
-        internal PointOfInterest(string name, string phone, string url, IReadOnlyList<PointOfInterestCategorySet> categorySet, IReadOnlyList<Classification> classifications, IReadOnlyList<BrandName> brands, OperatingHours operatingHours)
+        internal PointOfInterest(string name, string phone, string url, IReadOnlyList<PointOfInterestCategorySet> categorySet, IReadOnlyList<PointOfInterestClassification> classifications, IReadOnlyList<BrandName> brands, OperatingHours operatingHours)
         {
             Name = name;
             Phone = phone;
@@ -49,7 +49,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> The list of the most specific POI categories. </summary>
         public IReadOnlyList<PointOfInterestCategorySet> CategorySet { get; }
         /// <summary> Classification array. </summary>
-        public IReadOnlyList<Classification> Classifications { get; }
+        public IReadOnlyList<PointOfInterestClassification> Classifications { get; }
         /// <summary> Brands array. The name of the brand for the POI being returned. </summary>
         public IReadOnlyList<BrandName> Brands { get; }
         /// <summary> Opening hours for a POI (Points of Interest). </summary>

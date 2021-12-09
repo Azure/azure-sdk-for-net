@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class Classification
+    public partial class PointOfInterestClassification
     {
-        internal static Classification DeserializeClassification(JsonElement element)
+        internal static PointOfInterestClassification DeserializePointOfInterestClassification(JsonElement element)
         {
             Optional<string> code = default;
             Optional<IReadOnlyList<ClassificationName>> names = default;
@@ -40,7 +40,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new Classification(code.Value, Optional.ToList(names));
+            return new PointOfInterestClassification(code.Value, Optional.ToList(names));
         }
     }
 }
