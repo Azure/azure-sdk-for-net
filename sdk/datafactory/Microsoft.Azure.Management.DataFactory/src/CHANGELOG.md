@@ -1,7 +1,8 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
-## Version 4.29.0
+## Version 5.0.0
 ###  Feature Additions
+### Breaking Changes
 - Removed unnecessary additional properties for data flow flowlet for bug fix
 - Added optional property disableChunking in FTP and SFTP read settings
 - Added parameters for dataflow activity
