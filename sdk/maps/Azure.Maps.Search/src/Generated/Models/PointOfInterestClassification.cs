@@ -11,18 +11,18 @@ using Azure.Core;
 namespace Azure.Maps.Search.Models
 {
     /// <summary> The classification for the POI being returned. </summary>
-    public partial class Classification
+    public partial class PointOfInterestClassification
     {
-        /// <summary> Initializes a new instance of Classification. </summary>
-        internal Classification()
+        /// <summary> Initializes a new instance of PointOfInterestClassification. </summary>
+        internal PointOfInterestClassification()
         {
             Names = new ChangeTrackingList<ClassificationName>();
         }
 
-        /// <summary> Initializes a new instance of Classification. </summary>
+        /// <summary> Initializes a new instance of PointOfInterestClassification. </summary>
         /// <param name="code"> Code property. </param>
         /// <param name="names"> Names array. </param>
-        internal Classification(string code, IReadOnlyList<ClassificationName> names)
+        internal PointOfInterestClassification(string code, IReadOnlyList<ClassificationName> names)
         {
             Code = code;
             Names = names;

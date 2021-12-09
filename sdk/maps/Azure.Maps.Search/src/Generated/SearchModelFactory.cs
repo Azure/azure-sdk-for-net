@@ -24,12 +24,12 @@ namespace Azure.Maps.Search.Models
         }
 
         /// <summary> Initializes a new instance of Polygon. </summary>
-        /// <param name="providerID"> ID of the returned entity. </param>
+        /// <param name="providerId"> ID of the returned entity. </param>
         /// <param name="geometryData"> Geometry data in GeoJSON format. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. Present only if &quot;error&quot; is not present. </param>
         /// <returns> A new <see cref="Models.Polygon"/> instance for mocking. </returns>
-        public static Polygon Polygon(string providerID = null, GeoJsonFeatureCollection geometryData = null)
+        public static Polygon Polygon(string providerId = null, GeoJsonFeatureCollection geometryData = null)
         {
-            return new Polygon(providerID, geometryData);
+            return new Polygon(providerId, geometryData);
         }
 
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
@@ -102,7 +102,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="id"> Id property. </param>
         /// <param name="score"> The value within a result set to indicate the relative matching score between results.  You can use this to  determine that result x is twice as likely to be as relevant as result y if the value of x is 2x the value of y.   The values vary between queries and is only meant as a relative value for one result set. </param>
         /// <param name="distanceInMeters"> Straight line distance between the result and geobias location in meters. </param>
-        /// <param name="info"> Information about the original data source of the Result. Used for support requests. </param>
+        /// <param name="dataSourceInfo"> Information about the original data source of the Result. Used for support requests. </param>
         /// <param name="entityType"></param>
         /// <param name="pointOfInterest"> Details of the returned POI including information such as the name, phone, url address, and classifications. </param>
         /// <param name="address"> The address of the result. </param>
@@ -121,11 +121,11 @@ namespace Azure.Maps.Search.Models
         /// </param>
         /// <param name="detourTime"> Detour time in seconds. Only returned for calls to the Search Along Route API. </param>
         /// <returns> A new <see cref="Models.SearchAddressResultItem"/> instance for mocking. </returns>
-        public static SearchAddressResultItem SearchAddressResultItem(SearchAddressResultType? type = null, string id = null, double? score = null, double? distanceInMeters = null, string info = null, GeographicEntityType? entityType = null, PointOfInterest pointOfInterest = null, Address address = null, LatLon position = null, BoundingBox viewport = null, IEnumerable<EntryPoint> entryPoints = null, AddressRanges addressRanges = null, DataSource dataSources = null, MatchType? matchType = null, int? detourTime = null)
+        public static SearchAddressResultItem SearchAddressResultItem(SearchAddressResultType? type = null, string id = null, double? score = null, double? distanceInMeters = null, string dataSourceInfo = null, GeographicEntityType? entityType = null, PointOfInterest pointOfInterest = null, Address address = null, LatLon position = null, BoundingBox viewport = null, IEnumerable<EntryPoint> entryPoints = null, AddressRanges addressRanges = null, DataSource dataSources = null, MatchType? matchType = null, int? detourTime = null)
         {
             entryPoints ??= new List<EntryPoint>();
 
-            return new SearchAddressResultItem(type, id, score, distanceInMeters, info, entityType, pointOfInterest, address, position, viewport, entryPoints?.ToList(), addressRanges, dataSources, matchType, detourTime);
+            return new SearchAddressResultItem(type, id, score, distanceInMeters, dataSourceInfo, entityType, pointOfInterest, address, position, viewport, entryPoints?.ToList(), addressRanges, dataSources, matchType, detourTime);
         }
 
         /// <summary> Initializes a new instance of PointOfInterest. </summary>
@@ -137,10 +137,10 @@ namespace Azure.Maps.Search.Models
         /// <param name="brands"> Brands array. The name of the brand for the POI being returned. </param>
         /// <param name="operatingHours"> Opening hours for a POI (Points of Interest). </param>
         /// <returns> A new <see cref="Models.PointOfInterest"/> instance for mocking. </returns>
-        public static PointOfInterest PointOfInterest(string name = null, string phone = null, string url = null, IEnumerable<PointOfInterestCategorySet> categorySet = null, IEnumerable<Classification> classifications = null, IEnumerable<BrandName> brands = null, OperatingHours operatingHours = null)
+        public static PointOfInterest PointOfInterest(string name = null, string phone = null, string url = null, IEnumerable<PointOfInterestCategorySet> categorySet = null, IEnumerable<PointOfInterestClassification> classifications = null, IEnumerable<BrandName> brands = null, OperatingHours operatingHours = null)
         {
             categorySet ??= new List<PointOfInterestCategorySet>();
-            classifications ??= new List<Classification>();
+            classifications ??= new List<PointOfInterestClassification>();
             brands ??= new List<BrandName>();
 
             return new PointOfInterest(name, phone, url, categorySet?.ToList(), classifications?.ToList(), brands?.ToList(), operatingHours);
@@ -154,15 +154,15 @@ namespace Azure.Maps.Search.Models
             return new PointOfInterestCategorySet(id);
         }
 
-        /// <summary> Initializes a new instance of Classification. </summary>
+        /// <summary> Initializes a new instance of PointOfInterestClassification. </summary>
         /// <param name="code"> Code property. </param>
         /// <param name="names"> Names array. </param>
-        /// <returns> A new <see cref="Models.Classification"/> instance for mocking. </returns>
-        public static Classification Classification(string code = null, IEnumerable<ClassificationName> names = null)
+        /// <returns> A new <see cref="Models.PointOfInterestClassification"/> instance for mocking. </returns>
+        public static PointOfInterestClassification PointOfInterestClassification(string code = null, IEnumerable<ClassificationName> names = null)
         {
             names ??= new List<ClassificationName>();
 
-            return new Classification(code, names?.ToList());
+            return new PointOfInterestClassification(code, names?.ToList());
         }
 
         /// <summary> Initializes a new instance of ClassificationName. </summary>
@@ -191,25 +191,6 @@ namespace Azure.Maps.Search.Models
             timeRanges ??= new List<OperatingHoursTimeRange>();
 
             return new OperatingHours(mode, timeRanges?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of OperatingHoursTimeRange. </summary>
-        /// <param name="startTime"> The point in the next 7 days range when a given POI is being opened, or the beginning of the range if it was opened before the range. </param>
-        /// <param name="endTime"> The point in the next 7 days range when a given POI is being closed, or the beginning of the range if it was closed before the range. </param>
-        /// <returns> A new <see cref="Models.OperatingHoursTimeRange"/> instance for mocking. </returns>
-        public static OperatingHoursTimeRange OperatingHoursTimeRange(OperatingHoursTime startTime = null, OperatingHoursTime endTime = null)
-        {
-            return new OperatingHoursTimeRange(startTime, endTime);
-        }
-
-        /// <summary> Initializes a new instance of OperatingHoursTime. </summary>
-        /// <param name="date"> Represents current calendar date in POI time zone, e.g. &quot;2019-02-07&quot;. </param>
-        /// <param name="hour"> Hours are in the 24 hour format in the local time of a POI; possible values are 0 - 23. </param>
-        /// <param name="minute"> Minutes are in the local time of a POI; possible values are 0 - 59. </param>
-        /// <returns> A new <see cref="Models.OperatingHoursTime"/> instance for mocking. </returns>
-        public static OperatingHoursTime OperatingHoursTime(string date = null, int? hour = null, int? minute = null)
-        {
-            return new OperatingHoursTime(date, hour, minute);
         }
 
         /// <summary> Initializes a new instance of Address. </summary>

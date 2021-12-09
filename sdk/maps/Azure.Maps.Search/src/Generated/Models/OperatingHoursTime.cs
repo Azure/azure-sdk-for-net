@@ -8,7 +8,7 @@
 namespace Azure.Maps.Search.Models
 {
     /// <summary> Represents a date and time. </summary>
-    public partial class OperatingHoursTime
+    internal partial class OperatingHoursTime
     {
         /// <summary> Initializes a new instance of OperatingHoursTime. </summary>
         internal OperatingHoursTime()

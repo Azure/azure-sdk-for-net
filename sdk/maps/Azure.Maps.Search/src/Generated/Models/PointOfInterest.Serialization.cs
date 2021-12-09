@@ -19,7 +19,7 @@ namespace Azure.Maps.Search.Models
             Optional<string> phone = default;
             Optional<string> url = default;
             Optional<IReadOnlyList<PointOfInterestCategorySet>> categorySet = default;
-            Optional<IReadOnlyList<Classification>> classifications = default;
+            Optional<IReadOnlyList<PointOfInterestClassification>> classifications = default;
             Optional<IReadOnlyList<BrandName>> brands = default;
             Optional<OperatingHours> openingHours = default;
             foreach (var property in element.EnumerateObject())
@@ -61,10 +61,10 @@ namespace Azure.Maps.Search.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Classification> array = new List<Classification>();
+                    List<PointOfInterestClassification> array = new List<PointOfInterestClassification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Classification.DeserializeClassification(item));
+                        array.Add(PointOfInterestClassification.DeserializePointOfInterestClassification(item));
                     }
                     classifications = array;
                     continue;

@@ -32,7 +32,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="id"> Id property. </param>
         /// <param name="score"> The value within a result set to indicate the relative matching score between results.  You can use this to  determine that result x is twice as likely to be as relevant as result y if the value of x is 2x the value of y.   The values vary between queries and is only meant as a relative value for one result set. </param>
         /// <param name="distanceInMeters"> Straight line distance between the result and geobias location in meters. </param>
-        /// <param name="info"> Information about the original data source of the Result. Used for support requests. </param>
+        /// <param name="dataSourceInfo"> Information about the original data source of the Result. Used for support requests. </param>
         /// <param name="entityType"></param>
         /// <param name="pointOfInterest"> Details of the returned POI including information such as the name, phone, url address, and classifications. </param>
         /// <param name="address"> The address of the result. </param>
@@ -50,13 +50,13 @@ namespace Azure.Maps.Search.Models
         ///   * Street
         /// </param>
         /// <param name="detourTime"> Detour time in seconds. Only returned for calls to the Search Along Route API. </param>
-        internal SearchAddressResultItem(SearchAddressResultType? type, string id, double? score, double? distanceInMeters, string info, GeographicEntityType? entityType, PointOfInterest pointOfInterest, Address address, LatLon position, BoundingBox viewport, IReadOnlyList<EntryPoint> entryPoints, AddressRanges addressRanges, DataSource dataSources, MatchType? matchType, int? detourTime)
+        internal SearchAddressResultItem(SearchAddressResultType? type, string id, double? score, double? distanceInMeters, string dataSourceInfo, GeographicEntityType? entityType, PointOfInterest pointOfInterest, Address address, LatLon position, BoundingBox viewport, IReadOnlyList<EntryPoint> entryPoints, AddressRanges addressRanges, DataSource dataSources, MatchType? matchType, int? detourTime)
         {
             Type = type;
             Id = id;
             Score = score;
             DistanceInMeters = distanceInMeters;
-            Info = info;
+            DataSourceInfo = dataSourceInfo;
             EntityType = entityType;
             PointOfInterest = pointOfInterest;
             Address = address;
@@ -85,8 +85,6 @@ namespace Azure.Maps.Search.Models
         public double? Score { get; }
         /// <summary> Straight line distance between the result and geobias location in meters. </summary>
         public double? DistanceInMeters { get; }
-        /// <summary> Information about the original data source of the Result. Used for support requests. </summary>
-        public string Info { get; }
         /// <summary> Gets the entity type. </summary>
         public GeographicEntityType? EntityType { get; }
         /// <summary> Details of the returned POI including information such as the name, phone, url address, and classifications. </summary>

@@ -16,16 +16,13 @@ namespace Azure.Maps.Search.Models
         }
 
         /// <summary> Initializes a new instance of Polygon. </summary>
-        /// <param name="providerID"> ID of the returned entity. </param>
+        /// <param name="providerId"> ID of the returned entity. </param>
         /// <param name="geometryData"> Geometry data in GeoJSON format. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. Present only if &quot;error&quot; is not present. </param>
-        internal Polygon(string providerID, GeoJsonFeatureCollection geometryData)
+        internal Polygon(string providerId, GeoJsonFeatureCollection geometryData)
         {
-            ProviderID = providerID;
+            ProviderId = providerId;
             GeometryData = geometryData;
         }
-
-        /// <summary> ID of the returned entity. </summary>
-        public string ProviderID { get; }
         /// <summary> Geometry data in GeoJSON format. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. Present only if &quot;error&quot; is not present. </summary>
         public GeoJsonFeatureCollection GeometryData { get; }
     }
