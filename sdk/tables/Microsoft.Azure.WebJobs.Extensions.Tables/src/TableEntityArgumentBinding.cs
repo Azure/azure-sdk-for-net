@@ -3,22 +3,21 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Data.Tables;
 using Microsoft.Azure.WebJobs.Host.Bindings;
-using Microsoft.Azure.Cosmos.Table;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
     internal class TableEntityArgumentBinding<TElement> : IArgumentBinding<TableEntityContext>
-        where TElement : ITableEntity, new()
+        where TElement :class, ITableEntity, new()
     {
         public Type ValueType => typeof(TElement);
 
         public async Task<IValueProvider> BindAsync(TableEntityContext value, ValueBindingContext context)
         {
             var table = value.Table;
-            var retrieve = table.CreateRetrieveOperation<TElement>(value.PartitionKey, value.RowKey);
-            TableResult result = await table.ExecuteAsync(retrieve, context.CancellationToken).ConfigureAwait(false);
-            TElement entity = (TElement)result.Result;
+            var result = await table.GetEntityAsync<TElement>(value.PartitionKey, value.RowKey, cancellationToken: context.CancellationToken).ConfigureAwait(false);
+            TElement entity = (TElement)result.Value;
             if (entity == null)
             {
                 return new NullEntityValueProvider<TElement>(value);

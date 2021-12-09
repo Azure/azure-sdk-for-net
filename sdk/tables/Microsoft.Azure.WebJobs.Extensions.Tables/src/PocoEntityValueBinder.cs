@@ -5,9 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
+using Azure.Data.Tables;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Protocols;
-using Microsoft.Azure.Cosmos.Table;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
@@ -19,22 +20,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
         private readonly TableEntityContext _entityContext;
         private readonly string _eTag;
         private readonly TElement _value;
-        private readonly IDictionary<string, EntityProperty> _originalProperties;
+        // private readonly IDictionary<string, EntityProperty> _originalProperties;
 
         public PocoEntityValueBinder(TableEntityContext entityContext, string eTag, TElement value)
         {
             _entityContext = entityContext;
             _eTag = eTag;
             _value = value;
-            _originalProperties =
-                TableEntityValueBinder.DeepClone(Converter.Convert(value).WriteEntity(operationContext: null));
+            // _originalProperties =
+            //     TableEntityValueBinder.DeepClone(Converter.Convert(value).WriteEntity(operationContext: null));
         }
 
         public Type Type => typeof(TElement);
 
         public IWatcher Watcher => this;
 
-        public bool HasChanged => HasChanges(Converter.Convert(_value));
+#pragma warning disable CA1822 // TODO:
+        public bool HasChanged => true; //HasChanges(Converter.Convert(_value));
+#pragma warning restore CA1822
 
         public Task<object> GetValueAsync()
         {
@@ -57,7 +60,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 
             if (!Converter.ConvertsETag)
             {
-                entity.ETag = _eTag;
+                entity.ETag = new ETag(_eTag);
             }
 
             if (entity.PartitionKey != _entityContext.PartitionKey)
@@ -74,9 +77,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 
             if (HasChanges(entity))
             {
-                var table = _entityContext.Table;
-                var operation = TableOperation.Replace(entity);
-                return table.ExecuteAsync(operation, cancellationToken);
+                return _entityContext.Table.UpdateEntityAsync(entity, entity.ETag, cancellationToken: cancellationToken);
             }
 
             return Task.FromResult(0);
@@ -92,9 +93,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             return HasChanged ? new TableParameterLog { EntitiesWritten = 1 } : null;
         }
 
-        private bool HasChanges(ITableEntity current)
+        private static bool HasChanges(ITableEntity current)
         {
-            return TableEntityValueBinder.HasChanges(_originalProperties, current.WriteEntity(operationContext: null));
+            return current != null;
+            // TODO:
+            //return TableEntityValueBinder.HasChanges(_originalProperties, current.WriteEntity(operationContext: null));
         }
     }
 }

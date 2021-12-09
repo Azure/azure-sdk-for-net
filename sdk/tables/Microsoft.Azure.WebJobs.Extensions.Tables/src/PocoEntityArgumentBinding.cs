@@ -3,33 +3,35 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Data.Tables;
 using Microsoft.Azure.WebJobs.Host.Bindings;
-using Microsoft.Azure.Cosmos.Table;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
     internal class PocoEntityArgumentBinding<TElement> : IArgumentBinding<TableEntityContext>
         where TElement : new()
     {
-        private static readonly IConverter<ITableEntity, TElement> Converter =
-            TableEntityToPocoConverter<TElement>.Create();
+#pragma warning disable CS0649
+        private static readonly IConverter<ITableEntity, TElement> Converter;
+#pragma warning restore CS0649
+        // TODO:
+            //TableEntityToPocoConverter<TElement>.Create();
 
         public Type ValueType => typeof(TElement);
 
         public async Task<IValueProvider> BindAsync(TableEntityContext value, ValueBindingContext context)
         {
             var table = value.Table;
-            var retrieve = table.CreateRetrieveOperation<DynamicTableEntity>(
-                value.PartitionKey, value.RowKey);
-            TableResult result = await table.ExecuteAsync(retrieve, context.CancellationToken).ConfigureAwait(false);
-            DynamicTableEntity entity = (DynamicTableEntity)result.Result;
+            var result = await table.GetEntityAsync<TableEntity>(
+                value.PartitionKey, value.RowKey).ConfigureAwait(false);
+            TableEntity entity = (TableEntity)result.Value;
             if (entity == null)
             {
                 return new NullEntityValueProvider<TElement>(value);
             }
 
             TElement userEntity = Converter.Convert(entity);
-            return new PocoEntityValueBinder<TElement>(value, entity.ETag, userEntity);
+            return new PocoEntityValueBinder<TElement>(value, entity.ETag.ToString(), userEntity);
         }
     }
 }

@@ -584,7 +584,7 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response"/> containing headers such as ETag</returns>
         /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
-        public virtual Response AddEntity<T>(T entity, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        public virtual Response AddEntity<T>(T entity, CancellationToken cancellationToken = default) where T : ITableEntity
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
@@ -708,7 +708,7 @@ namespace Azure.Data.Tables
         public virtual async Task<Response> UpsertEntityAsync<T>(
             T entity,
             TableUpdateMode mode = TableUpdateMode.Merge,
-            CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+            CancellationToken cancellationToken = default) where T : ITableEntity
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
@@ -756,7 +756,7 @@ namespace Azure.Data.Tables
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
         public virtual Response UpsertEntity<T>(T entity, TableUpdateMode mode = TableUpdateMode.Merge, CancellationToken cancellationToken = default)
-            where T : class, ITableEntity, new()
+            where T : ITableEntity
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
@@ -816,7 +816,7 @@ namespace Azure.Data.Tables
             T entity,
             ETag ifMatch,
             TableUpdateMode mode = TableUpdateMode.Merge,
-            CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+            CancellationToken cancellationToken = default) where T : ITableEntity
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNull(entity.PartitionKey, nameof(entity.PartitionKey));
@@ -882,7 +882,7 @@ namespace Azure.Data.Tables
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
         public virtual Response UpdateEntity<T>(T entity, ETag ifMatch, TableUpdateMode mode = TableUpdateMode.Merge, CancellationToken cancellationToken = default)
-            where T : class, ITableEntity, new()
+            where T : ITableEntity
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNull(entity.PartitionKey, nameof(entity.PartitionKey));

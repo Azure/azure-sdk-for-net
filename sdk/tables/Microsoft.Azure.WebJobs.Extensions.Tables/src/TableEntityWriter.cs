@@ -6,16 +6,18 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
+using Azure.Data.Tables;
+using Azure.Data.Tables.Models;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Protocols;
-using Microsoft.Azure.Cosmos.Table;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
     internal class TableEntityWriter<T> : ICollector<T>, IAsyncCollector<T>, IWatcher
         where T : ITableEntity
     {
-        private readonly CloudTable _table;
+        private readonly TableClient _table;
 
         /// <summary>
         /// Max batch size is an azure limitation on how many entries can be in each batch.
@@ -28,19 +30,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
         /// </summary>
         public const int MaxPartitionWidth = 1000;
 
-        private readonly Dictionary<string, Dictionary<string, TableOperation>> _map =
-            new Dictionary<string, Dictionary<string, TableOperation>>();
+        private readonly Dictionary<string, Dictionary<string, TableTransactionAction>> _map = new();
 
         private readonly TableParameterLog _log;
         private readonly Stopwatch _watch = new Stopwatch();
 
-        public TableEntityWriter(CloudTable table, TableParameterLog log)
+        public TableEntityWriter(TableClient table, TableParameterLog log)
         {
             _table = table;
             _log = log;
         }
 
-        public TableEntityWriter(CloudTable table)
+        public TableEntityWriter(TableClient table)
             : this(table, new TableParameterLog())
         {
         }
@@ -64,7 +65,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             string rowKey = item.RowKey;
             TableClientHelpers.ValidateAzureTableKeyValue(partitionKey);
             TableClientHelpers.ValidateAzureTableKeyValue(rowKey);
-            Dictionary<string, TableOperation> partition;
+
+            Dictionary<string, TableTransactionAction> partition;
             if (!_map.TryGetValue(partitionKey, out partition))
             {
                 if (_map.Count >= MaxPartitionWidth)
@@ -73,7 +75,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                     await FlushAsync(cancellationToken).ConfigureAwait(false);
                 }
 
-                partition = new Dictionary<string, TableOperation>();
+                partition = new Dictionary<string, TableTransactionAction>();
                 _map[partitionKey] = partition;
             }
 
@@ -83,22 +85,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 // Replacing item forces a flush to ensure correct eTag behaviour.
                 await FlushPartitionAsync(partition, cancellationToken).ConfigureAwait(false);
                 // Reinitialize partition
-                partition = new Dictionary<string, TableOperation>();
+                partition = new Dictionary<string, TableTransactionAction>();
                 _map[partitionKey] = partition;
             }
 
             _log.EntitiesWritten++;
-            if (String.IsNullOrEmpty(itemCopy.ETag))
+            if (String.IsNullOrEmpty(itemCopy.ETag.ToString()))
             {
-                partition.Add(rowKey, _table.CreateInsertOperation(itemCopy));
+                partition.Add(rowKey, new TableTransactionAction(TableTransactionActionType.Add, itemCopy));
             }
             else if (itemCopy.ETag.Equals("*"))
             {
-                partition.Add(rowKey, _table.CreateInsertOrReplaceOperation(itemCopy));
+                partition.Add(rowKey, new TableTransactionAction(TableTransactionActionType.UpsertReplace, itemCopy));
             }
             else
             {
-                partition.Add(rowKey, _table.CreateReplaceOperation(itemCopy));
+                partition.Add(rowKey, new TableTransactionAction(TableTransactionActionType.UpsertReplace, itemCopy, itemCopy.ETag));
             }
 
             if (partition.Count >= MaxBatchSize)
@@ -110,9 +112,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 
         private static ITableEntity Copy(ITableEntity item)
         {
-            var props = TableEntityValueBinder.DeepClone(item.WriteEntity(null));
-            DynamicTableEntity copy = new DynamicTableEntity(item.PartitionKey, item.RowKey, item.ETag, props);
-            return copy;
+            // TODO: do we need the deep copy?.
+            // var props = TableEntityValueBinder.DeepClone(item.WriteEntity(null));
+            // TableEntity copy = new TableEntity(item.PartitionKey, item.RowKey)
+            // {
+            //     ETag = item.ETag,
+            // };
+
+            // BUG: How do we copy arbitrary ITableEntity ?
+            // return copy;
+
+            return item;
         }
 
         public virtual async Task FlushAsync(CancellationToken cancellationToken = default(CancellationToken))
@@ -125,7 +135,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             _map.Clear();
         }
 
-        internal virtual async Task FlushPartitionAsync(Dictionary<string, TableOperation> partition,
+        internal virtual async Task FlushPartitionAsync(Dictionary<string, TableTransactionAction> partition,
             CancellationToken cancellationToken)
         {
             if (partition.Count > 0)
@@ -144,29 +154,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
         }
 
         internal virtual async Task ExecuteBatchAndCreateTableIfNotExistsAsync(
-            Dictionary<string, TableOperation> partition, CancellationToken cancellationToken)
+            Dictionary<string, TableTransactionAction> partition, CancellationToken cancellationToken)
         {
-            TableBatchOperation batch = new TableBatchOperation();
-            foreach (var operation in partition.Values)
+            if (partition.Count > 0)
             {
-                batch.Add(operation);
-            }
-
-            if (batch.Count > 0)
-            {
-                StorageException exception = null;
+                RequestFailedException exception = null;
                 try
                 {
                     // Commit the batch
-                    await _table.ExecuteBatchAsync(batch, cancellationToken).ConfigureAwait(false);
+                    await _table.SubmitTransactionAsync(partition.Values, cancellationToken).ConfigureAwait(false);
                 }
-                catch (StorageException e)
+                catch (RequestFailedException e) when (e.Status == 404 && e.ErrorCode == TableErrorCode.TableNotFound)
                 {
-                    if (!e.IsNotFoundTableNotFound())
-                    {
-                        throw new StorageException(e.GetDetailedErrorMessage(), e);
-                    }
-
                     exception = e;
                 }
 
@@ -175,14 +174,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                     // Make sure the table exists
                     await _table.CreateIfNotExistsAsync(cancellationToken).ConfigureAwait(false);
                     // Commit the batch
-                    try
-                    {
-                        await _table.ExecuteBatchAsync(batch, cancellationToken).ConfigureAwait(false);
-                    }
-                    catch (StorageException e)
-                    {
-                        throw new StorageException(e.GetDetailedErrorMessage(), e);
-                    }
+                    await _table.SubmitTransactionAsync(partition.Values, cancellationToken).ConfigureAwait(false);
                 }
             }
         }

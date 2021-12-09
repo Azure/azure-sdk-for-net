@@ -7,9 +7,10 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Protocols;
-using Microsoft.Azure.Cosmos.Table;
+using ITableEntity = Azure.Data.Tables.ITableEntity;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
@@ -18,21 +19,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
         private readonly TableEntityContext _entityContext;
         private readonly ITableEntity _value;
         private readonly Type _valueType;
-        private readonly IDictionary<string, EntityProperty> _originalProperties;
+        // TODO: Change detection
+        //private readonly IDictionary<string, EntityProperty> _originalProperties;
 
         public TableEntityValueBinder(TableEntityContext entityContext, ITableEntity entity, Type valueType)
         {
             _entityContext = entityContext;
             _value = entity;
             _valueType = valueType;
-            _originalProperties = DeepClone(entity.WriteEntity(null));
+            // TODO: Change detection
+            //_originalProperties = DeepClone(entity.WriteEntity(null));
         }
 
         public Type Type => _valueType;
 
         public IWatcher Watcher => this;
 
-        public bool HasChanged => HasChanges(_originalProperties, _value.WriteEntity(operationContext: null));
+        public static bool HasChanged => true; // TODO: HasChanges(_originalProperties, _value.WriteEntity(operationContext: null));
 
         public Task<object> GetValueAsync()
         {
@@ -51,8 +54,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             if (HasChanged)
             {
                 var table = _entityContext.Table;
-                var operation = table.CreateReplaceOperation(_value);
-                return table.ExecuteAsync(operation, cancellationToken);
+                return table.UpdateEntityAsync(_value, _value.ETag, cancellationToken: cancellationToken);
             }
 
             return Task.FromResult(0);

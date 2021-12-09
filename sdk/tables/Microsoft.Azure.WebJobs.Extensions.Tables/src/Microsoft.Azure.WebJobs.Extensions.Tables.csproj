@@ -9,8 +9,11 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Azure.Cosmos.Table" VersionOverride="1.0.7" />
-		<PackageReference Include="Azure.Data.Tables" />
         <PackageReference Include="Microsoft.Azure.WebJobs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Azure.Data.Tables\src\Azure.Data.Tables.csproj" />
     </ItemGroup>
 
 </Project>

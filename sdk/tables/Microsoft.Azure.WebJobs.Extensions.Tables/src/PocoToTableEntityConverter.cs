@@ -8,6 +8,8 @@ using System.Globalization;
 using System.Reflection;
 using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Azure.WebJobs.Host;
+using ITableEntity = Azure.Data.Tables.ITableEntity;
+using TableEntity = Azure.Data.Tables.TableEntity;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
@@ -47,7 +49,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 return null;
             }
 
-            DynamicTableEntity result = new DynamicTableEntity();
+            TableEntity result = new TableEntity();
             if (_partitionKeyGetter != null)
             {
                 result.PartitionKey = _partitionKeyGetter.GetValue(input);
@@ -73,11 +75,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 properties.Add(propertyName, propertyValue);
             }
 
-            result.ReadEntity(properties, operationContext: null);
-            if (_eTagKeyGetter != null)
-            {
-                result.ETag = _eTagKeyGetter.GetValue(input);
-            }
+            // result.ReadEntity(properties, operationContext: null);
+            // if (_eTagKeyGetter != null)
+            // {
+            //     result.ETag = _eTagKeyGetter.GetValue(input);
+            // }
 
             return result;
         }

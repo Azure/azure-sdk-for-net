@@ -4,8 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using Azure.Data.Tables;
 using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Azure.WebJobs.Host.Bindings;
+using ITableEntity = Microsoft.Azure.Cosmos.Table.ITableEntity;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
@@ -46,24 +48,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             return extendedInformation.ErrorCode == "TableNotFound";
         }
 
-        public static string GetDetailedErrorMessage(this StorageException exception)
-        {
-            if (exception == null)
-            {
-                throw new ArgumentNullException(nameof(exception));
-            }
-
-            string message = exception.Message;
-            if (exception.RequestInformation != null)
-            {
-                message += $" (HTTP status code {exception.RequestInformation.HttpStatusCode.ToString(CultureInfo.InvariantCulture)}: "
-                           + $"{exception.RequestInformation.ExtendedErrorInformation?.ErrorCode}. "
-                           + $"{exception.RequestInformation.ExtendedErrorInformation?.ErrorMessage})";
-            }
-
-            return message;
-        }
-
         // $$$ Move to better place. From
         internal static void ValidateContractCompatibility<TPath>(this IBindablePath<TPath> path, IReadOnlyDictionary<string, Type> bindingDataContract)
         {
@@ -75,25 +59,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             BindingTemplateExtensions.ValidateContractCompatibility(path.ParameterNames, bindingDataContract);
         }
 
-        public static TableOperation CreateInsertOperation(this CloudTable sdk, ITableEntity entity)
-        {
-            var sdkOperation = TableOperation.Insert(entity);
-            return sdkOperation;
-        }
-
-        public static TableOperation CreateInsertOrReplaceOperation(this CloudTable sdk, ITableEntity entity)
-        {
-            var sdkOperation = TableOperation.InsertOrReplace(entity);
-            return sdkOperation;
-        }
-
-        public static TableOperation CreateReplaceOperation(this CloudTable sdk, ITableEntity entity)
-        {
-            var sdkOperation = TableOperation.Replace(entity);
-            return sdkOperation;
-        }
-
-        public static TableOperation CreateRetrieveOperation<TElement>(this CloudTable table, string partitionKey, string rowKey)
+        public static TableOperation CreateRetrieveOperation<TElement>(this TableClient table, string partitionKey, string rowKey)
             where TElement : ITableEntity, new()
         {
             return Retrieve<TElement>(partitionKey, rowKey);

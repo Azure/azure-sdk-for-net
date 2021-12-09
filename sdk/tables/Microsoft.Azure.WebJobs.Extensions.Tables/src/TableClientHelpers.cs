@@ -7,7 +7,8 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Microsoft.Azure.Cosmos.Table;
+using Azure.Data.Tables;
+using ITableEntity = Microsoft.Azure.Cosmos.Table.ITableEntity;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
@@ -21,9 +22,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
     {
         private static readonly char[] InvalidKeyValueCharacters = GetInvalidTableKeyValueCharacters();
 
-        public static string GetAccountName(CloudTableClient client)
+        public static string GetAccountName(TableServiceClient client)
         {
-            return client?.Credentials?.AccountName;
+            return client?.AccountName;
         }
 
         // http://msdn.microsoft.com/en-us/library/windowsazure/dd179338.aspx
