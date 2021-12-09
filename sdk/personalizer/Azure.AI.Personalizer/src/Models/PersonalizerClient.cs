@@ -16,6 +16,7 @@ namespace Azure.AI.Personalizer
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
+        private readonly bool _isLocalReference;
         internal RankRestClient RankRestClient { get; set; }
         internal EventsRestClient EventsRestClient { get; set; }
         internal MultiSlotRestClient MultiSlotRestClient { get; set; }
@@ -55,6 +56,17 @@ namespace Azure.AI.Personalizer
         /// <summary> Initializes a new instance of PersonalizerClient. </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="isLocalReference"> A flag to determine whether to use local reference. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public PersonalizerClient(Uri endpoint, TokenCredential credential, bool isLocalReference, PersonalizerClientOptions options = null) :
+            this(endpoint, credential, options)
+        {
+            _isLocalReference = isLocalReference;
+        }
+
+        /// <summary> Initializes a new instance of PersonalizerClient. </summary>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         public PersonalizerClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, null){ }
 
         /// <summary> Initializes a new instance of PersonalizerClient. </summary>
@@ -80,6 +92,17 @@ namespace Azure.AI.Personalizer
             EventsRestClient = new EventsRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
             MultiSlotRestClient = new MultiSlotRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
             MultiSlotEventsRestClient = new MultiSlotEventsRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
+        }
+
+        /// <summary> Initializes a new instance of PersonalizerClient. </summary>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="isLocalReference"> A flag to determine whether to use local reference. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public PersonalizerClient(Uri endpoint, AzureKeyCredential credential, bool isLocalReference, PersonalizerClientOptions options = null) :
+            this(endpoint, credential, options)
+        {
+            _isLocalReference = isLocalReference;
         }
 
         /// <summary> Initializes a new instance of PersonalizerClient. </summary>
