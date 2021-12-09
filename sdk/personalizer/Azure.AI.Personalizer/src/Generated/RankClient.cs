@@ -19,6 +19,7 @@ namespace Azure.AI.Personalizer
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
+        private readonly bool _isLocalReference;
         internal RankRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of RankClient for mocking. </summary>
@@ -48,6 +49,17 @@ namespace Azure.AI.Personalizer
             RestClient = new RankRestClient(_clientDiagnostics, _pipeline, endpoint);
         }
 
+        /// <summary> Initializes a new instance of PersonalizerClient. </summary>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="isLocalReference"> A flag to determine whether to use local reference. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public RankClient(string endpoint, TokenCredential credential, bool isLocalReference, PersonalizerClientOptions options = null) :
+            this(endpoint, credential, options)
+        {
+            _isLocalReference = isLocalReference;
+        }
+
         /// <summary> Initializes a new instance of RankClient. </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
@@ -67,6 +79,17 @@ namespace Azure.AI.Personalizer
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "Ocp-Apim-Subscription-Key"));
             RestClient = new RankRestClient(_clientDiagnostics, _pipeline, endpoint);
+        }
+
+        /// <summary> Initializes a new instance of PersonalizerClient. </summary>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="isLocalReference"> A flag to determine whether to use local reference. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public RankClient(string endpoint, AzureKeyCredential credential, bool isLocalReference, PersonalizerClientOptions options = null) :
+            this(endpoint, credential, options)
+        {
+            _isLocalReference = isLocalReference;
         }
 
         /// <summary> Initializes a new instance of RankClient. </summary>
