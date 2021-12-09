@@ -245,7 +245,8 @@ namespace Compute.Tests
             string dedicatedHostGroupName = null,
             string dedicatedHostName = null,
             string userData = null,
-            string capacityReservationGroupReferenceId = null)
+            string capacityReservationGroupReferenceId = null,
+            VMDiskSecurityProfile diskSecurityProfile = null)
         {
             try
             {
@@ -318,29 +319,21 @@ namespace Compute.Tests
                     };
                 }
                 
-                if (securityType != null && securityType.Equals("TrustedLaunch"))
+                if (securityType != null)
                 {
-                    if(inputVM.SecurityProfile != null)
+                    inputVM.SecurityProfile = inputVM.SecurityProfile ?? new SecurityProfile();
+                    inputVM.SecurityProfile.SecurityType = securityType;
+                    inputVM.SecurityProfile.UefiSettings = new UefiSettings
                     {
-                        inputVM.SecurityProfile.SecurityType = SecurityTypes.TrustedLaunch;
-                        inputVM.SecurityProfile.UefiSettings = new UefiSettings
-                        {
-                            VTpmEnabled = true,
-                            SecureBootEnabled = true
-                        };
-                    }
-                    else
-                    {
-                        inputVM.SecurityProfile = new SecurityProfile
-                        {
-                            SecurityType = SecurityTypes.TrustedLaunch,
-                            UefiSettings = new UefiSettings
-                            {
-                                VTpmEnabled = true,
-                                SecureBootEnabled = true
-                            }
-                        };
-                    }
+                        VTpmEnabled = true,
+                        SecureBootEnabled = true
+                    };
+                }
+
+                if(diskSecurityProfile != null)
+                {
+                    inputVM.StorageProfile.OsDisk.ManagedDisk = inputVM.StorageProfile.OsDisk.ManagedDisk ?? new ManagedDiskParameters();
+                    inputVM.StorageProfile.OsDisk.ManagedDisk.SecurityProfile = diskSecurityProfile;
                 }
 
                 if (zones != null)

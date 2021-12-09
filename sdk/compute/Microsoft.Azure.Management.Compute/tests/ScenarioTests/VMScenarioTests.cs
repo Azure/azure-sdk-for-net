@@ -128,6 +128,28 @@ namespace Compute.Tests
         }
 
         /// <summary>
+        /// To record this test case, you need to run it in region which support Encryption at host
+        /// </summary>
+        [Fact]
+        [Trait("Name", "TestVMScenarioOperations_TrustedLaunch")]
+        public void TestVMScenarioOperations_ConfidentialVMPMK()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            try
+            {
+                ImageReference image = new ImageReference(publisher: "MICROSOFTWINDOWSSERVER", offer: "WINDOWS-CVM", version: "20348.230.2109130355", sku: "2022-DATACENTER-CVM");
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "northeurope");
+                VMDiskSecurityProfile diskSecurityProfile = new VMDiskSecurityProfile(securityEncryptionType: "VMGuestStateOnly");
+                TestVMScenarioOperationsInternal("TestVMScenarioOperations_ConfidentialVM", vmSize: VirtualMachineSizeTypes.StandardDC2asV5, hasManagedDisks: true,
+                    osDiskStorageAccountType: StorageAccountTypes.StandardSSDLRS, securityType: "ConfidentialVM", imageReference: image, validateListAvailableSize: false, diskSecurityProfile: diskSecurityProfile);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+            }
+        }
+
+        /// <summary>
         /// To record this test case, you need to run it in region which support DiskEncryptionSet resource for the Disks
         /// </summary>
         [Fact]
@@ -280,7 +302,7 @@ namespace Compute.Tests
             string osDiskStorageAccountType = "Standard_LRS", string dataDiskStorageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null,
             bool hasDiffDisks = false, bool callUpdateVM = false, bool isPpgScenario = false, string diskEncryptionSetId = null, bool? encryptionAtHostEnabled = null,
             string securityType = null, bool isAutomaticPlacementOnDedicatedHostGroupScenario = false, ImageReference imageReference = null, bool validateListAvailableSize = true,
-            bool associateWithCapacityReservation = false)
+            bool associateWithCapacityReservation = false, VMDiskSecurityProfile diskSecurityProfile = null)
         {
             using (MockContext context = MockContext.Start(this.GetType(), methodName))
             {
@@ -393,10 +415,15 @@ namespace Compute.Tests
                         Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse, hasAZ: zones != null, writeAcceleratorEnabled: writeAcceleratorEnabled, hasDiffDisks: hasDiffDisks);
                     }
                     
-                    if(securityType != null && securityType.Equals("TrustedLaunch"))
+                    if(securityType != null)
                     {
                         Assert.True(inputVM.SecurityProfile.UefiSettings.VTpmEnabled);
                         Assert.True(inputVM.SecurityProfile.UefiSettings.SecureBootEnabled);
+                    }
+
+                    if(diskSecurityProfile != null)
+                    {
+                        Assert.Equal("ConfidentialVM", inputVM.SecurityProfile.SecurityType);
                     }
 
                     if(isPpgScenario)

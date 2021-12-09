@@ -182,5 +182,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         public const string StandardNV6 = "Standard_NV6";
         public const string StandardNV12 = "Standard_NV12";
         public const string StandardNV24 = "Standard_NV24";
+        public const string StandardDC2asV5 = "Standard_DC2as_v5";
     }
 }
