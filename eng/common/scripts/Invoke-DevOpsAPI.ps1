@@ -158,4 +158,5 @@ function Add-RetentionLease {
           -Headers (Get-DevOpsApiHeaders -Base64EncodedToken $Base64EncodedAuthToken) `
           -MaximumRetryCount 3 `
           -ContentType "application/json"
+
 }
