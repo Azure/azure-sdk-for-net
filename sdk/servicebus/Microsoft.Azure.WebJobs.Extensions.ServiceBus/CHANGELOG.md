@@ -11,8 +11,6 @@
 
 - Make `ServiceBusMessageActions` thread-safe.
 
-### Other Changes
-
 ## 5.1.0 (2021-11-10)
 
 ### Features Added
