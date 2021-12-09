@@ -1,13 +1,15 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
-using Microsoft.Azure.WebJobs.Host.Converters;
 using Microsoft.Azure.Cosmos.Table;
-namespace Microsoft.Azure.WebJobs.Host.Tables
+using Microsoft.Azure.WebJobs.Host;
+
+namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
     internal class TableEntityToPocoConverter<TOutput> : IConverter<ITableEntity, TOutput> where TOutput : new()
     {
@@ -16,6 +18,7 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
         private readonly IPropertySetter<TOutput, DateTimeOffset> _timestampSetter;
         private readonly IPropertySetter<TOutput, string> _eTagSetter;
         private readonly IReadOnlyDictionary<string, IPropertySetter<TOutput, EntityProperty>> _otherPropertySetters;
+
         private TableEntityToPocoConverter(
             IPropertySetter<TOutput, string> partitionKeySetter,
             IPropertySetter<TOutput, string> rowKeySetter,
@@ -30,25 +33,30 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
             _eTagSetter = eTagSetter;
             _otherPropertySetters = otherPropertySetters;
         }
+
         public TOutput Convert(ITableEntity input)
         {
             if (input == null)
             {
                 return default(TOutput);
             }
+
             TOutput result = new TOutput();
             if (_partitionKeySetter != null)
             {
                 _partitionKeySetter.SetValue(ref result, input.PartitionKey);
             }
+
             if (_rowKeySetter != null)
             {
                 _rowKeySetter.SetValue(ref result, input.RowKey);
             }
+
             if (_timestampSetter != null)
             {
                 _timestampSetter.SetValue(ref result, input.Timestamp);
             }
+
             IDictionary<string, EntityProperty> properties = input.WriteEntity(operationContext: null);
             if (properties != null)
             {
@@ -64,12 +72,15 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
                     }
                 }
             }
+
             if (_eTagSetter != null)
             {
                 _eTagSetter.SetValue(ref result, input.ETag);
             }
+
             return result;
         }
+
         public static TableEntityToPocoConverter<TOutput> Create()
         {
             IPropertySetter<TOutput, string> partitionKeySetter = GetSetter<string>("PartitionKey");
@@ -88,12 +99,15 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
                 {
                     continue;
                 }
+
                 IPropertySetter<TOutput, EntityProperty> otherPropertySetter = GetOtherSetter(property);
                 otherPropertySetters.Add(property.Name, otherPropertySetter);
             }
+
             return new TableEntityToPocoConverter<TOutput>(partitionKeySetter, rowKeySetter, timestampSetter,
                 eTagSetter, otherPropertySetters);
         }
+
         private static IPropertySetter<TOutput, TProperty> GetSetter<TProperty>(string propertyName)
         {
             PropertyInfo property = typeof(TOutput).GetProperty(propertyName,
@@ -102,20 +116,24 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
             {
                 return null;
             }
+
             if (property.PropertyType != typeof(TProperty))
             {
                 string message = String.Format(CultureInfo.InvariantCulture,
                     "If the {0} property is present, it must be a {1}.", propertyName, typeof(TProperty).Name);
                 throw new InvalidOperationException(message);
             }
+
             if (property.GetIndexParameters().Length != 0)
             {
                 string message = String.Format(CultureInfo.InvariantCulture,
                     "If the {0} property is present, it must not be an indexer.", propertyName);
                 throw new InvalidOperationException(message);
             }
+
             return PropertyAccessorFactory<TOutput>.CreateSetter<TProperty>(property);
         }
+
         private static IPropertySetter<TOutput, EntityProperty> GetOtherSetter(PropertyInfo property)
         {
             MethodInfo genericMethodTemplate = typeof(TableEntityToPocoConverter<TOutput>).GetMethod(
@@ -123,9 +141,10 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
             MethodInfo genericMethod = genericMethodTemplate.MakeGenericMethod(property.PropertyType);
             Func<PropertyInfo, IPropertySetter<TOutput, EntityProperty>> invoker =
                 (Func<PropertyInfo, IPropertySetter<TOutput, EntityProperty>>)genericMethod.CreateDelegate(
-                typeof(Func<PropertyInfo, IPropertySetter<TOutput, EntityProperty>>));
+                    typeof(Func<PropertyInfo, IPropertySetter<TOutput, EntityProperty>>));
             return invoker.Invoke(property);
         }
+
         private static IPropertySetter<TOutput, EntityProperty> GetOtherSetterGeneric<TProperty>(PropertyInfo property)
         {
             IConverter<EntityProperty, TProperty> converter = EntityPropertyToTConverterFactory.Create<TProperty>();
