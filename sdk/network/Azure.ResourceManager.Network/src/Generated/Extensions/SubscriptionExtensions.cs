@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ApplicationGatewayAvailableSslOptions" /> object. </returns>
         public static ApplicationGatewayAvailableSslOptions GetApplicationGatewayAvailableSslOptions(this Subscription subscription)
         {
-            return new ApplicationGatewayAvailableSslOptions(subscription, new ResourceIdentifier(subscription.Id + "/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default"));
+            return new ApplicationGatewayAvailableSslOptions(subscription, subscription.Id + "/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default");
         }
         #endregion
 
