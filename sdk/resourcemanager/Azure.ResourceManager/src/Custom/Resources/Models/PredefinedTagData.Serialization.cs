@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Resources
     {
         internal static PredefinedTagData DeserializeTagDetails(JsonElement element)
         {
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> tagName = default;
             Optional<PredefinedTagCount> count = default;
             Optional<IReadOnlyList<PredefinedTagValue>> values = default;
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tagName"))

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Resources
             Optional<string> managedBy = default;
             Optional<Sku> sku = default;
             Optional<ResourceIdentity> identity = default;
-            Optional<string> id = default;
+            ResourceIdentifier id = default;
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> location = default;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new GenericResourceData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), plan.Value, properties.Value, kind.Value, managedBy.Value, sku.Value, identity.Value, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), provisioningState.Value);
+            return new GenericResourceData(id, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), plan.Value, properties.Value, kind.Value, managedBy.Value, sku.Value, identity.Value, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), provisioningState.Value);
         }
     }
 }
