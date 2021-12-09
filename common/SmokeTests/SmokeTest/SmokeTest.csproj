@@ -3,9 +3,6 @@
     <OutputType>Exe</OutputType>
     <TargetFrameworks>netcoreapp3.1;net461;net6.0</TargetFrameworks>
     <LangVersion>latest</LangVersion>
-    <RestoreAdditionalProjectSources>
-      https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net
-    </RestoreAdditionalProjectSources>
   </PropertyGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
     <Reference Include="System" />
