@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
@@ -53,6 +54,9 @@ namespace Azure.Identity
 
             if (EnableBroker)
             {
+#if NET45
+                pubAppBuilder.WithDesktopFeatures();
+#endif
                 pubAppBuilder = pubAppBuilder.WithBroker();
             }
 

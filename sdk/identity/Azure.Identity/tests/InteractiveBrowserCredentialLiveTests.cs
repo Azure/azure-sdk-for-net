@@ -29,6 +29,18 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public async Task AuthenticateWithBrokerAsync()
+        {
+            // to fully manually verify the InteractiveBrowserCredential this test should be run both authenticating with a
+            // school / organization account as well as a personal live account, i.e. a @outlook.com, @live.com, or @hotmail.com
+            var cred = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { PreferBroker = true });
+
+            AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
+
+            Assert.NotNull(token.Token);
+        }
+
+        [Test]
         [Ignore("This test is an integration test which can only be run with user interaction")]
         public void AuthenticateBrowserCancellationAsync()
         {
