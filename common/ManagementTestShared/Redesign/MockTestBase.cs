@@ -16,9 +16,8 @@ namespace Azure.ResourceManager.TestFramework
             EnsureMockServerRunning();
         }
 
-        public MockTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, IsMockServerRunning()? RecordedTestMode.Playback: mode)
+        public MockTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, !IsMockServerRunning()? RecordedTestMode.Playback: mode)
         {
-            EnsureMockServerRunning();
         }
 
         private void EnsureMockServerRunning()
