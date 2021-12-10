@@ -12,5 +12,10 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// Validation options for Abuse Protection and Signature checks.
         /// </summary>
         public WebPubSubValidationOptions ValidationOptions { get; set; } = new WebPubSubValidationOptions();
+
+        /// <summary>
+        /// Auth options for request checks.
+        /// </summary>
+        public IWebPubSubAuthOptions AuthOptions { get; set; }
     }
 }

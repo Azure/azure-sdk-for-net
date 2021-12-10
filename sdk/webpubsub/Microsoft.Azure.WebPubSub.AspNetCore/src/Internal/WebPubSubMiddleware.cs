@@ -75,16 +75,14 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 await _next(context).ConfigureAwait(false);
                 return;
             }
-            else
+
+            // From web pubsub, but hub not register in server.
+            var hub = _handler.GetHub(hubName);
+            if (hub == null)
             {
-                // From web pubsub, but hub not register in server.
-                var hub = _handler.GetHub(hubName);
-                if (hub == null)
-                {
-                    Log.HubNotRegistered(_logger, hubName);
-                    await _next(context).ConfigureAwait(false);
-                    return;
-                }
+                Log.HubNotRegistered(_logger, hubName);
+                await _next(context).ConfigureAwait(false);
+                return;
             }
 
             await _handler.HandleRequest(context).ConfigureAwait(false);

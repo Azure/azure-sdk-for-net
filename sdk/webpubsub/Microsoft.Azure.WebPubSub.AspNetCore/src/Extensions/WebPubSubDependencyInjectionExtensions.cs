@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
+
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Azure.WebPubSub.AspNetCore;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -30,9 +32,14 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services.Configure(configure);
 
-            services.AddWebPubSub();
+            var options = new WebPubSubOptions();
+            configure(options);
 
-            return services;
+            if (options.AuthOptions != null)
+            {
+                services.AddWebPubSubAuthentication(options.AuthOptions);
+            }
+            return services.AddWebPubSub();
         }
 
         /// <summary>
@@ -46,9 +53,42 @@ namespace Microsoft.Extensions.DependencyInjection
             {
                 throw new ArgumentNullException(nameof(services));
             }
-
-            return services.AddSingleton<ServiceRequestHandlerAdapter>()
+            return services
+                .AddSingleton<ServiceRequestHandlerAdapter>()
                 .AddSingleton<WebPubSubMarkerService>();
+        }
+
+        /// <summary>
+        /// Add web pubsub authentication.
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="authOptions"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddWebPubSubAuthentication(this IServiceCollection services,
+                                                                    IWebPubSubAuthOptions authOptions)
+        {
+            var builder = services.AddAuthentication();
+            authOptions.Configure(Constants.Auth.AzureAd.DefaultScheme, builder);
+            return services.AddWebPubSubAuthPolicy(Constants.Auth.AzureAd.DefaultPolicy, authOptions);
+        }
+
+        /// <summary>
+        /// Add web pubsub auth policy
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="policyName"></param>
+        /// <param name="authOptions"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddWebPubSubAuthPolicy(this IServiceCollection services,
+                                                                string policyName,
+                                                                IWebPubSubAuthOptions authOptions)
+        {
+            return services.AddAuthorization(options =>
+            {
+                var builder = new AuthorizationPolicyBuilder().RequireAuthenticatedUser();
+                authOptions.Configure(builder);
+                options.AddPolicy(policyName, builder.Build());
+            });
         }
     }
 }

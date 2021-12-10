@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Azure.WebPubSub.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,7 +23,8 @@ namespace Microsoft.AspNetCore.Builder
         /// <returns>The <see cref="IEndpointConventionBuilder"/>.</returns>
         public static IEndpointConventionBuilder MapWebPubSubHub<THub>(
             this IEndpointRouteBuilder endpoints,
-            string path) where THub: WebPubSubHub
+            string path
+        ) where THub: WebPubSubHub
         {
             if (endpoints == null)
             {
@@ -41,10 +43,19 @@ namespace Microsoft.AspNetCore.Builder
             var adaptor = endpoints.ServiceProvider.GetService<ServiceRequestHandlerAdapter>();
             adaptor.RegisterHub<THub>();
 
-            var app = endpoints.CreateApplicationBuilder();
-            app.UseMiddleware<WebPubSubMiddleware>();
+            var builder = endpoints.CreateApplicationBuilder();
+            builder.UseMiddleware<WebPubSubMiddleware>();
+            return endpoints.Map(path, builder.Build());
+        }
 
-            return endpoints.Map(path, app.Build());
+        /// <summary>
+        /// Use Azure AD auth.
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <returns></returns>
+        public static IEndpointConventionBuilder UseWebPubSubAzureAdAuth(this IEndpointConventionBuilder builder)
+        {
+            return builder.RequireAuthorization(Constants.Auth.AzureAd.DefaultScheme);
         }
     }
 }
