@@ -114,7 +114,7 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Converts a List of Dictionaries containing properties and Odata type annotations to a custom entity type.
         /// </summary>
-        internal static List<T> ToTableEntityList<T>(this IReadOnlyList<IDictionary<string, object>> entityList) where T : class, ITableEntity, new()
+        internal static List<T> ToTableEntityList<T>(this IReadOnlyList<IDictionary<string, object>> entityList) where T : new()
         {
             var result = new List<T>(entityList.Count);
             var typeInfo = TablesTypeBinder.Shared.GetBinderInfo(typeof(T));
@@ -132,7 +132,7 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Cleans a Dictionary of its Odata type annotations, while using them to cast its entities accordingly.
         /// </summary>
-        internal static T ToTableEntity<T>(this IDictionary<string, object> entity, TablesTypeBinder.BoundTypeInfo? typeInfo = null) where T : class, ITableEntity, new()
+        internal static T ToTableEntity<T>(this IDictionary<string, object> entity, TablesTypeBinder.BoundTypeInfo? typeInfo = null) where T : new()
         {
             if (typeof(IDictionary<string, object>).IsAssignableFrom(typeof(T)))
             {

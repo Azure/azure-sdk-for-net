@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
+using Azure.Data.Tables;
 using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Azure.WebJobs.Host;
 using ITableEntity = Azure.Data.Tables.ITableEntity;
@@ -49,31 +50,31 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 return null;
             }
 
-            TableEntity result = new TableEntity();
-            if (_partitionKeyGetter != null)
-            {
-                result.PartitionKey = _partitionKeyGetter.GetValue(input);
-            }
-
-            if (_rowKeyGetter != null)
-            {
-                result.RowKey = _rowKeyGetter.GetValue(input);
-            }
-
-            if (_timestampGetter != null)
-            {
-                result.Timestamp = _timestampGetter.GetValue(input);
-            }
-
-            IDictionary<string, EntityProperty> properties = new Dictionary<string, EntityProperty>();
-            foreach (KeyValuePair<string, IPropertyGetter<TInput, EntityProperty>> pair in _otherPropertyGetters)
-            {
-                string propertyName = pair.Key;
-                IPropertyGetter<TInput, EntityProperty> getter = pair.Value;
-                Debug.Assert(getter != null);
-                EntityProperty propertyValue = getter.GetValue(input);
-                properties.Add(propertyName, propertyValue);
-            }
+            // TableEntity result = new TableEntity();
+            // if (_partitionKeyGetter != null)
+            // {
+            //     result.PartitionKey = _partitionKeyGetter.GetValue(input);
+            // }
+            //
+            // if (_rowKeyGetter != null)
+            // {
+            //     result.RowKey = _rowKeyGetter.GetValue(input);
+            // }
+            //
+            // if (_timestampGetter != null)
+            // {
+            //     result.Timestamp = _timestampGetter.GetValue(input);
+            // }
+            //
+            // IDictionary<string, EntityProperty> properties = new Dictionary<string, EntityProperty>();
+            // foreach (KeyValuePair<string, IPropertyGetter<TInput, EntityProperty>> pair in _otherPropertyGetters)
+            // {
+            //     string propertyName = pair.Key;
+            //     IPropertyGetter<TInput, EntityProperty> getter = pair.Value;
+            //     Debug.Assert(getter != null);
+            //     EntityProperty propertyValue = getter.GetValue(input);
+            //     properties.Add(propertyName, propertyValue);
+            // }
 
             // result.ReadEntity(properties, operationContext: null);
             // if (_eTagKeyGetter != null)
@@ -81,6 +82,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             //     result.ETag = _eTagKeyGetter.GetValue(input);
             // }
 
+            TableEntity result = new TableEntity();
+            TablesTypeBinder.Shared.Serialize(input, result);
             return result;
         }
 
