@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary>
     /// Represents an Azure geography region where supported resource providers live.
     /// </summary>
-    public struct Location : IEquatable<Location>
+    public readonly struct Location : IEquatable<Location>
     {
         private static Dictionary<string, Location> PublicCloudLocations { get; } = new Dictionary<string, Location>();
 
@@ -244,12 +244,12 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary>
         /// Gets a location name consisting of only lowercase characters without white spaces or any separation character between words, e.g. "westus".
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; }
 
         /// <summary>
         /// Gets a location display name consisting of titlecase words or alphanumeric characters separated by whitespaces, e.g. "West US"
         /// </summary>
-        public string DisplayName { get; private set; }
+        public string DisplayName { get; }
 
         /// <summary>
         /// Returns the instance of a known cloud by its name if it exists.
