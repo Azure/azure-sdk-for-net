@@ -2,7 +2,7 @@
 
 Run `dotnet build /t:GenerateCode` in the `src` directory to generate SDK code.
 
-See the [Contributing guidelines](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/CONTRIBUTING.md) for more details.
+See the [Contributing guidelines](https://github.com/Azure/azure-sdk-for-net/blob/fe0bf0e7e84a406ec2102c194ea05ccd5011a141/sdk/search/CONTRIBUTING.md) for more details.
 
 ## AutoRest Configuration
 > see https://aka.ms/autorest
