@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
+
 using Microsoft.Azure.WebPubSub.AspNetCore;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -28,11 +29,16 @@ namespace Microsoft.Extensions.DependencyInjection
                 throw new ArgumentNullException(nameof(configure));
             }
 
+            var options = new WebPubSubOptions();
+            configure(options);
+            if (options.AuthenticationOptions != null)
+            {
+                options.AuthenticationOptions.Configure(services);
+            }
+
             services.Configure(configure);
 
-            services.AddWebPubSub();
-
-            return services;
+            return services.AddWebPubSub();
         }
 
         /// <summary>
@@ -46,8 +52,8 @@ namespace Microsoft.Extensions.DependencyInjection
             {
                 throw new ArgumentNullException(nameof(services));
             }
-
-            return services.AddSingleton<ServiceRequestHandlerAdapter>()
+            return services
+                .AddSingleton<ServiceRequestHandlerAdapter>()
                 .AddSingleton<WebPubSubMarkerService>();
         }
     }

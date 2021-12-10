@@ -31,7 +31,9 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>Deserialize <see cref="WebPubSubEventRequest"/></returns>
-        internal static async Task<WebPubSubEventRequest> ReadWebPubSubEventAsync(this HttpRequest request, WebPubSubValidationOptions options = null, CancellationToken cancellationToken = default)
+        internal static async Task<WebPubSubEventRequest> ReadWebPubSubEventAsync(this HttpRequest request,
+                                                                                  WebPubSubValidationOptions options = null,
+                                                                                  CancellationToken cancellationToken = default)
         {
             if (request == null)
             {

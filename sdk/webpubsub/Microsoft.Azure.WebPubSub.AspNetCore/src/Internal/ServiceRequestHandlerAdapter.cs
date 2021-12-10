@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.Json;
 using System.Threading.Tasks;
+
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,8 +25,17 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         // <hubName, HubImpl>
         private readonly Dictionary<string, WebPubSubHub> _hubRegistry = new(StringComparer.OrdinalIgnoreCase);
 
-        public ServiceRequestHandlerAdapter(IServiceProvider provider, IOptions<WebPubSubOptions> options, ILogger<ServiceRequestHandlerAdapter> logger)
+        public ServiceRequestHandlerAdapter(IServiceProvider provider,
+                                            IOptions<WebPubSubOptions> options,
+                                            ILogger<ServiceRequestHandlerAdapter> logger,
+                                            AuthenticationBuilder builder
+                                            )
         {
+            builder.AddJwtBearer(authOptions =>
+            {
+                Console.WriteLine("asd");
+            });
+
             _provider = provider ?? throw new ArgumentNullException(nameof(provider));
             _options = options.Value;
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));

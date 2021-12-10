@@ -2,8 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Azure.WebPubSub.AspNetCore;
+using Microsoft.Azure.WebPubSub.AspNetCore.Internal;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.AspNetCore.Builder
@@ -19,10 +22,13 @@ namespace Microsoft.AspNetCore.Builder
         /// <typeparam name="THub">User implemented <see cref="WebPubSubHub"/>.</typeparam>
         /// <param name="endpoints">The <see cref="IEndpointRouteBuilder"/>.</param>
         /// <param name="path">The path to map the <see cref="WebPubSubHub"/>.</param>
+        /// <param name="audience"></param>
         /// <returns>The <see cref="IEndpointConventionBuilder"/>.</returns>
         public static IEndpointConventionBuilder MapWebPubSubHub<THub>(
             this IEndpointRouteBuilder endpoints,
-            string path) where THub: WebPubSubHub
+            string path,
+            string audience = ""
+        ) where THub: WebPubSubHub
         {
             if (endpoints == null)
             {
@@ -41,10 +47,19 @@ namespace Microsoft.AspNetCore.Builder
             var adaptor = endpoints.ServiceProvider.GetService<ServiceRequestHandlerAdapter>();
             adaptor.RegisterHub<THub>();
 
-            var app = endpoints.CreateApplicationBuilder();
-            app.UseMiddleware<WebPubSubMiddleware>();
-
-            return endpoints.Map(path, app.Build());
+            if (string.IsNullOrEmpty(audience))
+            {
+                var builder = endpoints.CreateApplicationBuilder();
+                builder.UseMiddleware<WebPubSubMiddleware>();
+                return endpoints.Map(path, builder.Build());
+            }
+            else
+            {
+                var builder = endpoints.CreateApplicationBuilder();
+                builder.UseMiddleware<WebPubSubAuthorizationMiddleware>(new object[] { audience });
+                builder.UseMiddleware<WebPubSubMiddleware>();
+                return endpoints.Map(path, builder.Build()).RequireAuthorization(Constants.Auth.AzureAd.Policy);
+            }
         }
     }
 }

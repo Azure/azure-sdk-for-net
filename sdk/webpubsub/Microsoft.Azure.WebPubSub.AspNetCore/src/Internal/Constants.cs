@@ -6,6 +6,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
     internal static class Constants
     {
         public static readonly char[] HeaderSeparator = { ',' };
+
         public const string AllowedAllOrigins = "*";
 
         public static class ContentTypes
@@ -23,6 +24,16 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             public const string ConnectedEvent = "connected";
             public const string MessageEvent = "message";
             public const string DisconnectedEvent = "disconnected";
+        }
+
+        public static class Auth
+        {
+            public static class AzureAd
+            {
+                public const string Scheme = "AzureWebPubSubAzureAd";
+
+                public const string Policy = "AzureWebPubSubAzureAd";
+            }
         }
 
         public static class Headers

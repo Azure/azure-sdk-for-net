@@ -101,6 +101,7 @@
     <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="2.18.4" />
 
     <!-- TODO: Make sure this package is arch-board approved -->
+    <PackageReference Update="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.0"/> 
     <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="5.4.0" />
 
     <!-- OpenTelemetry dependency approved for Azure.Monitor.OpenTelemetry.Exporter package only -->
