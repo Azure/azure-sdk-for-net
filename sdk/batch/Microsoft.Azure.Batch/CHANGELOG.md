@@ -1,16 +1,16 @@
 # Release History
 
-## 15.2.0-beta.1 (Unreleased)
+## 16.0.0 (Unreleased)
 
 ### Features Added
+
+- TODO
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
-### Other Changes
-
-## 15.2.0 (2021-08-10)
+- Fixed OutputFileBlobContainerDestination constructor null reference exception.
 
 ## Features Added
 

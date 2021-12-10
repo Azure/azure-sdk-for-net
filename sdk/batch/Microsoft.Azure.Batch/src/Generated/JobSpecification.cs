@@ -24,6 +24,7 @@ namespace Microsoft.Azure.Batch
     {
         private class PropertyContainer : PropertyCollection
         {
+            public readonly PropertyAccessor<bool?> AllowTaskPreemptionProperty;
             public readonly PropertyAccessor<IList<EnvironmentSetting>> CommonEnvironmentSettingsProperty;
             public readonly PropertyAccessor<JobConstraints> ConstraintsProperty;
             public readonly PropertyAccessor<string> DisplayNameProperty;
@@ -41,6 +42,7 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
+                this.AllowTaskPreemptionProperty = this.CreatePropertyAccessor<bool?>(nameof(AllowTaskPreemption), BindingAccess.Read | BindingAccess.Write);
                 this.CommonEnvironmentSettingsProperty = this.CreatePropertyAccessor<IList<EnvironmentSetting>>(nameof(CommonEnvironmentSettings), BindingAccess.Read | BindingAccess.Write);
                 this.ConstraintsProperty = this.CreatePropertyAccessor<JobConstraints>(nameof(Constraints), BindingAccess.Read | BindingAccess.Write);
                 this.DisplayNameProperty = this.CreatePropertyAccessor<string>(nameof(DisplayName), BindingAccess.Read | BindingAccess.Write);
@@ -59,6 +61,10 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer(Models.JobSpecification protocolObject) : base(BindingState.Bound)
             {
+                this.AllowTaskPreemptionProperty = this.CreatePropertyAccessor(
+                    protocolObject.AllowTaskPreemption,
+                    nameof(AllowTaskPreemption),
+                    BindingAccess.Read | BindingAccess.Write);
                 this.CommonEnvironmentSettingsProperty = this.CreatePropertyAccessor(
                     EnvironmentSetting.ConvertFromProtocolCollection(protocolObject.CommonEnvironmentSettings),
                     nameof(CommonEnvironmentSettings),
@@ -141,6 +147,20 @@ namespace Microsoft.Azure.Batch
         #endregion Constructors
 
         #region JobSpecification
+
+        /// <summary>
+        /// Gets or sets whether Tasks in this job can be preempted by other high priority jobs.
+        /// </summary>
+        /// <remarks>
+        /// If the value is set to True, other high priority jobs submitted to the system will take precedence and will be 
+        /// able requeue tasks from this job. You can update a job's allowTaskPreemption after it has been created using 
+        /// the update job API.
+        /// </remarks>
+        public bool? AllowTaskPreemption
+        {
+            get { return this.propertyContainer.AllowTaskPreemptionProperty.Value; }
+            set { this.propertyContainer.AllowTaskPreemptionProperty.Value = value; }
+        }
 
         /// <summary>
         /// Gets or sets a list of common environment variable settings.
@@ -331,6 +351,7 @@ namespace Microsoft.Azure.Batch
         {
             Models.JobSpecification result = new Models.JobSpecification()
             {
+                AllowTaskPreemption = this.AllowTaskPreemption,
                 CommonEnvironmentSettings = UtilitiesInternal.ConvertToProtocolCollection(this.CommonEnvironmentSettings),
                 Constraints = UtilitiesInternal.CreateObjectWithNullCheck(this.Constraints, (o) => o.GetTransportObject()),
                 DisplayName = this.DisplayName,
