@@ -646,15 +646,15 @@ namespace NetApp.Tests.ResourceTests
                 int length = 103;
                 try
                 {
-                    long setPoolSize = 4398046511104;
+                    long setPoolSize = 11*ResourceUtils.tebibyte;
                     ResourceUtils.CreateVolume(netAppMgmtClient, poolSize: setPoolSize);
                     createdVolumes.Add(ResourceUtils.volumeName1);
                     for (int i = 0; i < length-1; i++)
-                    {
+                    {                        
                         ResourceUtils.CreateVolume(netAppMgmtClient, $"{ResourceUtils.volumeName1}-{i}", volumeOnly: true);
                         createdVolumes.Add($"{ResourceUtils.volumeName1}-{i}");
                     }
-                    if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                    if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record") 
                     {
                         Thread.Sleep(30000);
                     }
@@ -669,13 +669,31 @@ namespace NetApp.Tests.ResourceTests
                     foreach(var volumeName in createdVolumes)
                     {
                         ResourceUtils.DeleteVolume(netAppMgmtClient, volumeName: volumeName);
+                        if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                        {
+                            Thread.Sleep(10000);
+                        }
                     }
-                }
-                catch (CloudException)
-                {                                        
-                    var volumesList = new List<Volume>();
-                    foreach (var volumeName in createdVolumes)
+                    if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
                     {
+                        Thread.Sleep(30000);
+                    }
+                }   
+                catch (CloudException cex)
+                {
+                    if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                    {
+                        Thread.Sleep(30000);
+                    }
+                    string ble = cex.Message;
+                    //get list of volumnes                
+                    var volumesPage = netAppMgmtClient.Volumes.List(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1);
+                    // Get all resources by polling on next page link
+                    var volumeResponseList = ListNextLink<Volume>.GetAllResourcesByPollingNextLink(volumesPage, netAppMgmtClient.Volumes.ListNext);
+
+                    foreach (var volume in volumeResponseList)
+                    {
+                        string volumeName = volume.Name.Split(@"/").Last();
                         try
                         {
                             ResourceUtils.DeleteVolume(netAppMgmtClient, volumeName: volumeName);
@@ -685,6 +703,11 @@ namespace NetApp.Tests.ResourceTests
                         }
                     }
                 }
+                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                {
+                    Thread.Sleep(30000);
+                }
+
                 ResourceUtils.DeletePool(netAppMgmtClient);
                 ResourceUtils.DeleteAccount(netAppMgmtClient);
             }
