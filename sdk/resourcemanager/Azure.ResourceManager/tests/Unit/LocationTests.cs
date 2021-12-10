@@ -41,13 +41,13 @@ namespace Azure.ResourceManager.Tests
         [TestCase(null, null, null)]
         public void CanConstructLocationFromString(string name, string expectedName, string expectedDisplayName)
         {
-            Location location = name;
             if (name == null)
             {
-                Assert.IsNull(location);
+                Assert.Throws<ArgumentNullException>(() => { Location location = name; });
             }
             else
             {
+                Location location = name;
                 string strLocation = location;
                 Assert.AreEqual(name, strLocation);
                 Assert.AreEqual(expectedDisplayName, location.DisplayName);
@@ -108,13 +108,13 @@ namespace Azure.ResourceManager.Tests
         [TestCase(false, "West US", "")]
         [TestCase(false, "West US", "!#()@(#@")]
         [TestCase(false, "West US", "W3$t U$")]
-        [TestCase(false, "West US", null)]
         public void EqualsToLocation(bool expected, string left, string right)
         {
             Location loc1 = left;
             Location loc2 = right;
             Assert.AreEqual(expected, loc1.Equals(loc2));
-            Assert.AreEqual(expected, loc1.GetHashCode() == loc2?.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({loc1.GetHashCode()}, {loc2?.GetHashCode()})");
+            if(right != null)
+                Assert.AreEqual(expected, loc1.GetHashCode() == loc2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({loc1.GetHashCode()}, {loc2.GetHashCode()})");
         }
 
         [Test]
@@ -144,7 +144,6 @@ namespace Azure.ResourceManager.Tests
         [TestCase(false, "West Us", "")]
         [TestCase(false, "West Us", "!#()@(#@")]
         [TestCase(false, "West Us", "W3$t U$")]
-        [TestCase(false, "West Us", null)]
         public void EqualsToString(bool expected, string left, string right)
         {
             Location location = left;
@@ -174,25 +173,17 @@ namespace Azure.ResourceManager.Tests
         [TestCase(null, null, null)]
         public void CanCastLocationToString(string name, string expectedName, string expectedDisplayName)
         {
-            Location location = name;
             if (name == null)
             {
-                Assert.IsNull(location);
+                Assert.Throws<ArgumentNullException>(()=> { Location location = name; });
             }
             else
             {
+                Location location = name;
                 string strLocation = location;
                 Assert.AreEqual(name, strLocation);
                 Assert.AreEqual(expectedDisplayName, location.DisplayName);
             }
-        }
-
-        [Test]
-        public void EqualOperatorNull()
-        {
-            Location loc = Location.WestUS2;
-            Assert.IsFalse(loc == null);
-            Assert.IsFalse(null == loc);
         }
 
         [TestCase(false, "WESTUS2", "EASTUS2")]

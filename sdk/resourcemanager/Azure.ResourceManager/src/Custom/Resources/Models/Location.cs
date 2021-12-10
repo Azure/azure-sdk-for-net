@@ -4,16 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary>
     /// Represents an Azure geography region where supported resource providers live.
     /// </summary>
-    public partial class Location : IEquatable<Location>
+    public struct Location : IEquatable<Location>
     {
         private static Dictionary<string, Location> PublicCloudLocations { get; } = new Dictionary<string, Location>();
 
@@ -229,12 +226,30 @@ namespace Azure.ResourceManager.Resources.Models
                 throw new ArgumentNullException(nameof(name));
 
             Name = name;
-            Location loc;
-            if (PublicCloudLocations.TryGetValue(name, out loc))
-            {
-                DisplayName = loc.DisplayName;
-            }
+            DisplayName = PublicCloudLocations.TryGetValue(name, out Location loc) ? loc.DisplayName : null;
         }
+
+        /// <summary> Initializes a new instance of Location. </summary>
+        /// <param name="name"> The location name. </param>
+        /// <param name="displayName"> The display name of the location. </param>
+        public Location(string name, string displayName)
+        {
+            if (ReferenceEquals(name, null))
+                throw new ArgumentNullException(nameof(name));
+
+            Name = name;
+            DisplayName = displayName;
+        }
+
+        /// <summary>
+        /// Gets a location name consisting of only lowercase characters without white spaces or any separation character between words, e.g. "westus".
+        /// </summary>
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets a location display name consisting of titlecase words or alphanumeric characters separated by whitespaces, e.g. "West US"
+        /// </summary>
+        public string DisplayName { get; private set; }
 
         /// <summary>
         /// Returns the instance of a known cloud by its name if it exists.
@@ -269,15 +284,13 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="other"> String to be assigned in the Name form </param>
         public static implicit operator Location(string other)
         {
-            if (ReferenceEquals(other, null))
+            if (!ReferenceEquals(other, null))
             {
-                return null;
-            }
-
-            Location value;
-            if (PublicCloudLocations.TryGetValue(other, out value))
-            {
-                return value;
+                Location value;
+                if (PublicCloudLocations.TryGetValue(other, out value))
+                {
+                    return value;
+                }
             }
 
             return new Location(other);
@@ -290,12 +303,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <returns> True or false. </returns>
         public bool Equals(Location other)
         {
-            if (ReferenceEquals(other, null))
-                return false;
-
-            if (ReferenceEquals(this, other))
-                return true;
-
             return Name == other.Name;
         }
 
@@ -305,11 +312,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="other"> Location object to be assigned. </param>
         public static implicit operator string(Location other)
         {
-            if (ReferenceEquals(other, null))
-            {
-                return null;
-            }
-
             return other.ToString();
         }
 
@@ -317,11 +319,6 @@ namespace Azure.ResourceManager.Resources.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-
             if (ReferenceEquals(obj, null))
             {
                 return false;
@@ -348,11 +345,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <returns> True if they are equal, otherwise false. </returns>
         public static bool operator ==(Location left, Location right)
         {
-            if (ReferenceEquals(left, null))
-            {
-                return ReferenceEquals(right, null);
-            }
-
             return left.Equals(right);
         }
 
@@ -364,7 +356,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <returns> True if they are not equal, otherwise false. </returns>
         public static bool operator !=(Location left, Location right)
         {
-            return !(left == right);
+            return !left.Equals(right);
         }
     }
 }
