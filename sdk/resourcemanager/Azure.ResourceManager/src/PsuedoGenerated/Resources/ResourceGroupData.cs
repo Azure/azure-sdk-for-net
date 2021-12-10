@@ -16,10 +16,6 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public ResourceGroupData(Location location) : base(location)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
         }
 
         /// <summary> Initializes a new instance of ResourceGroupData. </summary>
