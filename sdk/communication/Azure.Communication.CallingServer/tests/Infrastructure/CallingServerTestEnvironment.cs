@@ -21,6 +21,8 @@ namespace Azure.Communication.CallingServer.Tests
 
         public const string UserId = "USER_IDENTIFIER";
 
+        public const string AnotherUserId = "ANOTHER_USER_IDENTIFIER";
+
         public const string TargetCallConnectionId = "TARGET_CALL_CONNECTION_ID";
 
         public const string AudioUrl = "AUDIO_FILE_URL";
@@ -48,6 +50,11 @@ namespace Azure.Communication.CallingServer.Tests
         /// The user id required to add the paticipant in a call.
         /// </summary>
         public string UserIdentifier => GetRecordedVariable(UserId, options => options.IsSecret());
+
+        /// <summary>
+        /// The another user id required to add another paticipant in a call.
+        /// </summary>
+        public string AnotherUserIdentifier => GetRecordedVariable(AnotherUserId, options => options.IsSecret());
 
         /// <summary>
         /// The target call connection id required to transfer the call to another call.
