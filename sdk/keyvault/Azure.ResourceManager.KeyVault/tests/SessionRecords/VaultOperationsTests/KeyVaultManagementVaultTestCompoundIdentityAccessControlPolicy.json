@@ -98,7 +98,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "691",
+        "Content-Length": "689",
         "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-ResourceManager/1.0.0-alpha.20210823.1",
@@ -108,7 +108,7 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "location": "North Central US",
+        "location": "northcentralus",
         "tags": {
           "tag1": "value1",
           "tag2": "value2",

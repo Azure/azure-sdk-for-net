@@ -9,6 +9,7 @@ using Azure.Core.TestFramework;
 using Azure.Graph.Rbac;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.TestFramework;
 
 namespace Azure.ResourceManager.KeyVault.Tests
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
         public string ObjectId { get; set; }
         //Could not use TestEnvironment.Location since Location is got dynamically
-        public string Location { get; set; }
+        public Location LocationToUse { get; set; }
 
         public Subscription Subscription { get; private set; }
         public AccessPolicyEntry AccessPolicy { get; internal set; }
@@ -41,6 +42,11 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
         protected VaultOperationsTestsBase(bool isAsync)
             : base(isAsync, useLegacyTransport: true)
+        {
+        }
+
+        protected VaultOperationsTestsBase(bool isAsync, RecordedTestMode mode)
+            : base(isAsync, mode, useLegacyTransport: true)
         {
         }
 
@@ -65,10 +71,10 @@ namespace Azure.ResourceManager.KeyVault.Tests
                     break;
                 }
             }
-            Location = "North Central US";
+            LocationToUse = Location.NorthCentralUS;
 
             ResGroupName = Recording.GenerateAssetName("sdktestrg");
-            var rgResponse = await Subscription.GetResourceGroups().CreateOrUpdateAsync(ResGroupName, new ResourceGroupData(Location)).ConfigureAwait(false);
+            var rgResponse = await Subscription.GetResourceGroups().CreateOrUpdateAsync(ResGroupName, new ResourceGroupData(LocationToUse)).ConfigureAwait(false);
             ResourceGroup = rgResponse.Value;
 
             VaultCollection = ResourceGroup.GetVaults();
