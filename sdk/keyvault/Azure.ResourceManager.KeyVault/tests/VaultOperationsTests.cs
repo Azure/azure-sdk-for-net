@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             AccessPolicy.ApplicationId = Guid.Parse(TestEnvironment.ClientId);
             VaultProperties.EnableSoftDelete = null;
 
-            var parameters = new VaultCreateOrUpdateParameters(LocationToUse, VaultProperties);
+            var parameters = new VaultCreateOrUpdateParameters("North Central US", VaultProperties);
             parameters.Tags.InitializeFrom(Tags);
 
             var createVault = await VaultCollection.CreateOrUpdateAsync(
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 ResGroupName,
                 TestEnvironment.SubscriptionId,
                 TenantIdGuid,
-                LocationToUse,
+                "North Central US",
                 "A",
                 SkuName.Standard,
                 true,
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 ResGroupName,
                 TestEnvironment.SubscriptionId,
                 TenantIdGuid,
-                LocationToUse,
+                "North Central US",
                 "A",
                 SkuName.Standard,
                 true,
