@@ -73,7 +73,7 @@ namespace Azure.ResourceManager
     {
         public static readonly Azure.ResourceManager.ResourceIdentifier Root;
         public ResourceIdentifier(string resourceId) { }
-        public Azure.ResourceManager.Resources.Models.Location Location { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.Location? Location { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.ResourceIdentifier Parent { get { throw null; } }
         public string Provider { get { throw null; } }
@@ -826,7 +826,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class ResourceGroupData : Azure.ResourceManager.Models.TrackedResource
     {
-        public ResourceGroupData(string location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        public ResourceGroupData(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
         public string ManagedBy { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ResourceGroupProperties Properties { get { throw null; } set { } }
     }
@@ -877,15 +877,17 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.Subscription> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Subscription>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SubscriptionData : Azure.ResourceManager.Models.TrackedResource
+    public partial class SubscriptionData
     {
-        internal SubscriptionData() : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        internal SubscriptionData() { }
         public string AuthorizationSource { get { throw null; } }
         public string DisplayName { get { throw null; } }
+        public virtual Azure.ResourceManager.ResourceIdentifier Id { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ManagedByTenant> ManagedByTenants { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.SubscriptionState? State { get { throw null; } }
         public string SubscriptionGuid { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.SubscriptionPolicies SubscriptionPolicies { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public string TenantId { get { throw null; } }
     }
     public partial class TagResource : Azure.ResourceManager.Core.ArmResource
@@ -1049,75 +1051,78 @@ namespace Azure.ResourceManager.Resources.Models
         internal FeatureProperties() { }
         public string State { get { throw null; } }
     }
-    public partial class Location : System.IComparable<Azure.ResourceManager.Resources.Models.Location>, System.IEquatable<Azure.ResourceManager.Resources.Models.Location>
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct Location : System.IEquatable<Azure.ResourceManager.Resources.Models.Location>
     {
-        public static readonly Azure.ResourceManager.Resources.Models.Location AustraliaCentral;
-        public static readonly Azure.ResourceManager.Resources.Models.Location AustraliaCentral2;
-        public static readonly Azure.ResourceManager.Resources.Models.Location AustraliaEast;
-        public static readonly Azure.ResourceManager.Resources.Models.Location AustraliaSoutheast;
-        public static readonly Azure.ResourceManager.Resources.Models.Location BrazilSouth;
-        public static readonly Azure.ResourceManager.Resources.Models.Location BrazilSoutheast;
-        public static readonly Azure.ResourceManager.Resources.Models.Location CanadaCentral;
-        public static readonly Azure.ResourceManager.Resources.Models.Location CanadaEast;
-        public static readonly Azure.ResourceManager.Resources.Models.Location CentralIndia;
-        public static readonly Azure.ResourceManager.Resources.Models.Location CentralUS;
-        public static readonly Azure.ResourceManager.Resources.Models.Location EastAsia;
-        public static readonly Azure.ResourceManager.Resources.Models.Location EastUS;
-        public static readonly Azure.ResourceManager.Resources.Models.Location EastUS2;
-        public static readonly Azure.ResourceManager.Resources.Models.Location FranceCentral;
-        public static readonly Azure.ResourceManager.Resources.Models.Location FranceSouth;
-        public static readonly Azure.ResourceManager.Resources.Models.Location GermanyNorth;
-        public static readonly Azure.ResourceManager.Resources.Models.Location GermanyWestCentral;
-        public static readonly Azure.ResourceManager.Resources.Models.Location JapanEast;
-        public static readonly Azure.ResourceManager.Resources.Models.Location JapanWest;
-        public static readonly Azure.ResourceManager.Resources.Models.Location KoreaCentral;
-        public static readonly Azure.ResourceManager.Resources.Models.Location KoreaSouth;
-        public static readonly Azure.ResourceManager.Resources.Models.Location NorthCentralUS;
-        public static readonly Azure.ResourceManager.Resources.Models.Location NorthEurope;
-        public static readonly Azure.ResourceManager.Resources.Models.Location NorwayWest;
-        public static readonly Azure.ResourceManager.Resources.Models.Location SouthAfricaNorth;
-        public static readonly Azure.ResourceManager.Resources.Models.Location SouthAfricaWest;
-        public static readonly Azure.ResourceManager.Resources.Models.Location SouthCentralUS;
-        public static readonly Azure.ResourceManager.Resources.Models.Location SoutheastAsia;
-        public static readonly Azure.ResourceManager.Resources.Models.Location SouthIndia;
-        public static readonly Azure.ResourceManager.Resources.Models.Location SwitzerlandNorth;
-        public static readonly Azure.ResourceManager.Resources.Models.Location SwitzerlandWest;
-        public static readonly Azure.ResourceManager.Resources.Models.Location UAECentral;
-        public static readonly Azure.ResourceManager.Resources.Models.Location UAENorth;
-        public static readonly Azure.ResourceManager.Resources.Models.Location UKSouth;
-        public static readonly Azure.ResourceManager.Resources.Models.Location UKWest;
-        public static readonly Azure.ResourceManager.Resources.Models.Location WestCentralUS;
-        public static readonly Azure.ResourceManager.Resources.Models.Location WestEurope;
-        public static readonly Azure.ResourceManager.Resources.Models.Location WestIndia;
-        public static readonly Azure.ResourceManager.Resources.Models.Location WestUS;
-        public static readonly Azure.ResourceManager.Resources.Models.Location WestUS2;
-        protected Location() { }
-        public string CanonicalName { get { throw null; } }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public Location(string name) { throw null; }
+        public Location(string name, string displayName) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.Location AustraliaCentral { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location AustraliaCentral2 { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location AustraliaEast { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location AustraliaSoutheast { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location BrazilSouth { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location BrazilSoutheast { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location CanadaCentral { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location CanadaEast { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location CentralIndia { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location CentralUS { get { throw null; } }
         public string DisplayName { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location EastAsia { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location EastUS { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location EastUS2 { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location FranceCentral { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location FranceSouth { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location GermanyNorth { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location GermanyWestCentral { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location JapanEast { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location JapanWest { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location KoreaCentral { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location KoreaSouth { get { throw null; } }
         public string Name { get { throw null; } }
-        public string RegionalDisplayName { get { throw null; } }
-        public int CompareTo(Azure.ResourceManager.Resources.Models.Location other) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.Location NorthCentralUS { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location NorthEurope { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location NorwayWest { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location SouthAfricaNorth { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location SouthAfricaWest { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location SouthCentralUS { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location SoutheastAsia { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location SouthIndia { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location SwitzerlandNorth { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location SwitzerlandWest { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location UAECentral { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location UAENorth { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location UKSouth { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location UKWest { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location WestCentralUS { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location WestEurope { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location WestIndia { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location WestUS { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.Location WestUS2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.Location other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.Location left, Azure.ResourceManager.Resources.Models.Location right) { throw null; }
-        public static bool operator >(Azure.ResourceManager.Resources.Models.Location left, Azure.ResourceManager.Resources.Models.Location right) { throw null; }
-        public static bool operator >=(Azure.ResourceManager.Resources.Models.Location left, Azure.ResourceManager.Resources.Models.Location right) { throw null; }
         public static implicit operator string (Azure.ResourceManager.Resources.Models.Location other) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.Location (string other) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Resources.Models.Location left, Azure.ResourceManager.Resources.Models.Location right) { throw null; }
-        public static bool operator <(Azure.ResourceManager.Resources.Models.Location left, Azure.ResourceManager.Resources.Models.Location right) { throw null; }
-        public static bool operator <=(Azure.ResourceManager.Resources.Models.Location left, Azure.ResourceManager.Resources.Models.Location right) { throw null; }
         public override string ToString() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static bool TryGetKnownCloud(string name, out Azure.ResourceManager.Resources.Models.Location location) { throw null; }
     }
-    public partial class LocationExpanded : Azure.ResourceManager.Resources.Models.Location
+    public partial class LocationExpanded
     {
         protected LocationExpanded() { }
+        public string DisplayName { get { throw null; } }
         public string Id { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.LocationMetadata Metadata { get { throw null; } }
+        public string Name { get { throw null; } }
+        public string RegionalDisplayName { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
+        public static implicit operator Azure.ResourceManager.Resources.Models.Location (Azure.ResourceManager.Resources.Models.LocationExpanded location) { throw null; }
     }
     public partial class LocationMetadata
     {
