@@ -128,11 +128,11 @@ namespace Compute.Tests
         }
 
         /// <summary>
-        /// To record this test case, you need to run it in region which support Encryption at host
+        /// To record this test case, you need to run it in region which support ConfidentialVM
         /// </summary>
         [Fact]
-        [Trait("Name", "TestVMScenarioOperations_TrustedLaunch")]
-        public void TestVMScenarioOperations_ConfidentialVMPMK()
+        [Trait("Name", "TestVMScenarioOperations_ConfidentialVM")]
+        public void TestVMScenarioOperations_ConfidentialVM()
         {
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             try
@@ -141,7 +141,7 @@ namespace Compute.Tests
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "northeurope");
                 VMDiskSecurityProfile diskSecurityProfile = new VMDiskSecurityProfile(securityEncryptionType: "VMGuestStateOnly");
                 TestVMScenarioOperationsInternal("TestVMScenarioOperations_ConfidentialVM", vmSize: VirtualMachineSizeTypes.StandardDC2asV5, hasManagedDisks: true,
-                    osDiskStorageAccountType: StorageAccountTypes.StandardSSDLRS, securityType: "ConfidentialVM", imageReference: image, validateListAvailableSize: false, diskSecurityProfile: diskSecurityProfile);
+                    osDiskStorageAccountType: StorageAccountTypes.PremiumLRS, securityType: "ConfidentialVM", imageReference: image, validateListAvailableSize: false, diskSecurityProfile: diskSecurityProfile);
             }
             finally
             {
@@ -352,7 +352,8 @@ namespace Compute.Tests
                     CreateVM(rgName, asName, storageAccountName, imageRef, out inputVM, hasManagedDisks: hasManagedDisks,hasDiffDisks: hasDiffDisks, vmSize: vmSize, osDiskStorageAccountType: osDiskStorageAccountType,
                         dataDiskStorageAccountType: dataDiskStorageAccountType, writeAcceleratorEnabled: writeAcceleratorEnabled, zones: zones, ppgName: ppgName, 
                         diskEncryptionSetId: diskEncryptionSetId, encryptionAtHostEnabled: encryptionAtHostEnabled, securityType: securityType, dedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId,
-                        dedicatedHostGroupName: dedicatedHostGroupName, dedicatedHostName: dedicatedHostName, capacityReservationGroupReferenceId: capacityReservationGroupReferenceId);
+                        dedicatedHostGroupName: dedicatedHostGroupName, dedicatedHostName: dedicatedHostName, capacityReservationGroupReferenceId: capacityReservationGroupReferenceId,
+                        diskSecurityProfile: diskSecurityProfile);
 
                     // Instance view is not completely populated just after VM is provisioned. So we wait here for a few minutes to 
                     // allow GA blob to populate.
