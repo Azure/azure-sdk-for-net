@@ -1,6 +1,6 @@
 # Azure.Search.Documents Code Generation
 
-Run `dotnet build /t:GenerateCode` in `src` directory to generate SDK code.
+Run `dotnet build /t:GenerateCode` in the `src` directory to generate SDK code.
 
 See the [Contributing guidelines](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/CONTRIBUTING.md) for more details.
 
