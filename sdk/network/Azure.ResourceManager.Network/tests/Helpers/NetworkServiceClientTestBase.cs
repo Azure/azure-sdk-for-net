@@ -687,16 +687,16 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             return getVnetResponse;
         }
 
-        public static string GetChildLbResourceId(string subscriptionId, string resourceGroupName, string lbname, string childResourceType, string childResourceName)
+        public static ResourceIdentifier GetChildLbResourceId(string subscriptionId, string resourceGroupName, string lbname, string childResourceType, string childResourceName)
         {
             return
-                string.Format(
+                new ResourceIdentifier(string.Format(
                     "/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Network/loadBalancers/{2}/{3}/{4}",
                     subscriptionId,
                     resourceGroupName,
                     lbname,
                     childResourceType,
-                    childResourceName);
+                    childResourceName));
         }
 
         protected ApplicationGatewayCollection GetApplicationGatewayCollection(string resourceGroupName)

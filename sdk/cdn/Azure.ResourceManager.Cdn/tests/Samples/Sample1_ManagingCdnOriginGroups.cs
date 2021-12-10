@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             var input3 = new CdnOriginGroupData();
             input3.Origins.Add(new WritableSubResource
             {
-                Id = $"{endpoint.Id}/origins/myOrigin"
+                Id = new ResourceIdentifier($"{endpoint.Id}/origins/myOrigin")
             });
             CdnOriginGroupCreateOperation lro3 = await endpoint.GetCdnOriginGroups().CreateOrUpdateAsync(originGroupName, input3);
             CdnOriginGroup originGroup = lro3.Value;
