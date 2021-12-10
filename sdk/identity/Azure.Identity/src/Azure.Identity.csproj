@@ -1,13 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This is the implementation of the Azure SDK Client Library for Azure Identity</Description>
     <AssemblyTitle>Microsoft Azure.Identity Component</AssemblyTitle>
     <Version>1.6.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.5.0</ApiCompatVersion>
+    <ApiCompatVersion Condition="('$(TargetFramework)' != 'net461')" >1.5.0</ApiCompatVersion>
     <TargetFrameworks>$(RequiredTargetFrameworks);net461</TargetFrameworks>
     <PackageTags>Microsoft Azure Identity;$(PackageCommonTags)</PackageTags>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
@@ -20,8 +19,8 @@
     <PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" />
     <PackageReference Include="System.Security.Cryptography.ProtectedData" />
   </ItemGroup>
-  <!--Only Add Microsoft.Identity.Client.Desktop when compiled for desktop-->
-  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
+  <!--Only Add Microsoft.Identity.Client.Desktop when compiled for desktop or net core 3.1-->
+  <ItemGroup Condition="('$(TargetFramework)' == 'net461')">
     <PackageReference Include="Microsoft.Identity.Client.Desktop" />
   </ItemGroup>
   <ItemGroup>

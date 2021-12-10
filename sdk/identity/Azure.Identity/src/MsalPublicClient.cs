@@ -9,6 +9,9 @@ using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Identity.Client;
+#if (NETFRAMEWORK)
+using Microsoft.Identity.Client.Desktop;
+#endif
 
 namespace Azure.Identity
 {
@@ -54,10 +57,11 @@ namespace Azure.Identity
 
             if (EnableBroker)
             {
-#if NET45
-                pubAppBuilder.WithDesktopFeatures();
-#endif
+#if (NETFRAMEWORK)
+                pubAppBuilder.WithWindowsBroker();
+#else
                 pubAppBuilder = pubAppBuilder.WithBroker();
+#endif
             }
 
             if (clientCapabilities.Length > 0)
