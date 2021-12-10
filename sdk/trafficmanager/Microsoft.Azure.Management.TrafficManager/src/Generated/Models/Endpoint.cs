@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         /// traffic routing method. An empty list will match all ranges not
         /// covered by other endpoints.</param>
         /// <param name="customHeaders">List of custom headers.</param>
-        public Endpoint(string id = default(string), string name = default(string), string type = default(string), string targetResourceId = default(string), string target = default(string), EndpointStatus? endpointStatus = default(EndpointStatus?), long? weight = default(long?), long? priority = default(long?), string endpointLocation = default(string), EndpointMonitorStatus? endpointMonitorStatus = default(EndpointMonitorStatus?), long? minChildEndpoints = default(long?), long? minChildEndpointsIPv4 = default(long?), long? minChildEndpointsIPv6 = default(long?), IList<string> geoMapping = default(IList<string>), IList<EndpointPropertiesSubnetsItem> subnets = default(IList<EndpointPropertiesSubnetsItem>), IList<EndpointPropertiesCustomHeadersItem> customHeaders = default(IList<EndpointPropertiesCustomHeadersItem>))
+        public Endpoint(string id = default(string), string name = default(string), string type = default(string), string targetResourceId = default(string), string target = default(string), string endpointStatus = default(string), long? weight = default(long?), long? priority = default(long?), string endpointLocation = default(string), string endpointMonitorStatus = default(string), long? minChildEndpoints = default(long?), long? minChildEndpointsIPv4 = default(long?), long? minChildEndpointsIPv6 = default(long?), IList<string> geoMapping = default(IList<string>), IList<EndpointPropertiesSubnetsItem> subnets = default(IList<EndpointPropertiesSubnetsItem>), IList<EndpointPropertiesCustomHeadersItem> customHeaders = default(IList<EndpointPropertiesCustomHeadersItem>))
             : base(id, name, type)
         {
             TargetResourceId = targetResourceId;
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         /// 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.endpointStatus")]
-        public EndpointStatus? EndpointStatus { get; set; }
+        public string EndpointStatus { get; set; }
 
         /// <summary>
         /// Gets or sets the weight of this endpoint when using the 'Weighted'
@@ -162,7 +162,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         /// 'Inactive', 'Stopped'
         /// </summary>
         [JsonProperty(PropertyName = "properties.endpointMonitorStatus")]
-        public EndpointMonitorStatus? EndpointMonitorStatus { get; set; }
+        public string EndpointMonitorStatus { get; set; }
 
         /// <summary>
         /// Gets or sets the minimum number of endpoints that must be available
