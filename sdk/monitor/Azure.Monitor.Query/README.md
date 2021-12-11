@@ -145,7 +145,7 @@ public class MyLogEntryModel
 ```
 
 ```C# Snippet:QueryLogsAsModels
-var client = new LogsQueryClient(TestEnvironment.LogsEndpoint, new DefaultAzureCredential());
+var client = new LogsQueryClient(new DefaultAzureCredential());
 string workspaceId = "<workspace_id>";
 
 // Query TOP 10 resource groups by event count
