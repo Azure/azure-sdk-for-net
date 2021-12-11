@@ -30,7 +30,7 @@ Currently multiple-endpoint feature is only supported on `Persistent` transport 
 
 To enable multiple SignalR Service instances, you should:
 
-### 1. Use `Persistent` transport type.
+### 1. Use `Persistent` transport type
 
 The default transport type is `Transient` mode. You should add the following entry to your `local.settings.json` file or the application setting on Azure.
 
