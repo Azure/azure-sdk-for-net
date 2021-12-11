@@ -22,7 +22,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     internal class AzureMonitorTransmitter : ITransmitter
     {
         private readonly ApplicationInsightsRestClient applicationInsightsRestClient;
-        private static System.Timers.Timer aTimer;
+
         public AzureMonitorTransmitter(AzureMonitorExporterOptions options)
         {
             ConnectionStringParser.GetValues(options.ConnectionString, out _, out string ingestionEndpoint);
@@ -30,11 +30,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             options.AddPolicy(new IngestionResponsePolicy(), HttpPipelinePosition.PerCall);
 
             applicationInsightsRestClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), host: ingestionEndpoint);
-            aTimer = new System.Timers.Timer(2000);
-            // Hook up the Elapsed event for the timer.
-            aTimer.Elapsed += OnTimedEvent;
-            aTimer.AutoReset = true;
-            aTimer.Enabled = true;
         }
 
         public async ValueTask<int> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, bool async, CancellationToken cancellationToken)
@@ -68,35 +63,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
 
             return itemsAccepted;
-        }
-
-        private void OnTimedEvent(Object source, ElapsedEventArgs e)
-        {
-            Console.WriteLine(Thread.CurrentThread.Name);
-            Console.WriteLine(Thread.CurrentThread.ManagedThreadId);
-
-            foreach (var blobItem in AzureMonitorConverter.storage.GetBlobs())
-            {
-                Console.WriteLine(((LocalFileBlob)blobItem).FullPath);
-            }
-
-            // Get blob.
-            IPersistentBlob blob = AzureMonitorConverter.storage.GetBlob();
-
-            if (blob != null)
-            {
-                blob.Lease(100000);
-                var items = blob.Read();
-                try
-                {
-                    var itemAccepted = this.applicationInsightsRestClient.InternalTrackAsync(items, CancellationToken.None).Result;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-                blob.Delete();
-            }
         }
     }
 }
