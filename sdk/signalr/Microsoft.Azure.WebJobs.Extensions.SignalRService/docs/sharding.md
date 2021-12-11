@@ -98,7 +98,7 @@ By default, the SDK uses the [DefaultEndpointRouter](https://github.com/Azure/az
 * Server message routing: All service endpoints are returned.
 
 ### Customization
-#### Customize routing in C#
+#### Customize routing in .NET
 
 Here are the steps:
 * Implement a customized router. You can leverage information provided from [`ServiceEndpoint`](https://github.com/Azure/azure-signalr/blob/dev/src/Microsoft.Azure.SignalR.Common/Endpoints/ServiceEndpoint.cs) to make routing decision. See guide here: [customize-route-algorithm](https://github.com/Azure/azure-signalr/blob/dev/docs/sharding.md#customize-route-algorithm). **Please note that Http trigger is required in the negotiation function when you need `HttpContext` in custom negotiation method.**
