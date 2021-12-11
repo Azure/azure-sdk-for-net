@@ -72,7 +72,8 @@ Azure:SignalR:Endpoints:<EndpointName>:<EndpointType>
 
 The [SignalR Service Owner role](https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#signalr-service-owner) is required to use an Identity-based connection.
 
-Here is an example to configure the Azure Identity for an SignalR endpoint named "Endpoint1":
+Here's an example to configure Azure Identity for a SignalR endpoint named "Endpoint1":
+
 ```json
 {
   "Values": {
