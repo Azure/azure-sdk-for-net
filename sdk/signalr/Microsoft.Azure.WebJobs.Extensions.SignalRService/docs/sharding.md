@@ -41,7 +41,7 @@ The default transport type is `Transient` mode. You should add the following ent
 ```
 >Notes for switching from `Transient` mode to `Persistent` mode on **Azure Functions runtime V3**:
 >
-> Under `Transient` mode, `Newtonsoft.Json` library is used to serialize arguments of hub methods, however, under `Persistent` mode, `System.Text.Json` library is used as default on Azure Functions runtime V3. `System.Text.Json` has some key differences in default behavior with `Newtonsoft.Json`. If you want to use `Newtonsoft.Json` under `Persistent` mode, you can add a configuration item: `"Azure:SignalR:HubProtocol":"NewtonsoftJson"` in `local.settings.json` file or `Azure__SignalR__HubProtocol=NewtonsoftJson` on Azure portal.
+> Under `Transient` mode, the `Newtonsoft.Json` library is used to serialize arguments of hub methods. However, under `Persistent` mode, the `System.Text.Json` library is used as default on Azure Functions runtime v3. `System.Text.Json` has some key differences in default behavior with `Newtonsoft.Json`. If you want to use `Newtonsoft.Json` under `Persistent` mode, you can add the configuration item `"Azure:SignalR:HubProtocol": "NewtonsoftJson"` in the `local.settings.json` file or `Azure__SignalR__HubProtocol=NewtonsoftJson` in the Azure portal.
 
 
 ### 2. Configure multiple SignalR Service endpoint entries
