@@ -86,7 +86,7 @@ Here's an example to configure Azure Identity for a SignalR endpoint named "Endp
 ```
 The `serviceUri` is required. Other items, such as `clientId` and `clientSecret`, are optional depending upon which credentials you want to use.
 
-You might want to read [Common properties for identity-based connections](https://docs.microsoft.com/azure/azure-functions/functions-reference?tabs=azurewebjobsstorage#common-properties-for-identity-based-connections) for more information. Please note that you should replace `<CONNECTION_NAME_PREFIX>` there with `Azure__SignalR__Endpoints__<EndpointName>`.
+For more information, see [Common properties for identity-based connections](https://docs.microsoft.com/azure/azure-functions/functions-reference?tabs=azurewebjobsstorage#common-properties-for-identity-based-connections). Note that you should replace `<CONNECTION_NAME_PREFIX>` there with `Azure__SignalR__Endpoints__<EndpointName>`.
 
     
 ## Routing
