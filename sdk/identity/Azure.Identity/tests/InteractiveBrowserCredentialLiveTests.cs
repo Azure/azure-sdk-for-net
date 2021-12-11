@@ -29,7 +29,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        //[Ignore("This test is an integration test which can only be run with user interaction")]
+        [Ignore("This test is an integration test which can only be run with user interaction")]
         public async Task AuthenticateWithBrokerAsync()
         {
             var cred = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { PreferBroker = true });
