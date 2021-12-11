@@ -124,7 +124,7 @@ namespace SimpleChatV3
 
 #### Customize routing in other languages
 
-For languages other than C#, we support specifying target endpoints in each request. You will use new binding types to get endpoint information.
+For non-.NET languages, we support specifying target endpoints in each request. You will use new binding types to get endpoint information.
 
 ##### Client routing
 The `SignalRConnectionInfo` binding selects one endpoint according the default routing rule. If you want to customize routing rule, you should use `SignalRNegotiation` binding instead of `SignalRConnectionInfo` binding.
