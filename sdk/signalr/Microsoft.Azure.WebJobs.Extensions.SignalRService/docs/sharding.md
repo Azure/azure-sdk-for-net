@@ -66,7 +66,7 @@ Azure:SignalR:Endpoints:<EndpointName>:<EndpointType>
 
 > * When you configure Azure SignalR endpoints in the App Service in the Azure portal, replace `":"` with `"__"` (the double underscore) in the keys. For reasons, see [Environment variables](https://docs.microsoft.com/aspnet/core/fundamentals/configuration/?view=aspnetcore-5.0#environment-variables-1).
 >
-> * Connection string configured with the key `{ConnectionStringSetting}` (defaults to "AzureSignalRConnectionString") is also recognized as a primary service endpoint with empty name. But this configuration style is not recommended for multiple endpoints.
+> * A connection string configured with the key `{ConnectionStringSetting}` (defaults to "AzureSignalRConnectionString") is also recognized as a primary service endpoint with empty name. But this configuration style isn't recommended for multiple endpoints.
 
 #### Azure Identity support
 
