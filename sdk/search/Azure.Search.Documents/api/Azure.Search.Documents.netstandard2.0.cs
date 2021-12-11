@@ -1572,6 +1572,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage SrLatn { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Sv { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Tr { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Unk { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage ZhHans { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage ZhHant { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.OcrSkillLanguage other) { throw null; }

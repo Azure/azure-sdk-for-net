@@ -11,22 +11,21 @@ namespace Azure.ResourceManager.Tests
         [TestCase("/providers/Contoso.Widgets/widgets/myWidget/flanges/myFlange", Description = "Child of a subscription resource")]
         public void CanParseValidTenantResource(string resourceId)
         {
-            ResourceIdentifier tenant = resourceId;
+            ResourceIdentifier tenant = new ResourceIdentifier(resourceId);
             Assert.AreEqual(resourceId, tenant.ToString());
         }
 
         [Test]
         public void TryGetPropertiesForTenantResource()
         {
-            ResourceIdentifier id1 = "/providers/Contoso.Widgets/widgets/myWidget";
-            Assert.AreEqual(false, id1.TryGetSubscriptionId(out _));
-            Assert.AreEqual(false, id1.TryGetLocation(out _));
-            Assert.AreEqual(false, id1.TryGetResourceGroupName(out _));
-            Assert.AreEqual(true, id1.TryGetParent(out _));
-            ResourceIdentifier id2 = "/providers/Contoso.Widgets/widgets/myWidget/flages/myFlange";
-            ResourceIdentifier parent;
-            Assert.AreEqual(true, id2.TryGetParent(out parent));
-            Assert.AreEqual(true, id1.Equals(parent));
+            ResourceIdentifier id1 = new ResourceIdentifier("/providers/Contoso.Widgets/widgets/myWidget");
+            Assert.Null(id1.SubscriptionId);
+            Assert.Null(id1.Location);
+            Assert.Null(id1.ResourceGroupName);
+            Assert.NotNull(id1.Parent);
+            ResourceIdentifier id2 = new ResourceIdentifier("/providers/Contoso.Widgets/widgets/myWidget/flages/myFlange");
+            Assert.NotNull(id2.Parent);
+            Assert.AreEqual(true, id1.Equals(id2.Parent));
         }
 
         [Test]
@@ -36,9 +35,6 @@ namespace Azure.ResourceManager.Tests
             Assert.DoesNotThrow(() => tenant = new ResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101"));
             Assert.DoesNotThrow(() => tenant = new ResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2"));
             Assert.DoesNotThrow(() => tenant = new ResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg"));
-            Assert.DoesNotThrow(() => tenant = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101");
-            Assert.DoesNotThrow(() => tenant = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2");
-            Assert.DoesNotThrow(() => tenant = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg");
         }
 
         [TestCase("/providers/Microsoft.Widgets/widgets/MyWidget", "Microsoft.Authorization", "roleAssignments", "MyRoleAssignemnt")]
@@ -54,7 +50,7 @@ namespace Azure.ResourceManager.Tests
         [TestCase("/providers/Microsoft.Widgets/widgets/MyWidget/things/MyThing", "Microsoft.Authorization", "roleAssignments", "MyRole/Assignemnt")]
         public void TestAppendTenantProviderResource(string resourceId, string providerNamespace, string resourceTypeName, string resourceName)
         {
-            ResourceIdentifier resource = resourceId;
+            ResourceIdentifier resource = new ResourceIdentifier(resourceId);
             if (providerNamespace is null || resourceTypeName is null || resourceName is null)
                 Assert.Throws(typeof(ArgumentNullException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
             else if (string.IsNullOrWhiteSpace(providerNamespace) || string.IsNullOrWhiteSpace(resourceTypeName) || string.IsNullOrWhiteSpace(resourceName))
@@ -78,7 +74,7 @@ namespace Azure.ResourceManager.Tests
         [TestCase("/providers/Microsoft.Widgets/widgets/MyWidget/things/MyThing", "wheels", "wheel1/wheel2")]
         public void TestAppendTenantChildResource(string resourceId, string childTypeName, string childResourceName)
         {
-            ResourceIdentifier resource = resourceId;
+            ResourceIdentifier resource = new ResourceIdentifier(resourceId);
             if (childTypeName is null || childResourceName is null)
                 Assert.Throws(typeof(ArgumentNullException), () => resource.AppendChildResource(childTypeName, childResourceName));
             else if (string.IsNullOrWhiteSpace(childTypeName) || string.IsNullOrWhiteSpace(childResourceName))

@@ -1048,9 +1048,9 @@ namespace Azure.ResourceManager.Compute
         public RestorePointData() { }
         public Azure.ResourceManager.Compute.Models.ConsistencyModeTypes? ConsistencyMode { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> ExcludeDisks { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.RestorePointProvisioningDetails ProvisioningDetails { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.RestorePointSourceMetadata SourceMetadata { get { throw null; } }
+        public System.DateTimeOffset? TimeCreated { get { throw null; } set { } }
     }
     public partial class RestorePointGroup : Azure.ResourceManager.Core.ArmResource
     {
@@ -4915,14 +4915,6 @@ namespace Azure.ResourceManager.Compute.Models
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class RestorePointProvisioningDetails
-    {
-        internal RestorePointProvisioningDetails() { }
-        public System.DateTimeOffset? CreationTime { get { throw null; } }
-        public int? StatusCode { get { throw null; } }
-        public string StatusMessage { get { throw null; } }
-        public long? TotalUsedSizeInBytes { get { throw null; } }
     }
     public partial class RestorePointSourceMetadata
     {

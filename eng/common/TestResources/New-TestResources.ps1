@@ -580,14 +580,18 @@ try {
     $PSBoundParameters['TestApplicationOid'] = $TestApplicationOid
     $PSBoundParameters['TestApplicationSecret'] = $TestApplicationSecret
 
-    # Grant the test service principal ownership over the resource group. This may fail if the provisioner is a
-    # service principal without permissions to grant RBAC roles to other service principals. That should not be
-    # considered a critical failure, as the test application may have subscription-level permissions and not require
-    # the explicit grant.
-    #
-    # Ignore this check if $AzureTestPrincipal is specified as role assignment will already have been attempted on a
-    # previous run, and these error messages can be misleading for local runs.
-    if (!$resourceGroupRoleAssigned -and !$AzureTestPrincipal) {
+    # If the role hasn't been explicitly assigned to the resource group and a cached service principal is in use,
+    # query to see if the grant is needed.
+    if (!$resourceGroupRoleAssigned -and $AzureTestPrincipal) {
+        $roleAssignment = Get-AzRoleAssignment -ObjectId $AzureTestPrincipal.Id -RoleDefinitionName 'Owner' -ResourceGroupName "$ResourceGroupName" -ErrorAction SilentlyContinue
+        $resourceGroupRoleAssigned = ($roleAssignment.RoleDefinitionName -eq 'Owner')
+    }
+
+   # If needed, grant the test service principal ownership over the resource group. This may fail if the provisioner
+   # is a service principal without permissions to grant RBAC roles to other service principals. That should not be
+   # considered a critical failure, as the test application may have subscription-level permissions and not require
+   # the explicit grant.
+   if (!$resourceGroupRoleAssigned) {
         Log "Attempting to assigning the 'Owner' role for '$ResourceGroupName' to the Test Application '$TestApplicationId'"
         $principalOwnerAssignment = New-AzRoleAssignment -RoleDefinitionName "Owner" -ApplicationId "$TestApplicationId" -ResourceGroupName "$ResourceGroupName" -ErrorAction SilentlyContinue
 

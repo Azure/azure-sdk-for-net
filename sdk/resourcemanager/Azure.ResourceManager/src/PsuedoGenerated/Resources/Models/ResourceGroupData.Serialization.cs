@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Resources
 
         internal static ResourceGroupData DeserializeResourceGroup(JsonElement element)
         {
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<ResourceGroupProperties> properties = default;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Resources
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
