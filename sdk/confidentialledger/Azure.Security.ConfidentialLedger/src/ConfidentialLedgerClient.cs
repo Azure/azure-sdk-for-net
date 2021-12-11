@@ -14,7 +14,7 @@ namespace Azure.Security.ConfidentialLedger
 {
     public partial class ConfidentialLedgerClient
     {
-        internal ClientDiagnostics clientDiagnostics => _clientDiagnostics;
+        internal ClientDiagnostics clientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of ConfidentialLedgerClient. </summary>
         /// <param name="ledgerUri"> The Confidential Ledger URL, for example https://contoso.confidentialledger.azure.com. </param>
@@ -33,12 +33,12 @@ namespace Azure.Security.ConfidentialLedger
 
             var actualOptions = options ?? new ConfidentialLedgerClientOptions();
             var transportOptions = GetIdentityServerTlsCertAndTrust(ledgerUri, actualOptions);
-            _clientDiagnostics = new ClientDiagnostics(actualOptions);
+            clientDiagnostics = new ClientDiagnostics(actualOptions);
             _tokenCredential = credential;
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
             _pipeline = HttpPipelineBuilder.Build(
                 actualOptions,
-                new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() },
+                Array.Empty<HttpPipelinePolicy>(),
                 new HttpPipelinePolicy[] { authPolicy },
                 new ResponseClassifier(),
                 transportOptions);

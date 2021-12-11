@@ -22,7 +22,6 @@ namespace Azure.Security.ConfidentialLedger
         private static readonly string[] AuthorizationScopes = new string[] { "https://confidential-ledger.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _ledgerUri;
         private readonly string _apiVersion;
 
@@ -35,7 +34,7 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> The constitution is a script that assesses and applies proposals from consortium members. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -58,12 +57,12 @@ namespace Azure.Security.ConfidentialLedger
         public virtual async Task<Response> GetConstitutionAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConstitution");
+            using var scope = clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConstitution");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetConstitutionRequest();
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetConstitutionRequest(context);
+                return await _pipeline.ProcessMessageAsync(message, clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -73,7 +72,7 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> The constitution is a script that assesses and applies proposals from consortium members. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -96,12 +95,12 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Response GetConstitution(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConstitution");
+            using var scope = clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConstitution");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetConstitutionRequest();
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetConstitutionRequest(context);
+                return _pipeline.ProcessMessage(message, clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -111,7 +110,7 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Consortium members can manage the Confidential Ledger. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -138,12 +137,12 @@ namespace Azure.Security.ConfidentialLedger
         public virtual async Task<Response> GetConsortiumMembersAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConsortiumMembers");
+            using var scope = clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConsortiumMembers");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetConsortiumMembersRequest();
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetConsortiumMembersRequest(context);
+                return await _pipeline.ProcessMessageAsync(message, clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -153,7 +152,7 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Consortium members can manage the Confidential Ledger. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -180,12 +179,12 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Response GetConsortiumMembers(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConsortiumMembers");
+            using var scope = clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConsortiumMembers");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetConsortiumMembersRequest();
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetConsortiumMembersRequest(context);
+                return _pipeline.ProcessMessage(message, clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -195,7 +194,7 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> A quote is an SGX enclave measurement that can be used to verify the validity of a node and its enclave. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -218,12 +217,12 @@ namespace Azure.Security.ConfidentialLedger
         public virtual async Task<Response> GetEnclaveQuotesAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetEnclaveQuotes");
+            using var scope = clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetEnclaveQuotes");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEnclaveQuotesRequest();
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetEnclaveQuotesRequest(context);
+                return await _pipeline.ProcessMessageAsync(message, clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -233,7 +232,7 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> A quote is an SGX enclave measurement that can be used to verify the validity of a node and its enclave. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -256,12 +255,12 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Response GetEnclaveQuotes(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetEnclaveQuotes");
+            using var scope = clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetEnclaveQuotes");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEnclaveQuotesRequest();
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetEnclaveQuotesRequest(context);
+                return _pipeline.ProcessMessage(message, clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -273,7 +272,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <summary> A sub-ledger id may optionally be specified. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -302,12 +301,12 @@ namespace Azure.Security.ConfidentialLedger
         public virtual async Task<Response> PostLedgerEntryAsync(RequestContent content, string subLedgerId = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
+            using var scope = clientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePostLedgerEntryRequest(content, subLedgerId);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreatePostLedgerEntryRequest(content, subLedgerId, context);
+                return await _pipeline.ProcessMessageAsync(message, clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -319,7 +318,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <summary> A sub-ledger id may optionally be specified. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -348,12 +347,12 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Response PostLedgerEntry(RequestContent content, string subLedgerId = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
+            using var scope = clientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePostLedgerEntryRequest(content, subLedgerId);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreatePostLedgerEntryRequest(content, subLedgerId, context);
+                return _pipeline.ProcessMessage(message, clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -365,7 +364,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <summary> To return older ledger entries, the relevant sections of the ledger must be read from disk and validated. To prevent blocking within the enclave, the response will indicate whether the entry is ready and part of the response, or if the loading is still ongoing. </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -393,12 +392,12 @@ namespace Azure.Security.ConfidentialLedger
         public virtual async Task<Response> GetLedgerEntryAsync(string transactionId, string subLedgerId = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntry");
+            using var scope = clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntry");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetLedgerEntryRequest(transactionId, subLedgerId);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetLedgerEntryRequest(transactionId, subLedgerId, context);
+                return await _pipeline.ProcessMessageAsync(message, clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -410,7 +409,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <summary> To return older ledger entries, the relevant sections of the ledger must be read from disk and validated. To prevent blocking within the enclave, the response will indicate whether the entry is ready and part of the response, or if the loading is still ongoing. </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -438,12 +437,12 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Response GetLedgerEntry(string transactionId, string subLedgerId = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntry");
+            using var scope = clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntry");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetLedgerEntryRequest(transactionId, subLedgerId);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetLedgerEntryRequest(transactionId, subLedgerId, context);
+                return _pipeline.ProcessMessage(message, clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -454,7 +453,7 @@ namespace Azure.Security.ConfidentialLedger
 
         /// <summary> Gets a receipt certifying ledger contents at a particular transaction id. </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -490,12 +489,12 @@ namespace Azure.Security.ConfidentialLedger
         public virtual async Task<Response> GetReceiptAsync(string transactionId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetReceipt");
+            using var scope = clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetReceipt");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetReceiptRequest(transactionId);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetReceiptRequest(transactionId, context);
+                return await _pipeline.ProcessMessageAsync(message, clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -506,7 +505,7 @@ namespace Azure.Security.ConfidentialLedger
 
         /// <summary> Gets a receipt certifying ledger contents at a particular transaction id. </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -542,12 +541,12 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Response GetReceipt(string transactionId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetReceipt");
+            using var scope = clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetReceipt");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetReceiptRequest(transactionId);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetReceiptRequest(transactionId, context);
+                return _pipeline.ProcessMessage(message, clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -558,7 +557,7 @@ namespace Azure.Security.ConfidentialLedger
 
         /// <summary> Gets the status of an entry identified by a transaction id. </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -582,12 +581,12 @@ namespace Azure.Security.ConfidentialLedger
         public virtual async Task<Response> GetTransactionStatusAsync(string transactionId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetTransactionStatus");
+            using var scope = clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetTransactionStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTransactionStatusRequest(transactionId);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetTransactionStatusRequest(transactionId, context);
+                return await _pipeline.ProcessMessageAsync(message, clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -598,7 +597,7 @@ namespace Azure.Security.ConfidentialLedger
 
         /// <summary> Gets the status of an entry identified by a transaction id. </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -622,12 +621,12 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Response GetTransactionStatus(string transactionId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetTransactionStatus");
+            using var scope = clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetTransactionStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTransactionStatusRequest(transactionId);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetTransactionStatusRequest(transactionId, context);
+                return _pipeline.ProcessMessage(message, clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -638,7 +637,7 @@ namespace Azure.Security.ConfidentialLedger
 
         /// <summary> A sub-ledger id may optionally be specified. </summary>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -662,12 +661,12 @@ namespace Azure.Security.ConfidentialLedger
         public virtual async Task<Response> GetCurrentLedgerEntryAsync(string subLedgerId = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCurrentLedgerEntry");
+            using var scope = clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCurrentLedgerEntry");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCurrentLedgerEntryRequest(subLedgerId);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetCurrentLedgerEntryRequest(subLedgerId, context);
+                return await _pipeline.ProcessMessageAsync(message, clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -678,7 +677,7 @@ namespace Azure.Security.ConfidentialLedger
 
         /// <summary> A sub-ledger id may optionally be specified. </summary>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -702,12 +701,12 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Response GetCurrentLedgerEntry(string subLedgerId = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCurrentLedgerEntry");
+            using var scope = clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCurrentLedgerEntry");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCurrentLedgerEntryRequest(subLedgerId);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetCurrentLedgerEntryRequest(subLedgerId, context);
+                return _pipeline.ProcessMessage(message, clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -718,7 +717,7 @@ namespace Azure.Security.ConfidentialLedger
 
         /// <summary> Deletes a user from the Confidential Ledger. </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
@@ -736,12 +735,12 @@ namespace Azure.Security.ConfidentialLedger
         public virtual async Task<Response> DeleteUserAsync(string userId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteUser");
+            using var scope = clientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteUser");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteUserRequest(userId);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateDeleteUserRequest(userId, context);
+                return await _pipeline.ProcessMessageAsync(message, clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -752,7 +751,7 @@ namespace Azure.Security.ConfidentialLedger
 
         /// <summary> Deletes a user from the Confidential Ledger. </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
@@ -770,12 +769,12 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Response DeleteUser(string userId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteUser");
+            using var scope = clientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteUser");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteUserRequest(userId);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateDeleteUserRequest(userId, context);
+                return _pipeline.ProcessMessage(message, clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -786,7 +785,7 @@ namespace Azure.Security.ConfidentialLedger
 
         /// <summary> Gets a user. </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -810,12 +809,12 @@ namespace Azure.Security.ConfidentialLedger
         public virtual async Task<Response> GetUserAsync(string userId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUser");
+            using var scope = clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUser");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetUserRequest(userId);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetUserRequest(userId, context);
+                return await _pipeline.ProcessMessageAsync(message, clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -826,7 +825,7 @@ namespace Azure.Security.ConfidentialLedger
 
         /// <summary> Gets a user. </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -850,12 +849,12 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Response GetUser(string userId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUser");
+            using var scope = clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUser");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetUserRequest(userId);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetUserRequest(userId, context);
+                return _pipeline.ProcessMessage(message, clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -867,7 +866,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <summary> A JSON merge patch is applied for existing users. </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -897,12 +896,12 @@ namespace Azure.Security.ConfidentialLedger
         public virtual async Task<Response> CreateOrUpdateUserAsync(string userId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateOrUpdateUser");
+            using var scope = clientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateOrUpdateUser");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateUserRequest(userId, content);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateCreateOrUpdateUserRequest(userId, content, context);
+                return await _pipeline.ProcessMessageAsync(message, clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -914,7 +913,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <summary> A JSON merge patch is applied for existing users. </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -944,12 +943,12 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Response CreateOrUpdateUser(string userId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateOrUpdateUser");
+            using var scope = clientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateOrUpdateUser");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateUserRequest(userId, content);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateCreateOrUpdateUserRequest(userId, content, context);
+                return _pipeline.ProcessMessage(message, clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -962,7 +961,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="fromTransactionId"> Specify the first transaction ID in a range. </param>
         /// <param name="toTransactionId"> Specify the last transaction ID in a range. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -992,15 +991,15 @@ namespace Azure.Security.ConfidentialLedger
         public virtual AsyncPageable<BinaryData> GetLedgerEntriesAsync(string subLedgerId = null, string fromTransactionId = null, string toTransactionId = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "ConfidentialLedgerClient.GetLedgerEntries");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, clientDiagnostics, "ConfidentialLedgerClient.GetLedgerEntries");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetLedgerEntriesRequest(subLedgerId, fromTransactionId, toTransactionId)
-                        : CreateGetLedgerEntriesNextPageRequest(nextLink, subLedgerId, fromTransactionId, toTransactionId);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "entries", "@nextLink", cancellationToken).ConfigureAwait(false);
+                        ? CreateGetLedgerEntriesRequest(subLedgerId, fromTransactionId, toTransactionId, context)
+                        : CreateGetLedgerEntriesNextPageRequest(nextLink, subLedgerId, fromTransactionId, toTransactionId, context);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, clientDiagnostics, context, "entries", "@nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1011,7 +1010,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="fromTransactionId"> Specify the first transaction ID in a range. </param>
         /// <param name="toTransactionId"> Specify the last transaction ID in a range. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1041,24 +1040,24 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Pageable<BinaryData> GetLedgerEntries(string subLedgerId = null, string fromTransactionId = null, string toTransactionId = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "ConfidentialLedgerClient.GetLedgerEntries");
+            return PageableHelpers.CreatePageable(CreateEnumerable, clientDiagnostics, "ConfidentialLedgerClient.GetLedgerEntries");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetLedgerEntriesRequest(subLedgerId, fromTransactionId, toTransactionId)
-                        : CreateGetLedgerEntriesNextPageRequest(nextLink, subLedgerId, fromTransactionId, toTransactionId);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "entries", "@nextLink");
+                        ? CreateGetLedgerEntriesRequest(subLedgerId, fromTransactionId, toTransactionId, context)
+                        : CreateGetLedgerEntriesNextPageRequest(nextLink, subLedgerId, fromTransactionId, toTransactionId, context);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, clientDiagnostics, context, "entries", "@nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
             }
         }
 
-        internal HttpMessage CreateGetConstitutionRequest()
+        internal HttpMessage CreateGetConstitutionRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1071,9 +1070,9 @@ namespace Azure.Security.ConfidentialLedger
             return message;
         }
 
-        internal HttpMessage CreateGetConsortiumMembersRequest()
+        internal HttpMessage CreateGetConsortiumMembersRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1086,9 +1085,9 @@ namespace Azure.Security.ConfidentialLedger
             return message;
         }
 
-        internal HttpMessage CreateGetEnclaveQuotesRequest()
+        internal HttpMessage CreateGetEnclaveQuotesRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1101,9 +1100,9 @@ namespace Azure.Security.ConfidentialLedger
             return message;
         }
 
-        internal HttpMessage CreateGetLedgerEntriesRequest(string subLedgerId, string fromTransactionId, string toTransactionId)
+        internal HttpMessage CreateGetLedgerEntriesRequest(string subLedgerId, string fromTransactionId, string toTransactionId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1128,9 +1127,9 @@ namespace Azure.Security.ConfidentialLedger
             return message;
         }
 
-        internal HttpMessage CreatePostLedgerEntryRequest(RequestContent content, string subLedgerId)
+        internal HttpMessage CreatePostLedgerEntryRequest(RequestContent content, string subLedgerId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -1149,9 +1148,9 @@ namespace Azure.Security.ConfidentialLedger
             return message;
         }
 
-        internal HttpMessage CreateGetLedgerEntryRequest(string transactionId, string subLedgerId)
+        internal HttpMessage CreateGetLedgerEntryRequest(string transactionId, string subLedgerId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1169,9 +1168,9 @@ namespace Azure.Security.ConfidentialLedger
             return message;
         }
 
-        internal HttpMessage CreateGetReceiptRequest(string transactionId)
+        internal HttpMessage CreateGetReceiptRequest(string transactionId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1186,9 +1185,9 @@ namespace Azure.Security.ConfidentialLedger
             return message;
         }
 
-        internal HttpMessage CreateGetTransactionStatusRequest(string transactionId)
+        internal HttpMessage CreateGetTransactionStatusRequest(string transactionId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1203,9 +1202,9 @@ namespace Azure.Security.ConfidentialLedger
             return message;
         }
 
-        internal HttpMessage CreateGetCurrentLedgerEntryRequest(string subLedgerId)
+        internal HttpMessage CreateGetCurrentLedgerEntryRequest(string subLedgerId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1222,9 +1221,9 @@ namespace Azure.Security.ConfidentialLedger
             return message;
         }
 
-        internal HttpMessage CreateDeleteUserRequest(string userId)
+        internal HttpMessage CreateDeleteUserRequest(string userId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -1238,9 +1237,9 @@ namespace Azure.Security.ConfidentialLedger
             return message;
         }
 
-        internal HttpMessage CreateGetUserRequest(string userId)
+        internal HttpMessage CreateGetUserRequest(string userId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1254,9 +1253,9 @@ namespace Azure.Security.ConfidentialLedger
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateUserRequest(string userId, RequestContent content)
+        internal HttpMessage CreateCreateOrUpdateUserRequest(string userId, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
@@ -1272,9 +1271,9 @@ namespace Azure.Security.ConfidentialLedger
             return message;
         }
 
-        internal HttpMessage CreateGetLedgerEntriesNextPageRequest(string nextLink, string subLedgerId, string fromTransactionId, string toTransactionId)
+        internal HttpMessage CreateGetLedgerEntriesNextPageRequest(string nextLink, string subLedgerId, string fromTransactionId, string toTransactionId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();

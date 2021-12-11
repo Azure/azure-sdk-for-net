@@ -23,6 +23,7 @@
   <ItemGroup>
     <PackageReference Include="System.Memory.Data" />
     <PackageReference Include="System.Text.Json" />
+    <ProjectReference Include="../../../core/Azure.Core/src/Azure.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />

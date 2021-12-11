@@ -6,7 +6,6 @@
     <PackageTags>Azure FarmBeats</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);AZC0001</NoWarn>
-    <DefineConstants>$(DefineConstants);EXPERIMENTAL</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,8 +31,8 @@
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\core\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj" />
-    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+    <ProjectReference Include="../../../core/Azure.Core.Experimental/src/Azure.Core.Experimental.csproj" />
+    <ProjectReference Include="../../../core/Azure.Core/src/Azure.Core.csproj" />
   </ItemGroup>
 
 </Project>

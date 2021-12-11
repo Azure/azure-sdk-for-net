@@ -7,7 +7,6 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);419</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DefineConstants>$(DefineConstants);EXPERIMENTAL</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,7 +31,7 @@
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+    <ProjectReference Include="../../../core/Azure.Core/src/Azure.Core.csproj" />
   </ItemGroup>
 
 </Project>

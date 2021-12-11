@@ -13,6 +13,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="../../../core/Azure.Core/src/Azure.Core.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="Shared\Core" />
   </ItemGroup>

@@ -11,7 +11,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
+    <ProjectReference Include="../../../core/Azure.Core/src/Azure.Core.csproj" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 

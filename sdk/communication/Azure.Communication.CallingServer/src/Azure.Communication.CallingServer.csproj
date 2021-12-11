@@ -39,6 +39,7 @@
   <ItemGroup>
     <PackageReference Include="Azure.Communication.Common" />
     <PackageReference Include="System.Text.Json" />
+    <ProjectReference Include="../../../core/Azure.Core/src/Azure.Core.csproj" />
   </ItemGroup>
 
 </Project>

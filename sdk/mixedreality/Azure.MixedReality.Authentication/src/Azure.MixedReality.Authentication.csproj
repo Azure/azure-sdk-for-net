@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
+    <ProjectReference Include="../../../core/Azure.Core/src/Azure.Core.csproj" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
     <PackageReference Include="System.Text.Encodings.Web" />
     <PackageReference Include="System.Text.Json" />

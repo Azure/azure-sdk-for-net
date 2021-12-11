@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
+    <ProjectReference Include="../../../core/Azure.Core/src/Azure.Core.csproj" />
     <PackageReference Include="Azure.MixedReality.Authentication" VersionOverride="1.0.1" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>

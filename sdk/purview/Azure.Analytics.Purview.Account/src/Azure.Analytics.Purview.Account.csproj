@@ -6,7 +6,6 @@
     <PackageTags>Azure Purview</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);CS0169</NoWarn>
-    <DefineConstants>$(DefineConstants);EXPERIMENTAL</DefineConstants>
   </PropertyGroup>
 
   <!-- Shared source from Azure.Core -->
@@ -27,8 +26,8 @@
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\core\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj" />
-    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+    <ProjectReference Include="../../../core/Azure.Core.Experimental/src/Azure.Core.Experimental.csproj" />
+    <ProjectReference Include="../../../core/Azure.Core/src/Azure.Core.csproj" />
   </ItemGroup>
 
 </Project>

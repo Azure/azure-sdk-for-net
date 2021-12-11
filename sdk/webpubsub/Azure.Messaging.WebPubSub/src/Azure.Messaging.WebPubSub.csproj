@@ -9,12 +9,11 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);419</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DefineConstants>$(DefineConstants);EXPERIMENTAL</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Text.Json" />
-    <PackageReference Include="Azure.Core" />
+    <ProjectReference Include="../../../core/Azure.Core/src/Azure.Core.csproj" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->

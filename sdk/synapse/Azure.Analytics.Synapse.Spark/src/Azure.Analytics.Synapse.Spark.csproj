@@ -20,8 +20,8 @@
   <Import Project="..\..\Azure.Analytics.Synapse.Shared\src\Azure.Analytics.Synapse.Shared.projitems" Label="Shared" />
 
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
+    <ProjectReference Include="../../../core/Azure.Core/src/Azure.Core.csproj" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->

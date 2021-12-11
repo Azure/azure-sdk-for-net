@@ -5,7 +5,6 @@
     <Version>1.0.0-beta.3</Version>
     <PackageTags>Azure ConfidentialLedger</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <DefineConstants>$(DefineConstants);EXPERIMENTAL</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -17,7 +16,7 @@
     <PackageReference Include="Azure.Core" />
     end TODO -->
     <!-- TODO: revert when Azure.Core ships -->
-    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+    <ProjectReference Include="../../../core/Azure.Core/src/Azure.Core.csproj" />
     <!--  end TODO-->
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="Azure.Core.Experimental" />

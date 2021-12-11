@@ -5,7 +5,6 @@
     <Version>1.0.0-preview.6</Version>
     <PackageTags>Microsoft Azure Synapse Access Control;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <DefineConstants>$(DefineConstants);EXPERIMENTAL</DefineConstants>
     <NoWarn>
       $(NoWarn);
       SA1649;
@@ -19,6 +18,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.Text.Json" />
+    <ProjectReference Include="../../../core/Azure.Core/src/Azure.Core.csproj" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
@@ -40,8 +40,4 @@
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
-  </ItemGroup>
-
 </Project>
