@@ -147,11 +147,11 @@ namespace Azure.ResourceManager.AppService
 
         #region SiteInstanceExtension
 
-        /// <summary> Gets a collection of SiteInstanceExtensions in the SiteInstance. </summary>
-        /// <returns> An object representing collection of SiteInstanceExtensions and their operations over a SiteInstance. </returns>
-        public SiteInstanceExtensionCollection GetSiteInstanceExtensions()
+        /// <summary> Gets an object representing a SiteInstanceExtension along with the instance operations that can be performed on it in the SiteInstance. </summary>
+        /// <returns> Returns a <see cref="SiteInstanceExtension" /> object. </returns>
+        public SiteInstanceExtension GetSiteInstanceExtension()
         {
-            return new SiteInstanceExtensionCollection(this);
+            return new SiteInstanceExtension(this, new ResourceIdentifier(Id.ToString() + "/extensions/MSDeploy"));
         }
         #endregion
 

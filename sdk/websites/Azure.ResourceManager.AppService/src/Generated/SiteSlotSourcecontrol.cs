@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.AppService
         {
             HasData = true;
             _data = resource;
+            Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
@@ -47,6 +48,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SiteSlotSourcecontrol(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
+            Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
@@ -83,6 +85,9 @@ namespace Azure.ResourceManager.AppService
                 return _data;
             }
         }
+
+        /// <summary> Gets the parent resource of this resource. </summary>
+        public ArmResource Parent { get; }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web
@@ -187,6 +192,70 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _webAppsRestClient.DeleteSourceControlSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, additionalFlags, cancellationToken);
                 var operation = new WebAppDeleteSourceControlSlotOperation(response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web
+        /// OperationId: WebApps_CreateOrUpdateSourceControlSlot
+        /// <summary> Description for Updates the source control configuration of an app. </summary>
+        /// <param name="siteSourceControl"> JSON representation of a SiteSourceControl object. See example. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteSourceControl"/> is null. </exception>
+        public async virtual Task<WebAppCreateOrUpdateSourceControlSlotOperation> CreateOrUpdateAsync(SiteSourceControlData siteSourceControl, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (siteSourceControl == null)
+            {
+                throw new ArgumentNullException(nameof(siteSourceControl));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotSourcecontrol.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _webAppsRestClient.CreateOrUpdateSourceControlSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, siteSourceControl, cancellationToken).ConfigureAwait(false);
+                var operation = new WebAppCreateOrUpdateSourceControlSlotOperation(this, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateCreateOrUpdateSourceControlSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, siteSourceControl).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web
+        /// OperationId: WebApps_CreateOrUpdateSourceControlSlot
+        /// <summary> Description for Updates the source control configuration of an app. </summary>
+        /// <param name="siteSourceControl"> JSON representation of a SiteSourceControl object. See example. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteSourceControl"/> is null. </exception>
+        public virtual WebAppCreateOrUpdateSourceControlSlotOperation CreateOrUpdate(SiteSourceControlData siteSourceControl, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (siteSourceControl == null)
+            {
+                throw new ArgumentNullException(nameof(siteSourceControl));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotSourcecontrol.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _webAppsRestClient.CreateOrUpdateSourceControlSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, siteSourceControl, cancellationToken);
+                var operation = new WebAppCreateOrUpdateSourceControlSlotOperation(this, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateCreateOrUpdateSourceControlSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, siteSourceControl).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

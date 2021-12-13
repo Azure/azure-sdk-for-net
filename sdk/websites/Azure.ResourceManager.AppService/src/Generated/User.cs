@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.AppService
         {
             HasData = true;
             _data = resource;
+            Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new WebSiteManagementRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
@@ -46,6 +48,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal User(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
+            Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new WebSiteManagementRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
@@ -82,6 +85,9 @@ namespace Azure.ResourceManager.AppService
                 return _data;
             }
         }
+
+        /// <summary> Gets the parent resource of this resource. </summary>
+        public ArmResource Parent { get; }
 
         /// RequestPath: /providers/Microsoft.Web/publishingUsers/web
         /// ContextualPath: /providers/Microsoft.Web/publishingUsers/web
@@ -143,6 +149,70 @@ namespace Azure.ResourceManager.AppService
         public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
+        }
+
+        /// RequestPath: /providers/Microsoft.Web/publishingUsers/web
+        /// ContextualPath: /providers/Microsoft.Web/publishingUsers/web
+        /// OperationId: UpdatePublishingUser
+        /// <summary> Description for Updates publishing user. </summary>
+        /// <param name="userDetails"> Details of publishing user. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userDetails"/> is null. </exception>
+        public async virtual Task<WebSiteManagementUpdatePublishingUserOperation> CreateOrUpdateAsync(UserData userDetails, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (userDetails == null)
+            {
+                throw new ArgumentNullException(nameof(userDetails));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("User.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.UpdatePublishingUserAsync(userDetails, cancellationToken).ConfigureAwait(false);
+                var operation = new WebSiteManagementUpdatePublishingUserOperation(this, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /providers/Microsoft.Web/publishingUsers/web
+        /// ContextualPath: /providers/Microsoft.Web/publishingUsers/web
+        /// OperationId: UpdatePublishingUser
+        /// <summary> Description for Updates publishing user. </summary>
+        /// <param name="userDetails"> Details of publishing user. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userDetails"/> is null. </exception>
+        public virtual WebSiteManagementUpdatePublishingUserOperation CreateOrUpdate(UserData userDetails, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (userDetails == null)
+            {
+                throw new ArgumentNullException(nameof(userDetails));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("User.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _restClient.UpdatePublishingUser(userDetails, cancellationToken);
+                var operation = new WebSiteManagementUpdatePublishingUserOperation(this, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }
