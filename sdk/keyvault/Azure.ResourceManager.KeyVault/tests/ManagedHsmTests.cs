@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.KeyVault.Tests
         }
 
         [SetUp]
-        public async Task ClearChallengeCacheforRecord()
+        public void ClearChallengeCacheforRecord()
         {
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
-                await Initialize();
+                Initialize().ConfigureAwait(false).GetAwaiter().GetResult();
             }
         }
 
@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
         [RecordedTest]
         public async Task ManagedHsmCreateUpdateDelete()
         {
-            LocationToUse = "southcentralus";
-            var parameters = new ManagedHsmData(LocationToUse)
+            Location = "southcentralus";
+            var parameters = new ManagedHsmData(Location)
             {
                 Sku = new ManagedHsmSku(ManagedHsmSkuFamily.B, ManagedHsmSkuName.StandardB1),
                 Properties = ManagedHsmProperties
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 ResGroupName,
                 TestEnvironment.SubscriptionId,
                 TenantIdGuid,
-                LocationToUse,
+                Location,
                 ManagedHsmSkuFamily.B,
                 ManagedHsmSkuName.StandardB1,
                 CreateMode.Default,
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
             ManagedHsmProperties.PublicNetworkAccess = PublicNetworkAccess.Enabled;
             ManagedHsmProperties.NetworkAcls.DefaultAction = "Allow";
-            parameters = new ManagedHsmData(LocationToUse)
+            parameters = new ManagedHsmData(Location)
             {
                 Sku = new ManagedHsmSku(ManagedHsmSkuFamily.B, ManagedHsmSkuName.StandardB1),
                 Properties = ManagedHsmProperties
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 ResGroupName,
                 TestEnvironment.SubscriptionId,
                 TenantIdGuid,
-                LocationToUse,
+                Location,
                 ManagedHsmSkuFamily.B,
                 ManagedHsmSkuName.StandardB1,
                 CreateMode.Default,
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 ResGroupName,
                 TestEnvironment.SubscriptionId,
                 TenantIdGuid,
-                LocationToUse,
+                Location,
                 ManagedHsmSkuFamily.B,
                 ManagedHsmSkuName.StandardB1,
                 CreateMode.Default,
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.KeyVault.Tests
         {
             List<string> resourceIds = new List<string>();
             List<ManagedHsm> vaultList = new List<ManagedHsm>();
-            LocationToUse = "westus";
+            Location = "westus";
 
             string vaultName = Recording.GenerateAssetName("sdktestvault");
-            var parameters = new ManagedHsmData(LocationToUse)
+            var parameters = new ManagedHsmData(Location)
             {
                 Sku = new ManagedHsmSku(ManagedHsmSkuFamily.B, ManagedHsmSkuName.StandardB1),
                 Properties = ManagedHsmProperties
@@ -195,8 +195,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
         [RecordedTest]
         public async Task ManagedHsmRecoverDeletedVault()
         {
-            LocationToUse = "westus";
-            var parameters = new ManagedHsmData(LocationToUse)
+            Location = "westus";
+            var parameters = new ManagedHsmData(Location)
             {
                 Sku = new ManagedHsmSku(ManagedHsmSkuFamily.B, ManagedHsmSkuName.StandardB1),
                 Properties = ManagedHsmProperties
