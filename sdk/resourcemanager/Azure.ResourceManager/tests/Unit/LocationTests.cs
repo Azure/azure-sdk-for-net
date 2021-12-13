@@ -216,23 +216,23 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(expected, strLocation);
         }
 
-        [TestCase ("West US", "West US")]
-        [TestCase ("west-us", "West US")]
-        [TestCase ("westus", "West US")]
-        [TestCase ("Private Cloud", "Private Cloud")]
-        [TestCase ("private-cloud", "Private Cloud")]
-        [TestCase ("privatecloud", "privatecloud")]
-        [TestCase ("1$S#@$%^", "1$S#@$%^")]
-        [TestCase ("","")]
-        [TestCase (" ", " ")]
-        [TestCase (null,null)]
+        [TestCase("West US", "West US")]
+        [TestCase("west-us", "West US")]
+        [TestCase("westus", "West US")]
+        [TestCase("Private Cloud", "Private Cloud")]
+        [TestCase("private-cloud", "Private Cloud")]
+        [TestCase("privatecloud", "privatecloud")]
+        [TestCase("1$S#@$%^", "1$S#@$%^")]
+        [TestCase("", "")]
+        [TestCase(" ", " ")]
+        [TestCase(null, null)]
         public void CanCastStringToLocation(string name, string expected)
         {
             Location location1 = name;
             if (name == null)
-                Assert.Throws<System.NullReferenceException>(()=> { string x = location1.DisplayName; });
+                Assert.Throws<System.NullReferenceException>(() => { string x = location1.DisplayName; });
             else
-                Assert.AreEqual(expected, location1.DisplayName);  
+                Assert.AreEqual(expected, location1.DisplayName);
         }
 
         [Test]

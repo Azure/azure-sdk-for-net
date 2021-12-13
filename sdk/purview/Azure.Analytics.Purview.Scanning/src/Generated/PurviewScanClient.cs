@@ -65,7 +65,7 @@ namespace Azure.Analytics.Purview.Scanning
 
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _dataSourceName = dataSourceName;
             _scanName = scanName;
@@ -73,7 +73,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Get a filter. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -112,7 +112,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetFilterRequest();
+                using HttpMessage message = CreateGetFilterRequest(context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -123,7 +123,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Get a filter. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -162,7 +162,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetFilterRequest();
+                using HttpMessage message = CreateGetFilterRequest(context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -174,7 +174,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Creates or updates a filter. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -223,7 +223,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateFilterRequest(content);
+                using HttpMessage message = CreateCreateOrUpdateFilterRequest(content, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -235,7 +235,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Creates or updates a filter. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -284,7 +284,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateFilterRequest(content);
+                using HttpMessage message = CreateCreateOrUpdateFilterRequest(content, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -296,7 +296,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Creates an instance of a scan. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -424,7 +424,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateRequest(content);
+                using HttpMessage message = CreateCreateOrUpdateRequest(content, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -436,7 +436,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Creates an instance of a scan. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -564,7 +564,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateRequest(content);
+                using HttpMessage message = CreateCreateOrUpdateRequest(content, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -575,7 +575,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Gets a scan information. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -653,7 +653,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPropertiesRequest();
+                using HttpMessage message = CreateGetPropertiesRequest(context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -664,7 +664,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Gets a scan information. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -742,7 +742,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPropertiesRequest();
+                using HttpMessage message = CreateGetPropertiesRequest(context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -753,7 +753,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Deletes the scan associated with the data source. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -831,7 +831,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest();
+                using HttpMessage message = CreateDeleteRequest(context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -842,7 +842,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Deletes the scan associated with the data source. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -920,7 +920,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest();
+                using HttpMessage message = CreateDeleteRequest(context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -933,7 +933,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Runs the scan. </summary>
         /// <param name="runId"> The String to use. </param>
         /// <param name="scanLevel"> The ScanLevelType to use. Allowed values: &quot;Full&quot; | &quot;Incremental&quot;. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -984,7 +984,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRunScanRequest(runId, scanLevel);
+                using HttpMessage message = CreateRunScanRequest(runId, scanLevel, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -997,7 +997,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Runs the scan. </summary>
         /// <param name="runId"> The String to use. </param>
         /// <param name="scanLevel"> The ScanLevelType to use. Allowed values: &quot;Full&quot; | &quot;Incremental&quot;. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1048,7 +1048,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRunScanRequest(runId, scanLevel);
+                using HttpMessage message = CreateRunScanRequest(runId, scanLevel, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -1060,7 +1060,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Cancels a scan. </summary>
         /// <param name="runId"> The String to use. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1111,7 +1111,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCancelScanRequest(runId);
+                using HttpMessage message = CreateCancelScanRequest(runId, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1123,7 +1123,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Cancels a scan. </summary>
         /// <param name="runId"> The String to use. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1174,7 +1174,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCancelScanRequest(runId);
+                using HttpMessage message = CreateCancelScanRequest(runId, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -1185,7 +1185,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Gets trigger information. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1249,7 +1249,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTriggerRequest();
+                using HttpMessage message = CreateGetTriggerRequest(context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1260,7 +1260,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Gets trigger information. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1324,7 +1324,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTriggerRequest();
+                using HttpMessage message = CreateGetTriggerRequest(context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -1336,7 +1336,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Creates an instance of a trigger. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -1436,7 +1436,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateTriggerRequest(content);
+                using HttpMessage message = CreateCreateOrUpdateTriggerRequest(content, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1448,7 +1448,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Creates an instance of a trigger. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -1548,7 +1548,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateTriggerRequest(content);
+                using HttpMessage message = CreateCreateOrUpdateTriggerRequest(content, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -1559,7 +1559,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Deletes the trigger associated with the scan. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1623,7 +1623,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteTriggerRequest();
+                using HttpMessage message = CreateDeleteTriggerRequest(context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1634,7 +1634,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Deletes the trigger associated with the scan. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1698,7 +1698,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteTriggerRequest();
+                using HttpMessage message = CreateDeleteTriggerRequest(context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -1709,7 +1709,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Lists the scan history of a scan. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1788,8 +1788,8 @@ namespace Azure.Analytics.Purview.Scanning
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetRunsRequest()
-                        : CreateGetRunsNextPageRequest(nextLink);
+                        ? CreateGetRunsRequest(context)
+                        : CreateGetRunsNextPageRequest(nextLink, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1798,7 +1798,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Lists the scan history of a scan. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1877,8 +1877,8 @@ namespace Azure.Analytics.Purview.Scanning
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetRunsRequest()
-                        : CreateGetRunsNextPageRequest(nextLink);
+                        ? CreateGetRunsRequest(context)
+                        : CreateGetRunsNextPageRequest(nextLink, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1886,9 +1886,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        internal HttpMessage CreateGetFilterRequest()
+        internal HttpMessage CreateGetFilterRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1905,9 +1905,9 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateFilterRequest(RequestContent content)
+        internal HttpMessage CreateCreateOrUpdateFilterRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -1926,9 +1926,9 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(RequestContent content)
+        internal HttpMessage CreateCreateOrUpdateRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -1946,9 +1946,9 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
-        internal HttpMessage CreateGetPropertiesRequest()
+        internal HttpMessage CreateGetPropertiesRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1964,9 +1964,9 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest()
+        internal HttpMessage CreateDeleteRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -1982,9 +1982,9 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
-        internal HttpMessage CreateRunScanRequest(string runId, string scanLevel)
+        internal HttpMessage CreateRunScanRequest(string runId, string scanLevel, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -2006,9 +2006,9 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
-        internal HttpMessage CreateCancelScanRequest(string runId)
+        internal HttpMessage CreateCancelScanRequest(string runId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -2027,9 +2027,9 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
-        internal HttpMessage CreateGetRunsRequest()
+        internal HttpMessage CreateGetRunsRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2046,9 +2046,9 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
-        internal HttpMessage CreateGetTriggerRequest()
+        internal HttpMessage CreateGetTriggerRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2065,9 +2065,9 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateTriggerRequest(RequestContent content)
+        internal HttpMessage CreateCreateOrUpdateTriggerRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -2086,9 +2086,9 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
-        internal HttpMessage CreateDeleteTriggerRequest()
+        internal HttpMessage CreateDeleteTriggerRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -2105,9 +2105,9 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
-        internal HttpMessage CreateGetRunsNextPageRequest(string nextLink)
+        internal HttpMessage CreateGetRunsNextPageRequest(string nextLink, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();

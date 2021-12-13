@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Management
     {
         internal static ManagementGroupData DeserializeManagementGroup(JsonElement element)
         {
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> type = default;
             Optional<string> name = default;
             Optional<string> tenantId = default;
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Management
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("type"))

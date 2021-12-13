@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Tests
         public void CanParseRPIds(string subscription, string resourceGroup, string provider, string type, string name)
         {
             var resourceId = $"/subscriptions/{subscription}/resourceGroups/{Uri.EscapeDataString(resourceGroup)}/providers/{provider}/{type}/{Uri.EscapeDataString(name)}";
-            ResourceIdentifier subject = resourceId;
+            ResourceIdentifier subject = new ResourceIdentifier(resourceId);
             Assert.AreEqual(resourceId, subject.ToString());
             Assert.AreEqual(subscription, subject.SubscriptionId);
             Assert.AreEqual(resourceGroup, Uri.UnescapeDataString(subject.ResourceGroupName));
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Tests
         public void CanParseProxyResource(string subscription, string rg, string resourceNamespace, string resource, string type)
         {
             string id = $"/subscriptions/{subscription}/resourceGroups/{rg}/providers/{resourceNamespace}/{resource}";
-            ResourceIdentifier subject = id;
+            ResourceIdentifier subject = new ResourceIdentifier(id);
             Assert.AreEqual(id, subject.ToString());
             Assert.AreEqual(subscription, subject.SubscriptionId);
             Assert.AreEqual(resourceNamespace, subject.ResourceType.Namespace);
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Tests
         [Test]
         public void CanParseResourceGroups()
         {
-            ResourceIdentifier subject = "/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg";
+            ResourceIdentifier subject = new ResourceIdentifier("/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg");
             Assert.AreEqual("/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg", subject.ToString());
             Assert.AreEqual("0c2f6471-1bf0-4dda-aec3-cb9272f09575", subject.SubscriptionId);
             Assert.AreEqual("myRg", subject.ResourceGroupName);
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Tests
         public void CanParseChildResources(string parentName, string name)
         {
             var resourceId = $"/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg/providers/Microsoft.Network/virtualNetworks/{Uri.EscapeDataString(parentName)}/subnets/{Uri.EscapeDataString(name)}";
-            ResourceIdentifier subject = resourceId;
+            ResourceIdentifier subject = new ResourceIdentifier(resourceId);
             Assert.AreEqual(resourceId, subject.ToString());
             Assert.AreEqual("0c2f6471-1bf0-4dda-aec3-cb9272f09575", subject.SubscriptionId);
             Assert.AreEqual("myRg", Uri.UnescapeDataString(subject.ResourceGroupName));
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(name, Uri.UnescapeDataString(subject.Name));
 
             // check parent type parsing
-            ResourceIdentifier parentResource = $"/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg/providers/Microsoft.Network/virtualNetworks/{Uri.EscapeDataString(parentName)}";
+            ResourceIdentifier parentResource = new ResourceIdentifier($"/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg/providers/Microsoft.Network/virtualNetworks/{Uri.EscapeDataString(parentName)}");
             Assert.AreEqual(parentResource, subject.Parent);
             Assert.AreEqual(parentResource.ToString(), subject.Parent.ToString());
             Assert.AreEqual("0c2f6471-1bf0-4dda-aec3-cb9272f09575", ((ResourceIdentifier)subject.Parent).SubscriptionId);
@@ -95,18 +95,15 @@ namespace Azure.ResourceManager.Tests
         [Test]
         public void TryGetPropertiesForResourceGroupResource()
         {
-            ResourceIdentifier id1 = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg/providers/Contoso.Widgets/widgets/myWidget";
-            string subscription;
-            Assert.AreEqual(true, id1.TryGetSubscriptionId(out subscription));
-            Assert.AreEqual("6b085460-5f21-477e-ba44-1035046e9101", subscription);
-            Assert.AreEqual(false, id1.TryGetLocation(out _));
-            string resourceGroupName;
-            Assert.AreEqual(true, id1.TryGetResourceGroupName(out resourceGroupName));
-            Assert.AreEqual("myRg", resourceGroupName);
-            ResourceIdentifier expectedId = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg";
-            ResourceIdentifier parentId;
-            Assert.AreEqual(true, id1.TryGetParent(out parentId));
-            Assert.IsTrue(expectedId.Equals(parentId));
+            ResourceIdentifier id1 = new ResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg/providers/Contoso.Widgets/widgets/myWidget");
+            Assert.NotNull(id1.SubscriptionId);
+            Assert.AreEqual("6b085460-5f21-477e-ba44-1035046e9101", id1.SubscriptionId);
+            Assert.Null(id1.Location);
+            Assert.NotNull(id1.ResourceGroupName);
+            Assert.AreEqual("myRg", id1.ResourceGroupName);
+            ResourceIdentifier expectedId = new ResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg");
+            Assert.NotNull(id1.Parent);
+            Assert.IsTrue(expectedId.Equals(id1.Parent));
         }
 
         [TestCase(ResourceGroupResourceId, "Microsoft.Authorization", "roleAssignments", "MyRoleAssignemnt")]
@@ -122,7 +119,7 @@ namespace Azure.ResourceManager.Tests
 
         public void TestAppendResourceGroupProviderResource(string resourceId, string providerNamespace, string resourceTypeName, string resourceName)
         {
-            ResourceIdentifier resource = resourceId;
+            ResourceIdentifier resource = new ResourceIdentifier(resourceId);
             if (providerNamespace is null || resourceTypeName is null || resourceName is null)
                 Assert.Throws(typeof(ArgumentNullException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
             else if (string.IsNullOrWhiteSpace(providerNamespace) || string.IsNullOrWhiteSpace(resourceTypeName) || string.IsNullOrWhiteSpace(resourceName))
@@ -146,7 +143,7 @@ namespace Azure.ResourceManager.Tests
         [TestCase(ResourceGroupResourceId, "wheels", "wheel1/wheel2")]
         public void TestAppendResourceGroupChildResource(string resourceId, string childTypeName, string childResourceName)
         {
-            ResourceIdentifier resource = resourceId;
+            ResourceIdentifier resource = new ResourceIdentifier(resourceId);
             if (childTypeName is null || childResourceName is null)
                 Assert.Throws(typeof(ArgumentNullException), () => resource.AppendChildResource(childTypeName, childResourceName));
             else if (string.IsNullOrWhiteSpace(childTypeName) || string.IsNullOrWhiteSpace(childResourceName))

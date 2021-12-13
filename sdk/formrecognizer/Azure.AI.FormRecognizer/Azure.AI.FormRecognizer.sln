@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Test.Perf", "..\..\..
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.FormRecognizer.Perf", "perf\Azure.AI.FormRecognizer.Perf\Azure.AI.FormRecognizer.Perf.csproj", "{E11C4DF2-C78A-4EE3-B3FC-BE4F7C7A80F1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{6C5E5550-A9AE-4B52-84E5-32E035AC4D40}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{E11C4DF2-C78A-4EE3-B3FC-BE4F7C7A80F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E11C4DF2-C78A-4EE3-B3FC-BE4F7C7A80F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E11C4DF2-C78A-4EE3-B3FC-BE4F7C7A80F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C5E5550-A9AE-4B52-84E5-32E035AC4D40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C5E5550-A9AE-4B52-84E5-32E035AC4D40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C5E5550-A9AE-4B52-84E5-32E035AC4D40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C5E5550-A9AE-4B52-84E5-32E035AC4D40}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
