@@ -2,13 +2,14 @@
 
 The Azure Monitor Query client library is used to execute read-only queries against [Azure Monitor][azure_monitor_overview]'s two data platforms:
 
-- [Logs](https://docs.microsoft.com/azure/azure-monitor/logs/data-platform-logs) - Collects and organizes log and performance data from monitored resources. Data from different sources such as platform logs from Azure services, log and performance data from virtual machines agents, and usage and performance data from apps can be consolidated into a single [Azure Log Analytics workspace](https://docs.microsoft.com/azure/azure-monitor/logs/data-platform-logs#log-analytics-workspaces). The various data types can be analyzed together using the [Kusto Query Language][kusto_query_language].
+- [Logs](https://docs.microsoft.com/azure/azure-monitor/logs/data-platform-logs) - Collects and organizes log and performance data from monitored resources. Data from different sources such as platform logs from Azure services, log and performance data from virtual machines agents, and usage and performance data from apps can be consolidated into a single [Azure Log Analytics workspace](https://docs.microsoft.com/azure/azure-monitor/logs/data-platform-logs#log-analytics-and-workspaces). The various data types can be analyzed together using the [Kusto Query Language][kusto_query_language].
 - [Metrics](https://docs.microsoft.com/azure/azure-monitor/essentials/data-platform-metrics) - Collects numeric data from monitored resources into a time series database. Metrics are numerical values that are collected at regular intervals and describe some aspect of a system at a particular time. Metrics are lightweight and capable of supporting near real-time scenarios, making them particularly useful for alerting and fast detection of issues.
 
 **Resources:**
 
 - [Source code][source]
 - [Package (NuGet)][package]
+- [API reference documentation][msdocs_apiref]
 - [Service documentation][azure_monitor_overview]
 - [Change log][changelog]
 
@@ -144,7 +145,7 @@ public class MyLogEntryModel
 ```
 
 ```C# Snippet:QueryLogsAsModels
-var client = new LogsQueryClient(TestEnvironment.LogsEndpoint, new DefaultAzureCredential());
+var client = new LogsQueryClient(new DefaultAzureCredential());
 string workspaceId = "<workspace_id>";
 
 // Query TOP 10 resource groups by event count
@@ -425,6 +426,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [kusto_query_language]: https://docs.microsoft.com/azure/data-explorer/kusto/query/
 [logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
 [monitor_rest_api]: https://docs.microsoft.com/rest/api/monitor/
+[msdocs_apiref]: https://docs.microsoft.com/dotnet/api/overview/azure/monitor/query?view=azure-dotnet
 [package]: https://www.nuget.org/packages/Azure.Monitor.Query
 [source]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/src
 

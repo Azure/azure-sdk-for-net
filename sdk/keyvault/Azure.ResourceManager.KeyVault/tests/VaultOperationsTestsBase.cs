@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         public ResourceGroup ResourceGroup { get; set; }
 
         protected VaultOperationsTestsBase(bool isAsync)
-            : base(isAsync)
+            : base(isAsync, useLegacyTransport: true)
         {
         }
 

@@ -56,6 +56,7 @@
     "deserializable",
     "deserializes",
     "diagnoser",
+    "dotnetcli",
     "dont",
     "dtmf",
     "epsg",
@@ -254,10 +255,17 @@
         "ssis",
         "ssisdb",
         "sybase",
+        "sybase",
         "teradata",
         "usql",
         "vertica",
         "xero"
+      ]
+    },
+    {
+      "filename": "**/sdk/synapse/**/*.md",
+      "words": [
+        "abfss"
       ]
     },
     {
@@ -269,6 +277,21 @@
         "Eugps",
         "Plregon",
         "Usuk"
+      ]
+    },
+    {
+      "filename": "**/sdk/websites/**/*.cs",
+      "words": [
+        "Ipssl",
+        "Skus",
+        "Kube",
+        "Metadatas",
+        "Unparked",
+        "Proto",
+        "Zilla",
+        "Guage",
+        "Plex",
+        "Vstsrm"
       ]
     }
   ],

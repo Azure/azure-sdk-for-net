@@ -173,6 +173,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
+        "Content-Length": "0",
         "traceparent": "00-c0144f512eed89479cc6d153404548f0-f86fbe49e8bebf48-00",
         "User-Agent": [
           "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-alpha.20210119.1",

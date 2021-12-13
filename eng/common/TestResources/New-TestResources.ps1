@@ -76,7 +76,10 @@ param (
     [switch] $Force,
 
     [Parameter()]
-    [switch] $OutFile
+    [switch] $OutFile,
+
+    [Parameter()]
+    [switch] $SuppressVsoCommands = ($null -eq $env:SYSTEM_TEAMPROJECTID)
 )
 
 . $PSScriptRoot/SubConfig-Helpers.ps1
@@ -89,6 +92,17 @@ if (!$PSBoundParameters.ContainsKey('ErrorAction')) {
 function Log($Message)
 {
     Write-Host ('{0} - {1}' -f [DateTime]::Now.ToLongTimeString(), $Message)
+}
+
+# vso commands are specially formatted log lines that are parsed by Azure Pipelines
+# to perform additional actions, most commonly marking values as secrets.
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/scripts/logging-commands
+function LogVsoCommand([string]$message)
+{
+    if (!$CI -or $SuppressVsoCommands) {
+        return
+    }
+    Write-Host $message
 }
 
 function Retry([scriptblock] $Action, [int] $Attempts = 5)
@@ -224,13 +238,13 @@ function SetDeploymentOutputs([string]$serviceName, [object]$azContext, [object]
                 if (ShouldMarkValueAsSecret $serviceDirectoryPrefix $key $value $notSecretValues) {
                     # Treat all ARM template output variables as secrets since "SecureString" variables do not set values.
                     # In order to mask secrets but set environment variables for any given ARM template, we set variables twice as shown below.
-                    Write-Host "##vso[task.setvariable variable=_$key;issecret=true;]$value"
-                    Write-Host "Setting variable as secret '$key': $value"
+                    LogVsoCommand "##vso[task.setvariable variable=_$key;issecret=true;]$value"
+                    Write-Host "Setting variable as secret '$key'"
                 } else {
                     Write-Host "Setting variable '$key': $value"
                     $notSecretValues += $value
                 }
-                Write-Host "##vso[task.setvariable variable=$key;]$value"
+                LogVsoCommand "##vso[task.setvariable variable=$key;]$value"
             } else {
                 Write-Host ($shellExportFormat -f $key, $value)
             }
@@ -474,7 +488,7 @@ try {
 
         # Set the resource group name variable.
         Write-Host "Setting variable 'AZURE_RESOURCEGROUP_NAME': $ResourceGroupName"
-        Write-Host "##vso[task.setvariable variable=AZURE_RESOURCEGROUP_NAME;]$ResourceGroupName"
+        LogVsoCommand "##vso[task.setvariable variable=AZURE_RESOURCEGROUP_NAME;]$ResourceGroupName"
         if ($EnvironmentVariables.ContainsKey('AZURE_RESOURCEGROUP_NAME') -and `
             $EnvironmentVariables['AZURE_RESOURCEGROUP_NAME'] -ne $ResourceGroupName)
         {
@@ -566,14 +580,18 @@ try {
     $PSBoundParameters['TestApplicationOid'] = $TestApplicationOid
     $PSBoundParameters['TestApplicationSecret'] = $TestApplicationSecret
 
-    # Grant the test service principal ownership over the resource group. This may fail if the provisioner is a
-    # service principal without permissions to grant RBAC roles to other service principals. That should not be
-    # considered a critical failure, as the test application may have subscription-level permissions and not require
-    # the explicit grant.
-    #
-    # Ignore this check if $AzureTestPrincipal is specified as role assignment will already have been attempted on a
-    # previous run, and these error messages can be misleading for local runs.
-    if (!$resourceGroupRoleAssigned -and !$AzureTestPrincipal) {
+    # If the role hasn't been explicitly assigned to the resource group and a cached service principal is in use,
+    # query to see if the grant is needed.
+    if (!$resourceGroupRoleAssigned -and $AzureTestPrincipal) {
+        $roleAssignment = Get-AzRoleAssignment -ObjectId $AzureTestPrincipal.Id -RoleDefinitionName 'Owner' -ResourceGroupName "$ResourceGroupName" -ErrorAction SilentlyContinue
+        $resourceGroupRoleAssigned = ($roleAssignment.RoleDefinitionName -eq 'Owner')
+    }
+
+   # If needed, grant the test service principal ownership over the resource group. This may fail if the provisioner
+   # is a service principal without permissions to grant RBAC roles to other service principals. That should not be
+   # considered a critical failure, as the test application may have subscription-level permissions and not require
+   # the explicit grant.
+   if (!$resourceGroupRoleAssigned) {
         Log "Attempting to assigning the 'Owner' role for '$ResourceGroupName' to the Test Application '$TestApplicationId'"
         $principalOwnerAssignment = New-AzRoleAssignment -RoleDefinitionName "Owner" -ApplicationId "$TestApplicationId" -ResourceGroupName "$ResourceGroupName" -ErrorAction SilentlyContinue
 
@@ -865,6 +883,11 @@ service directory.
 The environment file will be named for the test resources template that it was
 generated for. For ARM templates, it will be test-resources.json.env. For
 Bicep templates, test-resources.bicep.env.
+
+.PARAMETER SuppressVsoCommands
+By default, the -CI parameter will print out secrets to logs with Azure Pipelines log
+commands that cause them to be redacted. For CI environments that don't support this (like 
+stress test clusters), this flag can be set to $false to avoid printing out these secrets to the logs.
 
 .EXAMPLE
 Connect-AzAccount -Subscription 'REPLACE_WITH_SUBSCRIPTION_ID'

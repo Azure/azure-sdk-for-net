@@ -18,7 +18,7 @@ namespace Azure.Identity.Tests
 {
     public class ManagedIdentityCredentialFederatedTokenLiveTests : IdentityRecordedTestBase
     {
-        public ManagedIdentityCredentialFederatedTokenLiveTests(bool isAsync) : base(isAsync)
+        public ManagedIdentityCredentialFederatedTokenLiveTests(bool isAsync) : base(isAsync, useLegacyTransport: true)
         {
         }
 

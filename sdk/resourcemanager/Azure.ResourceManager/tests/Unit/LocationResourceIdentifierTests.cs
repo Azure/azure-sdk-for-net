@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Tests
             string resourceId = $"{LocationInDifferentNamespace}/publishers/128technology";
             var id = new ResourceIdentifier(resourceId);
             Assert.AreEqual(resourceId, id.ToString());
-            Assert.AreEqual("westus2", id.Location);
+            Assert.AreEqual("westus2", id.Location.ToString());
             Assert.AreEqual("db1ab6f0-4769-4b27-930e-01e2ef9c123c", id.SubscriptionId);
             Assert.AreEqual("Microsoft.Compute/locations/publishers", id.ResourceType.ToString());
             Assert.AreEqual("128technology", id.Name);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Tests
             string resourceId = $"{LocationBaseResourceId}/myResourceType/myResourceName";
             var id = new ResourceIdentifier(resourceId);
             Assert.AreEqual(resourceId, id.ToString());
-            Assert.AreEqual("westus2", id.Location);
+            Assert.AreEqual("westus2", id.Location.ToString());
             Assert.AreEqual("17fecd63-33d8-4e43-ac6f-0aafa111b38d", id.SubscriptionId);
             Assert.AreEqual("Microsoft.Resources/subscriptions/locations/myResourceType", id.ResourceType.ToString());
             Assert.AreEqual("myResourceName", id.Name);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Tests
             string resourceId = $"{LocationBaseResourceId}/myResourceType/myResourceName/mySingletonResource";
             var id = new ResourceIdentifier(resourceId);
             Assert.AreEqual(resourceId, id.ToString());
-            Assert.AreEqual("westus2", id.Location);
+            Assert.AreEqual("westus2", id.Location.ToString());
             Assert.AreEqual("17fecd63-33d8-4e43-ac6f-0aafa111b38d", id.SubscriptionId);
             Assert.AreEqual("Microsoft.Resources/subscriptions/locations/myResourceType/mySingletonResource", id.ResourceType.ToString());
             Assert.AreEqual(string.Empty, id.Name);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Tests
 
             var parentId = id.Parent;
             Assert.AreEqual($"{LocationBaseResourceId}/myResourceType/myResourceName", parentId.ToString());
-            Assert.AreEqual("westus2", parentId.Location);
+            Assert.AreEqual("westus2", parentId.Location.ToString());
             Assert.AreEqual("17fecd63-33d8-4e43-ac6f-0aafa111b38d", parentId.SubscriptionId);
             Assert.AreEqual("Microsoft.Resources/subscriptions/locations/myResourceType", parentId.ResourceType.ToString());
             Assert.AreEqual("myResourceName", parentId.Name);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Tests
             string resourceId = $"{LocationBaseResourceId}/providers/myProvider/myResourceType/myResourceName";
             var id = new ResourceIdentifier(resourceId);
             Assert.AreEqual(resourceId, id.ToString());
-            Assert.AreEqual("westus2", id.Location);
+            Assert.AreEqual("westus2", id.Location.ToString());
             Assert.AreEqual("17fecd63-33d8-4e43-ac6f-0aafa111b38d", id.SubscriptionId);
             Assert.AreEqual("myProvider/myResourceType", id.ResourceType.ToString());
             Assert.AreEqual("myResourceName", id.Name);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Tests
             string resourceId = $"{LocationBaseResourceId}/providers/myProvider/myResourceType/myResourceName/myChildResource/myChildResourceName";
             var id = new ResourceIdentifier(resourceId);
             Assert.AreEqual(resourceId, id.ToString());
-            Assert.AreEqual("westus2", id.Location);
+            Assert.AreEqual("westus2", id.Location.ToString());
             Assert.AreEqual("17fecd63-33d8-4e43-ac6f-0aafa111b38d", id.SubscriptionId);
             Assert.AreEqual("myProvider/myResourceType/myChildResource", id.ResourceType.ToString());
             Assert.AreEqual("myChildResourceName", id.Name);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Tests
 
             var parentId = id.Parent;
             Assert.AreEqual($"{LocationBaseResourceId}/providers/myProvider/myResourceType/myResourceName", parentId.ToString());
-            Assert.AreEqual("westus2", parentId.Location);
+            Assert.AreEqual("westus2", parentId.Location.ToString());
             Assert.AreEqual("17fecd63-33d8-4e43-ac6f-0aafa111b38d", parentId.SubscriptionId);
             Assert.AreEqual("myProvider/myResourceType", parentId.ResourceType.ToString());
             Assert.AreEqual("myResourceName", parentId.Name);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Tests
             string resourceId = $"{LocationBaseResourceId}/providers/myProvider/myResourceType/myResourceName/providers/mySecondNamespace/myChildResource/myChildResourceName";
             var id = new ResourceIdentifier(resourceId);
             Assert.AreEqual(resourceId, id.ToString());
-            Assert.AreEqual("westus2", id.Location);
+            Assert.AreEqual("westus2", id.Location.ToString());
             Assert.AreEqual("17fecd63-33d8-4e43-ac6f-0aafa111b38d", id.SubscriptionId);
             Assert.AreEqual("mySecondNamespace/myChildResource", id.ResourceType.ToString());
             Assert.AreEqual("myChildResourceName", id.Name);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Tests
 
             var parentId = id.Parent;
             Assert.AreEqual($"{LocationBaseResourceId}/providers/myProvider/myResourceType/myResourceName", parentId.ToString());
-            Assert.AreEqual("westus2", parentId.Location);
+            Assert.AreEqual("westus2", parentId.Location.ToString());
             Assert.AreEqual("17fecd63-33d8-4e43-ac6f-0aafa111b38d", parentId.SubscriptionId);
             Assert.AreEqual("myProvider/myResourceType", parentId.ResourceType.ToString());
             Assert.AreEqual("myResourceName", parentId.Name);
@@ -135,18 +135,15 @@ namespace Azure.ResourceManager.Tests
         [Test]
         public void TryGetPropertiesForLocationResource()
         {
-            ResourceIdentifier id1 = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2/providers/Contoso.Widgets/widgets/myWidget";
-            string subscription;
-            Assert.AreEqual(true, id1.TryGetSubscriptionId(out subscription));
-            Assert.AreEqual("6b085460-5f21-477e-ba44-1035046e9101", subscription);
-            Location location;
-            Assert.AreEqual(true, id1.TryGetLocation(out location));
-            Assert.AreEqual(Location.WestUS2, location);
-            Assert.AreEqual(false, id1.TryGetResourceGroupName(out _));
-            ResourceIdentifier expectedId = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2";
-            ResourceIdentifier parentId;
-            Assert.AreEqual(true, id1.TryGetParent(out parentId));
-            Assert.IsTrue(expectedId.Equals(parentId));
+            ResourceIdentifier id1 = new ResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2/providers/Contoso.Widgets/widgets/myWidget");
+            Assert.NotNull(id1.SubscriptionId);
+            Assert.AreEqual("6b085460-5f21-477e-ba44-1035046e9101", id1.SubscriptionId);
+            Assert.NotNull(id1.Location);
+            Assert.AreEqual(Location.WestUS2, id1.Location);
+            Assert.Null(id1.ResourceGroupName);
+            ResourceIdentifier expectedId = new ResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2");
+            Assert.NotNull(id1.Parent);
+            Assert.IsTrue(expectedId.Equals(id1.Parent));
         }
 
         [TestCase(LocationResourceId, "Microsoft.Authorization", "roleAssignments", "MyRoleAssignemnt")]
@@ -162,7 +159,7 @@ namespace Azure.ResourceManager.Tests
 
         public void TestAppendLocationProviderResource(string resourceId, string providerNamespace, string resourceTypeName, string resourceName)
         {
-            ResourceIdentifier resource = resourceId;
+            ResourceIdentifier resource = new ResourceIdentifier(resourceId);
             if (providerNamespace is null || resourceTypeName is null || resourceName is null)
                 Assert.Throws(typeof(ArgumentNullException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
             else if (string.IsNullOrWhiteSpace(providerNamespace) || string.IsNullOrWhiteSpace(resourceTypeName) || string.IsNullOrWhiteSpace(resourceName))
@@ -185,7 +182,7 @@ namespace Azure.ResourceManager.Tests
         [TestCase(LocationResourceId, "wheels", "wheel1/wheel2")]
         public void TestAppendLocationChildResource(string resourceId, string childTypeName, string childResourceName)
         {
-            ResourceIdentifier resource = resourceId;
+            ResourceIdentifier resource = new ResourceIdentifier(resourceId);
             if (childTypeName is null || childResourceName is null)
                 Assert.Throws(typeof(ArgumentNullException), () => resource.AppendChildResource(childTypeName, childResourceName));
             else if (string.IsNullOrWhiteSpace(childTypeName) || string.IsNullOrWhiteSpace(childResourceName))

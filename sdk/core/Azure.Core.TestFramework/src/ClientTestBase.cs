@@ -21,7 +21,7 @@ namespace Azure.Core.TestFramework
         private static readonly IInterceptor s_avoidSyncInterceptor = new UseSyncMethodsInterceptor(forceSync: false);
         private static readonly IInterceptor s_diagnosticScopeValidatingInterceptor = new DiagnosticScopeValidatingInterceptor();
         private static Dictionary<Type, Exception> s_clientValidation = new Dictionary<Type, Exception>();
-        private const int GLOBAL_TEST_TIMEOUT_IN_SECONDS = 8;
+        private const int GLOBAL_TEST_TIMEOUT_IN_SECONDS = 10;
         public bool IsAsync { get; }
 
         public bool TestDiagnostics { get; set; } = true;
@@ -31,14 +31,17 @@ namespace Azure.Core.TestFramework
             IsAsync = isAsync;
         }
 
+        protected virtual DateTime TestStartTime => TestExecutionContext.CurrentContext.StartTime;
+
         [TearDown]
         public virtual void GlobalTimeoutTearDown()
         {
             var executionContext = TestExecutionContext.CurrentContext;
-            var duration = DateTime.UtcNow - executionContext.StartTime;
+            var duration = DateTime.UtcNow - TestStartTime;
             if (duration > TimeSpan.FromSeconds(GLOBAL_TEST_TIMEOUT_IN_SECONDS) && !Debugger.IsAttached)
             {
-                executionContext.CurrentResult.SetResult(ResultState.Failure, $"Test exceeded global time limit of {GLOBAL_TEST_TIMEOUT_IN_SECONDS} seconds. Duration: {duration}");
+                executionContext.CurrentResult.SetResult(ResultState.Failure,
+                    $"Test exceeded global time limit of {GLOBAL_TEST_TIMEOUT_IN_SECONDS} seconds. Duration: {duration}");
             }
         }
 

@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Tests
         [Test]
         public void Deserialization()
         {
-            var id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.ClassicStorage/storageAccounts/account1";
+            var id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.ClassicStorage/storageAccounts/account1");
             var expected = "{\"id\":\"" + id + "\"}";
             var resource1 = new WritableSubResource(id);
             var jsonString = JsonHelper.SerializeToString(resource1);
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(jsonString, JsonHelper.SerializeToString(resource2));
 
             var resource3 = new WritableSubResource();
-            resource3.Id = id;
+            resource3.Id = new ResourceIdentifier(id);
             Assert.AreEqual(jsonString, JsonHelper.SerializeToString(resource3));
         }
     }

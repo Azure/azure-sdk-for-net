@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             };
             var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(vnetName, vnetData);
             SubnetId = $"{vnet.Value.Data.Id.ToString()}/subnets/ManagedInstance";
-            StopSessionRecording();
+            await StopSessionRecordingAsync();
         }
 
         [SetUp]

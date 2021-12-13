@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -24,30 +25,30 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         [Test]
         public void TestUpdateConnectionState()
         {
-            var exist = new Dictionary<string, object>
+            var exist = new Dictionary<string, BinaryData>
             {
-                { "aaa", "aaa" },
-                { "bbb", "bbb" }
+                { "aaa", BinaryData.FromObjectAsJson("aaa") },
+                { "bbb", BinaryData.FromObjectAsJson("bbb") }
             };
-            var connectionContext = new WebPubSubConnectionContext(eventType: WebPubSubEventType.System, null, null, null, states: exist);
+            var connectionContext = new WebPubSubConnectionContext(eventType: WebPubSubEventType.System, null, null, null, connectionStates: exist);
 
             var response = new ConnectEventResponse
             {
                 UserId = "aaa"
             };
-            response.SetState("test", "ddd");
-            response.SetState("bbb", "bbb1");
-            var updated = connectionContext.UpdateStates(response.States);
+            response.SetState("test", BinaryData.FromObjectAsJson("ddd"));
+            response.SetState("bbb", BinaryData.FromObjectAsJson("bbb1"));
+            var updated = connectionContext.UpdateStates(response.ConnectionStates);
 
             // new
-            Assert.AreEqual("ddd", updated["test"]);
+            Assert.AreEqual("ddd", updated["test"].ToObjectFromJson<string>());
             // no change
-            Assert.AreEqual("aaa", updated["aaa"]);
+            Assert.AreEqual("aaa", updated["aaa"].ToObjectFromJson<string>());
             // update
-            Assert.AreEqual("bbb1", updated["bbb"]);
+            Assert.AreEqual("bbb1", updated["bbb"].ToObjectFromJson<string>());
 
             response.ClearStates();
-            updated = connectionContext.UpdateStates(response.States);
+            updated = connectionContext.UpdateStates(response.ConnectionStates);
 
             // After clear is null.
             Assert.IsNull(updated);
@@ -56,17 +57,19 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         [Test]
         public void TestEncodeAndDecodeState()
         {
-            var state = new Dictionary<string, object>
+            var state = new Dictionary<string, BinaryData>
             {
-                { "aaa", "aaa" },
-                { "bbb", "bbb" }
+                { "aaa", BinaryData.FromObjectAsJson("aaa") },
+                { "bbb", BinaryData.FromObjectAsJson("bbb") }
             };
 
             var encoded = state.EncodeConnectionStates();
 
             var decoded = encoded.DecodeConnectionStates();
 
-            Assert.AreEqual(state, decoded);
+            CollectionAssert.AreEquivalent(
+                state.Values.Select(d => d.ToObjectFromJson<string>()),
+                decoded.Values.Select(d => d.ToObjectFromJson<string>()));
         }
 
         [Test]

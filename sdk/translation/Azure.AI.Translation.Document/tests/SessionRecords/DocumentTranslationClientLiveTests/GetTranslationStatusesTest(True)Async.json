@@ -6,6 +6,7 @@
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
+        "Content-Length": "0",
         "traceparent": "00-a895eed5be6d5542a738ab5963735677-92912f7e3869ba46-00",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.8.0",
@@ -80,6 +81,7 @@
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
+        "Content-Length": "0",
         "traceparent": "00-892e7ab746bd74409203e1973f97fc9f-aef67b48db9ad248-00",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.8.0",

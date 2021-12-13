@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn.Tests
                 {
                     WafPolicy = new WritableSubResource
                     {
-                        Id = "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/CdnTest/providers/Microsoft.Network/frontdoorWebApplicationFirewallPolicies/testAFDWaf"
+                        Id = new ResourceIdentifier("/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/CdnTest/providers/Microsoft.Network/frontdoorWebApplicationFirewallPolicies/testAFDWaf")
                     }
                 }
             };
