@@ -114,3 +114,11 @@ directive:
     $.nbformat['x-ms-client-name'] = 'NotebookFormat';
     $.nbformat_minor['x-ms-client-name'] = 'NotebookFormatMinor';
 ```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.TriggerRun.properties
+  transform: >
+    $.status["x-ms-enum"].values = [{value: "Succeeded", name: "Succeeded" },{value: "Failed", name: "Failed" },{value: "Inprogress", name: "InProgress" }];
+```

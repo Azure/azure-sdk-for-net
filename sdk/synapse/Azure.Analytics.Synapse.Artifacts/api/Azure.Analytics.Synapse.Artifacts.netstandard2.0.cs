@@ -7132,7 +7132,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         private readonly int _dummyPrimitive;
         public TriggerRunStatus(string value) { throw null; }
         public static Azure.Analytics.Synapse.Artifacts.Models.TriggerRunStatus Failed { get { throw null; } }
-        public static Azure.Analytics.Synapse.Artifacts.Models.TriggerRunStatus Inprogress { get { throw null; } }
+        public static Azure.Analytics.Synapse.Artifacts.Models.TriggerRunStatus InProgress { get { throw null; } }
         public static Azure.Analytics.Synapse.Artifacts.Models.TriggerRunStatus Succeeded { get { throw null; } }
         public bool Equals(Azure.Analytics.Synapse.Artifacts.Models.TriggerRunStatus other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
