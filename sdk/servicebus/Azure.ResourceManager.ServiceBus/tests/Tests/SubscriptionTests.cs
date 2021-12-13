@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         [RecordedTest]
         public async Task CreateGetUpdateDeleteSubscription()
         {
+            IgnoreTestInLiveMode();
             //create namespace
             ResourceGroup resourceGroup = await CreateResourceGroupAsync();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
@@ -85,13 +86,6 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //delete subscription
             await serviceBusSubscription.DeleteAsync();
             Assert.IsFalse(await serviceBusSubscriptionCollection.CheckIfExistsAsync(subscriptionName));
-
-            //delete created topics
-            await topic.DeleteAsync();
-            await topic1.DeleteAsync();
-
-            //delete namespace
-            await serviceBusNamespace.DeleteAsync();
         }
     }
 }
