@@ -19,8 +19,6 @@ namespace Azure.ResourceManager.Core
     /// </summary>
     public abstract class ArmResource
     {
-        private const char Space = ' ';
-
         private TagResource _tagResource;
         private Tenant _tenant;
 
@@ -132,7 +130,7 @@ namespace Azure.ResourceManager.Core
             var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType));
             if (theResource is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Type}");
-            return theResource.Locations.Select(l => ConvertDisplayNameToLocation(l));
+            return theResource.Locations.Select(l => new Location(l));
         }
 
         /// <summary>
@@ -149,35 +147,7 @@ namespace Azure.ResourceManager.Core
             var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType));
             if (theResource is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Type}");
-            return theResource.Locations.Select(l => ConvertDisplayNameToLocation(l));
-        }
-
-        internal static Location ConvertDisplayNameToLocation(string displayName)
-        {
-            if (ReferenceEquals(displayName, null))
-                throw new ArgumentNullException(nameof(displayName));
-
-            string name = GetNameFromDisplayName(displayName);
-            Location value;
-            if (Location.TryGetKnownCloud(name, out value))
-            {
-                return value;
-            }
-
-            return new Location(name, displayName);
-        }
-
-        private static string GetNameFromDisplayName(string name)
-        {
-            StringBuilder sb = new StringBuilder();
-            foreach (char c in name)
-            {
-                if (c == Space)
-                    continue;
-
-                sb.Append(char.ToLowerInvariant(c));
-            }
-            return sb.ToString();
+            return theResource.Locations.Select(l => new Location(l));
         }
     }
 }

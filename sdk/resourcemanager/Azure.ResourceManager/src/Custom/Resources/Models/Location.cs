@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -12,6 +13,8 @@ namespace Azure.ResourceManager.Resources.Models
     /// </summary>
     public readonly struct Location : IEquatable<Location>
     {
+        private const char Space = ' ';
+
         private static Dictionary<string, Location> PublicCloudLocations { get; } = new Dictionary<string, Location>();
 
         #region Public Cloud Locations
@@ -219,14 +222,23 @@ namespace Azure.ResourceManager.Resources.Models
         #endregion
 
         /// <summary> Initializes a new instance of Location. </summary>
-        /// <param name="name"> The location name or the display name. </param>
-        public Location(string name)
+        /// <param name="location"> The location name or the display name. </param>
+        public Location(string location)
         {
-            if (ReferenceEquals(name, null))
-                throw new ArgumentNullException(nameof(name));
+            if (ReferenceEquals(location, null))
+                throw new ArgumentNullException(nameof(location));
 
-            Name = name;
-            DisplayName = PublicCloudLocations.TryGetValue(name, out Location loc) ? loc.DisplayName : null;
+            Name = GetNameFromDisplayName(location, out bool wasConverted);
+            var lookUp = wasConverted ? Name : location.ToLowerInvariant();
+            if (PublicCloudLocations.TryGetValue(lookUp, out Location loc))
+            {
+                Name = loc.Name;
+                DisplayName = loc.DisplayName;
+            }
+            else
+            {
+                DisplayName = wasConverted ? location : null;
+            }
         }
 
         /// <summary> Initializes a new instance of Location. </summary>
@@ -241,26 +253,32 @@ namespace Azure.ResourceManager.Resources.Models
             DisplayName = displayName;
         }
 
+        private static string GetNameFromDisplayName(string name, out bool foundSpace)
+        {
+            foundSpace = false;
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in name)
+            {
+                if (c == Space)
+                {
+                    foundSpace = true;
+                    continue;
+                }
+
+                sb.Append(char.ToLowerInvariant(c));
+            }
+            return foundSpace ? sb.ToString() : name;
+        }
+
         /// <summary>
         /// Gets a location name consisting of only lowercase characters without white spaces or any separation character between words, e.g. "westus".
         /// </summary>
         public string Name { get; }
 
         /// <summary>
-        /// Gets a location display name consisting of titlecase words or alphanumeric characters separated by whitespaces, e.g. "West US"
+        /// Gets a location display name consisting of titlecase words or alphanumeric characters separated by whitespaces, e.g. "West US".
         /// </summary>
         public string DisplayName { get; }
-
-        /// <summary>
-        /// Returns the instance of a known cloud by its name if it exists.
-        /// </summary>
-        /// <param name="name"> The name of the known cloud. </param>
-        /// <param name="location"> The location instance returned if found. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static bool TryGetKnownCloud(string name, out Location location)
-        {
-            return PublicCloudLocations.TryGetValue(name, out location);
-        }
 
         private static Location CreateStaticReference(string name, string displayName)
         {
@@ -281,7 +299,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary>
         /// Creates a new location implicitly from a string.
         /// </summary>
-        /// <param name="other"> String to be assigned in the Name form </param>
+        /// <param name="other"> String to be assigned in the Name form. </param>
         public static implicit operator Location(string other)
         {
             if (!ReferenceEquals(other, null))

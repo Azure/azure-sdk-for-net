@@ -9,49 +9,21 @@ namespace Azure.ResourceManager.Tests
     public class LocationTests
     {
         [TestCase("WestUS2", "westus2", "West US 2")]
-        [TestCase("WestUS4", "westus4", "WestUS4")]
+        [TestCase("WestUS4", "WestUS4", null)]
         [TestCase("West US 2", "westus2", "West US 2")]
+        [TestCase("WEst Us 2", "westus2", "West US 2")]
         [TestCase("West Us 3", "westus3", "West Us 3")]
         [TestCase("West-Us 2", "west-us2", "West-Us 2")]
         [TestCase(" West Us 2", "westus2", "West US 2")]
         [TestCase(" ", "", " ")]
-        [TestCase("", "", "")]
+        [TestCase("", "", null)]
+        [TestCase("Us West", "uswest", "Us West")]
+        [TestCase("A B C 5", "abc5", "A B C 5")]
         public void ConvertFromDisplayName(string input, string expectedName, string expectedDisplayName)
         {
-            Location loc = ArmResource.ConvertDisplayNameToLocation(input);
+            Location loc = input;
             Assert.AreEqual(expectedName, loc.Name);
             Assert.AreEqual(expectedDisplayName, loc.DisplayName);
-        }
-
-        [Test]
-        public void ConvertFromDisplayNameNull()
-        {
-            Assert.Throws<ArgumentNullException>(() => ArmResource.ConvertDisplayNameToLocation(null));
-        }
-
-        [TestCase("West US", "West US", null)]
-        [TestCase("west-us", "west-us", null)]
-        [TestCase("westus", "westus", "West US")]
-        [TestCase("Private Cloud", "Private Cloud", null)]
-        [TestCase("private-cloud", "private-cloud", null)]
-        [TestCase("privatecloud", "privatecloud", null)]
-        [TestCase("1$S#@$%^", "1$S#@$%^", null)]
-        [TestCase("", "", null)]
-        [TestCase(" ", " ", null)]
-        [TestCase(null, null, null)]
-        public void CanConstructLocationFromString(string name, string expectedName, string expectedDisplayName)
-        {
-            if (name == null)
-            {
-                Assert.Throws<ArgumentNullException>(() => { Location location = name; });
-            }
-            else
-            {
-                Location location = name;
-                string strLocation = location;
-                Assert.AreEqual(name, strLocation);
-                Assert.AreEqual(expectedDisplayName, location.DisplayName);
-            }
         }
 
         [TestCase("northcentralus", "northcentralus", "North Central US")]
@@ -59,7 +31,9 @@ namespace Azure.ResourceManager.Tests
         [TestCase("uswest1a", "uswest1a", null)]
         [TestCase("uswest1", "uswest1", null)]
         [TestCase("westus", "westus", "West US")]
-        [TestCase("westus ", "westus ", null)]
+        [TestCase("westus ", "westus", "West US")]
+        [TestCase("Westus", "westus", "West US")]
+        [TestCase("XWestus", "XWestus", null)]
         [TestCase("*uswest", "*uswest", null)]
         [TestCase("us*west", "us*west", null)]
         [TestCase("uswest*", "uswest*", null)]
@@ -83,24 +57,8 @@ namespace Azure.ResourceManager.Tests
             Assert.IsNull(loc.DisplayName);
         }
 
-        [TestCase("Us West")]
-        [TestCase("US West")]
-        [TestCase("USa West")]
-        [TestCase("West US")]
-        [TestCase("West USa")]
-        [TestCase("Us West West")]
-        [TestCase("Us West 2")]
-        [TestCase("Us West West 2")]
-        [TestCase("A B C 5")]
-        public void NameTypeIsDisplayName(string location)
-        {
-            Location loc = location;
-            Assert.IsNull(loc.DisplayName);
-            Assert.AreEqual(loc.Name, location);
-        }
-
         [TestCase(true, "West Us", "West Us")]
-        [TestCase(false, "West Us", "WestUs")]
+        [TestCase(true, "West Us", "WestUs")]
         [TestCase(true, "!#()@(#@", "!#()@(#@")]
         [TestCase(true, "W3$t U$", "W3$t U$")]
         [TestCase(true, "1234567890", "1234567890")]
@@ -115,6 +73,13 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(expected, loc1.Equals(loc2));
             if(right != null)
                 Assert.AreEqual(expected, loc1.GetHashCode() == loc2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({loc1.GetHashCode()}, {loc2.GetHashCode()})");
+        }
+
+        [Test]
+        public void NullNameInCtor()
+        {
+            Assert.Throws<ArgumentNullException>(() => { new Location(null, null); });
+            Assert.DoesNotThrow(() => { new Location("test", null); });
         }
 
         [Test]
@@ -136,7 +101,7 @@ namespace Azure.ResourceManager.Tests
         }
 
         [TestCase(true, "West Us", "West Us")]
-        [TestCase(false, "West Us", "WestUs")]
+        [TestCase(true, "West Us", "WestUs")]
         [TestCase(true, "!#()@(#@", "!#()@(#@")]
         [TestCase(true, "W3$t U$", "W3$t U$")]
         [TestCase(true, "1234567890", "1234567890")]
@@ -150,26 +115,15 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(expected, location.Equals(right));
         }
 
-        [TestCase("", "")]
-        [TestCase("West US", "West US")]
-        [TestCase("west-us", "west-us")]
-        [TestCase("westus2", "westus2")]
-        [TestCase("private-cloud", "private-cloud")]
-        public void CanParseToString(string name, string expected)
-        {
-            Location location1 = name;
-            Assert.AreEqual(expected, location1.ToString());
-        }
-
-        [TestCase("West US", "West US", null)]
+        [TestCase("West US", "westus", "West US")]
         [TestCase("west-us", "west-us", null)]
         [TestCase("westus", "westus", "West US")]
-        [TestCase("Private Cloud", "Private Cloud", null)]
-        [TestCase("private-cloud", "private-cloud", null)]
+        [TestCase("Private Cloud", "privatecloud", "Private Cloud")]
+        [TestCase("Private-cloud", "Private-cloud", null)]
         [TestCase("privatecloud", "privatecloud", null)]
         [TestCase("1$S#@$%^", "1$S#@$%^", null)]
         [TestCase("", "", null)]
-        [TestCase(" ", " ", null)]
+        [TestCase(" ", "", " ")]
         [TestCase(null, null, null)]
         public void CanCastLocationToString(string name, string expectedName, string expectedDisplayName)
         {
@@ -181,7 +135,7 @@ namespace Azure.ResourceManager.Tests
             {
                 Location location = name;
                 string strLocation = location;
-                Assert.AreEqual(name, strLocation);
+                Assert.AreEqual(expectedName, strLocation);
                 Assert.AreEqual(expectedDisplayName, location.DisplayName);
             }
         }
