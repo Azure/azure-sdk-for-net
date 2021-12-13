@@ -104,22 +104,6 @@
       "expirationDate": null,
       "type": null
     },
-    "05edbf1362db44e9735b855fa65fca2585464b1a5331b9199e88db13a4d8d287": {
-      "signature": "05edbf1362db44e9735b855fa65fca2585464b1a5331b9199e88db13a4d8d287",
-      "alternativeSignatures": [
-        "1854693c257b175a27cff89d3e48671ff94d8a17cbdac5d0e85f5139c97db245"
-      ],
-      "target": "sdk/storage/Azure.Storage.Common/tests/Shared/AzuriteFixture.cs",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-AZURE0140",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
     "25c9721e9eed26a58ee7a74c28a4e2dd83b119908a17bb22a72b915e4e16eb9c": {
       "signature": "25c9721e9eed26a58ee7a74c28a4e2dd83b119908a17bb22a72b915e4e16eb9c",
       "alternativeSignatures": [
@@ -915,70 +899,6 @@
       ],
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "e08000ed94634e565c1b12438d811332782e00020661ce360d9de9aa2c883330": {
-      "signature": "e08000ed94634e565c1b12438d811332782e00020661ce360d9de9aa2c883330",
-      "alternativeSignatures": [
-        "a7d411e965dcf844a39a3808a04fc021574dcfd59a70652b955d31fcb41a20ff"
-      ],
-      "target": "sdk/identity/Azure.Identity/tests/SessionRecords/ManagedIdentityCredentialSFLiveTests/ValidateSystemAssignedIdentity.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-GENERAL0060",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "94409ad411e9cb0cd8aa3e6a56419b8e4ea7f3c5b2b1d3afbce38704803a94fc": {
-      "signature": "94409ad411e9cb0cd8aa3e6a56419b8e4ea7f3c5b2b1d3afbce38704803a94fc",
-      "alternativeSignatures": [
-        "2f852033c3b218bd0775d59fbf72f0818d3f0a5f8473431aeab6b14ec450f175"
-      ],
-      "target": "sdk/identity/Azure.Identity/tests/SessionRecords/ManagedIdentityCredentialSFLiveTests/ValidateSystemAssignedIdentityAsync.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-GENERAL0060",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "9fe42481e1b7f2a23be8adf7253908bbaab08be819d4cb191dd7d97e035c9689": {
-      "signature": "9fe42481e1b7f2a23be8adf7253908bbaab08be819d4cb191dd7d97e035c9689",
-      "alternativeSignatures": [
-        "6f3bebf79d1a7a4d107c59f85baa804457ca960eefec39cd052d2116d58ca363"
-      ],
-      "target": "sdk/identity/Azure.Identity/tests/SessionRecords/ManagedIdentityCredentialSFLiveTests/ValidateUserAssignedIdentity.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-GENERAL0060",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "53d791312764be145a927a0e2f4644d254d91d9c72ec705111d38291cd80789c": {
-      "signature": "53d791312764be145a927a0e2f4644d254d91d9c72ec705111d38291cd80789c",
-      "alternativeSignatures": [
-        "65e80510297f4fcb5ff4f381e1d2cb6d455cdf034287af06107affa7968d41f6"
-      ],
-      "target": "sdk/identity/Azure.Identity/tests/SessionRecords/ManagedIdentityCredentialSFLiveTests/ValidateUserAssignedIdentityAsync.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-GENERAL0060",
       "justification": null,
       "createdDate": "2021-12-01 07:45:09Z",
       "expirationDate": null,
@@ -3304,102 +3224,6 @@
       "expirationDate": null,
       "type": null
     },
-    "b13cf13c81248a156f92694011377850f96f285e9ccc0d9453567b1a4d3f01a5": {
-      "signature": "b13cf13c81248a156f92694011377850f96f285e9ccc0d9453567b1a4d3f01a5",
-      "alternativeSignatures": [
-        "bd2915add67d81ef228f9fc702fc4f8eba9fd0cefbf5f29c0167fc1f406f70f3"
-      ],
-      "target": "sdk/synapse/Azure.Analytics.Synapse.Artifacts/tests/SessionRecords/NotebookClientLiveTests/TestGetNotebook.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-GENERAL0060",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "294c1e252b84977e5dc99f5a2d9064763837807c524eb31dd567b1c3ec556242": {
-      "signature": "294c1e252b84977e5dc99f5a2d9064763837807c524eb31dd567b1c3ec556242",
-      "alternativeSignatures": [
-        "2fe1186bdefa73dc127bbff4963624d5f5f765f50c7a7dec5db00b5589286b2e"
-      ],
-      "target": "sdk/synapse/Azure.Analytics.Synapse.Artifacts/tests/SessionRecords/NotebookClientLiveTests/TestGetNotebook.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-GENERAL0060",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "a7d65e00f26b02cb6ce7947f44b0b56ee34d12ee119186667de549f0f3829918": {
-      "signature": "a7d65e00f26b02cb6ce7947f44b0b56ee34d12ee119186667de549f0f3829918",
-      "alternativeSignatures": [
-        "4b4317cfbfc9f020b533313c00c2c88f2ed582d12e813d9a8809b879641cf91b"
-      ],
-      "target": "sdk/synapse/Azure.Analytics.Synapse.Artifacts/tests/SessionRecords/NotebookClientLiveTests/TestGetNotebook.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-GENERAL0060",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "20191458043be3da8d98c4715d143cd4cc547c478220410bfa6e20ca4370faa8": {
-      "signature": "20191458043be3da8d98c4715d143cd4cc547c478220410bfa6e20ca4370faa8",
-      "alternativeSignatures": [
-        "2e4d069ed51c23189c56e13f15723a330260e0019de0418cf72f696d71db2c6e"
-      ],
-      "target": "sdk/synapse/Azure.Analytics.Synapse.Artifacts/tests/SessionRecords/NotebookClientLiveTests/TestGetNotebookAsync.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-GENERAL0060",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "19a3383cc7a02bb990f87404d00934221a532e15ec3ecd3e2ebfd932f0f5ab94": {
-      "signature": "19a3383cc7a02bb990f87404d00934221a532e15ec3ecd3e2ebfd932f0f5ab94",
-      "alternativeSignatures": [
-        "ee32aa9e2a9a440119363d0a878f9e9be04427ef7e9801e1565831bba999c93a"
-      ],
-      "target": "sdk/synapse/Azure.Analytics.Synapse.Artifacts/tests/SessionRecords/NotebookClientLiveTests/TestGetNotebookAsync.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-GENERAL0060",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "6b91a9b5b94fdc36196704d7667ecdfb80cf830b80e37c806be8c3f3e4f39fe8": {
-      "signature": "6b91a9b5b94fdc36196704d7667ecdfb80cf830b80e37c806be8c3f3e4f39fe8",
-      "alternativeSignatures": [
-        "238ca2eee96750c84812b36a0beef49e5aa29a86581321fbbf25eab9183b2efa"
-      ],
-      "target": "sdk/synapse/Azure.Analytics.Synapse.Artifacts/tests/SessionRecords/NotebookClientLiveTests/TestGetNotebookAsync.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-GENERAL0060",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
     "3cfc44e56b287362c8a4d947cb6af5e213a77280ef0035d2f3bb017855ee5c2f": {
       "signature": "3cfc44e56b287362c8a4d947cb6af5e213a77280ef0035d2f3bb017855ee5c2f",
       "alternativeSignatures": [
@@ -3411,38 +3235,6 @@
       ],
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0060",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "2f640692b0c2d229ca8688fc44be286d0000badc6ae6e78a2e897fb71be6cdd3": {
-      "signature": "2f640692b0c2d229ca8688fc44be286d0000badc6ae6e78a2e897fb71be6cdd3",
-      "alternativeSignatures": [
-        "e9db36c075e10a4d93b2faf63dc5ee5da6b0a12fc91f55caaf84c0cf9f5d1cba"
-      ],
-      "target": "sdk/mixedreality/Azure.MixedReality.Authentication/tests/Azure.MixedReality.Authentication.Tests/SessionRecords/MixedRealityStsClientLiveTests/GetToken.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-GENERAL0130",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "14dde475710f7afb10bec2575f88f551cbaf520a731383e9b876446c95a00209": {
-      "signature": "14dde475710f7afb10bec2575f88f551cbaf520a731383e9b876446c95a00209",
-      "alternativeSignatures": [
-        "2e22e2833b5410bb765b755819a69282e67c522a0ff3f457e9b8d04be1ed70a2"
-      ],
-      "target": "sdk/mixedreality/Azure.MixedReality.Authentication/tests/Azure.MixedReality.Authentication.Tests/SessionRecords/MixedRealityStsClientLiveTests/GetTokenAsync.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-GENERAL0130",
       "justification": null,
       "createdDate": "2021-12-01 07:45:09Z",
       "expirationDate": null,
