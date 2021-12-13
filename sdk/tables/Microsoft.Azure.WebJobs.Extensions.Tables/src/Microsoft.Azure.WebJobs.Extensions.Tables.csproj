@@ -4,11 +4,15 @@
         <Version>1.0.0-beta.1</Version>
         <Description>This package extends the Microsoft.Azure.WebJobs library with Table triggers using Azure Table service.</Description>
         <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-        <NoWarn>$(NoWarn);CS1606;CS0618;AZC0001;CS1591;SA1636;SA1028;CA1200</NoWarn>
+        <NoWarn>$(NoWarn);
+            SA1636;<!-- Some code was copied, we can't change the license header -->
+            AZC0001;<!-- Namespace -->
+            CS0618; <!-- Obsolete APIs -->
+            CS1591; <!-- XML docs -->
+            </NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Azure.Cosmos.Table" VersionOverride="1.0.7" />
         <PackageReference Include="Microsoft.Azure.WebJobs" />
     </ItemGroup>
 
@@ -17,13 +21,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Include="..\..\Azure.Data.Tables\src\Extensions\StringTableExtensions.cs">
-        <Link>StringTableExtensions.cs</Link>
-      </Compile>
+      <Compile Include="..\..\Azure.Data.Tables\src\Extensions\StringTableExtensions.cs" />
       <Compile Include="$(AzureCoreSharedSources)TypeBinder.cs" LinkBase="Shared" />
-      <Compile Include="..\..\Azure.Data.Tables\src\TableConstants.cs">
-        <Link>TableConstants.cs</Link>
-      </Compile>
+      <Compile Include="..\..\Azure.Data.Tables\src\TableConstants.cs" />
     </ItemGroup>
 
 </Project>

@@ -147,7 +147,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             return tableEntity;
         }
 
-        // Provide some common builder rules. 
+        // Provide some common builder rules.
         private class JObjectBuilder :
             IAsyncConverter<TableAttribute, TableClient>,
             IAsyncConverter<TableAttribute, JObject>,
@@ -239,7 +239,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 
             public ObjectToITableEntityConverter()
             {
-                // JObject case should have been claimed by another converter. 
+                // JObject case should have been claimed by another converter.
                 // So we can statically enforce an ITableEntity compatible contract
                 var t = typeof(TElement);
                 TableClientHelpers.VerifyContainsProperty(t, "RowKey");

@@ -3,10 +3,8 @@
 
 using System;
 using Azure.Data.Tables;
-using Microsoft.Azure.WebJobs.Extensions.Tables;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Configuration;
-using TableStorageAccount = Microsoft.Azure.Cosmos.Table.CloudStorageAccount;
 
 namespace Microsoft.Azure.WebJobs
 {
