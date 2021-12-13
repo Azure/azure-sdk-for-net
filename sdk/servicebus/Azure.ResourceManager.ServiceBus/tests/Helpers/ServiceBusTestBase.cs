@@ -9,7 +9,6 @@ using Azure.ResourceManager.TestFramework;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.ResourceManager.ServiceBus.Models;
-using System.Net.NetworkInformation;
 
 namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
 {
