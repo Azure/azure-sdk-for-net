@@ -14,30 +14,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
     internal class PocoEntityValueBinder<TElement> : IValueBinder, IWatchable, IWatcher
     {
-        private static readonly PocoToTableEntityConverter<TElement> Converter =
-            new PocoToTableEntityConverter<TElement>();
+        private static readonly PocoToTableEntityConverter<TElement> Converter = new();
 
         private readonly TableEntityContext _entityContext;
         private readonly string _eTag;
         private readonly TElement _value;
-        // private readonly IDictionary<string, EntityProperty> _originalProperties;
+        private readonly TableEntity _originalProperties;
 
         public PocoEntityValueBinder(TableEntityContext entityContext, string eTag, TElement value)
         {
             _entityContext = entityContext;
             _eTag = eTag;
             _value = value;
-            // _originalProperties =
-            //     TableEntityValueBinder.DeepClone(Converter.Convert(value).WriteEntity(operationContext: null));
+            _originalProperties = Converter.Convert(value);
         }
 
         public Type Type => typeof(TElement);
 
         public IWatcher Watcher => this;
 
-#pragma warning disable CA1822 // TODO:
-        public bool HasChanged => true; //HasChanges(Converter.Convert(_value));
-#pragma warning restore CA1822
+        public bool HasChanged => HasChanges(Converter.Convert(_value));
 
         public Task<object> GetValueAsync()
         {
@@ -47,24 +43,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
         public Task SetValueAsync(object value, CancellationToken cancellationToken)
         {
             // Not ByRef, so can ignore value argument.
-            ITableEntity entity = Converter.Convert(_value);
-            // if (!Converter.ConvertsPartitionKey)
-            // {
-            //     entity.PartitionKey = _entityContext.PartitionKey;
-            // }
-            //
-            // if (!Converter.ConvertsRowKey)
-            // {
-            //     entity.RowKey = _entityContext.RowKey;
-            // }
-            //
-            // if (!Converter.ConvertsETag)
-            // {
-            //     entity.ETag = new ETag(_eTag);
-            // }
-            entity.PartitionKey = _entityContext.PartitionKey;
-            entity.RowKey = _entityContext.RowKey;
-            entity.ETag = new ETag(_eTag);
+            TableEntity entity = Converter.Convert(_value);
+            if (!Converter.ConvertsPartitionKey)
+            {
+                entity.PartitionKey = _entityContext.PartitionKey;
+            }
+
+            if (!Converter.ConvertsRowKey)
+            {
+                entity.RowKey = _entityContext.RowKey;
+            }
+
+            if (!Converter.ConvertsETag)
+            {
+                entity.ETag = new ETag(_eTag);
+            }
+
             if (entity.PartitionKey != _entityContext.PartitionKey)
             {
                 throw new InvalidOperationException(
@@ -95,11 +89,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             return HasChanged ? new TableParameterLog { EntitiesWritten = 1 } : null;
         }
 
-        private static bool HasChanges(ITableEntity current)
+        private bool HasChanges(TableEntity current)
         {
-            return current != null;
-            // TODO:
-            //return TableEntityValueBinder.HasChanges(_originalProperties, current.WriteEntity(operationContext: null));
+            return TableEntityValueBinder.HasChanges(_originalProperties, current);
         }
     }
 }

@@ -1,18 +1,34 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using ITableEntity = Azure.Data.Tables.ITableEntity;
-using TableEntity = Azure.Data.Tables.TableEntity;
+using System;
+using System.Globalization;
+using System.Reflection;
+using Azure.Data.Tables;
+using Azure.Monitor.Query;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
-    internal class PocoToTableEntityConverter<TInput> : IConverter<TInput, ITableEntity>
+    internal class PocoToTableEntityConverter<TInput> : IConverter<TInput, TableEntity>
     {
+        private readonly TypeBinder<TableEntity>.BoundTypeInfo _info;
+
         public PocoToTableEntityConverter()
         {
+            _info = PocoTypeBinder.Shared.GetBinderInfo(typeof(TInput));
+
+            ConvertsPartitionKey = HasGetter<string>("PartitionKey");
+            ConvertsRowKey = HasGetter<string>("RowKey");
+            ConvertsETag = HasGetter<string>("ETag");
         }
 
-        public ITableEntity Convert(TInput input)
+        public bool ConvertsPartitionKey { get; }
+
+        public bool ConvertsRowKey { get; }
+
+        public bool ConvertsETag { get; }
+
+        public TableEntity Convert(TInput input)
         {
             if (input == null)
             {
@@ -24,41 +40,36 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 return te;
             }
 
-            // TableEntity result = new TableEntity();
-            // if (_partitionKeyGetter != null)
-            // {
-            //     result.PartitionKey = _partitionKeyGetter.GetValue(input);
-            // }
-            //
-            // if (_rowKeyGetter != null)
-            // {
-            //     result.RowKey = _rowKeyGetter.GetValue(input);
-            // }
-            //
-            // if (_timestampGetter != null)
-            // {
-            //     result.Timestamp = _timestampGetter.GetValue(input);
-            // }
-            //
-            // IDictionary<string, EntityProperty> properties = new Dictionary<string, EntityProperty>();
-            // foreach (KeyValuePair<string, IPropertyGetter<TInput, EntityProperty>> pair in _otherPropertyGetters)
-            // {
-            //     string propertyName = pair.Key;
-            //     IPropertyGetter<TInput, EntityProperty> getter = pair.Value;
-            //     Debug.Assert(getter != null);
-            //     EntityProperty propertyValue = getter.GetValue(input);
-            //     properties.Add(propertyName, propertyValue);
-            // }
-
-            // result.ReadEntity(properties, operationContext: null);
-            // if (_eTagKeyGetter != null)
-            // {
-            //     result.ETag = _eTagKeyGetter.GetValue(input);
-            // }
-
             TableEntity result = new TableEntity();
-            PocoTypeBinder.Shared.Serialize(input, result);
+            _info.Serialize(input, result);
             return result;
+        }
+
+        private static bool HasGetter<TProperty>(string propertyName)
+        {
+            PropertyInfo property = typeof(TInput).GetProperty(propertyName,
+                BindingFlags.Instance | BindingFlags.Public);
+
+            if (property == null || !property.CanRead || !property.HasPublicGetMethod())
+            {
+                return false;
+            }
+
+            if (property.PropertyType != typeof(TProperty))
+            {
+                string message = String.Format(CultureInfo.CurrentCulture,
+                    "If the {0} property is present, it must be a {1}.", propertyName, typeof(TProperty).Name);
+                throw new InvalidOperationException(message);
+            }
+
+            if (property.GetIndexParameters().Length != 0)
+            {
+                string message = String.Format(CultureInfo.CurrentCulture,
+                    "If the {0} property is present, it must not be an indexer.", propertyName);
+                throw new InvalidOperationException(message);
+            }
+
+            return true;
         }
     }
 }

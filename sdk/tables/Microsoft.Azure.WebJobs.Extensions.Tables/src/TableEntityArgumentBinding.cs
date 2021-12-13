@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Data.Tables;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 
@@ -16,14 +17,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
         public async Task<IValueProvider> BindAsync(TableEntityContext value, ValueBindingContext context)
         {
             var table = value.Table;
-            var result = await table.GetEntityAsync<TElement>(value.PartitionKey, value.RowKey, cancellationToken: context.CancellationToken).ConfigureAwait(false);
-            TElement entity = (TElement)result.Value;
-            if (entity == null)
+            try
+            {
+                var result = await table.GetEntityAsync<TElement>(value.PartitionKey, value.RowKey, cancellationToken: context.CancellationToken).ConfigureAwait(false);
+                return new TableEntityValueBinder(value, result.Value, typeof(TElement));
+            }
+            catch (RequestFailedException e) when (e.Status == 404 && e.ErrorCode == "TableNotFound")
             {
                 return new NullEntityValueProvider<TElement>(value);
             }
-
-            return new TableEntityValueBinder(value, entity, typeof(TElement));
         }
     }
 }

@@ -235,7 +235,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
         private class ObjectToITableEntityConverter<TElement>
             : IConverter<TElement, ITableEntity>
         {
-            private static readonly IConverter<TElement, ITableEntity> Converter = new PocoToTableEntityConverter<TElement>();
+            private static readonly IConverter<TElement, TableEntity> Converter = new PocoToTableEntityConverter<TElement>();
 
             public ObjectToITableEntityConverter()
             {

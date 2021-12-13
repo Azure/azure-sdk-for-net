@@ -8,7 +8,6 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Azure.Data.Tables;
-using ITableEntity = Microsoft.Azure.Cosmos.Table.ITableEntity;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {

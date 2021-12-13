@@ -11,6 +11,7 @@ using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 using ITableEntity = Azure.Data.Tables.ITableEntity;
+using TableEntity = Azure.Data.Tables.TableEntity;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
@@ -70,10 +71,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             return HasChanged ? new TableParameterLog { EntitiesWritten = 1 } : null;
         }
 
-        internal static bool HasChanges(IDictionary<string, EntityProperty> originalProperties,
-            IDictionary<string, EntityProperty> currentProperties)
+        internal static bool HasChanges(TableEntity originalProperties,
+            TableEntity currentProperties)
         {
-            if (originalProperties.Keys.Count != currentProperties.Keys.Count)
+            if (originalProperties.Count != currentProperties.Count)
             {
                 return true;
             }
@@ -85,8 +86,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 
             foreach (string key in currentProperties.Keys)
             {
-                EntityProperty originalValue = originalProperties[key];
-                EntityProperty newValue = currentProperties[key];
+                object originalValue = originalProperties[key];
+                object newValue = currentProperties[key];
                 if (originalValue == null)
                 {
                     if (newValue != null)

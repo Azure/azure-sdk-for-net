@@ -100,7 +100,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             }
             else
             {
-                partition.Add(rowKey, new TableTransactionAction(TableTransactionActionType.UpsertReplace, itemCopy, itemCopy.ETag));
+                partition.Add(rowKey, new TableTransactionAction(TableTransactionActionType.UpdateReplace, itemCopy, itemCopy.ETag));
             }
 
             if (partition.Count >= MaxBatchSize)

@@ -22,6 +22,8 @@
     <Compile Remove="TableEntityToPocoConverterTests.cs" />
     <Compile Remove="TableEntityValueBinderTests.cs" />
     <Compile Remove="PocoToTableEntityConverterTests.cs" />
+    <Compile Remove="EntityPropertyToTConverterFactoryTests.cs" />
+    <Compile Remove="TToEntityPropertyConverterFactoryTests.cs" />
   </ItemGroup>
 
 

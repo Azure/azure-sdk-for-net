@@ -31,13 +31,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         [SetUp]
         public async Task SetUp()
         {
-            TableName = "testtable" + _random.Next();
+            TableName = GetRandomTableName();
 
             ServiceClient = new TableServiceClient(TestEnvironment.StorageConnectionString);
             TableClient = ServiceClient.GetTableClient(TableName);
             await TableClient.CreateAsync();
         }
-
         [TearDown]
         public async Task TearDown()
         {
@@ -129,6 +128,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             {
                 return false;
             }
+        }
+
+        protected string GetRandomTableName()
+        {
+            return "testtable" + _random.Next();
         }
     }
 }

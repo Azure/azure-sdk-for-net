@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,15 +31,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         [Test]
         public async Task Table_IfBoundToTableClientAndTableIsMissing_Creates()
         {
-            TableName = "ThisTableDoesntExist";
+            TableName = GetRandomTableName();
             var tableReference = ServiceClient.GetTableClient(TableName);
 
             // Act
             await CallAsync<BindToTableClientProgram>();
 
             // Assert
-
-            Assert.False(await TableExistsAsync(tableReference.Name));
+            Assert.True(await TableExistsAsync(tableReference.Name));
         }
 
         private class BindToTableClientProgram
@@ -48,7 +46,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             public async Task BindToTableClient([Table(TableNameExpression)] TableClient table)
             {
                 Assert.NotNull(table);
-                Assert.False(await TableExistsAsync(table));
+                Assert.True(await TableExistsAsync(table));
             }
         }
 
