@@ -140,7 +140,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             TableEntity tableEntity = new TableEntity(partitionKey, rowKey);
             foreach (JProperty property in entity.Properties())
             {
-                tableEntity[property.Name] = property.Value;
+                // TODO: validation?
+                tableEntity[property.Name] = ((JValue)property.Value).Value;
             }
 
             return tableEntity;
@@ -195,10 +196,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 string finalQuery = attribute.Filter;
                 if (!string.IsNullOrEmpty(attribute.PartitionKey))
                 {
-                    var partitionKeyPredicate = TableClient.CreateQueryFilter($"PartitionKey == {attribute.PartitionKey}");
+                    var partitionKeyPredicate = TableClient.CreateQueryFilter($"PartitionKey eq {attribute.PartitionKey}");
                     if (!string.IsNullOrEmpty(attribute.Filter))
                     {
-                        finalQuery = partitionKeyPredicate + "AND " + attribute.Filter;
+                        finalQuery = $"{partitionKeyPredicate} and {attribute.Filter}";
                     }
                     else
                     {
@@ -206,7 +207,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                     }
                 }
 
-                int? take = 0;
+                int? take = null;
                 if (attribute.Take > 0)
                 {
                     take = attribute.Take;
@@ -220,11 +221,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 await foreach (var entity in entities)
                 {
                     countRemaining--;
+                    entityArray.Add(ConvertEntityToJObject(entity));
                     if (countRemaining == 0)
                     {
                         break;
                     }
-                    entityArray.Add(ConvertEntityToJObject(entity));
                 }
                 return entityArray;
             }
@@ -234,7 +235,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
         private class ObjectToITableEntityConverter<TElement>
             : IConverter<TElement, ITableEntity>
         {
-            private static readonly IConverter<TElement, ITableEntity> Converter = PocoToTableEntityConverter<TElement>.Create();
+            private static readonly IConverter<TElement, ITableEntity> Converter = new PocoToTableEntityConverter<TElement>();
 
             public ObjectToITableEntityConverter()
             {

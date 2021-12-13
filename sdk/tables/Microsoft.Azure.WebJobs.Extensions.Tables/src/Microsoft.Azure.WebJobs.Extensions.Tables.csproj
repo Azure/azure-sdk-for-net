@@ -20,9 +20,6 @@
       <Compile Include="..\..\Azure.Data.Tables\src\Extensions\StringTableExtensions.cs">
         <Link>StringTableExtensions.cs</Link>
       </Compile>
-      <Compile Include="..\..\Azure.Data.Tables\src\Extensions\TablesTypeBinder.cs">
-        <Link>TablesTypeBinder.cs</Link>
-      </Compile>
       <Compile Include="$(AzureCoreSharedSources)TypeBinder.cs" LinkBase="Shared" />
       <Compile Include="..\..\Azure.Data.Tables\src\TableConstants.cs">
         <Link>TableConstants.cs</Link>

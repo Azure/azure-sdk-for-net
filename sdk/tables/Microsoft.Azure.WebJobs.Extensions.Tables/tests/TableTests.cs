@@ -230,7 +230,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             AssertNullablePropertyEqual(expected.BooleanProperty, entity, "BooleanProperty");
             AssertPropertyNull(entity, "NullableBooleanProperty");
             AssertPropertyEqual(expected.ByteArrayProperty, entity, "ByteArrayProperty");
-            AssertNullablePropertyEqual(expected.DateTimeProperty, entity, "DateTimeProperty");
+            // TODO: behavior change. DateTime was the default type before
+            AssertNullablePropertyEqual(new DateTimeOffset(expected.DateTimeProperty), entity, "DateTimeProperty");
             AssertPropertyNull(entity, "NullableDateTimeProperty");
             AssertNullablePropertyEqual(expected.DateTimeOffsetProperty, entity,
                 "DateTimeOffsetProperty");

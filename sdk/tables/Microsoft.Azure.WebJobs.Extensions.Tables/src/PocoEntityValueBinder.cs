@@ -15,7 +15,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
     internal class PocoEntityValueBinder<TElement> : IValueBinder, IWatchable, IWatcher
     {
         private static readonly PocoToTableEntityConverter<TElement> Converter =
-            PocoToTableEntityConverter<TElement>.Create();
+            new PocoToTableEntityConverter<TElement>();
 
         private readonly TableEntityContext _entityContext;
         private readonly string _eTag;
@@ -48,21 +48,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
         {
             // Not ByRef, so can ignore value argument.
             ITableEntity entity = Converter.Convert(_value);
-            if (!Converter.ConvertsPartitionKey)
-            {
-                entity.PartitionKey = _entityContext.PartitionKey;
-            }
-
-            if (!Converter.ConvertsRowKey)
-            {
-                entity.RowKey = _entityContext.RowKey;
-            }
-
-            if (!Converter.ConvertsETag)
-            {
-                entity.ETag = new ETag(_eTag);
-            }
-
+            // if (!Converter.ConvertsPartitionKey)
+            // {
+            //     entity.PartitionKey = _entityContext.PartitionKey;
+            // }
+            //
+            // if (!Converter.ConvertsRowKey)
+            // {
+            //     entity.RowKey = _entityContext.RowKey;
+            // }
+            //
+            // if (!Converter.ConvertsETag)
+            // {
+            //     entity.ETag = new ETag(_eTag);
+            // }
+            entity.PartitionKey = _entityContext.PartitionKey;
+            entity.RowKey = _entityContext.RowKey;
+            entity.ETag = new ETag(_eTag);
             if (entity.PartitionKey != _entityContext.PartitionKey)
             {
                 throw new InvalidOperationException(

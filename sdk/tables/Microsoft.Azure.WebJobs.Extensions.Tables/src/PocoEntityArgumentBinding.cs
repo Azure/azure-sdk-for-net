@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Data.Tables;
 using Microsoft.Azure.WebJobs.Host.Bindings;
@@ -25,7 +26,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 return new NullEntityValueProvider<TElement>(value);
             }
 
-            TElement userEntity = TablesTypeBinder.Shared.Deserialize<TElement>(entity);
+            TElement userEntity;
+            if (typeof(TElement) == typeof(TableEntity))
+            {
+                userEntity = (TElement)(object) entity;
+            }
+            else
+            {
+                userEntity = PocoTypeBinder.Shared.Deserialize<TElement>(entity);
+            }
 
             return new PocoEntityValueBinder<TElement>(value, entity.ETag.ToString(), userEntity);
         }

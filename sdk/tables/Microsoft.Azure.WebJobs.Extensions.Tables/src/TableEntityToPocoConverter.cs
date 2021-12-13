@@ -6,36 +6,36 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
-using Microsoft.Azure.Cosmos.Table;
+using Azure.Data.Tables;
 using Microsoft.Azure.WebJobs.Host;
 using ITableEntity = Azure.Data.Tables.ITableEntity;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
-    internal class TableEntityToPocoConverter<TOutput> : IConverter<ITableEntity, TOutput> where TOutput : new()
+    internal class TableEntityToPocoConverter<TOutput> : IConverter<TableEntity, TOutput> where TOutput : new()
     {
-        private readonly IPropertySetter<TOutput, string> _partitionKeySetter;
-        private readonly IPropertySetter<TOutput, string> _rowKeySetter;
-        private readonly IPropertySetter<TOutput, DateTimeOffset> _timestampSetter;
-        private readonly IPropertySetter<TOutput, string> _eTagSetter;
-        private readonly IReadOnlyDictionary<string, IPropertySetter<TOutput, EntityProperty>> _otherPropertySetters;
+        // private readonly IPropertySetter<TOutput, string> _partitionKeySetter;
+        // private readonly IPropertySetter<TOutput, string> _rowKeySetter;
+        // private readonly IPropertySetter<TOutput, DateTimeOffset> _timestampSetter;
+        // private readonly IPropertySetter<TOutput, string> _eTagSetter;
+        // private readonly IReadOnlyDictionary<string, IPropertySetter<TOutput, EntityProperty>> _otherPropertySetters;
 
-        private TableEntityToPocoConverter(
-            IPropertySetter<TOutput, string> partitionKeySetter,
-            IPropertySetter<TOutput, string> rowKeySetter,
-            IPropertySetter<TOutput, DateTimeOffset> timestampSetter,
-            IPropertySetter<TOutput, string> eTagSetter,
-            IReadOnlyDictionary<string, IPropertySetter<TOutput, EntityProperty>> otherPropertySetters)
-        {
-            Debug.Assert(otherPropertySetters != null);
-            _partitionKeySetter = partitionKeySetter;
-            _rowKeySetter = rowKeySetter;
-            _timestampSetter = timestampSetter;
-            _eTagSetter = eTagSetter;
-            _otherPropertySetters = otherPropertySetters;
-        }
+        // private TableEntityToPocoConverter(
+        //     IPropertySetter<TOutput, string> partitionKeySetter,
+        //     IPropertySetter<TOutput, string> rowKeySetter,
+        //     IPropertySetter<TOutput, DateTimeOffset> timestampSetter,
+        //     IPropertySetter<TOutput, string> eTagSetter,
+        //     IReadOnlyDictionary<string, IPropertySetter<TOutput, EntityProperty>> otherPropertySetters)
+        // {
+        //     Debug.Assert(otherPropertySetters != null);
+        //     _partitionKeySetter = partitionKeySetter;
+        //     _rowKeySetter = rowKeySetter;
+        //     _timestampSetter = timestampSetter;
+        //     _eTagSetter = eTagSetter;
+        //     _otherPropertySetters = otherPropertySetters;
+        // }
 
-        public TOutput Convert(ITableEntity input)
+        public TOutput Convert(TableEntity input)
         {
             if (input == null)
             {
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             //     _eTagSetter.SetValue(ref result, input.ETag);
             // }
 
-            return result;
+            return PocoTypeBinder.Shared.Deserialize<TOutput>(input);
         }
         //
         // public static TableEntityToPocoConverter<TOutput> Create()

@@ -179,10 +179,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         [Test]
         public async Task TableEntity_IfBoundToJArray_CanCall()
         {
-            await TableClient.UpdateEntityAsync(CreateTableEntity(PartitionKey, RowKey + "1", "Value", "x1"), ETag.All);
-            await TableClient.UpdateEntityAsync(CreateTableEntity(PartitionKey, RowKey + "2", "Value", "x2"), ETag.All);
-            await TableClient.UpdateEntityAsync(CreateTableEntity(PartitionKey, RowKey + "3", "Value", "x3"), ETag.All);
-            await TableClient.UpdateEntityAsync(CreateTableEntity(PartitionKey, RowKey + "4", "Value", "x4"), ETag.All);
+            await TableClient.AddEntityAsync(CreateTableEntity(PartitionKey, RowKey + "1", "Value", "x1"));
+            await TableClient.AddEntityAsync(CreateTableEntity(PartitionKey, RowKey + "2", "Value", "x2"));
+            await TableClient.AddEntityAsync(CreateTableEntity(PartitionKey, RowKey + "3", "Value", "x3"));
+            await TableClient.AddEntityAsync(CreateTableEntity(PartitionKey, RowKey + "4", "Value", "x4"));
 
             // Act
             var result1 = await CallAsync<BindTableEntityToJArrayProgram>(nameof(BindTableEntityToJArrayProgram.CallTakeFilter));
@@ -307,7 +307,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             Assert.AreEqual(PartitionKey, entity.PartitionKey); // Guard
             Assert.AreEqual(RowKey, entity.RowKey); // Guard
 
-            Assert.AreEqual(3, entity.Count);
+            // TODO: behavior change. Was 3 before
+            Assert.AreEqual(7, entity.Count);
             Assert.AreEqual("Pear", entity["Fruit"]);
             Assert.AreEqual("\"00:02:00\"", entity["Duration"]);
             Assert.AreEqual("Bar", entity["Value"]);

@@ -15,7 +15,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
     /// <typeparam name="T">The POCO type.</typeparam>
     internal class PocoEntityWriter<T> : ICollector<T>, IAsyncCollector<T>, IWatcher
     {
-        private static readonly IConverter<T, ITableEntity> Converter = PocoToTableEntityConverter<T>.Create();
+        private static readonly IConverter<T, ITableEntity> Converter = new PocoToTableEntityConverter<T>();
 
         public PocoEntityWriter(TableClient table, TableParameterLog tableStatistics)
         {
