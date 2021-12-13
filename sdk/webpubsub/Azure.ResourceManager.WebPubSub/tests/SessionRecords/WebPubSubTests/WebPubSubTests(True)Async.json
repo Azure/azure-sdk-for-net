@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-b1304865802b204088e6658695f9689d-61763e0262790148-00",
+        "traceparent": "00-d33858e014f1434485f368cfd21ff725-3a0a14cc99db7645-00",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20211203.1 (.NET Core 3.1.21; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "8abb86825b14d74e1c8cda65b3f9cfe5",
+        "x-ms-client-request-id": "47343731a1cba2af86b6b3046dfb92e3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "468",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 13 Dec 2021 08:09:12 GMT",
+        "Date": "Mon, 13 Dec 2021 08:43:13 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "359494e5-c820-4efe-912c-3182c557dee4",
+        "x-ms-correlation-request-id": "61c6f57d-d1eb-4daa-9d44-8fe21170ca1f",
         "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "359494e5-c820-4efe-912c-3182c557dee4",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20211213T080913Z:359494e5-c820-4efe-912c-3182c557dee4"
+        "x-ms-request-id": "61c6f57d-d1eb-4daa-9d44-8fe21170ca1f",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211213T084313Z:61c6f57d-d1eb-4daa-9d44-8fe21170ca1f"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -47,7 +47,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/WebPubSubRG-3614?api-version=2019-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/WebPubSubRG-9802?api-version=2019-10-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -55,7 +55,7 @@
         "Content-Length": "22",
         "Content-Type": "application/json",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20211203.1 (.NET Core 3.1.21; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "d806400cf0c207d45d5982c2159166f7",
+        "x-ms-client-request-id": "738f748110145f1174c290257bf641b5",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -66,19 +66,19 @@
         "Cache-Control": "no-cache",
         "Content-Length": "230",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 13 Dec 2021 08:09:15 GMT",
+        "Date": "Mon, 13 Dec 2021 08:43:15 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "1ecd492f-69de-42ef-bee3-e7d0b3493fd2",
+        "x-ms-correlation-request-id": "c38f1cbf-010f-4f84-9145-0fd0b67563f3",
         "x-ms-ratelimit-remaining-subscription-writes": "1199",
-        "x-ms-request-id": "1ecd492f-69de-42ef-bee3-e7d0b3493fd2",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20211213T080915Z:1ecd492f-69de-42ef-bee3-e7d0b3493fd2"
+        "x-ms-request-id": "c38f1cbf-010f-4f84-9145-0fd0b67563f3",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211213T084315Z:c38f1cbf-010f-4f84-9145-0fd0b67563f3"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/WebPubSubRG-3614",
-        "name": "WebPubSubRG-3614",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/WebPubSubRG-9802",
+        "name": "WebPubSubRG-9802",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "westus2",
         "properties": {
@@ -88,7 +88,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1650734462",
+    "RandomSeed": "310226512",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
