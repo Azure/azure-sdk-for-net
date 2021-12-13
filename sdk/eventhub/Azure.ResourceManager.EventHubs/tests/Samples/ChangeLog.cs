@@ -27,7 +27,7 @@ ResourceGroup resourceGroup = subscription.GetResourceGroups().Get(resourceGroup
 //create namespace
 EventHubNamespaceData parameters = new EventHubNamespaceData(Location.WestUS)
 {
-    Sku = new Sku(SkuName.Standard)
+    Sku = new Models.Sku(SkuName.Standard)
     {
         Tier = SkuTier.Standard,
     }
