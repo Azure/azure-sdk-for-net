@@ -699,7 +699,7 @@ namespace Azure.ResourceManager.Resources
         public Azure.ResourceManager.Models.Plan Plan { get { throw null; } set { } }
         public object Properties { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Models.Sku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.Sku Sku { get { throw null; } set { } }
     }
     public partial class PredefinedTag : Azure.ResourceManager.Core.ArmResource
     {
@@ -1426,6 +1426,16 @@ namespace Azure.ResourceManager.Resources.Models
         public string Origin { get { throw null; } }
         public string Provider { get { throw null; } }
         public string Resource { get { throw null; } }
+    }
+    public partial class Sku
+    {
+        public Sku() { }
+        public int? Capacity { get { throw null; } set { } }
+        public string Family { get { throw null; } set { } }
+        public string Model { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public string Size { get { throw null; } set { } }
+        public string Tier { get { throw null; } set { } }
     }
     public enum SpendingLimit
     {
