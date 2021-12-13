@@ -39,8 +39,8 @@ namespace Azure.Monitor.Query.Models
             return new LogsQueryResult(allTables, statisticsJson, visualizationJson, errorJson);
         }
 
-        /// <summary> Initializes a new instance of LogsTableRow. </summary>
-        /// /// <param name="columns"> The list of columns. </param>
+        /// <summary> Initializes a new instance of <see cref="LogsTableRow"/>. </summary>
+        /// <param name="columns"> The list of columns. </param>
         /// <param name="values"> An object array representing the rows of the table. </param>
         /// <returns> A new <see cref="Models.LogsTableRow"/> instance for mocking. </returns>
         public static LogsTableRow LogsTableRow(IEnumerable<LogsTableColumn> columns, IEnumerable<object> values)
@@ -51,13 +51,14 @@ namespace Azure.Monitor.Query.Models
             return new LogsTableRow(columnMap, columnsList, row);
         }
 
-        /// <summary> Initializes a new instance of LogsTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogsTable"/>. </summary>
         /// <param name="name"> The name of the table. </param>
         /// <param name="columns"> The list of columns. </param>
         /// <param name="rows"> The list of rows. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="rows"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="rows"/> is <c>null</c>. </exception>
         public static LogsTable LogsTable(string name, IEnumerable<LogsTableColumn> columns, IEnumerable<LogsTableRow> rows)
         {
+            //todo: change here
             JsonElement row = JsonElementFromObject(rows);
             return new LogsTable(name, columns, row);
         }
