@@ -1,19 +1,22 @@
 # Add 'AzsdkResourceType' member to outputs since actual output types have changed over the years.
 
+#Requires -Modules @{ModuleName='Az.KeyVault'; ModuleVersion='3.4.1'}
+
 function Get-PurgeableGroupResources {
   param (
     [Parameter(Mandatory=$true, Position=0)]
     [string] $ResourceGroupName
   )
+
   $purgeableResources = @()
 
   # Discover Managed HSMs first since they are a premium resource.
   Write-Verbose "Retrieving deleted Managed HSMs from resource group $ResourceGroupName"
 
   # Get any Managed HSMs in the resource group, for which soft delete cannot be disabled.
-  $deletedHsms = Get-AzKeyVaultManagedHsm -ResourceGroupName $ResourceGroupName -ErrorAction Ignore `
+  $deletedHsms = @(Get-AzKeyVaultManagedHsm -ResourceGroupName $ResourceGroupName -ErrorAction Ignore `
     | Add-Member -MemberType NoteProperty -Name AzsdkResourceType -Value 'Managed HSM' -PassThru `
-    | Add-Member -MemberType AliasProperty -Name AzsdkName -Value VaultName -PassThru
+    | Add-Member -MemberType AliasProperty -Name AzsdkName -Value VaultName -PassThru)
 
   if ($deletedHsms) {
     Write-Verbose "Found $($deletedHsms.Count) deleted Managed HSMs to potentially purge."
@@ -23,12 +26,12 @@ function Get-PurgeableGroupResources {
   Write-Verbose "Retrieving deleted Key Vaults from resource group $ResourceGroupName"
 
   # Get any Key Vaults that will be deleted so they can be purged later if soft delete is enabled.
-  $deletedKeyVaults = Get-AzKeyVault -ResourceGroupName $ResourceGroupName -ErrorAction Ignore | ForEach-Object {
+  $deletedKeyVaults = @(Get-AzKeyVault -ResourceGroupName $ResourceGroupName -ErrorAction Ignore | ForEach-Object {
     # Enumerating vaults from a resource group does not return all properties we required.
     Get-AzKeyVault -VaultName $_.VaultName -ErrorAction Ignore | Where-Object { $_.EnableSoftDelete } `
       | Add-Member -MemberType NoteProperty -Name AzsdkResourceType -Value 'Key Vault' -PassThru `
       | Add-Member -MemberType AliasProperty -Name AzsdkName -Value VaultName -PassThru
-    }
+    })
 
   if ($deletedKeyVaults) {
     Write-Verbose "Found $($deletedKeyVaults.Count) deleted Key Vaults to potentially purge."
@@ -73,9 +76,9 @@ function Get-PurgeableResources {
   Write-Verbose "Retrieving deleted Key Vaults from subscription $subscriptionId"
 
   # Get deleted Key Vaults for the current subscription.
-  $deletedKeyVaults = Get-AzKeyVault -InRemovedState `
+  $deletedKeyVaults = @(Get-AzKeyVault -InRemovedState `
     | Add-Member -MemberType NoteProperty -Name AzsdkResourceType -Value 'Key Vault' -PassThru `
-    | Add-Member -MemberType AliasProperty -Name AzsdkName -Value VaultName -PassThru
+    | Add-Member -MemberType AliasProperty -Name AzsdkName -Value VaultName -PassThru)
 
   if ($deletedKeyVaults) {
     Write-Verbose "Found $($deletedKeyVaults.Count) deleted Key Vaults to potentially purge."

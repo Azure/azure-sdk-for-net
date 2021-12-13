@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "df2b4977-16dc-8c5c-bf61-e944238ca217",
         "x-ms-date": "Tue, 26 Jan 2021 19:34:46 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "df2b4977-16dc-8c5c-bf61-e944238ca217",
         "x-ms-request-id": "f2e095ef-801a-00a1-3d1a-f42d5c000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -48,7 +48,7 @@
         "x-ms-date": "Tue, 26 Jan 2021 19:34:46 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -61,7 +61,7 @@
         ],
         "x-ms-client-request-id": "733a8dde-aecb-8be7-cf79-6ea5a2ec526c",
         "x-ms-request-id": "f2e095f2-801a-00a1-3e1a-f42d5c000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -79,7 +79,7 @@
         "x-ms-client-request-id": "96656f61-2e52-824c-1ee9-b7c8718a4ba0",
         "x-ms-date": "Tue, 26 Jan 2021 19:34:46 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -93,7 +93,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "96656f61-2e52-824c-1ee9-b7c8718a4ba0",
         "x-ms-request-id": "f2e095f3-801a-00a1-3f1a-f42d5c000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><EnumerationResults ServiceEndpoint=\"https://seansoftdeletecanary.file.core.windows.net/\"><Shares><Share><Name>existing647b1102</Name><Properties><Last-Modified>Mon, 11 May 2020 18:54:32 GMT</Last-Modified><Etag>\"0x8D7F5DCBE38249A\"</Etag><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><Quota>5120</Quota><AccessTier>TransactionOptimized</AccessTier><AccessTierChangeTime>Mon, 11 May 2020 18:54:32 GMT</AccessTierChangeTime><DefaultEncryptionScope>$account-encryption-key</DefaultEncryptionScope><DenyEncryptionScopeOverride>false</DenyEncryptionScopeOverride></Properties></Share><Share><Name>share647b1102</Name><Properties><Last-Modified>Tue, 12 May 2020 19:18:57 GMT</Last-Modified><Etag>\"0x8D7F6A9516B1701\"</Etag><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><Quota>5120</Quota><AccessTier>TransactionOptimized</AccessTier><AccessTierChangeTime>Tue, 12 May 2020 19:18:57 GMT</AccessTierChangeTime><DefaultEncryptionScope>$account-encryption-key</DefaultEncryptionScope><DenyEncryptionScopeOverride>false</DenyEncryptionScopeOverride></Properties></Share><Share><Name>shared365137f</Name><Properties><Last-Modified>Tue, 12 May 2020 20:31:46 GMT</Last-Modified><Etag>\"0x8D7F6B37DDB00D5\"</Etag><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><Quota>5120</Quota><AccessTier>TransactionOptimized</AccessTier><AccessTierChangeTime>Tue, 12 May 2020 20:31:46 GMT</AccessTierChangeTime><DefaultEncryptionScope>$account-encryption-key</DefaultEncryptionScope><DenyEncryptionScopeOverride>false</DenyEncryptionScopeOverride></Properties></Share><Share><Name>sharerestore12700ec5</Name><Properties><Last-Modified>Tue, 12 May 2020 20:36:16 GMT</Last-Modified><Etag>\"0x8D7F6B41ECF17FA\"</Etag><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><Quota>5120</Quota><AccessTier>TransactionOptimized</AccessTier><AccessTierChangeTime>Tue, 12 May 2020 19:41:52 GMT</AccessTierChangeTime><DefaultEncryptionScope>$account-encryption-key</DefaultEncryptionScope><DenyEncryptionScopeOverride>false</DenyEncryptionScopeOverride></Properties></Share><Share><Name>sharerestorebed60c48</Name><Properties><Last-Modified>Wed, 13 May 2020 17:46:48 GMT</Last-Modified><Etag>\"0x8D7F7659CAE040B\"</Etag><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><Quota>5120</Quota><AccessTier>TransactionOptimized</AccessTier><AccessTierChangeTime>Tue, 12 May 2020 01:26:19 GMT</AccessTierChangeTime><DefaultEncryptionScope>$account-encryption-key</DefaultEncryptionScope><DenyEncryptionScopeOverride>false</DenyEncryptionScopeOverride></Properties></Share><Share><Name>test-share-04423526-abc3-44c9-aa2e-540f6eecac0d</Name><Properties><Last-Modified>Sun, 12 Apr 2020 18:42:18 GMT</Last-Modified><Etag>\"0x8D7DF113AB0D452\"</Etag><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><Quota>5120</Quota><AccessTier>TransactionOptimized</AccessTier><DefaultEncryptionScope>$account-encryption-key</DefaultEncryptionScope><DenyEncryptionScopeOverride>false</DenyEncryptionScopeOverride></Properties></Share><Share><Name>test-share-081c75ba-a6bf-42b3-8abe-437d91cd0f36</Name><Properties><Last-Modified>Wed, 20 Jan 2021 23:58:52 GMT</Last-Modified><Etag>\"0x8D8BD9F56D99A7F\"</Etag><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><Quota>5120</Quota><AccessTier>TransactionOptimized</AccessTier><DefaultEncryptionScope>$account-encryption-key</DefaultEncryptionScope><DenyEncryptionScopeOverride>false</DenyEncryptionScopeOverride></Properties></Share><Share><Name>test-share-3754bd7d-b2e4-4079-a97e-a3b9afc1648c</Name><Properties><Last-Modified>Sat, 11 Apr 2020 17:58:03 GMT</Last-Modified><Etag>\"0x8D7DE41E1D75DB4\"</Etag><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><Quota>5120</Quota><AccessTier>TransactionOptimized</AccessTier><DefaultEncryptionScope>$account-encryption-key</DefaultEncryptionScope><DenyEncryptionScopeOverride>false</DenyEncryptionScopeOverride></Properties></Share><Share><Name>test-share-56f2609f-ac2e-5dee-b252-5bdc002ac31e</Name><Deleted>true</Deleted><Version>01D6F41A4B70B4DC</Version><Properties><Last-Modified>Tue, 26 Jan 2021 19:34:42 GMT</Last-Modified><Etag>\"0x8D8C2316DE5EE59\"</Etag><LeaseStatus>unlocked</LeaseStatus><LeaseState>broken</LeaseState><Quota>5120</Quota><AccessTier>TransactionOptimized</AccessTier><DefaultEncryptionScope>$account-encryption-key</DefaultEncryptionScope><DenyEncryptionScopeOverride>false</DenyEncryptionScopeOverride><DeletedTime>Tue, 26 Jan 2021 19:34:42 GMT</DeletedTime><RemainingRetentionDays>1</RemainingRetentionDays></Properties></Share><Share><Name>test-share-56fbbd79-6124-db7d-1025-1ab1bdf68dc4</Name><Deleted>true</Deleted><Version>01D6F41A4D6647BA</Version><Properties><Last-Modified>Tue, 26 Jan 2021 19:34:45 GMT</Last-Modified><Etag>\"0x8D8C2316FDC7A22\"</Etag><LeaseStatus>unlocked</LeaseStatus><LeaseState>broken</LeaseState><Quota>5120</Quota><AccessTier>TransactionOptimized</AccessTier><AccessTierChangeTime>Tue, 26 Jan 2021 19:34:45 GMT</AccessTierChangeTime><DefaultEncryptionScope>$account-encryption-key</DefaultEncryptionScope><DenyEncryptionScopeOverride>false</DenyEncryptionScopeOverride><DeletedTime>Tue, 26 Jan 2021 19:34:45 GMT</DeletedTime><RemainingRetentionDays>1</RemainingRetentionDays></Properties></Share><Share><Name>test-share-6214a335-a4b0-498c-9995-1e50b6bb50a2</Name><Properties><Last-Modified>Sat, 11 Apr 2020 17:57:43 GMT</Last-Modified><Etag>\"0x8D7DE41D5B0D211\"</Etag><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><Quota>5120</Quota><AccessTier>TransactionOptimized</AccessTier><DefaultEncryptionScope>$account-encryption-key</DefaultEncryptionScope><DenyEncryptionScopeOverride>false</DenyEncryptionScopeOverride></Properties></Share><Share><Name>test-share-659cd252-38f3-43aa-8092-750973358be5</Name><Properties><Last-Modified>Sun, 12 Apr 2020 18:14:14 GMT</Last-Modified><Etag>\"0x8D7DF0D4EBB62F2\"</Etag><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><Quota>5120</Quota><AccessTier>TransactionOptimized</AccessTier><DefaultEncryptionScope>$account-encryption-key</DefaultEncryptionScope><DenyEncryptionScopeOverride>false</DenyEncryptionScopeOverride></Properties></Share><Share><Name>test-share-6d528e3f-219f-44f9-b80b-3d2248cce9f3</Name><Properties><Last-Modified>Sat, 11 Apr 2020 17:58:24 GMT</Last-Modified><Etag>\"0x8D7DE41EDFB7785\"</Etag><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><Quota>5120</Quota><AccessTier>TransactionOptimized</AccessTier><DefaultEncryptionScope>$account-encryption-key</DefaultEncryptionScope><DenyEncryptionScopeOverride>false</DenyEncryptionScopeOverride></Properties></Share><Share><Name>test-share-6fe76ac5-709b-4678-b55e-47e717c1d943</Name><Properties><Last-Modified>Sun, 12 Apr 2020 18:24:45 GMT</Last-Modified><Etag>\"0x8D7DF0EC69BCDD4\"</Etag><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><Quota>5120</Quota><AccessTier>TransactionOptimized</AccessTier><DefaultEncryptionScope>$account-encryption-key</DefaultEncryptionScope><DenyEncryptionScopeOverride>false</DenyEncryptionScopeOverride></Properties></Share><Share><Name>test-share-745c2b22-c95a-4019-a1cf-df95f0cb7db9</Name><Properties><Last-Modified>Sun, 12 Apr 2020 18:42:49 GMT</Last-Modified><Etag>\"0x8D7DF114CDCA126\"</Etag><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><Quota>5120</Quota><AccessTier>TransactionOptimized</AccessTier><DefaultEncryptionScope>$account-encryption-key</DefaultEncryptionScope><DenyEncryptionScopeOverride>false</DenyEncryptionScopeOverride></Properties></Share><Share><Name>test-share-7e386df5-7d6b-4fcf-b23d-9e7dd2c13a2b</Name><Properties><Last-Modified>Sun, 12 Apr 2020 18:23:37 GMT</Last-Modified><Etag>\"0x8D7DF0E9E44C712\"</Etag><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><Quota>5120</Quota><AccessTier>TransactionOptimized</AccessTier><DefaultEncryptionScope>$account-encryption-key</DefaultEncryptionScope><DenyEncryptionScopeOverride>false</DenyEncryptionScopeOverride></Properties></Share><Share><Name>test-share-93210600-6d3f-49e4-8e87-7e6947c23b8b</Name><Properties><Last-Modified>Sat, 11 Apr 2020 17:57:33 GMT</Last-Modified><Etag>\"0x8D7DE41CF6BC1E8\"</Etag><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><Quota>5120</Quota><AccessTier>TransactionOptimized</AccessTier><DefaultEncryptionScope>$account-encryption-key</DefaultEncryptionScope><DenyEncryptionScopeOverride>false</DenyEncryptionScopeOverride></Properties></Share><Share><Name>test-share-a8dbb944-72d7-47b7-9c42-e7f369186f97</Name><Properties><Last-Modified>Fri, 13 Nov 2020 19:51:09 GMT</Last-Modified><Etag>\"0x8D8880D77942E77\"</Etag><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><Quota>5120</Quota><AccessTier>TransactionOptimized</AccessTier><AccessTierChangeTime>Fri, 13 Nov 2020 19:51:09 GMT</AccessTierChangeTime><DefaultEncryptionScope>$account-encryption-key</DefaultEncryptionScope><DenyEncryptionScopeOverride>false</DenyEncryptionScopeOverride></Properties></Share><Share><Name>test-share-ba5d06e0-c1d4-41b7-8876-7aef01d366a7</Name><Properties><Last-Modified>Sat, 11 Apr 2020 17:57:53 GMT</Last-Modified><Etag>\"0x8D7DE41DBC30637\"</Etag><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><Quota>5120</Quota><AccessTier>TransactionOptimized</AccessTier><DefaultEncryptionScope>$account-encryption-key</DefaultEncryptionScope><DenyEncryptionScopeOverride>false</DenyEncryptionScopeOverride></Properties></Share><Share><Name>test-share-bed60c48</Name><Properties><Last-Modified>Mon, 11 May 2020 19:38:41 GMT</Last-Modified><Etag>\"0x8D7F5E2E8A4F4E3\"</Etag><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><Quota>5120</Quota><AccessTier>TransactionOptimized</AccessTier><AccessTierChangeTime>Mon, 11 May 2020 19:30:04 GMT</AccessTierChangeTime><DefaultEncryptionScope>$account-encryption-key</DefaultEncryptionScope><DenyEncryptionScopeOverride>false</DenyEncryptionScopeOverride></Properties></Share><Share><Name>test-share-bffb30c0-47cc-4cd0-b3b4-6c560832c136</Name><Properties><Last-Modified>Sun, 12 Apr 2020 18:44:28 GMT</Last-Modified><Etag>\"0x8D7DF11881FBCE1\"</Etag><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><Quota>5120</Quota><AccessTier>TransactionOptimized</AccessTier><DefaultEncryptionScope>$account-encryption-key</DefaultEncryptionScope><DenyEncryptionScopeOverride>false</DenyEncryptionScopeOverride></Properties></Share><Share><Name>test-share-ce14a14c-6463-4bad-bedc-bedf7388d692</Name><Properties><Last-Modified>Sat, 11 Apr 2020 17:58:14 GMT</Last-Modified><Etag>\"0x8D7DE41E7E8F550\"</Etag><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><Quota>5120</Quota><AccessTier>TransactionOptimized</AccessTier><DefaultEncryptionScope>$account-encryption-key</DefaultEncryptionScope><DenyEncryptionScopeOverride>false</DenyEncryptionScopeOverride></Properties></Share><Share><Name>test-share-e21b1b2a-eaa6-4f88-928f-449387ef5cb9</Name><Properties><Last-Modified>Sun, 12 Apr 2020 18:13:43 GMT</Last-Modified><Etag>\"0x8D7DF0D3C81621C\"</Etag><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><Quota>5120</Quota><AccessTier>TransactionOptimized</AccessTier><DefaultEncryptionScope>$account-encryption-key</DefaultEncryptionScope><DenyEncryptionScopeOverride>false</DenyEncryptionScopeOverride></Properties></Share></Shares><NextMarker /></EnumerationResults>"
     },
@@ -113,7 +113,7 @@
         "x-ms-deleted-share-name": "test-share-56fbbd79-6124-db7d-1025-1ab1bdf68dc4",
         "x-ms-deleted-share-version": "01D6F41A4D6647BA",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -128,7 +128,7 @@
         ],
         "x-ms-client-request-id": "324327d1-bc86-1719-1a51-b73908822690",
         "x-ms-request-id": "f2e0961e-801a-00a1-461a-f42d5c000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -145,7 +145,7 @@
         "x-ms-client-request-id": "49f70816-1847-7519-d7de-6352711e16c0",
         "x-ms-date": "Tue, 26 Jan 2021 19:35:17 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -167,7 +167,7 @@
         "x-ms-lease-status": "unlocked",
         "x-ms-request-id": "f2e09621-801a-00a1-471a-f42d5c000000",
         "x-ms-share-quota": "5120",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -186,7 +186,7 @@
         "x-ms-date": "Tue, 26 Jan 2021 19:35:17 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -199,7 +199,7 @@
         ],
         "x-ms-client-request-id": "ff22292a-dc8b-d949-99b0-f04ec74fc7f9",
         "x-ms-request-id": "f2e09622-801a-00a1-481a-f42d5c000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

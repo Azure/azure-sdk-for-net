@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "53bf765c-e02b-1247-131f-42caa2c11e36",
         "x-ms-date": "Tue, 26 Jan 2021 19:32:57 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -29,7 +29,7 @@
         "x-ms-client-request-id": "53bf765c-e02b-1247-131f-42caa2c11e36",
         "x-ms-error-code": "ShareNotFound",
         "x-ms-request-id": "7aabfa0d-c01a-0066-3b1a-f495e2000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ShareNotFound</Code><Message>The specified share does not exist.\n",

@@ -177,6 +177,7 @@ known_content_issues:
   - ['sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/README.md', '#15423']
   - ['sdk/personalizer/README.md','azure-sdk-tools/issues/42']
   - ['sdk/personalizer/Azure.AI.Personalizer/README.md','azure-sdk-tools/issues/42']
+  - ['sdk/webpubsub/Azure.Messaging.WebPubSub/README.md','azure-sdk-tools/issues/42']
 
 # .net climbs upwards. placing these to prevent assigning readmes to the wrong project
 package_indexing_exclusion_list:

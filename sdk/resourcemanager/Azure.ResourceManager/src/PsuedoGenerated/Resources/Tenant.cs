@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="operations"> The operations object to copy the client parameters from. </param>
         /// <param name="tenantData"> The data model representing the generic azure resource. </param>
         internal Tenant(ArmResource operations, TenantData tenantData)
-            : base(operations, ResourceIdentifier.RootResourceIdentifier)
+            : base(operations, ResourceIdentifier.Root)
         {
             _data = tenantData;
             HasData = true;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="baseUri"> The base URI of the service. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         internal Tenant(ArmClientOptions options, TokenCredential credential, Uri baseUri, HttpPipeline pipeline)
-            : base(new ClientContext(options, credential, baseUri, pipeline), ResourceIdentifier.RootResourceIdentifier)
+            : base(new ClientContext(options, credential, baseUri, pipeline), ResourceIdentifier.Root)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _providerRestOperations = new ProviderRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Guid.Empty.ToString(), BaseUri);
@@ -225,12 +225,12 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Gets the management group container for this tenant.
+        /// Gets the management group collection for this tenant.
         /// </summary>
-        /// <returns> A container of the management groups. </returns>
-        public virtual ManagementGroupContainer GetManagementGroups()
+        /// <returns> A collection of the management groups. </returns>
+        public virtual ManagementGroupCollection GetManagementGroups()
         {
-            return new ManagementGroupContainer(this);
+            return new ManagementGroupCollection(this);
         }
 
         /// <summary>
@@ -244,12 +244,12 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Gets the subscription container for this tenant.
+        /// Gets the subscription collection for this tenant.
         /// </summary>
-        /// <returns> A container of the subscriptions. </returns>
-        public virtual SubscriptionContainer GetSubscriptions()
+        /// <returns> A collection of the subscriptions. </returns>
+        public virtual SubscriptionCollection GetSubscriptions()
         {
-            return new SubscriptionContainer(this);
+            return new SubscriptionCollection(this);
         }
     }
 }

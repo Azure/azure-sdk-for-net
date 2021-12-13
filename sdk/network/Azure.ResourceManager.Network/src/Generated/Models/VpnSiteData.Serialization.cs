@@ -8,8 +8,8 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -18,6 +18,11 @@ namespace Azure.ResourceManager.Network
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
@@ -34,14 +39,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(VirtualWan))
             {
                 writer.WritePropertyName("virtualWan");
-                writer.WriteObjectValue(VirtualWan);
+                JsonSerializer.Serialize(writer, VirtualWan);
             }
             if (Optional.IsDefined(DeviceProperties))
             {
@@ -95,12 +98,12 @@ namespace Azure.ResourceManager.Network
         internal static VpnSiteData DeserializeVpnSiteData(JsonElement element)
         {
             Optional<string> etag = default;
+            Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            ResourceIdentifier id = default;
-            Optional<SubResource> virtualWan = default;
+            Optional<WritableSubResource> virtualWan = default;
             Optional<DeviceProperties> deviceProperties = default;
             Optional<string> ipAddress = default;
             Optional<string> siteKey = default;
@@ -108,13 +111,18 @@ namespace Azure.ResourceManager.Network
             Optional<BgpSettings> bgpProperties = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<bool> isSecuritySite = default;
-            Optional<IList<VpnSiteLink>> vpnSiteLinks = default;
+            Optional<IList<VpnSiteLinkData>> vpnSiteLinks = default;
             Optional<O365PolicyProperties> o365Policy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
                 {
                     etag = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -147,11 +155,6 @@ namespace Azure.ResourceManager.Network
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -168,7 +171,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            virtualWan = SubResource.DeserializeSubResource(property0.Value);
+                            virtualWan = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("deviceProperties"))
@@ -238,10 +241,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<VpnSiteLink> array = new List<VpnSiteLink>();
+                            List<VpnSiteLinkData> array = new List<VpnSiteLinkData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VpnSiteLink.DeserializeVpnSiteLink(item));
+                                array.Add(VpnSiteLinkData.DeserializeVpnSiteLinkData(item));
                             }
                             vpnSiteLinks = array;
                             continue;
@@ -260,7 +263,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VpnSiteData(id, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, virtualWan.Value, deviceProperties.Value, ipAddress.Value, siteKey.Value, addressSpace.Value, bgpProperties.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(isSecuritySite), Optional.ToList(vpnSiteLinks), o365Policy.Value);
+            return new VpnSiteData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, virtualWan, deviceProperties.Value, ipAddress.Value, siteKey.Value, addressSpace.Value, bgpProperties.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(isSecuritySite), Optional.ToList(vpnSiteLinks), o365Policy.Value);
         }
     }
 }

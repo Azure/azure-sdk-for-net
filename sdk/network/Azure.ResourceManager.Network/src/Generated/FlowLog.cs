@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network
     public partial class FlowLog : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly FlowLogsRestOperations _restClient;
+        private readonly FlowLogsRestOperations _flowLogsRestClient;
         private readonly FlowLogData _data;
 
         /// <summary> Initializes a new instance of the <see cref="FlowLog"/> class for mocking. </summary>
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "FlowLog"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal FlowLog(ArmResource options, FlowLogData resource) : base(options, resource.Id)
+        internal FlowLog(ArmResource options, FlowLogData resource) : base(options, new ResourceIdentifier(resource.Id))
         {
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new FlowLogsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _flowLogsRestClient = new FlowLogsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="FlowLog"/> class. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network
         internal FlowLog(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new FlowLogsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _flowLogsRestClient = new FlowLogsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="FlowLog"/> class. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network
         internal FlowLog(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new FlowLogsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _flowLogsRestClient = new FlowLogsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _flowLogsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new FlowLog(this, response.Value), response.GetRawResponse());
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _flowLogsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FlowLog(this, response.Value), response.GetRawResponse());
@@ -149,8 +149,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new FlowLogDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _flowLogsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new FlowLogDeleteOperation(_clientDiagnostics, Pipeline, _flowLogsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new FlowLogDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _flowLogsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new FlowLogDeleteOperation(_clientDiagnostics, Pipeline, _flowLogsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -183,22 +183,23 @@ namespace Azure.ResourceManager.Network
                 throw;
             }
         }
+
         /// <summary> Update tags of the specified flow log. </summary>
         /// <param name="parameters"> Parameters supplied to update flow log tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response<FlowLog>> UpdateTagsAsync(TagsObject parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<FlowLog>> UpdateAsync(TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FlowLog.UpdateTags");
+            using var scope = _clientDiagnostics.CreateScope("FlowLog.Update");
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _flowLogsRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new FlowLog(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -212,18 +213,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters supplied to update flow log tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<FlowLog> UpdateTags(TagsObject parameters, CancellationToken cancellationToken = default)
+        public virtual Response<FlowLog> Update(TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FlowLog.UpdateTags");
+            using var scope = _clientDiagnostics.CreateScope("FlowLog.Update");
             scope.Start();
             try
             {
-                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
+                var response = _flowLogsRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
                 return Response.FromValue(new FlowLog(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

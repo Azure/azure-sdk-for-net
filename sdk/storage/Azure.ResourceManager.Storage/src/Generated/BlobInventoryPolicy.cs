@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Storage
     public partial class BlobInventoryPolicy : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly BlobInventoryPoliciesRestOperations _restClient;
+        private readonly BlobInventoryPoliciesRestOperations _blobInventoryPoliciesRestClient;
         private readonly BlobInventoryPolicyData _data;
 
         /// <summary> Initializes a new instance of the <see cref="BlobInventoryPolicy"/> class for mocking. </summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Storage
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new BlobInventoryPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _blobInventoryPoliciesRestClient = new BlobInventoryPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="BlobInventoryPolicy"/> class. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Storage
         internal BlobInventoryPolicy(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new BlobInventoryPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _blobInventoryPoliciesRestClient = new BlobInventoryPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="BlobInventoryPolicy"/> class. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Storage
         internal BlobInventoryPolicy(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new BlobInventoryPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _blobInventoryPoliciesRestClient = new BlobInventoryPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _blobInventoryPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new BlobInventoryPolicy(this, response.Value), response.GetRawResponse());
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _blobInventoryPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new BlobInventoryPolicy(this, response.Value), response.GetRawResponse());
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _blobInventoryPoliciesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new BlobInventoryPolicyDeleteOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _blobInventoryPoliciesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new BlobInventoryPolicyDeleteOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);

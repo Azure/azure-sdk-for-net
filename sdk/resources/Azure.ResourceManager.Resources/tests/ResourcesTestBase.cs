@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.Resources.Tests
         protected ArmClient Client { get; private set; }
 
         protected ResourcesTestBase(bool isAsync, RecordedTestMode mode)
-        : base(isAsync, mode)
+        : base(isAsync, mode, useLegacyTransport: true)
         {
         }
 
         protected ResourcesTestBase(bool isAsync)
-            : base(isAsync)
+            : base(isAsync, useLegacyTransport: true)
         {
         }
 
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Resources.Tests
             return tmpDeploymentProperties;
         }
 
-        protected static Deployment CreateDeploymentExtendedData(DeploymentProperties deploymentProperties) => new Deployment(deploymentProperties);
+        protected static DeploymentInput CreateDeploymentData(DeploymentProperties deploymentProperties) => new DeploymentInput(deploymentProperties);
 
         private static GenericResourceData ConstructGenericUserAssignedIdentities()
         {
@@ -91,11 +91,12 @@ namespace Azure.ResourceManager.Resources.Tests
             //The user assigned identities was created firstly in Portal due to the unexpected behavior of using generic resource to create the user assigned identities.
             string rgName4Identities = "rg-for-DeployScript";
             ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
-            var lro = await Client.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(rgName4Identities, rgData);
+            Subscription sub = await Client.GetDefaultSubscriptionAsync();
+            var lro = await sub.GetResourceGroups().CreateOrUpdateAsync(rgName4Identities, rgData);
             ResourceGroup rg4Identities = lro.Value;
             GenericResourceData userAssignedIdentitiesData = ConstructGenericUserAssignedIdentities();
             ResourceIdentifier userAssignedIdentitiesId = rg4Identities.Id.AppendProviderResource("Microsoft.ManagedIdentity", "userAssignedIdentities", "test-user-assigned-msi");
-            var lro2 = await Client.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(userAssignedIdentitiesId, userAssignedIdentitiesData);
+            var lro2 = await sub.GetGenericResources().CreateOrUpdateAsync(userAssignedIdentitiesId, userAssignedIdentitiesData);
             GenericResource userAssignedIdentities = lro2.Value;
             var managedIdentity = new ManagedServiceIdentity()
             {

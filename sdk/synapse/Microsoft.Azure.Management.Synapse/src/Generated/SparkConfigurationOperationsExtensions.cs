@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// SparkConfiguration name
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             public static SparkConfigurationResource Get(this ISparkConfigurationOperations operations, string resourceGroupName, string sparkConfigurationName, string workspaceName)
             {
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// SparkConfiguration name
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

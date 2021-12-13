@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "64002928-cf75-b914-69c3-98473c6f005c",
         "x-ms-date": "Wed, 17 Feb 2021 22:22:03 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "64002928-cf75-b914-69c3-98473c6f005c",
         "x-ms-request-id": "a11f17b1-701e-0000-657b-057f5f000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -53,7 +53,7 @@
         "x-ms-meta-meta": "data",
         "x-ms-meta-UPPER": "case",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 412,
@@ -68,7 +68,7 @@
         "x-ms-client-request-id": "aa2ac79f-2767-99d7-71f6-c27dfa9dc3da",
         "x-ms-error-code": "ConditionNotMet",
         "x-ms-request-id": "a11f180b-701e-0000-317b-057f5f000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ConditionNotMet</Code><Message>The condition specified using HTTP conditional header(s) is not met.\n",
@@ -90,7 +90,7 @@
         "x-ms-client-request-id": "75a79bb3-5644-8df4-7663-874e2c1d5b82",
         "x-ms-date": "Wed, 17 Feb 2021 22:22:03 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -103,7 +103,7 @@
         ],
         "x-ms-client-request-id": "75a79bb3-5644-8df4-7663-874e2c1d5b82",
         "x-ms-request-id": "a11f1844-701e-0000-657b-057f5f000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -122,7 +122,7 @@
         "x-ms-client-request-id": "5acfc24e-16ea-59ba-cf86-b8543937ab5f",
         "x-ms-date": "Wed, 17 Feb 2021 22:22:04 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -137,7 +137,7 @@
         ],
         "x-ms-client-request-id": "5acfc24e-16ea-59ba-cf86-b8543937ab5f",
         "x-ms-request-id": "3b65e7cb-c01e-002a-1c7b-05a04f000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -160,7 +160,7 @@
         "x-ms-meta-meta": "data",
         "x-ms-meta-UPPER": "case",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 412,
@@ -175,7 +175,7 @@
         "x-ms-client-request-id": "206eabe4-1748-3a87-646f-8f6e95416f58",
         "x-ms-error-code": "LeaseNotPresentWithContainerOperation",
         "x-ms-request-id": "3b65e7f5-c01e-002a-3e7b-05a04f000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>LeaseNotPresentWithContainerOperation</Code><Message>There is currently no lease on the container.\n",
@@ -197,7 +197,7 @@
         "x-ms-client-request-id": "8e6fb75b-8ac8-da17-8dc3-aae46d1e0df7",
         "x-ms-date": "Wed, 17 Feb 2021 22:22:04 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -210,7 +210,7 @@
         ],
         "x-ms-client-request-id": "8e6fb75b-8ac8-da17-8dc3-aae46d1e0df7",
         "x-ms-request-id": "3b65e81a-c01e-002a-607b-05a04f000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

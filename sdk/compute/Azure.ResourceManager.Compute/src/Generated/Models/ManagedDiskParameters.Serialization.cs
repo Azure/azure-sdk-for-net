@@ -7,7 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -24,18 +24,21 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(DiskEncryptionSet))
             {
                 writer.WritePropertyName("diskEncryptionSet");
-                writer.WriteObjectValue(DiskEncryptionSet);
+                JsonSerializer.Serialize(writer, DiskEncryptionSet);
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             writer.WriteEndObject();
         }
 
         internal static ManagedDiskParameters DeserializeManagedDiskParameters(JsonElement element)
         {
             Optional<StorageAccountTypes> storageAccountType = default;
-            Optional<DiskEncryptionSetParameters> diskEncryptionSet = default;
-            ResourceIdentifier id = default;
+            Optional<WritableSubResource> diskEncryptionSet = default;
+            Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccountType"))
@@ -55,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    diskEncryptionSet = DiskEncryptionSetParameters.DeserializeDiskEncryptionSetParameters(property.Value);
+                    diskEncryptionSet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -64,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ManagedDiskParameters(id, Optional.ToNullable(storageAccountType), diskEncryptionSet.Value);
+            return new ManagedDiskParameters(id.Value, Optional.ToNullable(storageAccountType), diskEncryptionSet);
         }
     }
 }

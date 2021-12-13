@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network
     public partial class ServiceEndpointPolicy : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ServiceEndpointPoliciesRestOperations _restClient;
+        private readonly ServiceEndpointPoliciesRestOperations _serviceEndpointPoliciesRestClient;
         private readonly ServiceEndpointPolicyData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ServiceEndpointPolicy"/> class for mocking. </summary>
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "ServiceEndpointPolicy"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal ServiceEndpointPolicy(ArmResource options, ServiceEndpointPolicyData resource) : base(options, resource.Id)
+        internal ServiceEndpointPolicy(ArmResource options, ServiceEndpointPolicyData resource) : base(options, new ResourceIdentifier(resource.Id))
         {
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ServiceEndpointPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _serviceEndpointPoliciesRestClient = new ServiceEndpointPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ServiceEndpointPolicy"/> class. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network
         internal ServiceEndpointPolicy(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ServiceEndpointPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _serviceEndpointPoliciesRestClient = new ServiceEndpointPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ServiceEndpointPolicy"/> class. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network
         internal ServiceEndpointPolicy(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ServiceEndpointPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _serviceEndpointPoliciesRestClient = new ServiceEndpointPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _serviceEndpointPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ServiceEndpointPolicy(this, response.Value), response.GetRawResponse());
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, expand, cancellationToken);
+                var response = _serviceEndpointPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServiceEndpointPolicy(this, response.Value), response.GetRawResponse());
@@ -151,8 +151,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceEndpointPolicyDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _serviceEndpointPoliciesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceEndpointPolicyDeleteOperation(_clientDiagnostics, Pipeline, _serviceEndpointPoliciesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -173,8 +173,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ServiceEndpointPolicyDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _serviceEndpointPoliciesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ServiceEndpointPolicyDeleteOperation(_clientDiagnostics, Pipeline, _serviceEndpointPoliciesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -185,22 +185,23 @@ namespace Azure.ResourceManager.Network
                 throw;
             }
         }
+
         /// <summary> Updates tags of a service endpoint policy. </summary>
         /// <param name="parameters"> Parameters supplied to update service endpoint policy tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response<ServiceEndpointPolicy>> UpdateTagsAsync(TagsObject parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ServiceEndpointPolicy>> UpdateAsync(TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicy.UpdateTags");
+            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicy.Update");
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _serviceEndpointPoliciesRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ServiceEndpointPolicy(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -214,18 +215,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters supplied to update service endpoint policy tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<ServiceEndpointPolicy> UpdateTags(TagsObject parameters, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceEndpointPolicy> Update(TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicy.UpdateTags");
+            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicy.Update");
             scope.Start();
             try
             {
-                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var response = _serviceEndpointPoliciesRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
                 return Response.FromValue(new ServiceEndpointPolicy(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -235,11 +236,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets a list of ServiceEndpointPolicyDefinitions in the ServiceEndpointPolicy. </summary>
+        #region ServiceEndpointPolicyDefinition
+
+        /// <summary> Gets a collection of ServiceEndpointPolicyDefinitions in the ServiceEndpointPolicy. </summary>
         /// <returns> An object representing collection of ServiceEndpointPolicyDefinitions and their operations over a ServiceEndpointPolicy. </returns>
-        public ServiceEndpointPolicyDefinitionContainer GetServiceEndpointPolicyDefinitions()
+        public ServiceEndpointPolicyDefinitionCollection GetServiceEndpointPolicyDefinitions()
         {
-            return new ServiceEndpointPolicyDefinitionContainer(this);
+            return new ServiceEndpointPolicyDefinitionCollection(this);
         }
+        #endregion
     }
 }

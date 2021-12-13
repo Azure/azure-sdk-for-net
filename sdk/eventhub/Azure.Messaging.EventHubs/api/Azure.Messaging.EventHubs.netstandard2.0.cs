@@ -1,7 +1,8 @@
 namespace Azure.Messaging.EventHubs
 {
-    public partial class EventData
+    public partial class EventData : Azure.Messaging.MessageWithMetadata
     {
+        public EventData() { }
         public EventData(System.BinaryData eventBody) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected EventData(System.BinaryData eventBody, System.Collections.Generic.IDictionary<string, object> properties = null, System.Collections.Generic.IReadOnlyDictionary<string, object> systemProperties = null, long sequenceNumber = (long)-9223372036854775808, long offset = (long)-9223372036854775808, System.DateTimeOffset enqueuedTime = default(System.DateTimeOffset), string partitionKey = null) { }
@@ -13,10 +14,14 @@ namespace Azure.Messaging.EventHubs
         public System.ReadOnlyMemory<byte> Body { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.IO.Stream BodyAsStream { get { throw null; } }
-        public string ContentType { get { throw null; } set { } }
+        public override string ContentType { get { throw null; } set { } }
         public string CorrelationId { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override System.BinaryData Data { get { throw null; } set { } }
         public System.DateTimeOffset EnqueuedTime { get { throw null; } }
-        public System.BinaryData EventBody { get { throw null; } }
+        public System.BinaryData EventBody { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool IsReadOnly { get { throw null; } }
         public string MessageId { get { throw null; } set { } }
         public long Offset { get { throw null; } }
         public string PartitionKey { get { throw null; } }
@@ -501,6 +506,16 @@ namespace Azure.Messaging.EventHubs.Producer
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
+    public partial class EnqueueEventOptions : Azure.Messaging.EventHubs.Producer.SendEventOptions
+    {
+        public EnqueueEventOptions() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override string ToString() { throw null; }
+    }
     public sealed partial class EventDataBatch : System.IDisposable
     {
         internal EventDataBatch() { }
@@ -509,6 +524,64 @@ namespace Azure.Messaging.EventHubs.Producer
         public long SizeInBytes { get { throw null; } }
         public void Dispose() { }
         public bool TryAdd(Azure.Messaging.EventHubs.EventData eventData) { throw null; }
+    }
+    public partial class EventHubBufferedProducerClient : System.IAsyncDisposable
+    {
+        protected EventHubBufferedProducerClient() { }
+        public EventHubBufferedProducerClient(Azure.Messaging.EventHubs.EventHubConnection connection, Azure.Messaging.EventHubs.Producer.EventHubBufferedProducerClientOptions clientOptions = null) { }
+        public EventHubBufferedProducerClient(string connectionString) { }
+        public EventHubBufferedProducerClient(string connectionString, Azure.Messaging.EventHubs.Producer.EventHubBufferedProducerClientOptions clientOptions) { }
+        public EventHubBufferedProducerClient(string connectionString, string eventHubName) { }
+        public EventHubBufferedProducerClient(string fullyQualifiedNamespace, string eventHubName, Azure.AzureNamedKeyCredential credential, Azure.Messaging.EventHubs.Producer.EventHubBufferedProducerClientOptions clientOptions = null) { }
+        public EventHubBufferedProducerClient(string fullyQualifiedNamespace, string eventHubName, Azure.AzureSasCredential credential, Azure.Messaging.EventHubs.Producer.EventHubBufferedProducerClientOptions clientOptions = null) { }
+        public EventHubBufferedProducerClient(string fullyQualifiedNamespace, string eventHubName, Azure.Core.TokenCredential credential, Azure.Messaging.EventHubs.Producer.EventHubBufferedProducerClientOptions clientOptions = null) { }
+        public EventHubBufferedProducerClient(string connectionString, string eventHubName, Azure.Messaging.EventHubs.Producer.EventHubBufferedProducerClientOptions clientOptions) { }
+        public string EventHubName { get { throw null; } }
+        public string FullyQualifiedNamespace { get { throw null; } }
+        public string Identifier { get { throw null; } }
+        public virtual bool IsClosed { get { throw null; } }
+        public virtual bool IsPublishing { get { throw null; } }
+        public virtual int TotalBufferedEventCount { get { throw null; } }
+        public event System.Func<Azure.Messaging.EventHubs.Producer.SendEventBatchFailedEventArgs, System.Threading.Tasks.Task> SendEventBatchFailedAsync { add { } remove { } }
+        public event System.Func<Azure.Messaging.EventHubs.Producer.SendEventBatchSucceededEventArgs, System.Threading.Tasks.Task> SendEventBatchSucceededAsync { add { } remove { } }
+        public virtual System.Threading.Tasks.Task CloseAsync(bool flush = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
+        public virtual System.Threading.Tasks.Task<int> EnqueueEventAsync(Azure.Messaging.EventHubs.EventData eventData, Azure.Messaging.EventHubs.Producer.EnqueueEventOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<int> EnqueueEventAsync(Azure.Messaging.EventHubs.EventData eventData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<int> EnqueueEventsAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.EventData> events, Azure.Messaging.EventHubs.Producer.EnqueueEventOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<int> EnqueueEventsAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.EventData> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        public virtual System.Threading.Tasks.Task FlushAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual int GetBufferedEventCount(string partitionId) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Messaging.EventHubs.EventHubProperties> GetEventHubPropertiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public virtual System.Threading.Tasks.Task<string[]> GetPartitionIdsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Messaging.EventHubs.PartitionProperties> GetPartitionPropertiesAsync(string partitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected virtual System.Threading.Tasks.Task<string[]> ListPartitionIdsAsync(Azure.Messaging.EventHubs.Producer.EventHubProducerClient producer, System.Threading.CancellationToken cancellationToken) { throw null; }
+        protected virtual System.Threading.Tasks.Task OnSendFailedAsync(System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventHubs.EventData> events, System.Exception exception, string partitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected virtual System.Threading.Tasks.Task OnSendSucceededAsync(System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventHubs.EventData> events, string partitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override string ToString() { throw null; }
+    }
+    public partial class EventHubBufferedProducerClientOptions
+    {
+        public EventHubBufferedProducerClientOptions() { }
+        public Azure.Messaging.EventHubs.EventHubConnectionOptions ConnectionOptions { get { throw null; } set { } }
+        public bool EnableIdempotentRetries { get { throw null; } set { } }
+        public string Identifier { get { throw null; } set { } }
+        public int MaximumConcurrentSends { get { throw null; } set { } }
+        public int MaximumConcurrentSendsPerPartition { get { throw null; } set { } }
+        public int MaximumEventBufferLengthPerPartition { get { throw null; } set { } }
+        public System.TimeSpan? MaximumWaitTime { get { throw null; } set { } }
+        public Azure.Messaging.EventHubs.EventHubsRetryOptions RetryOptions { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override string ToString() { throw null; }
     }
     public partial class EventHubProducerClient : System.IAsyncDisposable
     {
@@ -554,6 +627,21 @@ namespace Azure.Messaging.EventHubs.Producer
         public override int GetHashCode() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
+    }
+    public partial class SendEventBatchFailedEventArgs : System.EventArgs
+    {
+        public SendEventBatchFailedEventArgs(System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventHubs.EventData> eventBatch, System.Exception exception, string partitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public System.Threading.CancellationToken CancellationToken { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventHubs.EventData> EventBatch { get { throw null; } }
+        public System.Exception Exception { get { throw null; } }
+        public string PartitionId { get { throw null; } }
+    }
+    public partial class SendEventBatchSucceededEventArgs : System.EventArgs
+    {
+        public SendEventBatchSucceededEventArgs(System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventHubs.EventData> eventBatch, string partitionId, System.Threading.CancellationToken cancellationToken) { }
+        public System.Threading.CancellationToken CancellationToken { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventHubs.EventData> EventBatch { get { throw null; } }
+        public string PartitionId { get { throw null; } }
     }
     public partial class SendEventOptions
     {

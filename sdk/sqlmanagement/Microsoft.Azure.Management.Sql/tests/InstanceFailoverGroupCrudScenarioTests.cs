@@ -26,10 +26,10 @@ namespace Sql.Tests
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
 
                 // Names of pre-existing ManagedInstances
-                string sourceManagedInstanceName = "tdstage-haimb-dont-delete-3";
-                string targetManagedInstanceName = "threat-detection-test-1";
-                string sourceResourceGroup = "testclrg";
-                string targetResourceGroup = "testclrg";
+                string sourceManagedInstanceName = "mi-primary-wcus";
+                string targetManagedInstanceName = "mi-tooling-cus";
+                string sourceResourceGroup = ManagedInstanceTestUtilities.ResourceGroupName;
+                string targetResourceGroup = ManagedInstanceTestUtilities.ResourceGroupName;
 
                 // Create server 
                 var sourceManagedInstance = sqlClient.ManagedInstances.Get(sourceResourceGroup, sourceManagedInstanceName);

@@ -10,7 +10,14 @@
 
 ### Other Changes
 
+## 15.2.0 (2021-08-10)
+
+## Features Added
+
 ## 15.1.0 (2021-08-10)
+
+- Made ComputeNodeExtension operations publicly accessible.
+- Added default constructors to BatchServiceClient and models for mocking.
 
 ### Features Added
 

@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Cryptography.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
@@ -48,10 +50,70 @@ namespace Azure.Storage.Blobs
                 async,
                 cancellationToken).ConfigureAwait(false);
 
-            metadata ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-            metadata[Constants.ClientSideEncryption.EncryptionDataKey] = EncryptionDataSerializer.Serialize(EncryptionData);
+            Metadata modifiedMetadata = TransformMetadata(metadata, EncryptionData);
 
-            return (NonSeekableCiphertext, metadata);
+            return (NonSeekableCiphertext, modifiedMetadata);
+        }
+
+        /// <summary>
+        /// Creates a crypto transform stream to write blob contents to.
+        /// </summary>
+        /// <param name="blobClient">
+        /// BlobClient to open write with.
+        /// </param>
+        /// <param name="overwrite">
+        /// Overwrite parameter to open write.
+        /// </param>
+        /// <param name="options">
+        /// Options parameter to open write.
+        /// </param>
+        /// <param name="async">
+        /// Whether to perform this operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Content transform write stream and metadata.
+        /// </returns>
+        public async Task<Stream> ClientSideEncryptionOpenWriteInternal(
+            BlockBlobClient blobClient,
+            bool overwrite,
+            BlockBlobOpenWriteOptions options,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            Stream encryptionWriteStream = await _encryptor.EncryptedOpenWriteInternal(
+                async (encryptiondata, funcAsync, funcCancellationToken) =>
+                {
+                    options.Metadata = TransformMetadata(options.Metadata, encryptiondata);
+
+                    return await blobClient.OpenWriteInternal(
+                            overwrite,
+                            options,
+                            funcAsync,
+                            funcCancellationToken).ConfigureAwait(false);
+                },
+                async,
+                cancellationToken).ConfigureAwait(false);
+
+            return encryptionWriteStream;
+        }
+
+        /// <summary>
+        /// Adds encryption data to provided blob metadata, overwriting previous entry if any.
+        /// Safely creates new metadata object if none is provided.
+        /// </summary>
+        /// <param name="metadata">Optionally existing metadata.</param>
+        /// <param name="encryptionData">Encryption data to add.</param>
+        private static Metadata TransformMetadata(Metadata metadata, EncryptionData encryptionData)
+        {
+            Metadata modifiedMetadata = metadata == default
+                ? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+                : new Dictionary<string, string>(metadata, StringComparer.OrdinalIgnoreCase);
+            modifiedMetadata[Constants.ClientSideEncryption.EncryptionDataKey] = EncryptionDataSerializer.Serialize(encryptionData);
+
+            return modifiedMetadata;
         }
     }
 }

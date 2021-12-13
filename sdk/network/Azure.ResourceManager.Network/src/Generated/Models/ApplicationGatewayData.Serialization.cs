@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -34,6 +33,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("identity");
                 JsonSerializer.Serialize(writer, Identity);
             }
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
@@ -50,8 +54,6 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
@@ -232,7 +234,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(FirewallPolicy))
             {
                 writer.WritePropertyName("firewallPolicy");
-                writer.WriteObjectValue(FirewallPolicy);
+                JsonSerializer.Serialize(writer, FirewallPolicy);
             }
             if (Optional.IsDefined(EnableHttp2))
             {
@@ -283,11 +285,11 @@ namespace Azure.ResourceManager.Network
             Optional<string> etag = default;
             Optional<IList<string>> zones = default;
             Optional<ResourceIdentity> identity = default;
+            Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            ResourceIdentifier id = default;
             Optional<ApplicationGatewaySku> sku = default;
             Optional<ApplicationGatewaySslPolicy> sslPolicy = default;
             Optional<ApplicationGatewayOperationalState> operationalState = default;
@@ -308,7 +310,7 @@ namespace Azure.ResourceManager.Network
             Optional<IList<ApplicationGatewayRewriteRuleSet>> rewriteRuleSets = default;
             Optional<IList<ApplicationGatewayRedirectConfiguration>> redirectConfigurations = default;
             Optional<ApplicationGatewayWebApplicationFirewallConfiguration> webApplicationFirewallConfiguration = default;
-            Optional<Models.SubResource> firewallPolicy = default;
+            Optional<WritableSubResource> firewallPolicy = default;
             Optional<bool> enableHttp2 = default;
             Optional<bool> enableFips = default;
             Optional<ApplicationGatewayAutoscaleConfiguration> autoscaleConfiguration = default;
@@ -350,6 +352,11 @@ namespace Azure.ResourceManager.Network
                     identity = JsonSerializer.Deserialize<ResourceIdentity>(property.Value.ToString());
                     continue;
                 }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
@@ -378,11 +385,6 @@ namespace Azure.ResourceManager.Network
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -681,7 +683,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            firewallPolicy = Models.SubResource.DeserializeSubResource(property0.Value);
+                            firewallPolicy = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("enableHttp2"))
@@ -788,7 +790,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ApplicationGatewayData(id, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, Optional.ToList(zones), identity, sku.Value, sslPolicy.Value, Optional.ToNullable(operationalState), Optional.ToList(gatewayIPConfigurations), Optional.ToList(authenticationCertificates), Optional.ToList(trustedRootCertificates), Optional.ToList(trustedClientCertificates), Optional.ToList(sslCertificates), Optional.ToList(frontendIPConfigurations), Optional.ToList(frontendPorts), Optional.ToList(probes), Optional.ToList(backendAddressPools), Optional.ToList(backendHttpSettingsCollection), Optional.ToList(httpListeners), Optional.ToList(sslProfiles), Optional.ToList(urlPathMaps), Optional.ToList(requestRoutingRules), Optional.ToList(rewriteRuleSets), Optional.ToList(redirectConfigurations), webApplicationFirewallConfiguration.Value, firewallPolicy.Value, Optional.ToNullable(enableHttp2), Optional.ToNullable(enableFips), autoscaleConfiguration.Value, Optional.ToList(privateLinkConfigurations), Optional.ToList(privateEndpointConnections), resourceGuid.Value, Optional.ToNullable(provisioningState), Optional.ToList(customErrorConfigurations), Optional.ToNullable(forceFirewallPolicyAssociation));
+            return new ApplicationGatewayData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, Optional.ToList(zones), identity, sku.Value, sslPolicy.Value, Optional.ToNullable(operationalState), Optional.ToList(gatewayIPConfigurations), Optional.ToList(authenticationCertificates), Optional.ToList(trustedRootCertificates), Optional.ToList(trustedClientCertificates), Optional.ToList(sslCertificates), Optional.ToList(frontendIPConfigurations), Optional.ToList(frontendPorts), Optional.ToList(probes), Optional.ToList(backendAddressPools), Optional.ToList(backendHttpSettingsCollection), Optional.ToList(httpListeners), Optional.ToList(sslProfiles), Optional.ToList(urlPathMaps), Optional.ToList(requestRoutingRules), Optional.ToList(rewriteRuleSets), Optional.ToList(redirectConfigurations), webApplicationFirewallConfiguration.Value, firewallPolicy, Optional.ToNullable(enableHttp2), Optional.ToNullable(enableFips), autoscaleConfiguration.Value, Optional.ToList(privateLinkConfigurations), Optional.ToList(privateEndpointConnections), resourceGuid.Value, Optional.ToNullable(provisioningState), Optional.ToList(customErrorConfigurations), Optional.ToNullable(forceFirewallPolicyAssociation));
         }
     }
 }

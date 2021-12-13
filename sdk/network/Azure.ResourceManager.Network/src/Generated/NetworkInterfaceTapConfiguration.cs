@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkInterfaceTapConfiguration : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly NetworkInterfaceTapConfigurationsRestOperations _restClient;
+        private readonly NetworkInterfaceTapConfigurationsRestOperations _networkInterfaceTapConfigurationsRestClient;
         private readonly NetworkInterfaceTapConfigurationData _data;
 
         /// <summary> Initializes a new instance of the <see cref="NetworkInterfaceTapConfiguration"/> class for mocking. </summary>
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "NetworkInterfaceTapConfiguration"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal NetworkInterfaceTapConfiguration(ArmResource options, NetworkInterfaceTapConfigurationData resource) : base(options, resource.Id)
+        internal NetworkInterfaceTapConfiguration(ArmResource options, NetworkInterfaceTapConfigurationData resource) : base(options, new ResourceIdentifier(resource.Id))
         {
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new NetworkInterfaceTapConfigurationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _networkInterfaceTapConfigurationsRestClient = new NetworkInterfaceTapConfigurationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="NetworkInterfaceTapConfiguration"/> class. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network
         internal NetworkInterfaceTapConfiguration(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new NetworkInterfaceTapConfigurationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _networkInterfaceTapConfigurationsRestClient = new NetworkInterfaceTapConfigurationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="NetworkInterfaceTapConfiguration"/> class. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network
         internal NetworkInterfaceTapConfiguration(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new NetworkInterfaceTapConfigurationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _networkInterfaceTapConfigurationsRestClient = new NetworkInterfaceTapConfigurationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _networkInterfaceTapConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new NetworkInterfaceTapConfiguration(this, response.Value), response.GetRawResponse());
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _networkInterfaceTapConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkInterfaceTapConfiguration(this, response.Value), response.GetRawResponse());
@@ -149,8 +149,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkInterfaceTapConfigurationDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _networkInterfaceTapConfigurationsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkInterfaceTapConfigurationDeleteOperation(_clientDiagnostics, Pipeline, _networkInterfaceTapConfigurationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NetworkInterfaceTapConfigurationDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _networkInterfaceTapConfigurationsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new NetworkInterfaceTapConfigurationDeleteOperation(_clientDiagnostics, Pipeline, _networkInterfaceTapConfigurationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

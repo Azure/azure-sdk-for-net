@@ -17,6 +17,22 @@ namespace Azure.Storage.Files.DataLake.Tests
 {
     public static class ClientBuilderExtensions
     {
+        /// <summary>
+        /// Creates a new <see cref="ClientBuilder{TServiceClient, TServiceClientOptions}"/>
+        /// setup to generate <see cref="DataLakeClientBuilder"/>s.
+        /// </summary>
+        /// <param name="tenants"><see cref="TenantConfigurationBuilder"/> powering this client builder.</param>
+        /// <param name="serviceVersion">Service version for clients to target.</param>
+        public static DataLakeClientBuilder GetNewDataLakeClientBuilder(TenantConfigurationBuilder tenants, DataLakeClientOptions.ServiceVersion serviceVersion)
+            => new DataLakeClientBuilder(
+                ServiceEndpoint.Blob,
+                tenants,
+                (uri, clientOptions) => new DataLakeServiceClient(uri, clientOptions),
+                (uri, sharedKeyCredential, clientOptions) => new DataLakeServiceClient(uri, sharedKeyCredential, clientOptions),
+                (uri, tokenCredential, clientOptions) => new DataLakeServiceClient(uri, tokenCredential, clientOptions),
+                (uri, azureSasCredential, clientOptions) => new DataLakeServiceClient(uri, azureSasCredential, clientOptions),
+                () => new DataLakeClientOptions(serviceVersion));
+
         public static string GetGarbageLeaseId(this DataLakeClientBuilder clientBuilder)
             => clientBuilder.Recording.Random.NewGuid().ToString();
         public static string GetNewFileSystemName(this DataLakeClientBuilder clientBuilder)

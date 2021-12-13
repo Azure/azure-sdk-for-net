@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network
     public partial class SecurityPartnerProvider : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly SecurityPartnerProvidersRestOperations _restClient;
+        private readonly SecurityPartnerProvidersRestOperations _securityPartnerProvidersRestClient;
         private readonly SecurityPartnerProviderData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SecurityPartnerProvider"/> class for mocking. </summary>
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "SecurityPartnerProvider"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal SecurityPartnerProvider(ArmResource options, SecurityPartnerProviderData resource) : base(options, resource.Id)
+        internal SecurityPartnerProvider(ArmResource options, SecurityPartnerProviderData resource) : base(options, new ResourceIdentifier(resource.Id))
         {
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new SecurityPartnerProvidersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _securityPartnerProvidersRestClient = new SecurityPartnerProvidersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="SecurityPartnerProvider"/> class. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network
         internal SecurityPartnerProvider(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new SecurityPartnerProvidersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _securityPartnerProvidersRestClient = new SecurityPartnerProvidersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="SecurityPartnerProvider"/> class. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network
         internal SecurityPartnerProvider(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new SecurityPartnerProvidersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _securityPartnerProvidersRestClient = new SecurityPartnerProvidersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _securityPartnerProvidersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new SecurityPartnerProvider(this, response.Value), response.GetRawResponse());
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _securityPartnerProvidersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SecurityPartnerProvider(this, response.Value), response.GetRawResponse());
@@ -149,8 +149,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityPartnerProviderDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _securityPartnerProvidersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new SecurityPartnerProviderDeleteOperation(_clientDiagnostics, Pipeline, _securityPartnerProvidersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new SecurityPartnerProviderDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _securityPartnerProvidersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new SecurityPartnerProviderDeleteOperation(_clientDiagnostics, Pipeline, _securityPartnerProvidersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -183,22 +183,23 @@ namespace Azure.ResourceManager.Network
                 throw;
             }
         }
+
         /// <summary> Updates tags of a Security Partner Provider resource. </summary>
         /// <param name="parameters"> Parameters supplied to update Security Partner Provider tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response<SecurityPartnerProvider>> UpdateTagsAsync(TagsObject parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<SecurityPartnerProvider>> UpdateAsync(TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SecurityPartnerProvider.UpdateTags");
+            using var scope = _clientDiagnostics.CreateScope("SecurityPartnerProvider.Update");
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _securityPartnerProvidersRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SecurityPartnerProvider(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -212,18 +213,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters supplied to update Security Partner Provider tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<SecurityPartnerProvider> UpdateTags(TagsObject parameters, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityPartnerProvider> Update(TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SecurityPartnerProvider.UpdateTags");
+            using var scope = _clientDiagnostics.CreateScope("SecurityPartnerProvider.Update");
             scope.Start();
             try
             {
-                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var response = _securityPartnerProvidersRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
                 return Response.FromValue(new SecurityPartnerProvider(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

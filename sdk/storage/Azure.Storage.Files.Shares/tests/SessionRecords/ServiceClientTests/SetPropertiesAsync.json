@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "47b32704-8f92-82b0-20e4-401d09c876a5",
         "x-ms-date": "Thu, 05 Mar 2020 21:47:23 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -28,7 +28,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "47b32704-8f92-82b0-20e4-401d09c876a5",
         "x-ms-request-id": "c9ef6ccb-f01a-0012-2d37-f3e9eb000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><StorageServiceProperties><HourMetrics><Version>1.0</Version><Enabled>false</Enabled><RetentionPolicy><Enabled>true</Enabled><Days>1</Days></RetentionPolicy></HourMetrics><MinuteMetrics><Version>1.0</Version><Enabled>true</Enabled><IncludeAPIs>false</IncludeAPIs><RetentionPolicy><Enabled>true</Enabled><Days>8</Days></RetentionPolicy></MinuteMetrics><Cors><CorsRule><AllowedMethods>PUT,GET</AllowedMethods><AllowedOrigins>*</AllowedOrigins><AllowedHeaders>x-ms-meta-abc,x-ms-meta-data*,x-ms-meta-target*</AllowedHeaders><ExposedHeaders>x-ms-meta-*</ExposedHeaders><MaxAgeInSeconds>1000</MaxAgeInSeconds></CorsRule></Cors></StorageServiceProperties>"
     },
@@ -47,7 +47,7 @@
         "x-ms-client-request-id": "b4b4c028-a54c-36ba-6b02-43ce2ace5f93",
         "x-ms-date": "Thu, 05 Mar 2020 21:47:23 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": "<StorageServiceProperties><HourMetrics><Version>1.0</Version><Enabled>false</Enabled><RetentionPolicy><Enabled>true</Enabled><Days>1</Days></RetentionPolicy></HourMetrics><MinuteMetrics><Version>1.0</Version><Enabled>true</Enabled><RetentionPolicy><Enabled>true</Enabled><Days>8</Days></RetentionPolicy><IncludeAPIs>false</IncludeAPIs></MinuteMetrics><Cors><CorsRule><AllowedOrigins>*</AllowedOrigins><AllowedMethods>PUT,GET</AllowedMethods><AllowedHeaders>x-ms-meta-data*,x-ms-meta-target*,x-ms-meta-abc</AllowedHeaders><ExposedHeaders>x-ms-meta-*</ExposedHeaders><MaxAgeInSeconds>1000</MaxAgeInSeconds></CorsRule></Cors></StorageServiceProperties>",
       "StatusCode": 202,
@@ -60,7 +60,7 @@
         ],
         "x-ms-client-request-id": "b4b4c028-a54c-36ba-6b02-43ce2ace5f93",
         "x-ms-request-id": "c9ef6ccc-f01a-0012-2e37-f3e9eb000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -77,7 +77,7 @@
         "x-ms-client-request-id": "49f416a4-c114-9b58-8f37-4e6ba39fa94b",
         "x-ms-date": "Thu, 05 Mar 2020 21:47:24 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -92,7 +92,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "49f416a4-c114-9b58-8f37-4e6ba39fa94b",
         "x-ms-request-id": "c9ef6cd1-f01a-0012-2f37-f3e9eb000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><StorageServiceProperties><HourMetrics><Version>1.0</Version><Enabled>false</Enabled><RetentionPolicy><Enabled>true</Enabled><Days>1</Days></RetentionPolicy></HourMetrics><MinuteMetrics><Version>1.0</Version><Enabled>true</Enabled><IncludeAPIs>false</IncludeAPIs><RetentionPolicy><Enabled>true</Enabled><Days>8</Days></RetentionPolicy></MinuteMetrics><Cors><CorsRule><AllowedMethods>PUT,GET</AllowedMethods><AllowedOrigins>*</AllowedOrigins><AllowedHeaders>x-ms-meta-abc,x-ms-meta-data*,x-ms-meta-target*</AllowedHeaders><ExposedHeaders>x-ms-meta-*</ExposedHeaders><MaxAgeInSeconds>1000</MaxAgeInSeconds></CorsRule></Cors></StorageServiceProperties>"
     }

@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
     public class NetworkServiceClientTestBase : ManagementRecordedTestBase<NetworkManagementTestEnvironment>
     {
         private const string dummySSHKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+wWK73dCr+jgQOAxNsHAnNNNMEMWOHYEccp6wJm2gotpr9katuF/ZAdou5AaW1C61slRkHRkpRRX9FA9CYBiitZgvCCz+3nWNN7l/Up54Zps/pHWGZLHNJZRYyAB6j5yVLMVHIHriY49d/GZTZVNB8GoJv9Gakwc/fuEZYYl4YDFiGMBP///TzlI4jhiJzjKnEvqPFki5p2ZRJqcbCiF4pJrxUQR/RXqVFQdbRLZgYfJ8xGB878RENq3yQ39d8dVOkq4edbkzwcUmwwwkYVPIoDGsYLaRHnG+To7FvMeyO7xDVQkMKzopTQV8AuKpyvpqu0a9pWOMaiCyDytO7GGN you@me.com";
-        public NetworkServiceClientTestBase(bool isAsync) : base(isAsync)
+        public NetworkServiceClientTestBase(bool isAsync) : base(isAsync, useLegacyTransport: true)
         {
         }
 
-        public NetworkServiceClientTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        public NetworkServiceClientTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode, useLegacyTransport: true)
         {
         }
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         {
             get
             {
-                return ArmClient.DefaultSubscription;
+                return ArmClient.GetDefaultSubscription();
             }
         }
 
@@ -61,67 +61,74 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
         protected async Task<ResourceGroup> CreateResourceGroup(string name)
         {
-            return (await Subscription.GetResourceGroups().CreateOrUpdateAsync(name, new ResourceGroupData(TestEnvironment.Location))).Value;
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            return (await subscription.GetResourceGroups().CreateOrUpdateAsync(name, new ResourceGroupData(TestEnvironment.Location))).Value;
         }
         protected async Task<ResourceGroup> CreateResourceGroup(string name,string location)
         {
-            return (await Subscription.GetResourceGroups().CreateOrUpdateAsync(name, new ResourceGroupData(location))).Value;
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            return (await subscription.GetResourceGroups().CreateOrUpdateAsync(name, new ResourceGroupData(location))).Value;
         }
 
         public async Task<GenericResource> CreateLinuxVM(string vmName, string networkInterfaceName, string location, ResourceGroup resourceGroup)
         {
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
             var vnet = await CreateVirtualNetwork(Recording.GenerateAssetName("vnet_"), Recording.GenerateAssetName("subnet_"), location, resourceGroup.GetVirtualNetworks());
             var networkInterface = await CreateNetworkInterface(networkInterfaceName, null, vnet.Data.Subnets[0].Id, location, Recording.GenerateAssetName("ipconfig_"), resourceGroup.GetNetworkInterfaces());
 
             var adminUsername = Recording.GenerateAssetName("admin");
             var vmId = $"{resourceGroup.Id}/providers/Microsoft.Compute/virtualMachines/{vmName}";
-            return (await ArmClient.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vmId, new GenericResourceData(location)
+            var genericResouces = subscription.GetGenericResources();
+            var data = new GenericResourceData(location)
             {
                 Properties = new Dictionary<string, object>
                 {
-                    { "hardwareProfile", new Dictionary<string, object>
+                    { "hardwareProfile", new Dictionary<string, object> { { "vmSize", "Standard_F2" } } },
+                    {
+                        "storageProfile",
+                        new Dictionary<string, object>
                         {
-                            { "vmSize", "Standard_F2" }
-                        }
-                    },
-                    { "storageProfile", new Dictionary<string, object>
-                        {
-                            { "imageReference", new Dictionary<string, object>
+                            {
+                                "imageReference",
+                                new Dictionary<string, object>
                                 {
-                                    { "sku", "16.04-LTS" },
-                                    { "publisher", "Canonical" },
-                                    { "version", "latest" },
-                                    { "offer", "UbuntuServer" }
+                                    { "sku", "16.04-LTS" }, { "publisher", "Canonical" }, { "version", "latest" }, { "offer", "UbuntuServer" }
                                 }
                             },
-                            { "osDisk", new Dictionary<string, object>
+                            {
+                                "osDisk",
+                                new Dictionary<string, object>
                                 {
                                     { "name", $"{vmName}_os_disk" },
                                     { "osType", "Linux" },
                                     { "caching", "ReadWrite" },
                                     { "createOption", "FromImage" },
-                                    { "managedDisk", new Dictionary<string, object>
-                                        {
-                                            { "storageAccountType", "Standard_LRS" }
-                                        }
-                                    }
+                                    { "managedDisk", new Dictionary<string, object> { { "storageAccountType", "Standard_LRS" } } }
                                 }
                             }
                         }
                     },
-                    { "osProfile", new Dictionary<string, object>
+                    {
+                        "osProfile",
+                        new Dictionary<string, object>
                         {
-                            { "adminUsername",  adminUsername },
+                            { "adminUsername", adminUsername },
                             { "computerName", vmName },
-                            { "linuxConfiguration", new Dictionary<string, object>
+                            {
+                                "linuxConfiguration",
+                                new Dictionary<string, object>
                                 {
-                                    { "ssh", new Dictionary<string, object>
+                                    {
+                                        "ssh",
+                                        new Dictionary<string, object>
                                         {
-                                            { "publicKeys", new List<object>
-                                                { new Dictionary<string, object>
+                                            {
+                                                "publicKeys",
+                                                new List<object>
+                                                {
+                                                    new Dictionary<string, object>
                                                     {
-                                                        { "path", $"/home/{adminUsername}/.ssh/authorized_keys" },
-                                                        { "keyData", dummySSHKey }
+                                                        { "path", $"/home/{adminUsername}/.ssh/authorized_keys" }, { "keyData", dummySSHKey }
                                                     }
                                                 }
                                             }
@@ -132,33 +139,38 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                             },
                         }
                     },
-                    { "networkProfile", new Dictionary<string, object>
+                    {
+                        "networkProfile",
+                        new Dictionary<string, object>
                         {
-                            { "networkInterfaces", new List<object>
-                                { new Dictionary<string, object>
+                            {
+                                "networkInterfaces",
+                                new List<object>
+                                {
+                                    new Dictionary<string, object>
                                     {
                                         { "id", networkInterface.Id.ToString() },
-                                        { "properties", new Dictionary<string, object>
-                                            {
-                                                { "primary", true }
-                                            }
-                                        }
+                                        { "properties", new Dictionary<string, object> { { "primary", true } } }
                                     }
                                 }
                             }
                         }
                     }
                 }
-            })).Value;
+            };
+            var operation = InstrumentOperation(await genericResouces.CreateOrUpdateAsync(vmId, data, waitForCompletion: false));
+            await operation.WaitForCompletionAsync();
+            return operation.Value;
         }
 
         public async Task<GenericResource> CreateLinuxVM(string vmName, string networkInterfaceName, string location, ResourceGroup resourceGroup, VirtualNetwork vnet)
         {
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
             var networkInterface = await CreateNetworkInterface(networkInterfaceName, null, vnet.Data.Subnets[0].Id, location, Recording.GenerateAssetName("ipconfig_"), resourceGroup.GetNetworkInterfaces());
-
+            var genericResouces = subscription.GetGenericResources();
             var adminUsername = Recording.GenerateAssetName("admin");
             var vmId = $"{resourceGroup.Id}/providers/Microsoft.Compute/virtualMachines/{vmName}";
-            return (await ArmClient.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vmId, new GenericResourceData(location)
+            GenericResourceData data = new(location)
             {
                 Properties = new Dictionary<string, object>
                 {
@@ -232,7 +244,10 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                         }
                     }
                 }
-            })).Value;
+            };
+            var operation = InstrumentOperation(await genericResouces.CreateOrUpdateAsync(vmId, data, waitForCompletion: false));
+            await operation.WaitForCompletionAsync();
+            return operation.Value;
         }
 
         public async Task<GenericResource> CreateWindowsVM(string vmName, string networkInterfaceName, string location, ResourceGroup resourceGroup)
@@ -241,7 +256,9 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             var networkInterface = await CreateNetworkInterface(networkInterfaceName, null, vnet.Data.Subnets[0].Id, location, Recording.GenerateAssetName("ipconfig_"), resourceGroup.GetNetworkInterfaces());
 
             var vmId = $"{resourceGroup.Id}/providers/Microsoft.Compute/virtualMachines/{vmName}";
-            return (await ArmClient.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vmId, new GenericResourceData(location)
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            var genericResouces = subscription.GetGenericResources();
+            GenericResourceData data = new GenericResourceData(location)
             {
                 Properties = new Dictionary<string, object>
                 {
@@ -299,13 +316,17 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                         }
                     }
                 }
-            })).Value;
+            };
+            var operation = InstrumentOperation(await genericResouces.CreateOrUpdateAsync(vmId, data, waitForCompletion: false));
+            await operation.WaitForCompletionAsync();
+            return operation.Value;
         }
 
         protected async Task<GenericResource> deployWindowsNetworkAgent(string virtualMachineName, string location, ResourceGroup resourceGroup)
         {
             var extensionId = $"{resourceGroup.Id}/providers/Microsoft.Compute/virtualMachines/{virtualMachineName}/extensions/NetworkWatcherAgent";
-            return (await ArmClient.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(extensionId, new GenericResourceData(location)
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            return (await subscription.GetGenericResources().CreateOrUpdateAsync(extensionId, new GenericResourceData(location)
             {
                 Properties = new Dictionary<string, object>
                 {
@@ -410,11 +431,11 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             };
 
             // Put circuit
-            var circuitContainer = resourceGroup.GetExpressRouteCircuits();
-            Operation<ExpressRouteCircuit> circuitOperation = await circuitContainer.CreateOrUpdateAsync(circuitName, circuit);
+            var circuitCollection = resourceGroup.GetExpressRouteCircuits();
+            Operation<ExpressRouteCircuit> circuitOperation = await circuitCollection.CreateOrUpdateAsync(circuitName, circuit);
             Response<ExpressRouteCircuit> circuitResponse = await circuitOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", circuitResponse.Value.Data.ProvisioningState.ToString());
-            Response<ExpressRouteCircuit> getCircuitResponse = await circuitContainer.GetAsync(circuitName);
+            Response<ExpressRouteCircuit> getCircuitResponse = await circuitCollection.GetAsync(circuitName);
 
             return getCircuitResponse;
         }
@@ -438,11 +459,11 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 },
             };
 
-            var circuitContainer = resourceGroup.GetExpressRouteCircuits();
-            Operation<ExpressRouteCircuitPeering> peerOperation = await circuitContainer.Get(circuitName).Value.GetExpressRouteCircuitPeerings().CreateOrUpdateAsync(ExpressRouteTests.Peering_Microsoft, peering);
+            var circuitCollection = resourceGroup.GetExpressRouteCircuits();
+            Operation<ExpressRouteCircuitPeering> peerOperation = await circuitCollection.Get(circuitName).Value.GetExpressRouteCircuitPeerings().CreateOrUpdateAsync(ExpressRouteTests.Peering_Microsoft, peering);
             Response<ExpressRouteCircuitPeering> peerResponse = await peerOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", peerResponse.Value.Data.ProvisioningState.ToString());
-            Response<ExpressRouteCircuit> getCircuitResponse = await circuitContainer.GetAsync(circuitName);
+            Response<ExpressRouteCircuit> getCircuitResponse = await circuitCollection.GetAsync(circuitName);
 
             return getCircuitResponse;
         }
@@ -471,11 +492,11 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 Ipv6PeeringConfig = ipv6Peering
             };
 
-            var circuitContainer = resourceGroup.GetExpressRouteCircuits();
-            Operation<ExpressRouteCircuitPeering> peerOperation = await circuitContainer.Get(circuitName).Value.GetExpressRouteCircuitPeerings().CreateOrUpdateAsync(ExpressRouteTests.Peering_Microsoft, peering);
+            var circuitCollection = resourceGroup.GetExpressRouteCircuits();
+            Operation<ExpressRouteCircuitPeering> peerOperation = await circuitCollection.Get(circuitName).Value.GetExpressRouteCircuitPeerings().CreateOrUpdateAsync(ExpressRouteTests.Peering_Microsoft, peering);
             Response<ExpressRouteCircuitPeering> peerResponse = await peerOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", peerResponse.Value.Data.ProvisioningState.ToString());
-            Response<ExpressRouteCircuit> getCircuitResponse = await circuitContainer.GetAsync(circuitName);
+            Response<ExpressRouteCircuit> getCircuitResponse = await circuitCollection.GetAsync(circuitName);
 
             return getCircuitResponse;
         }
@@ -509,7 +530,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             return getCircuitResponse;
         }
 
-        public async Task<PublicIPAddress> CreateDefaultPublicIpAddress(string name, string domainNameLabel, string location, PublicIPAddressContainer publicIPAddressContainer)
+        public async Task<PublicIPAddress> CreateDefaultPublicIpAddress(string name, string domainNameLabel, string location, PublicIPAddressCollection publicIPAddressCollection)
         {
             var publicIp = new PublicIPAddressData()
             {
@@ -520,10 +541,10 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             };
 
             // Put nic1PublicIpAddress
-            Operation<PublicIPAddress> putPublicIpAddressOperation = await publicIPAddressContainer.CreateOrUpdateAsync(name, publicIp);
+            Operation<PublicIPAddress> putPublicIpAddressOperation = await publicIPAddressCollection.CreateOrUpdateAsync(name, publicIp);
             Response<PublicIPAddress> putPublicIpAddressResponse = await putPublicIpAddressOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
-            Response<PublicIPAddress> getPublicIpAddressResponse = await publicIPAddressContainer.GetAsync(name);
+            Response<PublicIPAddress> getPublicIpAddressResponse = await publicIPAddressCollection.GetAsync(name);
 
             return getPublicIpAddressResponse;
         }
@@ -539,11 +560,11 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             };
 
             // Put nic1PublicIpAddress
-            var publicIPAddressContainer = GetResourceGroup(resourceGroupName).GetPublicIPAddresses();
-            Operation<PublicIPAddress> putPublicIpAddressOperation = await publicIPAddressContainer.CreateOrUpdateAsync(name, publicIp);
+            var publicIPAddressCollection = GetResourceGroup(resourceGroupName).GetPublicIPAddresses();
+            Operation<PublicIPAddress> putPublicIpAddressOperation = await publicIPAddressCollection.CreateOrUpdateAsync(name, publicIp);
             Response<PublicIPAddress> putPublicIpAddressResponse = await putPublicIpAddressOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
-            Response<PublicIPAddress> getPublicIpAddressResponse = await publicIPAddressContainer.GetAsync(name);
+            Response<PublicIPAddress> getPublicIpAddressResponse = await publicIPAddressCollection.GetAsync(name);
 
             return getPublicIpAddressResponse;
         }
@@ -556,7 +577,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 Location = location,
                 Tags = { { "key", "value" } },
                 IpConfigurations = {
-                    new NetworkInterfaceIPConfiguration()
+                    new NetworkInterfaceIPConfigurationData()
                     {
                          Name = ipConfigName,
                          PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
@@ -571,9 +592,9 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             }
 
             // Test NIC apis
-            var networkInterfaceContainer = GetResourceGroup(resourceGroupName).GetNetworkInterfaces();
-            await networkInterfaceContainer.CreateOrUpdateAsync(name, nicParameters);
-            Response<NetworkInterface> getNicResponse = await networkInterfaceContainer.GetAsync(name);
+            var networkInterfaceCollection = GetResourceGroup(resourceGroupName).GetNetworkInterfaces();
+            await networkInterfaceCollection.CreateOrUpdateAsync(name, nicParameters);
+            Response<NetworkInterface> getNicResponse = await networkInterfaceCollection.GetAsync(name);
             Assert.AreEqual(getNicResponse.Value.Data.Name, name);
 
             // because its a single CA nic, primaryOnCA is always true
@@ -585,14 +606,14 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         }
 
         public async Task<NetworkInterface> CreateNetworkInterface(string name,  string publicIpAddressId, string subnetId,
-            string location, string ipConfigName, NetworkInterfaceContainer networkInterfaceContainer)
+            string location, string ipConfigName, NetworkInterfaceCollection networkInterfaceCollection)
         {
             var nicParameters = new NetworkInterfaceData()
             {
                 Location = location,
                 Tags = { { "key", "value" } },
                 IpConfigurations = {
-                    new NetworkInterfaceIPConfiguration()
+                    new NetworkInterfaceIPConfigurationData()
                     {
                          Name = ipConfigName,
                          PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
@@ -607,8 +628,8 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             }
 
             // Test NIC apis
-            await networkInterfaceContainer.CreateOrUpdateAsync(name, nicParameters);
-            Response<NetworkInterface> getNicResponse = await networkInterfaceContainer.GetAsync(name);
+            await networkInterfaceCollection.CreateOrUpdateAsync(name, nicParameters);
+            Response<NetworkInterface> getNicResponse = await networkInterfaceCollection.GetAsync(name);
             Assert.AreEqual(getNicResponse.Value.Data.Name, name);
 
             // because its a single CA nic, primaryOnCA is always true
@@ -636,14 +657,14 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 Subnets = { new SubnetData() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
             };
 
-            var virtualNetworkContainer = GetResourceGroup(resourceGroupName).GetVirtualNetworks();
-            await virtualNetworkContainer.CreateOrUpdateAsync(vnetName, vnet);
-            Response<VirtualNetwork> getVnetResponse = await virtualNetworkContainer.GetAsync(vnetName);
+            var virtualNetworkCollection = GetResourceGroup(resourceGroupName).GetVirtualNetworks();
+            await virtualNetworkCollection.CreateOrUpdateAsync(vnetName, vnet);
+            Response<VirtualNetwork> getVnetResponse = await virtualNetworkCollection.GetAsync(vnetName);
 
             return getVnetResponse;
         }
 
-        public async Task<VirtualNetwork> CreateVirtualNetwork(string vnetName, string subnetName, string location, VirtualNetworkContainer virtualNetworkContainer)
+        public async Task<VirtualNetwork> CreateVirtualNetwork(string vnetName, string subnetName, string location, VirtualNetworkCollection virtualNetworkCollection)
         {
             var vnet = new VirtualNetworkData()
             {
@@ -660,85 +681,85 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 Subnets = { new SubnetData() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
             };
 
-            await virtualNetworkContainer.CreateOrUpdateAsync(vnetName, vnet);
-            Response<VirtualNetwork> getVnetResponse = await virtualNetworkContainer.GetAsync(vnetName);
+            await virtualNetworkCollection.CreateOrUpdateAsync(vnetName, vnet);
+            Response<VirtualNetwork> getVnetResponse = await virtualNetworkCollection.GetAsync(vnetName);
 
             return getVnetResponse;
         }
 
-        public static string GetChildLbResourceId(string subscriptionId, string resourceGroupName, string lbname, string childResourceType, string childResourceName)
+        public static ResourceIdentifier GetChildLbResourceId(string subscriptionId, string resourceGroupName, string lbname, string childResourceType, string childResourceName)
         {
             return
-                string.Format(
+                new ResourceIdentifier(string.Format(
                     "/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Network/loadBalancers/{2}/{3}/{4}",
                     subscriptionId,
                     resourceGroupName,
                     lbname,
                     childResourceType,
-                    childResourceName);
+                    childResourceName));
         }
 
-        protected ApplicationGatewayContainer GetApplicationGatewayContainer(string resourceGroupName)
+        protected ApplicationGatewayCollection GetApplicationGatewayCollection(string resourceGroupName)
         {
             return GetResourceGroup(resourceGroupName).GetApplicationGateways();
         }
 
-        protected LoadBalancerContainer GetLoadBalancerContainer(string resourceGroupName)
+        protected LoadBalancerCollection GetLoadBalancerCollection(string resourceGroupName)
         {
             return GetResourceGroup(resourceGroupName).GetLoadBalancers();
         }
 
-        protected LoadBalancerContainer GetLoadBalancerContainer(Resources.ResourceGroup resourceGroup)
+        protected LoadBalancerCollection GetLoadBalancerCollection(Resources.ResourceGroup resourceGroup)
         {
             return resourceGroup.GetLoadBalancers();
         }
 
-        protected PublicIPAddressContainer GetPublicIPAddressContainer(string resourceGroupName)
+        protected PublicIPAddressCollection GetPublicIPAddressCollection(string resourceGroupName)
         {
             return GetResourceGroup(resourceGroupName).GetPublicIPAddresses();
         }
 
-        protected VirtualNetworkContainer GetVirtualNetworkContainer(string resourceGroupName)
+        protected VirtualNetworkCollection GetVirtualNetworkCollection(string resourceGroupName)
         {
             return GetResourceGroup(resourceGroupName).GetVirtualNetworks();
         }
 
-        protected VirtualNetworkContainer GetVirtualNetworkContainer(Resources.ResourceGroup resourceGroup)
+        protected VirtualNetworkCollection GetVirtualNetworkCollection(Resources.ResourceGroup resourceGroup)
         {
             return resourceGroup.GetVirtualNetworks();
         }
 
-        protected NetworkInterfaceContainer GetNetworkInterfaceContainer(string resourceGroupName)
+        protected NetworkInterfaceCollection GetNetworkInterfaceCollection(string resourceGroupName)
         {
             return GetResourceGroup(resourceGroupName).GetNetworkInterfaces();
         }
 
-        protected NetworkInterfaceContainer GetNetworkInterfaceContainer(Resources.ResourceGroup resourceGroup)
+        protected NetworkInterfaceCollection GetNetworkInterfaceCollection(Resources.ResourceGroup resourceGroup)
         {
             return resourceGroup.GetNetworkInterfaces();
         }
 
-        protected NetworkSecurityGroupContainer GetNetworkSecurityGroupContainer(string resourceGroupName)
+        protected NetworkSecurityGroupCollection GetNetworkSecurityGroupCollection(string resourceGroupName)
         {
             return GetResourceGroup(resourceGroupName).GetNetworkSecurityGroups();
         }
 
-        protected RouteTableContainer GetRouteTableContainer(string resourceGroupName)
+        protected RouteTableCollection GetRouteTableCollection(string resourceGroupName)
         {
             return GetResourceGroup(resourceGroupName).GetRouteTables();
         }
 
-        protected RouteFilterContainer GetRouteFilterContainer(string resourceGroupName)
+        protected RouteFilterCollection GetRouteFilterCollection(string resourceGroupName)
         {
             return GetResourceGroup(resourceGroupName).GetRouteFilters();
         }
 
-        protected NetworkWatcherContainer GetNetworkWatcherContainer(string resourceGroupName)
+        protected NetworkWatcherCollection GetNetworkWatcherCollection(string resourceGroupName)
         {
             return GetResourceGroup(resourceGroupName).GetNetworkWatchers();
         }
 
-        protected VirtualNetworkGatewayContainer GetVirtualNetworkGatewayContainer(string resourceGroupName)
+        protected VirtualNetworkGatewayCollection GetVirtualNetworkGatewayCollection(string resourceGroupName)
         {
             return GetResourceGroup(resourceGroupName).GetVirtualNetworkGateways();
         }

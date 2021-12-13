@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "4462d7eb-a64d-a27a-9def-ab369bb759ff",
         "x-ms-date": "Wed, 17 Feb 2021 02:09:11 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "4462d7eb-a64d-a27a-9def-ab369bb759ff",
         "x-ms-request-id": "c9290336-101e-004a-18d1-04794d000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -51,7 +51,7 @@
         "x-ms-lease-id": "ed24dd29-3019-9297-db25-2d3eab007e97",
         "x-ms-proposed-lease-id": "671d5720-33dc-72c7-51ae-ddcf8aeaea6e",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -66,7 +66,7 @@
         "x-ms-client-request-id": "5f6f8400-d511-f6c2-15b1-9c6a53c708f0",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "c9290351-101e-004a-2fd1-04794d000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>BlobNotFound</Code><Message>The specified blob does not exist.\n",
@@ -88,7 +88,7 @@
         "x-ms-client-request-id": "06cf76a6-8b7a-de5d-4a15-a7e1ce7c8ad3",
         "x-ms-date": "Wed, 17 Feb 2021 02:09:11 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -101,7 +101,7 @@
         ],
         "x-ms-client-request-id": "06cf76a6-8b7a-de5d-4a15-a7e1ce7c8ad3",
         "x-ms-request-id": "c929036c-101e-004a-48d1-04794d000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

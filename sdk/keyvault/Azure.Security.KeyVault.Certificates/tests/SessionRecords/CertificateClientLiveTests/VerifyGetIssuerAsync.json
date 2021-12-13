@@ -5,7 +5,7 @@
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Type": "application/json",
+        "Content-Length": "0",
         "traceparent": "00-455b3f71ad8c8e47877ce77026a0c79b-801bcc91b6a26c4a-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
@@ -113,7 +113,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "traceparent": "00-648cb92feeb91b49a91ab233bd8ff183-c69bc82e765e1145-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",

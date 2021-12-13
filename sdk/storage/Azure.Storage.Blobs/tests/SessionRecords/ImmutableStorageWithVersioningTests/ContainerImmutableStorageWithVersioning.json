@@ -11,7 +11,7 @@
         "x-ms-client-request-id": "665f08ce-2fd4-06d2-9167-d8287931af26",
         "x-ms-date": "Wed, 11 Aug 2021 19:42:18 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -31,7 +31,7 @@
         "x-ms-lease-state": "available",
         "x-ms-lease-status": "unlocked",
         "x-ms-request-id": "b1225bcd-d01e-004a-70e8-8e693e000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -46,7 +46,7 @@
         "x-ms-client-request-id": "65e0a1c7-64ba-c5a5-3d8a-abd726714a08",
         "x-ms-date": "Wed, 11 Aug 2021 19:42:19 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -57,7 +57,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "65e0a1c7-64ba-c5a5-3d8a-abd726714a08",
         "x-ms-request-id": "b1225c14-d01e-004a-27e8-8e693e000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://kasobolcanadanetoauth.blob.core.windows.net/\u0022\u003E\u003CContainers\u003E\u003CContainer\u003E\u003CName\u003Eccc0c3b3-39f3-484e-82af-1eeedc495adf\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EWed, 11 Aug 2021 19:42:17 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D95D00202967A8\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CPublicAccess\u003Econtainer\u003C/PublicAccess\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003CImmutableStorageWithVersioningEnabled\u003Etrue\u003C/ImmutableStorageWithVersioningEnabled\u003E\u003C/Properties\u003E\u003C/Container\u003E\u003C/Containers\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     }

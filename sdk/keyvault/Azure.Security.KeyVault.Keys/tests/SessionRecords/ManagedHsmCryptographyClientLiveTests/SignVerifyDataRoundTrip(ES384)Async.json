@@ -5,7 +5,7 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Type": "application/json",
+        "Content-Length": "0",
         "traceparent": "00-fd5e026601f4bc47a217fae5fd3ad377-f9d992f036224843-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Keys/4.3.0-alpha.20210714.1",

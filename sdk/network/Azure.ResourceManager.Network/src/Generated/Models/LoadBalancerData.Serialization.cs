@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -28,6 +27,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
             }
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
@@ -44,8 +48,6 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(FrontendIPConfigurations))
@@ -127,18 +129,18 @@ namespace Azure.ResourceManager.Network
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<LoadBalancerSku> sku = default;
             Optional<string> etag = default;
+            Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            ResourceIdentifier id = default;
-            Optional<IList<FrontendIPConfiguration>> frontendIPConfigurations = default;
+            Optional<IList<FrontendIPConfigurationData>> frontendIPConfigurations = default;
             Optional<IList<BackendAddressPoolData>> backendAddressPools = default;
-            Optional<IList<LoadBalancingRule>> loadBalancingRules = default;
-            Optional<IList<Probe>> probes = default;
+            Optional<IList<LoadBalancingRuleData>> loadBalancingRules = default;
+            Optional<IList<ProbeData>> probes = default;
             Optional<IList<InboundNatRuleData>> inboundNatRules = default;
             Optional<IList<InboundNatPool>> inboundNatPools = default;
-            Optional<IList<OutboundRule>> outboundRules = default;
+            Optional<IList<OutboundRuleData>> outboundRules = default;
             Optional<string> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -166,6 +168,11 @@ namespace Azure.ResourceManager.Network
                 if (property.NameEquals("etag"))
                 {
                     etag = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -198,11 +205,6 @@ namespace Azure.ResourceManager.Network
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -219,10 +221,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<FrontendIPConfiguration> array = new List<FrontendIPConfiguration>();
+                            List<FrontendIPConfigurationData> array = new List<FrontendIPConfigurationData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FrontendIPConfiguration.DeserializeFrontendIPConfiguration(item));
+                                array.Add(FrontendIPConfigurationData.DeserializeFrontendIPConfigurationData(item));
                             }
                             frontendIPConfigurations = array;
                             continue;
@@ -249,10 +251,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<LoadBalancingRule> array = new List<LoadBalancingRule>();
+                            List<LoadBalancingRuleData> array = new List<LoadBalancingRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LoadBalancingRule.DeserializeLoadBalancingRule(item));
+                                array.Add(LoadBalancingRuleData.DeserializeLoadBalancingRuleData(item));
                             }
                             loadBalancingRules = array;
                             continue;
@@ -264,10 +266,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Probe> array = new List<Probe>();
+                            List<ProbeData> array = new List<ProbeData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Probe.DeserializeProbe(item));
+                                array.Add(ProbeData.DeserializeProbeData(item));
                             }
                             probes = array;
                             continue;
@@ -309,10 +311,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<OutboundRule> array = new List<OutboundRule>();
+                            List<OutboundRuleData> array = new List<OutboundRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(OutboundRule.DeserializeOutboundRule(item));
+                                array.Add(OutboundRuleData.DeserializeOutboundRuleData(item));
                             }
                             outboundRules = array;
                             continue;
@@ -336,7 +338,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new LoadBalancerData(id, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), extendedLocation.Value, sku.Value, etag.Value, Optional.ToList(frontendIPConfigurations), Optional.ToList(backendAddressPools), Optional.ToList(loadBalancingRules), Optional.ToList(probes), Optional.ToList(inboundNatRules), Optional.ToList(inboundNatPools), Optional.ToList(outboundRules), resourceGuid.Value, Optional.ToNullable(provisioningState));
+            return new LoadBalancerData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), extendedLocation.Value, sku.Value, etag.Value, Optional.ToList(frontendIPConfigurations), Optional.ToList(backendAddressPools), Optional.ToList(loadBalancingRules), Optional.ToList(probes), Optional.ToList(inboundNatRules), Optional.ToList(inboundNatPools), Optional.ToList(outboundRules), resourceGuid.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.5 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,22 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.4 (2021-12-07)
+
+### Breaking Changes
+
+- Unified the identification rule of detecting resources, therefore some resources might become non-resources, and vice versa.
+
+### Bugs Fixed
+
+- Fixed problematic internal parameter invocation from the context `Id` property to the corresponding `RestOperations`.
+
+## 1.0.0-beta.3 (2021-10-28)
+
+### Breaking Changes
+
+- Renamed [Resource]Container to [Resource]Collection and added the IEnumerable<T> and IAsyncEnumerable<T> interfaces to them making it easier to iterate over the list in the simple case.
 
 ## 1.0.0-beta.2 (2021-09-14)
 

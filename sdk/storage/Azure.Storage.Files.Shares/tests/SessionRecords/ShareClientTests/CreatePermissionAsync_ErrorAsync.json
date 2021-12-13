@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "55ba2ceb-4089-2af8-da93-497a15d94e72",
         "x-ms-date": "Thu, 05 Mar 2020 21:48:46 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "55ba2ceb-4089-2af8-da93-497a15d94e72",
         "x-ms-request-id": "c9ef6e43-f01a-0012-0137-f3e9eb000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -48,7 +48,7 @@
         "x-ms-client-request-id": "9e2c911c-88e1-27f8-6987-52096b2c4cec",
         "x-ms-date": "Thu, 05 Mar 2020 21:48:46 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": {
@@ -66,7 +66,7 @@
         "x-ms-client-request-id": "9e2c911c-88e1-27f8-6987-52096b2c4cec",
         "x-ms-error-code": "FileInvalidPermission",
         "x-ms-request-id": "c9ef6e45-f01a-0012-0237-f3e9eb000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>FileInvalidPermission</Code><Message>The specified file permission is not valid.\n",
@@ -88,7 +88,7 @@
         "x-ms-date": "Thu, 05 Mar 2020 21:48:46 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -102,7 +102,7 @@
         ],
         "x-ms-client-request-id": "835de06a-afac-0890-fe25-e3f3cb531cd3",
         "x-ms-request-id": "c9ef6e46-f01a-0012-0337-f3e9eb000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

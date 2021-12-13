@@ -18,22 +18,24 @@ namespace Azure.ResourceManager.Tests
         public void NoDataValidation()
         {
             ///subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Compute/features/AHUB
-            var resource = Client.GetFeature($"/subscriptions/{Guid.NewGuid()}/providers/Microsoft.Features/providers/Microsoft.FakeNamespace/features/fakeFeature");
+            var resource = Client.GetFeature(new ResourceIdentifier($"/subscriptions/{Guid.NewGuid()}/providers/Microsoft.Features/providers/Microsoft.FakeNamespace/features/fakeFeature"));
             Assert.Throws<InvalidOperationException>(() => { var data = resource.Data; });
         }
 
         [RecordedTest]
         public async Task Get()
         {
-            Provider provider = await Client.DefaultSubscription.GetProviders().GetAsync("Microsoft.Compute");
-            Feature featureFromContainer = await GetFirst(provider.GetFeatures().GetAllAsync());
-            Feature feature = await featureFromContainer.GetAsync();
-            Assert.AreEqual(featureFromContainer.Data.Id, feature.Data.Id);
-            Assert.AreEqual(featureFromContainer.Data.Name, feature.Data.Name);
-            Assert.AreEqual(featureFromContainer.Data.Properties.State, feature.Data.Properties.State);
-            Assert.AreEqual(featureFromContainer.Data.Type, feature.Data.Type);
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            Provider provider = await subscription.GetProviders().GetAsync("Microsoft.Compute");
+            Feature featureFromCollection = await GetFirst(provider.GetFeatures().GetAllAsync());
+            Feature feature = await featureFromCollection.GetAsync();
+            Assert.AreEqual(featureFromCollection.Data.Id, feature.Data.Id);
+            Assert.AreEqual(featureFromCollection.Data.Name, feature.Data.Name);
+            Assert.AreEqual(featureFromCollection.Data.Properties.State, feature.Data.Properties.State);
+            Assert.AreEqual(featureFromCollection.Data.Type, feature.Data.Type);
 
-            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetFeature(feature.Data.Id + "x").GetAsync());
+            ResourceIdentifier invalidId = new ResourceIdentifier(feature.Data.Id.ToString() + "x");
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetFeature(invalidId).GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
 
@@ -63,7 +65,7 @@ namespace Azure.ResourceManager.Tests
         public async Task RegisterAndUnregister()
         {
             //testing both register and unregister in the same test to avoid feature creep in our test subscription
-            Provider provider = await Client.DefaultSubscription.GetProviders().GetAsync("Microsoft.Compute");
+            Provider provider = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetProviders().GetAsync("Microsoft.Compute");
             Feature feature = await provider.GetFeatures().GetAsync("AHUB");
             Feature afterRegister = await feature.RegisterAsync();
             Assert.AreEqual(feature.Data.Id, afterRegister.Data.Id);

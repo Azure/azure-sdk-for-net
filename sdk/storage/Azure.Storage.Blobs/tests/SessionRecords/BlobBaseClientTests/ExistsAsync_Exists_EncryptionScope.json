@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "9cbfb5da-3500-9082-152f-2dd3fea7550f",
         "x-ms-date": "Wed, 17 Feb 2021 18:46:49 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "9cbfb5da-3500-9082-152f-2dd3fea7550f",
         "x-ms-request-id": "e31f57d5-c01e-002b-085d-055a0e000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -51,7 +51,7 @@
         "x-ms-date": "Wed, 17 Feb 2021 18:46:50 GMT",
         "x-ms-encryption-scope": "seanscope1",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -68,7 +68,7 @@
         "x-ms-encryption-scope": "seanscope1",
         "x-ms-request-id": "e31f57f9-c01e-002b-275d-055a0e000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "x-ms-version-id": "2021-02-17T18:46:50.0775382Z"
       },
       "ResponseBody": []
@@ -87,7 +87,7 @@
         "x-ms-client-request-id": "bffa713c-db24-b4c1-b62d-c6004381b09f",
         "x-ms-date": "Wed, 17 Feb 2021 18:46:50 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -112,7 +112,7 @@
         "x-ms-lease-status": "unlocked",
         "x-ms-request-id": "e31f5840-c01e-002b-675d-055a0e000000",
         "x-ms-server-encrypted": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "x-ms-version-id": "2021-02-17T18:46:50.0775382Z"
       },
       "ResponseBody": []
@@ -131,7 +131,7 @@
         "x-ms-client-request-id": "1afb80c2-27b9-f3c2-c842-e009e8d0e97a",
         "x-ms-date": "Wed, 17 Feb 2021 18:46:50 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -144,7 +144,7 @@
         ],
         "x-ms-client-request-id": "1afb80c2-27b9-f3c2-c842-e009e8d0e97a",
         "x-ms-request-id": "e31f585c-c01e-002b-015d-055a0e000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

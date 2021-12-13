@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "ae146a0d-f693-cd1d-70e0-b521c622e49b",
         "x-ms-date": "Wed, 05 Aug 2020 22:27:01 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "ae146a0d-f693-cd1d-70e0-b521c622e49b",
         "x-ms-request-id": "126c9dbe-e01a-005e-3877-6b3122000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -48,7 +48,7 @@
         "x-ms-lease-action": "renew",
         "x-ms-lease-id": "869fcfee-a687-bd95-8572-07234e2c685e",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -64,7 +64,7 @@
         "x-ms-client-request-id": "02fc76c3-9a48-67e5-d556-2821eefa7f44",
         "x-ms-error-code": "ShareNotFound",
         "x-ms-request-id": "126c9dc1-e01a-005e-3977-6b3122000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ShareNotFound</Code><Message>The specified share does not exist.\n",
@@ -86,7 +86,7 @@
         "x-ms-date": "Wed, 05 Aug 2020 22:27:02 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -100,7 +100,7 @@
         ],
         "x-ms-client-request-id": "d760c07e-652f-2815-7f51-cd8beb61d648",
         "x-ms-request-id": "126c9dc2-e01a-005e-3a77-6b3122000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

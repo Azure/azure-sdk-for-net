@@ -5,30 +5,30 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations
 {
     /// <summary> It is a wrap up a Question Answering KB response. </summary>
     public partial class QuestionAnsweringTargetIntentResult : TargetIntentResult
     {
         /// <summary> Initializes a new instance of QuestionAnsweringTargetIntentResult. </summary>
-        /// <param name="confidenceScore"> The prediction score and it ranges from 0.0 to 1.0. </param>
-        internal QuestionAnsweringTargetIntentResult(double confidenceScore) : base(confidenceScore)
+        /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
+        internal QuestionAnsweringTargetIntentResult(double confidence) : base(confidence)
         {
-            TargetKind = TargetKind.QuestionAnswering;
+            TargetKind = Conversations.TargetKind.QuestionAnswering;
         }
 
         /// <summary> Initializes a new instance of QuestionAnsweringTargetIntentResult. </summary>
-        /// <param name="targetKind"> This discriminator property specifies the type of the target project that returns the response. &apos;luis&apos; means the type is LUIS Generally Available. &apos;luis_deepstack&apos; means LUIS vNext. &apos;question_answering&apos; means Question Answering. </param>
+        /// <param name="targetKind"> This discriminator property specifies the type of the target project that returns the response. </param>
         /// <param name="apiVersion"> The API version used to call a target service. </param>
-        /// <param name="confidenceScore"> The prediction score and it ranges from 0.0 to 1.0. </param>
+        /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
         /// <param name="result"> The generated answer by a Question Answering KB. </param>
-        internal QuestionAnsweringTargetIntentResult(TargetKind targetKind, string apiVersion, double confidenceScore, object result) : base(targetKind, apiVersion, confidenceScore)
+        internal QuestionAnsweringTargetIntentResult(TargetKind targetKind, string apiVersion, double confidence, KnowledgeBaseAnswers result) : base(targetKind, apiVersion, confidence)
         {
             Result = result;
             TargetKind = targetKind;
         }
 
         /// <summary> The generated answer by a Question Answering KB. </summary>
-        public object Result { get; }
+        public KnowledgeBaseAnswers Result { get; }
     }
 }

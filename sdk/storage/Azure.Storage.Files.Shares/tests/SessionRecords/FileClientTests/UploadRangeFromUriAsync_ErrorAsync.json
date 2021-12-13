@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "246a399b-e8ba-a42f-c6f0-705644f521ba",
         "x-ms-date": "Tue, 26 Jan 2021 19:34:29 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "246a399b-e8ba-a42f-c6f0-705644f521ba",
         "x-ms-request-id": "be950830-601a-000d-351a-f41216000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -51,7 +51,7 @@
         "x-ms-file-last-write-time": "Now",
         "x-ms-file-permission": "Inherit",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -74,7 +74,7 @@
         "x-ms-file-permission-key": "17860367565182308406*11459378189709739967",
         "x-ms-request-id": "be950833-601a-000d-361a-f41216000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -98,7 +98,7 @@
         "x-ms-file-permission": "Inherit",
         "x-ms-return-client-request-id": "true",
         "x-ms-type": "file",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -121,7 +121,7 @@
         "x-ms-file-permission-key": "4010187179898695473*11459378189709739967",
         "x-ms-request-id": "be950835-601a-000d-371a-f41216000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -142,7 +142,7 @@
         "x-ms-range": "bytes=256-511",
         "x-ms-return-client-request-id": "true",
         "x-ms-source-range": "bytes=512-767",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "x-ms-write": "update"
       },
       "RequestBody": null,
@@ -158,7 +158,7 @@
         "x-ms-client-request-id": "79e4ec0a-0769-26fa-0c70-99670cb22277",
         "x-ms-error-code": "CannotVerifyCopySource",
         "x-ms-request-id": "be950837-601a-000d-391a-f41216000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>CannotVerifyCopySource</Code><Message>The specified resource does not exist.\n",
@@ -181,7 +181,7 @@
         "x-ms-date": "Tue, 26 Jan 2021 19:34:29 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -194,7 +194,7 @@
         ],
         "x-ms-client-request-id": "725b3b30-2936-deca-2bfe-2dd73b6dcfdb",
         "x-ms-request-id": "be95083b-601a-000d-3d1a-f41216000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

@@ -83,6 +83,34 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
         /// </exception>
         Task<AzureOperationResponse<Configuration>> GetWithHttpMessagesAsync(string resourceGroupName, string serverName, string configurationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Update a list of configurations in a given server.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the server.
+        /// </param>
+        /// <param name='parameters'>
+        /// The parameters for updating a list of server configuration.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ConfigurationListResult>> BatchUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, ConfigurationListForBatchUpdate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// List all the configurations in a given server.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -138,6 +166,34 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<Configuration>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, string configurationName, Configuration parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Update a list of configurations in a given server.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the server.
+        /// </param>
+        /// <param name='parameters'>
+        /// The parameters for updating a list of server configuration.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ConfigurationListResult>> BeginBatchUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, ConfigurationListForBatchUpdate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all the configurations in a given server.
         /// </summary>

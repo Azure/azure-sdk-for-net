@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "86fd9684-b2f8-df21-abcc-65b29e0fe25c",
         "x-ms-date": "Tue, 13 Oct 2020 15:22:40 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "86fd9684-b2f8-df21-abcc-65b29e0fe25c",
         "x-ms-request-id": "8e92a786-301a-0010-2c74-a11faa000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -49,7 +49,7 @@
         "x-ms-lease-duration": "-1",
         "x-ms-proposed-lease-id": "e76691ef-001c-cebe-625b-d48b436852f0",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -66,7 +66,7 @@
         "x-ms-client-request-id": "c704ffbc-f76f-8321-d72f-249dde959b43",
         "x-ms-lease-id": "e76691ef-001c-cebe-625b-d48b436852f0",
         "x-ms-request-id": "8e92a78e-301a-0010-3174-a11faa000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -84,7 +84,7 @@
         "x-ms-date": "Tue, 13 Oct 2020 15:22:40 GMT",
         "x-ms-lease-id": "e76691ef-001c-cebe-625b-d48b436852f0",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -102,7 +102,7 @@
         "Vary": "Origin",
         "x-ms-client-request-id": "43ce2a37-8a64-8c80-f7b3-685ad0cbbbb2",
         "x-ms-request-id": "8e92a78f-301a-0010-3274-a11faa000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><SignedIdentifiers />"
     },
@@ -121,7 +121,7 @@
         "x-ms-delete-snapshots": "include",
         "x-ms-lease-id": "e76691ef-001c-cebe-625b-d48b436852f0",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -135,7 +135,7 @@
         ],
         "x-ms-client-request-id": "b3659c96-58c7-f0de-f4a1-8d233a79295d",
         "x-ms-request-id": "8e92a790-301a-0010-3374-a11faa000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

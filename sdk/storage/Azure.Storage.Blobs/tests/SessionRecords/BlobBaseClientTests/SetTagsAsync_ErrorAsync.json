@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "5bf661a4-6e52-13dc-004b-7d7f212ebfeb",
         "x-ms-date": "Wed, 17 Feb 2021 02:11:48 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "5bf661a4-6e52-13dc-004b-7d7f212ebfeb",
         "x-ms-request-id": "831df82f-501e-0090-06d2-04e0ac000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -50,7 +50,7 @@
         "x-ms-client-request-id": "383408da-11a8-f712-767d-418521590b01",
         "x-ms-date": "Wed, 17 Feb 2021 02:11:48 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": "﻿<Tags><TagSet><Tag><Key>tagKey0</Key><Value>tagValue0</Value></Tag><Tag><Key>tagKey1</Key><Value>tagValue1</Value></Tag></TagSet></Tags>",
       "StatusCode": 404,
@@ -65,7 +65,7 @@
         "x-ms-client-request-id": "383408da-11a8-f712-767d-418521590b01",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "831df840-501e-0090-10d2-04e0ac000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?>\n",
@@ -88,7 +88,7 @@
         "x-ms-client-request-id": "ffa9eac1-57ca-aea4-c3fa-e6c5bf495de6",
         "x-ms-date": "Wed, 17 Feb 2021 02:11:48 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -101,7 +101,7 @@
         ],
         "x-ms-client-request-id": "ffa9eac1-57ca-aea4-c3fa-e6c5bf495de6",
         "x-ms-request-id": "831df85c-501e-0090-2ad2-04e0ac000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

@@ -14,7 +14,7 @@
         "x-ms-blob-public-access": "container",
         "x-ms-client-request-id": "8ceeb353-8834-11d7-3305-fe398fbc540a",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "8ceeb353-8834-11d7-3305-fe398fbc540a",
         "x-ms-request-id": "26b0afdf-101e-0070-69ad-9e9c5e000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -48,7 +48,7 @@
         ],
         "x-ms-client-request-id": "d4cdbfe4-0a40-fe84-7a13-19e2c3fbdd66",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": "\uFEFF\u003CKeyInfo\u003E\u003CExpiry\u003E2021-08-31T22:19:25Z\u003C/Expiry\u003E\u003C/KeyInfo\u003E",
       "StatusCode": 200,
@@ -62,12 +62,12 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "d4cdbfe4-0a40-fe84-7a13-19e2c3fbdd66",
         "x-ms-request-id": "26b0afe5-101e-0070-6cad-9e9c5e000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CUserDelegationKey\u003E\u003CSignedOid\u003Ec4f48289-bb84-4086-b250-6f94a8f64cee\u003C/SignedOid\u003E\u003CSignedTid\u003E72f988bf-86f1-41af-91ab-2d7cd011db47\u003C/SignedTid\u003E\u003CSignedStart\u003E2021-08-31T21:19:24Z\u003C/SignedStart\u003E\u003CSignedExpiry\u003E2021-08-31T22:19:25Z\u003C/SignedExpiry\u003E\u003CSignedService\u003Eb\u003C/SignedService\u003E\u003CSignedVersion\u003E2020-12-06\u003C/SignedVersion\u003E\u003CValue\u003EHL59gptWSq2n\u002BLD/t/oo\u002BnxdFViWYrsTXPd5euGYHAA=\u003C/Value\u003E\u003C/UserDelegationKey\u003E"
     },
     {
-      "RequestUri": "https://seanoauthcanary.blob.core.windows.net/test-container-b94b71d4-32d3-c60a-e31a-5821882f96b8?skoid=c4f48289-bb84-4086-b250-6f94a8f64cee\u0026sktid=72f988bf-86f1-41af-91ab-2d7cd011db47\u0026skt=2021-08-31T21%3A19%3A24Z\u0026ske=2021-08-31T22%3A19%3A25Z\u0026sks=b\u0026skv=2020-12-06\u0026sv=2020-12-06\u0026st=2021-08-31T20%3A19%3A25Z\u0026se=2021-08-31T22%3A19%3A25Z\u0026sr=c\u0026sp=racwdxyltmei\u0026scid=887de3d5-d2f7-f38c-8adc-5056f22ecd59\u0026sig=Sanitized\u0026restype=container\u0026comp=list",
+      "RequestUri": "https://seanoauthcanary.blob.core.windows.net/test-container-b94b71d4-32d3-c60a-e31a-5821882f96b8?skoid=c4f48289-bb84-4086-b250-6f94a8f64cee\u0026sktid=72f988bf-86f1-41af-91ab-2d7cd011db47\u0026skt=2021-08-31T21%3A19%3A24Z\u0026ske=2021-08-31T22%3A19%3A25Z\u0026sks=b\u0026skv=2020-12-06\u0026sv=2021-04-10\u0026st=2021-08-31T20%3A19%3A25Z\u0026se=2021-08-31T22%3A19%3A25Z\u0026sr=c\u0026sp=racwdxyltmei\u0026scid=887de3d5-d2f7-f38c-8adc-5056f22ecd59\u0026sig=Sanitized\u0026restype=container\u0026comp=list",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -78,7 +78,7 @@
         ],
         "x-ms-client-request-id": "60d23000-735d-11c2-32da-4964b92e0b4c",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -92,7 +92,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "60d23000-735d-11c2-32da-4964b92e0b4c",
         "x-ms-request-id": "26b0afee-101e-0070-72ad-9e9c5e000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://seanoauthcanary.blob.core.windows.net/\u0022 ContainerName=\u0022test-container-b94b71d4-32d3-c60a-e31a-5821882f96b8\u0022\u003E\u003CBlobs /\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
@@ -109,7 +109,7 @@
         ],
         "x-ms-client-request-id": "c256108e-6d5b-96fb-8243-9d133665ef8f",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -122,7 +122,7 @@
         ],
         "x-ms-client-request-id": "c256108e-6d5b-96fb-8243-9d133665ef8f",
         "x-ms-request-id": "26b0aff2-101e-0070-76ad-9e9c5e000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

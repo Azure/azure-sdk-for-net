@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "fb64cc09-b0c6-c725-47ab-5ae773e5b7e4",
         "x-ms-date": "Mon, 23 Nov 2020 22:18:11 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -28,7 +28,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "fb64cc09-b0c6-c725-47ab-5ae773e5b7e4",
         "x-ms-request-id": "7667f34d-f01e-0019-4fe6-c1cd21000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -47,7 +47,7 @@
         "x-ms-return-client-request-id": "true",
         "x-ms-source-container-name": "test-filesystem-a7c2e012-a9b6-93f2-9fc3-6167fe729386",
         "x-ms-source-lease-id": "78d9d46a-e728-0d36-13a2-a248b06152b2",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 412,
@@ -62,7 +62,7 @@
         "x-ms-client-request-id": "f0ccb69f-acc1-2228-9556-e8240edc17e6",
         "x-ms-error-code": "LeaseNotPresentWithContainerOperation",
         "x-ms-request-id": "7667f351-f01e-0019-50e6-c1cd21000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?>\n",
@@ -84,7 +84,7 @@
         "x-ms-client-request-id": "f9a8ca05-6194-fcf1-bce0-790074a2ce84",
         "x-ms-date": "Mon, 23 Nov 2020 22:18:11 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -97,7 +97,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "f9a8ca05-6194-fcf1-bce0-790074a2ce84",
         "x-ms-request-id": "7667f352-f01e-0019-51e6-c1cd21000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

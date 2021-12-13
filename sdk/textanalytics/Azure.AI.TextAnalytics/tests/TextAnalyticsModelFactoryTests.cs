@@ -136,6 +136,24 @@ namespace Azure.AI.TextAnalytics.Tests
                 TextAnalyticsModelFactory.AnalyzeSentimentActionResult(default, default)
             };
 
+            var recognizeCustomEntitiesActionResults = new List<RecognizeCustomEntitiesActionResult>()
+            {
+                TextAnalyticsModelFactory.RecognizeCustomEntitiesActionResult(default, default),
+                TextAnalyticsModelFactory.RecognizeCustomEntitiesActionResult(default, default)
+            };
+
+            var singleCategoryClassifyActionResults = new List<SingleCategoryClassifyActionResult>()
+            {
+                TextAnalyticsModelFactory.SingleCategoryClassifyActionResult(default, default),
+                TextAnalyticsModelFactory.SingleCategoryClassifyActionResult(default, default)
+            };
+
+            var multiCategoryClassifyActionResults = new List<MultiCategoryClassifyActionResult>()
+            {
+                TextAnalyticsModelFactory.MultiCategoryClassifyActionResult(default, default),
+                TextAnalyticsModelFactory.MultiCategoryClassifyActionResult(default, default)
+            };
+
             var actionsResult = TextAnalyticsModelFactory.AnalyzeActionsResult(
                 extractKeyPhrasesActionResults,
                 recognizeEntitiesActionResults,
@@ -162,7 +180,10 @@ namespace Azure.AI.TextAnalytics.Tests
                 recognizePiiEntitiesActionResults,
                 recognizeLinkedEntitiesActionResults,
                 analyzeSentimentActionResults,
-                extractSummaryActionResults);
+                extractSummaryActionResults,
+                recognizeCustomEntitiesActionResults,
+                singleCategoryClassifyActionResults,
+                multiCategoryClassifyActionResults);
 
             CollectionAssert.AreEquivalent(extractKeyPhrasesActionResults, actionsResult.ExtractKeyPhrasesResults);
             CollectionAssert.AreEquivalent(recognizeEntitiesActionResults, actionsResult.RecognizeEntitiesResults);
@@ -170,6 +191,9 @@ namespace Azure.AI.TextAnalytics.Tests
             CollectionAssert.AreEquivalent(recognizeLinkedEntitiesActionResults, actionsResult.RecognizeLinkedEntitiesResults);
             CollectionAssert.AreEquivalent(analyzeSentimentActionResults, actionsResult.AnalyzeSentimentResults);
             CollectionAssert.AreEquivalent(extractSummaryActionResults, actionsResult.ExtractSummaryResults);
+            CollectionAssert.AreEquivalent(recognizeCustomEntitiesActionResults, actionsResult.RecognizeCustomEntitiesResults);
+            CollectionAssert.AreEquivalent(singleCategoryClassifyActionResults, actionsResult.SingleCategoryClassifyResults);
+            CollectionAssert.AreEquivalent(multiCategoryClassifyActionResults, actionsResult.MultiCategoryClassifyResults);
         }
 
         [Test]
@@ -177,8 +201,9 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             var result = TextAnalyticsModelFactory.ExtractSummaryResultCollection(new List<ExtractSummaryResult>(), default, default);
             var completedOn = DateTimeOffset.UtcNow;
+            string actionName = "ExtractSummary";
 
-            var actionResult = TextAnalyticsModelFactory.ExtractSummaryActionResult(result, completedOn);
+            var actionResult = TextAnalyticsModelFactory.ExtractSummaryActionResult(result, actionName, completedOn);
 
             Assert.AreEqual(result, actionResult.DocumentsResults);
             Assert.AreEqual(completedOn, actionResult.CompletedOn);
@@ -193,8 +218,9 @@ namespace Azure.AI.TextAnalytics.Tests
             var completedOn = DateTimeOffset.UtcNow;
             var code = "code";
             var message = "message";
+            string actionName = "ExtractSummary";
 
-            var actionResult = TextAnalyticsModelFactory.ExtractSummaryActionResult(completedOn, code, message);
+            var actionResult = TextAnalyticsModelFactory.ExtractSummaryActionResult(actionName, completedOn, code, message);
 
             Assert.Throws<InvalidOperationException>(() => _ = actionResult.DocumentsResults);
             Assert.AreEqual(completedOn, actionResult.CompletedOn);

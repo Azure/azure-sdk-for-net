@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "1099d5b0-5080-bae2-98e0-c199d463cf58",
         "x-ms-date": "Tue, 26 Jan 2021 19:29:41 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "1099d5b0-5080-bae2-98e0-c199d463cf58",
         "x-ms-request-id": "c211a961-c01a-0049-0519-f49829000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -51,7 +51,7 @@
         "x-ms-file-last-write-time": "Now",
         "x-ms-file-permission": "Inherit",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -74,7 +74,7 @@
         "x-ms-file-permission-key": "17860367565182308406*11459378189709739967",
         "x-ms-request-id": "c211a966-c01a-0049-0819-f49829000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -92,7 +92,7 @@
         "x-ms-client-request-id": "f1f503be-c70e-9a23-075f-c972d9b43cef",
         "x-ms-date": "Tue, 26 Jan 2021 19:29:41 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -107,7 +107,7 @@
         "x-ms-client-request-id": "f1f503be-c70e-9a23-075f-c972d9b43cef",
         "x-ms-error-code": "ResourceNotFound",
         "x-ms-request-id": "c211a968-c01a-0049-0919-f49829000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ResourceNotFound</Code><Message>The specified resource does not exist.\n",
@@ -130,7 +130,7 @@
         "x-ms-date": "Tue, 26 Jan 2021 19:29:41 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -143,7 +143,7 @@
         ],
         "x-ms-client-request-id": "c1ffbdf7-c4d7-433c-63e0-886fa3491d06",
         "x-ms-request-id": "c211a969-c01a-0049-0a19-f49829000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "e7e34f2f-8a2d-2aba-49ea-6d7d91b4d221",
         "x-ms-date": "Wed, 17 Feb 2021 19:02:54 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "e7e34f2f-8a2d-2aba-49ea-6d7d91b4d221",
         "x-ms-request-id": "1d5a7578-f01e-0020-705f-05a165000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -52,7 +52,7 @@
         "x-ms-client-request-id": "bf2171a2-3d91-2f5d-6d17-0c9f1d2436be",
         "x-ms-date": "Wed, 17 Feb 2021 19:02:54 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -68,7 +68,7 @@
         "x-ms-client-request-id": "bf2171a2-3d91-2f5d-6d17-0c9f1d2436be",
         "x-ms-request-id": "1d5a7591-f01e-0020-055f-05a165000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "x-ms-version-id": "2021-02-17T19:02:54.8685703Z"
       },
       "ResponseBody": []
@@ -89,7 +89,7 @@
         "x-ms-page-write": "clear",
         "x-ms-range": "bytes=5120-6143",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 416,
@@ -104,7 +104,7 @@
         "x-ms-client-request-id": "82f36107-fb69-3603-91d5-1d714c8f1d0c",
         "x-ms-error-code": "InvalidPageRange",
         "x-ms-request-id": "1d5a75a0-f01e-0020-125f-05a165000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>InvalidPageRange</Code><Message>The page range specified is invalid.\n",
@@ -126,7 +126,7 @@
         "x-ms-client-request-id": "bb989eca-b331-3354-d4d2-12d82a26cba5",
         "x-ms-date": "Wed, 17 Feb 2021 19:02:54 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -139,7 +139,7 @@
         ],
         "x-ms-client-request-id": "bb989eca-b331-3354-d4d2-12d82a26cba5",
         "x-ms-request-id": "1d5a75b6-f01e-0020-285f-05a165000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

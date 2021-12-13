@@ -78,6 +78,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("script");
                 writer.WriteStringValue(Script);
             }
+            if (Optional.IsCollectionDefined(ScriptLines))
+            {
+                writer.WritePropertyName("scriptLines");
+                writer.WriteStartArray();
+                foreach (var item in ScriptLines)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -92,6 +102,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IList<DataFlowSink>> sinks = default;
             Optional<IList<Transformation>> transformations = default;
             Optional<string> script = default;
+            Optional<IList<string>> scriptLines = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -188,11 +199,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             script = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("scriptLines"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            scriptLines = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new MappingDataFlow(type, description.Value, Optional.ToList(annotations), folder.Value, Optional.ToList(sources), Optional.ToList(sinks), Optional.ToList(transformations), script.Value);
+            return new MappingDataFlow(type, description.Value, Optional.ToList(annotations), folder.Value, Optional.ToList(sources), Optional.ToList(sinks), Optional.ToList(transformations), script.Value, Optional.ToList(scriptLines));
         }
 
         internal partial class MappingDataFlowConverter : JsonConverter<MappingDataFlow>

@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// <param name="members">Virtual machine members of this
         /// group.</param>
         /// <param name="status">VM Group status. Possible values include:
-        /// 'SUCCESS, FAILURE'</param>
+        /// 'SUCCESS', 'FAILURE'</param>
         /// <param name="provisioningState">The provisioning state. Possible
         /// values include: 'Succeeded', 'Failed', 'Building', 'Deleting',
         /// 'Updating'</param>
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Avs.Models
         public IList<string> Members { get; set; }
 
         /// <summary>
-        /// Gets VM Group status. Possible values include: 'SUCCESS, FAILURE'
+        /// Gets VM Group status. Possible values include: 'SUCCESS', 'FAILURE'
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public string Status { get; private set; }

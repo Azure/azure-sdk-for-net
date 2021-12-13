@@ -14,21 +14,21 @@ using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 ```
 
-When you first create your ARM client, choose the subscription you're going to work in. There's a convenient `DefaultSubscription` property that returns the default subscription configured for your user:
+When you first create your ARM client, choose the subscription you're going to work in. You can use the `GetDefaultSubscription`/`GetDefaultSubscriptionAsync` methods to return the default subscription configured for your user:
 
 ```C# Snippet:Readme_DefaultSubscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.DefaultSubscription;
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ```
 
-This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via container objects. Or you can access individual children by ID.
+This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via collection objects. Or you can access individual children by ID.
 
-```C# Snippet:Readme_GetResourceGroupContainer
-ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
-// With the container, we can create a new resource group with an specific name
+```C# Snippet:Readme_GetResourceGroupCollection
+ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
+// With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
 Location location = Location.WestUS2;
-ResourceGroup resourceGroup = await rgContainer.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
 ```
 
 Now that we have the resource group created, we can manage the Key vault inside this resource group.
@@ -36,7 +36,7 @@ Now that we have the resource group created, we can manage the Key vault inside 
 ***Create a vault***
 
 ```C# Snippet:Managing_KeyVaults_CreateAVault
-VaultContainer vaultContainer = resourceGroup.GetVaults();
+VaultCollection vaultCollection = resourceGroup.GetVaults();
 
 string vaultName = "myVault";
 Guid tenantIdGuid = new Guid("Your tenantId");
@@ -70,16 +70,16 @@ VaultProperties.AccessPolicies.Add(AccessPolicy);
 
 VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Location.WestUS, VaultProperties);
 
-var rawVault = await vaultContainer.CreateOrUpdateAsync(vaultName, parameters).ConfigureAwait(false);
+var rawVault = await vaultCollection.CreateOrUpdateAsync(vaultName, parameters).ConfigureAwait(false);
 Vault vault = await rawVault.WaitForCompletionAsync();
 ```
 
 ***List all vaults***
 
 ```C# Snippet:Managing_KeyVaults_ListAllVaults
-VaultContainer vaultContainer = resourceGroup.GetVaults();
+VaultCollection vaultCollection = resourceGroup.GetVaults();
 
-AsyncPageable<Vault> response = vaultContainer.GetAllAsync();
+AsyncPageable<Vault> response = vaultCollection.GetAllAsync();
 await foreach (Vault vault in response)
 {
     Console.WriteLine(vault.Data.Name);
@@ -89,24 +89,24 @@ await foreach (Vault vault in response)
 ***Get a vault***
 
 ```C# Snippet:Managing_KeyVaults_GetAVault
-VaultContainer vaultContainer = resourceGroup.GetVaults();
+VaultCollection vaultCollection = resourceGroup.GetVaults();
 
-Vault vault = await vaultContainer.GetAsync("myVault");
+Vault vault = await vaultCollection.GetAsync("myVault");
 Console.WriteLine(vault.Data.Name);
 ```
 
 ***Try to get a vault if it exists***
 
 ```C# Snippet:Managing_KeyVaults_GetAVaultIfExists
-VaultContainer vaultContainer = resourceGroup.GetVaults();
+VaultCollection vaultCollection = resourceGroup.GetVaults();
 
-Vault vault = await vaultContainer.GetIfExistsAsync("foo");
+Vault vault = await vaultCollection.GetIfExistsAsync("foo");
 if (vault != null)
 {
     Console.WriteLine(vault.Data.Name);
 }
 
-if (await vaultContainer.CheckIfExistsAsync("bar"))
+if (await vaultCollection.CheckIfExistsAsync("bar"))
 {
     Console.WriteLine("KeyVault 'bar' exists.");
 }
@@ -115,8 +115,8 @@ if (await vaultContainer.CheckIfExistsAsync("bar"))
 ***Delete a vault***
 
 ```C# Snippet:Managing_KeyVaults_DeleteAVault
-VaultContainer vaultContainer = resourceGroup.GetVaults();
+VaultCollection vaultCollection = resourceGroup.GetVaults();
 
-Vault vault = await vaultContainer.GetAsync("myVault");
+Vault vault = await vaultCollection.GetAsync("myVault");
 await vault.DeleteAsync();
 ```

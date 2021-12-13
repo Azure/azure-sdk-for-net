@@ -1,6 +1,6 @@
 # Release History
 
-## 4.0.0-beta.2 (Unreleased)
+## 4.0.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,11 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.0.0-beta.2 (2021-11-09)
+
+### Bugs Fixed
+- `BuildModelOperation` and `CopyModelOperation` correctly populate the `PercentCompleted` property, instead of always having a value of `0`.
 
 ## 4.0.0-beta.1 (2021-10-07)
 > Note: Starting with version `2021-09-30-preview`, a new set of clients were introduced to leverage the newest features of the Form Recognizer service. Please see the [Migration Guide](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/MigrationGuide.md) for detailed instructions on how to update application code from client library version `3.1.X` or lower to the latest version.

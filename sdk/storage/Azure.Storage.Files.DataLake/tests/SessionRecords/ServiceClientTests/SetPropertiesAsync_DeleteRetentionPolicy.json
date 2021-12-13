@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "2d041120-c635-9e40-92a2-50f4b2278f63",
         "x-ms-date": "Wed, 14 Apr 2021 15:10:42 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -28,7 +28,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "2d041120-c635-9e40-92a2-50f4b2278f63",
         "x-ms-request-id": "ed8c5c8c-301e-0040-7240-314a98000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><StorageServiceProperties><Logging><Version>1.0</Version><Read>false</Read><Write>false</Write><Delete>false</Delete><RetentionPolicy><Enabled>false</Enabled></RetentionPolicy></Logging><HourMetrics><Version>1.0</Version><Enabled>true</Enabled><IncludeAPIs>true</IncludeAPIs><RetentionPolicy><Enabled>true</Enabled><Days>5</Days></RetentionPolicy></HourMetrics><MinuteMetrics><Version>1.0</Version><Enabled>true</Enabled><IncludeAPIs>true</IncludeAPIs><RetentionPolicy><Enabled>true</Enabled><Days>5</Days></RetentionPolicy></MinuteMetrics><Cors /><DeleteRetentionPolicy><Enabled>true</Enabled><Days>5</Days><AllowPermanentDelete>false</AllowPermanentDelete></DeleteRetentionPolicy><StaticWebsite><Enabled>true</Enabled><IndexDocument>index.html</IndexDocument><ErrorDocument404Path>errors/error/404error.html</ErrorDocument404Path></StaticWebsite><DefaultServiceVersion>2014-02-14</DefaultServiceVersion></StorageServiceProperties>"
     },
@@ -48,7 +48,7 @@
         "x-ms-client-request-id": "f328474d-da32-0654-e8e0-a6d3179a4a3a",
         "x-ms-date": "Wed, 14 Apr 2021 15:10:42 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": "﻿<StorageServiceProperties><Logging><Version>1.0</Version><Delete>false</Delete><Read>false</Read><Write>false</Write><RetentionPolicy><Enabled>false</Enabled></RetentionPolicy></Logging><HourMetrics><Version>1.0</Version><Enabled>true</Enabled><IncludeAPIs>true</IncludeAPIs><RetentionPolicy><Enabled>true</Enabled><Days>5</Days></RetentionPolicy></HourMetrics><MinuteMetrics><Version>1.0</Version><Enabled>true</Enabled><IncludeAPIs>true</IncludeAPIs><RetentionPolicy><Enabled>true</Enabled><Days>5</Days></RetentionPolicy></MinuteMetrics><DefaultServiceVersion>2014-02-14</DefaultServiceVersion><DeleteRetentionPolicy><Enabled>true</Enabled><Days>3</Days></DeleteRetentionPolicy><StaticWebsite><Enabled>true</Enabled><IndexDocument>index.html</IndexDocument><ErrorDocument404Path>errors/error/404error.html</ErrorDocument404Path></StaticWebsite><Cors /></StorageServiceProperties>",
       "StatusCode": 202,
@@ -61,7 +61,7 @@
         ],
         "x-ms-client-request-id": "f328474d-da32-0654-e8e0-a6d3179a4a3a",
         "x-ms-request-id": "ed8c5c98-301e-0040-7c40-314a98000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -79,7 +79,7 @@
         "x-ms-client-request-id": "6aa69d92-9cff-8631-d355-04a427845ea0",
         "x-ms-date": "Wed, 14 Apr 2021 15:10:42 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -93,7 +93,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "6aa69d92-9cff-8631-d355-04a427845ea0",
         "x-ms-request-id": "ed8c5ca9-301e-0040-0c40-314a98000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><StorageServiceProperties><Logging><Version>1.0</Version><Read>false</Read><Write>false</Write><Delete>false</Delete><RetentionPolicy><Enabled>false</Enabled></RetentionPolicy></Logging><HourMetrics><Version>1.0</Version><Enabled>true</Enabled><IncludeAPIs>true</IncludeAPIs><RetentionPolicy><Enabled>true</Enabled><Days>5</Days></RetentionPolicy></HourMetrics><MinuteMetrics><Version>1.0</Version><Enabled>true</Enabled><IncludeAPIs>true</IncludeAPIs><RetentionPolicy><Enabled>true</Enabled><Days>5</Days></RetentionPolicy></MinuteMetrics><Cors /><DeleteRetentionPolicy><Enabled>true</Enabled><Days>3</Days><AllowPermanentDelete>false</AllowPermanentDelete></DeleteRetentionPolicy><StaticWebsite><Enabled>true</Enabled><IndexDocument>index.html</IndexDocument><ErrorDocument404Path>errors/error/404error.html</ErrorDocument404Path></StaticWebsite><DefaultServiceVersion>2014-02-14</DefaultServiceVersion></StorageServiceProperties>"
     },
@@ -113,7 +113,7 @@
         "x-ms-client-request-id": "7a40ee71-dff3-473a-bbaf-f0a4c6c82a35",
         "x-ms-date": "Wed, 14 Apr 2021 15:10:42 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": "﻿<StorageServiceProperties><Logging><Version>1.0</Version><Delete>false</Delete><Read>false</Read><Write>false</Write><RetentionPolicy><Enabled>false</Enabled></RetentionPolicy></Logging><HourMetrics><Version>1.0</Version><Enabled>true</Enabled><IncludeAPIs>true</IncludeAPIs><RetentionPolicy><Enabled>true</Enabled><Days>5</Days></RetentionPolicy></HourMetrics><MinuteMetrics><Version>1.0</Version><Enabled>true</Enabled><IncludeAPIs>true</IncludeAPIs><RetentionPolicy><Enabled>true</Enabled><Days>5</Days></RetentionPolicy></MinuteMetrics><DefaultServiceVersion>2014-02-14</DefaultServiceVersion><DeleteRetentionPolicy><Enabled>true</Enabled><Days>5</Days></DeleteRetentionPolicy><StaticWebsite><Enabled>true</Enabled><IndexDocument>index.html</IndexDocument><ErrorDocument404Path>errors/error/404error.html</ErrorDocument404Path></StaticWebsite><Cors /></StorageServiceProperties>",
       "StatusCode": 202,
@@ -126,7 +126,7 @@
         ],
         "x-ms-client-request-id": "7a40ee71-dff3-473a-bbaf-f0a4c6c82a35",
         "x-ms-request-id": "ed8c5cb7-301e-0040-1940-314a98000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -144,7 +144,7 @@
         "x-ms-client-request-id": "3933549e-e343-81ac-01db-85f45a14ba10",
         "x-ms-date": "Wed, 14 Apr 2021 15:10:42 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -158,7 +158,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "3933549e-e343-81ac-01db-85f45a14ba10",
         "x-ms-request-id": "ed8c5cc2-301e-0040-2140-314a98000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><StorageServiceProperties><Logging><Version>1.0</Version><Read>false</Read><Write>false</Write><Delete>false</Delete><RetentionPolicy><Enabled>false</Enabled></RetentionPolicy></Logging><HourMetrics><Version>1.0</Version><Enabled>true</Enabled><IncludeAPIs>true</IncludeAPIs><RetentionPolicy><Enabled>true</Enabled><Days>5</Days></RetentionPolicy></HourMetrics><MinuteMetrics><Version>1.0</Version><Enabled>true</Enabled><IncludeAPIs>true</IncludeAPIs><RetentionPolicy><Enabled>true</Enabled><Days>5</Days></RetentionPolicy></MinuteMetrics><Cors /><DeleteRetentionPolicy><Enabled>true</Enabled><Days>5</Days><AllowPermanentDelete>false</AllowPermanentDelete></DeleteRetentionPolicy><StaticWebsite><Enabled>true</Enabled><IndexDocument>index.html</IndexDocument><ErrorDocument404Path>errors/error/404error.html</ErrorDocument404Path></StaticWebsite><DefaultServiceVersion>2014-02-14</DefaultServiceVersion></StorageServiceProperties>"
     }

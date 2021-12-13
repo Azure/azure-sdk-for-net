@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://jverazsdkprim.table.core.windows.net/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.core.windows.net/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata=minimalmetadata",
@@ -9,13 +9,13 @@
         "Content-Length": "33",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-5cf9e3a35a2b0e41b7aca743a90acac3-5045e142cec06b4b-00",
+        "traceparent": "00-689043ad03bef54f9b6447c741b28b03-532926085bbdf24f-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Data.Tables/12.3.0-alpha.20211018.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
         ],
         "x-ms-client-request-id": "e0565896be0f602ac22557854347e341",
-        "x-ms-date": "Tue, 23 Mar 2021 18:28:27 GMT",
+        "x-ms-date": "Mon, 18 Oct 2021 17:13:14 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -26,8 +26,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=minimalmetadata; streaming=true; charset=utf-8",
-        "Date": "Tue, 23 Mar 2021 18:28:30 GMT",
-        "Location": "https://jverazsdkprim.table.core.windows.net/Tables(\u0027testtable70nsg0nu\u0027)",
+        "Date": "Mon, 18 Oct 2021 17:13:13 GMT",
+        "Location": "https://chrisstablesprim.table.core.windows.net/Tables(\u0027testtable70nsg0nu\u0027)",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
@@ -35,31 +35,31 @@
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "e0565896be0f602ac22557854347e341",
-        "x-ms-request-id": "a0286f72-e002-0026-1612-207c0c000000",
+        "x-ms-request-id": "fbe15a21-9002-007c-7143-c48de6000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
-        "odata.metadata": "https://jverazsdkprim.table.core.windows.net/$metadata#Tables/@Element",
+        "odata.metadata": "https://chrisstablesprim.table.core.windows.net/$metadata#Tables/@Element",
         "TableName": "testtable70nsg0nu"
       }
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata=minimalmetadata",
         "Authorization": "Sanitized",
-        "Content-Length": "648",
+        "Content-Length": "717",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
-        "traceparent": "00-3f2ebbd3c40a4b43a16e3ed062c830de-24b895823f25ca4a-00",
+        "traceparent": "00-751c2a6905e3d040bbec8e69dcc033b5-cee4df9eab26e047-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Data.Tables/12.3.0-alpha.20211018.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
         ],
         "x-ms-client-request-id": "4021adffa89d90a0e66cfb29d0dedc42",
-        "x-ms-date": "Tue, 23 Mar 2021 18:28:28 GMT",
+        "x-ms-date": "Mon, 18 Oct 2021 17:13:14 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -75,6 +75,8 @@
         "BinaryTypeProperty@odata.type": "Edm.Binary",
         "Int64TypeProperty": "1",
         "Int64TypeProperty@odata.type": "Edm.Int64",
+        "UInt64TypeProperty": "1",
+        "UInt64TypeProperty@odata.type": "Edm.Int64",
         "DoubleTypeProperty": 1,
         "DoubleTypeProperty@odata.type": "Edm.Double",
         "IntTypeProperty": 1,
@@ -85,10 +87,10 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "DataServiceId": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002701\u0027)",
-        "Date": "Tue, 23 Mar 2021 18:28:30 GMT",
-        "ETag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.1276352Z\u0027\u0022",
-        "Location": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002701\u0027)",
+        "DataServiceId": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002701\u0027)",
+        "Date": "Mon, 18 Oct 2021 17:13:13 GMT",
+        "ETag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A13.898369Z\u0027\u0022",
+        "Location": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002701\u0027)",
         "Preference-Applied": "return-no-content",
         "Server": [
           "Windows-Azure-Table/1.0",
@@ -96,28 +98,28 @@
         ],
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "4021adffa89d90a0e66cfb29d0dedc42",
-        "x-ms-request-id": "a0286f7c-e002-0026-1d12-207c0c000000",
+        "x-ms-request-id": "fbe15a2a-9002-007c-7843-c48de6000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata=minimalmetadata",
         "Authorization": "Sanitized",
-        "Content-Length": "648",
+        "Content-Length": "717",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
-        "traceparent": "00-22b1d8dada0f594985bed39f3ef7b152-020132eb39905743-00",
+        "traceparent": "00-b3cecf2818dee345a3c47d7e6da79fc2-24e629e25636fa4b-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Data.Tables/12.3.0-alpha.20211018.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
         ],
         "x-ms-client-request-id": "29b4cfa49fceae1674ad5992214b97e0",
-        "x-ms-date": "Tue, 23 Mar 2021 18:28:28 GMT",
+        "x-ms-date": "Mon, 18 Oct 2021 17:13:14 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -133,6 +135,8 @@
         "BinaryTypeProperty@odata.type": "Edm.Binary",
         "Int64TypeProperty": "2",
         "Int64TypeProperty@odata.type": "Edm.Int64",
+        "UInt64TypeProperty": "2",
+        "UInt64TypeProperty@odata.type": "Edm.Int64",
         "DoubleTypeProperty": 2,
         "DoubleTypeProperty@odata.type": "Edm.Double",
         "IntTypeProperty": 2,
@@ -143,10 +147,10 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "DataServiceId": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002702\u0027)",
-        "Date": "Tue, 23 Mar 2021 18:28:30 GMT",
-        "ETag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.1516544Z\u0027\u0022",
-        "Location": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002702\u0027)",
+        "DataServiceId": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002702\u0027)",
+        "Date": "Mon, 18 Oct 2021 17:13:13 GMT",
+        "ETag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A13.969419Z\u0027\u0022",
+        "Location": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002702\u0027)",
         "Preference-Applied": "return-no-content",
         "Server": [
           "Windows-Azure-Table/1.0",
@@ -154,28 +158,28 @@
         ],
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "29b4cfa49fceae1674ad5992214b97e0",
-        "x-ms-request-id": "a0286f7e-e002-0026-1f12-207c0c000000",
+        "x-ms-request-id": "fbe15a33-9002-007c-0143-c48de6000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata=minimalmetadata",
         "Authorization": "Sanitized",
-        "Content-Length": "648",
+        "Content-Length": "717",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
-        "traceparent": "00-5ca60f95036a354a98532f886fd1bf93-7d198e06f7f63b44-00",
+        "traceparent": "00-effc4390e4cde64eabb8ee420dd3415e-e92e0a46a1fde545-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Data.Tables/12.3.0-alpha.20211018.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
         ],
         "x-ms-client-request-id": "ab937f9caf15ed9db7c5faa2c3018fe4",
-        "x-ms-date": "Tue, 23 Mar 2021 18:28:28 GMT",
+        "x-ms-date": "Mon, 18 Oct 2021 17:13:14 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -191,6 +195,8 @@
         "BinaryTypeProperty@odata.type": "Edm.Binary",
         "Int64TypeProperty": "3",
         "Int64TypeProperty@odata.type": "Edm.Int64",
+        "UInt64TypeProperty": "3",
+        "UInt64TypeProperty@odata.type": "Edm.Int64",
         "DoubleTypeProperty": 3,
         "DoubleTypeProperty@odata.type": "Edm.Double",
         "IntTypeProperty": 3,
@@ -201,10 +207,10 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "DataServiceId": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002703\u0027)",
-        "Date": "Tue, 23 Mar 2021 18:28:30 GMT",
-        "ETag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.1746691Z\u0027\u0022",
-        "Location": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002703\u0027)",
+        "DataServiceId": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002703\u0027)",
+        "Date": "Mon, 18 Oct 2021 17:13:13 GMT",
+        "ETag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A14.04247Z\u0027\u0022",
+        "Location": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002703\u0027)",
         "Preference-Applied": "return-no-content",
         "Server": [
           "Windows-Azure-Table/1.0",
@@ -212,28 +218,28 @@
         ],
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "ab937f9caf15ed9db7c5faa2c3018fe4",
-        "x-ms-request-id": "a0286f81-e002-0026-2212-207c0c000000",
+        "x-ms-request-id": "fbe15a3f-9002-007c-0d43-c48de6000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata=minimalmetadata",
         "Authorization": "Sanitized",
-        "Content-Length": "648",
+        "Content-Length": "717",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
-        "traceparent": "00-8036c1cd52345d41ab141363efcec07c-d24dfc5579f37447-00",
+        "traceparent": "00-875d8960eacdd04499ff08ecc2e1eca6-7524a9b53e8de146-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Data.Tables/12.3.0-alpha.20211018.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
         ],
         "x-ms-client-request-id": "74e01548ba9360739773ccf04e0d6f9a",
-        "x-ms-date": "Tue, 23 Mar 2021 18:28:28 GMT",
+        "x-ms-date": "Mon, 18 Oct 2021 17:13:14 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -249,6 +255,8 @@
         "BinaryTypeProperty@odata.type": "Edm.Binary",
         "Int64TypeProperty": "4",
         "Int64TypeProperty@odata.type": "Edm.Int64",
+        "UInt64TypeProperty": "4",
+        "UInt64TypeProperty@odata.type": "Edm.Int64",
         "DoubleTypeProperty": 4,
         "DoubleTypeProperty@odata.type": "Edm.Double",
         "IntTypeProperty": 4,
@@ -259,10 +267,10 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "DataServiceId": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002704\u0027)",
-        "Date": "Tue, 23 Mar 2021 18:28:30 GMT",
-        "ETag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.1976851Z\u0027\u0022",
-        "Location": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002704\u0027)",
+        "DataServiceId": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002704\u0027)",
+        "Date": "Mon, 18 Oct 2021 17:13:13 GMT",
+        "ETag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A14.1135204Z\u0027\u0022",
+        "Location": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002704\u0027)",
         "Preference-Applied": "return-no-content",
         "Server": [
           "Windows-Azure-Table/1.0",
@@ -270,28 +278,28 @@
         ],
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "74e01548ba9360739773ccf04e0d6f9a",
-        "x-ms-request-id": "a0286f82-e002-0026-2312-207c0c000000",
+        "x-ms-request-id": "fbe15a4b-9002-007c-1943-c48de6000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata=minimalmetadata",
         "Authorization": "Sanitized",
-        "Content-Length": "648",
+        "Content-Length": "717",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
-        "traceparent": "00-63e60d749d81884d83340dfd4bcc9a81-672519ffc156f84c-00",
+        "traceparent": "00-e0f30ad4457bc7418a7048bac2600a1f-f4c7f697b41aab4d-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Data.Tables/12.3.0-alpha.20211018.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
         ],
         "x-ms-client-request-id": "508c1ad5314af52c32c67108a473eb73",
-        "x-ms-date": "Tue, 23 Mar 2021 18:28:28 GMT",
+        "x-ms-date": "Mon, 18 Oct 2021 17:13:14 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -307,6 +315,8 @@
         "BinaryTypeProperty@odata.type": "Edm.Binary",
         "Int64TypeProperty": "5",
         "Int64TypeProperty@odata.type": "Edm.Int64",
+        "UInt64TypeProperty": "5",
+        "UInt64TypeProperty@odata.type": "Edm.Int64",
         "DoubleTypeProperty": 5,
         "DoubleTypeProperty@odata.type": "Edm.Double",
         "IntTypeProperty": 5,
@@ -317,10 +327,10 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "DataServiceId": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002705\u0027)",
-        "Date": "Tue, 23 Mar 2021 18:28:30 GMT",
-        "ETag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.2247053Z\u0027\u0022",
-        "Location": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002705\u0027)",
+        "DataServiceId": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002705\u0027)",
+        "Date": "Mon, 18 Oct 2021 17:13:13 GMT",
+        "ETag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A14.1855713Z\u0027\u0022",
+        "Location": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002705\u0027)",
         "Preference-Applied": "return-no-content",
         "Server": [
           "Windows-Azure-Table/1.0",
@@ -328,28 +338,28 @@
         ],
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "508c1ad5314af52c32c67108a473eb73",
-        "x-ms-request-id": "a0286f87-e002-0026-2812-207c0c000000",
+        "x-ms-request-id": "fbe15a50-9002-007c-1e43-c48de6000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata=minimalmetadata",
         "Authorization": "Sanitized",
-        "Content-Length": "648",
+        "Content-Length": "717",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
-        "traceparent": "00-117b6d2c6be5e445bc6e52144a023de0-ee3e776e997f744d-00",
+        "traceparent": "00-6dfe138e01da66409a82c5ef3ca88a87-f530abf676085640-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Data.Tables/12.3.0-alpha.20211018.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
         ],
         "x-ms-client-request-id": "0c4a751d236be24d0c3314a2e2ad9fa9",
-        "x-ms-date": "Tue, 23 Mar 2021 18:28:28 GMT",
+        "x-ms-date": "Mon, 18 Oct 2021 17:13:14 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -365,6 +375,8 @@
         "BinaryTypeProperty@odata.type": "Edm.Binary",
         "Int64TypeProperty": "6",
         "Int64TypeProperty@odata.type": "Edm.Int64",
+        "UInt64TypeProperty": "6",
+        "UInt64TypeProperty@odata.type": "Edm.Int64",
         "DoubleTypeProperty": 6,
         "DoubleTypeProperty@odata.type": "Edm.Double",
         "IntTypeProperty": 6,
@@ -375,10 +387,10 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "DataServiceId": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002706\u0027)",
-        "Date": "Tue, 23 Mar 2021 18:28:30 GMT",
-        "ETag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.257727Z\u0027\u0022",
-        "Location": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002706\u0027)",
+        "DataServiceId": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002706\u0027)",
+        "Date": "Mon, 18 Oct 2021 17:13:13 GMT",
+        "ETag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A14.2566218Z\u0027\u0022",
+        "Location": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002706\u0027)",
         "Preference-Applied": "return-no-content",
         "Server": [
           "Windows-Azure-Table/1.0",
@@ -386,28 +398,28 @@
         ],
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "0c4a751d236be24d0c3314a2e2ad9fa9",
-        "x-ms-request-id": "a0286f8c-e002-0026-2d12-207c0c000000",
+        "x-ms-request-id": "fbe15a56-9002-007c-2343-c48de6000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata=minimalmetadata",
         "Authorization": "Sanitized",
-        "Content-Length": "648",
+        "Content-Length": "717",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
-        "traceparent": "00-30fdee8bddb13b41ab047b4390aae2bb-594681ec4fa1c148-00",
+        "traceparent": "00-f98025113565144bb7172c69f653686f-ae2042233c09824a-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Data.Tables/12.3.0-alpha.20211018.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
         ],
         "x-ms-client-request-id": "a8cd5f563f741799e8ea42cc486bbc23",
-        "x-ms-date": "Tue, 23 Mar 2021 18:28:28 GMT",
+        "x-ms-date": "Mon, 18 Oct 2021 17:13:14 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -423,6 +435,8 @@
         "BinaryTypeProperty@odata.type": "Edm.Binary",
         "Int64TypeProperty": "7",
         "Int64TypeProperty@odata.type": "Edm.Int64",
+        "UInt64TypeProperty": "7",
+        "UInt64TypeProperty@odata.type": "Edm.Int64",
         "DoubleTypeProperty": 7,
         "DoubleTypeProperty@odata.type": "Edm.Double",
         "IntTypeProperty": 7,
@@ -433,10 +447,10 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "DataServiceId": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002707\u0027)",
-        "Date": "Tue, 23 Mar 2021 18:28:30 GMT",
-        "ETag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.2787425Z\u0027\u0022",
-        "Location": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002707\u0027)",
+        "DataServiceId": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002707\u0027)",
+        "Date": "Mon, 18 Oct 2021 17:13:13 GMT",
+        "ETag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A14.3286727Z\u0027\u0022",
+        "Location": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002707\u0027)",
         "Preference-Applied": "return-no-content",
         "Server": [
           "Windows-Azure-Table/1.0",
@@ -444,28 +458,28 @@
         ],
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "a8cd5f563f741799e8ea42cc486bbc23",
-        "x-ms-request-id": "a0286f91-e002-0026-3212-207c0c000000",
+        "x-ms-request-id": "fbe15a5f-9002-007c-2c43-c48de6000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata=minimalmetadata",
         "Authorization": "Sanitized",
-        "Content-Length": "648",
+        "Content-Length": "717",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
-        "traceparent": "00-b20ba41a6082594ca2fd7ec297200d60-a67085701e60d244-00",
+        "traceparent": "00-206cf61e526fcd40859a2a453c5e803f-09747104610e0e4c-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Data.Tables/12.3.0-alpha.20211018.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
         ],
         "x-ms-client-request-id": "d9d2598862c3b22fcdaa43171c8a1285",
-        "x-ms-date": "Tue, 23 Mar 2021 18:28:28 GMT",
+        "x-ms-date": "Mon, 18 Oct 2021 17:13:14 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -481,6 +495,8 @@
         "BinaryTypeProperty@odata.type": "Edm.Binary",
         "Int64TypeProperty": "8",
         "Int64TypeProperty@odata.type": "Edm.Int64",
+        "UInt64TypeProperty": "8",
+        "UInt64TypeProperty@odata.type": "Edm.Int64",
         "DoubleTypeProperty": 8,
         "DoubleTypeProperty@odata.type": "Edm.Double",
         "IntTypeProperty": 8,
@@ -491,10 +507,10 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "DataServiceId": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002708\u0027)",
-        "Date": "Tue, 23 Mar 2021 18:28:30 GMT",
-        "ETag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.3007576Z\u0027\u0022",
-        "Location": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002708\u0027)",
+        "DataServiceId": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002708\u0027)",
+        "Date": "Mon, 18 Oct 2021 17:13:13 GMT",
+        "ETag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A14.3987218Z\u0027\u0022",
+        "Location": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002708\u0027)",
         "Preference-Applied": "return-no-content",
         "Server": [
           "Windows-Azure-Table/1.0",
@@ -502,28 +518,28 @@
         ],
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "d9d2598862c3b22fcdaa43171c8a1285",
-        "x-ms-request-id": "a0286f95-e002-0026-3612-207c0c000000",
+        "x-ms-request-id": "fbe15a65-9002-007c-3243-c48de6000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata=minimalmetadata",
         "Authorization": "Sanitized",
-        "Content-Length": "648",
+        "Content-Length": "717",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
-        "traceparent": "00-16b7337264fae14bb2ee55a2197e7fc3-262ab727dc060441-00",
+        "traceparent": "00-afbc58156f2e61419218a9f06cfa9d0a-67097379f75fd545-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Data.Tables/12.3.0-alpha.20211018.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
         ],
         "x-ms-client-request-id": "44b1c72742a5deffdb322380e08099a1",
-        "x-ms-date": "Tue, 23 Mar 2021 18:28:28 GMT",
+        "x-ms-date": "Mon, 18 Oct 2021 17:13:14 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -539,6 +555,8 @@
         "BinaryTypeProperty@odata.type": "Edm.Binary",
         "Int64TypeProperty": "9",
         "Int64TypeProperty@odata.type": "Edm.Int64",
+        "UInt64TypeProperty": "9",
+        "UInt64TypeProperty@odata.type": "Edm.Int64",
         "DoubleTypeProperty": 9,
         "DoubleTypeProperty@odata.type": "Edm.Double",
         "IntTypeProperty": 9,
@@ -549,10 +567,10 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "DataServiceId": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002709\u0027)",
-        "Date": "Tue, 23 Mar 2021 18:28:30 GMT",
-        "ETag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.3247746Z\u0027\u0022",
-        "Location": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002709\u0027)",
+        "DataServiceId": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002709\u0027)",
+        "Date": "Mon, 18 Oct 2021 17:13:13 GMT",
+        "ETag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A14.4697722Z\u0027\u0022",
+        "Location": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002709\u0027)",
         "Preference-Applied": "return-no-content",
         "Server": [
           "Windows-Azure-Table/1.0",
@@ -560,28 +578,28 @@
         ],
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "44b1c72742a5deffdb322380e08099a1",
-        "x-ms-request-id": "a0286f9c-e002-0026-3d12-207c0c000000",
+        "x-ms-request-id": "fbe15a6c-9002-007c-3843-c48de6000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata=minimalmetadata",
         "Authorization": "Sanitized",
-        "Content-Length": "651",
+        "Content-Length": "721",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
-        "traceparent": "00-657a07d18a7d5e4fa8f0e174521017e9-7ee15e373c860940-00",
+        "traceparent": "00-55b8ebfe54977943a2d21af0bc8fc9e1-2e72df3c34babc4b-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Data.Tables/12.3.0-alpha.20211018.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
         ],
         "x-ms-client-request-id": "8919f077c5daf3e6301bdac9fb82fa5e",
-        "x-ms-date": "Tue, 23 Mar 2021 18:28:28 GMT",
+        "x-ms-date": "Mon, 18 Oct 2021 17:13:14 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -597,6 +615,8 @@
         "BinaryTypeProperty@odata.type": "Edm.Binary",
         "Int64TypeProperty": "10",
         "Int64TypeProperty@odata.type": "Edm.Int64",
+        "UInt64TypeProperty": "10",
+        "UInt64TypeProperty@odata.type": "Edm.Int64",
         "DoubleTypeProperty": 10,
         "DoubleTypeProperty@odata.type": "Edm.Double",
         "IntTypeProperty": 10,
@@ -607,10 +627,10 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "DataServiceId": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002710\u0027)",
-        "Date": "Tue, 23 Mar 2021 18:28:30 GMT",
-        "ETag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.3517939Z\u0027\u0022",
-        "Location": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002710\u0027)",
+        "DataServiceId": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002710\u0027)",
+        "Date": "Mon, 18 Oct 2021 17:13:14 GMT",
+        "ETag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A14.5388208Z\u0027\u0022",
+        "Location": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002710\u0027)",
         "Preference-Applied": "return-no-content",
         "Server": [
           "Windows-Azure-Table/1.0",
@@ -618,28 +638,28 @@
         ],
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "8919f077c5daf3e6301bdac9fb82fa5e",
-        "x-ms-request-id": "a0286fa5-e002-0026-4512-207c0c000000",
+        "x-ms-request-id": "fbe15a73-9002-007c-3f43-c48de6000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata=minimalmetadata",
         "Authorization": "Sanitized",
-        "Content-Length": "651",
+        "Content-Length": "721",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
-        "traceparent": "00-96a1e4686f844d458112aff8da04ef81-5fd6464b7ed10c4a-00",
+        "traceparent": "00-26cc87d01284764791b19b76e6d37083-dcdf13259d43c847-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Data.Tables/12.3.0-alpha.20211018.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
         ],
         "x-ms-client-request-id": "80a4bdd877b9457d59f4fd903fafd14c",
-        "x-ms-date": "Tue, 23 Mar 2021 18:28:28 GMT",
+        "x-ms-date": "Mon, 18 Oct 2021 17:13:15 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -655,6 +675,8 @@
         "BinaryTypeProperty@odata.type": "Edm.Binary",
         "Int64TypeProperty": "11",
         "Int64TypeProperty@odata.type": "Edm.Int64",
+        "UInt64TypeProperty": "11",
+        "UInt64TypeProperty@odata.type": "Edm.Int64",
         "DoubleTypeProperty": 11,
         "DoubleTypeProperty@odata.type": "Edm.Double",
         "IntTypeProperty": 11,
@@ -665,10 +687,10 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "DataServiceId": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002711\u0027)",
-        "Date": "Tue, 23 Mar 2021 18:28:30 GMT",
-        "ETag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.3758108Z\u0027\u0022",
-        "Location": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002711\u0027)",
+        "DataServiceId": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002711\u0027)",
+        "Date": "Mon, 18 Oct 2021 17:13:14 GMT",
+        "ETag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A14.6138741Z\u0027\u0022",
+        "Location": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002711\u0027)",
         "Preference-Applied": "return-no-content",
         "Server": [
           "Windows-Azure-Table/1.0",
@@ -676,28 +698,28 @@
         ],
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "80a4bdd877b9457d59f4fd903fafd14c",
-        "x-ms-request-id": "a0286fa6-e002-0026-4612-207c0c000000",
+        "x-ms-request-id": "fbe15a78-9002-007c-4443-c48de6000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata=minimalmetadata",
         "Authorization": "Sanitized",
-        "Content-Length": "651",
+        "Content-Length": "721",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
-        "traceparent": "00-69bbccd66d553a499bc7cb7021feb699-d6875320bcdba44c-00",
+        "traceparent": "00-94da8658bfef6e48b778d918dcb42c27-eac0573a59c05a46-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Data.Tables/12.3.0-alpha.20211018.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
         ],
         "x-ms-client-request-id": "2b9fa211887062aae1be138a6835e358",
-        "x-ms-date": "Tue, 23 Mar 2021 18:28:28 GMT",
+        "x-ms-date": "Mon, 18 Oct 2021 17:13:15 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -713,6 +735,8 @@
         "BinaryTypeProperty@odata.type": "Edm.Binary",
         "Int64TypeProperty": "12",
         "Int64TypeProperty@odata.type": "Edm.Int64",
+        "UInt64TypeProperty": "12",
+        "UInt64TypeProperty@odata.type": "Edm.Int64",
         "DoubleTypeProperty": 12,
         "DoubleTypeProperty@odata.type": "Edm.Double",
         "IntTypeProperty": 12,
@@ -723,10 +747,10 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "DataServiceId": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002712\u0027)",
-        "Date": "Tue, 23 Mar 2021 18:28:30 GMT",
-        "ETag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.4018292Z\u0027\u0022",
-        "Location": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002712\u0027)",
+        "DataServiceId": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002712\u0027)",
+        "Date": "Mon, 18 Oct 2021 17:13:14 GMT",
+        "ETag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A14.6889269Z\u0027\u0022",
+        "Location": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002712\u0027)",
         "Preference-Applied": "return-no-content",
         "Server": [
           "Windows-Azure-Table/1.0",
@@ -734,28 +758,28 @@
         ],
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "2b9fa211887062aae1be138a6835e358",
-        "x-ms-request-id": "a0286fa8-e002-0026-4812-207c0c000000",
+        "x-ms-request-id": "fbe15a7f-9002-007c-4b43-c48de6000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata=minimalmetadata",
         "Authorization": "Sanitized",
-        "Content-Length": "651",
+        "Content-Length": "721",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
-        "traceparent": "00-dc667fe2257ce145abf6821fcdc89ce0-d3bc3dd0a675ac40-00",
+        "traceparent": "00-3a3c2dee148b5048a852823806eb56f7-e11a9e8f9f161445-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Data.Tables/12.3.0-alpha.20211018.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
         ],
         "x-ms-client-request-id": "23a7c53818dbffe872d430e6c755b481",
-        "x-ms-date": "Tue, 23 Mar 2021 18:28:28 GMT",
+        "x-ms-date": "Mon, 18 Oct 2021 17:13:15 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -771,6 +795,8 @@
         "BinaryTypeProperty@odata.type": "Edm.Binary",
         "Int64TypeProperty": "13",
         "Int64TypeProperty@odata.type": "Edm.Int64",
+        "UInt64TypeProperty": "13",
+        "UInt64TypeProperty@odata.type": "Edm.Int64",
         "DoubleTypeProperty": 13,
         "DoubleTypeProperty@odata.type": "Edm.Double",
         "IntTypeProperty": 13,
@@ -781,10 +807,10 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "DataServiceId": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002713\u0027)",
-        "Date": "Tue, 23 Mar 2021 18:28:30 GMT",
-        "ETag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.4258466Z\u0027\u0022",
-        "Location": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002713\u0027)",
+        "DataServiceId": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002713\u0027)",
+        "Date": "Mon, 18 Oct 2021 17:13:14 GMT",
+        "ETag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A14.7609783Z\u0027\u0022",
+        "Location": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002713\u0027)",
         "Preference-Applied": "return-no-content",
         "Server": [
           "Windows-Azure-Table/1.0",
@@ -792,28 +818,28 @@
         ],
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "23a7c53818dbffe872d430e6c755b481",
-        "x-ms-request-id": "a0286fad-e002-0026-4d12-207c0c000000",
+        "x-ms-request-id": "fbe15a84-9002-007c-5043-c48de6000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata=minimalmetadata",
         "Authorization": "Sanitized",
-        "Content-Length": "651",
+        "Content-Length": "721",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
-        "traceparent": "00-fd4967470817f84eb51c4651080a4c04-2e5d47333d343243-00",
+        "traceparent": "00-050c43717a00504393d87a27180f4c30-e410b14806b5964b-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Data.Tables/12.3.0-alpha.20211018.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
         ],
         "x-ms-client-request-id": "58b88d49cee250ed12429ffb64f3dd24",
-        "x-ms-date": "Tue, 23 Mar 2021 18:28:28 GMT",
+        "x-ms-date": "Mon, 18 Oct 2021 17:13:15 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -829,6 +855,8 @@
         "BinaryTypeProperty@odata.type": "Edm.Binary",
         "Int64TypeProperty": "14",
         "Int64TypeProperty@odata.type": "Edm.Int64",
+        "UInt64TypeProperty": "14",
+        "UInt64TypeProperty@odata.type": "Edm.Int64",
         "DoubleTypeProperty": 14,
         "DoubleTypeProperty@odata.type": "Edm.Double",
         "IntTypeProperty": 14,
@@ -839,10 +867,10 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "DataServiceId": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002714\u0027)",
-        "Date": "Tue, 23 Mar 2021 18:28:30 GMT",
-        "ETag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.4488622Z\u0027\u0022",
-        "Location": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002714\u0027)",
+        "DataServiceId": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002714\u0027)",
+        "Date": "Mon, 18 Oct 2021 17:13:14 GMT",
+        "ETag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A14.8330292Z\u0027\u0022",
+        "Location": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002714\u0027)",
         "Preference-Applied": "return-no-content",
         "Server": [
           "Windows-Azure-Table/1.0",
@@ -850,28 +878,28 @@
         ],
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "58b88d49cee250ed12429ffb64f3dd24",
-        "x-ms-request-id": "a0286fb0-e002-0026-4f12-207c0c000000",
+        "x-ms-request-id": "fbe15a8f-9002-007c-5b43-c48de6000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata=minimalmetadata",
         "Authorization": "Sanitized",
-        "Content-Length": "651",
+        "Content-Length": "721",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
-        "traceparent": "00-c0dfea58bbf52e458db8ad048d8aa511-5b9e8ec1e518dc41-00",
+        "traceparent": "00-a8a723d944aa584ebea3e6a5a707169c-bc4265fd47a07a4f-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Data.Tables/12.3.0-alpha.20211018.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
         ],
         "x-ms-client-request-id": "7958a510ae07f870baa0b99c58c39a8c",
-        "x-ms-date": "Tue, 23 Mar 2021 18:28:28 GMT",
+        "x-ms-date": "Mon, 18 Oct 2021 17:13:15 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -887,6 +915,8 @@
         "BinaryTypeProperty@odata.type": "Edm.Binary",
         "Int64TypeProperty": "15",
         "Int64TypeProperty@odata.type": "Edm.Int64",
+        "UInt64TypeProperty": "15",
+        "UInt64TypeProperty@odata.type": "Edm.Int64",
         "DoubleTypeProperty": 15,
         "DoubleTypeProperty@odata.type": "Edm.Double",
         "IntTypeProperty": 15,
@@ -897,10 +927,10 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "DataServiceId": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002715\u0027)",
-        "Date": "Tue, 23 Mar 2021 18:28:30 GMT",
-        "ETag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.4738801Z\u0027\u0022",
-        "Location": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002715\u0027)",
+        "DataServiceId": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002715\u0027)",
+        "Date": "Mon, 18 Oct 2021 17:13:14 GMT",
+        "ETag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A14.9050797Z\u0027\u0022",
+        "Location": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002715\u0027)",
         "Preference-Applied": "return-no-content",
         "Server": [
           "Windows-Azure-Table/1.0",
@@ -908,28 +938,28 @@
         ],
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "7958a510ae07f870baa0b99c58c39a8c",
-        "x-ms-request-id": "a0286fb5-e002-0026-5412-207c0c000000",
+        "x-ms-request-id": "fbe15a95-9002-007c-6143-c48de6000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata=minimalmetadata",
         "Authorization": "Sanitized",
-        "Content-Length": "651",
+        "Content-Length": "721",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
-        "traceparent": "00-971ae7f8be021246840e3a1475c6ea24-699eb726c764d740-00",
+        "traceparent": "00-653069939a1c0b469e020b7507e370fb-5bd629e73c76e04a-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Data.Tables/12.3.0-alpha.20211018.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
         ],
         "x-ms-client-request-id": "da4092098a7c6975d857109979ec9b7f",
-        "x-ms-date": "Tue, 23 Mar 2021 18:28:28 GMT",
+        "x-ms-date": "Mon, 18 Oct 2021 17:13:15 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -945,6 +975,8 @@
         "BinaryTypeProperty@odata.type": "Edm.Binary",
         "Int64TypeProperty": "16",
         "Int64TypeProperty@odata.type": "Edm.Int64",
+        "UInt64TypeProperty": "16",
+        "UInt64TypeProperty@odata.type": "Edm.Int64",
         "DoubleTypeProperty": 16,
         "DoubleTypeProperty@odata.type": "Edm.Double",
         "IntTypeProperty": 16,
@@ -955,10 +987,10 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "DataServiceId": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002716\u0027)",
-        "Date": "Tue, 23 Mar 2021 18:28:30 GMT",
-        "ETag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.4968961Z\u0027\u0022",
-        "Location": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002716\u0027)",
+        "DataServiceId": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002716\u0027)",
+        "Date": "Mon, 18 Oct 2021 17:13:14 GMT",
+        "ETag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A14.9781315Z\u0027\u0022",
+        "Location": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002716\u0027)",
         "Preference-Applied": "return-no-content",
         "Server": [
           "Windows-Azure-Table/1.0",
@@ -966,28 +998,28 @@
         ],
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "da4092098a7c6975d857109979ec9b7f",
-        "x-ms-request-id": "a0286fbb-e002-0026-5a12-207c0c000000",
+        "x-ms-request-id": "fbe15a9f-9002-007c-6b43-c48de6000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata=minimalmetadata",
         "Authorization": "Sanitized",
-        "Content-Length": "651",
+        "Content-Length": "721",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
-        "traceparent": "00-c1ce75c70a82e64289df358ac1fe3d45-88717ceacebb2842-00",
+        "traceparent": "00-4d2146abdb414949b503297c80dc0bee-83ef6d2ffa8c0c4f-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Data.Tables/12.3.0-alpha.20211018.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
         ],
         "x-ms-client-request-id": "22d50bf63afc9b791cc09e421550f74e",
-        "x-ms-date": "Tue, 23 Mar 2021 18:28:28 GMT",
+        "x-ms-date": "Mon, 18 Oct 2021 17:13:15 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -1003,6 +1035,8 @@
         "BinaryTypeProperty@odata.type": "Edm.Binary",
         "Int64TypeProperty": "17",
         "Int64TypeProperty@odata.type": "Edm.Int64",
+        "UInt64TypeProperty": "17",
+        "UInt64TypeProperty@odata.type": "Edm.Int64",
         "DoubleTypeProperty": 17,
         "DoubleTypeProperty@odata.type": "Edm.Double",
         "IntTypeProperty": 17,
@@ -1013,10 +1047,10 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "DataServiceId": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002717\u0027)",
-        "Date": "Tue, 23 Mar 2021 18:28:30 GMT",
-        "ETag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.521914Z\u0027\u0022",
-        "Location": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002717\u0027)",
+        "DataServiceId": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002717\u0027)",
+        "Date": "Mon, 18 Oct 2021 17:13:14 GMT",
+        "ETag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A15.0501824Z\u0027\u0022",
+        "Location": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002717\u0027)",
         "Preference-Applied": "return-no-content",
         "Server": [
           "Windows-Azure-Table/1.0",
@@ -1024,28 +1058,28 @@
         ],
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "22d50bf63afc9b791cc09e421550f74e",
-        "x-ms-request-id": "a0286fc1-e002-0026-6012-207c0c000000",
+        "x-ms-request-id": "fbe15aaa-9002-007c-7643-c48de6000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata=minimalmetadata",
         "Authorization": "Sanitized",
-        "Content-Length": "651",
+        "Content-Length": "721",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
-        "traceparent": "00-0392179d36606e438523aac5da5cf8e8-bda43cdca2ad2a48-00",
+        "traceparent": "00-e0d591d22676f84fa0760a967fa4aa10-9c58d962255cfc43-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Data.Tables/12.3.0-alpha.20211018.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
         ],
         "x-ms-client-request-id": "d1f112a803b286a72fefa1af9dd77ecd",
-        "x-ms-date": "Tue, 23 Mar 2021 18:28:28 GMT",
+        "x-ms-date": "Mon, 18 Oct 2021 17:13:15 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -1061,6 +1095,8 @@
         "BinaryTypeProperty@odata.type": "Edm.Binary",
         "Int64TypeProperty": "18",
         "Int64TypeProperty@odata.type": "Edm.Int64",
+        "UInt64TypeProperty": "18",
+        "UInt64TypeProperty@odata.type": "Edm.Int64",
         "DoubleTypeProperty": 18,
         "DoubleTypeProperty@odata.type": "Edm.Double",
         "IntTypeProperty": 18,
@@ -1071,10 +1107,10 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "DataServiceId": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002718\u0027)",
-        "Date": "Tue, 23 Mar 2021 18:28:30 GMT",
-        "ETag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.5479323Z\u0027\u0022",
-        "Location": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002718\u0027)",
+        "DataServiceId": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002718\u0027)",
+        "Date": "Mon, 18 Oct 2021 17:13:14 GMT",
+        "ETag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A15.1292381Z\u0027\u0022",
+        "Location": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002718\u0027)",
         "Preference-Applied": "return-no-content",
         "Server": [
           "Windows-Azure-Table/1.0",
@@ -1082,28 +1118,28 @@
         ],
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "d1f112a803b286a72fefa1af9dd77ecd",
-        "x-ms-request-id": "a0286fc6-e002-0026-6512-207c0c000000",
+        "x-ms-request-id": "fbe15ab4-9002-007c-7f43-c48de6000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata=minimalmetadata",
         "Authorization": "Sanitized",
-        "Content-Length": "651",
+        "Content-Length": "721",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
-        "traceparent": "00-513c9654b82d3540be91b3b883e30c64-d3ca23ed47479d4f-00",
+        "traceparent": "00-7b49e6e7e8656840b8d7578894e4d8dc-4b7f0d49b4cfb043-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Data.Tables/12.3.0-alpha.20211018.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
         ],
         "x-ms-client-request-id": "4ca6390577eece9019a4bdbcec335387",
-        "x-ms-date": "Tue, 23 Mar 2021 18:28:28 GMT",
+        "x-ms-date": "Mon, 18 Oct 2021 17:13:15 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -1119,6 +1155,8 @@
         "BinaryTypeProperty@odata.type": "Edm.Binary",
         "Int64TypeProperty": "19",
         "Int64TypeProperty@odata.type": "Edm.Int64",
+        "UInt64TypeProperty": "19",
+        "UInt64TypeProperty@odata.type": "Edm.Int64",
         "DoubleTypeProperty": 19,
         "DoubleTypeProperty@odata.type": "Edm.Double",
         "IntTypeProperty": 19,
@@ -1129,10 +1167,10 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "DataServiceId": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002719\u0027)",
-        "Date": "Tue, 23 Mar 2021 18:28:30 GMT",
-        "ETag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.5749512Z\u0027\u0022",
-        "Location": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002719\u0027)",
+        "DataServiceId": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002719\u0027)",
+        "Date": "Mon, 18 Oct 2021 17:13:14 GMT",
+        "ETag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A15.2333126Z\u0027\u0022",
+        "Location": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002719\u0027)",
         "Preference-Applied": "return-no-content",
         "Server": [
           "Windows-Azure-Table/1.0",
@@ -1140,28 +1178,28 @@
         ],
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "4ca6390577eece9019a4bdbcec335387",
-        "x-ms-request-id": "a0286fcb-e002-0026-6912-207c0c000000",
+        "x-ms-request-id": "fbe15ac5-9002-007c-0d43-c48de6000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata=minimalmetadata",
         "Authorization": "Sanitized",
-        "Content-Length": "651",
+        "Content-Length": "721",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
-        "traceparent": "00-6e8b5216073d634b93b5a83db2c7c5e7-cbd80188f36bf64b-00",
+        "traceparent": "00-856ae7983214004da5ce226ab4b2c83b-370f35f123caf446-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Data.Tables/12.3.0-alpha.20211018.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
         ],
         "x-ms-client-request-id": "67f0c15fcafbf3cc644ff30c99c9fe44",
-        "x-ms-date": "Tue, 23 Mar 2021 18:28:28 GMT",
+        "x-ms-date": "Mon, 18 Oct 2021 17:13:15 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -1177,6 +1215,8 @@
         "BinaryTypeProperty@odata.type": "Edm.Binary",
         "Int64TypeProperty": "20",
         "Int64TypeProperty@odata.type": "Edm.Int64",
+        "UInt64TypeProperty": "20",
+        "UInt64TypeProperty@odata.type": "Edm.Int64",
         "DoubleTypeProperty": 20,
         "DoubleTypeProperty@odata.type": "Edm.Double",
         "IntTypeProperty": 20,
@@ -1187,10 +1227,10 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "DataServiceId": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002720\u0027)",
-        "Date": "Tue, 23 Mar 2021 18:28:30 GMT",
-        "ETag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.5989681Z\u0027\u0022",
-        "Location": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002720\u0027)",
+        "DataServiceId": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002720\u0027)",
+        "Date": "Mon, 18 Oct 2021 17:13:14 GMT",
+        "ETag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A15.3073644Z\u0027\u0022",
+        "Location": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu(PartitionKey=\u0027somPartition\u0027,RowKey=\u002720\u0027)",
         "Preference-Applied": "return-no-content",
         "Server": [
           "Windows-Azure-Table/1.0",
@@ -1198,25 +1238,25 @@
         ],
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "67f0c15fcafbf3cc644ff30c99c9fe44",
-        "x-ms-request-id": "a0286fd3-e002-0026-7112-207c0c000000",
+        "x-ms-request-id": "fbe15acd-9002-007c-1543-c48de6000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.core.windows.net/testtable70nsg0nu()?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.core.windows.net/testtable70nsg0nu()?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata=minimalmetadata",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-d12e9e08259f9c43a5b38953e523e4af-b6b0c42a8209b04d-00",
+        "traceparent": "00-1909d081e6fac9478647ddeb8370a76f-deb16a5163cd2e4d-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Data.Tables/12.3.0-alpha.20211018.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
         ],
         "x-ms-client-request-id": "dc3dd041aaaa30608122b80d45ea99fb",
-        "x-ms-date": "Tue, 23 Mar 2021 18:28:28 GMT",
+        "x-ms-date": "Mon, 18 Oct 2021 17:13:15 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -1225,7 +1265,7 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=minimalmetadata; streaming=true; charset=utf-8",
-        "Date": "Tue, 23 Mar 2021 18:28:30 GMT",
+        "Date": "Mon, 18 Oct 2021 17:13:14 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
@@ -1233,17 +1273,17 @@
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "dc3dd041aaaa30608122b80d45ea99fb",
-        "x-ms-request-id": "a0286fd6-e002-0026-7412-207c0c000000",
+        "x-ms-request-id": "fbe15ad9-9002-007c-2043-c48de6000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
-        "odata.metadata": "https://jverazsdkprim.table.core.windows.net/$metadata#testtable70nsg0nu",
+        "odata.metadata": "https://chrisstablesprim.table.core.windows.net/$metadata#testtable70nsg0nu",
         "value": [
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.1276352Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A13.898369Z\u0027\u0022",
             "PartitionKey": "somPartition",
             "RowKey": "01",
-            "Timestamp": "2021-03-23T18:28:31.1276352Z",
+            "Timestamp": "2021-10-18T17:13:13.898369Z",
             "StringTypeProperty": "This is table entity number 01",
             "DatetimeTypeProperty@odata.type": "Edm.DateTime",
             "DatetimeTypeProperty": "2020-01-01T01:02:00Z",
@@ -1255,14 +1295,16 @@
             "BinaryTypeProperty": "AQIDBAU=",
             "Int64TypeProperty@odata.type": "Edm.Int64",
             "Int64TypeProperty": "1",
+            "UInt64TypeProperty@odata.type": "Edm.Int64",
+            "UInt64TypeProperty": "1",
             "DoubleTypeProperty": 1.0,
             "IntTypeProperty": 1
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.1516544Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A13.969419Z\u0027\u0022",
             "PartitionKey": "somPartition",
             "RowKey": "02",
-            "Timestamp": "2021-03-23T18:28:31.1516544Z",
+            "Timestamp": "2021-10-18T17:13:13.969419Z",
             "StringTypeProperty": "This is table entity number 02",
             "DatetimeTypeProperty@odata.type": "Edm.DateTime",
             "DatetimeTypeProperty": "2020-01-01T01:03:00Z",
@@ -1274,14 +1316,16 @@
             "BinaryTypeProperty": "AQIDBAU=",
             "Int64TypeProperty@odata.type": "Edm.Int64",
             "Int64TypeProperty": "2",
+            "UInt64TypeProperty@odata.type": "Edm.Int64",
+            "UInt64TypeProperty": "2",
             "DoubleTypeProperty": 2.0,
             "IntTypeProperty": 2
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.1746691Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A14.04247Z\u0027\u0022",
             "PartitionKey": "somPartition",
             "RowKey": "03",
-            "Timestamp": "2021-03-23T18:28:31.1746691Z",
+            "Timestamp": "2021-10-18T17:13:14.04247Z",
             "StringTypeProperty": "This is table entity number 03",
             "DatetimeTypeProperty@odata.type": "Edm.DateTime",
             "DatetimeTypeProperty": "2020-01-01T01:04:00Z",
@@ -1293,14 +1337,16 @@
             "BinaryTypeProperty": "AQIDBAU=",
             "Int64TypeProperty@odata.type": "Edm.Int64",
             "Int64TypeProperty": "3",
+            "UInt64TypeProperty@odata.type": "Edm.Int64",
+            "UInt64TypeProperty": "3",
             "DoubleTypeProperty": 3.0,
             "IntTypeProperty": 3
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.1976851Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A14.1135204Z\u0027\u0022",
             "PartitionKey": "somPartition",
             "RowKey": "04",
-            "Timestamp": "2021-03-23T18:28:31.1976851Z",
+            "Timestamp": "2021-10-18T17:13:14.1135204Z",
             "StringTypeProperty": "This is table entity number 04",
             "DatetimeTypeProperty@odata.type": "Edm.DateTime",
             "DatetimeTypeProperty": "2020-01-01T01:05:00Z",
@@ -1312,14 +1358,16 @@
             "BinaryTypeProperty": "AQIDBAU=",
             "Int64TypeProperty@odata.type": "Edm.Int64",
             "Int64TypeProperty": "4",
+            "UInt64TypeProperty@odata.type": "Edm.Int64",
+            "UInt64TypeProperty": "4",
             "DoubleTypeProperty": 4.0,
             "IntTypeProperty": 4
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.2247053Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A14.1855713Z\u0027\u0022",
             "PartitionKey": "somPartition",
             "RowKey": "05",
-            "Timestamp": "2021-03-23T18:28:31.2247053Z",
+            "Timestamp": "2021-10-18T17:13:14.1855713Z",
             "StringTypeProperty": "This is table entity number 05",
             "DatetimeTypeProperty@odata.type": "Edm.DateTime",
             "DatetimeTypeProperty": "2020-01-01T01:06:00Z",
@@ -1331,14 +1379,16 @@
             "BinaryTypeProperty": "AQIDBAU=",
             "Int64TypeProperty@odata.type": "Edm.Int64",
             "Int64TypeProperty": "5",
+            "UInt64TypeProperty@odata.type": "Edm.Int64",
+            "UInt64TypeProperty": "5",
             "DoubleTypeProperty": 5.0,
             "IntTypeProperty": 5
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.257727Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A14.2566218Z\u0027\u0022",
             "PartitionKey": "somPartition",
             "RowKey": "06",
-            "Timestamp": "2021-03-23T18:28:31.257727Z",
+            "Timestamp": "2021-10-18T17:13:14.2566218Z",
             "StringTypeProperty": "This is table entity number 06",
             "DatetimeTypeProperty@odata.type": "Edm.DateTime",
             "DatetimeTypeProperty": "2020-01-01T01:07:00Z",
@@ -1350,14 +1400,16 @@
             "BinaryTypeProperty": "AQIDBAU=",
             "Int64TypeProperty@odata.type": "Edm.Int64",
             "Int64TypeProperty": "6",
+            "UInt64TypeProperty@odata.type": "Edm.Int64",
+            "UInt64TypeProperty": "6",
             "DoubleTypeProperty": 6.0,
             "IntTypeProperty": 6
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.2787425Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A14.3286727Z\u0027\u0022",
             "PartitionKey": "somPartition",
             "RowKey": "07",
-            "Timestamp": "2021-03-23T18:28:31.2787425Z",
+            "Timestamp": "2021-10-18T17:13:14.3286727Z",
             "StringTypeProperty": "This is table entity number 07",
             "DatetimeTypeProperty@odata.type": "Edm.DateTime",
             "DatetimeTypeProperty": "2020-01-01T01:08:00Z",
@@ -1369,14 +1421,16 @@
             "BinaryTypeProperty": "AQIDBAU=",
             "Int64TypeProperty@odata.type": "Edm.Int64",
             "Int64TypeProperty": "7",
+            "UInt64TypeProperty@odata.type": "Edm.Int64",
+            "UInt64TypeProperty": "7",
             "DoubleTypeProperty": 7.0,
             "IntTypeProperty": 7
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.3007576Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A14.3987218Z\u0027\u0022",
             "PartitionKey": "somPartition",
             "RowKey": "08",
-            "Timestamp": "2021-03-23T18:28:31.3007576Z",
+            "Timestamp": "2021-10-18T17:13:14.3987218Z",
             "StringTypeProperty": "This is table entity number 08",
             "DatetimeTypeProperty@odata.type": "Edm.DateTime",
             "DatetimeTypeProperty": "2020-01-01T01:09:00Z",
@@ -1388,14 +1442,16 @@
             "BinaryTypeProperty": "AQIDBAU=",
             "Int64TypeProperty@odata.type": "Edm.Int64",
             "Int64TypeProperty": "8",
+            "UInt64TypeProperty@odata.type": "Edm.Int64",
+            "UInt64TypeProperty": "8",
             "DoubleTypeProperty": 8.0,
             "IntTypeProperty": 8
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.3247746Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A14.4697722Z\u0027\u0022",
             "PartitionKey": "somPartition",
             "RowKey": "09",
-            "Timestamp": "2021-03-23T18:28:31.3247746Z",
+            "Timestamp": "2021-10-18T17:13:14.4697722Z",
             "StringTypeProperty": "This is table entity number 09",
             "DatetimeTypeProperty@odata.type": "Edm.DateTime",
             "DatetimeTypeProperty": "2020-01-01T01:10:00Z",
@@ -1407,14 +1463,16 @@
             "BinaryTypeProperty": "AQIDBAU=",
             "Int64TypeProperty@odata.type": "Edm.Int64",
             "Int64TypeProperty": "9",
+            "UInt64TypeProperty@odata.type": "Edm.Int64",
+            "UInt64TypeProperty": "9",
             "DoubleTypeProperty": 9.0,
             "IntTypeProperty": 9
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.3517939Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A14.5388208Z\u0027\u0022",
             "PartitionKey": "somPartition",
             "RowKey": "10",
-            "Timestamp": "2021-03-23T18:28:31.3517939Z",
+            "Timestamp": "2021-10-18T17:13:14.5388208Z",
             "StringTypeProperty": "This is table entity number 10",
             "DatetimeTypeProperty@odata.type": "Edm.DateTime",
             "DatetimeTypeProperty": "2020-01-01T01:11:00Z",
@@ -1426,14 +1484,16 @@
             "BinaryTypeProperty": "AQIDBAU=",
             "Int64TypeProperty@odata.type": "Edm.Int64",
             "Int64TypeProperty": "10",
+            "UInt64TypeProperty@odata.type": "Edm.Int64",
+            "UInt64TypeProperty": "10",
             "DoubleTypeProperty": 10.0,
             "IntTypeProperty": 10
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.3758108Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A14.6138741Z\u0027\u0022",
             "PartitionKey": "somPartition",
             "RowKey": "11",
-            "Timestamp": "2021-03-23T18:28:31.3758108Z",
+            "Timestamp": "2021-10-18T17:13:14.6138741Z",
             "StringTypeProperty": "This is table entity number 11",
             "DatetimeTypeProperty@odata.type": "Edm.DateTime",
             "DatetimeTypeProperty": "2020-01-01T01:12:00Z",
@@ -1445,14 +1505,16 @@
             "BinaryTypeProperty": "AQIDBAU=",
             "Int64TypeProperty@odata.type": "Edm.Int64",
             "Int64TypeProperty": "11",
+            "UInt64TypeProperty@odata.type": "Edm.Int64",
+            "UInt64TypeProperty": "11",
             "DoubleTypeProperty": 11.0,
             "IntTypeProperty": 11
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.4018292Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A14.6889269Z\u0027\u0022",
             "PartitionKey": "somPartition",
             "RowKey": "12",
-            "Timestamp": "2021-03-23T18:28:31.4018292Z",
+            "Timestamp": "2021-10-18T17:13:14.6889269Z",
             "StringTypeProperty": "This is table entity number 12",
             "DatetimeTypeProperty@odata.type": "Edm.DateTime",
             "DatetimeTypeProperty": "2020-01-01T01:13:00Z",
@@ -1464,14 +1526,16 @@
             "BinaryTypeProperty": "AQIDBAU=",
             "Int64TypeProperty@odata.type": "Edm.Int64",
             "Int64TypeProperty": "12",
+            "UInt64TypeProperty@odata.type": "Edm.Int64",
+            "UInt64TypeProperty": "12",
             "DoubleTypeProperty": 12.0,
             "IntTypeProperty": 12
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.4258466Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A14.7609783Z\u0027\u0022",
             "PartitionKey": "somPartition",
             "RowKey": "13",
-            "Timestamp": "2021-03-23T18:28:31.4258466Z",
+            "Timestamp": "2021-10-18T17:13:14.7609783Z",
             "StringTypeProperty": "This is table entity number 13",
             "DatetimeTypeProperty@odata.type": "Edm.DateTime",
             "DatetimeTypeProperty": "2020-01-01T01:14:00Z",
@@ -1483,14 +1547,16 @@
             "BinaryTypeProperty": "AQIDBAU=",
             "Int64TypeProperty@odata.type": "Edm.Int64",
             "Int64TypeProperty": "13",
+            "UInt64TypeProperty@odata.type": "Edm.Int64",
+            "UInt64TypeProperty": "13",
             "DoubleTypeProperty": 13.0,
             "IntTypeProperty": 13
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.4488622Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A14.8330292Z\u0027\u0022",
             "PartitionKey": "somPartition",
             "RowKey": "14",
-            "Timestamp": "2021-03-23T18:28:31.4488622Z",
+            "Timestamp": "2021-10-18T17:13:14.8330292Z",
             "StringTypeProperty": "This is table entity number 14",
             "DatetimeTypeProperty@odata.type": "Edm.DateTime",
             "DatetimeTypeProperty": "2020-01-01T01:15:00Z",
@@ -1502,14 +1568,16 @@
             "BinaryTypeProperty": "AQIDBAU=",
             "Int64TypeProperty@odata.type": "Edm.Int64",
             "Int64TypeProperty": "14",
+            "UInt64TypeProperty@odata.type": "Edm.Int64",
+            "UInt64TypeProperty": "14",
             "DoubleTypeProperty": 14.0,
             "IntTypeProperty": 14
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.4738801Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A14.9050797Z\u0027\u0022",
             "PartitionKey": "somPartition",
             "RowKey": "15",
-            "Timestamp": "2021-03-23T18:28:31.4738801Z",
+            "Timestamp": "2021-10-18T17:13:14.9050797Z",
             "StringTypeProperty": "This is table entity number 15",
             "DatetimeTypeProperty@odata.type": "Edm.DateTime",
             "DatetimeTypeProperty": "2020-01-01T01:16:00Z",
@@ -1521,14 +1589,16 @@
             "BinaryTypeProperty": "AQIDBAU=",
             "Int64TypeProperty@odata.type": "Edm.Int64",
             "Int64TypeProperty": "15",
+            "UInt64TypeProperty@odata.type": "Edm.Int64",
+            "UInt64TypeProperty": "15",
             "DoubleTypeProperty": 15.0,
             "IntTypeProperty": 15
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.4968961Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A14.9781315Z\u0027\u0022",
             "PartitionKey": "somPartition",
             "RowKey": "16",
-            "Timestamp": "2021-03-23T18:28:31.4968961Z",
+            "Timestamp": "2021-10-18T17:13:14.9781315Z",
             "StringTypeProperty": "This is table entity number 16",
             "DatetimeTypeProperty@odata.type": "Edm.DateTime",
             "DatetimeTypeProperty": "2020-01-01T01:17:00Z",
@@ -1540,14 +1610,16 @@
             "BinaryTypeProperty": "AQIDBAU=",
             "Int64TypeProperty@odata.type": "Edm.Int64",
             "Int64TypeProperty": "16",
+            "UInt64TypeProperty@odata.type": "Edm.Int64",
+            "UInt64TypeProperty": "16",
             "DoubleTypeProperty": 16.0,
             "IntTypeProperty": 16
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.521914Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A15.0501824Z\u0027\u0022",
             "PartitionKey": "somPartition",
             "RowKey": "17",
-            "Timestamp": "2021-03-23T18:28:31.521914Z",
+            "Timestamp": "2021-10-18T17:13:15.0501824Z",
             "StringTypeProperty": "This is table entity number 17",
             "DatetimeTypeProperty@odata.type": "Edm.DateTime",
             "DatetimeTypeProperty": "2020-01-01T01:18:00Z",
@@ -1559,14 +1631,16 @@
             "BinaryTypeProperty": "AQIDBAU=",
             "Int64TypeProperty@odata.type": "Edm.Int64",
             "Int64TypeProperty": "17",
+            "UInt64TypeProperty@odata.type": "Edm.Int64",
+            "UInt64TypeProperty": "17",
             "DoubleTypeProperty": 17.0,
             "IntTypeProperty": 17
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.5479323Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A15.1292381Z\u0027\u0022",
             "PartitionKey": "somPartition",
             "RowKey": "18",
-            "Timestamp": "2021-03-23T18:28:31.5479323Z",
+            "Timestamp": "2021-10-18T17:13:15.1292381Z",
             "StringTypeProperty": "This is table entity number 18",
             "DatetimeTypeProperty@odata.type": "Edm.DateTime",
             "DatetimeTypeProperty": "2020-01-01T01:19:00Z",
@@ -1578,14 +1652,16 @@
             "BinaryTypeProperty": "AQIDBAU=",
             "Int64TypeProperty@odata.type": "Edm.Int64",
             "Int64TypeProperty": "18",
+            "UInt64TypeProperty@odata.type": "Edm.Int64",
+            "UInt64TypeProperty": "18",
             "DoubleTypeProperty": 18.0,
             "IntTypeProperty": 18
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.5749512Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A15.2333126Z\u0027\u0022",
             "PartitionKey": "somPartition",
             "RowKey": "19",
-            "Timestamp": "2021-03-23T18:28:31.5749512Z",
+            "Timestamp": "2021-10-18T17:13:15.2333126Z",
             "StringTypeProperty": "This is table entity number 19",
             "DatetimeTypeProperty@odata.type": "Edm.DateTime",
             "DatetimeTypeProperty": "2020-01-01T01:20:00Z",
@@ -1597,14 +1673,16 @@
             "BinaryTypeProperty": "AQIDBAU=",
             "Int64TypeProperty@odata.type": "Edm.Int64",
             "Int64TypeProperty": "19",
+            "UInt64TypeProperty@odata.type": "Edm.Int64",
+            "UInt64TypeProperty": "19",
             "DoubleTypeProperty": 19.0,
             "IntTypeProperty": 19
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A31.5989681Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272021-10-18T17%3A13%3A15.3073644Z\u0027\u0022",
             "PartitionKey": "somPartition",
             "RowKey": "20",
-            "Timestamp": "2021-03-23T18:28:31.5989681Z",
+            "Timestamp": "2021-10-18T17:13:15.3073644Z",
             "StringTypeProperty": "This is table entity number 20",
             "DatetimeTypeProperty@odata.type": "Edm.DateTime",
             "DatetimeTypeProperty": "2020-01-01T01:21:00Z",
@@ -1616,6 +1694,8 @@
             "BinaryTypeProperty": "AQIDBAU=",
             "Int64TypeProperty@odata.type": "Edm.Int64",
             "Int64TypeProperty": "20",
+            "UInt64TypeProperty@odata.type": "Edm.Int64",
+            "UInt64TypeProperty": "20",
             "DoubleTypeProperty": 20.0,
             "IntTypeProperty": 20
           }
@@ -1623,18 +1703,18 @@
       }
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.core.windows.net/Tables(\u0027testtable70nsg0nu\u0027)",
+      "RequestUri": "https://chrisstablesprim.table.core.windows.net/Tables(\u0027testtable70nsg0nu\u0027)",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-7e11fd0aae757949b559df6053a8954c-12051b386752814d-00",
+        "traceparent": "00-7c1af47325d9a84ca3c00440d88b2b23-55961e820bd5bf40-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Data.Tables/12.3.0-alpha.20211018.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
         ],
         "x-ms-client-request-id": "dc4f199c17e73ad26cb3e89e8484354f",
-        "x-ms-date": "Tue, 23 Mar 2021 18:28:28 GMT",
+        "x-ms-date": "Mon, 18 Oct 2021 17:13:15 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -1643,14 +1723,14 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Tue, 23 Mar 2021 18:28:30 GMT",
+        "Date": "Mon, 18 Oct 2021 17:13:15 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "dc4f199c17e73ad26cb3e89e8484354f",
-        "x-ms-request-id": "a0286fe0-e002-0026-7e12-207c0c000000",
+        "x-ms-request-id": "fbe15af5-9002-007c-3b43-c48de6000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
@@ -1660,6 +1740,6 @@
     "RandomSeed": "36626118",
     "STORAGE_ENDPOINT_SUFFIX": "core.windows.net",
     "TABLES_PRIMARY_STORAGE_ACCOUNT_KEY": "Kg==",
-    "TABLES_STORAGE_ACCOUNT_NAME": "jverazsdkprim"
+    "TABLES_STORAGE_ACCOUNT_NAME": "chrisstablesprim"
   }
 }

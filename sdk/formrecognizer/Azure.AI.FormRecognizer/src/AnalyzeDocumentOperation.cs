@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -103,11 +104,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="serviceClient">The client for communicating with the Form Recognizer Azure Cognitive Service through its REST API.</param>
         /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
-        internal AnalyzeDocumentOperation(DocumentAnalysisRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation)
+        /// <param name="postResponse">Response from the POSt request that initiated the operation.</param>
+        internal AnalyzeDocumentOperation(DocumentAnalysisRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, Response postResponse)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
-            _operationInternal = new(_diagnostics, this, rawResponse: null);
+            _operationInternal = new(_diagnostics, this, rawResponse: postResponse);
 
             // TODO: Use regex to parse ids.
             // https://github.com/Azure/azure-sdk-for-net/issues/11505
@@ -183,8 +185,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         async ValueTask<OperationState<AnalyzeResult>> IOperation<AnalyzeResult>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response<AnalyzeResultOperation> response = async
-                ? await _serviceClient.DocumentAnalysisGetAnalyzeDocumentResultAsync(_modelId, _resultId, cancellationToken).ConfigureAwait(false)
-                : _serviceClient.DocumentAnalysisGetAnalyzeDocumentResult(_modelId, _resultId, cancellationToken);
+                ? await _serviceClient.GetAnalyzeDocumentResultAsync(_modelId, _resultId, cancellationToken).ConfigureAwait(false)
+                : _serviceClient.GetAnalyzeDocumentResult(_modelId, _resultId, cancellationToken);
 
             AnalyzeResultOperationStatus status = response.Value.Status;
             Response rawResponse = response.GetRawResponse();
@@ -196,10 +198,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
             else if (status == AnalyzeResultOperationStatus.Failed)
             {
-                DocumentAnalysisError error = response.Value.Error;
-                RequestFailedException requestFailedException = async
-                    ? await _diagnostics.CreateRequestFailedExceptionAsync(rawResponse, error.Message, error.Code, error.ToAdditionalInfo()).ConfigureAwait(false)
-                    : _diagnostics.CreateRequestFailedException(rawResponse, error.Message, error.Code, error.ToAdditionalInfo());
+                RequestFailedException requestFailedException = await ClientCommon
+                    .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.Error)
+                    .ConfigureAwait(false);
 
                 return OperationState<AnalyzeResult>.Failure(rawResponse, requestFailedException);
             }

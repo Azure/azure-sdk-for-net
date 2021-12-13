@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute
     public partial class ProximityPlacementGroup : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ProximityPlacementGroupsRestOperations _restClient;
+        private readonly ProximityPlacementGroupsRestOperations _proximityPlacementGroupsRestClient;
         private readonly ProximityPlacementGroupData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ProximityPlacementGroup"/> class for mocking. </summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ProximityPlacementGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _proximityPlacementGroupsRestClient = new ProximityPlacementGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ProximityPlacementGroup"/> class. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute
         internal ProximityPlacementGroup(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ProximityPlacementGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _proximityPlacementGroupsRestClient = new ProximityPlacementGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ProximityPlacementGroup"/> class. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute
         internal ProximityPlacementGroup(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ProximityPlacementGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _proximityPlacementGroupsRestClient = new ProximityPlacementGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, includeColocationStatus, cancellationToken).ConfigureAwait(false);
+                var response = await _proximityPlacementGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, includeColocationStatus, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ProximityPlacementGroup(this, response.Value), response.GetRawResponse());
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, includeColocationStatus, cancellationToken);
+                var response = _proximityPlacementGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, includeColocationStatus, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ProximityPlacementGroup(this, response.Value), response.GetRawResponse());
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _proximityPlacementGroupsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new ProximityPlacementGroupDeleteOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _proximityPlacementGroupsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 var operation = new ProximityPlacementGroupDeleteOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
@@ -204,8 +204,8 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _proximityPlacementGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ProximityPlacementGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -233,8 +233,8 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _proximityPlacementGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new ProximityPlacementGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -262,8 +262,8 @@ namespace Azure.ResourceManager.Compute
                 await TagResource.DeleteAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _proximityPlacementGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ProximityPlacementGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -291,8 +291,8 @@ namespace Azure.ResourceManager.Compute
                 TagResource.Delete(cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _proximityPlacementGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new ProximityPlacementGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -319,8 +319,8 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _proximityPlacementGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ProximityPlacementGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -347,8 +347,8 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _proximityPlacementGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new ProximityPlacementGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -357,11 +357,12 @@ namespace Azure.ResourceManager.Compute
                 throw;
             }
         }
+
         /// <summary> Update a proximity placement group. </summary>
         /// <param name="parameters"> Parameters supplied to the Update Proximity Placement Group operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response<ProximityPlacementGroup>> UpdateAsync(ProximityPlacementGroupUpdate parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ProximityPlacementGroup>> UpdateAsync(ProximityPlacementGroupUpdate parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -372,7 +373,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _proximityPlacementGroupsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ProximityPlacementGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -397,7 +398,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.Update(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var response = _proximityPlacementGroupsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
                 return Response.FromValue(new ProximityPlacementGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

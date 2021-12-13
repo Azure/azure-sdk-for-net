@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "866aecfb-d235-4c85-486c-414e128823ee",
         "x-ms-date": "Wed, 17 Feb 2021 19:04:18 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "866aecfb-d235-4c85-486c-414e128823ee",
         "x-ms-request-id": "9c17508e-301e-0086-5f5f-05167b000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -52,7 +52,7 @@
         "x-ms-client-request-id": "5dcc9dae-12ed-140d-c135-d33ff21b1bf0",
         "x-ms-date": "Wed, 17 Feb 2021 19:04:18 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -68,7 +68,7 @@
         "x-ms-client-request-id": "5dcc9dae-12ed-140d-c135-d33ff21b1bf0",
         "x-ms-request-id": "9c17509c-301e-0086-675f-05167b000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "x-ms-version-id": "2021-02-17T19:04:18.9978072Z"
       },
       "ResponseBody": []
@@ -92,7 +92,7 @@
         "x-ms-page-write": "update",
         "x-ms-range": "bytes=1024-2047",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": "E/u+zQhjEQNBbirwJQ2FjM0Pu5SL+1h9N2v+p6TK9Qq50QizaVvIS4vJG37oHO60r0Zy4l+HZBijQJWcZWled3gfN1QE0iJyRnAIwt/ZlBp9SfhdWBOqMmzvECjGK+YiaqQGyOWZr9wk/5vvf6E5yax6HxtwAB5ldQToFML6rBuK5Vg708s145obOVh3u7PLtkZ8SwvKsWmFoVPgsZoaKlOAZJlJ/vXgRDyBVcfF7bpRHF57fWAPvzPvtTJ4VTL/AA8E9lYZgrhRmwbPSVyhwLOZjpQ8n6zzcaVlWUjDaO8JgVS3wfZjOJqmKuFaP3bXTfV+38adw2FjEYWwsyhvjTMXxsgI6v68NVb5lnXKmTEvjgxTRIgobL3yVK9wsoRyNpytQ3mtz2L2wqpwoy3rmHdUgSQbG0iq7lkKFZVPS4LRh1/YHVa4gb+pXYLet8iQBrw3HDFgVxtUAlQfo7nNp3YnnxzNE3shnABlcb7FzDaReQ7ZFy9QcTBEhBoBmN0F3LYMthirwvNBFoAx+uVdjjYdjSqr9JBH1y7siY5gHwMiX5QHuRUe5rYalwCuH3ZK5/Xj4wqzWugmxd/pvjll4PZ8DptRVdUh/6dzkFyPmLe4oqKYfTv4bwSs4fM1NSd9tbcJMhHb+ZEfwuRjQMqMliwoMRyWzGK6g5+WpXPh68p/9dqlhWam3akQebtXlS46H0rHDQML5ulUT65xRFMePtca5Erv5xHFgVRyhlOnY+5wXIUoGt3Gcw7xUDa4NJhV8jrkPLDkSjg5AYyvmGCWrOu/AefO9SP5VHA7/pbbDU27HZQYwyY9jBFM7xhRFtquWqNK+DKwhvwX6ug/qEyiXvQ+9HvLfunFgnXVggUKqD2WjaPykBQaCpaXAdk+/ePFqpEkEiJe4ty6hXa92gT3DEGqqRqor83fJOnlNH0PhoSRENh05pYbN6rHOAqeXC+RoPSXk1PIHfrDRe44ea5eqv7xK8osgyarj3Jw4HfDQMe6U5SIePMwyPPdsKCo4r38aI0MrDBkZBzO7APhWDyCAAQmfiUZ1jIKwWPXT9KFA620c3jqt5OWVe93uozwT3C3WrCbgWOY4pJbAevNjRVKSOhWLeTDmElwjyk2ohylGnLyIPQh6YFJG5HmjrWoyMfZLXGjmiKL88FnKvE6YkB2ted5220hKF9mDBFT3QqTyMdhXXWqAn9QZywyur6PDrlRcNnOL+1atwQSPI0QOBa31GIq2AXKy7NnKXRA722g1/1XAW0wxJnZB6VwmMXxPy4WeuZcZDa0hqQmZwZ5GciWcmWPuTaohw/IUdFfWjPtdelFKnSHQ3LHonvICl2TYO7d2SZgYoX4bfPWkxNkVSxxOQ==",
       "StatusCode": 412,
@@ -107,7 +107,7 @@
         "x-ms-client-request-id": "0c8082e2-138c-4d64-bc81-b0af5e624d4e",
         "x-ms-error-code": "ConditionNotMet",
         "x-ms-request-id": "9c1750a6-301e-0086-6e5f-05167b000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ConditionNotMet</Code><Message>The condition specified using HTTP conditional header(s) is not met.\n",
@@ -129,7 +129,7 @@
         "x-ms-client-request-id": "d282225d-64ac-deac-b8e6-32d25e7f9465",
         "x-ms-date": "Wed, 17 Feb 2021 19:04:19 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -142,7 +142,7 @@
         ],
         "x-ms-client-request-id": "d282225d-64ac-deac-b8e6-32d25e7f9465",
         "x-ms-request-id": "9c1750b5-301e-0086-7c5f-05167b000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

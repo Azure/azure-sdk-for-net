@@ -4,7 +4,9 @@
       "RequestUri": "https://mariaridoctrans29prim.blob.core.windows.net/source2144588721?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
+        "Content-Length": "0",
         "traceparent": "00-6cfdc21eef99074b84649fc51bd8ddf3-94c057db2c35224e-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-public-access": "container",
@@ -31,8 +33,10 @@
       "RequestUri": "https://mariaridoctrans29prim.blob.core.windows.net/source2144588721/Document1.txt",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
         "Content-Length": "27",
+        "Content-Type": "application/octet-stream",
         "If-None-Match": "*",
         "traceparent": "00-7cfe6eba53dabb41a143cea39b4ba60a-4b8b56951404c140-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
@@ -63,7 +67,9 @@
       "RequestUri": "https://mariaridoctrans29prim.blob.core.windows.net/target1252517123?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
+        "Content-Length": "0",
         "traceparent": "00-0270f77a722620499cf1f9adbc14cff5-43af240f3abb8249-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-public-access": "container",

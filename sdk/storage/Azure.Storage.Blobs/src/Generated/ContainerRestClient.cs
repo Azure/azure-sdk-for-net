@@ -30,7 +30,7 @@ namespace Azure.Storage.Blobs
         /// <param name="url"> The URL of the service account, container, or blob that is the target of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public ContainerRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2020-12-06")
+        public ContainerRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2021-04-10")
         {
             this.url = url ?? throw new ArgumentNullException(nameof(url));
             this.version = version ?? throw new ArgumentNullException(nameof(version));
@@ -709,6 +709,93 @@ namespace Azure.Storage.Blobs
                 case 202:
                     {
                         var value = message.ExtractResponseContent();
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateFilterBlobsRequest(int? timeout, string @where, string marker, int? maxresults)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendQuery("restype", "container", true);
+            uri.AppendQuery("comp", "blobs", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (@where != null)
+            {
+                uri.AppendQuery("where", @where, true);
+            }
+            if (marker != null)
+            {
+                uri.AppendQuery("marker", marker, true);
+            }
+            if (maxresults != null)
+            {
+                uri.AppendQuery("maxresults", maxresults.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("Accept", "application/xml");
+            return message;
+        }
+
+        /// <summary> The Filter Blobs operation enables callers to list blobs in a container whose tags match a given search expression.  Filter blobs searches within the given container. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="where"> Filters the results to return only to return only blobs whose tags match the specified expression. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
+        /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<ResponseWithHeaders<FilterBlobSegment, ContainerFilterBlobsHeaders>> FilterBlobsAsync(int? timeout = null, string @where = null, string marker = null, int? maxresults = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateFilterBlobsRequest(timeout, @where, marker, maxresults);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new ContainerFilterBlobsHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        FilterBlobSegment value = default;
+                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
+                        if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
+                        {
+                            value = FilterBlobSegment.DeserializeFilterBlobSegment(enumerationResultsElement);
+                        }
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> The Filter Blobs operation enables callers to list blobs in a container whose tags match a given search expression.  Filter blobs searches within the given container. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="where"> Filters the results to return only to return only blobs whose tags match the specified expression. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
+        /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public ResponseWithHeaders<FilterBlobSegment, ContainerFilterBlobsHeaders> FilterBlobs(int? timeout = null, string @where = null, string marker = null, int? maxresults = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateFilterBlobsRequest(timeout, @where, marker, maxresults);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new ContainerFilterBlobsHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        FilterBlobSegment value = default;
+                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
+                        if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
+                        {
+                            value = FilterBlobSegment.DeserializeFilterBlobSegment(enumerationResultsElement);
+                        }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:

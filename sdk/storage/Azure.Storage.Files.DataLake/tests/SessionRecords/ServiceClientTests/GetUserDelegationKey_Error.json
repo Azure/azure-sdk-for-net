@@ -16,7 +16,7 @@
         "x-ms-client-request-id": "58b6ce1b-51e2-b66d-b10f-82f62eff13a5",
         "x-ms-date": "Wed, 17 Feb 2021 22:19:23 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": "﻿<KeyInfo><Expiry>2021-02-17T23:19:23Z</Expiry></KeyInfo>",
       "StatusCode": 403,
@@ -31,7 +31,7 @@
         "x-ms-client-request-id": "58b6ce1b-51e2-b66d-b10f-82f62eff13a5",
         "x-ms-error-code": "AuthenticationFailed",
         "x-ms-request-id": "64961c89-501e-005a-4f7a-0519b8000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>AuthenticationFailed</Code><Message>Server failed to authenticate the request. Make sure the value of Authorization header is formed correctly including the signature.\n",

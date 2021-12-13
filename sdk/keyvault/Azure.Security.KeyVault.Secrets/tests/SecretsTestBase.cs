@@ -5,7 +5,9 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 
@@ -41,12 +43,12 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             _serviceVersion = serviceVersion;
         }
 
-        internal SecretClient GetClient()
+        internal SecretClient GetClient(TokenCredential credential = default)
         {
             return InstrumentClient
                 (new SecretClient(
                     new Uri(TestEnvironment.KeyVaultUrl),
-                    TestEnvironment.Credential,
+                    credential ?? TestEnvironment.Credential,
                     InstrumentClientOptions(
                         new SecretClientOptions(_serviceVersion)
                         {
@@ -60,9 +62,9 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                         })));
         }
 
-        public override void StartTestRecording()
+        public override async Task StartTestRecordingAsync()
         {
-            base.StartTestRecording();
+            await base.StartTestRecordingAsync();
 
             _listener = new KeyVaultTestEventListener();
 
@@ -70,11 +72,11 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             VaultUri = new Uri(TestEnvironment.KeyVaultUrl);
         }
 
-        public override void StopTestRecording()
+        public override async Task StopTestRecordingAsync()
         {
             _listener?.Dispose();
 
-            base.StopTestRecording();
+            await base.StopTestRecordingAsync();
         }
 
         [TearDown]
@@ -255,6 +257,24 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             {
                 return TestRetryHelper.RetryAsync(async () => await Client.GetSecretAsync(name).ConfigureAwait(false), delay: PollingInterval);
             }
+        }
+
+        protected TokenCredential GetCredential(string tenantId)
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return new MockCredential();
+            }
+
+            return new ClientSecretCredential(
+                tenantId ?? TestEnvironment.TenantId,
+                TestEnvironment.ClientId,
+                TestEnvironment.ClientSecret,
+                new ClientSecretCredentialOptions()
+                {
+                    AuthorityHost = new Uri(TestEnvironment.AuthorityHostUrl),
+                }
+            );
         }
     }
 }

@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> Specifies the state of the policy. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </summary>
+    /// <summary> Specifies the state of the audit. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </summary>
     public enum BlobAuditingPolicyState
     {
         /// <summary> Enabled. </summary>

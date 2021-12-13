@@ -3,9 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection;
 using Castle.DynamicProxy;
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
+using NUnit.Framework.Internal;
 
 namespace Azure.Core.TestFramework
 {
@@ -18,6 +21,7 @@ namespace Azure.Core.TestFramework
         private static readonly IInterceptor s_avoidSyncInterceptor = new UseSyncMethodsInterceptor(forceSync: false);
         private static readonly IInterceptor s_diagnosticScopeValidatingInterceptor = new DiagnosticScopeValidatingInterceptor();
         private static Dictionary<Type, Exception> s_clientValidation = new Dictionary<Type, Exception>();
+        private const int GLOBAL_TEST_TIMEOUT_IN_SECONDS = 10;
         public bool IsAsync { get; }
 
         public bool TestDiagnostics { get; set; } = true;
@@ -25,6 +29,20 @@ namespace Azure.Core.TestFramework
         public ClientTestBase(bool isAsync)
         {
             IsAsync = isAsync;
+        }
+
+        protected virtual DateTime TestStartTime => TestExecutionContext.CurrentContext.StartTime;
+
+        [TearDown]
+        public virtual void GlobalTimeoutTearDown()
+        {
+            var executionContext = TestExecutionContext.CurrentContext;
+            var duration = DateTime.UtcNow - TestStartTime;
+            if (duration > TimeSpan.FromSeconds(GLOBAL_TEST_TIMEOUT_IN_SECONDS) && !Debugger.IsAttached)
+            {
+                executionContext.CurrentResult.SetResult(ResultState.Failure,
+                    $"Test exceeded global time limit of {GLOBAL_TEST_TIMEOUT_IN_SECONDS} seconds. Duration: {duration}");
+            }
         }
 
         protected TClient CreateClient<TClient>(params object[] args) where TClient : class

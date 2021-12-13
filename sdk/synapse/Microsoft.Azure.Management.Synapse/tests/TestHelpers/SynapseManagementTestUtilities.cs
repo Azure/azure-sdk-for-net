@@ -246,13 +246,13 @@ namespace Microsoft.Azure.Management.Synapse.Tests
                 NodeCount = enableAutoScale ? (int?)null : commonData.NodeCount,
                 NodeSizeFamily = NodeSizeFamily.MemoryOptimized,
                 NodeSize = commonData.NodeSize,
-                AutoScale = !enableAutoScale ? null : new AutoScaleProperties
+                AutoScale = new AutoScaleProperties
                 {
                     Enabled = enableAutoScale,
                     MinNodeCount = commonData.AutoScaleMinNodeCount,
                     MaxNodeCount = commonData.AutoScaleMaxNodeCount
                 },
-                AutoPause = !enableAutoPause ? null : new AutoPauseProperties
+                AutoPause = new AutoPauseProperties
                 {
                     Enabled = enableAutoPause,
                     DelayInMinutes = commonData.AutoPauseDelayInMinute
@@ -274,6 +274,30 @@ namespace Microsoft.Azure.Management.Synapse.Tests
             {
                 StartIpAddress = startIpAddress,
                 EndIpAddress = endIpAddress
+            };
+        }
+
+        /// <summary>
+        /// Create kustopool create parameters.
+        /// </summary>
+        /// <param name="commonData"></param>
+        /// <returns></returns>
+        public static KustoPool PrepareKustopoolCreateParams(this CommonTestFixture commonData)
+        {
+            return new KustoPool
+            {
+                Location = commonData.Location,
+                Sku = commonData.KustoSku
+            };
+        }
+
+        public static ReadWriteDatabase PrepareKustoDatabaseCreateParams(this CommonTestFixture commonData)
+        {
+            return new ReadWriteDatabase
+            {
+                Location = commonData.Location,
+                SoftDeletePeriod = commonData.SoftDeletePeriod,
+                HotCachePeriod = commonData.HotCachePeriod
             };
         }
 

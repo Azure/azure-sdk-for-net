@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -17,11 +18,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of VpnSiteData. </summary>
         public VpnSiteData()
         {
-            VpnSiteLinks = new ChangeTrackingList<VpnSiteLink>();
+            VpnSiteLinks = new ChangeTrackingList<VpnSiteLinkData>();
         }
 
         /// <summary> Initializes a new instance of VpnSiteData. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="isSecuritySite"> IsSecuritySite flag. </param>
         /// <param name="vpnSiteLinks"> List of all vpn site links. </param>
         /// <param name="o365Policy"> Office365 Policy. </param>
-        internal VpnSiteData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, SubResource virtualWan, DeviceProperties deviceProperties, string ipAddress, string siteKey, AddressSpace addressSpace, BgpSettings bgpProperties, ProvisioningState? provisioningState, bool? isSecuritySite, IList<VpnSiteLink> vpnSiteLinks, O365PolicyProperties o365Policy) : base(id, name, type, location, tags)
+        internal VpnSiteData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, WritableSubResource virtualWan, DeviceProperties deviceProperties, string ipAddress, string siteKey, AddressSpace addressSpace, BgpSettings bgpProperties, ProvisioningState? provisioningState, bool? isSecuritySite, IList<VpnSiteLinkData> vpnSiteLinks, O365PolicyProperties o365Policy) : base(id, name, type, location, tags)
         {
             Etag = etag;
             VirtualWan = virtualWan;
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> The VirtualWAN to which the vpnSite belongs. </summary>
-        public SubResource VirtualWan { get; set; }
+        public WritableSubResource VirtualWan { get; set; }
         /// <summary> The device properties. </summary>
         public DeviceProperties DeviceProperties { get; set; }
         /// <summary> The ip-address for the vpn-site. </summary>
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> IsSecuritySite flag. </summary>
         public bool? IsSecuritySite { get; set; }
         /// <summary> List of all vpn site links. </summary>
-        public IList<VpnSiteLink> VpnSiteLinks { get; }
+        public IList<VpnSiteLinkData> VpnSiteLinks { get; }
         /// <summary> Office365 Policy. </summary>
         public O365PolicyProperties O365Policy { get; set; }
     }

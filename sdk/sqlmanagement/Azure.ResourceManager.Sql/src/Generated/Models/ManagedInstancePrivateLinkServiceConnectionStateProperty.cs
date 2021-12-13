@@ -10,13 +10,13 @@ using System;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The ManagedInstancePrivateLinkServiceConnectionStateProperty. </summary>
-    internal partial class ManagedInstancePrivateLinkServiceConnectionStateProperty
+    public partial class ManagedInstancePrivateLinkServiceConnectionStateProperty
     {
         /// <summary> Initializes a new instance of ManagedInstancePrivateLinkServiceConnectionStateProperty. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="status"/> or <paramref name="description"/> is null. </exception>
-        internal ManagedInstancePrivateLinkServiceConnectionStateProperty(string status, string description)
+        public ManagedInstancePrivateLinkServiceConnectionStateProperty(string status, string description)
         {
             if (status == null)
             {
@@ -31,10 +31,21 @@ namespace Azure.ResourceManager.Sql.Models
             Description = description;
         }
 
+        /// <summary> Initializes a new instance of ManagedInstancePrivateLinkServiceConnectionStateProperty. </summary>
+        /// <param name="status"> The private link service connection status. </param>
+        /// <param name="description"> The private link service connection description. </param>
+        /// <param name="actionsRequired"> The private link service connection description. </param>
+        internal ManagedInstancePrivateLinkServiceConnectionStateProperty(string status, string description, string actionsRequired)
+        {
+            Status = status;
+            Description = description;
+            ActionsRequired = actionsRequired;
+        }
+
         /// <summary> The private link service connection status. </summary>
-        public string Status { get; }
+        public string Status { get; set; }
         /// <summary> The private link service connection description. </summary>
-        public string Description { get; }
+        public string Description { get; set; }
         /// <summary> The private link service connection description. </summary>
         public string ActionsRequired { get; }
     }

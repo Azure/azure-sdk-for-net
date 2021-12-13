@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,7 +36,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary>
         /// Gets the operation progress. Value is from [0-100].
         /// </summary>
-        public int PercentCompleted => _percentCompleted;
+        public virtual int PercentCompleted => _percentCompleted;
 
         /// <summary>
         /// Final result of the long-running operation.
@@ -79,11 +80,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="serviceClient">The client for communicating with the Form Recognizer Azure Cognitive Service through its REST API.</param>
         /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
-        internal CopyModelOperation(DocumentAnalysisRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation)
+        /// <param name="postResponse">Response from the POSt request that initiated the operation.</param>
+        internal CopyModelOperation(DocumentAnalysisRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, Response postResponse)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
-            _operationInternal = new(_diagnostics, this, rawResponse: null);
+            _operationInternal = new(_diagnostics, this, rawResponse: postResponse);
 
             Id = operationLocation.Split('/').Last().Split('?').FirstOrDefault();
         }
@@ -158,8 +160,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         async ValueTask<OperationState<DocumentModel>> IOperation<DocumentModel>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response<ModelOperation> response = async
-                    ? await _serviceClient.DocumentAnalysisGetOperationAsync(Id, cancellationToken).ConfigureAwait(false)
-                    : _serviceClient.DocumentAnalysisGetOperation(Id, cancellationToken);
+                    ? await _serviceClient.GetOperationAsync(Id, cancellationToken).ConfigureAwait(false)
+                    : _serviceClient.GetOperation(Id, cancellationToken);
 
             DocumentOperationStatus status = response.Value.Status;
             Response rawResponse = response.GetRawResponse();
@@ -171,10 +173,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
             else if (status == DocumentOperationStatus.Failed)
             {
-                DocumentAnalysisError error = response.Value.Error;
-                RequestFailedException requestFailedException = async
-                    ? await _diagnostics.CreateRequestFailedExceptionAsync(rawResponse, error.Message, error.Code, error.ToAdditionalInfo()).ConfigureAwait(false)
-                    : _diagnostics.CreateRequestFailedException(rawResponse, error.Message, error.Code, error.ToAdditionalInfo());
+                RequestFailedException requestFailedException = await ClientCommon
+                    .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.Error)
+                    .ConfigureAwait(false);
 
                 return OperationState<DocumentModel>.Failure(rawResponse, requestFailedException);
             }

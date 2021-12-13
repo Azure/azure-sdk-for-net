@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceGroupBuilder"/> class.
         /// </summary>
-        /// <param name="container"> The container object to create the resource in. </param>
+        /// <param name="collection"> The collection object to create the resource in. </param>
         /// <param name="resource"> The resource to create. </param>
-        public ResourceGroupBuilder(ResourceGroupContainer container, ResourceGroupData resource)
+        public ResourceGroupBuilder(ResourceGroupCollection collection, ResourceGroupData resource)
         {
             Resource = resource;
-            Container = container;
+            Collection = collection;
         }
 
         /// <summary>
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Resources
         protected string ResourceName { get; private set; }
 
         /// <summary>
-        /// Gets the container object to create the resource in.
+        /// Gets the collection object to create the resource in.
         /// </summary>
-        protected ResourceGroupContainer Container { get; private set; }
+        protected ResourceGroupCollection Collection { get; private set; }
 
         /// <summary>
         /// Creates the resource object to send to the Azure API.
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Resources
             ResourceName = name;
             Resource = Build();
 
-            return Container.CreateOrUpdate(name, Resource, waitForCompletion, cancellationToken);
+            return Collection.CreateOrUpdate(name, Resource, waitForCompletion, cancellationToken);
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Resources
             ResourceName = name;
             Resource = Build();
 
-            return await Container.CreateOrUpdateAsync(name, Resource, waitForCompletion, cancellationToken).ConfigureAwait(false);
+            return await Collection.CreateOrUpdateAsync(name, Resource, waitForCompletion, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

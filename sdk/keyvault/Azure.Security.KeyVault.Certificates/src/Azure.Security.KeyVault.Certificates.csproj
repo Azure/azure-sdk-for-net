@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Description>This is the Microsoft Azure Key Vault Certificates client library</Description>
     <AssemblyTitle>Microsoft Azure.Security.KeyVault.Certificates client library</AssemblyTitle>
-    <Version>4.3.0-beta.2</Version>
+    <Version>4.3.0-beta.3</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>4.2.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Key Vault Certificates;$(PackageCommonTags)</PackageTags>
@@ -35,6 +35,8 @@
     <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />

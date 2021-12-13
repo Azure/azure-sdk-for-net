@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
 namespace Microsoft.Azure.WebPubSub.Common
@@ -11,6 +11,7 @@ namespace Microsoft.Azure.WebPubSub.Common
     /// <summary>
     /// Connect event request.
     /// </summary>
+    [DataContract]
     [JsonConverter(typeof(ConnectEventRequestJsonConverter))]
     public sealed class ConnectEventRequest : WebPubSubEventRequest
     {
@@ -23,24 +24,28 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// User Claims.
         /// </summary>
         [JsonPropertyName(ClaimsProperty)]
-        public ReadOnlyDictionary<string, string[]> Claims { get; }
+        [DataMember(Name = ClaimsProperty)]
+        public IReadOnlyDictionary<string, string[]> Claims { get; }
 
         /// <summary>
         /// Request query.
         /// </summary>
         [JsonPropertyName(QueryProperty)]
-        public ReadOnlyDictionary<string, string[]> Query { get; }
+        [DataMember(Name = QueryProperty)]
+        public IReadOnlyDictionary<string, string[]> Query { get; }
 
         /// <summary>
         /// Supported subprotocols.
         /// </summary>
         [JsonPropertyName(SubprotocolsProperty)]
+        [DataMember(Name = SubprotocolsProperty)]
         public IReadOnlyList<string> Subprotocols { get; }
 
         /// <summary>
         /// Client certificates.
         /// </summary>
         [JsonPropertyName(ClientCertificatesProperty)]
+        [DataMember(Name = ClientCertificatesProperty)]
         public IReadOnlyList<WebPubSubClientCertificate> ClientCertificates { get; }
 
         /// <summary>
@@ -58,6 +63,7 @@ namespace Microsoft.Azure.WebPubSub.Common
 
         /// <summary>
         /// Create <see cref="EventErrorResponse"/>.
+        /// Methods works for Function Extensions. And AspNetCore SDK Hub methods can directly throw exception for error cases.
         /// </summary>
         /// <param name="code"><see cref="WebPubSubErrorCode"/>.</param>
         /// <param name="message">Detail error message.</param>
@@ -67,31 +73,31 @@ namespace Microsoft.Azure.WebPubSub.Common
             return new EventErrorResponse(code, message);
         }
 
-        internal ConnectEventRequest(
+        /// <summary>
+        /// The connect event request
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="claims"></param>
+        /// <param name="query"></param>
+        /// <param name="subprotocols"></param>
+        /// <param name="certificates"></param>
+        public ConnectEventRequest(
             WebPubSubConnectionContext context,
-            IDictionary<string, string[]> claims,
-            IDictionary<string, string[]> query,
+            IReadOnlyDictionary<string, string[]> claims,
+            IReadOnlyDictionary<string, string[]> query,
             IEnumerable<string> subprotocols,
             IEnumerable<WebPubSubClientCertificate> certificates) : base(context)
         {
             if (claims != null)
             {
-                Claims = new ReadOnlyDictionary<string, string[]>(claims);
+                Claims = claims;
             }
             if (query != null)
             {
-                Query = new ReadOnlyDictionary<string, string[]>(query);
+                Query = query;
             }
             Subprotocols = subprotocols?.ToArray();
             ClientCertificates = certificates?.ToArray();
-        }
-
-        internal ConnectEventRequest(
-            IDictionary<string, string[]> claims,
-            IDictionary<string, string[]> query,
-            IEnumerable<string> subprotocols,
-            IEnumerable<WebPubSubClientCertificate> certificates) : this(null, claims, query, subprotocols, certificates)
-        {
         }
     }
 }

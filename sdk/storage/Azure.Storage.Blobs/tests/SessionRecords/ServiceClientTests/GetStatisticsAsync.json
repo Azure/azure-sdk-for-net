@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "222518bf-94e7-cb5e-69a8-ac1f4de05361",
         "x-ms-date": "Wed, 17 Feb 2021 02:19:24 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -28,7 +28,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "222518bf-94e7-cb5e-69a8-ac1f4de05361",
         "x-ms-request-id": "419b2605-501e-009d-4cd3-044be9000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><StorageServiceStats><GeoReplication><Status>live</Status><LastSyncTime>Wed, 17 Feb 2021 02:15:17 GMT</LastSyncTime></GeoReplication></StorageServiceStats>"
     }

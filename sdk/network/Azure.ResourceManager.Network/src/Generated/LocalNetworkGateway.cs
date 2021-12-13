@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network
     public partial class LocalNetworkGateway : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly LocalNetworkGatewaysRestOperations _restClient;
+        private readonly LocalNetworkGatewaysRestOperations _localNetworkGatewaysRestClient;
         private readonly LocalNetworkGatewayData _data;
 
         /// <summary> Initializes a new instance of the <see cref="LocalNetworkGateway"/> class for mocking. </summary>
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "LocalNetworkGateway"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal LocalNetworkGateway(ArmResource options, LocalNetworkGatewayData resource) : base(options, resource.Id)
+        internal LocalNetworkGateway(ArmResource options, LocalNetworkGatewayData resource) : base(options, new ResourceIdentifier(resource.Id))
         {
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new LocalNetworkGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _localNetworkGatewaysRestClient = new LocalNetworkGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="LocalNetworkGateway"/> class. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network
         internal LocalNetworkGateway(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new LocalNetworkGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _localNetworkGatewaysRestClient = new LocalNetworkGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="LocalNetworkGateway"/> class. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network
         internal LocalNetworkGateway(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new LocalNetworkGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _localNetworkGatewaysRestClient = new LocalNetworkGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _localNetworkGatewaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new LocalNetworkGateway(this, response.Value), response.GetRawResponse());
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _localNetworkGatewaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new LocalNetworkGateway(this, response.Value), response.GetRawResponse());
@@ -149,8 +149,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new LocalNetworkGatewayDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _localNetworkGatewaysRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new LocalNetworkGatewayDeleteOperation(_clientDiagnostics, Pipeline, _localNetworkGatewaysRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new LocalNetworkGatewayDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _localNetworkGatewaysRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new LocalNetworkGatewayDeleteOperation(_clientDiagnostics, Pipeline, _localNetworkGatewaysRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -183,22 +183,23 @@ namespace Azure.ResourceManager.Network
                 throw;
             }
         }
+
         /// <summary> Updates a local network gateway tags. </summary>
         /// <param name="parameters"> Parameters supplied to update local network gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response<LocalNetworkGateway>> UpdateTagsAsync(TagsObject parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<LocalNetworkGateway>> UpdateAsync(TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGateway.UpdateTags");
+            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGateway.Update");
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _localNetworkGatewaysRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new LocalNetworkGateway(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -212,18 +213,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters supplied to update local network gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<LocalNetworkGateway> UpdateTags(TagsObject parameters, CancellationToken cancellationToken = default)
+        public virtual Response<LocalNetworkGateway> Update(TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGateway.UpdateTags");
+            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGateway.Update");
             scope.Start();
             try
             {
-                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var response = _localNetworkGatewaysRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
                 return Response.FromValue(new LocalNetworkGateway(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
