@@ -12,13 +12,10 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
 
     /// <summary>
-    /// Defines values for EventSerializationType.
+    /// Defines values for SkuName.
     /// </summary>
-    public static class EventSerializationType
+    public static class SkuName
     {
-        public const string Csv = "Csv";
-        public const string Avro = "Avro";
-        public const string Json = "Json";
-        public const string Parquet = "Parquet";
+        public const string Standard = "Standard";
     }
 }

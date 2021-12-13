@@ -16,23 +16,23 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     /// <summary>
     /// The properties that are associated with a SKU.
     /// </summary>
-    public partial class StreamingJobSku
+    public partial class Sku
     {
         /// <summary>
-        /// Initializes a new instance of the StreamingJobSku class.
+        /// Initializes a new instance of the Sku class.
         /// </summary>
-        public StreamingJobSku()
+        public Sku()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the StreamingJobSku class.
+        /// Initializes a new instance of the Sku class.
         /// </summary>
         /// <param name="name">The name of the SKU. Required on PUT
         /// (CreateOrReplace) requests. Possible values include:
         /// 'Standard'</param>
-        public StreamingJobSku(string name = default(string))
+        public Sku(string name = default(string))
         {
             Name = name;
             CustomInit();
