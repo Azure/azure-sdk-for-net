@@ -10,7 +10,7 @@
         "User-Agent": "azsdk-net-Storage.Files.Shares/12.9.0-alpha.20211111.1 (.NET Framework 4.8.4340.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "f044def2-2fb7-a66b-7df2-386a016100e9",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -22,7 +22,7 @@
         "Server": "Windows-Azure-File/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "f044def2-2fb7-a66b-7df2-386a016100e9",
         "x-ms-request-id": "3b8c458a-601a-002d-3f2b-d7c899000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -39,7 +39,7 @@
         "x-ms-lease-duration": "-1",
         "x-ms-proposed-lease-id": "e3212d4f-bfe5-d124-d7cc-53dde69dda0e",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -52,7 +52,7 @@
         "x-ms-client-request-id": "c4a82917-27de-2d24-969f-bfc7eb1caa67",
         "x-ms-lease-id": "e3212d4f-bfe5-d124-d7cc-53dde69dda0e",
         "x-ms-request-id": "3b8c458c-601a-002d-402b-d7c899000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -67,7 +67,7 @@
         "x-ms-client-request-id": "fdf0f45d-4fc7-3da3-656f-2740f284479d",
         "x-ms-lease-action": "break",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -80,7 +80,7 @@
         "x-ms-client-request-id": "fdf0f45d-4fc7-3da3-656f-2740f284479d",
         "x-ms-lease-time": "0",
         "x-ms-request-id": "3b8c458e-601a-002d-422b-d7c899000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -94,7 +94,7 @@
         "User-Agent": "azsdk-net-Storage.Files.Shares/12.9.0-alpha.20211111.1 (.NET Framework 4.8.4340.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "f7692afa-ad2c-6aa0-2c39-f690f4ee1c6b",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -113,7 +113,7 @@
         "x-ms-lease-status": "unlocked",
         "x-ms-request-id": "3b8c4590-601a-002d-442b-d7c899000000",
         "x-ms-share-quota": "5120",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -128,7 +128,7 @@
         "x-ms-client-request-id": "c8463c4a-501a-1a70-10c7-dfdd6e4e060c",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -138,7 +138,7 @@
         "Server": "Windows-Azure-File/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "c8463c4a-501a-1a70-10c7-dfdd6e4e060c",
         "x-ms-request-id": "3b8c4592-601a-002d-462b-d7c899000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     }

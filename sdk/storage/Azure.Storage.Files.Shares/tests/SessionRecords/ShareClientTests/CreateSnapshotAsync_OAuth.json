@@ -10,7 +10,7 @@
         "User-Agent": "azsdk-net-Storage.Files.Shares/12.9.0-alpha.20211111.1 (.NET Framework 4.8.4340.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "f1949f8f-8821-284b-c6d5-01dc60b86682",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -22,7 +22,7 @@
         "Server": "Windows-Azure-File/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "f1949f8f-8821-284b-c6d5-01dc60b86682",
         "x-ms-request-id": "4bd9b790-901a-002b-0a2b-d789a8000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -36,7 +36,7 @@
         "User-Agent": "azsdk-net-Storage.Files.Shares/12.9.0-alpha.20211111.1 (.NET Framework 4.8.4340.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "ec04ab1c-d3e7-f20f-63fd-f4b4b989afe5",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -49,7 +49,7 @@
         "x-ms-client-request-id": "ec04ab1c-d3e7-f20f-63fd-f4b4b989afe5",
         "x-ms-request-id": "4bd9b792-901a-002b-0b2b-d789a8000000",
         "x-ms-snapshot": "2021-11-11T18:38:07.0000000Z",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -64,7 +64,7 @@
         "x-ms-client-request-id": "b4bfea6f-7ab4-559b-e5f4-211012e3cb27",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -74,7 +74,7 @@
         "Server": "Windows-Azure-File/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "b4bfea6f-7ab4-559b-e5f4-211012e3cb27",
         "x-ms-request-id": "4bd9b794-901a-002b-0c2b-d789a8000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     }
