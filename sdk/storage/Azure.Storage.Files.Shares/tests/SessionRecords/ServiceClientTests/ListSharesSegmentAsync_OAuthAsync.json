@@ -10,7 +10,7 @@
         "User-Agent": "azsdk-net-Storage.Files.Shares/12.9.0-alpha.20211111.1 (.NET Framework 4.8.4340.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "57347690-d00b-8184-85ba-22c93751adb2",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -22,7 +22,7 @@
         "Server": "Windows-Azure-File/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "57347690-d00b-8184-85ba-22c93751adb2",
         "x-ms-request-id": "57286205-001a-0026-562b-d71df0000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -36,7 +36,7 @@
         "User-Agent": "azsdk-net-Storage.Files.Shares/12.9.0-alpha.20211111.1 (.NET Framework 4.8.4340.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "58b1c278-4776-f715-f55e-2d33e3d1cb55",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -47,7 +47,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "58b1c278-4776-f715-f55e-2d33e3d1cb55",
         "x-ms-request-id": "57286208-001a-0026-582b-d71df0000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://oauthfilerest3.file.core.windows.net/\u0022\u003E\u003CShares\u003E\u003CShare\u003E\u003CName\u003Etest-share-a41256a2-8044-363d-5729-fa41ceaa9e20\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EThu, 11 Nov 2021 18:36:45 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D9A5423690C78D\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003CAccessTier\u003ETransactionOptimized\u003C/AccessTier\u003E\u003CAccessTierChangeTime\u003EThu, 11 Nov 2021 18:36:45 GMT\u003C/AccessTierChangeTime\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003C/Shares\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
@@ -62,7 +62,7 @@
         "x-ms-client-request-id": "7550ff28-55a0-393b-3a97-68334f0bb8e9",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -72,7 +72,7 @@
         "Server": "Windows-Azure-File/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "7550ff28-55a0-393b-3a97-68334f0bb8e9",
         "x-ms-request-id": "5728620c-001a-0026-5c2b-d71df0000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     }

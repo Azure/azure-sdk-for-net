@@ -10,7 +10,7 @@
         "User-Agent": "azsdk-net-Storage.Files.Shares/12.9.0-alpha.20211111.1 (.NET Framework 4.8.4340.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "3e081970-1b39-2ab0-127c-082be93923ce",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -22,7 +22,7 @@
         "Server": "Windows-Azure-File/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "3e081970-1b39-2ab0-127c-082be93923ce",
         "x-ms-request-id": "4bd9b79c-901a-002b-112b-d789a8000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -38,7 +38,7 @@
         "User-Agent": "azsdk-net-Storage.Files.Shares/12.9.0-alpha.20211111.1 (.NET Framework 4.8.4340.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "e6282b7e-156d-9707-c110-6c5909e21867",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": "\uFEFF\u003CSignedIdentifiers\u003E\u003CSignedIdentifier\u003E\u003CId\u003Eehllvedfxgkvasuqmbfd\u003C/Id\u003E\u003CAccessPolicy\u003E\u003CStart\u003E2021-11-11T17:38:07.9087072Z\u003C/Start\u003E\u003CExpiry\u003E2021-11-11T19:38:07.9087072Z\u003C/Expiry\u003E\u003CPermission\u003Erw\u003C/Permission\u003E\u003C/AccessPolicy\u003E\u003C/SignedIdentifier\u003E\u003C/SignedIdentifiers\u003E",
       "StatusCode": 200,
@@ -50,7 +50,7 @@
         "Server": "Windows-Azure-File/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "e6282b7e-156d-9707-c110-6c5909e21867",
         "x-ms-request-id": "4bd9b79e-901a-002b-122b-d789a8000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -64,7 +64,7 @@
         "User-Agent": "azsdk-net-Storage.Files.Shares/12.9.0-alpha.20211111.1 (.NET Framework 4.8.4340.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "e7a68106-1059-eeab-3904-84f202d4fc20",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -77,7 +77,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "e7a68106-1059-eeab-3904-84f202d4fc20",
         "x-ms-request-id": "4bd9b79f-901a-002b-132b-d789a8000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CSignedIdentifiers\u003E\u003CSignedIdentifier\u003E\u003CId\u003Eehllvedfxgkvasuqmbfd\u003C/Id\u003E\u003CAccessPolicy\u003E\u003CStart\u003E2021-11-11T17:38:07.9087072Z\u003C/Start\u003E\u003CExpiry\u003E2021-11-11T19:38:07.9087072Z\u003C/Expiry\u003E\u003CPermission\u003Erw\u003C/Permission\u003E\u003C/AccessPolicy\u003E\u003C/SignedIdentifier\u003E\u003C/SignedIdentifiers\u003E"
     },
@@ -92,7 +92,7 @@
         "x-ms-client-request-id": "88523c62-303c-310d-5edb-62e81c685c87",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -102,7 +102,7 @@
         "Server": "Windows-Azure-File/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "88523c62-303c-310d-5edb-62e81c685c87",
         "x-ms-request-id": "4bd9b7a0-901a-002b-142b-d789a8000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     }

@@ -11,7 +11,7 @@
         "x-ms-client-request-id": "d8ee1a88-f7ec-54d8-d0a5-eeac11a5c843",
         "x-ms-return-client-request-id": "true",
         "x-ms-share-quota": "1",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -23,7 +23,7 @@
         "Server": "Windows-Azure-File/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "d8ee1a88-f7ec-54d8-d0a5-eeac11a5c843",
         "x-ms-request-id": "4bd9b78b-901a-002b-062b-d789a8000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -37,7 +37,7 @@
         "User-Agent": "azsdk-net-Storage.Files.Shares/12.9.0-alpha.20211111.1 (.NET Framework 4.8.4340.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "493fcaa3-c562-ab4b-b6ff-a7c968912aab",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -47,7 +47,7 @@
         "Server": "Windows-Azure-File/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "493fcaa3-c562-ab4b-b6ff-a7c968912aab",
         "x-ms-request-id": "4bd9b78d-901a-002b-072b-d789a8000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     }

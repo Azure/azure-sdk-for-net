@@ -10,7 +10,7 @@
         "User-Agent": "azsdk-net-Storage.Files.Shares/12.9.0-alpha.20211111.1 (.NET Framework 4.8.4340.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "8ecf7c33-5ba9-10d6-c041-19b2a93a18a9",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -22,7 +22,7 @@
         "Server": "Windows-Azure-File/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "8ecf7c33-5ba9-10d6-c041-19b2a93a18a9",
         "x-ms-request-id": "3cceca52-a01a-001a-7c2b-d7a2b5000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -39,7 +39,7 @@
         "x-ms-lease-duration": "15",
         "x-ms-proposed-lease-id": "b3a10f33-7aaf-31f7-c214-969a24dfaa90",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -52,7 +52,7 @@
         "x-ms-client-request-id": "1587a53a-3e2e-b98a-859d-cc95c53cebe1",
         "x-ms-lease-id": "b3a10f33-7aaf-31f7-c214-969a24dfaa90",
         "x-ms-request-id": "3cceca55-a01a-001a-7d2b-d7a2b5000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -68,7 +68,7 @@
         "x-ms-delete-snapshots": "include",
         "x-ms-lease-id": "b3a10f33-7aaf-31f7-c214-969a24dfaa90",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -78,7 +78,7 @@
         "Server": "Windows-Azure-File/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "7f6047e2-9557-f162-812d-959f030c7b1d",
         "x-ms-request-id": "3cceca56-a01a-001a-7e2b-d7a2b5000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     }
