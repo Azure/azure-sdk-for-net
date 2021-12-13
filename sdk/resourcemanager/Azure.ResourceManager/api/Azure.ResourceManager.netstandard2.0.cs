@@ -1056,7 +1056,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public Location(string name) { throw null; }
+        public Location(string location) { throw null; }
         public Location(string name, string displayName) { throw null; }
         public static Azure.ResourceManager.Resources.Models.Location AustraliaCentral { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.Location AustraliaCentral2 { get { throw null; } }
@@ -1110,8 +1110,6 @@ namespace Azure.ResourceManager.Resources.Models
         public static implicit operator Azure.ResourceManager.Resources.Models.Location (string other) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Resources.Models.Location left, Azure.ResourceManager.Resources.Models.Location right) { throw null; }
         public override string ToString() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static bool TryGetKnownCloud(string name, out Azure.ResourceManager.Resources.Models.Location location) { throw null; }
     }
     public partial class LocationExpanded
     {
