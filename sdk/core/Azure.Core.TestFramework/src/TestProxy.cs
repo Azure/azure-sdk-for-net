@@ -115,7 +115,7 @@ namespace Azure.Core.TestFramework
                 throw new InvalidOperationException("Failed to start the test proxy.");
             }
 
-            //_proxyPortHttps = 5001;
+            _proxyPortHttps = 5001;
 
             // we need to use https when talking to test proxy admin endpoint so that we can establish the connection before any
             // test related traffic happens which would send a Connection header for the first request. This can be switched to HTTP
