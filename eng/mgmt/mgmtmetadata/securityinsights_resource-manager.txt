@@ -13,8 +13,3 @@ Commit:      f727c69fa6aa618d706adae3fe8c1222d08d7a4d
 AutoRest information
 Requested version: v2
 Bootstrapper version:    autorest@2.0.4413
-npm notice 
-npm notice New minor version of npm available! 8.1.3 -> 8.3.0
-npm notice Changelog: <https://github.com/npm/cli/releases/tag/v8.3.0>
-npm notice Run `npm install -g npm@8.3.0` to update!
-npm notice
