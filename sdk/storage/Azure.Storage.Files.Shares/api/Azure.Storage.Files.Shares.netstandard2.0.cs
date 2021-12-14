@@ -798,6 +798,7 @@ namespace Azure.Storage.Files.Shares.Models
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions DestinationRequestConditions { get { throw null; } set { } }
         public string FilePermission { get { throw null; } set { } }
         public bool? IgnoreReadOnly { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
         public bool? ReplaceIfExists { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.FileSmbProperties SmbProperties { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions SourceRequestConditions { get { throw null; } set { } }
