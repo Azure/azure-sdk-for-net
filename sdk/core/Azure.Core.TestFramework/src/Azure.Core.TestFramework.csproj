@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks);net47</TargetFrameworks>
+    <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
+    <ProjectReference Include="../../Azure.Core/src/Azure.Core.csproj" />
     <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="NUnit" />
@@ -33,5 +33,16 @@
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" LinkBase="Shared" />  
     <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs" LinkBase="Shared" />
   </ItemGroup>
+    
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+      <_Parameter1>TestProxyPath</_Parameter1>
+      <_Parameter2>$(NuGetPackageRoot)azure.sdk.tools.testproxy\$(TestProxyVersion)\tools\net5.0\any\Azure.Sdk.Tools.TestProxy.dll</_Parameter2>
+    </AssemblyAttribute>
+  </ItemGroup>  
 </Project>

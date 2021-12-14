@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 
 namespace Azure.AI.Language.QuestionAnswering.Tests
@@ -37,9 +38,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         /// <summary>
         /// Creates the <see cref="Client"/> once tests begin.
         /// </summary>
-        public override void StartTestRecording()
+        public override async Task StartTestRecordingAsync()
         {
-            base.StartTestRecording();
+            await base.StartTestRecordingAsync();
 
             Client = CreateClient();
         }

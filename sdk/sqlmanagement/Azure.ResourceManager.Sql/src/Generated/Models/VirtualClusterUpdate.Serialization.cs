@@ -33,6 +33,11 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("family");
                 writer.WriteStringValue(Family);
             }
+            if (Optional.IsDefined(MaintenanceConfigurationId))
+            {
+                writer.WritePropertyName("maintenanceConfigurationId");
+                writer.WriteStringValue(MaintenanceConfigurationId);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

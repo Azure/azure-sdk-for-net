@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <inheritdoc/>
-        protected override ResourceType ValidResourceType => ResourceIdentifier.RootResourceIdentifier.ResourceType;
+        protected override ResourceType ValidResourceType => ResourceIdentifier.Root.ResourceType;
 
         private TenantsRestOperations RestClient => new TenantsRestOperations(Diagnostics, Pipeline, ClientOptions, BaseUri);
 

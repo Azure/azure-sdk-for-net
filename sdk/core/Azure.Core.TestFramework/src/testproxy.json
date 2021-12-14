@@ -1,0 +1,614 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Test Proxy",
+    "version": "2021-11",
+    "description": "The Test Proxy is used to record and playback live tests."
+  },
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/playback/start": {
+      "post": {
+        "summary": "Start playback for a test.",
+        "description": "Start playback for a test.",
+        "operationId": "TestProxy_StartPlayback",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-recording-file",
+            "in": "header",
+            "description": "File location of the recording.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "headers": {
+              "x-recording-id": {
+                "type": "string"
+              }
+            }
+          },
+          "default": {
+            "description": "An error response received from the Test Proxy.",
+            "headers": {
+              "x-ms-error-code": {
+                "type": "string",
+                "description": "Error code for specific error that occurred."
+              }
+            }
+          }
+        }
+      }
+    },
+    "/playback/stop": {
+      "post": {
+        "summary": "Stop playback for a test.",
+        "description": "Stop playback for a test.",
+        "operationId": "TestProxy_StopPlayback",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-recording-id",
+            "in": "header",
+            "description": "The recording ID to stop playback for.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "default": {
+            "description": "An error response received from the Test Proxy.",
+            "headers": {
+              "x-ms-error-code": {
+                "type": "string",
+                "description": "Error code for specific error that occurred."
+              }
+            }
+          }
+        }
+      }
+    },
+    "/record/start": {
+      "post": {
+        "summary": "Start recording for a test.",
+        "description": "Start recording for a test.",
+        "operationId": "TestProxy_StartRecord",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-recording-file",
+            "in": "header",
+            "description": "File location of the recording.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "x-recording-id": {
+                "type": "string",
+                "description": "The recording ID for the test recording."
+              }
+            }
+          },
+          "default": {
+            "description": "An error response received from the Test Proxy.",
+            "headers": {
+              "x-ms-error-code": {
+                "type": "string",
+                "description": "Error code for specific error that occurred."
+              }
+            }
+          }
+        }
+      }
+    },
+    "/record/stop": {
+      "post": {
+        "summary": "Stop recording a test.",
+        "description": "Stop recording for a test.",
+        "operationId": "TestProxy_StopRecord",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-recording-id",
+            "in": "header",
+            "description": "The recording ID.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "variables",
+            "in": "body",
+            "description": "Variables for the recording.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "default": {
+            "description": "An error response received from the Test Proxy.",
+            "headers": {
+              "x-ms-error-code": {
+                "type": "string",
+                "description": "Error code for specific error that occurred."
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "x-ms-paths": {
+    "/admin/addsanitizer?overload=BodyKeySanitizer": {
+      "post": {
+        "summary": "Add a sanitizer.",
+        "description": "Stop recording for a test.",
+        "operationId": "TestProxy_AddBodyKeySanitizer",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-abstraction-identifier",
+            "in": "header",
+            "description": "The type of sanitizer.",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "BodyKeySanitizer"
+            ],
+            "x-ms-enum": {
+              "name": "SanitizerType",
+              "modelAsString": false
+            }
+          },
+          {
+            "name": "x-recording-id",
+            "in": "header",
+            "description": "The recording ID to apply the sanitizer to.",
+            "type": "string"
+          },
+          {
+            "name": "sanitizer",
+            "in": "body",
+            "description": "The body for a header regex sanitizer.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BodyKeySanitizer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "default": {
+            "description": "An error response received from the Test Proxy.",
+            "headers": {
+              "x-ms-error-code": {
+                "type": "string",
+                "description": "Error code for specific error that occurred."
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/addsanitizer?overload=HeaderRegexSanitizer": {
+      "post": {
+        "summary": "Add a sanitizer.",
+        "description": "Stop recording for a test.",
+        "operationId": "TestProxy_AddHeaderSanitizer",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-abstraction-identifier",
+            "in": "header",
+            "description": "The type of sanitizer.",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "HeaderRegexSanitizer"
+            ],
+            "x-ms-enum": {
+              "name": "SanitizerType",
+              "modelAsString": false
+            }
+          },
+          {
+            "name": "x-recording-id",
+            "in": "header",
+            "description": "The recording ID to apply the sanitizer to.",
+            "type": "string"
+          },
+          {
+            "name": "sanitizer",
+            "in": "body",
+            "description": "The body for a header regex sanitizer.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/HeaderRegexSanitizer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "default": {
+            "description": "An error response received from the Test Proxy.",
+            "headers": {
+              "x-ms-error-code": {
+                "type": "string",
+                "description": "Error code for specific error that occurred."
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/addsanitizer?overload=UriRegexSanitizer": {
+      "post": {
+        "summary": "Add a sanitizer.",
+        "operationId": "TestProxy_AddUriSanitizer",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-abstraction-identifier",
+            "in": "header",
+            "description": "The type of sanitizer.",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "UriRegexSanitizer"
+            ],
+            "x-ms-enum": {
+              "name": "SanitizerType",
+              "modelAsString": false
+            }
+          },
+          {
+            "name": "x-recording-id",
+            "in": "header",
+            "description": "The recording ID to apply the sanitizer to.",
+            "type": "string"
+          },
+          {
+            "name": "sanitizer",
+            "in": "body",
+            "description": "The body for a URI regex sanitizer.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UriRegexSanitizer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "default": {
+            "description": "An error response received from the Test Proxy.",
+            "headers": {
+              "x-ms-error-code": {
+                "type": "string",
+                "description": "Error code for specific error that occurred."
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/addsanitizer?overload=BodyRegexSanitizer": {
+      "post": {
+        "summary": "Add a sanitizer.",
+        "description": "Add a sanitizer.",
+        "operationId": "TestProxy_AddBodyRegexSanitizer",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-abstraction-identifier",
+            "in": "header",
+            "description": "The type of sanitizer.",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "BodyRegexSanitizer"
+            ],
+            "x-ms-enum": {
+              "name": "SanitizerType",
+              "modelAsString": false
+            }
+          },
+          {
+            "name": "x-recording-id",
+            "in": "header",
+            "description": "The recording ID to apply the sanitizer to.",
+            "type": "string"
+          },
+          {
+            "name": "sanitizer",
+            "in": "body",
+            "description": "The body for a body regex sanitizer.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BodyRegexSanitizer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "default": {
+            "description": "An error response received from the Test Proxy.",
+            "headers": {
+              "x-ms-error-code": {
+                "type": "string",
+                "description": "Error code for specific error that occurred."
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/setmatcher?overload=BodilessMatcher": {
+      "post": {
+        "summary": "Add a bodiless matcher.",
+        "description": "Add a bodiless matcher.",
+        "operationId": "TestProxy_AddBodilessMatcher",
+        "parameters": [
+          {
+            "name": "x-abstraction-identifier",
+            "in": "header",
+            "description": "The type of matcher.",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "BodilessMatcher"
+            ],
+            "x-ms-enum": {
+              "name": "MatcherType",
+              "modelAsString": false
+            }
+          },
+          {
+            "name": "x-recording-id",
+            "in": "header",
+            "description": "The recording ID to apply the matcher to.",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "default": {
+            "description": "An error response received from the Test Proxy.",
+            "headers": {
+              "x-ms-error-code": {
+                "type": "string",
+                "description": "Error code for specific error that occurred."
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/setmatcher?overload=CustomDefaultMatcher": {
+      "post": {
+        "summary": "Add a custom matcher.",
+        "description": "Add a custom matcher.",
+        "operationId": "TestProxy_AddCustomMatcher",
+        "parameters": [
+          {
+            "name": "x-abstraction-identifier",
+            "in": "header",
+            "description": "The type of matcher.",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "CustomDefaultMatcher"
+            ],
+            "x-ms-enum": {
+              "name": "MatcherType",
+              "modelAsString": false
+            }
+          },
+          {
+            "name": "x-recording-id",
+            "in": "header",
+            "description": "The recording ID to apply the matcher to.",
+            "type": "string"
+          },
+          {
+            "name": "matcher",
+            "in": "body",
+            "description": "The body for a custom matcher.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CustomDefaultMatcher"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "default": {
+            "description": "An error response received from the Test Proxy.",
+            "headers": {
+              "x-ms-error-code": {
+                "type": "string",
+                "description": "Error code for specific error that occurred."
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "SanitizerType": {
+      "type": "string",
+      "enum": [
+        "BodyKeySanitizer",
+        "HeaderRegexSanitizer",
+        "UriRegexSanitizer"
+      ],
+      "x-ms-enum": {
+        "name": "SanitizerType",
+        "modelAsString": false
+      }
+    },
+    "MatcherType": {
+      "type": "string",
+      "enum": [
+        "BodilessMatcher",
+        "CustomDefaultMatcher"
+      ],
+      "x-ms-enum": {
+        "name": "MatcherType",
+        "modelAsString": false
+      }
+    },
+    "CustomDefaultMatcher": {
+      "type": "object",
+      "properties": {
+        "nonDefaultHeaderExclusions" : {
+          "type": "string"
+        },
+        "compareBodies" : {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "nonDefaultHeaderExclusions",
+        "compareBodies"
+      ]
+    },
+    "BodyKeySanitizer": {
+      "type": "object",
+      "description": "Sanitizer for a request body",
+      "properties": {
+        "jsonPath": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "regex": {
+          "type": "string"
+        },
+        "groupForReplace": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "value"
+      ]
+    },
+    "BodyRegexSanitizer": {
+      "type": "object",
+      "description": "Sanitizer for a request body",
+      "properties": {
+        "regex": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "groupForReplace": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "regex",
+        "value"
+      ]
+    },
+    "HeaderRegexSanitizer": {
+      "type": "object",
+      "description": "Sanitizer for a request header",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "regex": {
+          "type": "string"
+        },
+        "groupForReplace": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "key",
+        "value"
+      ]
+    },
+    "UriRegexSanitizer": {
+      "type": "object",
+      "description": "Sanitizer for a request URI",
+      "properties": {
+        "regex": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "groupForReplace": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "regex",
+        "value"
+      ]
+    }
+  }
+}

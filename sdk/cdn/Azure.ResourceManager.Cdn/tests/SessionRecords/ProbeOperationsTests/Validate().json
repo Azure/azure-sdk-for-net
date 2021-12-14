@@ -1,0 +1,179 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a?api-version=2019-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "(.NET 5.0.10; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "40869927c660053bc9d2705fd7aa47f8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "410",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 24 Sep 2021 06:40:11 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "7270d742-af8a-4cce-9ae5-99d05bef11d2",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "7270d742-af8a-4cce-9ae5-99d05bef11d2",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20210924T064012Z:7270d742-af8a-4cce-9ae5-99d05bef11d2"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "f3d94233-a9aa-4241-ac82-2dfb63ce637a",
+        "tenantId": "75743128-1c62-4904-9be1-c23c1edb9a9f",
+        "displayName": "Visual Studio Enterprise Subscription",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Public_2014-09-01",
+          "quotaId": "MSDN_2014-09-01",
+          "spendingLimit": "On"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/providers/Microsoft.Cdn/validateProbe?api-version=2020-09-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "34",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Cdn/1.0.0-alpha.20210924.1",
+          "(.NET 5.0.10; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "a638a17251128a6324bc30ffb4e4f719",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "probeURL": "www.withoutHttp.com"
+      },
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "109",
+        "Content-Type": "application/json",
+        "Date": "Fri, 24 Sep 2021 06:40:12 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "a638a17251128a6324bc30ffb4e4f719",
+        "x-ms-correlation-request-id": "182c073d-2935-442f-ac81-3f6c503e8571",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "96e01842-aeca-4a1f-90a3-cafb262830bb",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20210924T064012Z:182c073d-2935-442f-ac81-3f6c503e8571"
+      },
+      "ResponseBody": [
+        "{\n",
+        "  \u0022error\u0022: {\n",
+        "    \u0022code\u0022: \u0022BadRequest\u0022,\n",
+        "    \u0022message\u0022: \u0022The format of the input probe URL is invalid.\u0022\n",
+        "  }\n",
+        "}"
+      ]
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/providers/Microsoft.Cdn/validateProbe?api-version=2020-09-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "72",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Cdn/1.0.0-alpha.20210924.1",
+          "(.NET 5.0.10; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "6fa8c099a2e3a1471c3c93f2aec3fee5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "probeURL": "https://azurecdn-files.azureedge.net/dsa-test/probe-v.txt"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "50",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 24 Sep 2021 06:40:13 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "6fa8c099a2e3a1471c3c93f2aec3fee5",
+        "x-ms-correlation-request-id": "8f2dfb6b-f6b0-44ca-b0ab-6d1908097997",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "da778dae-f20a-4dac-94e2-62ab3a7e3426",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20210924T064013Z:8f2dfb6b-f6b0-44ca-b0ab-6d1908097997"
+      },
+      "ResponseBody": {
+        "isValid": true,
+        "errorCode": "None",
+        "message": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/providers/Microsoft.Cdn/validateProbe?api-version=2020-09-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "61",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Cdn/1.0.0-alpha.20210924.1",
+          "(.NET 5.0.10; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "29becf90e799d6f236fc1ba3963b50e5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "probeURL": "https://www.notexist.com/notexist/notexist.txt"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "194",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 24 Sep 2021 06:40:14 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "29becf90e799d6f236fc1ba3963b50e5",
+        "x-ms-correlation-request-id": "d89435fc-23f8-45de-97bf-bd5e4cfd2ddb",
+        "x-ms-ratelimit-remaining-subscription-writes": "1197",
+        "x-ms-request-id": "282b62aa-b85f-4d4a-88da-d85365e4da9e",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20210924T064014Z:d89435fc-23f8-45de-97bf-bd5e4cfd2ddb"
+      },
+      "ResponseBody": {
+        "isValid": false,
+        "errorCode": "EndpointProbeCannotBeRetrieved",
+        "message": "We couldn\u0027t retrieve the input probe. Please verify that it is publicly accessible and its size is approximately 10 KB."
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1412636070",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "f3d94233-a9aa-4241-ac82-2dfb63ce637a"
+  }
+}

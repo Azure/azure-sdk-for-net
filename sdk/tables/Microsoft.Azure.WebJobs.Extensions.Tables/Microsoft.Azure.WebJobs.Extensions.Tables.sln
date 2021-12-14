@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.WebJobs.Extensions.Tables", "src\Microsoft.Azure.WebJobs.Extensions.Tables.csproj", "{57375945-61B5-4150-B55E-33BC5DAC2F25}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.WebJobs.Extensions.Tables.Tests", "tests\Microsoft.Azure.WebJobs.Extensions.Tables.Tests.csproj", "{4FAA8AB3-4173-485B-B6F7-5A4E239FC8AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{5153257C-C449-4776-B3CB-022C9ABB5543}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{B0D107B8-6BEE-4F9F-91BC-049721DF4620}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{57375945-61B5-4150-B55E-33BC5DAC2F25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57375945-61B5-4150-B55E-33BC5DAC2F25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57375945-61B5-4150-B55E-33BC5DAC2F25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57375945-61B5-4150-B55E-33BC5DAC2F25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FAA8AB3-4173-485B-B6F7-5A4E239FC8AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FAA8AB3-4173-485B-B6F7-5A4E239FC8AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FAA8AB3-4173-485B-B6F7-5A4E239FC8AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FAA8AB3-4173-485B-B6F7-5A4E239FC8AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5153257C-C449-4776-B3CB-022C9ABB5543}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5153257C-C449-4776-B3CB-022C9ABB5543}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5153257C-C449-4776-B3CB-022C9ABB5543}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5153257C-C449-4776-B3CB-022C9ABB5543}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0D107B8-6BEE-4F9F-91BC-049721DF4620}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0D107B8-6BEE-4F9F-91BC-049721DF4620}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0D107B8-6BEE-4F9F-91BC-049721DF4620}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0D107B8-6BEE-4F9F-91BC-049721DF4620}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

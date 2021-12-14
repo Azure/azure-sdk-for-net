@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             }
         }
 
-        public LinkedServiceClientLiveTests(bool isAsync) : base(isAsync)
+        public LinkedServiceClientLiveTests(bool isAsync) : base(isAsync, useLegacyTransport: true)
         {
         }
 

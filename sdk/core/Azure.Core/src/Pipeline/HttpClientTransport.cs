@@ -69,7 +69,7 @@ namespace Azure.Core.Pipeline
         /// <inheritdoc />
         public override void Process(HttpMessage message)
         {
-#if NET5_0
+#if NET5_0_OR_GREATER
             ProcessAsync(message, false).EnsureCompleted();
 #else
             // Intentionally blocking here
@@ -92,7 +92,7 @@ namespace Azure.Core.Pipeline
             Stream? contentStream = null;
             try
             {
-#if NET5_0
+#if NET5_0_OR_GREATER
                 if (!async)
                 {
                     // Sync HttpClient.Send is not supported on browser but neither is the sync-over-async
@@ -113,7 +113,7 @@ namespace Azure.Core.Pipeline
 
                 if (responseMessage.Content != null)
                 {
-#if NET5_0
+#if NET5_0_OR_GREATER
                     if (async)
                     {
                         contentStream = await responseMessage.Content.ReadAsStreamAsync(message.CancellationToken).ConfigureAwait(false);
@@ -481,7 +481,7 @@ namespace Azure.Core.Pipeline
                     return PipelineContent!.TryComputeLength(out length);
                 }
 
-#if NET5_0
+#if NET5_0_OR_GREATER
                 protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context, CancellationToken cancellationToken)
                 {
                     Debug.Assert(PipelineContent != null);
@@ -603,7 +603,7 @@ namespace Azure.Core.Pipeline
 
         private static void SetPropertiesOrOptions<T>(HttpRequestMessage httpRequest, string name, T value)
         {
-#if NET5_0
+#if NET5_0_OR_GREATER
             httpRequest.Options.Set(new HttpRequestOptionsKey<T>(name), value);
 #else
             httpRequest.Properties[name] = value;

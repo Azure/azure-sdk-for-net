@@ -20,6 +20,8 @@ namespace Microsoft.Azure.Management.DataBox
     using System.Linq;
     using System.Net;
     using System.Net.Http;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     public partial class DataBoxManagementClient : ServiceClient<DataBoxManagementClient>, IDataBoxManagementClient, IAzureClient
     {
@@ -331,7 +333,7 @@ namespace Microsoft.Azure.Management.DataBox
             Jobs = new JobsOperations(this);
             Service = new ServiceOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-11-01";
+            ApiVersion = "2021-08-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -365,6 +367,8 @@ namespace Microsoft.Azure.Management.DataBox
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CopyLogDetails>("copyLogDetailsType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DataAccountDetails>("dataAccountType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DataAccountDetails>("dataAccountType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DatacenterAddressResponse>("datacenterAddressType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DatacenterAddressResponse>("datacenterAddressType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<JobDetails>("jobDetailsType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<JobDetails>("jobDetailsType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<JobSecrets>("jobSecretsType"));
@@ -381,5 +385,205 @@ namespace Microsoft.Azure.Management.DataBox
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }
+        /// <summary>
+        /// Request to mitigate for a given job
+        /// </summary>
+        /// <param name='jobName'>
+        /// The name of the job Resource within the specified resource group. job names
+        /// must be between 3 and 24 characters in length and use any alphanumeric and
+        /// underscore only
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The Resource Group Name
+        /// </param>
+        /// <param name='customerResolutionCode'>
+        /// Resolution code for the job. Possible values include: 'None',
+        /// 'MoveToCleanUpDevice', 'Resume'
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ApiErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse> MitigateWithHttpMessagesAsync(string jobName, string resourceGroupName, CustomerResolutionCode customerResolutionCode, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (jobName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "jobName");
+            }
+            if (jobName != null)
+            {
+                if (jobName.Length > 24)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "jobName", 24);
+                }
+                if (jobName.Length < 3)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "jobName", 3);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(jobName, "^[-\\w\\.]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "jobName", "^[-\\w\\.]+$");
+                }
+            }
+            if (SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            MitigateJobRequest mitigateJobRequest = new MitigateJobRequest();
+            mitigateJobRequest.CustomerResolutionCode = customerResolutionCode;
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("jobName", jobName);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("mitigateJobRequest", mitigateJobRequest);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "Mitigate", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}/mitigate").ToString();
+            _url = _url.Replace("{jobName}", System.Uri.EscapeDataString(jobName));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            List<string> _queryParameters = new List<string>();
+            if (ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            if(mitigateJobRequest != null)
+            {
+                _requestContent = SafeJsonConvert.SerializeObject(mitigateJobRequest, SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 204)
+            {
+                var ex = new ApiErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ApiError _errorBody =  SafeJsonConvert.DeserializeObject<ApiError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
     }
 }

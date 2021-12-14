@@ -3934,6 +3934,7 @@ namespace Azure.Storage.Files.DataLake
 
             return await uploader.UploadInternal(
                 content,
+                expectedContentLength: default,
                 options,
                 options.ProgressHandler,
                 async,

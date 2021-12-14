@@ -42,7 +42,7 @@ var cryptoClient = new CryptographyClient(cloudRsaKey.Id, new DefaultAzureCreden
 Next, we'll generate a symmetric key which we will wrap.
 
 ```C# Snippet:KeysSample6GenerateKey
-byte[] keyData = AesManaged.Create().Key;
+byte[] keyData = Aes.Create().Key;
 Debug.WriteLine($"Generated Key: {Convert.ToBase64String(keyData)}");
 ```
 

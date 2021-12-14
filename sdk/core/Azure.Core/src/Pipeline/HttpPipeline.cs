@@ -54,7 +54,8 @@ namespace Azure.Core.Pipeline
             policies ??= Array.Empty<HttpPipelinePolicy>();
 
             var all = new HttpPipelinePolicy[policies.Length + 1];
-            all[policies.Length] = new HttpPipelineTransportPolicy(_transport);
+            all[policies.Length] = new HttpPipelineTransportPolicy(_transport,
+                ClientDiagnostics.CreateMessageSanitizer(new DiagnosticsOptions()));
             policies.CopyTo(all, 0);
 
             _pipeline = all;
@@ -100,7 +101,7 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="context">Context specifying the message options.</param>
         /// <returns>The message.</returns>
-        public HttpMessage CreateMessage(RequestContext context)
+        public HttpMessage CreateMessage(RequestContext? context)
         {
             var message = CreateMessage();
             message.AddPolicies(context);

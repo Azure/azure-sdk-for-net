@@ -43,8 +43,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
 
                 Notebook notebook = new Notebook (
                     new NotebookMetadata { LanguageInfo = new NotebookLanguageInfo(name: "Python") },
-                    nbformat: 4,
-                    nbformatMinor: 2,
+                    notebookFormat: 4,
+                    notebookFormatMinor: 2,
                     new List<NotebookCell>()
                 );
                 NotebookCreateOrUpdateNotebookOperation createOperation = await client.StartCreateOrUpdateNotebookAsync(name, new NotebookResource(name, notebook));
@@ -58,7 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             }
         }
 
-        public NotebookClientLiveTests(bool isAsync) : base(isAsync)
+        public NotebookClientLiveTests(bool isAsync) : base(isAsync, useLegacyTransport: true)
         {
         }
 

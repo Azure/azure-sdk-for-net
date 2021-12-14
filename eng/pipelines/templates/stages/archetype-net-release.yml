@@ -59,6 +59,9 @@ stages:
                     - checkout: self
                     - download: current
                       artifact: ${{parameters.ArtifactName}}-signed
+                    - template: /eng/pipelines/templates/steps/install-dotnet.yml
+                      parameters:
+                        EnableNuGetCache: false
                     - template: /eng/common/pipelines/templates/steps/retain-run.yml
                     - template: /eng/common/pipelines/templates/steps/set-test-pipeline-version.yml
                       parameters:
@@ -219,6 +222,9 @@ stages:
                   deploy:
                     steps:
                       - checkout: self
+                      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+                        parameters:
+                          EnableNuGetCache: false
                       - pwsh: |
                           eng/scripts/Update-PkgVersion.ps1 -ServiceDirectory '${{parameters.ServiceDirectory}}' -PackageName '${{artifact.name}}'
                         displayName: Increment package version
