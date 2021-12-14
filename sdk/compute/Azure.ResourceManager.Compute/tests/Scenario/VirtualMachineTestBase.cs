@@ -55,7 +55,8 @@ namespace Azure.ResourceManager.Compute.Tests
                     { "subnets", subnets }
                 }
             };
-            var operation = await _genericResourceCollection.CreateOrUpdateAsync(vnetId, input);
+            var operation = InstrumentOperation(await _genericResourceCollection.CreateOrUpdateAsync(vnetId, input, false));
+            await operation.WaitForCompletionAsync();
             return operation.Value;
         }
 
@@ -80,7 +81,8 @@ namespace Azure.ResourceManager.Compute.Tests
                     { "addressPrefixes", new List<string>() { "10.0.2.0/24" } }
                 }
             };
-            var operation = await _genericResourceCollection.CreateOrUpdateAsync(subnetId, input);
+            var operation = InstrumentOperation(await _genericResourceCollection.CreateOrUpdateAsync(subnetId, input, false));
+            await operation.WaitForCompletionAsync();
             return operation.Value;
         }
 
@@ -107,7 +109,8 @@ namespace Azure.ResourceManager.Compute.Tests
                     }
                 }
             };
-            var operation = await _genericResourceCollection.CreateOrUpdateAsync(nicId, input);
+            var operation = InstrumentOperation(await _genericResourceCollection.CreateOrUpdateAsync(nicId, input, false));
+            await operation.WaitForCompletionAsync();
             return operation.Value;
         }
 

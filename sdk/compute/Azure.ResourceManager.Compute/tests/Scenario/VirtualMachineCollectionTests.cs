@@ -24,7 +24,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var vmName = Recording.GenerateAssetName("testVM-");
             var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
-            var lro = await collection.CreateOrUpdateAsync(vmName, input);
+            var lro = InstrumentOperation(await collection.CreateOrUpdateAsync(vmName, input, false));
+            await lro.WaitForCompletionAsync();
             VirtualMachine virtualMachine = lro.Value;
             Assert.AreEqual(vmName, virtualMachine.Data.Name);
         }
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var vmName = Recording.GenerateAssetName("testVM-");
             var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
-            var lro = await collection.CreateOrUpdateAsync(vmName, input);
+            var lro = InstrumentOperation(await collection.CreateOrUpdateAsync(vmName, input, false));
+            await lro.WaitForCompletionAsync();
             VirtualMachine vm1 = lro.Value;
             VirtualMachine vm2 = await collection.GetAsync(vmName);
 
@@ -52,7 +54,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var vmName = Recording.GenerateAssetName("testVM-");
             var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
-            var lro = await collection.CreateOrUpdateAsync(vmName, input);
+            var lro = InstrumentOperation(await collection.CreateOrUpdateAsync(vmName, input, false));
+            await lro.WaitForCompletionAsync();
             VirtualMachine vm = lro.Value;
             Assert.IsTrue(await collection.CheckIfExistsAsync(vmName));
             Assert.IsFalse(await collection.CheckIfExistsAsync(vmName + "1"));
@@ -71,8 +74,10 @@ namespace Azure.ResourceManager.Compute.Tests
             var nic2 = await CreateBasicDependenciesOfVirtualMachineAsync();
             var input1 = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName1, nic1.Id);
             var input2 = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName2, nic2.Id);
-            _ = await collection.CreateOrUpdateAsync(vmName1, input1);
-            _ = await collection.CreateOrUpdateAsync(vmName2, input2);
+            var op1 = InstrumentOperation(await collection.CreateOrUpdateAsync(vmName1, input1, false));
+            await op1.WaitForCompletionAsync();
+            var op2 = InstrumentOperation(await collection.CreateOrUpdateAsync(vmName2, input2, false));
+            await op2.WaitForCompletionAsync();
             int count = 0;
             await foreach (var vm in collection.GetAllAsync())
             {
@@ -92,8 +97,10 @@ namespace Azure.ResourceManager.Compute.Tests
             var nic2 = await CreateBasicDependenciesOfVirtualMachineAsync();
             var input1 = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName1, nic1.Id);
             var input2 = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName2, nic2.Id);
-            _ = await collection.CreateOrUpdateAsync(vmName1, input1);
-            _ = await collection.CreateOrUpdateAsync(vmName2, input2);
+            var op1 = InstrumentOperation(await collection.CreateOrUpdateAsync(vmName1, input1, false));
+            await op1.WaitForCompletionAsync();
+            var op2 = InstrumentOperation(await collection.CreateOrUpdateAsync(vmName2, input2, false));
+            await op2.WaitForCompletionAsync();
 
             VirtualMachine vm1 = null, vm2 = null;
             await foreach (var vm in DefaultSubscription.GetVirtualMachinesAsync())
