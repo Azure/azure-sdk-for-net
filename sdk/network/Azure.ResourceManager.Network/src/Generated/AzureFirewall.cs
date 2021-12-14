@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "AzureFirewall"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal AzureFirewall(ArmResource options, AzureFirewallData resource) : base(options, resource.Id)
+        internal AzureFirewall(ArmResource options, AzureFirewallData resource) : base(options, new ResourceIdentifier(resource.Id))
         {
             HasData = true;
             _data = resource;

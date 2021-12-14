@@ -1392,7 +1392,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachineScaleSetRollingUpgrade" /> object. </returns>
         public VirtualMachineScaleSetRollingUpgrade GetVirtualMachineScaleSetRollingUpgrade()
         {
-            return new VirtualMachineScaleSetRollingUpgrade(this, Id + "/rollingUpgrades/latest");
+            return new VirtualMachineScaleSetRollingUpgrade(this, new ResourceIdentifier(Id.ToString() + "/rollingUpgrades/latest"));
         }
         #endregion
 

@@ -1,14 +1,9 @@
 # Release History
 
 ## 12.9.0-beta.3 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for service version 2021-04-10.
+- Added support for ShareDirectoryClient.Rename() and ShareFileClient.Rename().
+- Fixed a memory leak in ShareFileClient.UploadAsync().
 
 ## 12.9.0-beta.2 (2021-11-30)
 - Added support for service version 2021-02-12.

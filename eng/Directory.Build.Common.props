@@ -100,12 +100,6 @@
     </NoWarn>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(InheritDocEnabled)' != 'false' and '$(TargetFramework)' == 'netstandard2.0'">
-    <NoWarn>
-      $(NoWarn);IDT001<!-- InheritDoc related to malformed XML in netstandard.xml -->
-    </NoWarn>
-  </PropertyGroup>
-
   <!-- CodeAnalysis RuleSet -->
   <PropertyGroup Condition="'$(IsClientLibrary)' == 'true'">
     <CodeAnalysisRuleSet>$(RepoEngPath)\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
@@ -148,8 +142,7 @@
     <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
     <Authors>Microsoft</Authors>
     <Product>Azure .NET SDK</Product>
-    <PackageIcon>pkgicon.png</PackageIcon>
-    <PackageIconPath>$(RepoEngPath)/images/$(PackageIcon)</PackageIconPath>
+    <PackageIconPath>$(RepoEngPath)/images/pkgicon.png</PackageIconPath>
     <RepositoryUrl>https://github.com/Azure/azure-sdk-for-net</RepositoryUrl>
     <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
@@ -213,6 +206,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsClientLibrary)' == 'true'">
+    <PackageIconPath>$(RepoEngPath)/images/azureicon.png</PackageIconPath>
     <!-- Use a full key for the new client libraries and disable delay signing -->
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)AzureSDKClient.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>

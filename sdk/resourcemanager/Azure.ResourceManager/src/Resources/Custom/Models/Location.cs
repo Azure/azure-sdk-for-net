@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="displayName"> The display name of the location. </param>
         /// <param name="regionalDisplayName"> The display name of the location and its region. </param>
         internal Location(string name, string displayName, string regionalDisplayName)
-            :this(name, displayName, regionalDisplayName, GetCanonicalNameFromDisplayName(displayName))
+            : this(name, displayName, regionalDisplayName, GetCanonicalNameFromDisplayName(displayName))
         {
         }
 

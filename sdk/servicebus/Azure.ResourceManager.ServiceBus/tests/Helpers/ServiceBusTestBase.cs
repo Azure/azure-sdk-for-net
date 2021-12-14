@@ -78,5 +78,13 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
                 Assert.AreEqual(SkuTier.Standard, sBNamespace.Data.Sku.Tier);
             }
         }
+
+        public void IgnoreTestInLiveMode()
+        {
+            if (Mode == RecordedTestMode.Live)
+            {
+                Assert.Ignore();
+            }
+        }
     }
 }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="name"> The name of the tags wrapper resource. </param>
         /// <param name="type"> The type of the tags wrapper resource. </param>
         /// <param name="properties"> The set of tags. </param>
-        internal TagResourceData(string id, string name, string type, Tag properties): base(id, name, type)
+        internal TagResourceData(ResourceIdentifier id, string name, string type, Tag properties): base(id, name, type)
         {
             Properties = properties;
         }

@@ -1,10 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
-using System.Linq;
 using Azure.Communication.Pipeline;
-using Azure.Core;
+using Azure.Core.TestFramework;
 
 namespace Azure.Communication.Chat.Tests
 {
@@ -14,13 +12,5 @@ namespace Azure.Communication.Chat.Tests
 
         public ChatRecordedTestSanitizer() : base()
             => AddJsonPathSanitizer("$..token");
-
-        protected override void SanitizeAuthenticationHeader(IDictionary<string, string[]> headers)
-        {
-            if (headers.ContainsKey(HttpHeader.Names.UserAgent) && headers[HttpHeader.Names.UserAgent].Any(x => x.Contains("Communication.Chat")))
-                headers[HttpHeader.Names.Authorization] = new[] { SanitizedUnsignedUserTokenValue };
-            else
-                base.SanitizeAuthenticationHeader(headers);
-        }
     }
 }

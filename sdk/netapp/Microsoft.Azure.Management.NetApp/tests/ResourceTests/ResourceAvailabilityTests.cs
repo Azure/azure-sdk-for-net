@@ -28,8 +28,8 @@ namespace NetApp.Tests.ResourceTests
                 Assert.True(checkQuotaAvailabilityResponse.IsAvailable);
             }
         }
-
-        [Fact(Skip = "Manifest not released yet")]
+        
+        [Fact]
         public void GetQuotaLimit()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
@@ -41,7 +41,7 @@ namespace NetApp.Tests.ResourceTests
             }
         }
 
-        [Fact(Skip = "Manifest not released yet")]
+        [Fact(Skip = "Service side bug not released yet")]
         public void ListQuotaLimits()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
@@ -56,7 +56,7 @@ namespace NetApp.Tests.ResourceTests
 
         private static string GetSessionsDirectoryPath()
         {
-            string executingAssemblyPath = typeof(NetApp.Tests.ResourceTests.SnapshotTests).GetTypeInfo().Assembly.Location;
+            string executingAssemblyPath = typeof(NetApp.Tests.ResourceTests.ResourceAvailabilityTests).GetTypeInfo().Assembly.Location;
             return Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
         }
     }
