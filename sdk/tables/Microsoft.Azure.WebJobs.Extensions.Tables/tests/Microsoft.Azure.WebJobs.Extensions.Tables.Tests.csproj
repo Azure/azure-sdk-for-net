@@ -22,6 +22,8 @@
     <Compile Remove="TableEntityValueBinderTests.cs" />
     <Compile Remove="EntityPropertyToTConverterFactoryTests.cs" />
     <Compile Remove="TToEntityPropertyConverterFactoryTests.cs" />
+    
+    <Compile Include="..\..\Azure.Data.Tables\tests\TablesTestEnvironment.cs" />
   </ItemGroup>
 
 </Project>

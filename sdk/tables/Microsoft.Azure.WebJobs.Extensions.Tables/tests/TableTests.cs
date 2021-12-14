@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Data.Tables;
@@ -19,6 +18,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
     public class TableTests: TablesLiveTestBase
     {
         private const string PropertyName = "Property";
+
+        public TableTests(bool useCosmos) : base(useCosmos)
+        {
+        }
 
         [Test]
         public async Task Table_IndexingFails()
@@ -121,19 +124,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 context.AddBindingRule<TableAttribute>().AddOpenConverter<TableClient, CustomTableBinding<OpenType>>(
                     typeof(CustomTableBindingConverter<>));
             }
-        }
-
-        [Test]
-        public async Task Table_IfBoundToTableClient_BindsAndCreatesTable()
-        {
-            // Act
-            TableClient result = (await CallAsync<BindToTableClientProgram>()).Table;
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.AreEqual(TableName, result.Name);
-
-            Assert.True(await TableExistsAsync(TableName).ConfigureAwait(false));
         }
 
         [Test]

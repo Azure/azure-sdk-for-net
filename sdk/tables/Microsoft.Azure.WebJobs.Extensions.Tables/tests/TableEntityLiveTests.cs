@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Data.Tables;
@@ -13,6 +12,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 {
     public class TableEntityLiveTests: TablesLiveTestBase
     {
+        public TableEntityLiveTests(bool useCosmos) : base(useCosmos)
+        {
+        }
+
         [Test]
         public async Task TableEntity_IfBoundToExistingTableEntity_Binds()
         {

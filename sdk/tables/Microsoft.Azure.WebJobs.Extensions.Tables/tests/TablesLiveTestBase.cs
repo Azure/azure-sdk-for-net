@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core.TestFramework;
 using Azure.Data.Tables;
+using Azure.Data.Tables.Tests;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Configuration;
@@ -18,8 +19,12 @@ using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 {
+    [TestFixture(true)]
+    [TestFixture(false)]
     public class TablesLiveTestBase : LiveTestBase<TablesTestEnvironment>
     {
+        private readonly bool _useCosmos;
+        private readonly bool _createTable;
         protected const string TableNameExpression = "%Table%";
         protected const string PartitionKey = "PK";
         protected const string RowKey = "RK";
@@ -28,14 +33,25 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         protected TableServiceClient ServiceClient;
         protected TableClient TableClient;
 
+        protected TablesLiveTestBase(bool useCosmos, bool createTable = true)
+        {
+            _useCosmos = useCosmos;
+            _createTable = createTable;
+        }
+
         [SetUp]
         public async Task SetUp()
         {
             TableName = GetRandomTableName();
 
-            ServiceClient = new TableServiceClient(TestEnvironment.StorageConnectionString);
+            ServiceClient = new TableServiceClient(
+                _useCosmos ? TestEnvironment.CosmosConnectionString : TestEnvironment.StorageConnectionString);
+
             TableClient = ServiceClient.GetTableClient(TableName);
-            await TableClient.CreateAsync();
+            if (_createTable)
+            {
+                await TableClient.CreateAsync();
+            }
         }
         [TearDown]
         public async Task TearDown()
@@ -85,7 +101,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                     builder.AddInMemoryCollection(new Dictionary<string, string>()
                     {
                         {"Table", TableName},
-                        {"AzureWebJobsStorage", TestEnvironment.StorageConnectionString}
+                        {"AzureWebJobsStorage", _useCosmos ? TestEnvironment.CosmosConnectionString : TestEnvironment.StorageConnectionString}
                     });
                 });
 

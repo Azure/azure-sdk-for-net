@@ -15,39 +15,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 {
     public class TablesLiveTests: TablesLiveTestBase
     {
-        [TestCase("FuncWithITableEntity")]
-        [TestCase("FuncWithPocoObjectEntity")]
-        [TestCase("FuncWithPocoValueEntity")]
-        [TestCase("FuncWithICollector")]
-        public async Task Table_IfBoundToTypeAndTableIsMissing_DoesNotCreate(string methodName)
+        public TablesLiveTests(bool useCosmos) : base(useCosmos)
         {
-            TableName = "ThisTableDoesntExistAndShouldntBeCreated";
-            // Act
-            await CallAsync<MissingTableProgram>(methodName);
-            // Assert
-            Assert.False(await TableExistsAsync(TableName));
-        }
-
-        [Test]
-        public async Task Table_IfBoundToTableClientAndTableIsMissing_Creates()
-        {
-            TableName = GetRandomTableName();
-            var tableReference = ServiceClient.GetTableClient(TableName);
-
-            // Act
-            await CallAsync<BindToTableClientProgram>();
-
-            // Assert
-            Assert.True(await TableExistsAsync(tableReference.Name));
-        }
-
-        private class BindToTableClientProgram
-        {
-            public async Task BindToTableClient([Table(TableNameExpression)] TableClient table)
-            {
-                Assert.NotNull(table);
-                Assert.True(await TableExistsAsync(table));
-            }
         }
 
         [Test]
@@ -461,30 +430,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 [propertyName] = propertyValue
             };
         }
-
-        private class MissingTableProgram
-        {
-            public static void FuncWithICollector([Table(TableNameExpression)] ICollector<SdkTableEntity> entities)
-            {
-                Assert.NotNull(entities);
-            }
-
-            public static void FuncWithITableEntity([Table(TableNameExpression, "PK", "RK")] SdkTableEntity entity)
-            {
-                Assert.Null(entity);
-            }
-
-            public static void FuncWithPocoObjectEntity([Table(TableNameExpression, "PK", "RK")] PocoTableEntity entity)
-            {
-                Assert.Null(entity);
-            }
-
-            public static void FuncWithPocoValueEntity([Table(TableNameExpression, "PK", "RK")] StructTableEntity entity)
-            {
-                Assert.Null(entity.Value);
-            }
-        }
-
         private class SdkTableEntity : ITableEntity
         {
             public string Value { get; set; }
