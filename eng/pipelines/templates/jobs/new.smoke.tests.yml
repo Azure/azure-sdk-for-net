@@ -8,35 +8,29 @@ parameters:
   - name: ArtifactName
     type: string
     default: ""
-  - name: TimeoutInMinutes
-    type: number
-    default: 60
 
 jobs:
   - job: SmokeTest
     steps:
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
       - ${{ if eq(parameters.Daily, true) }}:
         - task: PowerShell@2
           displayName: Building Package Info
           inputs:
             targetType: filePath
-            filePath: ./eng/scripts/smoketest/Save-Package-Properties.ps1
-            arguments: -outDirectory PackageInfo
+            filePath: ./eng/scripts/smoketest/Get-Package-Version.ps1
             workingDirectory: common/SmokeTests/SmokeTest
             pwsh: true
 
-        - template: /eng/pipelines/templates/steps/BuildSmokeTestProject.yml
-          parameters:
-            PackageInfoDir: common/SmokeTests/SmokeTest/PackageInfo
-      
       - ${{ if eq(parameters.Daily, false) }}:
         - download: current
-          artifact: ${{parameters.ArtifactName}}-signed
-        - template: /eng/pipelines/templates/steps/BuildSmokeTestProject.yml
-          parameters:
-            PackageInfoDir: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/PackageInfo
-
-      - template: /eng/common/TestResources/remove-test-resources.yml
-        parameters:
-          ServiceDirectory: '$(Build.SourcesDirectory)/common/SmokeTests/'
-          SubscriptionConfiguration: $(SubscriptionConfiguration)
+          artifact: ${{ parameters.ArtifactName }}
+          timeoutInMinutes: 5
+        - task: PowerShell@2
+          displayName: Use latest GA/Beta package versions
+          inputs:
+            targetType: filePath
+            filePath: ./common/SmokeTests/SmokeTest/Update-Dependencies.ps1
+            arguments: -CI -ArtifactsPath "$(Pipeline.Workspace)/${{ parameters.ArtifactName }}"
+            workingDirectory: common/SmokeTests/SmokeTest
+            pwsh: true
