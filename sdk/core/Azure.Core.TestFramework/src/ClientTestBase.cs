@@ -49,7 +49,7 @@ namespace Azure.Core.TestFramework
             {
                 executionContext.CurrentResult.SetResult(
                     ResultState.Failure,
-                    $"Test exceeded global time limit of {GLOBAL_TEST_TIMEOUT_IN_SECONDS} seconds. Duration: {duration}");
+                    $"Test exceeded global time limit of {timeout} seconds. Duration: {duration}");
             }
         }
 
