@@ -15,7 +15,7 @@
     <PackageReleaseNotes>
       <![CDATA[
         This is a public release of the Azure Compute SDK. Included with this release is:
-        1. DiskRP API calls updated with 2021-04-01 version.
+        1. DiskRP API calls updated with 2021-08-01 version.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
