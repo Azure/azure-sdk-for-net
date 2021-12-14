@@ -93,13 +93,14 @@ namespace Azure.Communication.CallingServer.Tests
             try
             {
                 var callLocator = new GroupCallLocator(groupId);
+                await WaitForOperationCompletion().ConfigureAwait(false);
 
                 // Play Prompt Audio
-                await WaitForOperationCompletion().ConfigureAwait(false);
                 await PlayAudioOperation(callingServerClient, callLocator).ConfigureAwait(false);
 
-                // Cancel Prompt Audio
                 await WaitForOperationCompletion().ConfigureAwait(false);
+
+                // Cancel Prompt Audio
                 await CancelAllMediaOperationsOperation(callConnections).ConfigureAwait(false);
             }
             catch (RequestFailedException ex)
@@ -135,14 +136,15 @@ namespace Azure.Communication.CallingServer.Tests
             try
             {
                 string userId = GetFixedUserId(TestEnvironment.UserIdentifier);
+                await WaitForOperationCompletion().ConfigureAwait(false);
 
                 // Add Participant
-                await WaitForOperationCompletion().ConfigureAwait(false);
                 AddParticipantResult addParticipantResult = await AddParticipantOperation(callingServerClient, callLocator, userId).ConfigureAwait(false);
                 Assert.NotNull(addParticipantResult);
 
-                // Remove Participant
                 await WaitForOperationCompletion().ConfigureAwait(false);
+
+                // Remove Participant
                 await RemoveParticipantOperation(callingServerClient, callLocator, userId).ConfigureAwait(false);
             }
             catch (RequestFailedException ex)
@@ -244,24 +246,21 @@ namespace Azure.Communication.CallingServer.Tests
                 }
 
                 string userId = GetFixedUserId(TestEnvironment.UserIdentifier);
+                await WaitForOperationCompletion().ConfigureAwait(false);
 
                 // Add Participant
-                await WaitForOperationCompletion().ConfigureAwait(false);
                 AddParticipantResult addParticipantResult = await AddParticipantOperation(callingServerClient, callLocator, userId).ConfigureAwait(false);
                 Assert.NotNull(addParticipantResult);
 
                 // Get Participant
-                await WaitForOperationCompletion().ConfigureAwait(false);
                 var getParticipant = await GetParticipantOperation(callingServerClient, callLocator, userId).ConfigureAwait(false);
                 Assert.NotNull(getParticipant);
 
                 // Get Participants
-                await WaitForOperationCompletion().ConfigureAwait(false);
                 var getParticipants = await GetParticipantsOperation(callingServerClient, callLocator).ConfigureAwait(false);
                 Assert.IsTrue(getParticipants.Count() > 2);
 
                 // Remove Participant
-                await WaitForOperationCompletion().ConfigureAwait(false);
                 await RemoveParticipantOperation(callingServerClient, callLocator, userId).ConfigureAwait(false);
             }
             catch (RequestFailedException ex)
@@ -297,23 +296,22 @@ namespace Azure.Communication.CallingServer.Tests
             try
             {
                 string userId = GetFixedUserId(TestEnvironment.UserIdentifier);
+                await WaitForOperationCompletion().ConfigureAwait(false);
 
                 // Add Participant
-                await WaitForOperationCompletion().ConfigureAwait(false);
                 AddParticipantResult addParticipantResult = await AddParticipantOperation(callingServerClient, callLocator, userId).ConfigureAwait(false);
                 Assert.NotNull(addParticipantResult);
 
                 // Play Audio To Participant
-                await WaitForOperationCompletion().ConfigureAwait(false);
                 var playAudioResult = await PlayAudioToParticipantOperation(callingServerClient, callLocator, userId).ConfigureAwait(false);
 
-                // Cancel Participant Media Operation
                 await WaitForOperationCompletion().ConfigureAwait(false);
+
+                // Cancel Participant Media Operation
                 string mediaOperationId = playAudioResult.OperationId;
                 await CancelParticipantMediaOperation(callingServerClient, callLocator, userId, mediaOperationId).ConfigureAwait(false);
 
                 // Remove Participant
-                await WaitForOperationCompletion().ConfigureAwait(false);
                 await RemoveParticipantOperation(callingServerClient, callLocator, userId).ConfigureAwait(false);
             }
             catch (RequestFailedException ex)
@@ -343,15 +341,17 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnections = await CreateGroupCallOperation(callingServerClient, groupId, GetFromUserId(), GetToUserId(), TestEnvironment.AppCallbackUrl).ConfigureAwait(false);
             var callLocator = new GroupCallLocator(groupId);
 
+            await WaitForOperationCompletion().ConfigureAwait(false);
+
             try
             {
                 // Play Prompt Audio
-                await WaitForOperationCompletion().ConfigureAwait(false);
                 var playAudioResult = await PlayAudioOperation(callingServerClient, callLocator).ConfigureAwait(false);
+                string mediaOperatioId = playAudioResult.OperationId;
+
+                await WaitForOperationCompletion().ConfigureAwait(false);
 
                 // Cancel Prompt Audio
-                await WaitForOperationCompletion().ConfigureAwait(false);
-                string mediaOperatioId = playAudioResult.OperationId;
                 await CancelMediaOperation(callingServerClient, callLocator, mediaOperatioId).ConfigureAwait(false);
             }
             catch (RequestFailedException ex)
@@ -388,14 +388,15 @@ namespace Azure.Communication.CallingServer.Tests
             try
             {
                 string userId = GetFixedUserId(TestEnvironment.UserIdentifier);
+                await WaitForOperationCompletion().ConfigureAwait(false);
 
                 // Add Participant
-                await WaitForOperationCompletion().ConfigureAwait(false);
                 AddParticipantResult addParticipantResult = await AddParticipantOperation(callingServerClient, callLocator, userId).ConfigureAwait(false);
                 Assert.NotNull(addParticipantResult);
 
-                // Answer Call
                 await WaitForOperationCompletion().ConfigureAwait(false);
+
+                // Answer Call
                 var answerCallResult = await AnswerCallOperation(callingServerClient).ConfigureAwait(false);
 
                 foreach (var callConnection in callConnections)
@@ -404,7 +405,6 @@ namespace Azure.Communication.CallingServer.Tests
                 }
 
                 // Remove Participant
-                await WaitForOperationCompletion().ConfigureAwait(false);
                 await RemoveParticipantOperation(callingServerClient, callLocator, userId).ConfigureAwait(false);
             }
             catch (RequestFailedException ex)
@@ -441,19 +441,16 @@ namespace Azure.Communication.CallingServer.Tests
             try
             {
                 string userId = GetFixedUserId(TestEnvironment.UserIdentifier);
+                await WaitForOperationCompletion().ConfigureAwait(false);
 
                 // Add Participant
-                await WaitForOperationCompletion().ConfigureAwait(false);
                 AddParticipantResult addParticipantResult = await AddParticipantOperation(callingServerClient, callLocator, userId).ConfigureAwait(false);
                 Assert.NotNull(addParticipantResult);
 
-                // Reject Call
                 await WaitForOperationCompletion().ConfigureAwait(false);
-                await RejectCallOperation(callingServerClient).ConfigureAwait(false);
 
-                // Remove Participant
-                await WaitForOperationCompletion().ConfigureAwait(false);
-                await RemoveParticipantOperation(callingServerClient, callLocator, userId).ConfigureAwait(false);
+                // Reject Call
+                await RejectCallOperation(callingServerClient).ConfigureAwait(false);
             }
             catch (RequestFailedException ex)
             {
@@ -483,15 +480,14 @@ namespace Azure.Communication.CallingServer.Tests
             var groupId = GetGroupId();
 
             // Establish a Call
-            var callConnections = await CreateGroupCallOperation(callingServerClient, groupId, GetFromUserId(), GetToUserId(), TestEnvironment.AppCallbackUrl).ConfigureAwait(false);
-            var callLocator = new GroupCallLocator(groupId);
+            await CreateGroupCallOperation(callingServerClient, groupId, GetFromUserId(), GetToUserId(), TestEnvironment.AppCallbackUrl).ConfigureAwait(false);
 
             try
             {
                 string userId = GetFixedUserId(TestEnvironment.UserIdentifier);
+                await WaitForOperationCompletion().ConfigureAwait(false);
 
                 // Redirect Call
-                await WaitForOperationCompletion().ConfigureAwait(false);
                 await RedirectCallOperation(callingServerClient, userId).ConfigureAwait(false);
             }
             catch (RequestFailedException ex)
@@ -502,12 +498,6 @@ namespace Azure.Communication.CallingServer.Tests
             catch (Exception ex)
             {
                 Assert.Fail($"Unexpected error: {ex}");
-            }
-            finally
-            {
-                // Hang up the Call, there is one call leg in this test case, hangup the call will also delete the call as the result.
-                await WaitForOperationCompletion().ConfigureAwait(false);
-                await CleanUpConnectionsAsync(callConnections).ConfigureAwait(false);
             }
         }
 
