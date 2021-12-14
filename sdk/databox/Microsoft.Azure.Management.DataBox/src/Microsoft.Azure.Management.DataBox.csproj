@@ -18,7 +18,7 @@
                 
                 2) Added DataCenterAddressRequest in RegionConfigurationRequest API.
 				
-				3) Added API to mark Devices Shipped for customer disk.
+				        3) Added API to mark Devices Shipped for customer disk.
 
                 4) Modified JobStage and CopyStatus to be modelled as string 				
             
