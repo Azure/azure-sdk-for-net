@@ -98,7 +98,8 @@ namespace CosmosDB.Tests
                     accountName = CreateDatabaseAccount(
                         kind: DatabaseAccountKind.MongoDB,
                         serverVersion: "3.6",
-                        enablePitr: true
+                        enablePitr: false,
+                        capabilities: new List<Capability> { new Capability("EnableMongo"), new Capability("EnableMongoRoleBasedAccessControl") }
                     );
                 }
                 else if (accountType == AccountType.Table)
