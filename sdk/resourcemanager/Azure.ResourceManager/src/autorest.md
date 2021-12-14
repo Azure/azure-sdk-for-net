@@ -102,7 +102,10 @@ public-clients: false
 head-as-boolean: false
 payload-flattening-threshold: 2
 request-path-to-scope-resource-types:
-  /{scope}/providers/Microsoft.Authorization/locks/{lockName}: subscriptions;resourceGroups;*
+  /{scope}/providers/Microsoft.Authorization/locks/{lockName}:
+    - subscriptions
+    - resourceGroups
+    - "*"
 #   /{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}: subscriptions;resourceGroups;managementGroups;tenant;*
 #   /{scope}/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}: subscriptions;resourceGroups;managementGroups;tenant;*
 # request-path-to-parent:
