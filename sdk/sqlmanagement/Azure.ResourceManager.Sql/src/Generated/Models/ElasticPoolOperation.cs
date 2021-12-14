@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A elastic pool operation. </summary>
-    public partial class ElasticPoolOperation : ProxyResource
+    public partial class ElasticPoolOperation : Resource
     {
         /// <summary> Initializes a new instance of ElasticPoolOperation. </summary>
         public ElasticPoolOperation()
@@ -18,9 +20,9 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of ElasticPoolOperation. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
         /// <param name="elasticPoolName"> The name of the elastic pool the operation is being performed on. </param>
         /// <param name="operation"> The name of operation. </param>
         /// <param name="operationFriendlyName"> The friendly name of operation. </param>
@@ -35,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="estimatedCompletionTime"> The estimated completion time of the operation. </param>
         /// <param name="description"> The operation description. </param>
         /// <param name="isCancellable"> Whether the operation can be cancelled. </param>
-        internal ElasticPoolOperation(string id, string name, string type, string elasticPoolName, string operation, string operationFriendlyName, int? percentComplete, string serverName, DateTimeOffset? startTime, string state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompletionTime, string description, bool? isCancellable) : base(id, name, type)
+        internal ElasticPoolOperation(ResourceIdentifier id, string name, ResourceType type, string elasticPoolName, string operation, string operationFriendlyName, int? percentComplete, string serverName, DateTimeOffset? startTime, string state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompletionTime, string description, bool? isCancellable) : base(id, name, type)
         {
             ElasticPoolName = elasticPoolName;
             Operation = operation;

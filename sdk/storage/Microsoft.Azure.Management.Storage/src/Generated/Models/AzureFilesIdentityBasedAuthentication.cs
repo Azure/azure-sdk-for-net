@@ -41,8 +41,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// users using Kerberos authentication if RBAC role is not assigned.
         /// Possible values include: 'None', 'StorageFileDataSmbShareReader',
         /// 'StorageFileDataSmbShareContributor',
-        /// 'StorageFileDataSmbShareElevatedContributor',
-        /// 'StorageFileDataSmbShareOwner'</param>
+        /// 'StorageFileDataSmbShareElevatedContributor'</param>
         public AzureFilesIdentityBasedAuthentication(string directoryServiceOptions, ActiveDirectoryProperties activeDirectoryProperties = default(ActiveDirectoryProperties), string defaultSharePermission = default(string))
         {
             DirectoryServiceOptions = directoryServiceOptions;
@@ -74,8 +73,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// authentication if RBAC role is not assigned. Possible values
         /// include: 'None', 'StorageFileDataSmbShareReader',
         /// 'StorageFileDataSmbShareContributor',
-        /// 'StorageFileDataSmbShareElevatedContributor',
-        /// 'StorageFileDataSmbShareOwner'
+        /// 'StorageFileDataSmbShareElevatedContributor'
         /// </summary>
         [JsonProperty(PropertyName = "defaultSharePermission")]
         public string DefaultSharePermission { get; set; }

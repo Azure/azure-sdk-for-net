@@ -11,17 +11,17 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing a builder object used to create Azure resources.
     /// </summary>
-    public class ResourceGroupBuilder
+    internal class ResourceGroupBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceGroupBuilder"/> class.
         /// </summary>
-        /// <param name="container"> The container object to create the resource in. </param>
+        /// <param name="collection"> The collection object to create the resource in. </param>
         /// <param name="resource"> The resource to create. </param>
-        public ResourceGroupBuilder(ResourceGroupContainer container, ResourceGroupData resource)
+        public ResourceGroupBuilder(ResourceGroupCollection collection, ResourceGroupData resource)
         {
             Resource = resource;
-            Container = container;
+            Collection = collection;
         }
 
         /// <summary>
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Resources
         protected string ResourceName { get; private set; }
 
         /// <summary>
-        /// Gets the container object to create the resource in.
+        /// Gets the collection object to create the resource in.
         /// </summary>
-        protected ResourceGroupContainer Container { get; private set; }
+        protected ResourceGroupCollection Collection { get; private set; }
 
         /// <summary>
         /// Creates the resource object to send to the Azure API.
@@ -57,10 +57,11 @@ namespace Azure.ResourceManager.Resources
         /// The operation to create or update a resource. Please note some properties can be set only during creation.
         /// </summary>
         /// <param name="name"> The name of the new resource to create. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A response with the <see cref="Response{ResourceGroup}"/> operation for this resource. </returns>
         /// <exception cref="ArgumentException"> Name cannot be null or a whitespace. </exception>
-        public Response<ResourceGroup> CreateOrUpdate(string name, CancellationToken cancellationToken = default)
+        public ResourceGroupCreateOrUpdateOperation CreateOrUpdate(string name, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Name cannot be null or whitespace.", nameof(name));
@@ -68,18 +69,20 @@ namespace Azure.ResourceManager.Resources
             ResourceName = name;
             Resource = Build();
 
-            return Container.CreateOrUpdate(name, Resource, cancellationToken);
+            return Collection.CreateOrUpdate(name, Resource, waitForCompletion, cancellationToken);
         }
 
         /// <summary>
         /// The operation to create or update a resource. Please note some properties can be set only during creation.
         /// </summary>
         /// <param name="name"> The name of the new resource to create. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response{ResourceGroup}"/> operation for this resource. </returns>
         /// <exception cref="ArgumentException"> Name cannot be null or a whitespace. </exception>
-        public async Task<Response<ResourceGroup>> CreateOrUpdateAsync(
+        public async Task<ResourceGroupCreateOrUpdateOperation> CreateOrUpdateAsync(
             string name,
+            bool waitForCompletion = true,
             CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(name))
@@ -88,51 +91,7 @@ namespace Azure.ResourceManager.Resources
             ResourceName = name;
             Resource = Build();
 
-            return await Container.CreateOrUpdateAsync(name, Resource, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// The operation to create or update a resource. Please note some properties can be set only during creation.
-        /// </summary>
-        /// <param name="name"> The name of the new resource to create. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An <see cref="Operation{ResourceGroup}"/> that allows polling for completion of the operation. </returns>
-        /// <remarks>
-        /// See <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning" /> for details on long running operation object.
-        /// </remarks>
-        /// <exception cref="ArgumentException"> Name cannot be null or a whitespace. </exception>
-        public Operation<ResourceGroup> StartCreateOrUpdate(string name, CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Name cannot be null or whitespace.", nameof(name));
-
-            ResourceName = name;
-            Resource = Build();
-
-            return Container.StartCreateOrUpdate(name, Resource, cancellationToken);
-        }
-
-        /// <summary>
-        /// The operation to create or update a resource. Please note some properties can be set only during creation.
-        /// </summary>
-        /// <param name="name"> The name of the new resource to create. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="Operation{ResourceGroup}"/> that allows polling for completion of the operation. </returns>
-        /// <remarks>
-        /// See <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning" /> for details on long running operation object.
-        /// </remarks>
-        /// <exception cref="ArgumentException"> Name cannot be null or a whitespace. </exception>
-        public async Task<Operation<ResourceGroup>> StartCreateOrUpdateAsync(
-            string name,
-            CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Name cannot be null or whitespace.", nameof(name));
-
-            ResourceName = name;
-            Resource = Build();
-
-            return await Container.StartCreateOrUpdateAsync(name, Resource, cancellationToken).ConfigureAwait(false);
+            return await Collection.CreateOrUpdateAsync(name, Resource, waitForCompletion, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

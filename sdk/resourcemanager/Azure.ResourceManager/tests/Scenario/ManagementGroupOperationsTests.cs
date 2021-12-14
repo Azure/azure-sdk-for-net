@@ -20,22 +20,29 @@ namespace Azure.ResourceManager.Tests
         public async Task GetGlobalManagementGroup()
         {
             _mgmtGroupName = SessionRecording.GenerateAssetName("mgmt-group-");
-            _mgmtGroup = await GlobalClient.GetManagementGroups().CreateOrUpdateAsync(_mgmtGroupName, new CreateManagementGroupRequest());
+            var mgmtOp = await GlobalClient.GetManagementGroups().CreateOrUpdateAsync(_mgmtGroupName, new CreateManagementGroupOptions(), waitForCompletion: false);
+            await mgmtOp.WaitForCompletionAsync();
+            _mgmtGroup = mgmtOp.Value;
             _mgmtGroup = await _mgmtGroup.GetAsync();
-            StopSessionRecording();
+            await StopSessionRecordingAsync();
         }
 
         [RecordedTest]
         public async Task Get()
         {
-            var mgmtGroup = await Client.GetManagementGroupOperations(_mgmtGroup.Id).GetAsync();
+            var mgmtGroup = await Client.GetManagementGroup(_mgmtGroup.Id).GetAsync();
             CompareMgmtGroups(_mgmtGroup, mgmtGroup.Value);
+            ResourceIdentifier fakeId = new ResourceIdentifier(_mgmtGroup.Id.ToString() + "x");
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetManagementGroup(new ResourceIdentifier(fakeId)).GetAsync());
+            Assert.AreEqual(403, ex.Status);
         }
 
         [RecordedTest]
         public async Task Delete()
         {
-            ManagementGroup mgmtGroup = await Client.GetManagementGroups().CreateOrUpdateAsync(Recording.GenerateAssetName("mgmt-group-"), new CreateManagementGroupRequest());
+            var mgmtGroupOp = await Client.GetManagementGroups().CreateOrUpdateAsync(Recording.GenerateAssetName("mgmt-group-"), new CreateManagementGroupOptions(), waitForCompletion: false);
+            await mgmtGroupOp.WaitForCompletionAsync();
+            ManagementGroup mgmtGroup = mgmtGroupOp.Value;
             await mgmtGroup.DeleteAsync();
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await mgmtGroup.GetAsync());
             Assert.AreEqual(404, ex.Status);
@@ -44,8 +51,10 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task StartDelete()
         {
-            ManagementGroup mgmtGroup = await Client.GetManagementGroups().CreateOrUpdateAsync(Recording.GenerateAssetName("mgmt-group-"), new CreateManagementGroupRequest());
-            var deleteOp = await mgmtGroup.StartDeleteAsync();
+            var mgmtGroupOp = await Client.GetManagementGroups().CreateOrUpdateAsync(Recording.GenerateAssetName("mgmt-group-"), new CreateManagementGroupOptions(), waitForCompletion: false);
+            await mgmtGroupOp.WaitForCompletionAsync();
+            ManagementGroup mgmtGroup = mgmtGroupOp.Value;
+            var deleteOp = await mgmtGroup.DeleteAsync(waitForCompletion: false);
             await deleteOp.WaitForCompletionResponseAsync();
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await mgmtGroup.GetAsync());
             Assert.AreEqual(404, ex.Status);
@@ -54,9 +63,9 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task GetDescendants()
         {
-            ManagementGroup mgmtGroup = await Client.GetManagementGroupOperations(_mgmtGroup.Id).GetAsync();
+            ManagementGroup mgmtGroup = await Client.GetManagementGroup(_mgmtGroup.Id).GetAsync();
             DescendantInfo descendant = null;
-            await foreach(var desc in mgmtGroup.ListDescendantsAsync())
+            await foreach(var desc in mgmtGroup.GetDescendantsAsync())
             {
                 descendant = desc;
                 break;
@@ -67,8 +76,11 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task Update()
         {
-            ManagementGroup mgmtGroup = await Client.GetManagementGroups().CreateOrUpdateAsync(Recording.GenerateAssetName("mgmt-group-"), new CreateManagementGroupRequest());
-            PatchManagementGroupRequest patch = new PatchManagementGroupRequest();
+            var mgmtGroupOp = await Client.GetManagementGroups()
+                .CreateOrUpdateAsync(Recording.GenerateAssetName("mgmt-group-"), new CreateManagementGroupOptions(), waitForCompletion: false);
+            await mgmtGroupOp.WaitForCompletionAsync();
+            ManagementGroup mgmtGroup = mgmtGroupOp.Value;
+            PatchManagementGroupOptions patch = new PatchManagementGroupOptions();
             patch.DisplayName = "New Display Name";
             ManagementGroup patchedMgmtGroup = await mgmtGroup.UpdateAsync(patch);
             Assert.AreEqual("New Display Name", patchedMgmtGroup.Data.DisplayName);

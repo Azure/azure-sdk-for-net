@@ -40,7 +40,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="health">The health. Possible values include: 'None',
         /// 'Normal', 'Warning', 'Critical'</param>
         /// <param name="healthErrors">The health errors.</param>
-        public DraDetails(string id = default(string), string name = default(string), string biosId = default(string), string version = default(string), System.DateTime? lastHeartbeatUtc = default(System.DateTime?), string health = default(string), IList<HealthError> healthErrors = default(IList<HealthError>))
+        /// <param name="forwardProtectedItemCount">The count of protected
+        /// items which are protected in forward direction.</param>
+        /// <param name="reverseProtectedItemCount">The count of protected
+        /// items which are protected in reverse direction.</param>
+        public DraDetails(string id = default(string), string name = default(string), string biosId = default(string), string version = default(string), System.DateTime? lastHeartbeatUtc = default(System.DateTime?), string health = default(string), IList<HealthError> healthErrors = default(IList<HealthError>), int? forwardProtectedItemCount = default(int?), int? reverseProtectedItemCount = default(int?))
         {
             Id = id;
             Name = name;
@@ -49,6 +53,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             LastHeartbeatUtc = lastHeartbeatUtc;
             Health = health;
             HealthErrors = healthErrors;
+            ForwardProtectedItemCount = forwardProtectedItemCount;
+            ReverseProtectedItemCount = reverseProtectedItemCount;
             CustomInit();
         }
 
@@ -99,6 +105,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "healthErrors")]
         public IList<HealthError> HealthErrors { get; private set; }
+
+        /// <summary>
+        /// Gets the count of protected items which are protected in forward
+        /// direction.
+        /// </summary>
+        [JsonProperty(PropertyName = "forwardProtectedItemCount")]
+        public int? ForwardProtectedItemCount { get; private set; }
+
+        /// <summary>
+        /// Gets the count of protected items which are protected in reverse
+        /// direction.
+        /// </summary>
+        [JsonProperty(PropertyName = "reverseProtectedItemCount")]
+        public int? ReverseProtectedItemCount { get; private set; }
 
     }
 }

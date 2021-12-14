@@ -68,7 +68,9 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="armRoleReceivers">The list of ARM role receivers that
         /// are part of this action group. Roles are Azure RBAC roles and only
         /// built-in roles are supported.</param>
-        public ActionGroupResource(string location, string groupShortName, bool enabled, string id = default(string), string name = default(string), string type = default(string), string kind = default(string), string identity = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<EmailReceiver> emailReceivers = default(IList<EmailReceiver>), IList<SmsReceiver> smsReceivers = default(IList<SmsReceiver>), IList<WebhookReceiver> webhookReceivers = default(IList<WebhookReceiver>), IList<ItsmReceiver> itsmReceivers = default(IList<ItsmReceiver>), IList<AzureAppPushReceiver> azureAppPushReceivers = default(IList<AzureAppPushReceiver>), IList<AutomationRunbookReceiver> automationRunbookReceivers = default(IList<AutomationRunbookReceiver>), IList<VoiceReceiver> voiceReceivers = default(IList<VoiceReceiver>), IList<LogicAppReceiver> logicAppReceivers = default(IList<LogicAppReceiver>), IList<AzureFunctionReceiver> azureFunctionReceivers = default(IList<AzureFunctionReceiver>), IList<ArmRoleReceiver> armRoleReceivers = default(IList<ArmRoleReceiver>))
+        /// <param name="eventHubReceivers">The list of event hub receivers
+        /// that are part of this action group.</param>
+        public ActionGroupResource(string location, string groupShortName, bool enabled, string id = default(string), string name = default(string), string type = default(string), string kind = default(string), string identity = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<EmailReceiver> emailReceivers = default(IList<EmailReceiver>), IList<SmsReceiver> smsReceivers = default(IList<SmsReceiver>), IList<WebhookReceiver> webhookReceivers = default(IList<WebhookReceiver>), IList<ItsmReceiver> itsmReceivers = default(IList<ItsmReceiver>), IList<AzureAppPushReceiver> azureAppPushReceivers = default(IList<AzureAppPushReceiver>), IList<AutomationRunbookReceiver> automationRunbookReceivers = default(IList<AutomationRunbookReceiver>), IList<VoiceReceiver> voiceReceivers = default(IList<VoiceReceiver>), IList<LogicAppReceiver> logicAppReceivers = default(IList<LogicAppReceiver>), IList<AzureFunctionReceiver> azureFunctionReceivers = default(IList<AzureFunctionReceiver>), IList<ArmRoleReceiver> armRoleReceivers = default(IList<ArmRoleReceiver>), IList<EventHubReceiver> eventHubReceivers = default(IList<EventHubReceiver>))
             : base(location, id, name, type, kind, identity, tags)
         {
             GroupShortName = groupShortName;
@@ -83,6 +85,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
             LogicAppReceivers = logicAppReceivers;
             AzureFunctionReceivers = azureFunctionReceivers;
             ArmRoleReceivers = armRoleReceivers;
+            EventHubReceivers = eventHubReceivers;
             CustomInit();
         }
 
@@ -176,6 +179,13 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.armRoleReceivers")]
         public IList<ArmRoleReceiver> ArmRoleReceivers { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of event hub receivers that are part of this
+        /// action group.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.eventHubReceivers")]
+        public IList<EventHubReceiver> EventHubReceivers { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -294,6 +304,16 @@ namespace Microsoft.Azure.Management.Monitor.Models
                     if (element9 != null)
                     {
                         element9.Validate();
+                    }
+                }
+            }
+            if (EventHubReceivers != null)
+            {
+                foreach (var element10 in EventHubReceivers)
+                {
+                    if (element10 != null)
+                    {
+                        element10.Validate();
                     }
                 }
             }

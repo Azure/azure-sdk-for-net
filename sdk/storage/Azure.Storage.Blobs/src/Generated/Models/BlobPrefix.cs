@@ -15,7 +15,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> Initializes a new instance of BlobPrefix. </summary>
         /// <param name="name"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal BlobPrefix(string name)
+        internal BlobPrefix(BlobName name)
         {
             if (name == null)
             {
@@ -25,6 +25,7 @@ namespace Azure.Storage.Blobs.Models
             Name = name;
         }
 
-        public string Name { get; }
+        /// <summary> Gets the name. </summary>
+        public BlobName Name { get; }
     }
 }

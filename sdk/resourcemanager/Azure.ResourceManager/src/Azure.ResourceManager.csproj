@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>1.0.0-beta.1</Version>
+    <Version>1.0.0-beta.6</Version>
     <PackageId>Azure.ResourceManager</PackageId>
     <Description>
       Azure management SDK for Azure resources.
@@ -9,12 +9,12 @@
     </Description>
     <PackageTags>azure;management;resource</PackageTags>
     <NoWarn>$(NoWarn);CA2214</NoWarn>
-    <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
+    <UseDefaultNamespaceAndOutputFolder>false</UseDefaultNamespaceAndOutputFolder>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="Shared\Core" />
   </ItemGroup>
-  
+
 </Project>

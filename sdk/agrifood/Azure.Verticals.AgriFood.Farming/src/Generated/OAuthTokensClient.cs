@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -17,13 +19,15 @@ namespace Azure.Verticals.AgriFood.Farming
     /// <summary> The OAuthTokens service client. </summary>
     public partial class OAuthTokensClient
     {
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
-        private readonly string[] AuthorizationScopes = { "https://farmbeats.azure.net/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
-        private Uri endpoint;
-        private readonly string apiVersion;
+        private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of OAuthTokensClient for mocking. </summary>
         protected OAuthTokensClient()
@@ -34,6 +38,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="endpoint"> The endpoint of your FarmBeats resource (protocol and hostname, for example: https://{resourceName}.farmbeats.azure.net). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public OAuthTokensClient(Uri endpoint, TokenCredential credential, FarmBeatsClientOptions options = null)
         {
             if (endpoint == null)
@@ -44,59 +49,217 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 throw new ArgumentNullException(nameof(credential));
             }
-
             options ??= new FarmBeatsClientOptions();
+
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
-            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
-            this.endpoint = endpoint;
-            apiVersion = options.Version;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
         }
 
-        /// <summary> Returns a list of OAuthToken documents. </summary>
-        /// <param name="authProviderIds"> Name of AuthProvider. </param>
-        /// <param name="farmerIds"> List of farmers. </param>
-        /// <param name="isValid"> If the token object is valid. </param>
-        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
-        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
-        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
-        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="options"> The request options. </param>
+        /// <summary> Returns Connection link needed in the OAuth flow. </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   farmerId: string (required),
+        ///   oAuthProviderId: string (required),
+        ///   userRedirectLink: string (required),
+        ///   userRedirectState: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> ListAsync(IEnumerable<string> authProviderIds = null, IEnumerable<string> farmerIds = null, bool? isValid = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
+        public virtual async Task<Response> GetOAuthConnectionLinkAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateListRequest(authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("OAuthTokensClient.List");
+            using var scope = _clientDiagnostics.CreateScope("OAuthTokensClient.GetOAuthConnectionLink");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                using HttpMessage message = CreateGetOAuthConnectionLinkRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Returns Connection link needed in the OAuth flow. </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   farmerId: string (required),
+        ///   oAuthProviderId: string (required),
+        ///   userRedirectLink: string (required),
+        ///   userRedirectState: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response GetOAuthConnectionLink(RequestContent content, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("OAuthTokensClient.GetOAuthConnectionLink");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetOAuthConnectionLinkRequest(content, context);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get cascade delete job details for OAuth tokens for specified job ID. </summary>
+        /// <param name="jobId"> ID of the job. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   farmerId: string,
+        ///   resourceId: string,
+        ///   resourceType: string,
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetCascadeDeleteJobDetailsAsync(string jobId, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("OAuthTokensClient.GetCascadeDeleteJobDetails");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId, context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get cascade delete job details for OAuth tokens for specified job ID. </summary>
+        /// <param name="jobId"> ID of the job. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   farmerId: string,
+        ///   resourceId: string,
+        ///   resourceType: string,
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response GetCascadeDeleteJobDetails(string jobId, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("OAuthTokensClient.GetCascadeDeleteJobDetails");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId, context);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -118,45 +281,61 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       farmerId: string,
+        ///       authProviderId: string,
+        ///       isValid: boolean,
+        ///       eTag: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format)
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response List(IEnumerable<string> authProviderIds = null, IEnumerable<string> farmerIds = null, bool? isValid = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
+        public virtual AsyncPageable<BinaryData> GetOAuthTokensAsync(IEnumerable<string> authProviderIds = null, IEnumerable<string> farmerIds = null, bool? isValid = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateListRequest(authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "OAuthTokensClient.GetOAuthTokens");
+            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("OAuthTokensClient.List");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
+                do
                 {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetOAuthTokensRequest(authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetOAuthTokensNextPageRequest(nextLink, authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
             }
         }
 
-        /// <summary> Create Request for <see cref="List"/> and <see cref="ListAsync"/> operations. </summary>
+        /// <summary> Returns a list of OAuthToken documents. </summary>
         /// <param name="authProviderIds"> Name of AuthProvider. </param>
         /// <param name="farmerIds"> List of farmers. </param>
         /// <param name="isValid"> If the token object is valid. </param>
@@ -169,22 +348,203 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateListRequest(IEnumerable<string> authProviderIds = null, IEnumerable<string> farmerIds = null, bool? isValid = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       farmerId: string,
+        ///       authProviderId: string,
+        ///       isValid: boolean,
+        ///       eTag: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format)
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Pageable<BinaryData> GetOAuthTokens(IEnumerable<string> authProviderIds = null, IEnumerable<string> farmerIds = null, bool? isValid = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+#pragma warning restore AZC0002
         {
-            var message = Pipeline.CreateMessage();
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "OAuthTokensClient.GetOAuthTokens");
+            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
+            {
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetOAuthTokensRequest(authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetOAuthTokensNextPageRequest(nextLink, authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
+            }
+        }
+
+        /// <summary> Create a cascade delete job for OAuth tokens. </summary>
+        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="jobId"> Job ID supplied by end user. </param>
+        /// <param name="farmerId"> ID of the farmer. </param>
+        /// <param name="oauthProviderId"> ID of the OAuthProvider. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/>, or <paramref name="oauthProviderId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   farmerId: string,
+        ///   resourceId: string,
+        ///   resourceType: string,
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(bool waitForCompletion, string jobId, string farmerId, string oauthProviderId, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("OAuthTokensClient.CreateCascadeDeleteJob");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, oauthProviderId, context);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "OAuthTokensClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create a cascade delete job for OAuth tokens. </summary>
+        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="jobId"> Job ID supplied by end user. </param>
+        /// <param name="farmerId"> ID of the farmer. </param>
+        /// <param name="oauthProviderId"> ID of the OAuthProvider. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/>, or <paramref name="oauthProviderId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   farmerId: string,
+        ///   resourceId: string,
+        ///   resourceType: string,
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Operation<BinaryData> CreateCascadeDeleteJob(bool waitForCompletion, string jobId, string farmerId, string oauthProviderId, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("OAuthTokensClient.CreateCascadeDeleteJob");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, oauthProviderId, context);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "OAuthTokensClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitForCompletion);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        internal HttpMessage CreateGetOAuthTokensRequest(IEnumerable<string> authProviderIds, IEnumerable<string> farmerIds, bool? isValid, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/oauth/tokens", false);
             if (authProviderIds != null)
             {
-                uri.AppendQueryDelimited("authProviderIds", authProviderIds, ",", true);
+                foreach (var param in authProviderIds)
+                {
+                    uri.AppendQuery("authProviderIds", param, true);
+                }
             }
             if (farmerIds != null)
             {
-                uri.AppendQueryDelimited("farmerIds", farmerIds, ",", true);
+                foreach (var param in farmerIds)
+                {
+                    uri.AppendQuery("farmerIds", param, true);
+                }
             }
             if (isValid != null)
             {
@@ -214,383 +574,103 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("$skipToken", skipToken, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        /// <summary> Returns Connection link needed in the OAuth flow. </summary>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>farmerId</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term>ID of the farmer.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>oAuthProviderId</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term>ID of the OAuthProvider.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>userRedirectLink</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term>Link to redirect the user to, at the end of the oauth flow.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>userRedirectState</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>State to provide back when redirecting the user, at the end of the oauth flow.</term>
-        ///   </item>
-        /// </list>
-        /// </remarks>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> GetOAuthConnectionLinkAsync(RequestContent content, RequestOptions options = null)
-#pragma warning restore AZC0002
+        internal HttpMessage CreateGetOAuthConnectionLinkRequest(RequestContent content, RequestContext context)
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateGetOAuthConnectionLinkRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("OAuthTokensClient.GetOAuthConnectionLink");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Returns Connection link needed in the OAuth flow. </summary>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>farmerId</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term>ID of the farmer.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>oAuthProviderId</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term>ID of the OAuthProvider.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>userRedirectLink</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term>Link to redirect the user to, at the end of the oauth flow.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>userRedirectState</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>State to provide back when redirecting the user, at the end of the oauth flow.</term>
-        ///   </item>
-        /// </list>
-        /// </remarks>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response GetOAuthConnectionLink(RequestContent content, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateGetOAuthConnectionLinkRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("OAuthTokensClient.GetOAuthConnectionLink");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create Request for <see cref="GetOAuthConnectionLink"/> and <see cref="GetOAuthConnectionLinkAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetOAuthConnectionLinkRequest(RequestContent content, RequestOptions options = null)
-        {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/oauth/tokens/:connect", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
+            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        /// <summary> Get cascade delete job details for OAuth tokens for specified job ID. </summary>
-        /// <param name="jobId"> ID of the job. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> GetCascadeDeleteJobDetailsAsync(string jobId, RequestOptions options = null)
-#pragma warning restore AZC0002
+        internal HttpMessage CreateGetCascadeDeleteJobDetailsRequest(string jobId, RequestContext context)
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("OAuthTokensClient.GetCascadeDeleteJobDetails");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get cascade delete job details for OAuth tokens for specified job ID. </summary>
-        /// <param name="jobId"> ID of the job. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response GetCascadeDeleteJobDetails(string jobId, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("OAuthTokensClient.GetCascadeDeleteJobDetails");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create Request for <see cref="GetCascadeDeleteJobDetails"/> and <see cref="GetCascadeDeleteJobDetailsAsync"/> operations. </summary>
-        /// <param name="jobId"> ID of the job. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetCascadeDeleteJobDetailsRequest(string jobId, RequestOptions options = null)
-        {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/oauth/tokens/remove/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        /// <summary> Create a cascade delete job for OAuth tokens. </summary>
-        /// <param name="jobId"> Job ID supplied by end user. </param>
-        /// <param name="farmerId"> ID of the farmer. </param>
-        /// <param name="oauthProviderId"> ID of the OAuthProvider. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(string jobId, string farmerId, string oauthProviderId, RequestOptions options = null)
-#pragma warning restore AZC0002
+        internal HttpMessage CreateCreateCascadeDeleteJobRequest(string jobId, string farmerId, string oauthProviderId, RequestContext context)
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, oauthProviderId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("OAuthTokensClient.CreateCascadeDeleteJob");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 202:
-                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "OAuthTokensClient.CreateCascadeDeleteJob");
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "OAuthTokensClient.CreateCascadeDeleteJob");
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create a cascade delete job for OAuth tokens. </summary>
-        /// <param name="jobId"> Job ID supplied by end user. </param>
-        /// <param name="farmerId"> ID of the farmer. </param>
-        /// <param name="oauthProviderId"> ID of the OAuthProvider. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Operation<BinaryData> CreateCascadeDeleteJob(string jobId, string farmerId, string oauthProviderId, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, oauthProviderId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("OAuthTokensClient.CreateCascadeDeleteJob");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 202:
-                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "OAuthTokensClient.CreateCascadeDeleteJob");
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "OAuthTokensClient.CreateCascadeDeleteJob");
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create Request for <see cref="CreateCascadeDeleteJob"/> and <see cref="CreateCascadeDeleteJobAsync"/> operations. </summary>
-        /// <param name="jobId"> Job ID supplied by end user. </param>
-        /// <param name="farmerId"> ID of the farmer. </param>
-        /// <param name="oauthProviderId"> ID of the OAuthProvider. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateCascadeDeleteJobRequest(string jobId, string farmerId, string oauthProviderId, RequestOptions options = null)
-        {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/oauth/tokens/remove/", false);
             uri.AppendPath(jobId, true);
             uri.AppendQuery("farmerId", farmerId, true);
             uri.AppendQuery("oauthProviderId", oauthProviderId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier202.Instance;
             return message;
+        }
+
+        internal HttpMessage CreateGetOAuthTokensNextPageRequest(string nextLink, IEnumerable<string> authProviderIds, IEnumerable<string> farmerIds, bool? isValid, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
+        }
+
+        private sealed class ResponseClassifier200 : ResponseClassifier
+        {
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                return message.Response.Status switch
+                {
+                    200 => false,
+                    _ => true
+                };
+            }
+        }
+        private sealed class ResponseClassifier202 : ResponseClassifier
+        {
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier202();
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                return message.Response.Status switch
+                {
+                    202 => false,
+                    _ => true
+                };
+            }
         }
     }
 }

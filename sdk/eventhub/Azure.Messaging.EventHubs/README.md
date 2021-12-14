@@ -32,13 +32,13 @@ The Azure Event Hubs client library allows for publishing and consuming of Azure
 
 To quickly create a basic set of Event Hubs resources in Azure and to receive a connection string for them, you can deploy our sample template by clicking:
 
-[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Feventhub%2FAzure.Messaging.EventHubs%2Fassets%2Fsamples-azure-deploy.json)
+[![Deploy to Azure](https://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Feventhub%2FAzure.Messaging.EventHubs%2Fassets%2Fsamples-azure-deploy.json)
 
 ### Install the package
 
 Install the Azure Event Hubs client library for .NET with [NuGet](https://www.nuget.org/):
 
-```PowerShell
+```dotnetcli
 dotnet add package Azure.Messaging.EventHubs
 ```
 
@@ -139,7 +139,7 @@ await using (var consumer = new EventHubConsumerClient(consumerGroup, connection
 
 In order to read events for an Event Hub partition, you'll need to create an `EventHubConsumerClient` for a given consumer group.  When an Event Hub is created, it provides a default consumer group that can be used to get started with exploring Event Hubs.  To read from a specific partition, the consumer will also need to specify where in the event stream to begin receiving events; in our example, we will focus on reading all published events for the first partition of the Event Hub.
 
-```C# Snippet:EventHubs_ReadMe_Read
+```C# Snippet:EventHubs_ReadMe_ReadPartition
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 
@@ -147,12 +147,15 @@ string consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
 
 await using (var consumer = new EventHubConsumerClient(consumerGroup, connectionString, eventHubName))
 {
+    EventPosition startingPosition = EventPosition.Earliest;
+    string partitionId = (await consumer.GetPartitionIdsAsync()).First();
+
     using var cancellationSource = new CancellationTokenSource();
     cancellationSource.CancelAfter(TimeSpan.FromSeconds(45));
 
-    await foreach (PartitionEvent receivedEvent in consumer.ReadEventsAsync(cancellationSource.Token))
+    await foreach (PartitionEvent receivedEvent in consumer.ReadEventsFromPartitionAsync(partitionId, startingPosition, cancellationSource.Token))
     {
-        // At this point, the loop will wait for events to be available in the Event Hub.  When an event
+        // At this point, the loop will wait for events to be available in the partition.  When an event
         // is available, the loop will iterate with the event that was received.  Because we did not
         // specify a maximum wait time, the loop will wait forever unless cancellation is requested using
         // the cancellation token.
@@ -192,6 +195,7 @@ try
 {
     // The processor performs its work in the background; block until cancellation
     // to allow processing to take place.
+
     await Task.Delay(Timeout.Infinite, cancellationSource.Token);
 }
 catch (TaskCanceledException)
@@ -206,6 +210,7 @@ try
 finally
 {
     // To prevent leaks, the handlers should be removed when processing is complete.
+
     processor.ProcessEventAsync -= processEventHandler;
     processor.ProcessErrorAsync -= processErrorHandler;
 }
@@ -220,10 +225,9 @@ The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/blob/mai
 To make use of an Active Directory principal, one of the available credentials from the `Azure.Identity` library is specified when creating the Event Hubs client.  In addition, the fully qualified Event Hubs namespace and the name of desired Event Hub are supplied in lieu of the Event Hubs connection string.  For illustration, the `EventHubProducerClient` is demonstrated in these examples, but the concept and form are common across clients.
 
 ```C# Snippet:EventHubs_ReadMe_PublishIdentity
-TokenCredential credential = new DefaultAzureCredential();
-
 var fullyQualifiedNamespace = "<< FULLY-QUALIFIED EVENT HUBS NAMESPACE (like something.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var credential = new DefaultAzureCredential();
 
 await using (var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential))
 {
@@ -283,7 +287,7 @@ For detailed information about the failures represented by the `EventHubsExcepti
 
 The Event Hubs client library is fully instrumented for logging information at various levels of detail using the .NET `EventSource` to emit information.  Logging is performed for each operation and follows the pattern of marking the starting point of the operation, it's completion, and any exceptions encountered.  Additional information that may offer insight is also logged in the context of the associated operation.
 
-The Event Hubs client logs are available to any `EventListener` by opting into the source named "Azure-Messaging-EventHubs" or opting into all sources that have the trait "AzureEventSource".  To make capturing logs from the Azure client libraries easier, the `Azure.Core` library used by Event Hubs offers an `AzureEventSourceListener`.  More information can be found in the [Azure.Core Diagnostics sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#logging).
+The Event Hubs client logs are available to any `EventListener` by opting into the source named "Azure-Messaging-EventHubs" or opting into all sources that have the trait "AzureEventSource".  To make capturing logs from the Azure client libraries easier, the `Azure.Core` library used by Event Hubs offers an `AzureEventSourceListener`.  More information can be found in [Capturing Event Hubs logs using the AzureEventSourceListener](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample10_AzureEventSourceListener.md).
 
 The Event Hubs client library is also instrumented for distributed tracing using Application Insights or OpenTelemetry.  More information can be found in the [Azure.Core Diagnostics sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#distributed-tracing).
 

@@ -131,6 +131,28 @@ SearchIndexerDataSourceConnection dataSourceConnection = new SearchIndexerDataSo
 await indexerClient.CreateDataSourceConnectionAsync(dataSourceConnection);
 ```
 
+#### Create SearchClientOptions
+
+To control specific request behaviors such as timeouts and retries, you can create a client with options.
+
+```C# Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_SearchClientOptions
+// Create SearchIndexerClient options
+SearchClientOptions options = new SearchClientOptions()
+{
+    Transport = new HttpClientTransport(new HttpClient()
+    {
+        // Increase timeout for each request to 5 minutes
+        Timeout = TimeSpan.FromMinutes(5)
+    });
+};
+
+// Increase retry attempts to 6
+options.Retry.MaxRetries = 6;
+
+// Create a new SearchIndexerClient with options
+indexerClient = new SearchIndexerClient(endpoint, credential, options);
+```
+
 ### Create a Skillset
 
 To provide French translations of descriptions, we'll define a [translation skill](https://docs.microsoft.com/azure/search/cognitive-search-skill-text-translation) to translate from English.

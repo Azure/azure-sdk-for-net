@@ -30,9 +30,12 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// Initializes a new instance of the ApiError class.
         /// </summary>
         /// <param name="error">Error information in OData format</param>
-        public ApiError(ODataError error = default(ODataError))
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource.</param>
+        public ApiError(ODataError error = default(ODataError), SystemData systemData = default(SystemData))
         {
             Error = error;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -46,6 +49,13 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "error")]
         public ODataError Error { get; set; }
+
+        /// <summary>
+        /// Gets metadata pertaining to creation and last modification of the
+        /// resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

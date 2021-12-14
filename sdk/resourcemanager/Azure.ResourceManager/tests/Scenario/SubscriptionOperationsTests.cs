@@ -3,7 +3,6 @@
 
 using System;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -20,11 +19,20 @@ namespace Azure.ResourceManager.Tests
         {
         }
 
+        [RecordedTest]
+        [SyncOnly]
+        public void NoDataValidation()
+        {
+            ///subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c
+            var resource = Client.GetSubscription(new ResourceIdentifier($"/subscriptions/{Guid.NewGuid()}"));
+            Assert.Throws<InvalidOperationException>(() => { var data = resource.Data; });
+        }
+
         [TestCase]
         [RecordedTest]
         public async Task GetSubscriptionOperation()
         {
-            var sub = await Client.GetSubscriptions().TryGetAsync(TestEnvironment.SubscriptionId);
+            Subscription sub = await Client.GetSubscriptions().GetIfExistsAsync(TestEnvironment.SubscriptionId);
             Assert.AreEqual(sub.Id.SubscriptionId, TestEnvironment.SubscriptionId);
         }
 
@@ -32,7 +40,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task TestGetResourceGroupOpsArgNullException(string resourceGroupName)
         {
-            var subOps = Client.DefaultSubscription;
+            var subOps = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             try
             {
                 _ = await subOps.GetResourceGroups().GetAsync(resourceGroupName);
@@ -49,7 +57,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task TestGetResourceGroupOpsArgException(string resourceGroupName)
         {
-            var subOps = Client.DefaultSubscription;
+            var subOps = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             try
             {
                 ResourceGroup rg = await subOps.GetResourceGroups().GetAsync(resourceGroupName);
@@ -64,7 +72,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task TestGetResourceGroupOpsEmptyString(string resourceGroupName)
         {
-            var subOps = Client.DefaultSubscription;
+            var subOps = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             try
             {
                 ResourceGroup rg = await subOps.GetResourceGroups().GetAsync(resourceGroupName);
@@ -80,7 +88,7 @@ namespace Azure.ResourceManager.Tests
         public async Task TestGetResourceGroupOpsOutOfRangeArgException(int length)
         {
             var resourceGroupName = GetLongString(length);
-            var subOps = Client.DefaultSubscription;
+            var subOps = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             try
             {
                 var rg = await subOps.GetResourceGroups().GetAsync(resourceGroupName);
@@ -98,7 +106,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task TestGetResourceGroupOpsValid(string resourceGroupName)
         {
-            var subOps = Client.DefaultSubscription;
+            var subOps = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             try
             {
                 _ = await subOps.GetResourceGroups().GetAsync(resourceGroupName);
@@ -114,7 +122,7 @@ namespace Azure.ResourceManager.Tests
         public async Task TestGetResourceGroupOpsLong(int length)
         {
             var resourceGroupName = GetLongString(length);
-            var subOps = Client.DefaultSubscription;
+            var subOps = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             try
             {
                 _ = await subOps.GetResourceGroups().GetAsync(resourceGroupName);
@@ -128,27 +136,23 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task TestListLocations()
         {
-            var subOps = Client.DefaultSubscription;
-            var locations = await subOps.ListLocationsAsync().ToEnumerableAsync();
+            var subOps = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
+            var locations = await subOps.GetLocationsAsync().ToEnumerableAsync();
             Assert.IsTrue(locations.Count != 0);
             var location = locations.First();
             Assert.IsNotNull(location.Metadata, "Metadata was null");
             Assert.IsNotNull(location.Id, "Id was null");
-            Assert.AreEqual(Client.DefaultSubscription.Id.SubscriptionId, location.SubscriptionId);
+            Assert.AreEqual(subOps.Id.SubscriptionId, location.SubscriptionId);
         }
 
         [RecordedTest]
         public async Task TestGetSubscription()
         {
-            var subscription = await Client.DefaultSubscription.GetAsync();
+            var subscription = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetAsync();
             Assert.NotNull(subscription.Value.Data.Id);
-        }
 
-        [RecordedTest]
-        public async Task TestTryGet()
-        {
-            var sub = await Client.GetSubscriptions().TryGetAsync(TestEnvironment.SubscriptionId);
-            Assert.AreEqual($"/subscriptions/{TestEnvironment.SubscriptionId}", sub.Data.Id.ToString());
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetSubscription(new ResourceIdentifier($"/subscriptions/{new Guid()}")).GetAsync());
+            Assert.AreEqual(404, ex.Status);
         }
 
         private string GetLongString(int length)
@@ -165,7 +169,8 @@ namespace Azure.ResourceManager.Tests
         public async Task ListFeatures()
         {
             Feature testFeature = null;
-            await foreach (var feature in Client.DefaultSubscription.ListFeaturesAsync())
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
+            await foreach (var feature in subscription.GetFeaturesAsync())
             {
                 testFeature = feature;
                 break;

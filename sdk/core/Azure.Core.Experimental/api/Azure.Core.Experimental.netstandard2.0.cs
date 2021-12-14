@@ -3,105 +3,12 @@ namespace Azure
     public partial class RequestOptions
     {
         public RequestOptions() { }
-        public RequestOptions(Azure.ResponseStatusOption statusOption) { }
-        public RequestOptions(System.Action<Azure.Core.HttpMessage> perCall) { }
-        public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
-        public Azure.Core.Pipeline.HttpPipelinePolicy? PerCallPolicy { get { throw null; } set { } }
-        public Azure.ResponseStatusOption StatusOption { get { throw null; } set { } }
-        public static implicit operator Azure.RequestOptions (Azure.ResponseStatusOption option) { throw null; }
-    }
-    public enum ResponseStatusOption
-    {
-        Default = 0,
-        NoThrow = 1,
+        public Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
+        public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
     }
 }
 namespace Azure.Core
 {
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ContentType : System.IEquatable<Azure.Core.ContentType>, System.IEquatable<string>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ContentType(string contentType) { throw null; }
-        public static Azure.Core.ContentType ApplicationJson { get { throw null; } }
-        public static Azure.Core.ContentType ApplicationOctetStream { get { throw null; } }
-        public static Azure.Core.ContentType TextPlain { get { throw null; } }
-        public bool Equals(Azure.Core.ContentType other) { throw null; }
-        public override bool Equals(object? obj) { throw null; }
-        public bool Equals(string other) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Core.ContentType left, Azure.Core.ContentType right) { throw null; }
-        public static implicit operator Azure.Core.ContentType (string contentType) { throw null; }
-        public static bool operator !=(Azure.Core.ContentType left, Azure.Core.ContentType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DateTimeRange : System.IEquatable<Azure.Core.DateTimeRange>
-    {
-        public DateTimeRange(System.DateTimeOffset start, System.DateTimeOffset end) { throw null; }
-        public DateTimeRange(System.DateTimeOffset start, System.TimeSpan duration) { throw null; }
-        public DateTimeRange(System.TimeSpan duration) { throw null; }
-        public DateTimeRange(System.TimeSpan duration, System.DateTimeOffset end) { throw null; }
-        public static Azure.Core.DateTimeRange All { get { throw null; } }
-        public System.TimeSpan Duration { get { throw null; } }
-        public System.DateTimeOffset? End { get { throw null; } }
-        public System.DateTimeOffset? Start { get { throw null; } }
-        public bool Equals(Azure.Core.DateTimeRange other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Core.DateTimeRange left, Azure.Core.DateTimeRange right) { throw null; }
-        public static implicit operator Azure.Core.DateTimeRange (System.TimeSpan timeSpan) { throw null; }
-        public static bool operator !=(Azure.Core.DateTimeRange left, Azure.Core.DateTimeRange right) { throw null; }
-        public static Azure.Core.DateTimeRange Parse(string value) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Diagnostics.DebuggerDisplayAttribute("Content: {_body}")]
-    public partial class DynamicContent : Azure.Core.RequestContent
-    {
-        internal DynamicContent() { }
-        public static Azure.Core.RequestContent Create(Azure.Core.JsonData body) { throw null; }
-        public override void Dispose() { }
-        public override bool TryComputeLength(out long length) { throw null; }
-        public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation) { }
-        public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellation) { throw null; }
-    }
-    [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
-    public partial class DynamicRequest : Azure.Core.Request
-    {
-        public DynamicRequest(Azure.Core.Request request, Azure.Core.Pipeline.HttpPipeline pipeline) { }
-        public Azure.Core.JsonData Body { get { throw null; } set { } }
-        public override string ClientRequestId { get { throw null; } set { } }
-        public override Azure.Core.RequestContent? Content { get { throw null; } set { } }
-        public dynamic DynamicBody { get { throw null; } }
-        protected override void AddHeader(string name, string value) { }
-        protected override bool ContainsHeader(string name) { throw null; }
-        public override void Dispose() { }
-        protected virtual void Dispose(bool disposing) { }
-        protected override System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders() { throw null; }
-        protected override bool RemoveHeader(string name) { throw null; }
-        public Azure.Core.DynamicResponse Send(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.Tasks.Task<Azure.Core.DynamicResponse> SendAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        protected override bool TryGetHeader(string name, out string? value) { throw null; }
-        protected override bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
-    }
-    [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
-    public partial class DynamicResponse : Azure.Response
-    {
-        public DynamicResponse(Azure.Response response, Azure.Core.JsonData? body) { }
-        public Azure.Core.JsonData? Body { get { throw null; } }
-        public override string ClientRequestId { get { throw null; } set { } }
-        public override System.IO.Stream? ContentStream { get { throw null; } set { } }
-        public dynamic? DynamicBody { get { throw null; } }
-        public override string ReasonPhrase { get { throw null; } }
-        public override int Status { get { throw null; } }
-        protected override bool ContainsHeader(string name) { throw null; }
-        public override void Dispose() { }
-        protected virtual void Dispose(bool disposing) { }
-        protected override System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders() { throw null; }
-        protected override bool TryGetHeader(string name, out string? value) { throw null; }
-        protected override bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
-    }
     [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
     public partial class JsonData : System.Dynamic.IDynamicMetaObjectProvider, System.IEquatable<Azure.Core.JsonData>
     {
@@ -187,26 +94,21 @@ namespace Azure.Core
         public long WriteTo(System.IO.Stream stream) { throw null; }
         public System.Threading.Tasks.Task<long> WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
-    public partial class ProtocolClientOptions : Azure.Core.ClientOptions
+}
+namespace Azure.Core.Pipeline
+{
+    public static partial class HttpPipelineExtensions
     {
-        public ProtocolClientOptions() { }
+        public static Azure.Core.HttpMessage CreateMessage(this Azure.Core.Pipeline.HttpPipeline pipeline, Azure.RequestOptions? options) { throw null; }
     }
-    public sealed partial class ResponseError
+}
+namespace Azure.Messaging
+{
+    public abstract partial class MessageWithMetadata
     {
-        public ResponseError(string? code, string? message, Azure.Core.ResponseInnerError? innerError, string? target, System.Collections.Generic.IReadOnlyList<Azure.Core.ResponseError>? details) { }
-        public string? Code { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Core.ResponseError> Details { get { throw null; } }
-        public Azure.Core.ResponseInnerError? InnerError { get { throw null; } }
-        public string? Message { get { throw null; } }
-        public string? Target { get { throw null; } }
-        public override string ToString() { throw null; }
-    }
-    public sealed partial class ResponseInnerError
-    {
-        internal ResponseInnerError() { }
-        public string? Code { get { throw null; } }
-        public Azure.Core.ResponseInnerError? InnerError { get { throw null; } }
-        public string? Message { get { throw null; } }
-        public override string ToString() { throw null; }
+        protected MessageWithMetadata() { }
+        public abstract string ContentType { get; set; }
+        public abstract System.BinaryData Data { get; set; }
+        public abstract bool IsReadOnly { get; }
     }
 }

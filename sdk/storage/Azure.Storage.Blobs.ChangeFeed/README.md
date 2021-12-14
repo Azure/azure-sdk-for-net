@@ -1,6 +1,6 @@
 # Azure Storage Blobs Change Feed client library for .NET
 
-> Server Version: 2020-04-8, 2020-02-10, 2019-12-12
+> Server Version: 2021-02-12, 2020-12-06, 2020-10-02, 2020-08-04, 2020-06-12 2020-04-08, 2020-02-10, and 2019-12-12
 
 The purpose of the change feed is to provide transaction logs of all the changes that occur to
 the blobs and the blob metadata in your storage account. The change feed provides ordered,
@@ -16,7 +16,7 @@ process change events that occur in your Blob Storage account at a low cost.
 
 Install the Azure Storage Blobs client library for .NET with [NuGet][nuget]:
 
-```Powershell
+```dotnetcli
 dotnet add package Azure.Storage.Blobs.ChangeFeed
 ```
 

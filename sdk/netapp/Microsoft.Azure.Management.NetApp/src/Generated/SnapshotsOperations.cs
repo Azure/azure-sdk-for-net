@@ -338,7 +338,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// The name of the volume
         /// </param>
         /// <param name='snapshotName'>
-        /// The name of the mount target
+        /// The name of the snapshot
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -619,7 +619,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// The name of the volume
         /// </param>
         /// <param name='snapshotName'>
-        /// The name of the mount target
+        /// The name of the snapshot
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -656,7 +656,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// The name of the volume
         /// </param>
         /// <param name='snapshotName'>
-        /// The name of the mount target
+        /// The name of the snapshot
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -690,7 +690,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// The name of the volume
         /// </param>
         /// <param name='snapshotName'>
-        /// The name of the mount target
+        /// The name of the snapshot
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -727,7 +727,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// The name of the volume
         /// </param>
         /// <param name='snapshotName'>
-        /// The name of the mount target
+        /// The name of the snapshot
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1023,7 +1023,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// The name of the volume
         /// </param>
         /// <param name='snapshotName'>
-        /// The name of the mount target
+        /// The name of the snapshot
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1312,7 +1312,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// The name of the volume
         /// </param>
         /// <param name='snapshotName'>
-        /// The name of the mount target
+        /// The name of the snapshot
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

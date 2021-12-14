@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Language.QuestionAnswering.Models
+namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary> Human-readable error code. </summary>
     internal readonly partial struct InnerErrorCode : IEquatable<InnerErrorCode>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="InnerErrorCode"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="InnerErrorCode"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InnerErrorCode(string value)
         {

@@ -16,6 +16,7 @@ param (
 )
 
 $ErrorActionPreference = 'Stop'
+$Env:NODE_OPTIONS = "--max-old-space-size=8192"
 Set-StrictMode -Version 1
 
 [string[]] $errors = @()

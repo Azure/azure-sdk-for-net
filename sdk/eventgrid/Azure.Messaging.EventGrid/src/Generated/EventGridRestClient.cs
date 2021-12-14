@@ -29,12 +29,7 @@ namespace Azure.Messaging.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public EventGridRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string apiVersion = "2018-01-01")
         {
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
-
-            this.apiVersion = apiVersion;
+            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }

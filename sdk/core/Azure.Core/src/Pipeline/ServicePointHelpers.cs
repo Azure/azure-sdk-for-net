@@ -90,6 +90,11 @@ namespace Azure.Core.Pipeline
                 // Some platforms might throw NotSupportedException
                 // when accessing handler options
             }
+            catch (NotImplementedException)
+            {
+                // Some platforms (like Unity) might throw NotImplementedException
+                // when accessing handler options
+            }
         }
     }
 }

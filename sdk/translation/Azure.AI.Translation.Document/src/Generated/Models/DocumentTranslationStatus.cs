@@ -15,7 +15,7 @@ namespace Azure.AI.Translation.Document
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="DocumentTranslationStatus"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentTranslationStatus"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DocumentTranslationStatus(string value)
         {
@@ -26,8 +26,8 @@ namespace Azure.AI.Translation.Document
         private const string RunningValue = "Running";
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
-        private const string CancelledValue = "Cancelled";
-        private const string CancellingValue = "Cancelling";
+        private const string CanceledValue = "Cancelled";
+        private const string CancelingValue = "Cancelling";
         private const string ValidationFailedValue = "ValidationFailed";
 
         /// <summary> NotStarted. </summary>
@@ -38,10 +38,6 @@ namespace Azure.AI.Translation.Document
         public static DocumentTranslationStatus Succeeded { get; } = new DocumentTranslationStatus(SucceededValue);
         /// <summary> Failed. </summary>
         public static DocumentTranslationStatus Failed { get; } = new DocumentTranslationStatus(FailedValue);
-        /// <summary> Cancelled. </summary>
-        public static DocumentTranslationStatus Cancelled { get; } = new DocumentTranslationStatus(CancelledValue);
-        /// <summary> Cancelling. </summary>
-        public static DocumentTranslationStatus Cancelling { get; } = new DocumentTranslationStatus(CancellingValue);
         /// <summary> ValidationFailed. </summary>
         public static DocumentTranslationStatus ValidationFailed { get; } = new DocumentTranslationStatus(ValidationFailedValue);
         /// <summary> Determines if two <see cref="DocumentTranslationStatus"/> values are the same. </summary>

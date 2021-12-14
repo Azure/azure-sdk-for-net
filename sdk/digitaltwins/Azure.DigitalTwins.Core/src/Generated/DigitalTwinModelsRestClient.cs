@@ -31,14 +31,8 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public DigitalTwinModelsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-10-31")
         {
-            endpoint ??= new Uri("https://digitaltwins-name.digitaltwins.azure.net");
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
-
-            this.endpoint = endpoint;
-            this.apiVersion = apiVersion;
+            this.endpoint = endpoint ?? new Uri("https://digitaltwins-name.digitaltwins.azure.net");
+            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -155,7 +149,10 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath("/models", false);
             if (dependenciesFor != null)
             {
-                uri.AppendQueryDelimited("dependenciesFor", dependenciesFor, ",", true);
+                foreach (var param in dependenciesFor)
+                {
+                    uri.AppendQuery("dependenciesFor", param, true);
+                }
             }
             if (includeModelDefinition != null)
             {

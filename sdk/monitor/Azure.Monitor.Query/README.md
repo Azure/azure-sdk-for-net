@@ -1,39 +1,68 @@
 # Azure Monitor Query client library for .NET
 
-The `Azure.Monitor.Query` package provides the ability to query the following Azure Monitor data sources:
+The Azure Monitor Query client library is used to execute read-only queries against [Azure Monitor][azure_monitor_overview]'s two data platforms:
 
-- [Azure Monitor Logs](https://docs.microsoft.com/azure/azure-monitor/logs/data-platform-logs) - Collects and organizes log and performance data from monitored resources. Data from different sources such as platform logs from Azure services, log and performance data from virtual machines agents, and usage and performance data from apps can be consolidated into a single workspace. The various data types can be analyzed together using the [Kusto Query Language](https://docs.microsoft.com/azure/data-explorer/kusto/query).
-- [Azure Monitor Metrics](https://docs.microsoft.com/azure/azure-monitor/essentials/data-platform-metrics) - Collects numeric data from monitored resources into a time series database. Metrics are numerical values that are collected at regular intervals and describe some aspect of a system at a particular time. Metrics in Azure Monitor are lightweight and capable of supporting near real-time scenarios, making them particularly useful for alerting and fast detection of issues.
+- [Logs](https://docs.microsoft.com/azure/azure-monitor/logs/data-platform-logs) - Collects and organizes log and performance data from monitored resources. Data from different sources such as platform logs from Azure services, log and performance data from virtual machines agents, and usage and performance data from apps can be consolidated into a single [Azure Log Analytics workspace](https://docs.microsoft.com/azure/azure-monitor/logs/data-platform-logs#log-analytics-and-workspaces). The various data types can be analyzed together using the [Kusto Query Language][kusto_query_language].
+- [Metrics](https://docs.microsoft.com/azure/azure-monitor/essentials/data-platform-metrics) - Collects numeric data from monitored resources into a time series database. Metrics are numerical values that are collected at regular intervals and describe some aspect of a system at a particular time. Metrics are lightweight and capable of supporting near real-time scenarios, making them particularly useful for alerting and fast detection of issues.
 
-[Source code][query_client_src] | [Package (NuGet)][query_client_nuget_package]
+**Resources:**
+
+- [Source code][source]
+- [Package (NuGet)][package]
+- [API reference documentation][msdocs_apiref]
+- [Service documentation][azure_monitor_overview]
+- [Change log][changelog]
 
 ## Getting started
 
-### Install the package
-
-Install the Azure Monitor Query client library for .NET with [NuGet][query_client_nuget_package]:
-
-```
-dotnet add package Azure.Monitor.Query --prerelease
-```
-
 ### Prerequisites
 
-- An [Azure subscription][azure_sub].
-- To query logs, you need an existing Log Analytics workspace. You can create it with one of the following approaches:
-  - [Azure Portal](https://docs.microsoft.com/azure/azure-monitor/logs/quick-create-workspace)
-  - [Azure CLI](https://docs.microsoft.com/azure/azure-monitor/logs/quick-create-workspace-cli)
-  - [PowerShell](https://docs.microsoft.com/azure/azure-monitor/logs/powershell-workspace-configuration)
-- To query metrics, all you need is an Azure resource of any kind (Storage Account, Key Vault, Cosmos DB, etc.).
+- An [Azure subscription][azure_subscription]
+- To query Logs, you need an [Azure Log Analytics workspace][azure_monitor_create_using_portal].
+- To query Metrics, you need an Azure resource of any kind (Storage Account, Key Vault, Cosmos DB, etc.).
+
+### Install the package
+
+Install the Azure Monitor Query client library for .NET with [NuGet][package]:
+
+```dotnetcli
+dotnet add package Azure.Monitor.Query
+```
 
 ### Authenticate the client
 
-To interact with the Azure Monitor service, create an instance of a [TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) class. Pass it to the constructor of your `LogsQueryClient` or `MetricsQueryClient` class.
+An authenticated client is required to query Logs or Metrics. To authenticate, create an instance of a [TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) class. Pass it to the constructor of your `LogsQueryClient` or `MetricsQueryClient` class.
+
+To authenticate, the following examples use `DefaultAzureCredential` from the [Azure.Identity](https://www.nuget.org/packages/Azure.Identity) package:
+
+```C# Snippet:CreateLogsClient
+var client = new LogsQueryClient(new DefaultAzureCredential());
+```
+
+```C# Snippet:CreateMetricsClient
+var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
+```
+
+### Execute the query
+
+For examples of Logs and Metrics queries, see the [Examples](#examples) section.
 
 ## Key concepts
 
-- `LogsQueryClient` - Client that provides methods to query logs from Azure Monitor Logs.
-- `MetricsQueryClient` - Client that provides methods to query metrics from Azure Monitor Metrics.
+### Logs query rate limits and throttling
+
+The Log Analytics service applies throttling when the request rate is too high. Limits, such as the maximum number of rows returned, are also applied on the Kusto queries. For more information, see [Rate and query limits](https://dev.loganalytics.io/documentation/Using-the-API/Limits).
+
+### Metrics data structure
+
+Each set of metric values is a time series with the following characteristics:
+
+- The time the value was collected
+- The resource associated with the value
+- A namespace that acts like a category for the metric
+- A metric name
+- The value itself
+- Some metrics may have multiple dimensions as described in multi-dimensional metrics. Custom metrics can have up to 10 dimensions.
 
 ### Thread safety
 
@@ -53,27 +82,31 @@ All client instance methods are thread-safe and independent of each other ([guid
 
 ## Examples
 
-- [Query logs](#query-logs)
-- [Query logs as model](#query-logs-as-model)
-- [Query logs as primitive](#query-logs-as-primitive)
-- [Batch query](#batch-query)
-- [Query dynamic table](#query-dynamic-table)
-- [Increase query timeout](#increase-query-timeout)
-- [Query metrics](#query-metrics)
+- [Logs query](#logs-query)
+  - [Handle logs query response](#handle-logs-query-response)
+  - [Map logs query results to a model](#map-logs-query-results-to-a-model)
+  - [Map logs query results to a primitive](#map-logs-query-results-to-a-primitive)
+  - [Print logs query results as a table](#print-logs-query-results-as-a-table)
+- [Batch logs query](#batch-logs-query)
+- [Advanced logs query scenarios](#advanced-logs-query-scenarios)
+  - [Set logs query timeout](#set-logs-query-timeout)
+  - [Query multiple workspaces](#query-multiple-workspaces)
+- [Metrics query](#metrics-query)
+  - [Handle metrics query response](#handle-metrics-query-response)
 
-### Query logs
+### Logs query
 
-You can query logs using the `LogsQueryClient.QueryAsync` method. The result is returned as a table with a collection of rows:
+You can query logs using the `LogsQueryClient.QueryWorkspaceAsync` method. The result is returned as a table with a collection of rows:
 
 ```C# Snippet:QueryLogsAsTable
 string workspaceId = "<workspace_id>";
 var client = new LogsQueryClient(new DefaultAzureCredential());
-Response<LogsQueryResult> response = await client.QueryAsync(
+Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
     workspaceId,
     "AzureActivity | top 10 by TimeGenerated",
-    new DateTimeRange(TimeSpan.FromDays(1)));
+    new QueryTimeRange(TimeSpan.FromDays(1)));
 
-LogsQueryResultTable table = response.Value.PrimaryTable;
+LogsTable table = response.Value.Table;
 
 foreach (var row in table.Rows)
 {
@@ -81,9 +114,27 @@ foreach (var row in table.Rows)
 }
 ```
 
-### Query logs as model
+#### Handle logs query response
 
-You can map query results to a model using the `LogsQueryClient.QueryAsync<T>` method.
+The `QueryWorkspace` method returns the `LogsQueryResult`, while the `QueryBatch` method returns the `LogsBatchQueryResult`. Here's a hierarchy of the response:
+
+```
+LogsQueryResult
+|---Error
+|---Status
+|---Table
+    |---Name
+    |---Columns (list of `LogsTableColumn` objects)
+        |---Name
+        |---Type
+    |---Rows (list of `LogsTableRows` objects)
+        |---Count
+|---AllTables (list of `LogsTable` objects)    
+```
+
+#### Map logs query results to a model
+
+You can map logs query results to a model using the `LogsQueryClient.QueryWorkspaceAsync<T>` method.
 
 ```C# Snippet:QueryLogsAsModelsModel
 public class MyLogEntryModel
@@ -94,14 +145,14 @@ public class MyLogEntryModel
 ```
 
 ```C# Snippet:QueryLogsAsModels
-var client = new LogsQueryClient(TestEnvironment.LogsEndpoint, new DefaultAzureCredential());
+var client = new LogsQueryClient(new DefaultAzureCredential());
 string workspaceId = "<workspace_id>";
 
 // Query TOP 10 resource groups by event count
-Response<IReadOnlyList<MyLogEntryModel>> response = await client.QueryAsync<MyLogEntryModel>(
+Response<IReadOnlyList<MyLogEntryModel>> response = await client.QueryWorkspaceAsync<MyLogEntryModel>(
     workspaceId,
     "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count",
-    new DateTimeRange(TimeSpan.FromDays(1)));
+    new QueryTimeRange(TimeSpan.FromDays(1)));
 
 foreach (var logEntryModel in response.Value)
 {
@@ -109,9 +160,9 @@ foreach (var logEntryModel in response.Value)
 }
 ```
 
-### Query logs as primitive
+#### Map logs query results to a primitive
 
-If your query returns a single column (or a single value) of a primitive type, use the `LogsQueryClient.QueryAsync<T>` overload to deserialize it:
+If your query returns a single column (or a single value) of a primitive type, use the `LogsQueryClient.QueryWorkspaceAsync<T>` overload to deserialize it:
 
 ```C# Snippet:QueryLogsAsPrimitive
 string workspaceId = "<workspace_id>";
@@ -119,10 +170,10 @@ string workspaceId = "<workspace_id>";
 var client = new LogsQueryClient(new DefaultAzureCredential());
 
 // Query TOP 10 resource groups by event count
-Response<IReadOnlyList<string>> response = await client.QueryAsync<string>(
+Response<IReadOnlyList<string>> response = await client.QueryWorkspaceAsync<string>(
     workspaceId,
     "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup",
-    new DateTimeRange(TimeSpan.FromDays(1)));
+    new QueryTimeRange(TimeSpan.FromDays(1)));
 
 foreach (var resourceGroup in response.Value)
 {
@@ -130,41 +181,7 @@ foreach (var resourceGroup in response.Value)
 }
 ```
 
-### Batch query
-
-You can execute multiple queries in a single request using the `LogsQueryClient.CreateBatchQuery` method:
-
-```C# Snippet:BatchQuery
-string workspaceId = "<workspace_id>";
-
-var client = new LogsQueryClient(new DefaultAzureCredential());
-
-// Query TOP 10 resource groups by event count
-// And total event count
-var batch = new LogsBatchQuery();
-
-string countQueryId = batch.AddQuery(
-    workspaceId,
-    "AzureActivity | count",
-    new DateTimeRange(TimeSpan.FromDays(1)));
-string topQueryId = batch.AddQuery(
-    workspaceId,
-    "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count",
-    new DateTimeRange(TimeSpan.FromDays(1)));
-
-Response<LogsBatchQueryResults> response = await client.QueryBatchAsync(batch);
-
-var count = response.Value.GetResult<int>(countQueryId).Single();
-var topEntries = response.Value.GetResult<MyLogEntryModel>(topQueryId);
-
-Console.WriteLine($"AzureActivity has total {count} events");
-foreach (var logEntryModel in topEntries)
-{
-    Console.WriteLine($"{logEntryModel.ResourceGroup} had {logEntryModel.Count} events");
-}
-```
-
-### Query dynamic table
+#### Print logs query results as a table
 
 You can also dynamically inspect the list of columns. The following example prints the query result as a table:
 
@@ -172,12 +189,12 @@ You can also dynamically inspect the list of columns. The following example prin
 string workspaceId = "<workspace_id>";
 
 var client = new LogsQueryClient(new DefaultAzureCredential());
-Response<LogsQueryResult> response = await client.QueryAsync(
+Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
     workspaceId,
     "AzureActivity | top 10 by TimeGenerated",
-    new DateTimeRange(TimeSpan.FromDays(1)));
+    new QueryTimeRange(TimeSpan.FromDays(1)));
 
-LogsQueryResultTable table = response.Value.PrimaryTable;
+LogsTable table = response.Value.Table;
 
 foreach (var column in table.Columns)
 {
@@ -198,9 +215,45 @@ foreach (var row in table.Rows)
 }
 ```
 
-### Increase query timeout
+### Batch logs query
 
-Some Logs queries take longer than 3 minutes to execute. The default server timeout is 3 minutes. You can increase the server timeout to a maximum of 10 minutes. In the following example, the `LogsQueryOptions` object's `ServerTimeout` property is used to set the server timeout to 10 minutes:
+You can execute multiple logs queries in a single request using the `LogsQueryClient.QueryBatchAsync` method:
+
+```C# Snippet:BatchQuery
+string workspaceId = "<workspace_id>";
+
+var client = new LogsQueryClient(new DefaultAzureCredential());
+
+// Query TOP 10 resource groups by event count
+// And total event count
+var batch = new LogsBatchQuery();
+
+string countQueryId = batch.AddWorkspaceQuery(
+    workspaceId,
+    "AzureActivity | count",
+    new QueryTimeRange(TimeSpan.FromDays(1)));
+string topQueryId = batch.AddWorkspaceQuery(
+    workspaceId,
+    "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count",
+    new QueryTimeRange(TimeSpan.FromDays(1)));
+
+Response<LogsBatchQueryResultCollection> response = await client.QueryBatchAsync(batch);
+
+var count = response.Value.GetResult<int>(countQueryId).Single();
+var topEntries = response.Value.GetResult<MyLogEntryModel>(topQueryId);
+
+Console.WriteLine($"AzureActivity has total {count} events");
+foreach (var logEntryModel in topEntries)
+{
+    Console.WriteLine($"{logEntryModel.ResourceGroup} had {logEntryModel.Count} events");
+}
+```
+
+### Advanced logs query scenarios
+
+#### Set logs query timeout
+
+Some logs queries take longer than 3 minutes to execute. The default server timeout is 3 minutes. You can increase the server timeout to a maximum of 10 minutes. In the following example, the `LogsQueryOptions` object's `ServerTimeout` property is used to set the server timeout to 10 minutes:
 
 ```C# Snippet:QueryLogsWithTimeout
 string workspaceId = "<workspace_id>";
@@ -208,10 +261,10 @@ string workspaceId = "<workspace_id>";
 var client = new LogsQueryClient(new DefaultAzureCredential());
 
 // Query TOP 10 resource groups by event count
-Response<IReadOnlyList<int>> response = await client.QueryAsync<int>(
+Response<IReadOnlyList<int>> response = await client.QueryWorkspaceAsync<int>(
     workspaceId,
     "AzureActivity | summarize count()",
-    new DateTimeRange(TimeSpan.FromDays(1)),
+    new QueryTimeRange(TimeSpan.FromDays(1)),
     options: new LogsQueryOptions
     {
         ServerTimeout = TimeSpan.FromMinutes(10)
@@ -223,9 +276,35 @@ foreach (var resourceGroup in response.Value)
 }
 ```
 
-### Query metrics
+#### Query multiple workspaces
 
-You can query metrics using the `MetricsQueryClient.QueryAsync` method. For every requested metric, a set of aggregated values is returned inside the `TimeSeries` collection.
+To run the same logs query against multiple workspaces, use the `LogsQueryOptions.AdditionalWorkspaces` property:
+
+```C# Snippet:QueryLogsWithAdditionalWorkspace
+string workspaceId = "<workspace_id>";
+string additionalWorkspaceId = "<additional_workspace_id>";
+
+var client = new LogsQueryClient(new DefaultAzureCredential());
+
+// Query TOP 10 resource groups by event count
+Response<IReadOnlyList<int>> response = await client.QueryWorkspaceAsync<int>(
+    workspaceId,
+    "AzureActivity | summarize count()",
+    new QueryTimeRange(TimeSpan.FromDays(1)),
+    options: new LogsQueryOptions
+    {
+        AdditionalWorkspaces = { additionalWorkspaceId }
+    });
+
+foreach (var resourceGroup in response.Value)
+{
+    Console.WriteLine(resourceGroup);
+}
+```
+
+### Metrics query
+
+You can query metrics using the `MetricsQueryClient.QueryResourceAsync` method. For every requested metric, a set of aggregated values is returned inside the `TimeSeries` collection.
 
 A resource ID is required to query metrics. To find the resource ID:
 
@@ -235,11 +314,11 @@ A resource ID is required to query metrics. To find the resource ID:
 
 ```C# Snippet:QueryMetrics
 string resourceId =
-    "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.OperationalInsights/workspaces/<workspace_name>";
+    "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/<resource_provider>/<resource>";
 
 var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
 
-Response<MetricQueryResult> results = await metricsClient.QueryAsync(
+Response<MetricsQueryResult> results = await metricsClient.QueryResourceAsync(
     resourceId,
     new[] {"Microsoft.OperationalInsights/workspaces"}
 );
@@ -251,12 +330,37 @@ foreach (var metric in results.Value.Metrics)
     {
         Console.WriteLine("Dimensions: " + string.Join(",", element.Metadata));
 
-        foreach (var metricValue in element.Data)
+        foreach (var metricValue in element.Values)
         {
             Console.WriteLine(metricValue);
         }
     }
 }
+```
+
+#### Handle metrics query response
+	
+The metrics query API returns a `MetricsQueryResult` object. The `MetricsQueryResult` object contains properties such as a list of `MetricResult`-typed objects, `Cost`, `Namespace`, `ResourceRegion`, `TimeSpan`, and `Interval`. The `MetricResult` objects list can be accessed using the `metrics` param. Each `MetricResult` object in this list contains a list of `MetricTimeSeriesElement` objects. Each `MetricTimeSeriesElement` object contains `Metadata` and `Values` properties.
+
+Here's a hierarchy of the response:
+
+```
+MetricsQueryResult
+|---Cost
+|---Granularity
+|---Namespace
+|---ResourceRegion
+|---TimeSpan
+|---Metrics (list of `MetricResult` objects)
+    |---Id
+    |---ResourceType
+    |---Name
+    |---Description
+    |---Error
+    |---Unit
+    |---TimeSeries (list of `MetricTimeSeriesElement` objects)
+        |---Metadata
+        |---Values
 ```
 
 ## Troubleshooting
@@ -274,8 +378,8 @@ var client = new LogsQueryClient(new DefaultAzureCredential());
 
 try
 {
-    await client.QueryAsync(
-        workspaceId, "My Not So Valid Query", new DateTimeRange(TimeSpan.FromDays(1)));
+    await client.QueryWorkspaceAsync(
+        workspaceId, "My Not So Valid Query", new QueryTimeRange(TimeSpan.FromDays(1)));
 }
 catch (Exception e)
 {
@@ -283,7 +387,7 @@ catch (Exception e)
 }
 ```
 
-The exception also contains some additional information like the full error content.
+The exception also contains some additional information like the full error content:
 
 ```
 Azure.RequestFailedException : The request had some invalid properties
@@ -294,7 +398,7 @@ Content:
 {"error":{"message":"The request had some invalid properties","code":"BadArgumentError","correlationId":"34f5f93a-6007-48a4-904f-487ca4e62a82","innererror":{"code":"SyntaxError","message":"A recognition error occurred in the query.","innererror":{"code":"SYN0002","message":"Query could not be parsed at 'Not' on line [1,3]","line":1,"pos":3,"token":"Not"}}}}
 ```
 
-### Setting up console logging
+### Set up console logging
 
 The simplest way to see the logs is to enable the console logging. To create an Azure SDK log listener that outputs messages to the console, use the [AzureEventSourceListener.CreateConsoleLogger](https://docs.microsoft.com/dotnet/api/azure.core.diagnostics.azureeventsourcelistener.createconsolelogger?view=azure-dotnet) method:
 
@@ -307,21 +411,28 @@ To learn more about other logging mechanisms, see [here][logging].
 
 ## Next steps
 
+To learn more about Azure Monitor, see the [Azure Monitor service documentation][azure_monitor_overview].
+
 ## Contributing
 
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
 
 This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For more information see the [Code of Conduct FAQ][coc_faq] or contact [opencode@microsoft.com][coc_contact] with any additional questions or comments.
 
-[query_client_src]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/src
-[query_client_nuget_package]: https://www.nuget.org/packages?q=Azure.Monitor.Query
+[azure_monitor_create_using_portal]: https://docs.microsoft.com/azure/azure-monitor/logs/quick-create-workspace
+[azure_monitor_overview]: https://docs.microsoft.com/azure/azure-monitor/overview
+[azure_subscription]: https://azure.microsoft.com/free/dotnet/
+[changelog]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/CHANGELOG.md
+[kusto_query_language]: https://docs.microsoft.com/azure/data-explorer/kusto/query/
+[logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
 [monitor_rest_api]: https://docs.microsoft.com/rest/api/monitor/
-[azure_cli]: https://docs.microsoft.com/cli/azure
-[azure_sub]: https://azure.microsoft.com/free/dotnet/
+[msdocs_apiref]: https://docs.microsoft.com/dotnet/api/overview/azure/monitor/query?view=azure-dotnet
+[package]: https://www.nuget.org/packages/Azure.Monitor.Query
+[source]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/src
+
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
-[logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fmonitor%2FAzure.Monitor.Query%2FREADME.png)

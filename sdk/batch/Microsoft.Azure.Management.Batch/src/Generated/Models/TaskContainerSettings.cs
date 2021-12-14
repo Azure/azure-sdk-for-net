@@ -110,10 +110,6 @@ namespace Microsoft.Azure.Management.Batch.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ImageName");
             }
-            if (Registry != null)
-            {
-                Registry.Validate();
-            }
         }
     }
 }

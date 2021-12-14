@@ -17,6 +17,13 @@ namespace Azure.Storage.Test.Shared
         private const string CopySourceName = "x-ms-copy-source";
         private const string RenameSource = "x-ms-rename-source";
         private const string CopySourceAuthorization = "x-ms-copy-source-authorization";
+        private const string PreviousSnapshotUrl = "x-ms-previous-snapshot-url";
+        private const string FileRenameSource = "x-ms-file-rename-source";
+
+        public StorageRecordedTestSanitizer()
+        {
+            SanitizedHeaders.Add("x-ms-encryption-key");
+        }
 
         public override string SanitizeUri(string uri)
         {
@@ -27,7 +34,7 @@ namespace Azure.Storage.Test.Shared
                 query[SignatureQueryName] = SanitizeValue;
                 builder.Query = query.ToString();
             }
-            return builder.Uri.ToString();
+            return builder.Uri.AbsoluteUri;
         }
 
         public string SanitizeQueryParameters(string queryParameters)
@@ -60,6 +67,16 @@ namespace Azure.Storage.Test.Shared
             if (headers.TryGetValue(RenameSource, out var renameSource))
             {
                 headers[RenameSource] = renameSource.Select(c => SanitizeQueryParameters(c)).ToArray();
+            }
+
+            if (headers.TryGetValue(PreviousSnapshotUrl, out var snapshotUri))
+            {
+                headers[PreviousSnapshotUrl] = snapshotUri.Select(c => SanitizeUri(c)).ToArray();
+            }
+
+            if (headers.TryGetValue(FileRenameSource, out var fileRenameSource))
+            {
+                headers[FileRenameSource] = fileRenameSource.Select(c => SanitizeQueryParameters(c)).ToArray();
             }
         }
 

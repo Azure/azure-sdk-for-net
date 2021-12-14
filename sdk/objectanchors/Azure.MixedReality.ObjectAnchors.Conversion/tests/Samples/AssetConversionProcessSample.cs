@@ -80,6 +80,13 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests.Samples
 
             AssetConversionOperation operation = new AssetConversionOperation(jobId, client);
 
+            await operation.WaitForCompletionAsync();
+
+            if (!operation.HasCompletedSuccessfully)
+            {
+                throw new Exception("The asset conversion operation completed with an unsuccessful status");
+            }
+
             string localFileDownloadPath = modelDownloadLocalFilePath;
 
             BlobClient downloadBlobClient = new BlobClient(operation.Value.OutputModelUri, new BlobClientOptions());

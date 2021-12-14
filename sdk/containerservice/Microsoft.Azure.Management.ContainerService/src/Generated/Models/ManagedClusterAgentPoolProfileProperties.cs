@@ -58,6 +58,8 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// auto-scaling</param>
         /// <param name="enableAutoScaling">Whether to enable
         /// auto-scaler</param>
+        /// <param name="scaleDownMode">The scale down mode to use when scaling
+        /// the Agent Pool.</param>
         /// <param name="type">Possible values include:
         /// 'VirtualMachineScaleSets', 'AvailabilitySet'</param>
         /// <param name="mode">Possible values include: 'System',
@@ -106,7 +108,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// <param name="gpuInstanceProfile">GPUInstanceProfile to be used to
         /// specify GPU MIG instance profile for supported GPU VM SKU. Possible
         /// values include: 'MIG1g', 'MIG2g', 'MIG3g', 'MIG4g', 'MIG7g'</param>
-        public ManagedClusterAgentPoolProfileProperties(int? count = default(int?), string vmSize = default(string), int? osDiskSizeGB = default(int?), string osDiskType = default(string), string kubeletDiskType = default(string), string vnetSubnetID = default(string), string podSubnetID = default(string), int? maxPods = default(int?), string osType = default(string), string osSKU = default(string), int? maxCount = default(int?), int? minCount = default(int?), bool? enableAutoScaling = default(bool?), string type = default(string), string mode = default(string), string orchestratorVersion = default(string), string nodeImageVersion = default(string), AgentPoolUpgradeSettings upgradeSettings = default(AgentPoolUpgradeSettings), string provisioningState = default(string), PowerState powerState = default(PowerState), IList<string> availabilityZones = default(IList<string>), bool? enableNodePublicIP = default(bool?), string nodePublicIPPrefixID = default(string), string scaleSetPriority = default(string), string scaleSetEvictionPolicy = default(string), double? spotMaxPrice = default(double?), IDictionary<string, string> tags = default(IDictionary<string, string>), IDictionary<string, string> nodeLabels = default(IDictionary<string, string>), IList<string> nodeTaints = default(IList<string>), string proximityPlacementGroupID = default(string), KubeletConfig kubeletConfig = default(KubeletConfig), LinuxOSConfig linuxOSConfig = default(LinuxOSConfig), bool? enableEncryptionAtHost = default(bool?), bool? enableUltraSSD = default(bool?), bool? enableFIPS = default(bool?), string gpuInstanceProfile = default(string))
+        public ManagedClusterAgentPoolProfileProperties(int? count = default(int?), string vmSize = default(string), int? osDiskSizeGB = default(int?), string osDiskType = default(string), string kubeletDiskType = default(string), string vnetSubnetID = default(string), string podSubnetID = default(string), int? maxPods = default(int?), string osType = default(string), string osSKU = default(string), int? maxCount = default(int?), int? minCount = default(int?), bool? enableAutoScaling = default(bool?), string scaleDownMode = default(string), string type = default(string), string mode = default(string), string orchestratorVersion = default(string), string nodeImageVersion = default(string), AgentPoolUpgradeSettings upgradeSettings = default(AgentPoolUpgradeSettings), string provisioningState = default(string), PowerState powerState = default(PowerState), IList<string> availabilityZones = default(IList<string>), bool? enableNodePublicIP = default(bool?), string nodePublicIPPrefixID = default(string), string scaleSetPriority = default(string), string scaleSetEvictionPolicy = default(string), double? spotMaxPrice = default(double?), IDictionary<string, string> tags = default(IDictionary<string, string>), IDictionary<string, string> nodeLabels = default(IDictionary<string, string>), IList<string> nodeTaints = default(IList<string>), string proximityPlacementGroupID = default(string), KubeletConfig kubeletConfig = default(KubeletConfig), LinuxOSConfig linuxOSConfig = default(LinuxOSConfig), bool? enableEncryptionAtHost = default(bool?), bool? enableUltraSSD = default(bool?), bool? enableFIPS = default(bool?), string gpuInstanceProfile = default(string))
         {
             Count = count;
             VmSize = vmSize;
@@ -121,6 +123,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
             MaxCount = maxCount;
             MinCount = minCount;
             EnableAutoScaling = enableAutoScaling;
+            ScaleDownMode = scaleDownMode;
             Type = type;
             Mode = mode;
             OrchestratorVersion = orchestratorVersion;
@@ -250,6 +253,18 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// </summary>
         [JsonProperty(PropertyName = "enableAutoScaling")]
         public bool? EnableAutoScaling { get; set; }
+
+        /// <summary>
+        /// Gets or sets the scale down mode to use when scaling the Agent
+        /// Pool.
+        /// </summary>
+        /// <remarks>
+        /// This also effects the cluster autoscaler behavior. If not
+        /// specified, it defaults to Delete. Possible values include:
+        /// 'Delete', 'Deallocate'
+        /// </remarks>
+        [JsonProperty(PropertyName = "scaleDownMode")]
+        public string ScaleDownMode { get; set; }
 
         /// <summary>
         /// Gets or sets possible values include: 'VirtualMachineScaleSets',

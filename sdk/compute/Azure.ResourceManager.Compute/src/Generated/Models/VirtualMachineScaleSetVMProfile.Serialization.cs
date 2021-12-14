@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("networkProfile");
                 writer.WriteObjectValue(NetworkProfile);
             }
+            if (Optional.IsDefined(SecurityProfile))
+            {
+                writer.WritePropertyName("securityProfile");
+                writer.WriteObjectValue(SecurityProfile);
+            }
             if (Optional.IsDefined(DiagnosticsProfile))
             {
                 writer.WritePropertyName("diagnosticsProfile");
@@ -65,6 +70,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("scheduledEventsProfile");
                 writer.WriteObjectValue(ScheduledEventsProfile);
             }
+            if (Optional.IsDefined(UserData))
+            {
+                writer.WritePropertyName("userData");
+                writer.WriteStringValue(UserData);
+            }
             writer.WriteEndObject();
         }
 
@@ -73,6 +83,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<VirtualMachineScaleSetOSProfile> osProfile = default;
             Optional<VirtualMachineScaleSetStorageProfile> storageProfile = default;
             Optional<VirtualMachineScaleSetNetworkProfile> networkProfile = default;
+            Optional<SecurityProfile> securityProfile = default;
             Optional<DiagnosticsProfile> diagnosticsProfile = default;
             Optional<VirtualMachineScaleSetExtensionProfile> extensionProfile = default;
             Optional<string> licenseType = default;
@@ -80,6 +91,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<VirtualMachineEvictionPolicyTypes> evictionPolicy = default;
             Optional<BillingProfile> billingProfile = default;
             Optional<ScheduledEventsProfile> scheduledEventsProfile = default;
+            Optional<string> userData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osProfile"))
@@ -110,6 +122,16 @@ namespace Azure.ResourceManager.Compute.Models
                         continue;
                     }
                     networkProfile = VirtualMachineScaleSetNetworkProfile.DeserializeVirtualMachineScaleSetNetworkProfile(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("securityProfile"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    securityProfile = SecurityProfile.DeserializeSecurityProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("diagnosticsProfile"))
@@ -177,8 +199,13 @@ namespace Azure.ResourceManager.Compute.Models
                     scheduledEventsProfile = ScheduledEventsProfile.DeserializeScheduledEventsProfile(property.Value);
                     continue;
                 }
+                if (property.NameEquals("userData"))
+                {
+                    userData = property.Value.GetString();
+                    continue;
+                }
             }
-            return new VirtualMachineScaleSetVMProfile(osProfile.Value, storageProfile.Value, networkProfile.Value, diagnosticsProfile.Value, extensionProfile.Value, licenseType.Value, Optional.ToNullable(priority), Optional.ToNullable(evictionPolicy), billingProfile.Value, scheduledEventsProfile.Value);
+            return new VirtualMachineScaleSetVMProfile(osProfile.Value, storageProfile.Value, networkProfile.Value, securityProfile.Value, diagnosticsProfile.Value, extensionProfile.Value, licenseType.Value, Optional.ToNullable(priority), Optional.ToNullable(evictionPolicy), billingProfile.Value, scheduledEventsProfile.Value, userData.Value);
         }
     }
 }

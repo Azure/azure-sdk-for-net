@@ -109,11 +109,18 @@ else
 $releaseDateString = $ParsedReleaseDate.ToString("MM/dd/yyyy")
 $month = $ParsedReleaseDate.ToString("MMMM")
 
-Write-Host
 Write-Host "Assuming release is in $month with release date $releaseDateString" -ForegroundColor Green
+if (Test-Path "Function:GetExistingPackageVersions")
+{
+    $releasedVersions = GetExistingPackageVersions -PackageName $packageProperties.Name -GroupId $packageProperties.Group
+    if ($null -ne $releasedVersions -and $releasedVersions.Count -gt 0)
+    {
+      $latestReleasedVersion = $releasedVersions[$releasedVersions.Count - 1]
+      Write-Host "Latest released version: ${latestReleasedVersion}" -ForegroundColor Green
+    }
+}
 
 $currentProjectVersion = $packageProperties.Version
-
 $newVersion = Read-Host -Prompt "Input the new version, or press Enter to use use current project version '$currentProjectVersion'"
 
 if (!$newVersion)
@@ -173,8 +180,17 @@ if ($releaseTrackingOnly)
 
 if (Test-Path "Function:SetPackageVersion")
 {
-  SetPackageVersion -PackageName $packageProperties.Name -Version $newVersion -ServiceDirectory $packageProperties.ServiceDirectory -ReleaseDate $releaseDateString `
-    -PackageProperties $packageProperties
+  $replaceLatestEntryTitle = $true
+  $latestVersion = Get-LatestReleaseDateFromChangeLog -ChangeLogLocation $packageProperties.ChangeLogPath
+  if ($latestVersion)
+  {
+    $promptMessage = "The latest entry in the CHANGELOG.md already has a release date. Do you want to replace the latest entry title? Please enter (y or n)."
+    while (($readInput = Read-Host -Prompt $promptMessage) -notmatch '^[yn]$'){ }
+    $replaceLatestEntryTitle = ($readInput -eq "y")
+  }
+  SetPackageVersion -PackageName $packageProperties.Name -Version $newVersion `
+    -ServiceDirectory $packageProperties.ServiceDirectory -ReleaseDate $releaseDateString `
+    -PackageProperties $packageProperties -ReplaceLatestEntryTitle $replaceLatestEntryTitle
 }
 else
 {
@@ -182,6 +198,13 @@ else
     Make sure it is present in eng/scripts/Language-Settings.ps1.`
     See https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/common_engsys.md#code-structure"
   exit 1
+}
+
+$changelogIsValid = Confirm-ChangeLogEntry -ChangeLogLocation $packageProperties.ChangeLogPath -VersionString $newVersion -ForRelease $true -SantizeEntry
+
+if (!$changelogIsValid)
+{
+  Write-Warning "The changelog [$($packageProperties.ChangeLogPath)] is not valid for release. Please make sure it is valid before queuing release build."
 }
 
 git diff -s --exit-code $packageProperties.DirectoryPath

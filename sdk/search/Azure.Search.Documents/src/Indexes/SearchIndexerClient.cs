@@ -2,13 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using System.Collections.Generic;
-using System.Linq;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes
 {
@@ -17,15 +19,13 @@ namespace Azure.Search.Documents.Indexes
     /// indexes and documents, as well as manage other resources, on a Search
     /// Service.
     /// </summary>
-    public class SearchIndexerClient
+    public partial class SearchIndexerClient
     {
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SearchClientOptions.ServiceVersion _version;
 
-        private DataSourcesRestClient _dataSourcesClient;
         private IndexersRestClient _indexersClient;
-        private SkillsetsRestClient _skillsetsClient;
         private string _serviceName;
 
         /// <summary>
@@ -133,17 +133,6 @@ namespace Azure.Search.Documents.Indexes
             _serviceName ??= Endpoint.GetSearchServiceName();
 
         /// <summary>
-        /// Gets the generated <see cref="DataSourcesRestClient"/> to make requests.
-        /// </summary>
-        private DataSourcesRestClient DataSourcesClient => LazyInitializer.EnsureInitialized(ref _dataSourcesClient, () => new DataSourcesRestClient(
-            _clientDiagnostics,
-            _pipeline,
-            Endpoint.AbsoluteUri,
-            null,
-            _version.ToVersionString())
-        );
-
-        /// <summary>
         /// Gets the generated <see cref="IndexersRestClient"/> to make requests.
         /// </summary>
         private IndexersRestClient IndexersClient => LazyInitializer.EnsureInitialized(ref _indexersClient, () => new IndexersRestClient(
@@ -154,486 +143,6 @@ namespace Azure.Search.Documents.Indexes
             _version.ToVersionString())
         );
 
-        /// <summary>
-        /// Gets the generated <see cref="SkillsetsRestClient"/> to make requests.
-        /// </summary>
-        private SkillsetsRestClient SkillsetsClient => LazyInitializer.EnsureInitialized(ref _skillsetsClient, () => new SkillsetsRestClient(
-            _clientDiagnostics,
-            _pipeline,
-            Endpoint.AbsoluteUri,
-            null,
-            _version.ToVersionString())
-        );
-
-        #region Data Sources operations
-        /// <summary>
-        /// Creates a new data source connection.
-        /// </summary>
-        /// <param name="dataSourceConnection">Required. The <see cref="SearchIndexerDataSourceConnection"/> to create.</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>
-        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerDataSourceConnection"/> that was created.
-        /// This may differ slightly from what was passed in since the service may return back properties set to their default values.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnection"/> is null.</exception>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual Response<SearchIndexerDataSourceConnection> CreateDataSourceConnection(
-            SearchIndexerDataSourceConnection dataSourceConnection,
-            CancellationToken cancellationToken = default)
-        {
-            // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
-
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateDataSourceConnection)}");
-            scope.Start();
-            try
-            {
-                return DataSourcesClient.Create(
-                    dataSourceConnection,
-                    cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates a new data source connection.
-        /// </summary>
-        /// <param name="dataSourceConnection">Required. The <see cref="SearchIndexerDataSourceConnection"/> to create.</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>
-        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerDataSourceConnection"/> that was created.
-        /// This may differ slightly from what was passed in since the service may return back properties set to their default values.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnection"/> is null.</exception>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual async Task<Response<SearchIndexerDataSourceConnection>> CreateDataSourceConnectionAsync(
-            SearchIndexerDataSourceConnection dataSourceConnection,
-            CancellationToken cancellationToken = default)
-        {
-            // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
-
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateDataSourceConnection)}");
-            scope.Start();
-            try
-            {
-                return await DataSourcesClient.CreateAsync(
-                    dataSourceConnection,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates a new data source or updates an existing data source connection.
-        /// </summary>
-        /// <param name="dataSourceConnection">Required. The <see cref="SearchIndexerDataSourceConnection"/> to create or update.</param>
-        /// <param name="onlyIfUnchanged">
-        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerDataSourceConnection.ETag"/> does not match the current service version;
-        /// otherwise, the current service version will be overwritten.
-        /// </param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>
-        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerDataSourceConnection"/> that was created.
-        /// This may differ slightly from what was passed in since the service may return back properties set to their default values.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnection"/> is null.</exception>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual Response<SearchIndexerDataSourceConnection> CreateOrUpdateDataSourceConnection(
-            SearchIndexerDataSourceConnection dataSourceConnection,
-            bool onlyIfUnchanged = false,
-            CancellationToken cancellationToken = default)
-        {
-            // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
-
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateOrUpdateDataSourceConnection)}");
-            scope.Start();
-            try
-            {
-                return DataSourcesClient.CreateOrUpdate(
-                    dataSourceConnection?.Name,
-                    dataSourceConnection,
-                    onlyIfUnchanged ? dataSourceConnection?.ETag?.ToString() : null,
-                    null,
-                    cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates a new data source or updates an existing data source connection.
-        /// </summary>
-        /// <param name="dataSourceConnection">Required. The <see cref="SearchIndexerDataSourceConnection"/> to create or update.</param>
-        /// <param name="onlyIfUnchanged">
-        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerDataSourceConnection.ETag"/> does not match the current service version;
-        /// otherwise, the current service version will be overwritten.
-        /// </param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>
-        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerDataSourceConnection"/> that was created.
-        /// This may differ slightly from what was passed in since the service may return back properties set to their default values.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnection"/> is null.</exception>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual async Task<Response<SearchIndexerDataSourceConnection>> CreateOrUpdateDataSourceConnectionAsync(
-            SearchIndexerDataSourceConnection dataSourceConnection,
-            bool onlyIfUnchanged = false,
-            CancellationToken cancellationToken = default)
-        {
-            // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
-
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateOrUpdateDataSourceConnection)}");
-            scope.Start();
-            try
-            {
-                return await DataSourcesClient.CreateOrUpdateAsync(
-                    dataSourceConnection?.Name,
-                    dataSourceConnection,
-                    onlyIfUnchanged ? dataSourceConnection?.ETag?.ToString() : null,
-                    null,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes a data source connection.
-        /// </summary>
-        /// <param name="dataSourceConnectionName">The name of the <see cref="SearchIndexerDataSourceConnection"/> to delete.</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response"/> from the server.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnectionName"/> is null.</exception>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual Response DeleteDataSourceConnection(
-            string dataSourceConnectionName,
-            CancellationToken cancellationToken = default)
-        {
-            // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(dataSourceConnectionName, nameof(dataSourceConnectionName));
-
-            return DeleteDataSourceConnection(
-                dataSourceConnectionName,
-                null,
-                false,
-                cancellationToken);
-        }
-
-        /// <summary>
-        /// Deletes a data source connection.
-        /// </summary>
-        /// <param name="dataSourceConnectionName">The name of the <see cref="SearchIndexerDataSourceConnection"/> to delete.</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response"/> from the server.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnectionName"/> is null.</exception>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual async Task<Response> DeleteDataSourceConnectionAsync(
-            string dataSourceConnectionName,
-            CancellationToken cancellationToken = default)
-        {
-            // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(dataSourceConnectionName, nameof(dataSourceConnectionName));
-
-            return await DeleteDataSourceConnectionAsync(
-                dataSourceConnectionName,
-                null,
-                false,
-                cancellationToken)
-                .ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Deletes a data source connection.
-        /// </summary>
-        /// <param name="dataSourceConnection">The <see cref="SearchIndexerDataSourceConnection"/> to delete.</param>
-        /// <param name="onlyIfUnchanged">
-        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerDataSourceConnection.ETag"/> does not match the current service version;
-        /// otherwise, the current service version will be overwritten.
-        /// </param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response"/> from the server.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnection"/> is null.</exception>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual Response DeleteDataSourceConnection(
-            SearchIndexerDataSourceConnection dataSourceConnection,
-            bool onlyIfUnchanged = false,
-            CancellationToken cancellationToken = default)
-        {
-            // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
-
-            return DeleteDataSourceConnection(
-                dataSourceConnection?.Name,
-                dataSourceConnection?.ETag,
-                onlyIfUnchanged,
-                cancellationToken);
-        }
-
-        /// <summary>
-        /// Deletes a data source connection.
-        /// </summary>
-        /// <param name="dataSourceConnection">The <see cref="SearchIndexerDataSourceConnection"/> to delete.</param>
-        /// <param name="onlyIfUnchanged">
-        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerDataSourceConnection.ETag"/> does not match the current service version;
-        /// otherwise, the current service version will be overwritten.
-        /// </param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response"/> from the server.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnection"/> is null.</exception>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual async Task<Response> DeleteDataSourceConnectionAsync(
-            SearchIndexerDataSourceConnection dataSourceConnection,
-            bool onlyIfUnchanged = false,
-            CancellationToken cancellationToken = default)
-        {
-            // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
-
-            return await DeleteDataSourceConnectionAsync(
-                dataSourceConnection?.Name,
-                dataSourceConnection?.ETag,
-                onlyIfUnchanged,
-                cancellationToken)
-                .ConfigureAwait(false);
-        }
-
-        private Response DeleteDataSourceConnection(
-            string dataSourceConnectionName,
-            ETag? etag,
-            bool onlyIfUnchanged,
-            CancellationToken cancellationToken)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteDataSourceConnection)}");
-            scope.Start();
-            try
-            {
-                return DataSourcesClient.Delete(
-                    dataSourceConnectionName,
-                    onlyIfUnchanged ? etag?.ToString() : null,
-                    null,
-                    cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        private async Task<Response> DeleteDataSourceConnectionAsync(
-            string dataSourceConnectionName,
-            ETag? etag,
-            bool onlyIfUnchanged,
-            CancellationToken cancellationToken)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteDataSourceConnection)}");
-            scope.Start();
-            try
-            {
-                return await DataSourcesClient.DeleteAsync(
-                    dataSourceConnectionName,
-                    onlyIfUnchanged ? etag?.ToString() : null,
-                    null,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets a specific <see cref="SearchIndexerDataSourceConnection"/>.
-        /// </summary>
-        /// <param name="dataSourceConnectionName">Required. The name of the <see cref="SearchIndexerDataSourceConnection"/> to get.</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="SearchIndexerDataSourceConnection"/>.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnectionName"/> is null.</exception>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual Response<SearchIndexerDataSourceConnection> GetDataSourceConnection(
-            string dataSourceConnectionName,
-            CancellationToken cancellationToken = default)
-        {
-            // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(dataSourceConnectionName, nameof(dataSourceConnectionName));
-
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetDataSourceConnection)}");
-            scope.Start();
-            try
-            {
-                return DataSourcesClient.Get(
-                    dataSourceConnectionName,
-                    cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets a specific <see cref="SearchIndexerDataSourceConnection"/>.
-        /// </summary>
-        /// <param name="dataSourceConnectionName">Required. The name of the <see cref="SearchIndexerDataSourceConnection"/> to get.</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="SearchIndexerDataSourceConnection"/>.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnectionName"/> is null.</exception>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual async Task<Response<SearchIndexerDataSourceConnection>> GetDataSourceConnectionAsync(
-            string dataSourceConnectionName,
-            CancellationToken cancellationToken = default)
-        {
-            // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(dataSourceConnectionName, nameof(dataSourceConnectionName));
-
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetDataSourceConnection)}");
-            scope.Start();
-            try
-            {
-                return await DataSourcesClient.GetAsync(
-                    dataSourceConnectionName,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets a list of all data source connections.
-        /// </summary>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerDataSourceConnection"/>.</returns>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual Response<IReadOnlyList<SearchIndexerDataSourceConnection>> GetDataSourceConnections(
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetDataSourceConnections)}");
-            scope.Start();
-            try
-            {
-                Response<ListDataSourcesResult> result = DataSourcesClient.List(
-                    Constants.All,
-                    cancellationToken);
-
-                return Response.FromValue(result.Value.DataSources, result.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets a list of all data source connections.
-        /// </summary>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerDataSourceConnection"/>.</returns>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual async Task<Response<IReadOnlyList<SearchIndexerDataSourceConnection>>> GetDataSourceConnectionsAsync(
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetDataSourceConnections)}");
-            scope.Start();
-            try
-            {
-                Response<ListDataSourcesResult> result = await DataSourcesClient.ListAsync(
-                    Constants.All,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-
-                return Response.FromValue(result.Value.DataSources, result.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets a list of all data source connection names.
-        /// </summary>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerDataSourceConnection"/> names.</returns>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual Response<IReadOnlyList<string>> GetDataSourceConnectionNames(
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetDataSourceConnectionNames)}");
-            scope.Start();
-            try
-            {
-                Response<ListDataSourcesResult> result = DataSourcesClient.List(
-                    Constants.NameKey,
-                    cancellationToken);
-
-                IReadOnlyList<string> names = result.Value.DataSources.Select(value => value.Name).ToArray();
-                return Response.FromValue(names, result.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets a list of all data source connection names.
-        /// </summary>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerDataSourceConnection"/> names.</returns>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual async Task<Response<IReadOnlyList<string>>> GetDataSourceConnectionNamesAsync(
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetDataSourceConnectionNames)}");
-            scope.Start();
-            try
-            {
-                Response<ListDataSourcesResult> result = await DataSourcesClient.ListAsync(
-                    Constants.NameKey,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-
-                IReadOnlyList<string> names = result.Value.DataSources.Select(value => value.Name).ToArray();
-                return Response.FromValue(names, result.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-        #endregion
-
-        #region Indexer operations
         /// <summary>
         /// Creates a new indexer.
         /// </summary>
@@ -710,9 +219,73 @@ namespace Azure.Search.Documents.Indexes
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexer"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<SearchIndexer> CreateOrUpdateIndexer(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            SearchIndexer indexer,
+            bool onlyIfUnchanged,
+            CancellationToken cancellationToken) => CreateOrUpdateIndexer(
+                indexer,
+                onlyIfUnchanged,
+                ignoreCacheResetRequirements: null,
+                disableCacheReprocessingChangeDetection: null,
+                cancellationToken);
+
+        /// <summary>
+        /// Creates a new indexer or updates an existing indexer.
+        /// </summary>
+        /// <param name="indexer">Required. The <see cref="SearchIndexer"/> to create or update.</param>
+        /// <param name="onlyIfUnchanged">
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexer.ETag"/> does not match the current service version;
+        /// otherwise, the current service version will be overwritten.
+        /// </param>
+        /// <param name="disableCacheReprocessingChangeDetection">Disables cache reprocessing change detection.</param>
+        /// <param name="ignoreCacheResetRequirements">Ignores cache reset requirements.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexer"/> created.
+        /// This may differ slightly from what was passed into the service.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexer"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<SearchIndexer> CreateOrUpdateIndexer(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            SearchIndexer indexer,
+            bool onlyIfUnchanged,
+            bool disableCacheReprocessingChangeDetection,
+            bool ignoreCacheResetRequirements,
+            CancellationToken cancellationToken) => CreateOrUpdateIndexer(
+                indexer,
+                onlyIfUnchanged,
+                ignoreCacheResetRequirements,
+                disableCacheReprocessingChangeDetection,
+                cancellationToken);
+
+        /// <summary>
+        /// Creates a new indexer or updates an existing indexer.
+        /// </summary>
+        /// <param name="indexer">Required. The <see cref="SearchIndexer"/> to create or update.</param>
+        /// <param name="onlyIfUnchanged">
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexer.ETag"/> does not match the current service version;
+        /// otherwise, the current service version will be overwritten.
+        /// </param>
+        /// <param name="ignoreCacheResetRequirements">Ignores cache reset requirements.</param>
+        /// <param name="disableCacheReprocessingChangeDetection">Disables cache reprocessing change detection.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexer"/> created.
+        /// This may differ slightly from what was passed into the service.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexer"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<SearchIndexer> CreateOrUpdateIndexer(
             SearchIndexer indexer,
             bool onlyIfUnchanged = false,
+            bool? ignoreCacheResetRequirements = null,
+            bool? disableCacheReprocessingChangeDetection = null,
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
@@ -727,6 +300,8 @@ namespace Azure.Search.Documents.Indexes
                     indexer,
                     onlyIfUnchanged ? indexer?.ETag?.ToString() : null,
                     null,
+                    ignoreCacheResetRequirements,
+                    disableCacheReprocessingChangeDetection,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -751,9 +326,74 @@ namespace Azure.Search.Documents.Indexes
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexer"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual async Task<Response<SearchIndexer>> CreateOrUpdateIndexerAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            SearchIndexer indexer,
+            bool onlyIfUnchanged,
+            CancellationToken cancellationToken) => await CreateOrUpdateIndexerAsync(
+                indexer,
+                onlyIfUnchanged,
+                ignoreCacheResetRequirements: null,
+                disableCacheReprocessingChangeDetection: null,
+                cancellationToken).
+                ConfigureAwait(false);
+
+        /// <summary>
+        /// Creates a new indexer or updates an existing indexer.
+        /// </summary>
+        /// <param name="indexer">Required. The <see cref="SearchIndexer"/> to create or update.</param>
+        /// <param name="onlyIfUnchanged">
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexer.ETag"/> does not match the current service version;
+        /// otherwise, the current service version will be overwritten.
+        /// </param>
+        /// <param name="disableCacheReprocessingChangeDetection">Disables cache reprocessing change detection.</param>
+        /// <param name="ignoreCacheResetRequirements">Ignores cache reset requirements.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexer"/> created.
+        /// This may differ slightly from what was passed into the service.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexer"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual async Task<Response<SearchIndexer>> CreateOrUpdateIndexerAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            SearchIndexer indexer,
+            bool onlyIfUnchanged,
+            bool disableCacheReprocessingChangeDetection,
+            bool ignoreCacheResetRequirements,
+            CancellationToken cancellationToken) => await CreateOrUpdateIndexerAsync(
+                indexer,
+                onlyIfUnchanged,
+                ignoreCacheResetRequirements,
+                disableCacheReprocessingChangeDetection,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Creates a new indexer or updates an existing indexer.
+        /// </summary>
+        /// <param name="indexer">Required. The <see cref="SearchIndexer"/> to create or update.</param>
+        /// <param name="onlyIfUnchanged">
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexer.ETag"/> does not match the current service version;
+        /// otherwise, the current service version will be overwritten.
+        /// </param>
+        /// <param name="ignoreCacheResetRequirements">Ignores cache reset requirements.</param>
+        /// <param name="disableCacheReprocessingChangeDetection">Disables cache reprocessing change detection.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexer"/> created.
+        /// This may differ slightly from what was passed into the service.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexer"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<SearchIndexer>> CreateOrUpdateIndexerAsync(
             SearchIndexer indexer,
             bool onlyIfUnchanged = false,
+            bool? ignoreCacheResetRequirements = null,
+            bool? disableCacheReprocessingChangeDetection = null,
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
@@ -768,6 +408,8 @@ namespace Azure.Search.Documents.Indexes
                     indexer,
                     onlyIfUnchanged ? indexer?.ETag?.ToString() : null,
                     null,
+                    ignoreCacheResetRequirements,
+                    disableCacheReprocessingChangeDetection,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -1252,30 +894,29 @@ namespace Azure.Search.Documents.Indexes
                 throw;
             }
         }
-        #endregion
 
-        #region Skillsets operations
         /// <summary>
-        /// Creates a new skillset.
+        /// Resets specific documents in the datasource to be selectively re-ingested by the indexer.
         /// </summary>
-        /// <param name="skillset">Required. The <see cref="SearchIndexerSkillset"/> to create.</param>
+        /// <param name="indexerName"> The name of the indexer to reset documents for. </param>
+        /// <param name="overwrite">If <c>false</c>, keys or ids will be appended to existing ones. If <c>true</c>, only the keys or ids in this payload will be queued to be re-ingested.</param>
+        /// <param name="resetDocumentOptions">The reset options to use.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>
-        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerSkillset"/> that was created.
-        /// This may differ slightly from what was passed in since the service may return back properties set to their default values.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillset"/> is null.</exception>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual Response<SearchIndexerSkillset> CreateSkillset(
-            SearchIndexerSkillset skillset,
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        public virtual Response ResetDocuments(
+            string indexerName,
+            bool? overwrite = null,
+            ResetDocumentOptions resetDocumentOptions = null,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateSkillset)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(ResetDocuments)}");
             scope.Start();
             try
             {
-                return SkillsetsClient.Create(
-                    skillset,
+                return IndexersClient.ResetDocs(
+                    indexerName,
+                    overwrite,
+                    resetDocumentOptions,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -1286,26 +927,27 @@ namespace Azure.Search.Documents.Indexes
         }
 
         /// <summary>
-        /// Creates a new skillset.
+        /// Resets specific documents in the datasource to be selectively re-ingested by the indexer.
         /// </summary>
-        /// <param name="skillset">Required. The <see cref="SearchIndexerSkillset"/> to create.</param>
+        /// <param name="indexerName">The name of the indexer to reset documents for.</param>
+        /// <param name="overwrite">If <c>false</c>, keys or ids will be appended to existing ones. If <c>true</c>, only the keys or ids in this payload will be queued to be re-ingested.</param>
+        /// <param name="resetDocumentOptions">The reset options to use.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>
-        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerSkillset"/> that was created.
-        /// This may differ slightly from what was passed in since the service may return back properties set to their default values.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillset"/> is null.</exception>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual async Task<Response<SearchIndexerSkillset>> CreateSkillsetAsync(
-            SearchIndexerSkillset skillset,
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        public virtual async Task<Response> ResetDocumentsAsync(
+            string indexerName,
+            bool? overwrite = null,
+            ResetDocumentOptions resetDocumentOptions = null,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateSkillset)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(ResetDocuments)}");
             scope.Start();
             try
             {
-                return await SkillsetsClient.CreateAsync(
-                    skillset,
+                return await IndexersClient.ResetDocsAsync(
+                    indexerName,
+                    overwrite,
+                    resetDocumentOptions,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -1315,399 +957,5 @@ namespace Azure.Search.Documents.Indexes
                 throw;
             }
         }
-
-        /// <summary>
-        /// Creates a new skillset or updates an existing skillset.
-        /// </summary>
-        /// <param name="skillset">Required. The <see cref="SearchIndexerSkillset"/> to create or update.</param>
-        /// <param name="onlyIfUnchanged">
-        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerSkillset.ETag"/> does not match the current service version;
-        /// otherwise, the current service version will be overwritten.
-        /// </param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>
-        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerSkillset"/> that was created.
-        /// This may differ slightly from what was passed in since the service may return back properties set to their default values.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillset"/> is null.</exception>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual Response<SearchIndexerSkillset> CreateOrUpdateSkillset(
-            SearchIndexerSkillset skillset,
-            bool onlyIfUnchanged = false,
-            CancellationToken cancellationToken = default)
-        {
-            // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(skillset, nameof(skillset));
-
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateOrUpdateSkillset)}");
-            scope.Start();
-            try
-            {
-                return SkillsetsClient.CreateOrUpdate(
-                    skillset?.Name,
-                    skillset,
-                    onlyIfUnchanged ? skillset?.ETag?.ToString() : null,
-                    null,
-                    cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates a new skillset or updates an existing skillset.
-        /// </summary>
-        /// <param name="skillset">Required. The <see cref="SearchIndexerSkillset"/> to create or update.</param>
-        /// <param name="onlyIfUnchanged">
-        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerSkillset.ETag"/> does not match the current service version;
-        /// otherwise, the current service version will be overwritten.
-        /// </param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>
-        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerSkillset"/> that was created.
-        /// This may differ slightly from what was passed in since the service may return back properties set to their default values.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillset"/> is null.</exception>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual async Task<Response<SearchIndexerSkillset>> CreateOrUpdateSkillsetAsync(
-            SearchIndexerSkillset skillset,
-            bool onlyIfUnchanged = false,
-            CancellationToken cancellationToken = default)
-        {
-            // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(skillset, nameof(skillset));
-
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateOrUpdateSkillset)}");
-            scope.Start();
-            try
-            {
-                return await SkillsetsClient.CreateOrUpdateAsync(
-                    skillset?.Name,
-                    skillset,
-                    onlyIfUnchanged ? skillset?.ETag?.ToString() : null,
-                    null,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes a skillset.
-        /// </summary>
-        /// <param name="skillsetName">The name of the <see cref="SearchIndexerSkillset"/> to delete.</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response"/> from the server.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillsetName"/> is null.</exception>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual Response DeleteSkillset(
-            string skillsetName,
-            CancellationToken cancellationToken = default)
-        {
-            // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(skillsetName, nameof(skillsetName));
-
-            return DeleteSkillset(
-                skillsetName,
-                null,
-                false,
-                cancellationToken);
-        }
-
-        /// <summary>
-        /// Deletes a skillset.
-        /// </summary>
-        /// <param name="skillsetName">The name of the <see cref="SearchIndexerSkillset"/> to delete.</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response"/> from the server.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillsetName"/> is null.</exception>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual async Task<Response> DeleteSkillsetAsync(
-            string skillsetName,
-            CancellationToken cancellationToken = default)
-        {
-            // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(skillsetName, nameof(skillsetName));
-
-            return await DeleteSkillsetAsync(
-                skillsetName,
-                null,
-                false,
-                cancellationToken)
-                .ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Deletes a skillset.
-        /// </summary>
-        /// <param name="skillset">The <see cref="SearchIndexerSkillset"/> to delete.</param>
-        /// <param name="onlyIfUnchanged">
-        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerSkillset.ETag"/> does not match the current service version;
-        /// otherwise, the current service version will be overwritten.
-        /// </param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response"/> from the server.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillset"/> is null.</exception>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual Response DeleteSkillset(
-            SearchIndexerSkillset skillset,
-            bool onlyIfUnchanged = false,
-            CancellationToken cancellationToken = default)
-        {
-            // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(skillset, nameof(skillset));
-
-            return DeleteSkillset(
-                skillset?.Name,
-                skillset?.ETag,
-                onlyIfUnchanged,
-                cancellationToken);
-        }
-
-        /// <summary>
-        /// Deletes a skillset.
-        /// </summary>
-        /// <param name="skillset">The <see cref="SearchIndexerSkillset"/> to delete.</param>
-        /// <param name="onlyIfUnchanged">
-        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerSkillset.ETag"/> does not match the current service version;
-        /// otherwise, the current service version will be overwritten.
-        /// </param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response"/> from the server.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillset"/> is null.</exception>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual async Task<Response> DeleteSkillsetAsync(
-            SearchIndexerSkillset skillset,
-            bool onlyIfUnchanged = false,
-            CancellationToken cancellationToken = default)
-        {
-            // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(skillset, nameof(skillset));
-
-            return await DeleteSkillsetAsync(
-                skillset?.Name,
-                skillset?.ETag,
-                onlyIfUnchanged,
-                cancellationToken)
-                .ConfigureAwait(false);
-        }
-
-        private Response DeleteSkillset(
-            string skillsetName,
-            ETag? etag,
-            bool onlyIfUnchanged,
-            CancellationToken cancellationToken)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteSkillset)}");
-            scope.Start();
-            try
-            {
-                return SkillsetsClient.Delete(
-                    skillsetName,
-                    onlyIfUnchanged ? etag?.ToString() : null,
-                    null,
-                    cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        private async Task<Response> DeleteSkillsetAsync(
-            string skillsetName,
-            ETag? etag,
-            bool onlyIfUnchanged,
-            CancellationToken cancellationToken)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteSkillset)}");
-            scope.Start();
-            try
-            {
-                return await SkillsetsClient.DeleteAsync(
-                    skillsetName,
-                    onlyIfUnchanged ? etag?.ToString() : null,
-                    null,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets a specific <see cref="SearchIndexerSkillset"/>.
-        /// </summary>
-        /// <param name="skillsetName">Required. The name of the <see cref="SearchIndexerSkillset"/> to get.</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="SearchIndexerSkillset"/>.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillsetName"/> is null.</exception>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual Response<SearchIndexerSkillset> GetSkillset(
-            string skillsetName,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetSkillset)}");
-            scope.Start();
-            try
-            {
-                return SkillsetsClient.Get(
-                    skillsetName,
-                    cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets a specific <see cref="SearchIndexerSkillset"/>.
-        /// </summary>
-        /// <param name="skillsetName">Required. The name of the <see cref="SearchIndexerSkillset"/> to get.</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="SearchIndexerSkillset"/>.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillsetName"/> is null.</exception>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual async Task<Response<SearchIndexerSkillset>> GetSkillsetAsync(
-            string skillsetName,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetSkillset)}");
-            scope.Start();
-            try
-            {
-                return await SkillsetsClient.GetAsync(
-                    skillsetName,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets a list of all skillsets.
-        /// </summary>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerSkillset"/>.</returns>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual Response<IReadOnlyList<SearchIndexerSkillset>> GetSkillsets(
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetSkillsets)}");
-            scope.Start();
-            try
-            {
-                Response<ListSkillsetsResult> result = SkillsetsClient.List(
-                    Constants.All,
-                    cancellationToken);
-
-                return Response.FromValue(result.Value.Skillsets, result.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets a list of all skillsets.
-        /// </summary>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerSkillset"/>.</returns>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual async Task<Response<IReadOnlyList<SearchIndexerSkillset>>> GetSkillsetsAsync(
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetSkillsets)}");
-            scope.Start();
-            try
-            {
-                Response<ListSkillsetsResult> result = await SkillsetsClient.ListAsync(
-                    Constants.All,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-
-                return Response.FromValue(result.Value.Skillsets, result.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets a list of all skillset names.
-        /// </summary>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerSkillset"/> names.</returns>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual Response<IReadOnlyList<string>> GetSkillsetNames(
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetSkillsetNames)}");
-            scope.Start();
-            try
-            {
-                Response<ListSkillsetsResult> result = SkillsetsClient.List(
-                    Constants.NameKey,
-                    cancellationToken);
-
-                IReadOnlyList<string> names = result.Value.Skillsets.Select(value => value.Name).ToArray();
-                return Response.FromValue(names, result.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets a list of all skillset names.
-        /// </summary>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerSkillset"/> names.</returns>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual async Task<Response<IReadOnlyList<string>>> GetSkillsetNamesAsync(
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetSkillsetNames)}");
-            scope.Start();
-            try
-            {
-                Response<ListSkillsetsResult> result = await SkillsetsClient.ListAsync(
-                    Constants.NameKey,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-
-                IReadOnlyList<string> names = result.Value.Skillsets.Select(value => value.Name).ToArray();
-                return Response.FromValue(names, result.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-        #endregion
     }
 }

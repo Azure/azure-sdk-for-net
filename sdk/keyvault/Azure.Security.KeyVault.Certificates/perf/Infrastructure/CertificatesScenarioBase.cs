@@ -14,7 +14,8 @@ namespace Azure.Security.KeyVault.Certificates.Perf.Infrastructure
         {
             Client = new CertificateClient(
                 PerfTestEnvironment.Instance.VaultUri,
-                PerfTestEnvironment.Instance.Credential);
+                PerfTestEnvironment.Instance.Credential,
+                ConfigureClientOptions(new CertificateClientOptions()));
         }
 
         protected CertificateClient Client { get; }

@@ -33,9 +33,6 @@ parameters:
 - name: MatrixReplace
   type: object
   default: []
-- name: SpellCheckPublicApiSurface
-  type: boolean
-  default: false
 
 jobs:
   - job: Build
@@ -43,6 +40,7 @@ jobs:
       name: azsdk-pool-mms-win-2019-general
       vmImage: MMS2019
     steps:
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
       - template: /eng/common/pipelines/templates/steps/set-test-pipeline-version.yml
         parameters:
           PackageName: "Azure.Template"
@@ -70,7 +68,6 @@ jobs:
         displayName: 'Use Python 3.6'
         inputs:
           versionSpec: '3.6'
-      - template: /eng/pipelines/templates/steps/install-dotnet.yml
       - script: >-
           dotnet pack eng/service.proj -warnaserror
           /p:SDKType=${{ parameters.SDKType }}
@@ -81,6 +78,18 @@ jobs:
           /p:CommitSHA=$(Build.SourceVersion)
           /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
         displayName: "Build and Package"
+
+      - task: Powershell@2
+        inputs:
+          filePath: $(Build.SourcesDirectory)/eng/common/scripts/Save-Package-Properties.ps1
+          arguments: >
+            -ServiceDirectory ${{parameters.ServiceDirectory}}
+            -OutDirectory $(Build.ArtifactStagingDirectory)/PackageInfo
+            -AddDevVersion
+          pwsh: true
+          workingDirectory: $(Pipeline.Workspace)
+        displayName: Update package properties with dev version
+        condition: and(succeeded(),eq(variables['SetDevVersion'],'true'))
 
       - template: /eng/common/pipelines/templates/steps/create-apireview.yml
         parameters:
@@ -97,6 +106,18 @@ jobs:
         parameters:
           ArtifactPath: '$(Build.ArtifactStagingDirectory)'
           ArtifactName: 'packages'
+
+      - template: /eng/common/pipelines/templates/steps/detect-api-changes.yml
+        parameters:
+          Artifacts: ${{ parameters.Artifacts }}
+
+      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+        displayName: "Component Detection"
+        # ComponentGovernance is currently unable to run on pull requests of public projects.  Running on
+        # scheduled builds should be good enough.
+        condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
+        inputs:
+          ignoreDirectories: '.nuget'
 
   - job: "Analyze"
     condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
@@ -120,19 +141,25 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/verify-samples.yml
         parameters:
           ServiceDirectory: ${{ parameters.ServiceDirectory }}
-      - script: |
-          pip install setuptools wheel
-          pip install doc-warden==$(DocWardenVersion)
-          ward scan -d $(Build.SourcesDirectory) -c $(Build.SourcesDirectory)/eng/.docsettings.yml
-        displayName: "Verify Readmes"
+      - template: /eng/common/pipelines/templates/steps/verify-readme.yml
+        parameters:
+          ScanPath: $(Build.SourcesDirectory)/sdk/${{ parameters.ServiceDirectory }}
       - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
         parameters:
           SourceDirectory: $(Build.SourcesDirectory)
       - task: NodeTool@0
         inputs:
-          versionSpec: '14.x'
+          # https://github.com/nodejs/node/issues/40468
+          versionSpec: '16.6.2'
         displayName: 'Install NodeJS'
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
+      - task: DotNetCoreCLI@2
+        displayName: 'Install Snippet Generator Tool'
+        inputs:
+          command: custom
+          custom: 'tool'
+          arguments: 'install --global --add-source "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json" --version "1.0.0-dev.20211119.1" "Azure.Sdk.Tools.SnippetGenerator"'
+          workingDirectory: '$(Agent.BuildDirectory)'
       - task: PowerShell@2
         displayName: "Verify generated code"
         inputs:
@@ -140,16 +167,9 @@ jobs:
           arguments: >
            -ServiceDirectory ${{ parameters.ServiceToTest }}
            -SDKType ${{ parameters.SDKType }}
-           -SpellCheckPublicApiSurface:$${{ parameters.SpellCheckPublicApiSurface }}
+           -SpellCheckPublicApiSurface
           pwsh: true
           failOnStderr:  false
-      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
-        displayName: "Component Detection"
-        # ComponentGovernance is currently unable to run on pull requests of public projects.  Running on
-        # scheduled builds should be good enough.
-        inputs:
-          ignoreDirectories: "sdk/storage/Azure.Storage.Common/swagger/Generator"
-        condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
       - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
 
   - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml

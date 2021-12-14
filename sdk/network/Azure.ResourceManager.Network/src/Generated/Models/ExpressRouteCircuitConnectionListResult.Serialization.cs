@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ExpressRouteCircuitConnectionListResult DeserializeExpressRouteCircuitConnectionListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ExpressRouteCircuitConnection>> value = default;
+            Optional<IReadOnlyList<ExpressRouteCircuitConnectionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ExpressRouteCircuitConnection> array = new List<ExpressRouteCircuitConnection>();
+                    List<ExpressRouteCircuitConnectionData> array = new List<ExpressRouteCircuitConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExpressRouteCircuitConnection.DeserializeExpressRouteCircuitConnection(item));
+                        array.Add(ExpressRouteCircuitConnectionData.DeserializeExpressRouteCircuitConnectionData(item));
                     }
                     value = array;
                     continue;

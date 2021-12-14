@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of AvailabilitySetListResult. </summary>
         /// <param name="value"> The list of availability sets. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AvailabilitySetListResult(IEnumerable<AvailabilitySet> value)
+        internal AvailabilitySetListResult(IEnumerable<AvailabilitySetData> value)
         {
             if (value == null)
             {
@@ -30,14 +31,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of AvailabilitySetListResult. </summary>
         /// <param name="value"> The list of availability sets. </param>
         /// <param name="nextLink"> The URI to fetch the next page of AvailabilitySets. Call ListNext() with this URI to fetch the next page of AvailabilitySets. </param>
-        internal AvailabilitySetListResult(IReadOnlyList<AvailabilitySet> value, string nextLink)
+        internal AvailabilitySetListResult(IReadOnlyList<AvailabilitySetData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of availability sets. </summary>
-        public IReadOnlyList<AvailabilitySet> Value { get; }
+        public IReadOnlyList<AvailabilitySetData> Value { get; }
         /// <summary> The URI to fetch the next page of AvailabilitySets. Call ListNext() with this URI to fetch the next page of AvailabilitySets. </summary>
         public string NextLink { get; }
     }

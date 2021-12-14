@@ -42,6 +42,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// subnet. Must have the delegation Microsoft.NetApp/volumes</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
+        /// <param name="etag">A unique read-only string that changes whenever
+        /// the resource is updated.</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="fileSystemId">FileSystem ID</param>
@@ -52,8 +54,14 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="snapshotId">Snapshot ID</param>
         /// <param name="backupId">Backup ID</param>
         /// <param name="baremetalTenantId">Baremetal Tenant ID</param>
+        /// <param name="networkFeatures">Network features</param>
+        /// <param name="networkSiblingSetId">Network Sibling Set ID</param>
+        /// <param name="storageToNetworkProximity">Storage to Network
+        /// Proximity</param>
         /// <param name="mountTargets">mountTargets</param>
-        /// <param name="volumeType">What type of volume is this</param>
+        /// <param name="volumeType">What type of volume is this. For
+        /// destination volumes in Cross Region Replication, set type to
+        /// DataProtection</param>
         /// <param name="dataProtection">DataProtection</param>
         /// <param name="isRestoring">Restoring</param>
         /// <param name="snapshotDirectoryVisible">If enabled (true) the volume
@@ -72,7 +80,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// available share property for smb volume. Only applicable for SMB
         /// volume</param>
         /// <param name="throughputMibps">Maximum throughput in Mibps that can
-        /// be achieved by this volume</param>
+        /// be achieved by this volume and this will be accepted as input only
+        /// for manual qosType volume</param>
         /// <param name="encryptionKeySource">Encryption Key Source. Possible
         /// values are: 'Microsoft.NetApp'</param>
         /// <param name="ldapEnabled">Specifies whether LDAP is enabled or not
@@ -89,11 +98,36 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// same group. the fourth for other users not in the group. 0755 -
         /// gives read/write/execute permissions to owner and read/execute to
         /// group and other users.</param>
-        public Volume(string location, string creationToken, long usageThreshold, string subnetId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string fileSystemId = default(string), string serviceLevel = default(string), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), IList<string> protocolTypes = default(IList<string>), string provisioningState = default(string), string snapshotId = default(string), string backupId = default(string), string baremetalTenantId = default(string), IList<MountTargetProperties> mountTargets = default(IList<MountTargetProperties>), string volumeType = default(string), VolumePropertiesDataProtection dataProtection = default(VolumePropertiesDataProtection), bool? isRestoring = default(bool?), bool? snapshotDirectoryVisible = default(bool?), bool? kerberosEnabled = default(bool?), string securityStyle = default(string), bool? smbEncryption = default(bool?), bool? smbContinuouslyAvailable = default(bool?), double? throughputMibps = default(double?), string encryptionKeySource = default(string), bool? ldapEnabled = default(bool?), bool? coolAccess = default(bool?), int? coolnessPeriod = default(int?), string unixPermissions = default(string))
+        /// <param name="cloneProgress">When a volume is being restored from
+        /// another volume's snapshot, will show the percentage completion of
+        /// this cloning process. When this value is empty/null there is no
+        /// cloning process currently happening on this volume. This value will
+        /// update every 5 minutes during cloning.</param>
+        /// <param name="avsDataStore">avsDataStore</param>
+        /// <param name="isDefaultQuotaEnabled">Specifies if default quota is
+        /// enabled for the volume.</param>
+        /// <param name="defaultUserQuotaInKiBs">Default user quota for volume
+        /// in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4
+        /// KiBs applies .</param>
+        /// <param name="defaultGroupQuotaInKiBs">Default group quota for
+        /// volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value
+        /// of 4 KiBs applies.</param>
+        /// <param name="volumeGroupName">Volume Group Name</param>
+        /// <param name="capacityPoolResourceId">Pool Resource Id used in case
+        /// of creating a volume through volume group</param>
+        /// <param name="proximityPlacementGroup">Proximity placement group
+        /// associated with the volume</param>
+        /// <param name="t2Network">T2 network information</param>
+        /// <param name="volumeSpecName">Volume spec name is the application
+        /// specific designation or identifier for the particular volume in a
+        /// volume group for e.g. data, log</param>
+        /// <param name="placementRules">Volume placement rules</param>
+        public Volume(string location, string creationToken, long usageThreshold, string subnetId, string id = default(string), string name = default(string), string etag = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string fileSystemId = default(string), string serviceLevel = default(string), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), IList<string> protocolTypes = default(IList<string>), string provisioningState = default(string), string snapshotId = default(string), string backupId = default(string), string baremetalTenantId = default(string), string networkFeatures = default(string), string networkSiblingSetId = default(string), string storageToNetworkProximity = default(string), IList<MountTargetProperties> mountTargets = default(IList<MountTargetProperties>), string volumeType = default(string), VolumePropertiesDataProtection dataProtection = default(VolumePropertiesDataProtection), bool? isRestoring = default(bool?), bool? snapshotDirectoryVisible = default(bool?), bool? kerberosEnabled = default(bool?), string securityStyle = default(string), bool? smbEncryption = default(bool?), bool? smbContinuouslyAvailable = default(bool?), double? throughputMibps = default(double?), string encryptionKeySource = default(string), bool? ldapEnabled = default(bool?), bool? coolAccess = default(bool?), int? coolnessPeriod = default(int?), string unixPermissions = default(string), int? cloneProgress = default(int?), string avsDataStore = default(string), bool? isDefaultQuotaEnabled = default(bool?), long? defaultUserQuotaInKiBs = default(long?), long? defaultGroupQuotaInKiBs = default(long?), string volumeGroupName = default(string), string capacityPoolResourceId = default(string), string proximityPlacementGroup = default(string), string t2Network = default(string), string volumeSpecName = default(string), IList<PlacementKeyValuePairs> placementRules = default(IList<PlacementKeyValuePairs>))
         {
             Location = location;
             Id = id;
             Name = name;
+            Etag = etag;
             Type = type;
             Tags = tags;
             FileSystemId = fileSystemId;
@@ -107,6 +141,9 @@ namespace Microsoft.Azure.Management.NetApp.Models
             BackupId = backupId;
             BaremetalTenantId = baremetalTenantId;
             SubnetId = subnetId;
+            NetworkFeatures = networkFeatures;
+            NetworkSiblingSetId = networkSiblingSetId;
+            StorageToNetworkProximity = storageToNetworkProximity;
             MountTargets = mountTargets;
             VolumeType = volumeType;
             DataProtection = dataProtection;
@@ -122,6 +159,17 @@ namespace Microsoft.Azure.Management.NetApp.Models
             CoolAccess = coolAccess;
             CoolnessPeriod = coolnessPeriod;
             UnixPermissions = unixPermissions;
+            CloneProgress = cloneProgress;
+            AvsDataStore = avsDataStore;
+            IsDefaultQuotaEnabled = isDefaultQuotaEnabled;
+            DefaultUserQuotaInKiBs = defaultUserQuotaInKiBs;
+            DefaultGroupQuotaInKiBs = defaultGroupQuotaInKiBs;
+            VolumeGroupName = volumeGroupName;
+            CapacityPoolResourceId = capacityPoolResourceId;
+            ProximityPlacementGroup = proximityPlacementGroup;
+            T2Network = t2Network;
+            VolumeSpecName = volumeSpecName;
+            PlacementRules = placementRules;
             CustomInit();
         }
 
@@ -147,6 +195,13 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
+        /// </summary>
+        [JsonProperty(PropertyName = "etag")]
+        public string Etag { get; private set; }
 
         /// <summary>
         /// Gets resource type
@@ -182,8 +237,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// Gets or sets serviceLevel
         /// </summary>
         /// <remarks>
-        /// The service level of the file system. Possible values include:
-        /// 'Standard', 'Premium', 'Ultra'
+        /// Possible values include: 'Standard', 'Premium', 'Ultra',
+        /// 'StandardZRS'
         /// </remarks>
         [JsonProperty(PropertyName = "properties.serviceLevel")]
         public string ServiceLevel { get; set; }
@@ -258,6 +313,36 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public string SubnetId { get; set; }
 
         /// <summary>
+        /// Gets or sets network features
+        /// </summary>
+        /// <remarks>
+        /// Basic network, or Standard features available to the volume.
+        /// Possible values include: 'Basic', 'Standard'
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.networkFeatures")]
+        public string NetworkFeatures { get; set; }
+
+        /// <summary>
+        /// Gets network Sibling Set ID
+        /// </summary>
+        /// <remarks>
+        /// Network Sibling Set ID for the the group of volumes sharing
+        /// networking resources.
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.networkSiblingSetId")]
+        public string NetworkSiblingSetId { get; private set; }
+
+        /// <summary>
+        /// Gets storage to Network Proximity
+        /// </summary>
+        /// <remarks>
+        /// Provides storage to network proximity information for the volume.
+        /// Possible values include: 'Default', 'T1', 'T2'
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.storageToNetworkProximity")]
+        public string StorageToNetworkProximity { get; private set; }
+
+        /// <summary>
         /// Gets mountTargets
         /// </summary>
         /// <remarks>
@@ -267,7 +352,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public IList<MountTargetProperties> MountTargets { get; private set; }
 
         /// <summary>
-        /// Gets or sets what type of volume is this
+        /// Gets or sets what type of volume is this. For destination volumes
+        /// in Cross Region Replication, set type to DataProtection
         /// </summary>
         [JsonProperty(PropertyName = "properties.volumeType")]
         public string VolumeType { get; set; }
@@ -328,7 +414,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
 
         /// <summary>
         /// Gets or sets maximum throughput in Mibps that can be achieved by
-        /// this volume
+        /// this volume and this will be accepted as input only for manual
+        /// qosType volume
         /// </summary>
         [JsonProperty(PropertyName = "properties.throughputMibps")]
         public double? ThroughputMibps { get; set; }
@@ -372,6 +459,89 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.unixPermissions")]
         public string UnixPermissions { get; set; }
+
+        /// <summary>
+        /// Gets when a volume is being restored from another volume's
+        /// snapshot, will show the percentage completion of this cloning
+        /// process. When this value is empty/null there is no cloning process
+        /// currently happening on this volume. This value will update every 5
+        /// minutes during cloning.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.cloneProgress")]
+        public int? CloneProgress { get; private set; }
+
+        /// <summary>
+        /// Gets or sets avsDataStore
+        /// </summary>
+        /// <remarks>
+        /// Specifies whether the volume is enabled for Azure VMware Solution
+        /// (AVS) datastore purpose. Possible values include: 'Enabled',
+        /// 'Disabled'
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.avsDataStore")]
+        public string AvsDataStore { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies if default quota is enabled for the volume.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isDefaultQuotaEnabled")]
+        public bool? IsDefaultQuotaEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets default user quota for volume in KiBs. If
+        /// isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies .
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.defaultUserQuotaInKiBs")]
+        public long? DefaultUserQuotaInKiBs { get; set; }
+
+        /// <summary>
+        /// Gets or sets default group quota for volume in KiBs. If
+        /// isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.defaultGroupQuotaInKiBs")]
+        public long? DefaultGroupQuotaInKiBs { get; set; }
+
+        /// <summary>
+        /// Gets volume Group Name
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.volumeGroupName")]
+        public string VolumeGroupName { get; private set; }
+
+        /// <summary>
+        /// Gets or sets pool Resource Id used in case of creating a volume
+        /// through volume group
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.capacityPoolResourceId")]
+        public string CapacityPoolResourceId { get; set; }
+
+        /// <summary>
+        /// Gets or sets proximity placement group associated with the volume
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.proximityPlacementGroup")]
+        public string ProximityPlacementGroup { get; set; }
+
+        /// <summary>
+        /// Gets T2 network information
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.t2Network")]
+        public string T2Network { get; private set; }
+
+        /// <summary>
+        /// Gets or sets volume spec name is the application specific
+        /// designation or identifier for the particular volume in a volume
+        /// group for e.g. data, log
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.volumeSpecName")]
+        public string VolumeSpecName { get; set; }
+
+        /// <summary>
+        /// Gets or sets volume placement rules
+        /// </summary>
+        /// <remarks>
+        /// Application specific placement rules for the particular volume
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.placementRules")]
+        public IList<PlacementKeyValuePairs> PlacementRules { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -461,6 +631,21 @@ namespace Microsoft.Azure.Management.NetApp.Models
                     throw new ValidationException(ValidationRules.Pattern, "BackupId", "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}|(\\\\?([^\\/]*[\\/])*)([^\\/]+)$");
                 }
             }
+            if (NetworkSiblingSetId != null)
+            {
+                if (NetworkSiblingSetId.Length > 36)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "NetworkSiblingSetId", 36);
+                }
+                if (NetworkSiblingSetId.Length < 36)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "NetworkSiblingSetId", 36);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(NetworkSiblingSetId, "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "NetworkSiblingSetId", "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$");
+                }
+            }
             if (MountTargets != null)
             {
                 foreach (var element in MountTargets)
@@ -474,17 +659,6 @@ namespace Microsoft.Azure.Management.NetApp.Models
             if (DataProtection != null)
             {
                 DataProtection.Validate();
-            }
-            if (ThroughputMibps != null)
-            {
-                if (ThroughputMibps > 4500)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "ThroughputMibps", 4500);
-                }
-                if (ThroughputMibps < 0)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "ThroughputMibps", 0);
-                }
             }
             if (CoolnessPeriod != null)
             {
@@ -506,6 +680,16 @@ namespace Microsoft.Azure.Management.NetApp.Models
                 if (UnixPermissions.Length < 4)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "UnixPermissions", 4);
+                }
+            }
+            if (PlacementRules != null)
+            {
+                foreach (var element1 in PlacementRules)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
                 }
             }
         }

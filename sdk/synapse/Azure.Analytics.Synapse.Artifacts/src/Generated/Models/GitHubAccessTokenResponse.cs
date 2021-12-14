@@ -22,6 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             GitHubAccessToken = gitHubAccessToken;
         }
 
+        /// <summary> Gets the git hub access token. </summary>
         public string GitHubAccessToken { get; }
     }
 }

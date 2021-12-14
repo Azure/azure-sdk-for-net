@@ -18,15 +18,15 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WritePropertyName("connectionString");
                 writer.WriteStringValue(ConnectionString);
             }
-            writer.WriteNullStringValue("database", Database);
-            writer.WriteNullStringValue("userName", UserName);
-            writer.WriteNullStringValue("password", Password);
+            writer.WriteNullObjectValue("database", Database);
+            writer.WriteNullObjectValue("userName", UserName);
+            writer.WriteNullObjectValue("password", Password);
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password");
                 writer.WriteStringValue(Password);
             }
-            writer.WriteNullStringValue("query", Query);
+            writer.WriteNullObjectValue("query", Query);
             writer.WriteEndObject();
         }
     }

@@ -206,6 +206,31 @@ namespace DataFactory.Tests.JsonSamples
     }
 }";
         [JsonSample]
+        public const string AmazonRdsForSqlServerLinkedService = @"
+{
+    name: ""Test-AmazonRdsForSqlServer-LinkedService"",
+    properties:
+    {
+        type: ""AmazonRdsForSqlServer"",
+        connectVia: {
+            referenceName : ""Connection1"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties:
+        {
+            connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            },
+            userName: ""WindowsAuthUserName"",
+            password: {
+                value : ""fakepassword"",
+                type : ""SecureString""
+            }
+        }
+    }
+}";
+        [JsonSample]
         public const string HDISLinkedServiceWithSqlAlwaysEncryptedProperties = @"
 {
     name: ""Test-HDIS-LinkedService"",
@@ -228,11 +253,15 @@ namespace DataFactory.Tests.JsonSamples
                 type : ""SecureString""
             },
             alwaysEncryptedSettings: {
-                alwaysEncryptedAkvAuthType: ""ServicePrincipal"",
+                alwaysEncryptedAkvAuthType: ""UserAssignedManagedIdentity"",
                 servicePrincipalId: ""fakeServicePrincipalId"",
                 servicePrincipalKey: {
                    value : ""fakeServicePrincipalKey"",
                    type : ""SecureString""
+                },
+                credential: {
+                   type: ""CredentialReference"",
+                   referenceName: ""Credential""
                 }
             }
         }
@@ -592,6 +621,56 @@ namespace DataFactory.Tests.JsonSamples
     properties:
     {
         type: ""Oracle"",
+        connectVia: {
+            referenceName : ""CherryAgent-01"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties: {
+            connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            },
+            password: { 
+                type : ""AzureKeyVaultSecret"", 
+                secretName : ""fakeSecretName"", 
+                store: { 
+                    type : ""LinkedServiceReference"", 
+                    referenceName : ""AKVLinkedService"" 
+                } 
+            },
+            encryptedCredential: ""MyEncryptedCredentials""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string AmazonRdsForOracleLinkedService = @"
+{
+    name: ""LinkedService-AmazonRdsForOracleDB"",
+    properties:
+    {
+        type: ""AmazonRdsForOracle"",
+        connectVia: {
+            referenceName : ""CherryAgent-01"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties: {
+            connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            },
+            encryptedCredential: ""MyEncryptedCredentials""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string AmazonRdsForOracleLinkedServiceWithPasswordInAKV = @"
+{
+    name: ""LinkedService-AmazonRdsForOracleDB-with-Password-in-AKV"",
+    properties:
+    {
+        type: ""AmazonRdsForOracle"",
         connectVia: {
             referenceName : ""CherryAgent-01"",
             type : ""IntegrationRuntimeReference""
@@ -3182,6 +3261,23 @@ namespace DataFactory.Tests.JsonSamples
                 value : ""servicePrincipalKey"",
                 type : ""SecureString""
             }
+        }
+    }
+}";
+        [JsonSample]
+        public const string CosmosDbMongoDbApiLinkedService = @"
+{
+    name: ""LinkedService-CosmosDbMongoDbApi"",
+    properties:
+    {
+        type: ""CosmosDbMongoDbApi"",
+        typeProperties: {
+            isServerVersionAbove32: true,
+            connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            },
+            database: ""testdb""
         }
     }
 }";

@@ -48,7 +48,7 @@ The `EventProcessorClient` is safe to cache and use for the lifetime of the appl
 ## Processing events with identity-based authorization
 
 ```C# Snippet:EventHubs_Processor_Sample05_DefaultAzureCredential
-TokenCredential credential = new DefaultAzureCredential();
+var credential = new DefaultAzureCredential();
 
 var storageEndpoint = "<< STORAGE ENDPOINT (likely similar to {your-account}.blob.core.windows.net) >>";
 var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
@@ -120,10 +120,11 @@ finally
 ## Processing events with Shared Access Signature authorization
 
 ```C# Snippet:EventHubs_Processor_Sample05_SharedAccessSignature
+var credential = new AzureSasCredential("<< SHARED ACCESS KEY STRING >>");
+
 var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
 var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
 
-var credential = new AzureSasCredential("<< SHARED ACCESS KEY STRING >>");
 var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
@@ -188,10 +189,11 @@ finally
 ## Processing events with Shared Access Key authorization
 
 ```C# Snippet:EventHubs_Processor_Sample05_SharedAccessKey
+var credential = new AzureNamedKeyCredential("<< SHARED KEY NAME >>", "<< SHARED KEY >>");
+
 var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
 var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
 
-var credential = new AzureNamedKeyCredential("<< SHARED KEY NAME >>", "<< SHARED KEY >>");
 var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
@@ -260,18 +262,20 @@ In some scenarios, it may be preferable to supplement token-based authorization 
 This example illustrates parsing the fully qualified namespace and, optionally, the Event Hub name from the connection string and using it with identity-based authorization.
 
 ```C# Snippet:EventHubs_Processor_Sample05_ConnectionStringParse
-TokenCredential credential = new DefaultAzureCredential();
-
-var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
-var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
+var credential = new DefaultAzureCredential();
 
 var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
 
+var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
 var storageEndpoint = new BlobServiceClient(storageConnectionString).Uri;
-var blobUriBuilder = new BlobUriBuilder(storageEndpoint);
-blobUriBuilder.BlobContainerName = blobContainerName;
+
+var blobUriBuilder = new BlobUriBuilder(storageEndpoint)
+{
+    BlobContainerName = blobContainerName
+};
 
 var storageClient = new BlobContainerClient(
     blobUriBuilder.ToUri(),

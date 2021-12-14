@@ -38,12 +38,17 @@ namespace Azure.Analytics.Synapse.Spark.Models
             Traceback = traceback;
         }
 
+        /// <summary> Gets the status. </summary>
         public string Status { get; }
+        /// <summary> Gets the execution count. </summary>
         public int ExecutionCount { get; }
         /// <summary> Any object. </summary>
         public object Data { get; }
+        /// <summary> Gets the error name. </summary>
         public string ErrorName { get; }
+        /// <summary> Gets the error value. </summary>
         public string ErrorValue { get; }
+        /// <summary> Gets the traceback. </summary>
         public IReadOnlyList<string> Traceback { get; }
     }
 }

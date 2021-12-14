@@ -1049,7 +1049,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
                 TestUtility.Log("Registering EventProcessorHost for the first time.");
                 await eventProcessorHost.RegisterEventProcessorAsync<SecondTestEventProcessor>();
 
-                // Unregister event processor should succed
+                // Unregister event processor should succeed
                 TestUtility.Log("Registering EventProcessorHost for the first time.");
                 await eventProcessorHost.UnregisterEventProcessorAsync();
 

@@ -14,6 +14,7 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>2.0</OldToolsVersion>
+    <IsMgmtSubLibrary>false</IsMgmtSubLibrary>
   </PropertyGroup>
   <PropertyGroup>
     <!-- TODO: As part of release process, this PropertyGroup can be removed once RP is approved for namespace -->

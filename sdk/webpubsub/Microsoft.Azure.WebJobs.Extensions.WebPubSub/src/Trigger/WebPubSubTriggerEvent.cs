@@ -1,10 +1,10 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
-using Azure.Messaging.WebPubSub;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Azure.WebPubSub.Common;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
@@ -13,21 +13,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         /// <summary>
         /// Web PubSub common request context from cloud event headers.
         /// </summary>
-        public ConnectionContext ConnectionContext { get; set; }
+        public WebPubSubConnectionContext ConnectionContext { get; set; }
 
-        public BinaryData Message { get; set; }
+        public BinaryData Data { get; set; }
 
-        public MessageDataType DataType { get; set; }
+        public WebPubSubDataType DataType { get; set; }
 
-        public string[] Subprotocols { get; set; }
+        public IList<string> Subprotocols { get; set; }
 
         public IDictionary<string, string[]> Claims { get; set; }
 
         public IDictionary<string, string[]> Query { get; set; }
 
-        public ClientCertificateInfo[] ClientCertificates { get; set; }
+        public IList<WebPubSubClientCertificate> ClientCertificates { get; set; }
 
         public string Reason { get; set; }
+
+        public WebPubSubEventRequest Request { get; set; }
 
         /// <summary>
         /// A TaskCompletionSource will set result when the function invocation has finished.

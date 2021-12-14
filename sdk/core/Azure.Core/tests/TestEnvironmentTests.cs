@@ -59,17 +59,22 @@ namespace Azure.Core.Tests
             }
         }
 
-        [Theory]
-        [TestCase(RecordedTestMode.Live)]
         [TestCase(RecordedTestMode.Playback)]
         [TestCase(RecordedTestMode.Record)]
-        [TestCase(RecordedTestMode.None)]
-        public void ReadingRecordedValueInCtorThrows(RecordedTestMode mode)
+        public void ReadingRecordedValueInCtorThrowsInRecordedOrPlayback(RecordedTestMode mode)
         {
             Assert.Throws<InvalidOperationException>(() => new RecordedVariableMisuse(true, mode));
         }
 
-        [Theory]
+        [TestCase(RecordedTestMode.Live)]
+        [TestCase(RecordedTestMode.None)]
+        public void ReadingRecordedValueInCtorDoesNotThrowInLive(RecordedTestMode mode)
+        {
+            // this is allowed when in Live mode since we are not going to look at any record sessions anyway
+            var test = new RecordedVariableMisuse(true, mode);
+            Assert.AreEqual("1", test.Value);
+        }
+
         [TestCase(RecordedTestMode.Live)]
         [TestCase(RecordedTestMode.Playback)]
         [TestCase(RecordedTestMode.Record)]
@@ -80,7 +85,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual("2", test.Value);
         }
 
-        [Theory]
         [TestCase(RecordedTestMode.Live)]
         [TestCase(RecordedTestMode.Playback)]
         [TestCase(RecordedTestMode.Record)]
@@ -91,7 +95,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual("1", test.Value);
         }
 
-        [Theory]
         [TestCase(RecordedTestMode.Live)]
         [TestCase(RecordedTestMode.Playback)]
         [TestCase(RecordedTestMode.Record)]
@@ -115,11 +118,11 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void RecordedVariableSanitized()
+        public async Task RecordedVariableSanitized()
         {
             var tempFile = Path.GetTempFileName();
             var env = new MockTestEnvironment();
-            var testRecording = new TestRecording(RecordedTestMode.Record, tempFile, new RecordedTestSanitizer(), new RecordMatcher());
+            var testRecording = new TestRecording(RecordedTestMode.Record, tempFile, new RecordedTestSanitizer(), new RecordMatcher(), useLegacyTransport: true);
             env.Mode = RecordedTestMode.Record;
             env.SetRecording(testRecording);
 
@@ -128,9 +131,9 @@ namespace Azure.Core.Tests
             Assert.AreEqual("1", env.DefaultSecret);
             Assert.AreEqual("endpoint=1;key=2", env.ConnectionStringWithSecret);
 
-            testRecording.Dispose();
+            await testRecording.DisposeAsync();
 
-            testRecording = new TestRecording(RecordedTestMode.Playback, tempFile, new RecordedTestSanitizer(), new RecordMatcher());
+            testRecording = new TestRecording(RecordedTestMode.Playback, tempFile, new RecordedTestSanitizer(), new RecordMatcher(), useLegacyTransport: true);
 
             Assert.AreEqual("Kg==", testRecording.GetVariable("Base64Secret", ""));
             Assert.AreEqual("Custom", testRecording.GetVariable("CustomSecret", ""));
@@ -139,18 +142,18 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void RecordedOptionalVariableNotSanitizedIfMissing()
+        public async Task RecordedOptionalVariableNotSanitizedIfMissing()
         {
             var tempFile = Path.GetTempFileName();
             var env = new MockTestEnvironment();
-            var testRecording = new TestRecording(RecordedTestMode.Record, tempFile, new RecordedTestSanitizer(), new RecordMatcher());
+            var testRecording = new TestRecording(RecordedTestMode.Record, tempFile, new RecordedTestSanitizer(), new RecordMatcher(), useLegacyTransport: true);
             env.Mode = RecordedTestMode.Record;
             env.SetRecording(testRecording);
 
             Assert.IsNull(env.MissingOptionalSecret);
 
-            testRecording.Dispose();
-            testRecording = new TestRecording(RecordedTestMode.Playback, tempFile, new RecordedTestSanitizer(), new RecordMatcher());
+            await testRecording.DisposeAsync();
+            testRecording = new TestRecording(RecordedTestMode.Playback, tempFile, new RecordedTestSanitizer(), new RecordMatcher(), useLegacyTransport: true);
 
             Assert.IsNull(testRecording.GetVariable(nameof(env.MissingOptionalSecret), null));
         }

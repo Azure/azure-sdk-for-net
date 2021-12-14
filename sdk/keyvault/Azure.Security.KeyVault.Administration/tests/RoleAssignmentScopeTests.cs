@@ -13,11 +13,11 @@ namespace Azure.Security.KeyVault.Administration.Tests
         [TestCase(default(Uri))]
         public void CtorValidatesArgs(object arg)
         {
-            Assert.That(() => new KeyVaultRoleScope(default(string)), Throws.ArgumentNullException);
-            Assert.That(() => new KeyVaultRoleScope(default(Uri)), Throws.ArgumentNullException);
+            Assert.That<KeyVaultRoleScope>(() => new KeyVaultRoleScope(default(string)), Throws.ArgumentNullException);
+            Assert.That<KeyVaultRoleScope>(() => new KeyVaultRoleScope(default(Uri)), Throws.ArgumentNullException);
 
-            Assert.That(() => new KeyVaultRoleScope("someScope"), Throws.Nothing);
-            Assert.That(() => new KeyVaultRoleScope(new Uri("https://myvault.vault.azure.net/keys/keyName")), Throws.Nothing);
+            Assert.That<KeyVaultRoleScope>(() => new KeyVaultRoleScope("someScope"), Throws.Nothing);
+            Assert.That<KeyVaultRoleScope>(() => new KeyVaultRoleScope(new Uri("https://myvault.vault.azure.net/keys/keyName")), Throws.Nothing);
         }
 
         [Test]

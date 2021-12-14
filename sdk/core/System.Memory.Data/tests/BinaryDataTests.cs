@@ -296,12 +296,15 @@ namespace System.Tests
             TestModel payload = new TestModel { A = "value", B = 5, C = true, D = null };
 
             AssertData(BinaryData.FromObjectAsJson(payload));
-            AssertData(BinaryData.FromObjectAsJson(payload, new Text.Json.JsonSerializerOptions { IgnoreNullValues = true }));
             AssertData(new BinaryData(payload, type: typeof(TestModel)));
             AssertData(new BinaryData(payload));
             AssertData(new BinaryData(payload, type: null));
             AssertData(new BinaryData(payload, options: null, typeof(TestModel)));
+
+#pragma warning disable CS0618, SYSLIB0020 // IgnoreNullValues is obsolete
+            AssertData(BinaryData.FromObjectAsJson(payload, new Text.Json.JsonSerializerOptions { IgnoreNullValues = true }));
             AssertData(new BinaryData(payload, new Text.Json.JsonSerializerOptions() { IgnoreNullValues = true }, typeof(TestModel)));
+#pragma warning restore CS0618, SYSLIB0020
 
             void AssertData(BinaryData data)
             {

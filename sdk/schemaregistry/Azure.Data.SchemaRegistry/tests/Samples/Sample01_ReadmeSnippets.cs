@@ -14,17 +14,18 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
         private SchemaRegistryClient client;
 #pragma warning restore IDE1006 // Naming Styles
         private SchemaProperties _schemaProperties;
+        private string _definition;
 
         [OneTimeSetUp]
         public void CreateSchemaRegistryClient()
         {
-            string endpoint = TestEnvironment.SchemaRegistryEndpoint;
+            string fullyQualifiedNamespace = TestEnvironment.SchemaRegistryEndpoint;
 
             #region Snippet:SchemaRegistryCreateSchemaRegistryClient
             // Create a new SchemaRegistry client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
             // For more information on Azure.Identity usage, see: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
-            var client = new SchemaRegistryClient(endpoint: endpoint, credential: new DefaultAzureCredential());
+            var client = new SchemaRegistryClient(fullyQualifiedNamespace: fullyQualifiedNamespace, credential: new DefaultAzureCredential());
             #endregion
 
             this.client = client;
@@ -37,10 +38,10 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             string groupName = TestEnvironment.SchemaRegistryGroup;
 
             #region Snippet:SchemaRegistryRegisterSchema
-            string schemaName = "employeeSample";
-            SerializationType schemaType = SerializationType.Avro;
-            // Example schema's content
-            string schemaContent = @"
+            string name = "employeeSample";
+            SchemaFormat format = SchemaFormat.Avro;
+            // Example schema's definition
+            string definition = @"
             {
                ""type"" : ""record"",
                 ""namespace"" : ""TestSchema"",
@@ -51,11 +52,12 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
                 ]
             }";
 
-            Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, schemaName, schemaType, schemaContent);
+            Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, name, definition, format);
             #endregion
 
             Assert.NotNull(schemaProperties);
             _schemaProperties = schemaProperties.Value;
+            _definition = definition;
         }
 
         [Test]
@@ -65,10 +67,10 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             string groupName = TestEnvironment.SchemaRegistryGroup;
 
             #region Snippet:SchemaRegistryRetrieveSchemaId
-            string schemaName = "employeeSample";
-            SerializationType schemaType = SerializationType.Avro;
+            string name = "employeeSample";
+            SchemaFormat format = SchemaFormat.Avro;
             // Example schema's content
-            string schemaContent = @"
+            string content = @"
             {
                ""type"" : ""record"",
                 ""namespace"" : ""TestSchema"",
@@ -79,8 +81,8 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
                 ]
             }";
 
-            Response<SchemaProperties> schemaProperties = client.GetSchemaId(groupName, schemaName, schemaType, schemaContent);
-            string schemaId = schemaProperties.Value.Id;
+            SchemaProperties schemaProperties = client.GetSchemaProperties(groupName, name, content, format);
+            string schemaId = schemaProperties.Id;
             #endregion
 
             Assert.AreEqual(_schemaProperties.Id, schemaId);
@@ -93,11 +95,11 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             var schemaId = _schemaProperties.Id;
 
             #region Snippet:SchemaRegistryRetrieveSchema
-            Response<SchemaProperties> schemaProperties = client.GetSchema(schemaId);
-            string schemaContent = schemaProperties.Value.Content;
+            SchemaRegistrySchema schema = client.GetSchema(schemaId);
+            string definition = schema.Definition;
             #endregion
 
-            Assert.AreEqual(Regex.Replace(_schemaProperties.Content, @"\s+", string.Empty), schemaContent);
+            Assert.AreEqual(Regex.Replace(_definition, @"\s+", string.Empty), definition);
         }
     }
 }

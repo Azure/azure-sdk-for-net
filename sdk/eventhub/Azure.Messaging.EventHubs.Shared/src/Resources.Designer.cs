@@ -474,7 +474,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The requested retry mode, &apos;{0}&apos;, is not known; a retry delay canot be determined..
+        ///   Looks up a localized string similar to The requested retry mode, &apos;{0}&apos;, is not known; a retry delay cannot be determined..
         /// </summary>
         internal static string UnknownRetryMode
         {
@@ -694,7 +694,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to One or more exceptions occured during event processing.  Please see the inner exceptions for more detail..
+        ///   Looks up a localized string similar to One or more exceptions occurred during event processing.  Please see the inner exceptions for more detail..
         /// </summary>
         internal static string AggregateEventProcessingExceptionMessage
         {
@@ -800,6 +800,61 @@ namespace Azure.Messaging.EventHubs
             get
             {
                 return ResourceManager.GetString("InvalidAmqpMessageDictionaryTypeMask", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to This handler cannot be changed after an event has been enqueued; closing or disposing the producer will unregister any current hander..
+        /// </summary>
+        internal static string CannotChangeHandlersWhenPublishing
+        {
+            get
+            {
+                return ResourceManager.GetString("CannotChangeHandlersWhenPublishing", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to A load balancing cycle has taken too long to complete.  A slow cycle can cause stability issues with partition ownership.  Consider investigating storage latency and thread pool health.  Common causes are soft delete being enabled for storage and too many partitions owned.  You may also want to consider increasing the 'PartitionOwnershipExpirationInterval' in the processor options.  Cycle Duration: '{0}' seconds.  Partition Ownership Interval '{1}' seconds..
+        /// </summary>
+        internal static string ProcessorLoadBalancingCycleSlowMask
+        {
+            get
+            {
+                return ResourceManager.GetString("ProcessorLoadBalancingCycleSlowMask", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Events cannot be enqueued processing without the {0} handler set..
+        /// </summary>
+        internal static string CannotEnqueueEventWithoutHandler
+        {
+            get
+            {
+                return ResourceManager.GetString("CannotEnqueueEventWithoutHandler", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Events cannot be published to the requested partition; no partition with the id `{2}` are associated with the Event Hub..
+        /// </summary>
+        internal static string CannotSendToUknownPartition
+        {
+            get
+            {
+                return ResourceManager.GetString("CannotSendToUknownPartition", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The event is too large for be published to the Event Hub: '{0}`.  Size limit: {1} bytes..
+        /// </summary>
+        internal static string EventTooLargeMask
+        {
+            get
+            {
+                return ResourceManager.GetString("EventTooLargeMask", resourceCulture);
             }
         }
     }

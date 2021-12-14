@@ -3,10 +3,13 @@
 
 using System;
 using System.Buffers;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Security.Authentication;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,7 +31,7 @@ namespace Azure.Core.Tests
         {
         }
 
-        protected abstract HttpPipelineTransport GetTransport(bool https = false);
+        protected abstract HttpPipelineTransport GetTransport(bool https = false, HttpPipelineTransportOptions options = null);
 
         public static object[] ContentWithLength =>
             new object[]
@@ -72,18 +75,14 @@ namespace Azure.Core.Tests
             Request request = transport.CreateRequest();
             request.Method = RequestMethod.Post;
             request.Uri.Reset(testServer.Address);
-            request.Content = RequestContent.Create(new byte[10]);
+
+            request.Content = new InvalidSizeContent();
             request.Headers.Add("Content-Length", "50");
 
-            try
-            {
-                await ExecuteRequest(request, transport);
-            }
-            catch (Exception)
-            {
-                // Sending the request would fail because of length mismatch
-            }
+            await ExecuteRequest(request, transport);
 
+            Assert.True(request.Content.TryComputeLength(out var cl));
+            Assert.AreEqual(10, cl);
             Assert.AreEqual(50, contentLength);
         }
 
@@ -95,15 +94,15 @@ namespace Azure.Core.Tests
                 context =>
                 {
                     contentLength = context.Request.ContentLength.Value;
+                    context.Abort();
                 });
 
-            var requestContentLength = long.MaxValue;
             var transport = GetTransport();
             Request request = transport.CreateRequest();
             request.Method = RequestMethod.Post;
             request.Uri.Reset(testServer.Address);
-            request.Content = RequestContent.Create(new byte[10]);
-            request.Headers.Add("Content-Length", requestContentLength.ToString());
+            var infiniteStream = new InfiniteStream();
+            request.Content = RequestContent.Create(infiniteStream);
 
             try
             {
@@ -114,7 +113,9 @@ namespace Azure.Core.Tests
                 // Sending the request would fail because of length mismatch
             }
 
-            Assert.AreEqual(requestContentLength, requestContentLength);
+            // InfiniteStream has a length of long.MaxValue check that it got sent correctly
+            Assert.AreEqual(infiniteStream.Length, contentLength);
+            Assert.Greater(infiniteStream.Length, int.MaxValue);
         }
 
         [Test]
@@ -538,25 +539,81 @@ namespace Azure.Core.Tests
             Assert.AreEqual(10*1024, requestBytes.Length);
         }
 
-        [Test]
-        public async Task ContentLength0WhenNoContent()
+        public static object[][] RequestMethods => new[]
         {
-            StringValues contentLengthHeader = default;
+            new object[] { RequestMethod.Delete },
+            new object[] { RequestMethod.Get },
+            new object[] { RequestMethod.Patch },
+            new object[] { RequestMethod.Post },
+            new object[] { RequestMethod.Put },
+            new object[] { RequestMethod.Head },
+            new object[] { new RequestMethod("custom") },
+        };
+
+        [Test]
+        [TestCaseSource(nameof(RequestMethods))]
+        public async Task ContentLengthSetCorrectlyWhenNoContent(RequestMethod method)
+        {
+            var transport = GetTransport();
+
+            long? contentLength = null;
             using TestServer testServer = new TestServer(
                 context =>
                 {
-                    Assert.True(context.Request.Headers.TryGetValue("Content-Length", out contentLengthHeader));
+                    contentLength = context.Request.ContentLength;
                 });
 
-            var transport = GetTransport();
-
             Request request = transport.CreateRequest();
-            request.Method = RequestMethod.Post;
+            request.Method = method;
+            request.Content = null;
             request.Uri.Reset(testServer.Address);
 
             await ExecuteRequest(request, transport);
 
-            Assert.AreEqual(contentLengthHeader.ToString(), "0");
+            // for NET461, HttpClient will include zero content-length for DELETEs
+#if NET461
+            if (transport is HttpClientTransport &&
+                method == RequestMethod.Delete)
+            {
+                Assert.AreEqual(0, contentLength);
+
+                return;
+            }
+#endif
+
+            if (method == RequestMethod.Delete ||
+                method == RequestMethod.Get ||
+                method == RequestMethod.Head)
+            {
+                Assert.Null(contentLength);
+            }
+            else
+            {
+                Assert.AreEqual(0, contentLength);
+            }
+        }
+
+        [Test]
+        [TestCaseSource(nameof(RequestMethods))]
+        public async Task ContentTypeNullWhenNoContent(RequestMethod method)
+        {
+            var transport = GetTransport();
+
+            string contentType = null;
+            using TestServer testServer = new TestServer(
+                context =>
+                {
+                    contentType = context.Request.ContentType;
+                });
+
+            Request request = transport.CreateRequest();
+            request.Method = method;
+            request.Content = null;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Uri.Reset(testServer.Address);
+
+            await ExecuteRequest(request, transport);
+            Assert.Null(contentType);
         }
 
         [Test]
@@ -801,6 +858,26 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void TransportExceptionsAreWrappedAndInnerExceptionIsPopulated()
+        {
+            using (TestServer testServer = new TestServer(
+                context =>
+                {
+                    context.Abort();
+                    return Task.CompletedTask;
+                }))
+            {
+                var transport = GetTransport();
+                Request request = transport.CreateRequest();
+                request.Uri.Reset(testServer.Address);
+                RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => await ExecuteRequest(request, transport));
+                Assert.IsNotEmpty(exception.Message);
+                Assert.AreEqual(0, exception.Status);
+                Assert.IsNotEmpty(exception.InnerException.Message);
+            }
+        }
+
+        [Test]
         public Task ThrowsTaskCanceledExceptionWhenCancelled() => ThrowsTaskCanceledExceptionWhenCancelled(false);
 
         [Test]
@@ -917,6 +994,126 @@ namespace Azure.Core.Tests
             }
         }
 
+        [Test]
+        [RunOnlyOnPlatforms(Linux = true, Windows = true, OSX = false, Reason = "https://github.com/Azure/azure-sdk-for-net/issues/17986")]
+        public async Task ServerCertificateCustomValidationCallbackIsHonored([Values(true, false)] bool setCertCallback, [Values(true, false)] bool isValidCert)
+        {
+            // This test assumes ServicePointManager.ServerCertificateValidationCallback will be unset.
+            ServicePointManager.ServerCertificateValidationCallback = null;
+
+            using (TestServer testServer = new TestServer(
+                async context =>
+                {
+                    byte[] buffer = Encoding.UTF8.GetBytes("Hello");
+                    await context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
+                },
+                true))
+            {
+                bool certValidationCalled = false;
+                X509Certificate2 cert = null;
+                X509Chain chain = null;
+                var options = new HttpPipelineTransportOptions();
+
+                if (setCertCallback)
+                {
+                    options.ServerCertificateCustomValidationCallback = args =>
+                    {
+                        certValidationCalled = true;
+                        cert = args.Certificate;
+                        chain = args.X509Chain;
+                        return isValidCert;
+                    };
+                }
+                var transport = GetTransport(true, options);
+                Request request = transport.CreateRequest();
+                request.Uri.Reset(testServer.Address);
+
+                try
+                {
+                    await ExecuteRequest(request, transport);
+                    Assert.Multiple(
+                        () =>
+                        {
+                            Assert.IsTrue(isValidCert);
+                            Assert.IsTrue(setCertCallback);
+                        });
+                }
+                catch (Exception ex) when (ex is not AssertionException)
+                {
+                    Assert.That(setCertCallback && !isValidCert || !setCertCallback);
+
+                    ex = ex.InnerException;
+                    while (ex is { } && ex is not AuthenticationException)
+                    {
+                        ex = ex.InnerException;
+                    }
+                    if (ex is not AuthenticationException)
+                    {
+                        throw;
+                    }
+                    TestContext.WriteLine(ex.Message);
+                }
+                finally
+                {
+                    Assert.AreEqual(setCertCallback, certValidationCalled);
+                    if (certValidationCalled)
+                    {
+                        Assert.Multiple(
+                            () =>
+                            {
+                                Assert.NotNull(cert, $"{nameof(ServerCertificateCustomValidationArgs)}.{nameof(ServerCertificateCustomValidationArgs.Certificate)} should not be null");
+                                Assert.NotNull(chain, $"{nameof(ServerCertificateCustomValidationArgs)}.{nameof(ServerCertificateCustomValidationArgs.X509Chain)} should not be null");
+                            });
+                    }
+                }
+            }
+        }
+
+        [Test]
+        public async Task No100ContinueSentByDefault()
+        {
+            using (TestServer testServer = new TestServer(
+                       async context =>
+                       {
+                           Assert.Zero(context.Request.Headers["Expect"].Count);
+                           await context.Response.WriteAsync("");
+                       }))
+            {
+                var transport = GetTransport();
+                Request request = transport.CreateRequest();
+                request.Method = RequestMethod.Post;
+                request.Uri.Reset(testServer.Address);
+                request.Content = RequestContent.Create("Hello");
+                Response response = await ExecuteRequest(request, transport);
+
+                Assert.AreEqual(200, response.Status);
+            }
+        }
+
+        [Test]
+        public async Task CanSendExpect100Continue()
+        {
+            using (TestServer testServer = new TestServer(
+                       async context =>
+                       {
+                           Assert.True(context.Request.Headers["Expect"] == "100-continue");
+                           context.Response.StatusCode = 444;
+
+                           await context.Response.WriteAsync("Too long");
+                       }))
+            {
+                var transport = GetTransport();
+                Request request = transport.CreateRequest();
+                request.Method = RequestMethod.Post;
+                request.Uri.Reset(testServer.Address);
+                request.Headers.Add("Expect", "100-continue");
+                request.Content = RequestContent.Create("Hello");
+                Response response = await ExecuteRequest(request, transport);
+
+                Assert.AreEqual(444, response.Status);
+            }
+        }
+
         private static Request CreateRequest(HttpPipelineTransport transport, TestServer server, byte[] bytes = null)
         {
             Request request = transport.CreateRequest();
@@ -967,6 +1164,30 @@ namespace Azure.Core.Tests
             public override bool CanSeek { get; } = true;
             public override long Length => long.MaxValue;
             public override long Position { get; set; } = 0;
+        }
+
+        private class InvalidSizeContent : RequestContent
+        {
+            private static readonly RequestContent _innerContent = RequestContent.Create(new byte[50]);
+            public override void Dispose()
+            {
+            }
+
+            public override bool TryComputeLength(out long length)
+            {
+                length = 10;
+                return true;
+            }
+
+            public override void WriteTo(Stream stream, CancellationToken cancellation)
+            {
+                _innerContent.WriteTo(stream, cancellation);
+            }
+
+            public override Task WriteToAsync(Stream stream, CancellationToken cancellation)
+            {
+                return _innerContent.WriteToAsync(stream, cancellation);
+            }
         }
     }
 }

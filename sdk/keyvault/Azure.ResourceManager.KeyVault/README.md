@@ -8,8 +8,8 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 Install the Azure Key Vault management library for .NET with [NuGet](https://www.nuget.org/):
 
-```PowerShell
-dotnet add package Azure.ResourceManager.KeyVault --version 1.0.0-preview.1
+```dotnetcli
+dotnet add package Azure.ResourceManager.KeyVault --version 1.0.0-beta.4
 ```
 
 ### Prerequisites
@@ -22,7 +22,7 @@ To create an authenticated client and start interacting with Azure resources, pl
 
 ## Key concepts
 
-Key concepts of the Azure .NET SDK can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html)
+Key concepts of the Azure .NET SDK can be found [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/README.md#key-concepts)
 
 ## Documentation
 

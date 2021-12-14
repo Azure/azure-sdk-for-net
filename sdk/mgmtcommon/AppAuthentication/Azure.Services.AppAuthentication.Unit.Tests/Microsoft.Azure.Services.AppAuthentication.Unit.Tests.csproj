@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>net472;net452;net461;netcoreapp2.0;netcoreapp1.1</TargetFrameworks>
+        <TargetFrameworks>net472;net452;net461;netcoreapp3.1</TargetFrameworks>
     </PropertyGroup>
 	<PropertyGroup Condition="'$(TargetFramework)' == 'net472'">
 		<DefineConstants>net472;FullNetFx</DefineConstants>		
@@ -16,10 +16,13 @@
         <ProjectReference Include="..\Azure.Services.AppAuthentication\Microsoft.Azure.Services.AppAuthentication.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.0" />
-        <PackageReference Include="xUnit" Version="2.3.1" />
-        <PackageReference Include="xUnit.Runner.VisualStudio" Version="2.3.1" />
-        	<PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.2" />
+        <PackageReference Include="xUnit" Version="2.4.1" />
+        <PackageReference Include="xUnit.Runner.VisualStudio" Version="2.4.1">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        	<PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="All" />
     </ItemGroup>
     <ItemGroup>
         <Reference Include="System.Net.Http" />

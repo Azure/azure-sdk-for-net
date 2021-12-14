@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31717.71
+MinimumVisualStudioVersion = 15.0.26124.0
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FFE2667E-131F-40CE-8851-AFAECFBF89BB}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.WebJobs.Extensions.SignalRService", "src\Microsoft.Azure.WebJobs.Extensions.SignalRService.csproj", "{02A467BA-E3F2-408D-AD49-CB317C430C53}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.WebJobs.Extensions.SignalRService.Tests", "tests\Microsoft.Azure.WebJobs.Extensions.SignalRService.Tests.csproj", "{D1F82C66-8DF4-4622-BED6-7B6F11DABBAD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{25AE2C7A-FD10-4A94-A063-857C542B7D45}"
+	ProjectSection(SolutionItems) = preProject
+		api\Microsoft.Azure.WebJobs.Extensions.SignalRService.netcoreapp3.1.cs = api\Microsoft.Azure.WebJobs.Extensions.SignalRService.netcoreapp3.1.cs
+		api\Microsoft.Azure.WebJobs.Extensions.SignalRService.netstandard2.0.cs = api\Microsoft.Azure.WebJobs.Extensions.SignalRService.netstandard2.0.cs
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{02A467BA-E3F2-408D-AD49-CB317C430C53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02A467BA-E3F2-408D-AD49-CB317C430C53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02A467BA-E3F2-408D-AD49-CB317C430C53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02A467BA-E3F2-408D-AD49-CB317C430C53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1F82C66-8DF4-4622-BED6-7B6F11DABBAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1F82C66-8DF4-4622-BED6-7B6F11DABBAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1F82C66-8DF4-4622-BED6-7B6F11DABBAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1F82C66-8DF4-4622-BED6-7B6F11DABBAD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {227AD9AE-1447-4D8C-A014-50ABEC8E005C}
+	EndGlobalSection
+EndGlobal

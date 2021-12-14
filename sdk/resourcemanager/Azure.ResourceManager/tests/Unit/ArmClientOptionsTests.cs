@@ -72,6 +72,7 @@ namespace Azure.ResourceManager.Tests
         }
 
         [TestCase]
+        [Ignore("Waiting for ADO 5402")]
         public void VersionExist()
         {
             ArmClientOptions options = new ArmClientOptions();
@@ -81,6 +82,7 @@ namespace Azure.ResourceManager.Tests
         }
 
         [TestCase]
+        [Ignore("Waiting for ADO 5402")]
         public void VersionLoadedChanges()
         {
             ArmClientOptions options = new ArmClientOptions();
@@ -94,6 +96,7 @@ namespace Azure.ResourceManager.Tests
         }
 
         [TestCase]
+        [Ignore("Waiting for ADO 5402")]
         public void VersionsLoadedChangeSet()
         {
             ArmClientOptions options = new ArmClientOptions();

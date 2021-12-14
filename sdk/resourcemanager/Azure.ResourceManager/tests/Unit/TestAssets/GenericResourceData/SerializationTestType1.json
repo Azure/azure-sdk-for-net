@@ -11,7 +11,7 @@
     "managedBy": "ManagedByForResource",
     "sku": {
       "name": "NameForSku",
-      "tier": "TierForSku",
+      "tier": "Basic",
       "size": "SizeForSku",
       "family": "FamilyForSku",
       "model": "ModelForSku",

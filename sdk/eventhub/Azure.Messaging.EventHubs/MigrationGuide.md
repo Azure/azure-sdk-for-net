@@ -148,10 +148,9 @@ var consumer = new EventHubConsumerClient(consumerGroup, connectionString, event
 Using an `Azure.Identity` credential:
 
 ```C# Snippet:EventHubs_Migrate_CreateWithDefaultAzureCredential
-TokenCredential credential = new DefaultAzureCredential();
-
 var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var credential = new DefaultAzureCredential();
 var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
 
 var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
@@ -211,12 +210,11 @@ var producer = new EventHubProducerClient(connectionString, eventHubName);
 
 try
 {
-    using var eventBatch = await producer.CreateBatchAsync();
+    using EventDataBatch eventBatch = await producer.CreateBatchAsync();
 
     for (var index = 0; index < 5; ++index)
     {
-        var eventBody = new BinaryData($"Event #{ index }");
-        var eventData = new EventData(eventBody);
+        var eventData = new EventData($"Event #{ index }");
 
         if (!eventBatch.TryAdd(eventData))
         {
@@ -287,12 +285,11 @@ try
         PartitionKey = "Any Value Will Do..."
     };
 
-    using var eventBatch = await producer.CreateBatchAsync(batchOptions);
+    using EventDataBatch eventBatch = await producer.CreateBatchAsync(batchOptions);
 
     for (var index = 0; index < 5; ++index)
     {
-        var eventBody = new BinaryData($"Event #{ index }");
-        var eventData = new EventData(eventBody);
+        var eventData = new EventData($"Event #{ index }");
 
         if (!eventBatch.TryAdd(eventData))
         {
@@ -365,12 +362,11 @@ try
         PartitionId = firstPartition
     };
 
-    using var eventBatch = await producer.CreateBatchAsync(batchOptions);
+    using EventDataBatch eventBatch = await producer.CreateBatchAsync(batchOptions);
 
     for (var index = 0; index < 5; ++index)
     {
-        var eventBody = new BinaryData($"Event #{ index }");
-        var eventData = new EventData(eventBody);
+        var eventData = new EventData($"Event #{ index }");
 
         if (!eventBatch.TryAdd(eventData))
         {

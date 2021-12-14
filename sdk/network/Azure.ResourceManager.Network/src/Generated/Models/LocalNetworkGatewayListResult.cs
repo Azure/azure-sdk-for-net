@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of LocalNetworkGatewayListResult. </summary>
         internal LocalNetworkGatewayListResult()
         {
-            Value = new ChangeTrackingList<LocalNetworkGateway>();
+            Value = new ChangeTrackingList<LocalNetworkGatewayData>();
         }
 
         /// <summary> Initializes a new instance of LocalNetworkGatewayListResult. </summary>
         /// <param name="value"> A list of local network gateways that exists in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal LocalNetworkGatewayListResult(IReadOnlyList<LocalNetworkGateway> value, string nextLink)
+        internal LocalNetworkGatewayListResult(IReadOnlyList<LocalNetworkGatewayData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of local network gateways that exists in a resource group. </summary>
-        public IReadOnlyList<LocalNetworkGateway> Value { get; }
+        public IReadOnlyList<LocalNetworkGatewayData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

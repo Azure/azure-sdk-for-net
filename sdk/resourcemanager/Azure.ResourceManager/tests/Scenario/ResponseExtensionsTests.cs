@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Tests
         public async Task GetCorrelationId()
         {
             var correlationId = "0a98bb8b-ec3e-4f68-a8c1-a7705554a980";
-            var pipeline = Client.DefaultSubscription.Pipeline;
+            var pipeline = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).Pipeline;
             var endpoint = new Uri("https://management.azure.com");
             var message = pipeline.CreateMessage();
             var request = message.Request;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Tests
 
             await pipeline.SendAsync(message, default).ConfigureAwait(false);
             var response = message.Response;
-            Assert.AreEqual(correlationId, ResponseExtensions.GetCorrelationId(response));
+            Assert.AreEqual(correlationId, response.GetCorrelationId());
         }
     }
 }

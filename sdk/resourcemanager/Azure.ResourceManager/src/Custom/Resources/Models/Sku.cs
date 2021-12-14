@@ -2,10 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Globalization;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Models
 {
     /// <summary>
     /// A class representing SKU for resource.
@@ -28,9 +29,7 @@ namespace Azure.ResourceManager.Resources.Models
             int compareResult = 0;
             if ((compareResult = string.Compare(Name, other.Name, StringComparison.InvariantCultureIgnoreCase)) == 0 &&
                 (compareResult = string.Compare(Family, other.Family, StringComparison.InvariantCultureIgnoreCase)) == 0 &&
-                (compareResult = string.Compare(Model, other.Model, StringComparison.InvariantCultureIgnoreCase)) == 0 &&
-                (compareResult = string.Compare(Size, other.Size, StringComparison.InvariantCultureIgnoreCase)) == 0 &&
-                (compareResult = string.Compare(Tier, other.Tier, StringComparison.InvariantCultureIgnoreCase)) == 0)
+                (compareResult = string.Compare(Size, other.Size, StringComparison.InvariantCultureIgnoreCase)) == 0)
             {
                 return Nullable.Compare<long>(Capacity, other.Capacity);
             }
@@ -53,13 +52,13 @@ namespace Azure.ResourceManager.Resources.Models
 
             return string.Equals(Name, other.Name, StringComparison.InvariantCultureIgnoreCase) &&
                 string.Equals(Family, other.Family, StringComparison.InvariantCultureIgnoreCase) &&
-                string.Equals(Model, other.Model, StringComparison.InvariantCultureIgnoreCase) &&
                 string.Equals(Size, other.Size, StringComparison.InvariantCultureIgnoreCase) &&
-                string.Equals(Tier, other.Tier, StringComparison.InvariantCultureIgnoreCase) &&
+                (Tier.HasValue ? Tier.Value.Equals(other.Tier) : !other.Tier.HasValue) &&
                 long.Equals(Capacity, other.Capacity);
         }
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(this, obj))
@@ -79,14 +78,14 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
         {
             return HashCodeBuilder.Combine(
                 Name?.ToLower(CultureInfo.InvariantCulture),
-                Model?.ToLower(CultureInfo.InvariantCulture),
                 Family?.ToLower(CultureInfo.InvariantCulture),
                 Size?.ToLower(CultureInfo.InvariantCulture),
-                Tier?.ToLower(CultureInfo.InvariantCulture),
+                Tier?.ToString().ToLower(CultureInfo.InvariantCulture),
                 Capacity);
         }
 

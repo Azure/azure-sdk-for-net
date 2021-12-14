@@ -1,5 +1,9 @@
 ## Microsoft.Azure.Services.AppAuthentication Library
 
+### Note
+This library is no longer recommended to use with the new Azure SDK. It is replaced with the new **Azure Identity client library** available for .NET, Java, TypeScript and Python and should be used for all new development. Information about how to migrate to `Azure.Identity` can be found here: [AppAuthentication to Azure.Identity Migration Guidance](https://docs.microsoft.com/dotnet/api/overview/azure/app-auth-migration).
+***
+
 ### Purpose
 Make it easy to authenticate to Azure Services (that support Azure AD Authentication), and help avoid credentials in source code and configuration files. 
 
@@ -34,7 +38,7 @@ The library is organized in these layers:
 
 On Windows, open a command prompt, navigate to the unit test folder, and run **dotnet test**. This will run tests for both .NET 4.5.2 and .NET Standard 1.4. 
 
-On Linux, open a command prompt, navigate to the unit test folder, and run **dotnet test -f netcoreapp1.1**. This will run tests for .NET Standard 1.4. 
+On Linux, open a command prompt, navigate to the unit test folder, and run **dotnet test -f netcoreapp3.1**. This will run tests for .NET Standard 1.4. 
 
 **Integration Test Cases**
 
@@ -50,6 +54,6 @@ Before running these test cases, ensure that you
    
 On Windows, open a command prompt, navigate to the integration test folder, and run **dotnet test**. This will run tests for both .NET 4.5.2 and .NET Standard 1.4. 
 
-On Linux, open a command prompt, navigate to the integration test folder, and run **dotnet test -f netcoreapp1.1**. This will run tests for .NET Standard 1.4. 
+On Linux, open a command prompt, navigate to the integration test folder, and run **dotnet test -f netcoreapp3.1**. This will run tests for .NET Standard 1.4. 
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fmgmtcommon%2FAppAuthentication%2FREADME.png)

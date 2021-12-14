@@ -34,22 +34,9 @@ namespace Azure.Storage.Files.DataLake
         /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="resource"/>, or <paramref name="version"/> is null. </exception>
         public FileSystemRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string resource = "filesystem", string version = "2020-06-12")
         {
-            if (url == null)
-            {
-                throw new ArgumentNullException(nameof(url));
-            }
-            if (resource == null)
-            {
-                throw new ArgumentNullException(nameof(resource));
-            }
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-
-            this.url = url;
-            this.resource = resource;
-            this.version = version;
+            this.url = url ?? throw new ArgumentNullException(nameof(url));
+            this.resource = resource ?? throw new ArgumentNullException(nameof(resource));
+            this.version = version ?? throw new ArgumentNullException(nameof(version));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }

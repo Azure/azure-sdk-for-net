@@ -13,10 +13,14 @@ namespace Azure.ResourceManager.Tests.Samples
         public async Task CreateResourceGroupAsync()
         {
             #region Snippet:Creating_A_Virtual_Network_CreateResourceGroup
-            var armClient = new ArmClient(new DefaultAzureCredential());
-            ResourceGroupContainer rgContainer = armClient.DefaultSubscription.GetResourceGroups();
+            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+            ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
+
             string rgName = "myResourceGroup";
-            ResourceGroup resourceGroup = await rgContainer.Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
+            ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
+            ResourceGroupCreateOrUpdateOperation operation = await rgCollection.CreateOrUpdateAsync(rgName, rgData);
+            ResourceGroup resourceGroup = operation.Value;
             #endregion Snippet:Creating_A_Virtual_Network_CreateResourceGroup
         }
     }

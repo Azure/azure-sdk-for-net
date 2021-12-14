@@ -56,12 +56,31 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <param name="provisioningState">Resource state</param>
         /// <param name="status">Resource status</param>
         /// <param name="restorePointInTime">Snapshot time to restore</param>
-        /// <param name="createMode">What is this?</param>
+        /// <param name="createMode">Specifies the mode of sql pool creation.
+        ///
+        /// Default: regular sql pool creation.
+        ///
+        /// PointInTimeRestore: Creates a sql pool by restoring a point in time
+        /// backup of an existing sql pool. sourceDatabaseId must be specified
+        /// as the resource ID of the existing sql pool, and restorePointInTime
+        /// must be specified.
+        ///
+        /// Recovery: Creates a sql pool by a geo-replicated backup.
+        /// sourceDatabaseId  must be specified as the recoverableDatabaseId to
+        /// restore.
+        ///
+        /// Restore: Creates a sql pool by restoring a backup of a deleted sql
+        /// pool. SourceDatabaseId should be the sql pool's original resource
+        /// ID. SourceDatabaseId and sourceDatabaseDeletionDate must be
+        /// specified. Possible values include: 'Default',
+        /// 'PointInTimeRestore', 'Recovery', 'Restore'</param>
         /// <param name="creationDate">Date the SQL pool was created</param>
         /// <param name="storageAccountType">The storage account type used to
         /// store backups for this sql pool. Possible values include: 'GRS',
         /// 'LRS', 'ZRS'</param>
-        public SqlPool(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), long? maxSizeBytes = default(long?), string collation = default(string), string sourceDatabaseId = default(string), string recoverableDatabaseId = default(string), string provisioningState = default(string), string status = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), string createMode = default(string), System.DateTime? creationDate = default(System.DateTime?), string storageAccountType = default(string))
+        /// <param name="sourceDatabaseDeletionDate">Specifies the time that
+        /// the sql pool was deleted</param>
+        public SqlPool(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), long? maxSizeBytes = default(long?), string collation = default(string), string sourceDatabaseId = default(string), string recoverableDatabaseId = default(string), string provisioningState = default(string), string status = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), string createMode = default(string), System.DateTime? creationDate = default(System.DateTime?), string storageAccountType = default(string), System.DateTime? sourceDatabaseDeletionDate = default(System.DateTime?))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -75,6 +94,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
             CreateMode = createMode;
             CreationDate = creationDate;
             StorageAccountType = storageAccountType;
+            SourceDatabaseDeletionDate = sourceDatabaseDeletionDate;
             CustomInit();
         }
 
@@ -132,7 +152,24 @@ namespace Microsoft.Azure.Management.Synapse.Models
         public System.DateTime? RestorePointInTime { get; set; }
 
         /// <summary>
-        /// Gets or sets what is this?
+        /// Gets or sets specifies the mode of sql pool creation.
+        ///
+        /// Default: regular sql pool creation.
+        ///
+        /// PointInTimeRestore: Creates a sql pool by restoring a point in time
+        /// backup of an existing sql pool. sourceDatabaseId must be specified
+        /// as the resource ID of the existing sql pool, and restorePointInTime
+        /// must be specified.
+        ///
+        /// Recovery: Creates a sql pool by a geo-replicated backup.
+        /// sourceDatabaseId  must be specified as the recoverableDatabaseId to
+        /// restore.
+        ///
+        /// Restore: Creates a sql pool by restoring a backup of a deleted sql
+        /// pool. SourceDatabaseId should be the sql pool's original resource
+        /// ID. SourceDatabaseId and sourceDatabaseDeletionDate must be
+        /// specified. Possible values include: 'Default',
+        /// 'PointInTimeRestore', 'Recovery', 'Restore'
         /// </summary>
         [JsonProperty(PropertyName = "properties.createMode")]
         public string CreateMode { get; set; }
@@ -149,6 +186,12 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageAccountType")]
         public string StorageAccountType { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the time that the sql pool was deleted
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sourceDatabaseDeletionDate")]
+        public System.DateTime? SourceDatabaseDeletionDate { get; set; }
 
         /// <summary>
         /// Validate the object.

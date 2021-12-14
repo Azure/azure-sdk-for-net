@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +22,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
     [TestFixture]
     [Category(TestCategory.Live)]
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
-    [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "Example assignments needed for snippet output content.")]
     public class Sample05_IdentityAndSharedAccessCredentialsLiveTests
     {
         /// <summary>
@@ -38,22 +36,23 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             #region Snippet:EventHubs_Processor_Sample05_DefaultAzureCredential
 
-            TokenCredential credential = new DefaultAzureCredential();
+#if SNIPPET
+            var credential = new DefaultAzureCredential();
 
             var storageEndpoint = "<< STORAGE ENDPOINT (likely similar to {your-account}.blob.core.windows.net) >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
-            /*@@*/
-            /*@@*/ storageEndpoint = new BlobServiceClient(StorageTestEnvironment.Instance.StorageConnectionString).Uri.ToString();
-            /*@@*/ blobContainerName = storageScope.ContainerName;
 
             var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
-            /*@@*/
-            /*@@*/ fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
-            /*@@*/ eventHubName = eventHubScope.EventHubName;
-            /*@@*/ consumerGroup = eventHubScope.ConsumerGroups.First();
-            /*@@*/ credential = EventHubsTestEnvironment.Instance.Credential;
+#else
+            var credential = EventHubsTestEnvironment.Instance.Credential;
+            var storageEndpoint = new BlobServiceClient(StorageTestEnvironment.Instance.StorageConnectionString).Uri.ToString();
+            var blobContainerName = storageScope.ContainerName;
+            var fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
+            var eventHubName = eventHubScope.EventHubName;
+            var consumerGroup = eventHubScope.ConsumerGroups.First();
+#endif
 
             var blobUriBuilder = new BlobUriBuilder(new Uri(storageEndpoint));
             blobUriBuilder.BlobContainerName = blobContainerName;
@@ -129,24 +128,26 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             #region Snippet:EventHubs_Processor_Sample05_SharedAccessSignature
 
+#if SNIPPET
+            var credential = new AzureSasCredential("<< SHARED ACCESS KEY STRING >>");
+
             var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
-            /*@@*/
-            /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = storageScope.ContainerName;
 
-            var credential = new AzureSasCredential("<< SHARED ACCESS KEY STRING >>");
             var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
-            /*@@*/
-            /*@@*/ fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
-            /*@@*/ eventHubName = eventHubScope.EventHubName;
-            /*@@*/ consumerGroup = eventHubScope.ConsumerGroups.First();
-            /*@@*/
-            /*@@*/ var resource = $"amqps://{ EventHubsTestEnvironment.Instance.FullyQualifiedNamespace }/{ eventHubScope.EventHubName }".ToLowerInvariant();
-            /*@@*/ var signature = new SharedAccessSignature(resource, EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
-            /*@@*/ credential = new AzureSasCredential(signature.Value);
+#else
+            var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
+            var blobContainerName = storageScope.ContainerName;
+            var fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
+            var eventHubName = eventHubScope.EventHubName;
+            var consumerGroup = eventHubScope.ConsumerGroups.First();
+
+            var resource = $"amqps://{ EventHubsTestEnvironment.Instance.FullyQualifiedNamespace }/{ eventHubScope.EventHubName }".ToLowerInvariant();
+            var signature = new SharedAccessSignature(resource, EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
+            var credential = new AzureSasCredential(signature.Value);
+#endif
 
              var storageClient = new BlobContainerClient(
                 storageConnectionString,
@@ -219,21 +220,23 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             #region Snippet:EventHubs_Processor_Sample05_SharedAccessKey
 
+#if SNIPPET
+            var credential = new AzureNamedKeyCredential("<< SHARED KEY NAME >>", "<< SHARED KEY >>");
+
             var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
-            /*@@*/
-            /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = storageScope.ContainerName;
 
-            var credential = new AzureNamedKeyCredential("<< SHARED KEY NAME >>", "<< SHARED KEY >>");
             var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
-            /*@@*/
-            /*@@*/ fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
-            /*@@*/ eventHubName = eventHubScope.EventHubName;
-            /*@@*/ consumerGroup = eventHubScope.ConsumerGroups.First();
-            /*@@*/ credential = new AzureNamedKeyCredential(EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
+#else
+            var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
+            var blobContainerName = storageScope.ContainerName;
+            var fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
+            var eventHubName = eventHubScope.EventHubName;
+            var consumerGroup = eventHubScope.ConsumerGroups.First();
+            var credential = new AzureNamedKeyCredential(EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
+#endif
 
              var storageClient = new BlobContainerClient(
                 storageConnectionString,
@@ -306,26 +309,29 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             #region Snippet:EventHubs_Processor_Sample05_ConnectionStringParse
 
-            TokenCredential credential = new DefaultAzureCredential();
-
-            var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
-            var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
-            /*@@*/
-            /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = storageScope.ContainerName;
+#if SNIPPET
+            var credential = new DefaultAzureCredential();
 
             var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
-            /*@@*/
-            /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = eventHubScope.EventHubName;
-            /*@@*/ consumerGroup = eventHubScope.ConsumerGroups.First();
-            /*@@*/ credential = EventHubsTestEnvironment.Instance.Credential;
 
+            var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+            var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
+#else
+            var credential = EventHubsTestEnvironment.Instance.Credential;
+            var eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = eventHubScope.EventHubName;
+            var consumerGroup = eventHubScope.ConsumerGroups.First();
+            var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
+            var blobContainerName = storageScope.ContainerName;
+#endif
             var storageEndpoint = new BlobServiceClient(storageConnectionString).Uri;
-            var blobUriBuilder = new BlobUriBuilder(storageEndpoint);
-            blobUriBuilder.BlobContainerName = blobContainerName;
+
+            var blobUriBuilder = new BlobUriBuilder(storageEndpoint)
+            {
+                BlobContainerName = blobContainerName
+            };
 
             var storageClient = new BlobContainerClient(
                 blobUriBuilder.ToUri(),
@@ -394,7 +400,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         ///   examples.
         /// </summary>
         ///
-        [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Simulated class for illustration in samples.")]
         private static class Application
         {
             /// <summary>

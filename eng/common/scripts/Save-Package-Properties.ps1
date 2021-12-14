@@ -37,20 +37,25 @@ Param (
 
 . (Join-Path $PSScriptRoot common.ps1)
 
-function SetOutput($outputPath, $incomingPackageSpec) { 
-  $outputObject = $incomingPackageSpec
+function SetOutput($outputPath, $incomingPackageSpec) {
 
-  if ($addDevVersion) {
+  # If there is an exsiting package info json file read that and set that as output object which gets properties updated here.
+  if (Test-Path $outputPath)
+  {
+    Write-Host "Found existing package info json."
+    $outputObject = ConvertFrom-Json (Get-Content $outputPath -Raw)
+  }
+  else
+  {
+    $outputObject = $incomingPackageSpec
+  }
+  
+
+  if ($addDevVersion)
+  {
     # Use the "Version" property which was provided by the incoming package spec
     # as the DevVersion. This may be overridden later.
     $outputObject.DevVersion = $incomingPackageSpec.Version
-
-    # If there is an exsiting package info json file read that and set the 
-    # Version property from that JSON file.
-    if (Test-Path $outputPath) { 
-      $originalObject = ConvertFrom-Json (Get-Content $outputPath -Raw)
-      $outputObject.Version = $originalObject.Version
-    }
   }
 
   # Set file paths to relative paths
@@ -68,6 +73,14 @@ function GetRelativePath($path) {
   if (!$path) {
     return ''
   }
+
+  # If the path is already relative return the path. Calling `GetRelativePath`
+  # on a relative path converts the relative path to an absolute path based on
+  # the current working directory which can result in unexpected outputs.
+  if (![IO.Path]::IsPathRooted($path)) {
+    return $path
+  }
+
   $relativeTo = Resolve-Path $PSScriptRoot/../../../
   # Replace "\" with "/" so the path is valid across other platforms and tools
   $relativePath = [IO.Path]::GetRelativePath($relativeTo, $path) -replace "\\", '/'
@@ -83,21 +96,19 @@ if ($allPackageProperties)
     }
     foreach($pkg in $allPackageProperties)
     {
-        if ($pkg.IsNewSdk)
+        Write-Host "Package Name: $($pkg.Name)"
+        Write-Host "Package Version: $($pkg.Version)"
+        Write-Host "Package SDK Type: $($pkg.SdkType)"
+        Write-Host "Artifact Name: $($pkg.ArtifactName)"
+        Write-Host "Release date: $($pkg.ReleaseStatus)"
+        $configFilePrefix = $pkg.Name
+        if ($pkg.ArtifactName)
         {
-            Write-Host "Package Name: $($pkg.Name)"
-            Write-Host "Package Version: $($pkg.Version)"
-            Write-Host "Package SDK Type: $($pkg.SdkType)"
-            Write-Host "Artifact Name: $($pkg.ArtifactName)"
-            Write-Host "Release date: $($pkg.ReleaseStatus)"
-            $configFilePrefix = $pkg.Name
-            if ($pkg.ArtifactName)
-            {
-              $configFilePrefix = $pkg.ArtifactName
-            }
-            $outputPath = Join-Path -Path $outDirectory "$configFilePrefix.json"
-            SetOutput $outputPath $pkg
+          $configFilePrefix = $pkg.ArtifactName
         }
+        $outputPath = Join-Path -Path $outDirectory "$configFilePrefix.json"
+        Write-Host "Output path of json file: $outputPath"
+        SetOutput $outputPath $pkg
     }
 
     Get-ChildItem -Path $outDirectory

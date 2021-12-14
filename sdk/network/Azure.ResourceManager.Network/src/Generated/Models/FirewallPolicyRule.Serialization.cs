@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("ruleType");
-            writer.WriteStringValue(RuleType.ToString());
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Priority))
+            if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("priority");
-                writer.WriteNumberValue(Priority.Value);
+                writer.WritePropertyName("description");
+                writer.WriteStringValue(Description);
             }
+            writer.WritePropertyName("ruleType");
+            writer.WriteStringValue(RuleType.ToString());
             writer.WriteEndObject();
         }
 
@@ -36,37 +36,33 @@ namespace Azure.ResourceManager.Network.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "FirewallPolicyFilterRule": return FirewallPolicyFilterRule.DeserializeFirewallPolicyFilterRule(element);
-                    case "FirewallPolicyNatRule": return FirewallPolicyNatRule.DeserializeFirewallPolicyNatRule(element);
+                    case "ApplicationRule": return ApplicationRule.DeserializeApplicationRule(element);
+                    case "NatRule": return NatRule.DeserializeNatRule(element);
+                    case "NetworkRule": return NetworkRule.DeserializeNetworkRule(element);
                 }
             }
-            FirewallPolicyRuleType ruleType = default;
             Optional<string> name = default;
-            Optional<int> priority = default;
+            Optional<string> description = default;
+            FirewallPolicyRuleType ruleType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ruleType"))
-                {
-                    ruleType = new FirewallPolicyRuleType(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("priority"))
+                if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    priority = property.Value.GetInt32();
+                    description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("ruleType"))
+                {
+                    ruleType = new FirewallPolicyRuleType(property.Value.GetString());
                     continue;
                 }
             }
-            return new FirewallPolicyRule(ruleType, name.Value, Optional.ToNullable(priority));
+            return new FirewallPolicyRule(name.Value, description.Value, ruleType);
         }
     }
 }

@@ -13,6 +13,7 @@ using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Shared;
 using Azure.Storage.Test;
@@ -29,6 +30,9 @@ namespace Azure.Storage.Blobs.Test
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
+
+        public BlobServiceClient GetServiceClient_SharedKey(BlobClientOptions options = default)
+            => BlobsClientBuilder.GetServiceClient_SharedKey(options);
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_02_02)]
@@ -252,11 +256,11 @@ namespace Azure.Storage.Blobs.Test
         public void Ctor_TokenAuth_Http()
         {
             // Arrange
-            Uri httpUri = new Uri(TestConfigOAuth.BlobServiceEndpoint).ToHttp();
+            Uri httpUri = new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint).ToHttp();
 
             // Act
             TestHelper.AssertExpectedException(
-                () => new BlobContainerClient(httpUri, GetOAuthCredential()),
+                () => new BlobContainerClient(httpUri, Tenants.GetOAuthCredential()),
                  new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
@@ -339,6 +343,8 @@ namespace Azure.Storage.Blobs.Test
                 Response<BlobContainerInfo> response = await container.CreateAsync();
 
                 // Assert
+                // Ensure that we grab the whole ETag value from the service without removing the quotes
+                Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
 
                 var accountName = new BlobUriBuilder(service.Uri).AccountName;
@@ -389,7 +395,7 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
             var containerName = GetNewContainerName();
-            BlobServiceClient service = GetServiceClient_OauthAccount();
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_OAuth();
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
 
             try
@@ -421,7 +427,7 @@ namespace Azure.Storage.Blobs.Test
                 | AccountSasPermissions.Update
                 | AccountSasPermissions.Process;
 
-            SasQueryParameters sasQueryParameters = GetNewAccountSas(
+            SasQueryParameters sasQueryParameters = BlobsClientBuilder.GetNewAccountSas(
                 permissions: permissions);
 
             BlobServiceClient service = new BlobServiceClient(
@@ -817,8 +823,10 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(response.Value.PublicAccess);
             Assert.IsNotNull(response.Value.HasImmutabilityPolicy);
             Assert.IsNotNull(response.Value.HasLegalHold);
-            Assert.IsNotNull(response.Value.ETag);
             Assert.IsNotNull(response.Value.Metadata);
+
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
 
             if (_serviceVersion >= BlobClientOptions.ServiceVersion.V2019_07_07)
             {
@@ -893,11 +901,16 @@ namespace Azure.Storage.Blobs.Test
             IDictionary<string, string> metadata = BuildMetadata();
 
             // Act
-            await test.Container.SetMetadataAsync(metadata);
+            Response<BlobContainerInfo> response = await test.Container.SetMetadataAsync(metadata);
 
             // Assert
-            Response<BlobContainerProperties> response = await test.Container.GetPropertiesAsync();
-            AssertDictionaryEquality(metadata, response.Value.Metadata);
+
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+
+            // Check if we correctly set the metadata properly
+            Response<BlobContainerProperties> getPropertiesResponse = await test.Container.GetPropertiesAsync();
+            AssertDictionaryEquality(metadata, getPropertiesResponse.Value.Metadata);
         }
 
         [RecordedTest]
@@ -1033,6 +1046,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(response);
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
         }
 
         [RecordedTest]
@@ -1144,19 +1159,23 @@ namespace Azure.Storage.Blobs.Test
             BlobSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
 
             // Act
-            await test.Container.SetAccessPolicyAsync(
+            Response<BlobContainerInfo> response = await test.Container.SetAccessPolicyAsync(
                 accessType: publicAccessType,
                 permissions: signedIdentifiers
             );
 
             // Assert
+
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+
             Response<BlobContainerProperties> propertiesResponse = await test.Container.GetPropertiesAsync();
             Assert.AreEqual(publicAccessType, propertiesResponse.Value.PublicAccess);
 
-            Response<BlobContainerAccessPolicy> response = await test.Container.GetAccessPolicyAsync();
-            Assert.AreEqual(1, response.Value.SignedIdentifiers.Count());
+            Response<BlobContainerAccessPolicy> getPolicyResponse = await test.Container.GetAccessPolicyAsync();
+            Assert.AreEqual(1, getPolicyResponse.Value.SignedIdentifiers.Count());
 
-            BlobSignedIdentifier acl = response.Value.SignedIdentifiers.First();
+            BlobSignedIdentifier acl = getPolicyResponse.Value.SignedIdentifiers.First();
             Assert.AreEqual(signedIdentifiers[0].Id, acl.Id);
             Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, acl.AccessPolicy.PolicyStartsOn);
             Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, acl.AccessPolicy.PolicyExpiresOn);
@@ -1460,6 +1479,8 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobLease> response = await leaseClient.AcquireAsync(duration: duration);
 
             // Assert
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
             Assert.AreEqual(id, response.Value.LeaseId);
             Assert.AreEqual(response.Value.LeaseId, leaseClient.LeaseId);
 
@@ -1609,6 +1630,9 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(renewResponse.GetRawResponse().Headers.RequestId);
             Assert.AreEqual(renewResponse.Value.LeaseId, leaseClient.LeaseId);
 
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(renewResponse.Value.ETag.ToString(), $"\"{renewResponse.GetRawResponse().Headers.ETag}\"");
+
             // Cleanup
             await container.DeleteIfExistsAsync(conditions: new BlobRequestConditions { LeaseId = renewResponse.Value.LeaseId });
         }
@@ -1735,6 +1759,10 @@ namespace Azure.Storage.Blobs.Test
             Response<ReleasedObjectInfo> releaseResponse = await InstrumentClient(test.Container.GetBlobLeaseClient(leaseResponse.Value.LeaseId)).ReleaseAsync();
 
             // Assert
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(releaseResponse.Value.ETag.ToString(), $"\"{releaseResponse.GetRawResponse().Headers.ETag}\"");
+
+            // Ensure the correct status by doing a GetProperties call
             Response<BlobContainerProperties> response = await test.Container.GetPropertiesAsync();
 
             Assert.AreEqual(LeaseStatus.Unlocked, response.Value.LeaseStatus);
@@ -1995,6 +2023,9 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(newId, changeResponse.Value.LeaseId);
             Assert.AreEqual(changeResponse.Value.LeaseId, leaseClient.LeaseId);
 
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(changeResponse.Value.ETag.ToString(), $"\"{changeResponse.GetRawResponse().Headers.ETag}\"");
+
             // Cleanup
             await InstrumentClient(test.Container.GetBlobLeaseClient(changeResponse.Value.LeaseId)).ReleaseAsync();
         }
@@ -2248,7 +2279,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task ListBlobsFlatSegmentAsync_Deleted()
         {
             // Arrange
-            BlobServiceClient blobServiceClient = GetServiceClient_SoftDelete();
+            BlobServiceClient blobServiceClient = BlobsClientBuilder.GetServiceClient_SoftDelete();
             await using DisposingContainer test = await GetTestContainerAsync(blobServiceClient);
             string blobName = GetNewBlobName();
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
@@ -2380,7 +2411,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(setMetadataResponse.Value.VersionId, blobs[1].VersionId);
         }
 
-        [Ignore("Object Replication policies is only enabled on certain storage accounts")]
+        [PlaybackOnly("Object Replication policies is only enabled on certain storage accounts")]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task ListBlobsFlatSegmentAsync_ObjectReplication()
@@ -2445,6 +2476,23 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(1, blobItems.Count);
             Assert.AreEqual(blob.Name, blobItems[0].Name);
             Assert.IsTrue(blobItems[0].HasVersionsOnly);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_02_12)]
+        public async Task ListBlobsFlatSegmentAsync_EncodedBlobName()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = "dir1/dir2/file\uFFFF.blob";
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            await blob.CreateAsync();
+
+            // Act
+            BlobItem blobItem = await test.Container.GetBlobsAsync().FirstAsync();
+
+            // Assert
+            Assert.AreEqual(blobName, blobItem.Name);
         }
 
         [RecordedTest]
@@ -2620,7 +2668,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task ListBlobsHierarchySegmentAsync_Deleted()
         {
             // Arrange
-            BlobServiceClient blobServiceClient = GetServiceClient_SoftDelete();
+            BlobServiceClient blobServiceClient = BlobsClientBuilder.GetServiceClient_SoftDelete();
             await using DisposingContainer test = await GetTestContainerAsync(blobServiceClient);
             string blobName = GetNewBlobName();
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
@@ -2735,7 +2783,7 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
-        [Ignore("Object Replication policies is only enabled on certain storage accounts")]
+        [PlaybackOnly("Object Replication policies is only enabled on certain storage accounts")]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task ListBlobsHierarchySegmentAsync_ObjectReplication()
@@ -2799,6 +2847,39 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(1, blobHierarchyItems.Count);
             Assert.AreEqual(blob.Name, blobHierarchyItems[0].Blob.Name);
             Assert.IsTrue(blobHierarchyItems[0].Blob.HasVersionsOnly);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_02_12)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task ListBlobsHierarchySegmentAsync_EncodedBlobName(bool delimiter)
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = "dir1/dir2/file\uFFFF.blob";
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            await blob.CreateAsync();
+
+            // Act
+            BlobHierarchyItem item;
+            if (delimiter)
+            {
+                item = await test.Container.GetBlobsByHierarchyAsync().FirstAsync();
+
+                // Assert
+                Assert.IsTrue(item.IsBlob);
+                Assert.AreEqual(blobName, item.Blob.Name);
+            }
+            else
+            {
+                item = await test.Container.GetBlobsByHierarchyAsync(
+                    delimiter: ".b").FirstAsync();
+
+                // Assert
+                Assert.IsTrue(item.IsPrefix);
+                Assert.AreEqual("dir1/dir2/file\uffff.b", item.Prefix);
+            }
         }
 
         [RecordedTest]
@@ -3503,7 +3584,7 @@ namespace Azure.Storage.Blobs.Test
             string newContainerName = GetNewContainerName();
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(oldContainerName));
             await container.CreateAsync();
-            SasQueryParameters sasQueryParameters = GetNewAccountSas();
+            SasQueryParameters sasQueryParameters = BlobsClientBuilder.GetNewAccountSas();
             service = InstrumentClient(new BlobServiceClient(new Uri($"{service.Uri}?{sasQueryParameters}"), GetOptions()));
             BlobContainerClient sasContainer = InstrumentClient(service.GetBlobContainerClient(oldContainerName));
 
@@ -3596,15 +3677,124 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task FilterBlobsByTag()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = GetNewBlobName();
+            AppendBlobClient appendBlob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            string tagKey = "myTagKey";
+            string tagValue = "myTagValue";
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { tagKey, tagValue }
+            };
+            AppendBlobCreateOptions options = new AppendBlobCreateOptions
+            {
+                Tags = tags
+            };
+            await appendBlob.CreateAsync(options);
+
+            string expression = $"\"{tagKey}\"='{tagValue}'";
+
+            // It takes a few seconds for Filter Blobs to pick up new changes
+            await Delay(2000);
+
+            // Act
+            List<TaggedBlobItem> blobs = new List<TaggedBlobItem>();
+            await foreach (TaggedBlobItem taggedBlobItem in test.Container.FindBlobsByTagsAsync(expression))
+            {
+                blobs.Add(taggedBlobItem);
+            }
+
+            // Assert
+            TaggedBlobItem filterBlob = blobs.Where(r => r.BlobName == blobName).FirstOrDefault();
+            Assert.AreEqual(1, filterBlob.Tags.Count);
+            Assert.AreEqual("myTagValue", filterBlob.Tags["myTagKey"]);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_04_10)]
+        [TestCase(BlobContainerSasPermissions.Filter)]
+        [TestCase(BlobContainerSasPermissions.All)]
+        public async Task FindBlobsByTag_ContainerSAS(BlobContainerSasPermissions containerSasPermissions)
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = GetNewBlobName();
+            AppendBlobClient appendBlob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            string tagKey = "myTagKey";
+            string tagValue = "myTagValue";
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { tagKey, tagValue }
+            };
+            AppendBlobCreateOptions options = new AppendBlobCreateOptions
+            {
+                Tags = tags
+            };
+            await appendBlob.CreateAsync(options);
+
+            string expression = $"\"{tagKey}\"='{tagValue}'";
+
+            // It takes a few seconds for Filter Blobs to pick up new changes
+            await Delay(2000);
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder()
+            {
+                BlobContainerName = test.Container.Name,
+                ExpiresOn = Recording.UtcNow.AddDays(1)
+            };
+            blobSasBuilder.SetPermissions(containerSasPermissions);
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(test.Container.Uri)
+            {
+                Sas = blobSasBuilder.ToSasQueryParameters(Tenants.GetNewSharedKeyCredentials())
+            };
+
+            BlobContainerClient sasContainerClient = InstrumentClient(new BlobContainerClient(blobUriBuilder.ToUri(), GetOptions()));
+
+            // Act
+            List<TaggedBlobItem> blobs = new List<TaggedBlobItem>();
+            await foreach (TaggedBlobItem taggedBlobItem in sasContainerClient.FindBlobsByTagsAsync(expression))
+            {
+                blobs.Add(taggedBlobItem);
+            }
+
+            // Assert
+            TaggedBlobItem filterBlob = blobs.Where(r => r.BlobName == blobName).FirstOrDefault();
+            Assert.AreEqual(1, filterBlob.Tags.Count);
+            Assert.AreEqual("myTagValue", filterBlob.Tags["myTagKey"]);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task FindBlobsByTagAsync_Error()
+        {
+            // Arrange
+            BlobServiceClient service = InstrumentClient(
+                new BlobServiceClient(
+                    GetServiceClient_SharedKey().Uri,
+                    GetOptions()));
+
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                container.FindBlobsByTagsAsync("\"key\" = 'value'").AsPages().FirstAsync(),
+                e => Assert.AreEqual(BlobErrorCode.NoAuthenticationInformation.ToString(), e.ErrorCode));
+        }
+
+        [RecordedTest]
         public void CanMockClientConstructors()
         {
             // One has to call .Object to trigger constructor. It's lazy.
             var mock = new Mock<BlobContainerClient>(TestConfigDefault.ConnectionString, "name", new BlobClientOptions()).Object;
             mock = new Mock<BlobContainerClient>(TestConfigDefault.ConnectionString, "name").Object;
             mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), new BlobClientOptions()).Object;
-            mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
+            mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), Tenants.GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
             mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new BlobClientOptions()).Object;
-            mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), GetOAuthCredential(TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
+            mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
         }
 
         #region Secondary Storage

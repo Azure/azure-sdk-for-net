@@ -30,6 +30,7 @@ namespace Azure.Core.TestFramework
             // We don't want to instrument generated rest clients.
             if ((type.Name.EndsWith("Client") && !type.Name.EndsWith("RestClient")) ||
                 // Generated ARM clients will have a property containing the sub-client that ends with Operations.
+                //TODO: remove after all track2 .net mgmt libraries are updated to the new generation
                 (invocation.Method.Name.StartsWith("get_") && type.Name.EndsWith("Operations")))
             {
                 if (IsNullResult(invocation))
@@ -41,11 +42,10 @@ namespace Azure.Core.TestFramework
 
             if (
                 // Generated ARM clients will have a property containing the sub-client that ends with Operations.
-                (invocation.Method.Name.StartsWith("get_") && (type.Name.EndsWith("Operations") || (type.BaseType != null && type.BaseType.Name.EndsWith("Operations")))) ||
+                (invocation.Method.Name.StartsWith("get_") && ManagementInterceptor.InheritsFromArmResource(type)) ||
                 // Instrument the container construction methods inside Operations objects
-                (invocation.Method.Name.StartsWith("Get") && type.Name.EndsWith("Container")) ||
                 // Instrument the operations construction methods inside Operations objects
-                (invocation.Method.Name.StartsWith("Get") && type.Name.EndsWith("Operations")))
+                (invocation.Method.Name.StartsWith("Get") && ManagementInterceptor.InheritsFromArmResource(type)))
             {
                 if (IsNullResult(invocation))
                     return;

@@ -1,6 +1,6 @@
 # Release History
 
-## 5.6.0-beta.1 (Unreleased)
+## 5.7.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -8,9 +8,51 @@
 
 ### Bugs Fixed
 
+### Other Changes
+
+- Based on a new series of profiling and testing in real-world application scenarios, the default values for processor load balancing are being updated to provide better performance and stability.  The default load balancing interval was changed from 10 seconds to 30 seconds.  The default ownership expiration interval was changed from 30 seconds to 2 minutes.  The default load balancing strategy has been changed from balanced to greedy.
+
+## 5.7.0-beta.1 (2021-11-09)
+
+### Other Changes
+
+- Added additional heuristics for the `EventProcessorClient` load balancing cycle to help discover issues that can impact processor performance and stability; these validations will produce warnings should potential concerns be found.
+
+- `EventProcessorClient` will now log a verbose message indicating what event position was chosen to read from when initializing a partition.
+
+## 5.6.2 (2021-10-05)
+
+### Bugs Fixed
+
+- Dependencies have been updated to resolve an error when creating `EventSource` instances when used with Xamarin.
+
+## 5.6.1 (2021-09-08)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Andrey Shihov _([GitHub](https://github.com/andreyshihov))_
+
+### Bugs Fixed
+
+- Fixed an issue with refreshing authorization where redundant requests were made to acquire AAD tokens that were due to expire.  Refreshes will now coordinate to ensure a single AAD token acquisition.
+
+- Fixed an issue with authorization refresh where attempts may have been made to authorize a faulted link.  Links that fail to open are no longer be considered valid for authorization.
+
+### Other Changes
+
+- Documentation has been enhanced to provide additional context for client library types, notably detailing non-obvious validations applied to parameters and options members.
+
+## 5.6.0 (2021-08-10)
+
+### Bugs Fixed
+
 - Fixed an issue where partition processing would ignore cancellation when the processor was shutting down or partition ownership changed and continue dispatching events to the handler until the entire batch was complete.  Cancellation will now be properly respected.
 
 ### Other Changes
+
+- Added the ability to adjust the connection idle timeout using the `EventHubConnectionOptions` available within the options for each client type.
 
 ## 5.5.0 (2021-07-07)
 

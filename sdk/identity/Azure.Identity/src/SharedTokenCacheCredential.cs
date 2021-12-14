@@ -30,7 +30,6 @@ namespace Azure.Identity
         private readonly bool _skipTenantValidation;
         private readonly AuthenticationRecord _record;
         private readonly AsyncLockWithValue<IAccount> _accountAsyncLock;
-        private readonly bool _allowMultiTenantAuthentication;
 
         internal MsalPublicClient Client { get; }
 
@@ -74,8 +73,13 @@ namespace Azure.Identity
             _skipTenantValidation = (options as SharedTokenCacheCredentialOptions)?.EnableGuestTenantAuthentication ?? false;
             _record = (options as SharedTokenCacheCredentialOptions)?.AuthenticationRecord;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
-            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
-            Client = client ?? new MsalPublicClient(_pipeline, tenantId, (options as SharedTokenCacheCredentialOptions)?.ClientId ?? Constants.DeveloperSignOnClientId, null, (options as ITokenCacheOptions) ?? s_DefaultCacheOptions);
+            Client = client ?? new MsalPublicClient(
+                _pipeline,
+                tenantId,
+                (options as SharedTokenCacheCredentialOptions)?.ClientId ?? Constants.DeveloperSignOnClientId,
+                null,
+                (options as ITokenCacheOptions) ?? s_DefaultCacheOptions,
+                options?.IsLoggingPIIEnabled ?? false);
             _accountAsyncLock = new AsyncLockWithValue<IAccount>();
         }
 
@@ -107,7 +111,7 @@ namespace Azure.Identity
 
             try
             {
-                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _allowMultiTenantAuthentication);
+                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext);
                 IAccount account = await GetAccountAsync(tenantId, async, cancellationToken).ConfigureAwait(false);
                 AuthenticationResult result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, account, tenantId, async, cancellationToken).ConfigureAwait(false);
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));

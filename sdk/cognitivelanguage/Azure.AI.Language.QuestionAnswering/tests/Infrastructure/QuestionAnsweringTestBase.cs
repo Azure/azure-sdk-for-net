@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 
 namespace Azure.AI.Language.QuestionAnswering.Tests
@@ -9,7 +10,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
     /// Base class for live client tests using different service versions.
     /// </summary>
     /// <typeparam name="TClient">The type of client being tested.</typeparam>
-    [ClientTestFixture(QuestionAnsweringClientOptions.ServiceVersion.V2021_05_01_preview)]
+    [ClientTestFixture(
+        QuestionAnsweringClientOptions.ServiceVersion.V2021_10_01
+    )]
     public abstract class QuestionAnsweringTestBase<TClient> : RecordedTestBase<QuestionAnsweringTestEnvironment> where TClient : class
     {
         protected QuestionAnsweringTestBase(bool isAsync, QuestionAnsweringClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
@@ -35,15 +38,18 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         /// <summary>
         /// Creates the <see cref="Client"/> once tests begin.
         /// </summary>
-        public override void StartTestRecording()
+        public override async Task StartTestRecordingAsync()
         {
-            base.StartTestRecording();
+            await base.StartTestRecordingAsync();
 
-            Client = CreateClient<TClient>(
+            Client = CreateClient();
+        }
+
+        protected TClient CreateClient(QuestionAnsweringClientOptions options = null) =>
+            CreateClient<TClient>(
                 TestEnvironment.Endpoint,
                 new AzureKeyCredential(TestEnvironment.ApiKey),
                 InstrumentClientOptions(
-                    new QuestionAnsweringClientOptions(ServiceVersion)));
-        }
+                    options ?? new QuestionAnsweringClientOptions(ServiceVersion)));
     }
 }

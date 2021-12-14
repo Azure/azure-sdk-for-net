@@ -10,7 +10,9 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
-    [ClientTestFixture(TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+    [ClientTestFixture(
+    TextAnalyticsClientOptions.ServiceVersion.V3_1,
+    TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
     public class AnalyzeOperationTests : TextAnalyticsClientLiveTestBase
     {
         public AnalyzeOperationTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
@@ -60,6 +62,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
         public async Task AnalyzeOperationTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -81,12 +84,20 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<RecognizePiiEntitiesActionResult> piiActionsResults = resultCollection.RecognizePiiEntitiesResults;
             IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> entityLinkingActionsResults = resultCollection.RecognizeLinkedEntitiesResults;
             IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults = resultCollection.AnalyzeSentimentResults;
+            IReadOnlyCollection<ExtractSummaryActionResult> extractSummaryActionsResults = resultCollection.ExtractSummaryResults;
+            IReadOnlyCollection<RecognizeCustomEntitiesActionResult> recognizeCustomEntitiesActionResults = resultCollection.RecognizeCustomEntitiesResults;
+            IReadOnlyCollection<SingleCategoryClassifyActionResult> singleCategoryClassifyResults = resultCollection.SingleCategoryClassifyResults;
+            IReadOnlyCollection<MultiCategoryClassifyActionResult> multiCategoryClassifyResults = resultCollection.MultiCategoryClassifyResults;
 
             Assert.IsNotNull(keyPhrasesActionsResults);
             Assert.IsNotNull(entitiesActionsResults);
             Assert.IsNotNull(piiActionsResults);
             Assert.IsNotNull(entityLinkingActionsResults);
             Assert.IsNotNull(analyzeSentimentActionsResults);
+            Assert.IsNotNull(extractSummaryActionsResults);
+            Assert.IsNotNull(singleCategoryClassifyResults);
+            Assert.IsNotNull(multiCategoryClassifyResults);
+            Assert.IsNotNull(recognizeCustomEntitiesActionResults);
 
             var keyPhrasesListId1 = new List<string> { "CEO", "SpaceX", "Elon Musk", "Tesla" };
             var keyPhrasesListId2 = new List<string> { "Tesla stock" };
@@ -292,6 +303,124 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(TextSentiment.Neutral, analyzeSentimentDocumentsResults[1].DocumentSentiment.Sentiment);
         }
 
+        [Ignore("issue: results in an internal server error | bug link: https://dev.azure.com/msazure/Cognitive%20Services/_workitems/edit/12413250")]
+        public async Task AnalyzeOperationWithMultipleActionsOfSameType()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            var batchDocuments = new List<TextDocumentInput>
+            {
+                new TextDocumentInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
+                {
+                     Language = "en",
+                },
+                new TextDocumentInput("2", "Mi perro y mi gato tienen que ir al veterinario.")
+                {
+                     Language = "es",
+                }
+            };
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>()
+                {
+                    new ExtractKeyPhrasesAction()
+                    { ActionName = "DisableServaiceLogsTrue", DisableServiceLogs = true },
+                    new ExtractKeyPhrasesAction()
+                    { ActionName = "DisableServiceLogsFalse"},
+                },
+                RecognizeEntitiesActions = new List<RecognizeEntitiesAction>()
+                {
+                    new RecognizeEntitiesAction()
+                    { ActionName = "DisableServiceLogsTrue", DisableServiceLogs = true },
+                    new RecognizeEntitiesAction()
+                    { ActionName = "DisableServiceLogsFalse" },
+                },
+                RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>()
+                {
+                    new RecognizePiiEntitiesAction()
+                    { ActionName = "DisableServiceLogsTrue", DisableServiceLogs = true },
+                    new RecognizePiiEntitiesAction()
+                    { ActionName = "DisableServiceLogsFalse" },
+                },
+                RecognizeLinkedEntitiesActions = new List<RecognizeLinkedEntitiesAction>()
+                {
+                    new RecognizeLinkedEntitiesAction()
+                    { ActionName = "DisableServiceLogsTrue", DisableServiceLogs = true },
+                    new RecognizeLinkedEntitiesAction()
+                    { ActionName = "DisableServiceLogsFalse" },
+                },
+                AnalyzeSentimentActions = new List<AnalyzeSentimentAction>()
+                {
+                    new AnalyzeSentimentAction()
+                    { ActionName = "DisableServiceLogsTrue", DisableServiceLogs = true },
+                    new AnalyzeSentimentAction()
+                    { ActionName = "DisableServiceLogsFalse" },
+                },
+                RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
+                {
+                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName)
+                    { ActionName = "DisableServiceLogsTrue", DisableServiceLogs = true },
+                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName)
+                    { ActionName = "DisableServiceLogsFalse" },
+                },
+                SingleCategoryClassifyActions = new List<SingleCategoryClassifyAction>()
+                {
+                    new SingleCategoryClassifyAction(TestEnvironment.SingleClassificationProjectName, TestEnvironment.SingleClassificationDeploymentName)
+                    { ActionName = "DisableServiceLogsTrue", DisableServiceLogs = true },
+                    new SingleCategoryClassifyAction(TestEnvironment.SingleClassificationProjectName, TestEnvironment.SingleClassificationDeploymentName)
+                    { ActionName = "DisableServiceLogsFalse" },
+                },
+                MultiCategoryClassifyActions = new List<MultiCategoryClassifyAction>()
+                {
+                    new MultiCategoryClassifyAction(TestEnvironment.MultiClassificationProjectName, TestEnvironment.MultiClassificationDeploymentName)
+                    { ActionName = "DisableServiceLogsTrue", DisableServiceLogs = true },
+                    new MultiCategoryClassifyAction(TestEnvironment.MultiClassificationProjectName, TestEnvironment.MultiClassificationDeploymentName)
+                    { ActionName = "DisableServiceLogsFalse"},
+                },
+                DisplayName = "AnalyzeOperationWithMultipleTasksOfSameType"
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchDocuments, batchActions);
+
+            Assert.AreEqual(0, operation.ActionsFailed);
+            Assert.AreEqual(0, operation.ActionsSucceeded);
+            Assert.AreEqual(0, operation.ActionsInProgress);
+            Assert.AreEqual(0, operation.ActionsTotal);
+
+            await operation.WaitForCompletionAsync();
+
+            Assert.AreEqual(0, operation.ActionsFailed);
+            Assert.AreEqual(16, operation.ActionsSucceeded);
+            Assert.AreEqual(0, operation.ActionsInProgress);
+            Assert.AreEqual(16, operation.ActionsTotal);
+            Assert.AreNotEqual(new DateTimeOffset(), operation.CreatedOn);
+            Assert.AreNotEqual(new DateTimeOffset(), operation.LastModified);
+            Assert.AreNotEqual(new DateTimeOffset(), operation.ExpiresOn);
+
+            //Take the first page
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            IReadOnlyCollection<RecognizeEntitiesActionResult> entitiesActionsResults = resultCollection.RecognizeEntitiesResults;
+            IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesActionsResults = resultCollection.ExtractKeyPhrasesResults;
+            IReadOnlyCollection<RecognizePiiEntitiesActionResult> piiActionsResults = resultCollection.RecognizePiiEntitiesResults;
+            IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> entityLinkingActionsResults = resultCollection.RecognizeLinkedEntitiesResults;
+            IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults = resultCollection.AnalyzeSentimentResults;
+            IReadOnlyCollection<RecognizeCustomEntitiesActionResult> recognizeCustomEntitiesResults = resultCollection.RecognizeCustomEntitiesResults;
+            IReadOnlyCollection<SingleCategoryClassifyActionResult> singleCategoryClassifyResults = resultCollection.SingleCategoryClassifyResults;
+            IReadOnlyCollection<MultiCategoryClassifyActionResult> multiCategoryClassifyResults = resultCollection.MultiCategoryClassifyResults;
+
+            Assert.IsNotNull(keyPhrasesActionsResults);
+            Assert.IsNotNull(entitiesActionsResults);
+            Assert.IsNotNull(piiActionsResults);
+            Assert.IsNotNull(entityLinkingActionsResults);
+            Assert.IsNotNull(analyzeSentimentActionsResults);
+            Assert.IsNotNull(recognizeCustomEntitiesResults);
+            Assert.IsNotNull(singleCategoryClassifyResults);
+            Assert.IsNotNull(multiCategoryClassifyResults);
+            Assert.AreEqual("AnalyzeOperationWithMultipleTasks", operation.DisplayName);
+        }
+
         [RecordedTest]
         public async Task AnalyzeOperationWithPagination()
         {
@@ -316,7 +445,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsFalse(operation.HasValue);
 
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
-            Assert.Throws<InvalidOperationException>(() => operation.GetValues());
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
 
             await operation.WaitForCompletionAsync();
 
@@ -534,7 +663,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        public async Task AnalyzeOperationAllActionsAndDisableServiceLogs ()
+        public async Task AnalyzeOperationAllActionsAndDisableServiceLogs()
         {
             TextAnalyticsClient client = GetClient();
 
@@ -544,7 +673,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 RecognizeEntitiesActions = new List<RecognizeEntitiesAction>() { new RecognizeEntitiesAction() { DisableServiceLogs = true } },
                 RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>() { new RecognizePiiEntitiesAction() { DisableServiceLogs = false } },
                 RecognizeLinkedEntitiesActions = new List<RecognizeLinkedEntitiesAction>() { new RecognizeLinkedEntitiesAction() { DisableServiceLogs = true } },
-                AnalyzeSentimentActions = new List<AnalyzeSentimentAction>() { new AnalyzeSentimentAction() { DisableServiceLogs = true } },
+                AnalyzeSentimentActions = new List<AnalyzeSentimentAction>() { new AnalyzeSentimentAction() { DisableServiceLogs = true } }
             };
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchConvenienceDocuments, batchActions);

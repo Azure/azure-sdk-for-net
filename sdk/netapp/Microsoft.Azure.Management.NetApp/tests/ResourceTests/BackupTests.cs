@@ -23,7 +23,8 @@ namespace NetApp.Tests.ResourceTests
     public class AnfBackupTests : TestBase
     {
         private const int delay = 5000;
-        [Fact(Skip = "Backup service side bug (Networking) causes this to fail, re-enable when fixed")]
+        //[Fact(Skip = "Backup service side bug (Networking) causes this to fail, re-enable when fixed")]
+        [Fact]
         public void CreateDeleteBackup()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
@@ -47,6 +48,7 @@ namespace NetApp.Tests.ResourceTests
                 }
                 // Create volume 
                 var createVolume = ResourceUtils.CreateVolume(netAppMgmtClient, location: ResourceUtils.backupLocation, accountName: ResourceUtils.volumeBackupAccountName1, poolName: ResourceUtils.backupPoolName1, volumeName: ResourceUtils.backupVolumeName1, vnet: ResourceUtils.backupVnet, volumeOnly: true);
+                Assert.NotNull(createVolume);
                 if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
                 {
                     Thread.Sleep(delay);
@@ -145,10 +147,14 @@ namespace NetApp.Tests.ResourceTests
 
                 // clean up 
                 // Delete volume so we can delete last backup
-                ResourceUtils.DeleteVolume(netAppMgmtClient, accountName: ResourceUtils.volumeBackupAccountName1, volumeName: ResourceUtils.backupVolumeName1);
+                ResourceUtils.DeleteVolume(netAppMgmtClient, accountName: ResourceUtils.volumeBackupAccountName1, poolName: ResourceUtils.backupPoolName1 , volumeName: ResourceUtils.backupVolumeName1);
                 //Delete last backup from AccountBackups
-                netAppMgmtClient.AccountBackups.Delete(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.backupName2);                
-                ResourceUtils.DeletePool(netAppMgmtClient, accountName: ResourceUtils.volumeBackupAccountName1);
+                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                {
+                    Thread.Sleep(delay);
+                }
+                netAppMgmtClient.AccountBackups.Delete(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.backupName2);
+                ResourceUtils.DeletePool(netAppMgmtClient, accountName: ResourceUtils.volumeBackupAccountName1, poolName: ResourceUtils.backupPoolName1);
                 ResourceUtils.DeleteAccount(netAppMgmtClient, accountName: ResourceUtils.volumeBackupAccountName1);
 
             }

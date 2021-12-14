@@ -128,6 +128,10 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             {
                 Assert.Inconclusive("The create operation completed before it could be canceled.");
             }
+            catch (RequestFailedException e) when (e.Status == 409)
+            {
+                Assert.Inconclusive("There was a service timing issue when attempting to cancel the operation.");
+            }
 
             if (operation.HasCompleted && !operation.Properties.CancellationRequested)
             {
@@ -167,6 +171,10 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             catch (RequestFailedException e) when (e.Status == 403)
             {
                 Assert.Inconclusive("The create operation completed before it could be canceled.");
+            }
+            catch (RequestFailedException e) when (e.Status == 409)
+            {
+                Assert.Inconclusive("There was a service timing issue when attempting to cancel the operation.");
             }
 
             if (operation.HasCompleted && !operation.Properties.CancellationRequested)
@@ -262,11 +270,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 RegisterForCleanup(certName);
 
                 using CancellationTokenSource cts = new CancellationTokenSource(DefaultCertificateOperationTimeout);
-                TimeSpan pollingInterval = Mode == RecordedTestMode.Playback ? TimeSpan.Zero : KeyVaultTestEnvironment.DefaultPollingInterval;
-
                 while (!operation.HasCompleted)
                 {
-                    await Task.Delay(pollingInterval, cts.Token);
+                    await Task.Delay(PollingInterval, cts.Token);
                     await operation.UpdateStatusAsync(cts.Token);
                 }
 
@@ -355,9 +361,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             // Need to call the real async wait method or the sync version of this test fails because it's using the instrumented Client directly.
             using CancellationTokenSource cts = new CancellationTokenSource(DefaultCertificateOperationTimeout);
-            TimeSpan pollingInterval = Mode == RecordedTestMode.Playback ? TimeSpan.Zero : KeyVaultTestEnvironment.DefaultPollingInterval;
-
-            await operation.WaitForCompletionAsync(pollingInterval, cts.Token);
+            await operation.WaitForCompletionAsync(PollingInterval, cts.Token);
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsTrue(operation.HasValue);
@@ -791,7 +795,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             KeyVaultCertificate certificate = await Client.GetCertificateAsync(name);
 
             using X509Certificate2 pub = new X509Certificate2(certificate.Cer);
+#if NET6_0_OR_GREATER
+            using RSA pubkey = (RSA)pub.PublicKey.GetRSAPublicKey();
+#else
             using RSA pubkey = (RSA)pub.PublicKey.Key;
+#endif
 
             byte[] plaintext = Encoding.UTF8.GetBytes("Hello, world!");
             byte[] ciphertext = pubkey.Encrypt(plaintext, RSAEncryptionPadding.Pkcs1);
@@ -799,7 +807,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             using X509Certificate2 x509certificate = await Client.DownloadCertificateAsync(name);
             Assert.IsTrue(x509certificate.HasPrivateKey);
 
-            using RSA rsa = (RSA)x509certificate.PrivateKey;
+            using RSA rsa = (RSA)x509certificate.GetRSAPrivateKey();
             byte[] decrypted = rsa.Decrypt(ciphertext, RSAEncryptionPadding.Pkcs1);
 
             CollectionAssert.AreEqual(plaintext, decrypted);
@@ -834,7 +842,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             string version = certificate.Properties.Version;
 
             using X509Certificate2 pub = new X509Certificate2(certificate.Cer);
+#if NET6_0_OR_GREATER
+            using RSA pubkey = (RSA)pub.PublicKey.GetRSAPublicKey();
+#else
             using RSA pubkey = (RSA)pub.PublicKey.Key;
+#endif
 
             byte[] plaintext = Encoding.UTF8.GetBytes("Hello, world!");
             byte[] ciphertext = pubkey.Encrypt(plaintext, RSAEncryptionPadding.Pkcs1);
@@ -852,7 +864,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             using X509Certificate2 x509certificate = await Client.DownloadCertificateAsync(name, version);
             Assert.IsTrue(x509certificate.HasPrivateKey);
 
-            using RSA rsa = (RSA)x509certificate.PrivateKey;
+            using RSA rsa = (RSA)x509certificate.GetRSAPrivateKey();
             byte[] decrypted = rsa.Decrypt(ciphertext, RSAEncryptionPadding.Pkcs1);
 
             CollectionAssert.AreEqual(plaintext, decrypted);
@@ -893,6 +905,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 #if NET461
             Assert.Ignore("ECC is not supported before .NET Framework 4.7");
 #endif
+            if (keyCurveName == CertificateKeyCurveName.P256K && RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                Assert.Ignore("https://github.com/Azure/azure-sdk-for-net/issues/25472");
+            }
+
             string name = Recording.GenerateId();
 
             CertificatePolicy policy = new CertificatePolicy
@@ -945,6 +962,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 #if NET461
             Assert.Ignore("ECC is not supported before .NET Framework 4.7");
 #endif
+            if (keyCurveName == CertificateKeyCurveName.P256K && RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                Assert.Ignore("https://github.com/Azure/azure-sdk-for-net/issues/25472");
+            }
+
             string name = Recording.GenerateId();
 
             CertificatePolicy policy = new CertificatePolicy

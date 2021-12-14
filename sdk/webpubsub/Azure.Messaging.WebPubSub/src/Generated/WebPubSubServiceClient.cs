@@ -17,52 +17,172 @@ namespace Azure.Messaging.WebPubSub
     /// <summary> The WebPubSubService service client. </summary>
     public partial class WebPubSubServiceClient
     {
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
-        private string hub;
-        private Uri endpoint;
-        private readonly string apiVersion;
+        private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly string _endpoint;
+        private readonly string _hub;
+        private readonly string _apiVersion;
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of WebPubSubServiceClient for mocking. </summary>
         protected WebPubSubServiceClient()
         {
         }
 
-        /// <summary> Broadcast content inside request body to all the connected client connections. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Upload file type. </param>
-        /// <param name="excluded"> Excluded connection Ids. </param>
-        /// <param name="options"> The request options. </param>
+        /// <summary> Generate token for the client to connect Azure Web PubSub service. </summary>
+        /// <param name="userId"> User Id. </param>
+        /// <param name="role"> Roles that the connection with the generated token will have. </param>
+        /// <param name="minutesToExpire"> The expire time of the generated token. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   token: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> SendToAllAsync(RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestOptions options = null)
+        internal virtual async Task<Response> GenerateClientTokenImplAsync(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateSendToAllRequest(content, contentType, excluded, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToAll");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GenerateClientTokenImpl");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 202:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                using HttpMessage message = CreateGenerateClientTokenImplRequest(userId, role, minutesToExpire, context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Generate token for the client to connect Azure Web PubSub service. </summary>
+        /// <param name="userId"> User Id. </param>
+        /// <param name="role"> Roles that the connection with the generated token will have. </param>
+        /// <param name="minutesToExpire"> The expire time of the generated token. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   token: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        internal virtual Response GenerateClientTokenImpl(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GenerateClientTokenImpl");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGenerateClientTokenImplRequest(userId, role, minutesToExpire, context);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Close the connections in the hub. </summary>
+        /// <param name="excluded"> Exclude these connectionIds when closing the connections in the hub. </param>
+        /// <param name="reason"> The reason closing the client connection. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CloseAllConnectionsAsync(IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseAllConnections");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCloseAllConnectionsRequest(excluded, reason, context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Close the connections in the hub. </summary>
+        /// <param name="excluded"> Exclude these connectionIds when closing the connections in the hub. </param>
+        /// <param name="reason"> The reason closing the client connection. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response CloseAllConnections(IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseAllConnections");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCloseAllConnectionsRequest(excluded, reason, context);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -73,38 +193,35 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Broadcast content inside request body to all the connected client connections. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Upload file type. </param>
+        /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response SendToAll(RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestOptions options = null)
+        public virtual async Task<Response> SendToAllAsync(RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateSendToAllRequest(content, contentType, excluded, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToAll");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 202:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                using HttpMessage message = CreateSendToAllRequest(content, contentType, excluded, context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -113,1659 +230,1843 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
-        /// <summary> Create Request for <see cref="SendToAll"/> and <see cref="SendToAllAsync"/> operations. </summary>
+        /// <summary> Broadcast content inside request body to all the connected client connections. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Upload file type. </param>
+        /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateSendToAllRequest(RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestOptions options = null)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response SendToAll(RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestContext context = null)
+#pragma warning restore AZC0002
         {
-            var message = Pipeline.CreateMessage();
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToAll");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSendToAllRequest(content, contentType, excluded, context);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Check if the connection with the given connectionId exists. </summary>
+        /// <param name="connectionId"> The connection Id. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        internal virtual async Task<Response> ConnectionExistsImplAsync(string connectionId, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.ConnectionExistsImpl");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateConnectionExistsImplRequest(connectionId, context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Check if the connection with the given connectionId exists. </summary>
+        /// <param name="connectionId"> The connection Id. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        internal virtual Response ConnectionExistsImpl(string connectionId, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.ConnectionExistsImpl");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateConnectionExistsImplRequest(connectionId, context);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Close the client connection. </summary>
+        /// <param name="connectionId"> Target connection Id. </param>
+        /// <param name="reason"> The reason closing the client connection. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CloseConnectionAsync(string connectionId, string reason = null, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseConnection");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCloseConnectionRequest(connectionId, reason, context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Close the client connection. </summary>
+        /// <param name="connectionId"> Target connection Id. </param>
+        /// <param name="reason"> The reason closing the client connection. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response CloseConnection(string connectionId, string reason = null, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseConnection");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCloseConnectionRequest(connectionId, reason, context);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Send content inside request body to the specific connection. </summary>
+        /// <param name="connectionId"> The connection Id. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> or <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> SendToConnectionAsync(string connectionId, RequestContent content, ContentType contentType, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToConnection");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSendToConnectionRequest(connectionId, content, contentType, context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Send content inside request body to the specific connection. </summary>
+        /// <param name="connectionId"> The connection Id. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> or <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response SendToConnection(string connectionId, RequestContent content, ContentType contentType, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToConnection");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSendToConnectionRequest(connectionId, content, contentType, context);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Check if there are any client connections inside the given group. </summary>
+        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="group"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        internal virtual async Task<Response> GroupExistsImplAsync(string group, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GroupExistsImpl");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGroupExistsImplRequest(group, context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Check if there are any client connections inside the given group. </summary>
+        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="group"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        internal virtual Response GroupExistsImpl(string group, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GroupExistsImpl");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGroupExistsImplRequest(group, context);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Close connections in the specific group. </summary>
+        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="excluded"> Exclude these connectionIds when closing the connections in the group. </param>
+        /// <param name="reason"> The reason closing the client connection. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="group"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CloseGroupConnectionsAsync(string group, IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseGroupConnections");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCloseGroupConnectionsRequest(group, excluded, reason, context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Close connections in the specific group. </summary>
+        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="excluded"> Exclude these connectionIds when closing the connections in the group. </param>
+        /// <param name="reason"> The reason closing the client connection. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="group"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response CloseGroupConnections(string group, IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseGroupConnections");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCloseGroupConnectionsRequest(group, excluded, reason, context);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Send content inside request body to a group of connections. </summary>
+        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
+        /// <param name="excluded"> Excluded connection Ids. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> SendToGroupAsync(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToGroup");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSendToGroupRequest(group, content, contentType, excluded, context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Send content inside request body to a group of connections. </summary>
+        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
+        /// <param name="excluded"> Excluded connection Ids. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response SendToGroup(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToGroup");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSendToGroupRequest(group, content, contentType, excluded, context);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add a connection to the target group. </summary>
+        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="connectionId"> Target connection Id. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> AddConnectionToGroupAsync(string group, string connectionId, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.AddConnectionToGroup");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddConnectionToGroupRequest(group, connectionId, context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add a connection to the target group. </summary>
+        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="connectionId"> Target connection Id. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response AddConnectionToGroup(string group, string connectionId, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.AddConnectionToGroup");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddConnectionToGroupRequest(group, connectionId, context);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Remove a connection from the target group. </summary>
+        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="connectionId"> Target connection Id. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> RemoveConnectionFromGroupAsync(string group, string connectionId, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveConnectionFromGroup");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRemoveConnectionFromGroupRequest(group, connectionId, context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Remove a connection from the target group. </summary>
+        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="connectionId"> Target connection Id. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response RemoveConnectionFromGroup(string group, string connectionId, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveConnectionFromGroup");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRemoveConnectionFromGroupRequest(group, connectionId, context);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Check if there are any client connections connected for the given user. </summary>
+        /// <param name="userId"> Target user Id. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        internal virtual async Task<Response> UserExistsImplAsync(string userId, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.UserExistsImpl");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUserExistsImplRequest(userId, context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Check if there are any client connections connected for the given user. </summary>
+        /// <param name="userId"> Target user Id. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        internal virtual Response UserExistsImpl(string userId, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.UserExistsImpl");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUserExistsImplRequest(userId, context);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Close connections for the specific user. </summary>
+        /// <param name="userId"> The user Id. </param>
+        /// <param name="excluded"> Exclude these connectionIds when closing the connections for the user. </param>
+        /// <param name="reason"> The reason closing the client connection. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CloseUserConnectionsAsync(string userId, IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseUserConnections");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCloseUserConnectionsRequest(userId, excluded, reason, context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Close connections for the specific user. </summary>
+        /// <param name="userId"> The user Id. </param>
+        /// <param name="excluded"> Exclude these connectionIds when closing the connections for the user. </param>
+        /// <param name="reason"> The reason closing the client connection. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response CloseUserConnections(string userId, IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseUserConnections");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCloseUserConnectionsRequest(userId, excluded, reason, context);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Send content inside request body to the specific user. </summary>
+        /// <param name="userId"> The user Id. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> SendToUserAsync(string userId, RequestContent content, ContentType contentType, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToUser");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSendToUserRequest(userId, content, contentType, context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Send content inside request body to the specific user. </summary>
+        /// <param name="userId"> The user Id. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response SendToUser(string userId, RequestContent content, ContentType contentType, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToUser");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSendToUserRequest(userId, content, contentType, context);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add a user to the target group. </summary>
+        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="userId"> Target user Id. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="userId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> AddUserToGroupAsync(string group, string userId, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.AddUserToGroup");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddUserToGroupRequest(group, userId, context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add a user to the target group. </summary>
+        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="userId"> Target user Id. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="userId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response AddUserToGroup(string group, string userId, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.AddUserToGroup");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddUserToGroupRequest(group, userId, context);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Remove a user from the target group. </summary>
+        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="userId"> Target user Id. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="userId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> RemoveUserFromGroupAsync(string group, string userId, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromGroup");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRemoveUserFromGroupRequest(group, userId, context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Remove a user from the target group. </summary>
+        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="userId"> Target user Id. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="userId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response RemoveUserFromGroup(string group, string userId, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromGroup");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRemoveUserFromGroupRequest(group, userId, context);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Remove a user from all groups. </summary>
+        /// <param name="userId"> Target user Id. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> RemoveUserFromAllGroupsAsync(string userId, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromAllGroups");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRemoveUserFromAllGroupsRequest(userId, context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Remove a user from all groups. </summary>
+        /// <param name="userId"> Target user Id. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response RemoveUserFromAllGroups(string userId, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromAllGroups");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRemoveUserFromAllGroupsRequest(userId, context);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Grant permission to the connection. </summary>
+        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. Allowed values: &quot;sendToGroup&quot; | &quot;joinLeaveGroup&quot;. </param>
+        /// <param name="connectionId"> Target connection Id. </param>
+        /// <param name="targetName"> Optional. If not set, grant the permission to all the targets. If set, grant the permission to the specific target. The meaning of the target depends on the specific permission. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        internal virtual async Task<Response> GrantPermissionAsync(string permission, string connectionId, string targetName = null, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GrantPermission");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGrantPermissionRequest(permission, connectionId, targetName, context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Grant permission to the connection. </summary>
+        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. Allowed values: &quot;sendToGroup&quot; | &quot;joinLeaveGroup&quot;. </param>
+        /// <param name="connectionId"> Target connection Id. </param>
+        /// <param name="targetName"> Optional. If not set, grant the permission to all the targets. If set, grant the permission to the specific target. The meaning of the target depends on the specific permission. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        internal virtual Response GrantPermission(string permission, string connectionId, string targetName = null, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GrantPermission");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGrantPermissionRequest(permission, connectionId, targetName, context);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Revoke permission for the connection. </summary>
+        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. Allowed values: &quot;sendToGroup&quot; | &quot;joinLeaveGroup&quot;. </param>
+        /// <param name="connectionId"> Target connection Id. </param>
+        /// <param name="targetName"> Optional. If not set, revoke the permission for all targets. If set, revoke the permission for the specific target. The meaning of the target depends on the specific permission. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        internal virtual async Task<Response> RevokePermissionAsync(string permission, string connectionId, string targetName = null, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RevokePermission");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRevokePermissionRequest(permission, connectionId, targetName, context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Revoke permission for the connection. </summary>
+        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. Allowed values: &quot;sendToGroup&quot; | &quot;joinLeaveGroup&quot;. </param>
+        /// <param name="connectionId"> Target connection Id. </param>
+        /// <param name="targetName"> Optional. If not set, revoke the permission for all targets. If set, revoke the permission for the specific target. The meaning of the target depends on the specific permission. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        internal virtual Response RevokePermission(string permission, string connectionId, string targetName = null, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RevokePermission");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRevokePermissionRequest(permission, connectionId, targetName, context);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Check if a connection has permission to the specified action. </summary>
+        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. Allowed values: &quot;sendToGroup&quot; | &quot;joinLeaveGroup&quot;. </param>
+        /// <param name="connectionId"> Target connection Id. </param>
+        /// <param name="targetName"> Optional. If not set, get the permission for all targets. If set, get the permission for the specific target. The meaning of the target depends on the specific permission. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        internal virtual async Task<Response> CheckPermissionAsync(string permission, string connectionId, string targetName = null, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CheckPermission");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCheckPermissionRequest(permission, connectionId, targetName, context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Check if a connection has permission to the specified action. </summary>
+        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. Allowed values: &quot;sendToGroup&quot; | &quot;joinLeaveGroup&quot;. </param>
+        /// <param name="connectionId"> Target connection Id. </param>
+        /// <param name="targetName"> Optional. If not set, get the permission for all targets. If set, get the permission for the specific target. The meaning of the target depends on the specific permission. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        internal virtual Response CheckPermission(string permission, string connectionId, string targetName = null, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CheckPermission");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCheckPermissionRequest(permission, connectionId, targetName, context);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        internal HttpMessage CreateGenerateClientTokenImplRequest(string userId, IEnumerable<string> role, int? minutesToExpire, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
+            uri.AppendPath(_hub, true);
+            uri.AppendPath("/:generateToken", false);
+            if (userId != null)
+            {
+                uri.AppendQuery("userId", userId, true);
+            }
+            if (role != null)
+            {
+                foreach (var param in role)
+                {
+                    uri.AppendQuery("role", param, true);
+                }
+            }
+            if (minutesToExpire != null)
+            {
+                uri.AppendQuery("minutesToExpire", minutesToExpire.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateCloseAllConnectionsRequest(IEnumerable<string> excluded, string reason, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(_hub, true);
+            uri.AppendPath("/:closeConnections", false);
+            if (excluded != null)
+            {
+                foreach (var param in excluded)
+                {
+                    uri.AppendQuery("excluded", param, true);
+                }
+            }
+            if (reason != null)
+            {
+                uri.AppendQuery("reason", reason, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier204.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateSendToAllRequest(RequestContent content, ContentType contentType, IEnumerable<string> excluded, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(_hub, true);
             uri.AppendPath("/:send", false);
             if (excluded != null)
             {
-                uri.AppendQueryDelimited("excluded", excluded, ",", true);
+                foreach (var param in excluded)
+                {
+                    uri.AppendQuery("excluded", param, true);
+                }
             }
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
+            message.ResponseClassifier = ResponseClassifier202.Instance;
             return message;
         }
 
-        /// <summary> Check if the connection with the given connectionId exists. </summary>
-        /// <param name="connectionId"> The connection Id. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        internal virtual async Task<Response> ConnectionExistsImplAsync(string connectionId, RequestOptions options = null)
-#pragma warning restore AZC0002
+        internal HttpMessage CreateSendToAllRequest(RequestContent content, IEnumerable<string> excluded, RequestContext context)
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateConnectionExistsImplRequest(connectionId, options);
-            if (options.PerCallPolicy != null)
+            var message = _pipeline.CreateMessage(context);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(_hub, true);
+            uri.AppendPath("/:send", false);
+            if (excluded != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.ConnectionExistsImpl");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
+                foreach (var param in excluded)
                 {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 404:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
+                    uri.AppendQuery("excluded", param, true);
                 }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            request.Headers.Add("Content-Type", "text/plain");
+            request.Content = content;
+            message.ResponseClassifier = ResponseClassifier202.Instance;
+            return message;
         }
 
-        /// <summary> Check if the connection with the given connectionId exists. </summary>
-        /// <param name="connectionId"> The connection Id. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        internal virtual Response ConnectionExistsImpl(string connectionId, RequestOptions options = null)
-#pragma warning restore AZC0002
+        internal HttpMessage CreateConnectionExistsImplRequest(string connectionId, RequestContext context)
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateConnectionExistsImplRequest(connectionId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.ConnectionExistsImpl");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 404:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create Request for <see cref="ConnectionExistsImpl"/> and <see cref="ConnectionExistsImplAsync"/> operations. </summary>
-        /// <param name="connectionId"> The connection Id. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateConnectionExistsImplRequest(string connectionId, RequestOptions options = null)
-        {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
+            uri.AppendPath(_hub, true);
             uri.AppendPath("/connections/", false);
             uri.AppendPath(connectionId, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier200404.Instance;
             return message;
         }
 
-        /// <summary> Close the client connection. </summary>
-        /// <param name="connectionId"> Target connection Id. </param>
-        /// <param name="reason"> The reason closing the client connection. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> CloseConnectionAsync(string connectionId, string reason = null, RequestOptions options = null)
-#pragma warning restore AZC0002
+        internal HttpMessage CreateCloseConnectionRequest(string connectionId, string reason, RequestContext context)
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateCloseConnectionRequest(connectionId, reason, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseConnection");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Close the client connection. </summary>
-        /// <param name="connectionId"> Target connection Id. </param>
-        /// <param name="reason"> The reason closing the client connection. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response CloseConnection(string connectionId, string reason = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateCloseConnectionRequest(connectionId, reason, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseConnection");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create Request for <see cref="CloseConnection"/> and <see cref="CloseConnectionAsync"/> operations. </summary>
-        /// <param name="connectionId"> Target connection Id. </param>
-        /// <param name="reason"> The reason closing the client connection. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCloseConnectionRequest(string connectionId, string reason = null, RequestOptions options = null)
-        {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
+            uri.AppendPath(_hub, true);
             uri.AppendPath("/connections/", false);
             uri.AppendPath(connectionId, true);
             if (reason != null)
             {
                 uri.AppendQuery("reason", reason, true);
             }
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
-        /// <summary> Send content inside request body to the specific connection. </summary>
-        /// <param name="connectionId"> The connection Id. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Upload file type. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> SendToConnectionAsync(string connectionId, RequestContent content, ContentType contentType, RequestOptions options = null)
-#pragma warning restore AZC0002
+        internal HttpMessage CreateSendToConnectionRequest(string connectionId, RequestContent content, ContentType contentType, RequestContext context)
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateSendToConnectionRequest(connectionId, content, contentType, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToConnection");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 202:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Send content inside request body to the specific connection. </summary>
-        /// <param name="connectionId"> The connection Id. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Upload file type. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response SendToConnection(string connectionId, RequestContent content, ContentType contentType, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateSendToConnectionRequest(connectionId, content, contentType, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToConnection");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 202:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create Request for <see cref="SendToConnection"/> and <see cref="SendToConnectionAsync"/> operations. </summary>
-        /// <param name="connectionId"> The connection Id. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Upload file type. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateSendToConnectionRequest(string connectionId, RequestContent content, ContentType contentType, RequestOptions options = null)
-        {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
+            uri.AppendPath(_hub, true);
             uri.AppendPath("/connections/", false);
             uri.AppendPath(connectionId, true);
             uri.AppendPath("/:send", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
+            message.ResponseClassifier = ResponseClassifier202.Instance;
             return message;
         }
 
-        /// <summary> Check if there are any client connections inside the given group. </summary>
-        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        internal virtual async Task<Response> GroupExistsImplAsync(string group, RequestOptions options = null)
-#pragma warning restore AZC0002
+        internal HttpMessage CreateSendToConnectionRequest(string connectionId, RequestContent content, RequestContext context)
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateGroupExistsImplRequest(group, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GroupExistsImpl");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 404:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Check if there are any client connections inside the given group. </summary>
-        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        internal virtual Response GroupExistsImpl(string group, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateGroupExistsImplRequest(group, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GroupExistsImpl");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 404:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create Request for <see cref="GroupExistsImpl"/> and <see cref="GroupExistsImplAsync"/> operations. </summary>
-        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGroupExistsImplRequest(string group, RequestOptions options = null)
-        {
-            var message = Pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Head;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/groups/", false);
-            uri.AppendPath(group, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> Send content inside request body to a group of connections. </summary>
-        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Upload file type. </param>
-        /// <param name="excluded"> Excluded connection Ids. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> SendToGroupAsync(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateSendToGroupRequest(group, content, contentType, excluded, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToGroup");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 202:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Send content inside request body to a group of connections. </summary>
-        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Upload file type. </param>
-        /// <param name="excluded"> Excluded connection Ids. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response SendToGroup(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateSendToGroupRequest(group, content, contentType, excluded, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToGroup");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 202:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create Request for <see cref="SendToGroup"/> and <see cref="SendToGroupAsync"/> operations. </summary>
-        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Upload file type. </param>
-        /// <param name="excluded"> Excluded connection Ids. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateSendToGroupRequest(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestOptions options = null)
-        {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
+            uri.AppendPath(_hub, true);
+            uri.AppendPath("/connections/", false);
+            uri.AppendPath(connectionId, true);
+            uri.AppendPath("/:send", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            request.Headers.Add("Content-Type", "text/plain");
+            request.Content = content;
+            message.ResponseClassifier = ResponseClassifier202.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateGroupExistsImplRequest(string group, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context);
+            var request = message.Request;
+            request.Method = RequestMethod.Head;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(_hub, true);
+            uri.AppendPath("/groups/", false);
+            uri.AppendPath(group, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier200404.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateCloseGroupConnectionsRequest(string group, IEnumerable<string> excluded, string reason, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(_hub, true);
+            uri.AppendPath("/groups/", false);
+            uri.AppendPath(group, true);
+            uri.AppendPath("/:closeConnections", false);
+            if (excluded != null)
+            {
+                foreach (var param in excluded)
+                {
+                    uri.AppendQuery("excluded", param, true);
+                }
+            }
+            if (reason != null)
+            {
+                uri.AppendQuery("reason", reason, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier204.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateSendToGroupRequest(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(_hub, true);
             uri.AppendPath("/groups/", false);
             uri.AppendPath(group, true);
             uri.AppendPath("/:send", false);
             if (excluded != null)
             {
-                uri.AppendQueryDelimited("excluded", excluded, ",", true);
+                foreach (var param in excluded)
+                {
+                    uri.AppendQuery("excluded", param, true);
+                }
             }
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
+            message.ResponseClassifier = ResponseClassifier202.Instance;
             return message;
         }
 
-        /// <summary> Add a connection to the target group. </summary>
-        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="connectionId"> Target connection Id. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> AddConnectionToGroupAsync(string group, string connectionId, RequestOptions options = null)
-#pragma warning restore AZC0002
+        internal HttpMessage CreateSendToGroupRequest(string group, RequestContent content, IEnumerable<string> excluded, RequestContext context)
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateAddConnectionToGroupRequest(group, connectionId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.AddConnectionToGroup");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 404:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Add a connection to the target group. </summary>
-        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="connectionId"> Target connection Id. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response AddConnectionToGroup(string group, string connectionId, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateAddConnectionToGroupRequest(group, connectionId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.AddConnectionToGroup");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 404:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create Request for <see cref="AddConnectionToGroup"/> and <see cref="AddConnectionToGroupAsync"/> operations. </summary>
-        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="connectionId"> Target connection Id. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateAddConnectionToGroupRequest(string group, string connectionId, RequestOptions options = null)
-        {
-            var message = Pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/groups/", false);
-            uri.AppendPath(group, true);
-            uri.AppendPath("/connections/", false);
-            uri.AppendPath(connectionId, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> Remove a connection from the target group. </summary>
-        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="connectionId"> Target connection Id. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> RemoveConnectionFromGroupAsync(string group, string connectionId, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateRemoveConnectionFromGroupRequest(group, connectionId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveConnectionFromGroup");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Remove a connection from the target group. </summary>
-        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="connectionId"> Target connection Id. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response RemoveConnectionFromGroup(string group, string connectionId, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateRemoveConnectionFromGroupRequest(group, connectionId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveConnectionFromGroup");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create Request for <see cref="RemoveConnectionFromGroup"/> and <see cref="RemoveConnectionFromGroupAsync"/> operations. </summary>
-        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="connectionId"> Target connection Id. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateRemoveConnectionFromGroupRequest(string group, string connectionId, RequestOptions options = null)
-        {
-            var message = Pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/groups/", false);
-            uri.AppendPath(group, true);
-            uri.AppendPath("/connections/", false);
-            uri.AppendPath(connectionId, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> Check if there are any client connections connected for the given user. </summary>
-        /// <param name="userId"> Target user Id. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        internal virtual async Task<Response> UserExistsImplAsync(string userId, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateUserExistsImplRequest(userId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.UserExistsImpl");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 404:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Check if there are any client connections connected for the given user. </summary>
-        /// <param name="userId"> Target user Id. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        internal virtual Response UserExistsImpl(string userId, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateUserExistsImplRequest(userId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.UserExistsImpl");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 404:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create Request for <see cref="UserExistsImpl"/> and <see cref="UserExistsImplAsync"/> operations. </summary>
-        /// <param name="userId"> Target user Id. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateUserExistsImplRequest(string userId, RequestOptions options = null)
-        {
-            var message = Pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Head;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/users/", false);
-            uri.AppendPath(userId, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> Send content inside request body to the specific user. </summary>
-        /// <param name="userId"> The user Id. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Upload file type. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> SendToUserAsync(string userId, RequestContent content, ContentType contentType, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateSendToUserRequest(userId, content, contentType, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToUser");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 202:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Send content inside request body to the specific user. </summary>
-        /// <param name="userId"> The user Id. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Upload file type. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response SendToUser(string userId, RequestContent content, ContentType contentType, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateSendToUserRequest(userId, content, contentType, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToUser");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 202:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create Request for <see cref="SendToUser"/> and <see cref="SendToUserAsync"/> operations. </summary>
-        /// <param name="userId"> The user Id. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Upload file type. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateSendToUserRequest(string userId, RequestContent content, ContentType contentType, RequestOptions options = null)
-        {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/users/", false);
-            uri.AppendPath(userId, true);
+            uri.AppendPath(_hub, true);
+            uri.AppendPath("/groups/", false);
+            uri.AppendPath(group, true);
             uri.AppendPath("/:send", false);
-            if (apiVersion != null)
+            if (excluded != null)
             {
-                uri.AppendQuery("api-version", apiVersion, true);
+                foreach (var param in excluded)
+                {
+                    uri.AppendQuery("excluded", param, true);
+                }
             }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", contentType.ToString());
+            request.Headers.Add("Accept", "application/json, text/json");
+            request.Headers.Add("Content-Type", "text/plain");
             request.Content = content;
+            message.ResponseClassifier = ResponseClassifier202.Instance;
             return message;
         }
 
-        /// <summary> Add a user to the target group. </summary>
-        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="userId"> Target user Id. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> AddUserToGroupAsync(string group, string userId, RequestOptions options = null)
-#pragma warning restore AZC0002
+        internal HttpMessage CreateAddConnectionToGroupRequest(string group, string connectionId, RequestContext context)
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateAddUserToGroupRequest(group, userId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.AddUserToGroup");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 404:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Add a user to the target group. </summary>
-        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="userId"> Target user Id. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response AddUserToGroup(string group, string userId, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateAddUserToGroupRequest(group, userId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.AddUserToGroup");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 404:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create Request for <see cref="AddUserToGroup"/> and <see cref="AddUserToGroupAsync"/> operations. </summary>
-        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="userId"> Target user Id. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateAddUserToGroupRequest(string group, string userId, RequestOptions options = null)
-        {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/users/", false);
-            uri.AppendPath(userId, true);
+            uri.AppendPath(_hub, true);
             uri.AppendPath("/groups/", false);
             uri.AppendPath(group, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendPath("/connections/", false);
+            uri.AppendPath(connectionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier200404.Instance;
             return message;
         }
 
-        /// <summary> Remove a user from the target group. </summary>
-        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="userId"> Target user Id. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> RemoveUserFromGroupAsync(string group, string userId, RequestOptions options = null)
-#pragma warning restore AZC0002
+        internal HttpMessage CreateRemoveConnectionFromGroupRequest(string group, string connectionId, RequestContext context)
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateRemoveUserFromGroupRequest(group, userId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromGroup");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Remove a user from the target group. </summary>
-        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="userId"> Target user Id. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response RemoveUserFromGroup(string group, string userId, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateRemoveUserFromGroupRequest(group, userId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromGroup");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create Request for <see cref="RemoveUserFromGroup"/> and <see cref="RemoveUserFromGroupAsync"/> operations. </summary>
-        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="userId"> Target user Id. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateRemoveUserFromGroupRequest(string group, string userId, RequestOptions options = null)
-        {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/users/", false);
-            uri.AppendPath(userId, true);
+            uri.AppendPath(_hub, true);
             uri.AppendPath("/groups/", false);
             uri.AppendPath(group, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> Remove a user from all groups. </summary>
-        /// <param name="userId"> Target user Id. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> RemoveUserFromAllGroupsAsync(string userId, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateRemoveUserFromAllGroupsRequest(userId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromAllGroups");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Remove a user from all groups. </summary>
-        /// <param name="userId"> Target user Id. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response RemoveUserFromAllGroups(string userId, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateRemoveUserFromAllGroupsRequest(userId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromAllGroups");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create Request for <see cref="RemoveUserFromAllGroups"/> and <see cref="RemoveUserFromAllGroupsAsync"/> operations. </summary>
-        /// <param name="userId"> Target user Id. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateRemoveUserFromAllGroupsRequest(string userId, RequestOptions options = null)
-        {
-            var message = Pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/users/", false);
-            uri.AppendPath(userId, true);
-            uri.AppendPath("/groups", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> Grant permission to the connection. </summary>
-        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
-        /// <param name="connectionId"> Target connection Id. </param>
-        /// <param name="targetName"> Optional. If not set, grant the permission to all the targets. If set, grant the permission to the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        internal virtual async Task<Response> GrantPermissionAsync(string permission, string connectionId, string targetName = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateGrantPermissionRequest(permission, connectionId, targetName, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GrantPermission");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Grant permission to the connection. </summary>
-        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
-        /// <param name="connectionId"> Target connection Id. </param>
-        /// <param name="targetName"> Optional. If not set, grant the permission to all the targets. If set, grant the permission to the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        internal virtual Response GrantPermission(string permission, string connectionId, string targetName = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateGrantPermissionRequest(permission, connectionId, targetName, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GrantPermission");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create Request for <see cref="GrantPermission"/> and <see cref="GrantPermissionAsync"/> operations. </summary>
-        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
-        /// <param name="connectionId"> Target connection Id. </param>
-        /// <param name="targetName"> Optional. If not set, grant the permission to all the targets. If set, grant the permission to the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGrantPermissionRequest(string permission, string connectionId, string targetName = null, RequestOptions options = null)
-        {
-            var message = Pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/permissions/", false);
-            uri.AppendPath(permission, true);
             uri.AppendPath("/connections/", false);
             uri.AppendPath(connectionId, true);
-            if (targetName != null)
-            {
-                uri.AppendQuery("targetName", targetName, true);
-            }
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
-        /// <summary> Revoke permission for the connection. </summary>
-        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
-        /// <param name="connectionId"> Target connection Id. </param>
-        /// <param name="targetName"> Optional. If not set, revoke the permission for all targets. If set, revoke the permission for the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        internal virtual async Task<Response> RevokePermissionAsync(string permission, string connectionId, string targetName = null, RequestOptions options = null)
-#pragma warning restore AZC0002
+        internal HttpMessage CreateUserExistsImplRequest(string userId, RequestContext context)
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateRevokePermissionRequest(permission, connectionId, targetName, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RevokePermission");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Revoke permission for the connection. </summary>
-        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
-        /// <param name="connectionId"> Target connection Id. </param>
-        /// <param name="targetName"> Optional. If not set, revoke the permission for all targets. If set, revoke the permission for the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        internal virtual Response RevokePermission(string permission, string connectionId, string targetName = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateRevokePermissionRequest(permission, connectionId, targetName, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RevokePermission");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create Request for <see cref="RevokePermission"/> and <see cref="RevokePermissionAsync"/> operations. </summary>
-        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
-        /// <param name="connectionId"> Target connection Id. </param>
-        /// <param name="targetName"> Optional. If not set, revoke the permission for all targets. If set, revoke the permission for the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateRevokePermissionRequest(string permission, string connectionId, string targetName = null, RequestOptions options = null)
-        {
-            var message = Pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/permissions/", false);
-            uri.AppendPath(permission, true);
-            uri.AppendPath("/connections/", false);
-            uri.AppendPath(connectionId, true);
-            if (targetName != null)
-            {
-                uri.AppendQuery("targetName", targetName, true);
-            }
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> Check if a connection has permission to the specified action. </summary>
-        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
-        /// <param name="connectionId"> Target connection Id. </param>
-        /// <param name="targetName"> Optional. If not set, get the permission for all targets. If set, get the permission for the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        internal virtual async Task<Response> CheckPermissionAsync(string permission, string connectionId, string targetName = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateCheckPermissionRequest(permission, connectionId, targetName, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CheckPermission");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 404:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Check if a connection has permission to the specified action. </summary>
-        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
-        /// <param name="connectionId"> Target connection Id. </param>
-        /// <param name="targetName"> Optional. If not set, get the permission for all targets. If set, get the permission for the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        internal virtual Response CheckPermission(string permission, string connectionId, string targetName = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateCheckPermissionRequest(permission, connectionId, targetName, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CheckPermission");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 404:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create Request for <see cref="CheckPermission"/> and <see cref="CheckPermissionAsync"/> operations. </summary>
-        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
-        /// <param name="connectionId"> Target connection Id. </param>
-        /// <param name="targetName"> Optional. If not set, get the permission for all targets. If set, get the permission for the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCheckPermissionRequest(string permission, string connectionId, string targetName = null, RequestOptions options = null)
-        {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
+            uri.AppendPath(_hub, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier200404.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateCloseUserConnectionsRequest(string userId, IEnumerable<string> excluded, string reason, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(_hub, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendPath("/:closeConnections", false);
+            if (excluded != null)
+            {
+                foreach (var param in excluded)
+                {
+                    uri.AppendQuery("excluded", param, true);
+                }
+            }
+            if (reason != null)
+            {
+                uri.AppendQuery("reason", reason, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier204.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateSendToUserRequest(string userId, RequestContent content, ContentType contentType, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(_hub, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendPath("/:send", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            request.Headers.Add("Content-Type", contentType.ToString());
+            request.Content = content;
+            message.ResponseClassifier = ResponseClassifier202.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateSendToUserRequest(string userId, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(_hub, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendPath("/:send", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            request.Headers.Add("Content-Type", "text/plain");
+            request.Content = content;
+            message.ResponseClassifier = ResponseClassifier202.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateAddUserToGroupRequest(string group, string userId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context);
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(_hub, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendPath("/groups/", false);
+            uri.AppendPath(group, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier200404.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateRemoveUserFromGroupRequest(string group, string userId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(_hub, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendPath("/groups/", false);
+            uri.AppendPath(group, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier204.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateRemoveUserFromAllGroupsRequest(string userId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(_hub, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendPath("/groups", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier204.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateGrantPermissionRequest(string permission, string connectionId, string targetName, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context);
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(_hub, true);
             uri.AppendPath("/permissions/", false);
             uri.AppendPath(permission, true);
             uri.AppendPath("/connections/", false);
@@ -1774,12 +2075,113 @@ namespace Azure.Messaging.WebPubSub
             {
                 uri.AppendQuery("targetName", targetName, true);
             }
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
+        }
+
+        internal HttpMessage CreateRevokePermissionRequest(string permission, string connectionId, string targetName, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(_hub, true);
+            uri.AppendPath("/permissions/", false);
+            uri.AppendPath(permission, true);
+            uri.AppendPath("/connections/", false);
+            uri.AppendPath(connectionId, true);
+            if (targetName != null)
+            {
+                uri.AppendQuery("targetName", targetName, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier204.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateCheckPermissionRequest(string permission, string connectionId, string targetName, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context);
+            var request = message.Request;
+            request.Method = RequestMethod.Head;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(_hub, true);
+            uri.AppendPath("/permissions/", false);
+            uri.AppendPath(permission, true);
+            uri.AppendPath("/connections/", false);
+            uri.AppendPath(connectionId, true);
+            if (targetName != null)
+            {
+                uri.AppendQuery("targetName", targetName, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier200404.Instance;
+            return message;
+        }
+
+        private sealed class ResponseClassifier200 : ResponseClassifier
+        {
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                return message.Response.Status switch
+                {
+                    200 => false,
+                    _ => true
+                };
+            }
+        }
+        private sealed class ResponseClassifier204 : ResponseClassifier
+        {
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier204();
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                return message.Response.Status switch
+                {
+                    204 => false,
+                    _ => true
+                };
+            }
+        }
+        private sealed class ResponseClassifier202 : ResponseClassifier
+        {
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier202();
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                return message.Response.Status switch
+                {
+                    202 => false,
+                    _ => true
+                };
+            }
+        }
+        private sealed class ResponseClassifier200404 : ResponseClassifier
+        {
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200404();
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                return message.Response.Status switch
+                {
+                    200 => false,
+                    404 => false,
+                    _ => true
+                };
+            }
         }
     }
 }

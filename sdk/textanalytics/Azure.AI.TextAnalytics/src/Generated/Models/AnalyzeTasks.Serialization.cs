@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.TextAnalytics.Internal;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -24,6 +25,10 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<IReadOnlyList<KeyPhraseExtractionTasksItem>> keyPhraseExtractionTasks = default;
             Optional<IReadOnlyList<EntityLinkingTasksItem>> entityLinkingTasks = default;
             Optional<IReadOnlyList<SentimentAnalysisTasksItem>> sentimentAnalysisTasks = default;
+            Optional<IReadOnlyList<ExtractiveSummarizationTasksItem>> extractiveSummarizationTasks = default;
+            Optional<IReadOnlyList<CustomEntityRecognitionTasksItem>> customEntityRecognitionTasks = default;
+            Optional<IReadOnlyList<CustomSingleClassificationTasksItem>> customSingleClassificationTasks = default;
+            Optional<IReadOnlyList<CustomMultiClassificationTasksItem>> customMultiClassificationTasks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("completed"))
@@ -121,8 +126,68 @@ namespace Azure.AI.TextAnalytics.Models
                     sentimentAnalysisTasks = array;
                     continue;
                 }
+                if (property.NameEquals("extractiveSummarizationTasks"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<ExtractiveSummarizationTasksItem> array = new List<ExtractiveSummarizationTasksItem>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ExtractiveSummarizationTasksItem.DeserializeExtractiveSummarizationTasksItem(item));
+                    }
+                    extractiveSummarizationTasks = array;
+                    continue;
+                }
+                if (property.NameEquals("customEntityRecognitionTasks"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<CustomEntityRecognitionTasksItem> array = new List<CustomEntityRecognitionTasksItem>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(CustomEntityRecognitionTasksItem.DeserializeCustomEntityRecognitionTasksItem(item));
+                    }
+                    customEntityRecognitionTasks = array;
+                    continue;
+                }
+                if (property.NameEquals("customSingleClassificationTasks"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<CustomSingleClassificationTasksItem> array = new List<CustomSingleClassificationTasksItem>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(CustomSingleClassificationTasksItem.DeserializeCustomSingleClassificationTasksItem(item));
+                    }
+                    customSingleClassificationTasks = array;
+                    continue;
+                }
+                if (property.NameEquals("customMultiClassificationTasks"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<CustomMultiClassificationTasksItem> array = new List<CustomMultiClassificationTasksItem>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(CustomMultiClassificationTasksItem.DeserializeCustomMultiClassificationTasksItem(item));
+                    }
+                    customMultiClassificationTasks = array;
+                    continue;
+                }
             }
-            return new AnalyzeTasks(completed, failed, inProgress, total, Optional.ToList(entityRecognitionTasks), Optional.ToList(entityRecognitionPiiTasks), Optional.ToList(keyPhraseExtractionTasks), Optional.ToList(entityLinkingTasks), Optional.ToList(sentimentAnalysisTasks));
+            return new AnalyzeTasks(completed, failed, inProgress, total, Optional.ToList(entityRecognitionTasks), Optional.ToList(entityRecognitionPiiTasks), Optional.ToList(keyPhraseExtractionTasks), Optional.ToList(entityLinkingTasks), Optional.ToList(sentimentAnalysisTasks), Optional.ToList(extractiveSummarizationTasks), Optional.ToList(customEntityRecognitionTasks), Optional.ToList(customSingleClassificationTasks), Optional.ToList(customMultiClassificationTasks));
         }
     }
 }

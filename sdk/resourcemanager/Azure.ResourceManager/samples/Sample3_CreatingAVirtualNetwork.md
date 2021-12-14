@@ -7,8 +7,10 @@ In this example, we'll create a virtual network. Since the SDK follows the resou
 These are the namespaces needed for this project:
 ```C#
 using Azure.Identity;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Network;
+using System;
 using System.Threading.Tasks;
 ```
 
@@ -16,29 +18,82 @@ using System.Threading.Tasks;
 Start by creating a new resource group, like we did above:
 
 ```C# Snippet:Creating_A_Virtual_Network_CreateResourceGroup
-var armClient = new ArmClient(new DefaultAzureCredential());
-ResourceGroupContainer rgContainer = armClient.DefaultSubscription.GetResourceGroups();
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
+
 string rgName = "myResourceGroup";
-ResourceGroup resourceGroup = await rgContainer.Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
+ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
+ResourceGroupCreateOrUpdateOperation operation = await rgCollection.CreateOrUpdateAsync(rgName, rgData);
+ResourceGroup resourceGroup = operation.Value;
 ```
 ## Create a Virtual Network
-Now that we have a resource group, we'll create our virtual network. To do this, we will use a helper method on the container object called `Construct`. The helper method allows us to create the request object and then send that to the `Create` method.
+Now that we have a resource group, we'll create our virtual network. To do this, we will create a `VirtualNetworkData` object for the parameters that we want our Virtual Network to have, then we will get the Virtual Network collection and from there we call `CreateOrUpdateAsync()`.
 
-```csharp
-VirtualNetworkContainer vnetContainer = resourceGroup.GetVirtualNetworks();
-VirtualNetwork virtualNetwork = await vnetContainer
-    .Construct("10.0.0.0/16", location)
-    .CreateAsync("myVnetName");
+```C#
+string vnetName = "myVnetName";
+VirtualNetworkData vnetData = new VirtualNetworkData()
+{
+    // You can specify many options for the Virtual Network in here
+    Location = "WestUS2",
+    AddressSpace = new AddressSpace()
+    {
+        AddressPrefixes = { "10.0.0.0/16", }
+    }
+};
+
+VirtualNetwork vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(vnetName, vnetData);
 ```
 
 ## Create a Subnet 
 Now that we have a virtual network, we must create at least one subnet in order to add any virtual machines.
-Following the hierarchy in Azure, subnets belong to a virtual network, so that's where we'll get our `SubnetContainer` instance. After that, we'll again use the `Construct` helper method to create our subnet.
+Following the hierarchy in Azure, subnets belong to a virtual network, so that's where we'll get our `SubnetCollection` instance. Before that, a `SubnetData` object must be created to specify the parameters for the Subnet.
 
-```csharp
-string subnetName = "mySubnetName";
-SubnetContainer subnetContainer = virtualNetwork.GetSubnets();
-Subnet subnet = await subnetContainer
-    .Construct("10.0.0.0/24")
-    .CreateAsync(subnetName);
+```C#
+string subnetName = vnetName + "_Subnet1";
+SubnetData subnetData = new SubnetData()
+{
+    Name = subnetName,
+    AddressPrefix = "10.0.1.0/24"
+};
+
+Subnet subnet = await vnet.GetSubnets().CreateOrUpdateAsync(subnetName, subnetData);
+```
+
+## Another way to create a Virtual Network with a Subnet
+It is possible to define an create a virtual network with its subnets in a single step. This is achieved by defining the subnets in the `VirtualNetworkData` object that is given as a parameter.
+
+```C#
+string vnetName = "myVnetName";
+string subnet1Name = vnetName + "_Subnet1";
+
+var vnetData = new VirtualNetworkData()
+{
+    Location = "WestUS2",
+    AddressSpace = new AddressSpace()
+    {
+        AddressPrefixes = { "10.0.0.0/16", }
+    },
+    Subnets = { new SubnetData() { Name = subnet1Name, AddressPrefix = "10.0.0.0/24", } }
+};
+
+VirtualNetwork vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(vnetName, vnetData);
+```
+### Modifying the Subnets of an existing Virtual Network
+Using the SubnetCollection it is possible to add a subnet into the virtual network we created above.
+```C#
+string subnet2Name = vnetName + "_Subnet2";
+SubnetData subnetData = new SubnetData()
+{
+    Name = subnet2Name,
+    AddressPrefix = "10.0.1.0/24"
+};
+
+Subnet subnet = await vnet.GetSubnets().CreateOrUpdateAsync(subnet2Name, subnetData);
+```
+
+You can verify that your virtual network now has 2 subnets by doing the following: 
+```C#
+VirtualNetwork myVNet = await resourceGroup.GetVirtualNetworks().GetAsync(vnetName);
+Console.WriteLine(myVNet.Data.Subnets.Count);
 ```

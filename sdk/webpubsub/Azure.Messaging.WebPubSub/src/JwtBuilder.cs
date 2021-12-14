@@ -4,6 +4,7 @@
 using System;
 using System.Buffers;
 using System.Buffers.Text;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
@@ -85,7 +86,7 @@ namespace Azure.Core
                 throw new InvalidOperationException("Cannot change claims after building. Create a new JwtBuilder instead");
             AddClaim(utf8Name, value.ToUnixTimeSeconds());
         }
-        public void AddClaim(ReadOnlySpan<byte> utf8Name, string[] value)
+        public void AddClaim(ReadOnlySpan<byte> utf8Name, IEnumerable<string> value)
         {
             if (_writer == null)
                 throw new InvalidOperationException("Cannot change claims after building. Create a new JwtBuilder instead");

@@ -4,7 +4,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Management;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.TestFramework;
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.Tests
         protected ArmClient Client { get; private set; }
 
         protected ResourceManagerTestBase(bool isAsync, RecordedTestMode mode)
-        : base(isAsync, mode)
+        : base(isAsync, mode, useLegacyTransport: true)
         {
         }
 
         protected ResourceManagerTestBase(bool isAsync)
-            : base(isAsync)
+            : base(isAsync, useLegacyTransport: true)
         {
         }
 
@@ -34,10 +36,11 @@ namespace Azure.ResourceManager.Tests
 
         protected static GenericResourceData ConstructGenericAvailabilitySet()
         {
-            var data = new GenericResourceData();
-            data.Location = Location.WestUS2;
-            data.Sku = new Sku();
-            data.Sku.Name = "Aligned";
+            var data = new GenericResourceData(Location.WestUS2);
+            data.Sku = new Resources.Models.Sku()
+            {
+                Name = "Aligned"
+            };
             var propertyBag = new Dictionary<string, object>();
             propertyBag.Add("platformUpdateDomainCount", 5);
             propertyBag.Add("platformFaultDomainCount", 2);
@@ -47,18 +50,19 @@ namespace Azure.ResourceManager.Tests
 
         protected async Task<GenericResource> CreateGenericAvailabilitySetAsync(ResourceIdentifier rgId)
         {
-            var genericResources = Client.DefaultSubscription.GetGenericResources();
+            var genericResources = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetGenericResources();
             GenericResourceData data = ConstructGenericAvailabilitySet();
             var asetId = rgId.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
-            return await genericResources.CreateOrUpdateAsync(asetId, data);
+            var op = await genericResources.CreateOrUpdateAsync(asetId, data);
+            return op.Value;
         }
 
-        protected async Task<ResourcesCreateOrUpdateByIdOperation> StartCreateGenericAvailabilitySetAsync(ResourceIdentifier rgId)
+        protected async Task<ResourceCreateOrUpdateByIdOperation> StartCreateGenericAvailabilitySetAsync(ResourceIdentifier rgId)
         {
-            var genericResources = Client.DefaultSubscription.GetGenericResources();
+            var genericResources = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetGenericResources();
             GenericResourceData data = ConstructGenericAvailabilitySet();
             var asetId = rgId.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
-            return await genericResources.StartCreateOrUpdateAsync(asetId, data);
+            return await genericResources.CreateOrUpdateAsync(asetId, data, false);
         }
 
         protected static void AssertAreEqual(GenericResource aset, GenericResource aset2)
@@ -70,14 +74,24 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(aset.Data.ManagedBy, aset2.Data.ManagedBy);
             Assert.AreEqual(aset.Data.Name, aset2.Data.Name);
             Assert.AreEqual(aset.Data.Plan, aset2.Data.Plan);
-            Assert.AreEqual(aset.Data.Sku, aset2.Data.Sku);
+            if (aset.Data.Sku != null && aset2.Data.Sku != null)
+            {
+                Assert.NotNull(aset.Data.Sku);
+                Assert.NotNull(aset2.Data.Sku);
+                Assert.AreEqual(aset.Data.Sku.Name, aset2.Data.Sku.Name);
+                Assert.AreEqual(aset.Data.Sku.Tier, aset2.Data.Sku.Tier);
+                Assert.AreEqual(aset.Data.Sku.Size, aset2.Data.Sku.Size);
+                Assert.AreEqual(aset.Data.Sku.Family, aset2.Data.Sku.Family);
+                Assert.AreEqual(aset.Data.Sku.Model, aset2.Data.Sku.Model);
+                Assert.AreEqual(aset.Data.Sku.Capacity, aset2.Data.Sku.Capacity);
+            }
             //TODO: Add equal for Properties and Tags
         }
 
-        protected static async Task<int> GetResourceCountAsync(GenericResourceContainer genericResources, ResourceGroup rg = default)
+        protected static async Task<int> GetResourceCountAsync(GenericResourceCollection genericResources, ResourceGroup rg = default)
         {
             int result = 0;
-            var pageable = rg == null ? genericResources.ListAsync() : genericResources.ListByResourceGroupAsync(rg.Id.Name);
+            var pageable = rg == null ? genericResources.GetAllAsync() : genericResources.GetByResourceGroupAsync(rg.Id.Name);
             await foreach (var resource in pageable)
                 result++;
             return result;

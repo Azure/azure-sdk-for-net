@@ -51,95 +51,83 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
             {
                 // determine the schema by inspecting the first event (a topic can only support a single schema)
                 var firstEvent = events.First();
-                if (firstEvent is string str)
+                switch (firstEvent)
                 {
-                    bool isEventGridEvent = false;
-                    try
+                    case string:
+                        await SendAsync(events, evt => new BinaryData((string)evt), cancellationToken)
+                            .ConfigureAwait(false);
+                        break;
+                    case BinaryData:
+                        await SendAsync(events, evt => (BinaryData) evt, cancellationToken)
+                            .ConfigureAwait(false);
+                        break;
+                    case byte[]:
+                        await SendAsync(events, evt => new BinaryData((byte[])evt), cancellationToken)
+                            .ConfigureAwait(false);
+                        break;
+                    case JObject:
+                        await SendAsync(events, evt => new BinaryData(((JObject)evt).ToString()), cancellationToken)
+                            .ConfigureAwait(false);
+                        break;
+                    case EventGridEvent:
                     {
-                        var ev = EventGridEvent.Parse(new BinaryData(str));
-                        isEventGridEvent = true;
-                    }
-                    catch (ArgumentException)
-                    {
-                    }
-
-                    if (isEventGridEvent)
-                    {
-                        List<EventGridEvent> egEvents = new();
-                        foreach (string evt in events)
+                        List<EventGridEvent> egEvents = new(events.Count);
+                        foreach (object evt in events)
                         {
-                            egEvents.Add(EventGridEvent.Parse(new BinaryData(evt)));
+                            egEvents.Add((EventGridEvent) evt);
                         }
-
                         await _client.SendEventsAsync(egEvents, cancellationToken).ConfigureAwait(false);
+                        break;
                     }
-                    else
+                    case CloudEvent:
                     {
-                        List<CloudEvent> cloudEvents = new();
-                        foreach (string evt in events)
+                        List<CloudEvent> cloudEvents = new(events.Count);
+                        foreach (object evt in events)
                         {
-                            cloudEvents.Add(CloudEvent.Parse(new BinaryData(evt)));
+                            cloudEvents.Add((CloudEvent) evt);
                         }
-
                         await _client.SendEventsAsync(cloudEvents, cancellationToken).ConfigureAwait(false);
+                        break;
                     }
+                    default:
+                        throw new InvalidOperationException(
+                            $"{firstEvent?.GetType().ToString()} is not a valid event type.");
                 }
-                else if (firstEvent is JObject jObject)
-                {
-                    bool isEventGridEvent = false;
-                    try
-                    {
-                        var ev = EventGridEvent.Parse(new BinaryData(jObject.ToString()));
-                        isEventGridEvent = true;
-                    }
-                    catch (ArgumentException)
-                    {
-                    }
+            }
+        }
 
-                    if (isEventGridEvent)
-                    {
-                        List<EventGridEvent> egEvents = new();
-                        foreach (JObject evt in events)
-                        {
-                            egEvents.Add(EventGridEvent.Parse(new BinaryData(evt.ToString())));
-                        }
+        private async Task SendAsync(IList<object> events, Func<object, BinaryData> binaryDataFactory, CancellationToken cancellationToken)
+        {
+            bool isEventGridEvent = false;
+            try
+            {
+                // test the first event to determine CloudEvent vs EventGridEvent
+                // both event types are NOT supported in same list
+                EventGridEvent.Parse(binaryDataFactory(events.First()));
+                isEventGridEvent = true;
+            }
+            catch (ArgumentException)
+            {
+            }
+            if (isEventGridEvent)
+            {
+                List<EventGridEvent> egEvents = new(events.Count);
+                foreach (object evt in events)
+                {
+                    egEvents.Add(EventGridEvent.Parse(binaryDataFactory(evt)));
+                }
 
-                        await _client.SendEventsAsync(egEvents, cancellationToken).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        List<CloudEvent> cloudEvents = new();
-                        foreach (JObject evt in events)
-                        {
-                            cloudEvents.Add(CloudEvent.Parse(new BinaryData(evt.ToString())));
-                        }
+                await _client.SendEventsAsync(egEvents, cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                List<CloudEvent> cloudEvents = new(events.Count);
+                foreach (object evt in events)
+                {
+                    cloudEvents.Add(CloudEvent.Parse(binaryDataFactory(evt)));
+                }
 
-                        await _client.SendEventsAsync(cloudEvents, cancellationToken).ConfigureAwait(false);
-                    }
-                }
-                else if (firstEvent is EventGridEvent)
-                {
-                    List<EventGridEvent> egEvents = new();
-                    foreach (object evt in events)
-                    {
-                        egEvents.Add((EventGridEvent) evt);
-                    }
-                    await _client.SendEventsAsync(egEvents, cancellationToken).ConfigureAwait(false);
-                }
-                else if (firstEvent is CloudEvent)
-                {
-                    List<CloudEvent> cloudEvents = new();
-                    foreach (object evt in events)
-                    {
-                        cloudEvents.Add((CloudEvent) evt);
-                    }
-                    await _client.SendEventsAsync(cloudEvents, cancellationToken).ConfigureAwait(false);
-                }
-                else
-                {
-                    throw new InvalidOperationException(
-                        $"{firstEvent?.GetType().ToString()} is not a valid event type.");
-                }
+                await _client.SendEventsAsync(cloudEvents, cancellationToken).ConfigureAwait(false);
             }
         }
     }

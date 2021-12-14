@@ -3,11 +3,11 @@
 
 using System;
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Tests
@@ -15,6 +15,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
     public partial class KeyClientLiveTests
     {
         [Test]
+        [PremiumOnly]
         [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3_Preview)]
         public async Task ReleaseCreatedKey()
         {
@@ -41,6 +42,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
+        [PremiumOnly]
         [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3_Preview)]
         public async Task ReleaseUpdatedKey()
         {
@@ -87,11 +89,12 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 },
             };
 
-            KeyVaultKey key = await Client.ImportKeyAsync(options);
+            // BUGBUG: Remove assert when https://github.com/Azure/azure-sdk-for-net/issues/22750 is resolved.
+            KeyVaultKey key = await AssertRequestSupported(async () => await Client.ImportKeyAsync(options));
             RegisterForCleanup(key.Name);
 
             // BUGBUG: Remove assert when https://github.com/Azure/azure-sdk-for-net/issues/22750 is resolved.
-            JwtSecurityToken jws = await AssertRequestSupported(async() => await ReleaseKeyAsync(keyName));
+            JwtSecurityToken jws = await AssertRequestSupported(async () => await ReleaseKeyAsync(keyName));
             Assert.IsTrue(jws.Payload.TryGetValue("response", out object response));
 
             JsonDocument doc = JsonDocument.Parse(response.ToString());
@@ -137,7 +140,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
     ""version"": ""1.0""
 }}";
 
-            byte[] releasePolicyData = Encoding.UTF8.GetBytes(releasePolicy);
+            BinaryData releasePolicyData = BinaryData.FromString(releasePolicy);
             return new(releasePolicyData);
         }
 

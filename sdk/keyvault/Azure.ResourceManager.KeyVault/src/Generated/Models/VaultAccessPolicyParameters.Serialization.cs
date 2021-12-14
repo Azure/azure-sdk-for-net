@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -22,16 +23,26 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static VaultAccessPolicyParameters DeserializeVaultAccessPolicyParameters(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
             Optional<string> location = default;
             VaultAccessPolicyProperties properties = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("location"))
+                {
+                    location = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("properties"))
+                {
+                    properties = VaultAccessPolicyProperties.DeserializeVaultAccessPolicyProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -44,18 +55,8 @@ namespace Azure.ResourceManager.KeyVault.Models
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("location"))
-                {
-                    location = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("properties"))
-                {
-                    properties = VaultAccessPolicyProperties.DeserializeVaultAccessPolicyProperties(property.Value);
-                    continue;
-                }
             }
-            return new VaultAccessPolicyParameters(id.Value, name.Value, type.Value, location.Value, properties);
+            return new VaultAccessPolicyParameters(id, name, type, location.Value, properties);
         }
     }
 }

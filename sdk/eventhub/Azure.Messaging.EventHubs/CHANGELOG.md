@@ -1,14 +1,73 @@
 # Release History
 
-## 5.6.0-beta.1 (Unreleased)
+## 5.7.0-beta.2 (Unreleased)
 
 ### Features Added
 
-- Each Event Hubs client type now offers an option to set an Identifier. The identifier is informational and is associated with the AMQP links used, allowing the service to provide additional context in error messages and the SDK logs to provide an additional point of correlation.
+- Support for cancellation tokens has been improved for AMQP operations, enabling earlier detection of cancellation requests without needing to wait for the configured timeout to elapse.
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Fixed an issue for publishing with idempotent retries enabled where the client and service state could become out-of-sync for error scenarios with ambiguous outcomes. When this occurred, callers had no way to detect or correct the condition and it was possible that new events would fail to publish or be incorrectly identified as duplicates by the service. 
+
+### Other Changes
+
+- Based on a new series of profiling and testing in real-world application scenarios, the default values for `EventProcessor<T>` load balancing are being updated to provide better performance and stability.  The default load balancing interval was changed from 10 seconds to 30 seconds.  The default ownership expiration interval was changed from 30 seconds to 2 minutes.  The default load balancing strategy has been changed from balanced to greedy.
+
+## 5.7.0-beta.1 (2021-11-09)
+
+### Features Added
+
+- The `EventHubBufferedProducerClient` is being introduced, intended to allow for efficient publishing of events without having to explicitly manage batches in the application.  More information can be found in its [design document](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/design/proposal-event-hub-buffered-producer.md).
+
+### Other Changes
+
+- `EventData` now allows the `EventBody` to be set after construction and supports an empty constructor.
+
+- Added additional heuristics for the `EventProcessor<T>` load balancing cycle to help discover issues that can impact processor performance and stability; these validations will produce warnings should potential concerns be found.
+
+- `EventProcessor<T>` will now log a verbose message indicating what event position was chosen to read from when initializing a partition.
+
+- `EventPosition` now exposes its `ToString` method for code completion, making it more discoverable.
+
+## 5.6.2 (2021-10-05)
+
+### Bugs Fixed
+
+- Dependencies have been updated to resolve an error when creating `EventSource` instances when used with Xamarin.
+
+## 5.6.1 (2021-09-08)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Andrey Shihov _([GitHub](https://github.com/andreyshihov))_
+- John Call _([GitHub](https://github.com/johnthcall))_
+
+### Bugs Fixed
+
+- Fixed an issue with refreshing authorization where redundant requests were made to acquire AAD tokens that were due to expire.  Refreshes will now coordinate to ensure a single AAD token acquisition.
+
+- Fixed an issue with authorization refresh where attempts may have been made to authorize a faulted link.  Links that fail to open are no longer be considered valid for authorization.
+
+## Other Changes
+
+- A sample demonstrating the use of the `AzureEventSourceListener` from `Azure.Core` for common scenarios with the Event Hubs client library has been created.   _(A community contribution, courtesy of [andreyshihov](https://github.com/andreyshihov))_
+
+- Serialization of event data from Event Hubs has been tweaked for greater efficiency.  _(A community contribution, courtesy of [johnthcall](https://github.com/johnthcall))_
+
+- Adjusted the approach used to abandon AMQP sessions when an exception occurs while opening a link to ensure that the transport library does not continue to hold an unnecessary reference.
+
+- Documentation has been enhanced to provide additional context for client library types, notably detailing non-obvious validations applied to parameters and options members.
+
+## 5.6.0 (2021-08-10)
+
+### Features Added
+
+- Each Event Hubs client type now offers an option to set an Identifier. The identifier is informational and is associated with the AMQP links used, allowing the service to provide additional context in error messages and the SDK logs to provide an additional point of correlation.
 
 ### Other Changes
 

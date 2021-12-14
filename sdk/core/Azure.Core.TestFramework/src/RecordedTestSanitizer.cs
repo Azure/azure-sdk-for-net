@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using Azure.Core.TestFramework.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -14,7 +15,12 @@ namespace Azure.Core.TestFramework
     public class RecordedTestSanitizer
     {
         public const string SanitizeValue = "Sanitized";
-        private List<(string JsonPath, Func<JToken, JToken> Sanitizer)> JsonPathSanitizers { get; } = new();
+        internal List<(string JsonPath, Func<JToken, JToken> Sanitizer)> JsonPathSanitizers { get; } = new();
+
+        public List<BodyKeySanitizer> BodyKeySanitizers { get; } = new();
+
+        public List<BodyRegexSanitizer> BodyRegexSanitizers { get; } = new();
+        public List<UriRegexSanitizer> UriRegexSanitizers { get; } = new();
 
         /// <summary>
         /// This is just a temporary workaround to avoid breaking tests that need to be re-recorded
@@ -24,6 +30,16 @@ namespace Azure.Core.TestFramework
         public bool LegacyConvertJsonDateTokens { get; set; }
 
         private static readonly string[] s_sanitizeValueArray = { SanitizeValue };
+
+        public RecordedTestSanitizer()
+        {
+            // Lazy sanitize fields in the request and response bodies
+            AddJsonPathSanitizer("$..primaryKey");
+            AddJsonPathSanitizer("$..secondaryKey");
+            AddJsonPathSanitizer("$..primaryConnectionString");
+            AddJsonPathSanitizer("$..secondaryConnectionString");
+            AddJsonPathSanitizer("$..connectionString");
+        }
 
         private static readonly JsonSerializerSettings SerializerSettings = new JsonSerializerSettings
         {
@@ -35,6 +51,15 @@ namespace Azure.Core.TestFramework
         public void AddJsonPathSanitizer(string jsonPath, Func<JToken, JToken> sanitizer = null)
         {
             JsonPathSanitizers.Add((jsonPath, sanitizer ?? (_ => JToken.FromObject(SanitizeValue))));
+        }
+
+        public void ReplaceHostInUri(string replacementHostName)
+        {
+            UriRegexSanitizers.Add(
+                new UriRegexSanitizer(@"https://(?<host>[^/]+)/", replacementHostName)
+                {
+                    GroupForReplace = "host"
+                });
         }
 
         public virtual string SanitizeUri(string uri)
@@ -55,8 +80,14 @@ namespace Azure.Core.TestFramework
 
         public virtual string SanitizeTextBody(string contentType, string body)
         {
+            bool modified = false;
+
+            if (string.IsNullOrWhiteSpace(body))
+                return body;
+
             if (JsonPathSanitizers.Count == 0)
                 return body;
+
             try
             {
                 JToken jsonO;
@@ -76,9 +107,18 @@ namespace Azure.Core.TestFramework
                     foreach (JToken token in jsonO.SelectTokens(jsonPath))
                     {
                         token.Replace(sanitizer(token));
+                        modified = true;
                     }
                 }
-                return JsonConvert.SerializeObject(jsonO, SerializerSettings);
+
+                if (modified || LegacyConvertJsonDateTokens)
+                {
+                    return JsonConvert.SerializeObject(jsonO, SerializerSettings);
+                }
+                else
+                {
+                    return body;
+                }
             }
             catch
             {

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -27,6 +28,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WritePropertyName("dataFlow");
                 writer.WriteObjectValue(DataFlow);
+            }
+            if (Optional.IsCollectionDefined(DataFlows))
+            {
+                writer.WritePropertyName("dataFlows");
+                writer.WriteStartArray();
+                foreach (var item in DataFlows)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(Datasets))
             {
@@ -66,6 +77,105 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
+        internal static DataFlowDebugPackage DeserializeDataFlowDebugPackage(JsonElement element)
+        {
+            Optional<string> sessionId = default;
+            Optional<DataFlowDebugResource> dataFlow = default;
+            Optional<IList<DataFlowDebugResource>> dataFlows = default;
+            Optional<IList<DatasetDebugResource>> datasets = default;
+            Optional<IList<LinkedServiceDebugResource>> linkedServices = default;
+            Optional<DataFlowStagingInfo> staging = default;
+            Optional<DataFlowDebugPackageDebugSettings> debugSettings = default;
+            IDictionary<string, object> additionalProperties = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("sessionId"))
+                {
+                    sessionId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dataFlow"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    dataFlow = DataFlowDebugResource.DeserializeDataFlowDebugResource(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("dataFlows"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<DataFlowDebugResource> array = new List<DataFlowDebugResource>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DataFlowDebugResource.DeserializeDataFlowDebugResource(item));
+                    }
+                    dataFlows = array;
+                    continue;
+                }
+                if (property.NameEquals("datasets"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<DatasetDebugResource> array = new List<DatasetDebugResource>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DatasetDebugResource.DeserializeDatasetDebugResource(item));
+                    }
+                    datasets = array;
+                    continue;
+                }
+                if (property.NameEquals("linkedServices"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<LinkedServiceDebugResource> array = new List<LinkedServiceDebugResource>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(LinkedServiceDebugResource.DeserializeLinkedServiceDebugResource(item));
+                    }
+                    linkedServices = array;
+                    continue;
+                }
+                if (property.NameEquals("staging"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    staging = DataFlowStagingInfo.DeserializeDataFlowStagingInfo(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("debugSettings"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    debugSettings = DataFlowDebugPackageDebugSettings.DeserializeDataFlowDebugPackageDebugSettings(property.Value);
+                    continue;
+                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+            }
+            additionalProperties = additionalPropertiesDictionary;
+            return new DataFlowDebugPackage(sessionId.Value, dataFlow.Value, Optional.ToList(dataFlows), Optional.ToList(datasets), Optional.ToList(linkedServices), staging.Value, debugSettings.Value, additionalProperties);
+        }
+
         internal partial class DataFlowDebugPackageConverter : JsonConverter<DataFlowDebugPackage>
         {
             public override void Write(Utf8JsonWriter writer, DataFlowDebugPackage model, JsonSerializerOptions options)
@@ -74,7 +184,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             public override DataFlowDebugPackage Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeDataFlowDebugPackage(document.RootElement);
             }
         }
     }

@@ -30,17 +30,8 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <exception cref="ArgumentNullException"> <paramref name="environmentFqdn"/> or <paramref name="apiVersion"/> is null. </exception>
         public ModelSettingsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string environmentFqdn, string apiVersion = "2020-07-31")
         {
-            if (environmentFqdn == null)
-            {
-                throw new ArgumentNullException(nameof(environmentFqdn));
-            }
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
-
-            this.environmentFqdn = environmentFqdn;
-            this.apiVersion = apiVersion;
+            this.environmentFqdn = environmentFqdn ?? throw new ArgumentNullException(nameof(environmentFqdn));
+            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }

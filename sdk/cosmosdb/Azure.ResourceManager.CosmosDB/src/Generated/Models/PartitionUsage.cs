@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The partition level usage data for a usage request. </summary>
-    public partial class PartitionUsage : Usage
+    public partial class PartitionUsage : BaseUsage
     {
         /// <summary> Initializes a new instance of PartitionUsage. </summary>
         internal PartitionUsage()

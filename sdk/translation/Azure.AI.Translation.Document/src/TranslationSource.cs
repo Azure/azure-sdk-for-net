@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Core;
+using Azure.AI.Translation.Document.Models;
 
 namespace Azure.AI.Translation.Document
 {
@@ -14,7 +15,8 @@ namespace Azure.AI.Translation.Document
 
         /// <summary>
         /// Location of the folder / container or single file with your documents.
-        /// This should be a SAS Uri.
+        /// See the service documentation for the supported SAS permissions for accessing
+        /// source storage containers/blobs: <a href="https://aka.ms/azsdk/documenttranslation/sas-permissions"/>.
         /// </summary>
         [CodeGenMember("SourceUrl")]
         public Uri SourceUri { get; }
@@ -36,7 +38,7 @@ namespace Azure.AI.Translation.Document
             set
             {
                 if (Filter == null)
-                    Filter = new DocumentFilterInternal();
+                    Filter = new DocumentFilter();
                 Filter.Prefix = value;
             }
         }
@@ -51,7 +53,7 @@ namespace Azure.AI.Translation.Document
             set
             {
                 if (Filter == null)
-                    Filter = new DocumentFilterInternal();
+                    Filter = new DocumentFilter();
                 Filter.Suffix = value;
             }
         }
@@ -61,6 +63,6 @@ namespace Azure.AI.Translation.Document
         /// using prefix and suffix.
         /// </summary>
         [CodeGenMember("Filter")]
-        internal DocumentFilterInternal Filter { get; set; }
+        internal DocumentFilter Filter { get; set; }
     }
 }

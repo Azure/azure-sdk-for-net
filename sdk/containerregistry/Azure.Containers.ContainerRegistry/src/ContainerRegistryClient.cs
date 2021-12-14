@@ -72,6 +72,11 @@ namespace Azure.Containers.ContainerRegistry
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
+            if (options.Audience == null)
+            {
+                throw new InvalidOperationException("ContainerRegistryClientOptions.Audience property must be set to initialize ContainerRegistryClient.");
+            }
+
             _endpoint = endpoint;
             _registryName = endpoint.Host.Split('.')[0];
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -79,7 +84,8 @@ namespace Azure.Containers.ContainerRegistry
             _acrAuthPipeline = HttpPipelineBuilder.Build(options);
             _acrAuthClient = new AuthenticationRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
 
-            _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryChallengeAuthenticationPolicy(credential, options.AuthenticationScope, _acrAuthClient));
+            string defaultScope = options.Audience + "/.default";
+            _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryChallengeAuthenticationPolicy(credential, defaultScope, _acrAuthClient));
             _restClient = new ContainerRegistryRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
         }
 

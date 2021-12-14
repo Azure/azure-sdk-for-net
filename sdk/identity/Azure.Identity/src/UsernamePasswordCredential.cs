@@ -19,22 +19,21 @@ namespace Azure.Identity
     public class UsernamePasswordCredential : TokenCredential
     {
         private const string NoDefaultScopeMessage = "Authenticating in this environment requires specifying a TokenRequestContext.";
+        private const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/usernamepasswordcredential/troubleshoot";
 
         private readonly string _clientId;
-        private readonly MsalPublicClient _client;
         private readonly CredentialPipeline _pipeline;
         private readonly string _username;
         private readonly SecureString _password;
         private AuthenticationRecord _record;
         private readonly string _tenantId;
-        private readonly bool _allowMultiTenantAuthentication;
+        internal MsalPublicClient Client { get; }
 
         /// <summary>
         /// Protected constructor for mocking
         /// </summary>
         protected UsernamePasswordCredential()
-        {
-        }
+        { }
 
         /// <summary>
         /// Creates an instance of the <see cref="UsernamePasswordCredential"/> with the details needed to authenticate against Azure Active Directory with a simple username
@@ -46,8 +45,7 @@ namespace Azure.Identity
         /// <param name="clientId">The client (application) ID of an App Registration in the tenant.</param>
         public UsernamePasswordCredential(string username, string password, string tenantId, string clientId)
             : this(username, password, tenantId, clientId, (TokenCredentialOptions)null)
-        {
-        }
+        { }
 
         /// <summary>
         /// Creates an instance of the <see cref="UsernamePasswordCredential"/> with the details needed to authenticate against Azure Active Directory with a simple username
@@ -60,8 +58,7 @@ namespace Azure.Identity
         /// <param name="options">The client options for the newly created UsernamePasswordCredential</param>
         public UsernamePasswordCredential(string username, string password, string tenantId, string clientId, TokenCredentialOptions options)
             : this(username, password, tenantId, clientId, options, null, null)
-        {
-        }
+        { }
 
         /// <summary>
         /// Creates an instance of the <see cref="UsernamePasswordCredential"/> with the details needed to authenticate against Azure Active Directory with a simple username
@@ -74,22 +71,27 @@ namespace Azure.Identity
         /// <param name="options">The client options for the newly created UsernamePasswordCredential</param>
         public UsernamePasswordCredential(string username, string password, string tenantId, string clientId, UsernamePasswordCredentialOptions options)
             : this(username, password, tenantId, clientId, options, null, null)
-        {
-        }
+        { }
 
-        internal UsernamePasswordCredential(string username, string password, string tenantId, string clientId, TokenCredentialOptions options, CredentialPipeline pipeline, MsalPublicClient client)
+        internal UsernamePasswordCredential(
+            string username,
+            string password,
+            string tenantId,
+            string clientId,
+            TokenCredentialOptions options,
+            CredentialPipeline pipeline,
+            MsalPublicClient client)
         {
             Argument.AssertNotNull(username, nameof(username));
             Argument.AssertNotNull(password, nameof(password));
             Argument.AssertNotNull(clientId, nameof(clientId));
             _tenantId = Validations.ValidateTenantId(tenantId, nameof(tenantId));
-            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
 
             _username = username;
             _password = password.ToSecureString();
             _clientId = clientId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
-            _client = client ?? new MsalPublicClient(_pipeline, tenantId, clientId, null, options as ITokenCacheOptions);
+            Client = client ?? new MsalPublicClient(_pipeline, tenantId, clientId, null, options as ITokenCacheOptions, options?.IsLoggingPIIEnabled ?? false);
         }
 
         /// <summary>
@@ -126,7 +128,8 @@ namespace Azure.Identity
         /// <returns>The <see cref="AuthenticationRecord"/> of the authenticated account.</returns>
         public virtual AuthenticationRecord Authenticate(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return AuthenticateImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
+            AuthenticateImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
+            return _record;
         }
 
         /// <summary>
@@ -137,7 +140,8 @@ namespace Azure.Identity
         /// <returns>The <see cref="AuthenticationRecord"/> of the authenticated account.</returns>
         public virtual async Task<AuthenticationRecord> AuthenticateAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return await AuthenticateImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
+            await AuthenticateImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
+            return _record;
         }
 
         /// <summary>
@@ -166,41 +170,53 @@ namespace Azure.Identity
             return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
         }
 
-        private async Task<AuthenticationRecord> AuthenticateImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
+        private async Task<AuthenticationResult> AuthenticateImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope($"{nameof(UsernamePasswordCredential)}.{nameof(Authenticate)}", requestContext);
-
             try
             {
-                scope.Succeeded(await GetTokenImplAsync(async, requestContext, cancellationToken).ConfigureAwait(false));
+                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext);
 
-                return _record;
+                AuthenticationResult result = await Client
+                    .AcquireTokenByUsernamePasswordAsync(requestContext.Scopes, requestContext.Claims, _username, _password, tenantId, async, cancellationToken)
+                    .ConfigureAwait(false);
+
+                _record = new AuthenticationRecord(result, _clientId);
+                return result;
             }
             catch (Exception e)
             {
-                throw scope.FailWrapAndThrow(e);
+                throw scope.FailWrapAndThrow(e, Troubleshooting);
             }
         }
 
         private async Task<AccessToken> GetTokenImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("UsernamePasswordCredential.GetToken", requestContext);
-
             try
             {
-                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _allowMultiTenantAuthentication);
-
-                AuthenticationResult result = await _client
-                    .AcquireTokenByUsernamePasswordAsync(requestContext.Scopes, requestContext.Claims, _username, _password, tenantId, async, cancellationToken)
-                    .ConfigureAwait(false);
-
-                _record = new AuthenticationRecord(result, _clientId);
-
+                AuthenticationResult result;
+                if (_record != null)
+                {
+                    var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext);
+                    try
+                    {
+                        result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, _record, tenantId, async, cancellationToken)
+                            .ConfigureAwait(false);
+                        return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
+                    }
+                    catch (MsalUiRequiredException msalEx)
+                    {
+                        AzureIdentityEventSource.Singleton.UsernamePasswordCredentialAcquireTokenSilentFailed(msalEx);
+                        // fall through so that AuthenticateImplAsync is called.
+                    }
+                }
+                result = await AuthenticateImplAsync(async, requestContext, cancellationToken).ConfigureAwait(false);
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
             catch (Exception e)
             {
-                throw scope.FailWrapAndThrow(e);
+                throw scope.FailWrapAndThrow(e, Troubleshooting);
             }
         }
     }

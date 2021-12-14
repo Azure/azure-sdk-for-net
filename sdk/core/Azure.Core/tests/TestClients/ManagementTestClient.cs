@@ -19,14 +19,14 @@ namespace Azure.Core.Tests
             _diagnostics = new ClientDiagnostics(options);
         }
 
-        public virtual TestResourceOperations GetTestResourceOperations()
+        public virtual TestResource GetTestResource()
         {
-            return new TestResourceOperations();
+            return new TestResource();
         }
 
-        public virtual TestResourceContainer GetTestResourceContainer()
+        public virtual TestResourceCollection GetTestResourceCollection()
         {
-            return new TestResourceContainer();
+            return new TestResourceCollection();
         }
 
         public virtual TestResource DefaultSubscription => new TestResource();

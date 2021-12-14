@@ -27,6 +27,7 @@ namespace Azure.Storage.Blobs.Models
             Schema = schema.ToList();
         }
 
+        /// <summary> Gets the schema. </summary>
         public IList<ArrowFieldInternal> Schema { get; }
     }
 }

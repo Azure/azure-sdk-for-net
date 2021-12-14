@@ -1,16 +1,51 @@
 # Release History
 
-## 4.3.0-beta.1 (Unreleased)
+## 4.3.0-beta.5 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 4.3.0-beta.4 (2021-11-16)
+
+### Bugs Fixed
+
+- Attempt to cache key locally from `KeyClient.GetCryptographyClient`. ([#25254](https://github.com/Azure/azure-sdk-for-net/issues/25254))
+
+## 4.3.0-beta.3 (2021-11-09)
+
+### Breaking Changes
+
+- Changed return type from `RandomBytes` to `byte[]` on `KeyClient.GetRandomBytes` and `GetRandomBytesAsync`.
+- Renamed `KeyReleasePolicy.Data` to `KeyReleasePolicy.EncodedPolicy` and changed property type from `byte[]` to `BinaryData`.
+- Renamed `name` and `version` parameters on `KeyClient.GetCryptographyClient` to `keyName` and `keyVersion`, respectively.
+- Renamed `target` parameter on `KeyClient.ReleaseKey` and `ReleaseKeyAsync` to `targetAttestationToken`.
+
+## 4.3.0-beta.2 (2021-10-14)
+
+### Features Added
+
+- Added `JsonWebKeyConverter` to support serializing and deserializing a `JsonWebKey` to a RFC 7517 JWK. ([#16155](https://github.com/Azure/azure-sdk-for-net/issues/16155))
+- Added `KeyClient.GetCryptographyClient` to get a `CryptographyClient` that uses the same options, policies, and pipeline as the `KeyClient` that created it. ([#23786](https://github.com/Azure/azure-sdk-for-net/issues/23786))
+- Added `KeyRotationPolicy` class and new methods including `KeyClient.GetKeyRotationPolicy`, `KeyClient.RotateKey`, and `KeyClient.UpdateKeyRotationPolicy`.
+- Added `KeyVaultKeyIdentifier.TryCreate` to parse key URIs without throwing an exception when invalid. ([#23146](https://github.com/Azure/azure-sdk-for-net/issues/23146))
+- Support multi-tenant authentication against Key Vault and Managed HSM when using Azure.Identity 1.5.0 or newer. ([#18359](https://github.com/Azure/azure-sdk-for-net/issues/18359))
+
+### Bugs Fixed
+
+- Added key version to distributed tracing. ([#12907](https://github.com/Azure/azure-sdk-for-net/issues/12907))
+
+## 4.3.0-beta.1 (2021-08-10)
 
 ### Features Added
 
 - Added `GetRandomBytes` and `GetRandomBytesAsync` to `KeyClient` to get random bytes from a managed HSM.
 - Added `Exportable` and `ReleasePolicy` to `CreateKeyOptions`, `ImportKeyOptions`, and `KeyProperties` to support Secure Key Release for Key Vault and Managed HSM.
 - Added `ReleaseKey` and `ReleaseKeyAsync` to `KeyClient` to release a key for Key Vault and Managed HSM.
-
-### Breaking Changes
-
-### Key Bugs Fixed
 
 ### Fixed
 

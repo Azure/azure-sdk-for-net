@@ -34,91 +34,18 @@ namespace Azure.Storage.Test.Shared
         }
 
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
-            : base(async, mode)
+            : base(async, mode, useLegacyTransport: true)
         {
             Sanitizer = new StorageRecordedTestSanitizer();
+            Tenants = new TenantConfigurationBuilder(this);
         }
 
         /// <summary>
-        /// Gets the tenant to use by default for our tests.
+        /// Source of test tenants.
         /// </summary>
-        public TenantConfiguration TestConfigDefault => GetTestConfig(
-                "Storage_TestConfigDefault",
-                () => TestConfigurations.DefaultTargetTenant);
+        protected readonly TenantConfigurationBuilder Tenants;
 
-        /// <summary>
-        /// Gets the tenant to use for any tests that require Read Access
-        /// Geo-Redundant Storage to be setup.
-        /// </summary>
-        public TenantConfiguration TestConfigSecondary => GetTestConfig(
-                "Storage_TestConfigSecondary",
-                () => TestConfigurations.DefaultSecondaryTargetTenant);
-
-        /// <summary>
-        /// Gets the tenant to use for any tests that require Premium SSDs.
-        /// </summary>
-        public TenantConfiguration TestConfigPremiumBlob => GetTestConfig(
-                "Storage_TestConfigPremiumBlob",
-                () => TestConfigurations.DefaultTargetPremiumBlobTenant);
-
-        /// <summary>
-        /// Gets the tenant to use for any tests that require preview features.
-        /// </summary>
-        public TenantConfiguration TestConfigPreviewBlob => GetTestConfig(
-                "Storage_TestConfigPreviewBlob",
-                () => TestConfigurations.DefaultTargetPreviewBlobTenant);
-
-        /// <summary>
-        /// Gets the tenant to use for any tests that require authentication
-        /// with Azure AD.
-        /// </summary>
-        public TenantConfiguration TestConfigOAuth => GetTestConfig(
-                "Storage_TestConfigOAuth",
-                () => TestConfigurations.DefaultTargetOAuthTenant);
-
-        /// <summary>
-        /// Gets the tenant to use for any tests that require authentication
-        /// with Azure AD.
-        /// </summary>
-        public TenantConfiguration TestConfigHierarchicalNamespace => GetTestConfig(
-                "Storage_TestConfigHierarchicalNamespace",
-                () => TestConfigurations.DefaultTargetHierarchicalNamespaceTenant);
-
-        /// <summary>
-        /// Gets the tenant to use for any tests that require authentication
-        /// with Azure AD.
-        /// </summary>
-        public TenantConfiguration TestConfigManagedDisk => GetTestConfig(
-                "Storage_TestConfigManagedDisk",
-                () => TestConfigurations.DefaultTargetManagedDiskTenant);
-
-        /// <summary>
-        /// Gets the tenant to use for any tests that require authentication
-        /// with Azure AD.
-        /// </summary>
-        public TenantConfiguration TestConfigSoftDelete => GetTestConfig(
-                "Storage_TestConfigSoftDelete",
-                () => TestConfigurations.DefaultTargetSoftDeleteTenant);
-
-        /// <summary>
-        /// Gets the tenant to use for any tests premium files.
-        /// </summary>
-        public TenantConfiguration TestConfigPremiumFile => GetTestConfig(
-                "Storage_TestConfigPremiumFile",
-                () => TestConfigurations.DefaultPremiumFileTenant);
-
-        /// <summary>
-        /// Gets a cache used for storing serialized tenant configurations.  Do
-        /// not get values from this directly; use GetTestConfig.
-        /// </summary>
-        private readonly Dictionary<string, string> _recordingConfigCache =
-            new Dictionary<string, string>();
-
-        /// <summary>
-        /// Gets a cache used for storing deserialized tenant configurations.
-        /// Do not get values from this directly; use GetTestConfig.
-        private readonly Dictionary<string, TenantConfiguration> _playbackConfigCache =
-            new Dictionary<string, TenantConfiguration>();
+        protected TenantConfiguration TestConfigDefault => Tenants.TestConfigDefault;
 
         /// <summary>
         /// We need to clear the playback cache before every test because
@@ -127,55 +54,7 @@ namespace Azure.Storage.Test.Shared
         /// </summary>
         [SetUp]
         public virtual void ClearCaches() =>
-            _playbackConfigCache.Clear();
-
-        /// <summary>
-        /// Get or create a test configuration tenant to use with our tests.
-        ///
-        /// If we're recording, we'll save a sanitized version of the test
-        /// configuarion.  If we're playing recorded tests, we'll use the
-        /// serialized test configuration.  If we're running the tests live,
-        /// we'll just return the value.
-        ///
-        /// While we cache things internally, DO NOT cache them elsewhere
-        /// because we need each test to have its configuration recorded.
-        /// </summary>
-        /// <param name="name">The name of the session record variable.</param>
-        /// <param name="getTenant">
-        /// A function to get the tenant.  This is wrapped in a Func becuase
-        /// we'll throw Assert.Inconclusive if you try to access a tenant with
-        /// an invalid config file.
-        /// </param>
-        /// <returns>A test tenant to use with our tests.</returns>
-        private TenantConfiguration GetTestConfig(string name, Func<TenantConfiguration> getTenant)
-        {
-            TenantConfiguration config;
-            string text;
-            switch (Mode)
-            {
-                case RecordedTestMode.Playback:
-                    if (!_playbackConfigCache.TryGetValue(name, out config))
-                    {
-                        text = Recording.GetVariable(name, null);
-                        config = TenantConfiguration.Parse(text);
-                        _playbackConfigCache[name] = config;
-                    }
-                    break;
-                case RecordedTestMode.Record:
-                    config = getTenant();
-                    if (!_recordingConfigCache.TryGetValue(name, out text))
-                    {
-                        text = TenantConfiguration.Serialize(config, true);
-                        _recordingConfigCache[name] = text;
-                    }
-                    Recording.GetVariable(name, text);
-                    break;
-                default:
-                    config = getTenant();
-                    break;
-            }
-            return config;
-        }
+            Tenants.ClearPlaybackCache();
 
         public DateTimeOffset GetUtcNow() => Recording.UtcNow;
 
@@ -213,25 +92,6 @@ namespace Azure.Storage.Test.Shared
             return IPAddress.Parse(ipString);
         }
 
-        public TokenCredential GetOAuthCredential() =>
-            GetOAuthCredential(TestConfigOAuth);
-
-        public TokenCredential GetOAuthCredential(TenantConfiguration config) =>
-            GetOAuthCredential(
-                config.ActiveDirectoryTenantId,
-                config.ActiveDirectoryApplicationId,
-                config.ActiveDirectoryApplicationSecret,
-                new Uri(config.ActiveDirectoryAuthEndpoint));
-
-        public TokenCredential GetOAuthCredential(string tenantId, string appId, string secret, Uri authorityHost) =>
-            Mode == RecordedTestMode.Playback ?
-                (TokenCredential) new StorageTestTokenCredential() :
-                new ClientSecretCredential(
-                    tenantId,
-                    appId,
-                    secret,
-                    new TokenCredentialOptions() { AuthorityHost = authorityHost });
-
         internal SharedAccessSignatureCredentials GetAccountSasCredentials(
             AccountSasServices services = AccountSasServices.All,
             AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All,
@@ -245,7 +105,7 @@ namespace Azure.Storage.Test.Shared
                 Protocol = SasProtocol.Https,
             };
             sasBuilder.SetPermissions(permissions);
-            var cred = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+            var cred = new StorageSharedKeyCredential(Tenants.TestConfigDefault.AccountName, Tenants.TestConfigDefault.AccountKey);
             return new SharedAccessSignatureCredentials(sasBuilder.ToSasQueryParameters(cred).ToString());
         }
 
@@ -281,47 +141,6 @@ namespace Azure.Storage.Test.Shared
             else
             {
                 Assert.Inconclusive("Copy may have completed too quickly to abort.");
-            }
-        }
-
-        /// <summary>
-        /// A number of our tests have built in delays while we wait an expected
-        /// amount of time for a service operation to complete and this method
-        /// allows us to wait (unless we're playing back recordings, which can
-        /// complete immediately).
-        /// </summary>
-        /// <param name="milliseconds">The number of milliseconds to wait.</param>
-        /// <param name="playbackDelayMilliseconds">
-        /// An optional number of milliseconds to wait if we're playing back a
-        /// recorded test.  This is useful for allowing client side events to
-        /// get processed.
-        /// </param>
-        /// <returns>A task that will (optionally) delay.</returns>
-        public async Task Delay(int milliseconds = 1000, int? playbackDelayMilliseconds = null) =>
-            await Delay(Mode, milliseconds, playbackDelayMilliseconds);
-
-        /// <summary>
-        /// A number of our tests have built in delays while we wait an expected
-        /// amount of time for a service operation to complete and this method
-        /// allows us to wait (unless we're playing back recordings, which can
-        /// complete immediately).
-        /// </summary>
-        /// <param name="milliseconds">The number of milliseconds to wait.</param>
-        /// <param name="playbackDelayMilliseconds">
-        /// An optional number of milliseconds to wait if we're playing back a
-        /// recorded test.  This is useful for allowing client side events to
-        /// get processed.
-        /// </param>
-        /// <returns>A task that will (optionally) delay.</returns>
-        public static async Task Delay(RecordedTestMode mode, int milliseconds = 1000, int? playbackDelayMilliseconds = null)
-        {
-            if (mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(milliseconds);
-            }
-            else if (playbackDelayMilliseconds != null)
-            {
-                await Task.Delay(playbackDelayMilliseconds.Value);
             }
         }
 
@@ -473,19 +292,6 @@ namespace Azure.Storage.Test.Shared
             return stream;
         }
 
-        private class StorageTestTokenCredential : TokenCredential
-        {
-            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
-            {
-                return new ValueTask<AccessToken>(GetToken(requestContext, cancellationToken));
-            }
-
-            public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
-            {
-                return new AccessToken("TEST TOKEN " + string.Join(" ", requestContext.Scopes), DateTimeOffset.MaxValue);
-            }
-        }
-
         public string AccountSasPermissionsToPermissionsString(AccountSasPermissions permissions)
         {
             var sb = new StringBuilder();
@@ -536,19 +342,21 @@ namespace Azure.Storage.Test.Shared
             return sb.ToString();
         }
 
-        public async Task<string> GetAuthToken()
+        public async Task<string> GetAuthToken(string[] scopes = default, TenantConfiguration tenantConfiguration = default)
         {
             if (Mode == RecordedTestMode.Playback)
             {
                 return "auth token";
             }
 
-            IConfidentialClientApplication application = ConfidentialClientApplicationBuilder.Create(TestConfigOAuth.ActiveDirectoryApplicationId)
-                .WithAuthority(AzureCloudInstance.AzurePublic, TestConfigOAuth.ActiveDirectoryTenantId)
-                .WithClientSecret(TestConfigOAuth.ActiveDirectoryApplicationSecret)
+            tenantConfiguration ??= Tenants.TestConfigOAuth;
+
+            IConfidentialClientApplication application = ConfidentialClientApplicationBuilder.Create(tenantConfiguration.ActiveDirectoryApplicationId)
+                .WithAuthority(AzureCloudInstance.AzurePublic, tenantConfiguration.ActiveDirectoryTenantId)
+                .WithClientSecret(tenantConfiguration.ActiveDirectoryApplicationSecret)
                 .Build();
 
-            string[] scopes = new string[] { "https://storage.azure.com/.default" };
+            scopes ??= new string[] { "https://storage.azure.com/.default" };
 
             AcquireTokenForClientParameterBuilder result = application.AcquireTokenForClient(scopes);
             AuthenticationResult authenticationResult = await result.ExecuteAsync();

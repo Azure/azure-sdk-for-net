@@ -41,6 +41,30 @@ namespace Azure.Security.KeyVault.Keys.Tests
             _serviceVersion = serviceVersion;
         }
 
+        [SetUp]
+        public void ClearChallengeCacheforRecord()
+        {
+            // in record mode we reset the challenge cache before each test so that the challenge call
+            // is always made.  This allows tests to be replayed independently and in any order
+            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
+            {
+                ChallengeBasedAuthenticationPolicy.ClearCache();
+            }
+        }
+
+        /// <summary>
+        /// Gets whether the current text fixture is running against Managed HSM.
+        /// </summary>
+        protected internal virtual bool IsManagedHSM => false;
+
+        internal static void IgnoreIfNotSupported(RequestFailedException ex)
+        {
+            if (ex.Status == 400 && ex.ErrorCode == "NotSupported")
+            {
+                throw new IgnoreException(ex.Message ?? "The feature under test is not supported");
+            }
+        }
+
         internal KeyClient GetClient()
         {
             // Until https://github.com/Azure/azure-sdk-for-net/issues/8575 is fixed,
@@ -68,20 +92,20 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 interceptors);
         }
 
-        public override void StartTestRecording()
+        public override async Task StartTestRecordingAsync()
         {
-            base.StartTestRecording();
+            await base.StartTestRecordingAsync();
 
             _listener = new KeyVaultTestEventListener();
 
             Client = GetClient();
         }
 
-        public override void StopTestRecording()
+        public override async Task StopTestRecordingAsync()
         {
             _listener?.Dispose();
 
-            base.StopTestRecording();
+            await base.StopTestRecordingAsync();
         }
 
         [TearDown]
@@ -252,7 +276,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             }
         }
 
-        protected Task WaitForDeletedKey(string name, TimeSpan? delay = null)
+        protected Task WaitForDeletedKey(string name)
         {
             if (Mode == RecordedTestMode.Playback)
             {
@@ -261,8 +285,16 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             using (Recording.DisableRecording())
             {
-                delay ??= KeyVaultTestEnvironment.DefaultPollingInterval;
-                return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedKeyAsync(name), delay: delay.Value);
+                return TestRetryHelper.RetryAsync(async () => {
+                    try
+                    {
+                        return await Client.GetDeletedKeyAsync(name).ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex) when (ex.Status == 404)
+                    {
+                        throw new InconclusiveException($"Timed out while waiting for key '{name}' to be deleted");
+                    }
+                }, delay: PollingInterval);
             }
         }
 
@@ -275,7 +307,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             using (Recording.DisableRecording())
             {
-                delay ??= KeyVaultTestEnvironment.DefaultPollingInterval;
+                delay ??= PollingInterval;
                 return TestRetryHelper.RetryAsync(async () => {
                     try
                     {

@@ -1,6 +1,7 @@
 ---
 page_type: sample
 languages:
+- aspx-csharp
 - csharp
 products:
 - azure
@@ -35,22 +36,31 @@ Examples of secrets that should be stored in Key Vault:
 
 To build and run this sample you will need:
 
+Software:
+
+* [.NET][dotnet_install]
+* [Azure CLI][azure_cli]
+
+Azure services:
+
 * [App Configuration][appconfig_overview]
 * [Key Vault][keyvault_overview]
+* (Optional) [App Service][appservice_overview] - needed to deploy the web application to Azure, which is provisioned in the [Bicep][bicep_overview] [template][sample_template].
 
-To deploy this sample you will also need:
+  > [!NOTE]
+  > App Service has [support for referencing Key Vault secrets][appservice_secrets] directly, but is used only as an example how to configure a web site to use App Configuration.
+  > If you choose to deploy your web application to another service, the same principles to configure the App Configuration connection string still apply.
 
-* [App Service][appservice_overview]
+* (Optional) [Application Insights][appinsights_overview] - to monitor web traffic and application traces, which is *not* provisioned in the Bicep template.
 
-Optionally, you may configure the App Service to use [Application Insights][appinsights_overview] to monitor traffic.
-
-[![Deploy to Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)][sample_deploy]
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)][sample_deploy]
 
 To deploy the template manually, make sure your [Azure CLI][azure_cli] is up to date and run:
 
 ```bash
+az bicep install # if deploying azuredeploy.bicep
 az group create --location {location} --resource-group {group-name}
-az deployment group create --resource-group {group-name} --template-file azuredeploy.bicep
+az deployment group create --resource-group {group-name} --template-file azuredeploy.bicep # or azuredeploy.json
 ```
 
 There are a number of parameters you can optional set. [View the template][sample_template] for details.
@@ -80,7 +90,7 @@ After deployment completes, make note of the output variables as shown in the ex
 
 You can build, run, and even deploy the sample using [Visual Studio][visualstudio], [Visual Studio Code][visualstudiocode], or the [.NET command line interface (CLI)][dotnet_cli]. Using the `dotnet` CLI, for example, within the directory containing the sample application source run:
 
-```bash
+```dotnetcli
 dotnet build
 ```
 
@@ -104,7 +114,9 @@ If you're logged in as a service principal, the `user.type` will be `servicePrin
 az keyvault set-policy -n {vault-host-name} --spn {spn} --secret-permissions get
 ```
 
-#### Visual Studio
+Next you'll need to add the App Configuration connection string from the template deployment outputs to your local user secrets:
+
+#### [Visual Studio](#tab/visualstudio)
 
 1. Right-click on the project
 2. Click **Managed User Secrets**
@@ -118,34 +130,36 @@ az keyvault set-policy -n {vault-host-name} --spn {spn} --secret-permissions get
 
 4. Click **Debug -> Start debugging (F5)** to run.
 
-#### Visual Studio Code
+#### [Visual Studio Code](#tab/visualstudiocode)
 
 1. In the project folder, run the following to add a variable named `ConnectionStrings:AppConfig` with the `value` of the `appConfigurationConnectionString` output variable:
 
-   ```bash
+   ```dotnetcli
    dotnet user-secrets set "ConnectionStrings:AppConfig" "Endpoint=https://{appconfig-host-name}.azconfig.io;Id={id};Secret={secret}"
    ```
 
 2. With a *.cs* file open the command palette and run `Debug: Start debugging` or press `F5` (default binding).
 3. If prompted, select ".NET Core" to create a launch configuration and start debugging.
 
-#### dotnet CLI
+#### [.NET](#tab/dotnet)
 
 1. In the project folder, run the following to add a variable named `ConnectionStrings:AppConfig` with the `value` of the `appConfigurationConnectionString` output variable:
 
-   ```bash
+   ```dotnetcli
    dotnet user-secrets set "ConnectionStrings:AppConfig" "Endpoint=https://{appconfig-host-name}.azconfig.io;Id={id};Secret={secret}"
    ```
 
 2. Run the project:
 
-   ```bash
+   ```dotnetcli
    dotnet run
    ```
 
-#### Deploying the sample
+---
 
-See the [ASP.NET quickstart][aspnet_quickstart] for instructions to deploy for Visual Studio, Visual Studio Code, and the `dotnet` CLI. For Visual Studio and Visual Studio Code, make sure you select your existing resource if you deployed the Bicep template above; otherwise, for the `dotnet` CLI you can deploy to an existing resource by [configuring Local Git support][aspnet_deploy_localgit].
+### Deploying the sample
+
+See the [ASP.NET quickstart][aspnet_quickstart] for instructions to deploy for Visual Studio, Visual Studio Code, and the `dotnet` CLI. For Visual Studio and Visual Studio Code, make sure you select your existing resource if you deployed the Bicep template above; otherwise, for the `dotnet` CLI you can deploy to an existing resource by [configuring Git support][aspnet_deploy_localgit] and pushing source, which will be built automatically on the host.
 
 ## Configuring App Configuration with Key Vault references
 
@@ -153,7 +167,7 @@ Using [Azure App Configuration][appconfig_overview] is an efficient way to store
 
 1. Add the following package to your project:
 
-   ```bash
+   ```dotnetcli
    dotnet add package Azure.Identity
    dotnet add package Microsoft.Extensions.Configuration.AzureAppConfiguration
    ```
@@ -230,12 +244,15 @@ In [ASP.NET Razor pages][aspnet_razor] as an example, you can then inject them i
 [appconfig_overview]: https://docs.microsoft.com/azure/azure-app-configuration/overview
 [appinsights_overview]: https://docs.microsoft.com/azure/azure-monitor/app/app-insights-overview
 [appservice_overview]: https://docs.microsoft.com/azure/app-service/overview
+[appservice_secrets]: https://docs.microsoft.com/azure/app-service/app-service-key-vault-references#rotation
 [aspnet_config]: https://docs.microsoft.com/aspnet/core/fundamentals/configuration
 [aspnet_deploy_localgit]: https://docs.microsoft.com/azure/app-service/deploy-local-git
 [aspnet_quickstart]: https://docs.microsoft.com/azure/app-service/quickstart-dotnetcore
 [aspnet_razor]: https://docs.microsoft.com/aspnet/core/razor-pages/
 [azure_cli]: https://docs.microsoft.com/cli/azure/
+[bicep_overview]: https://docs.microsoft.com/azure/azure-resource-manager/bicep/overview
 [dotnet_cli]: https://docs.microsoft.com/dotnet/core/tools/
+[dotnet_install]: https://dotnet.microsoft.com/download
 [identity_defaultazurecredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
 [identity_troubleshooting]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#troubleshooting
 [keyvault_injection]: https://docs.microsoft.com/dotnet/api/overview/azure/microsoft.extensions.azure-readme-pre
@@ -245,7 +262,7 @@ In [ASP.NET Razor pages][aspnet_razor] as an example, you can then inject them i
 [keyvault_secretclient]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Secrets/README.md#secretclient
 [nuget_azureappconfig]: https://nuget.org/packages/Microsoft.Extensions.Configuration.AzureAppConfiguration
 [nuget_azureextensions]: https://nuget.org/packages/Microsoft.Extensions.Azure
-[sample_deploy]: https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmain%2Fsamples%2FAppSecretsConfig%2Fazuredeploy.bicep
+[sample_deploy]: https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmain%2Fsamples%2FAppSecretsConfig%2Fazuredeploy.json
 [sample_template]: https://github.com/Azure/azure-sdk-for-net/blob/main/samples/AppSecretsConfig/azuredeploy.bicep
 [visualstudio]: https://visualstudio.microsoft.com/
 [visualstudiocode]: https://code.visualstudio.com/

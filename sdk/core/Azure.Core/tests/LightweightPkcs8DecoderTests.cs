@@ -186,7 +186,7 @@ namespace Azure.Core.Tests
             byte[] data = Convert.FromBase64String(PrivateKey);
 
             using RSA fromPem = LightweightPkcs8Decoder.DecodeRSAPkcs8(data);
-            using RSA fromPfx = (RSA)new X509Certificate2(Convert.FromBase64String(Pfx)).PrivateKey;
+            using RSA fromPfx = new X509Certificate2(Convert.FromBase64String(Pfx)).GetRSAPrivateKey();
 
             RSAParameters pemParams = fromPem.ExportParameters(false);
             RSAParameters pfxParams = fromPfx.ExportParameters(false);

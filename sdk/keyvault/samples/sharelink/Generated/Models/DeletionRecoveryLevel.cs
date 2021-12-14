@@ -15,7 +15,7 @@ namespace Azure.Security.KeyVault.Storage.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="DeletionRecoveryLevel"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletionRecoveryLevel"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DeletionRecoveryLevel(string value)
         {

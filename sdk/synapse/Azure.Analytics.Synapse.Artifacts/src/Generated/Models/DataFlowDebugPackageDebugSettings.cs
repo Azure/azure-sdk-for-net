@@ -20,6 +20,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Parameters = new ChangeTrackingDictionary<string, object>();
         }
 
+        /// <summary> Initializes a new instance of DataFlowDebugPackageDebugSettings. </summary>
+        /// <param name="sourceSettings"> Source setting for data flow debug. </param>
+        /// <param name="parameters"> Data flow parameters. </param>
+        /// <param name="datasetParameters"> Parameters for dataset. </param>
+        internal DataFlowDebugPackageDebugSettings(IList<DataFlowSourceSetting> sourceSettings, IDictionary<string, object> parameters, object datasetParameters)
+        {
+            SourceSettings = sourceSettings;
+            Parameters = parameters;
+            DatasetParameters = datasetParameters;
+        }
+
         /// <summary> Source setting for data flow debug. </summary>
         public IList<DataFlowSourceSetting> SourceSettings { get; }
         /// <summary> Data flow parameters. </summary>

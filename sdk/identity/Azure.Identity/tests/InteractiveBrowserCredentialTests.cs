@@ -13,19 +13,8 @@ using System.Threading.Tasks;
 
 namespace Azure.Identity.Tests
 {
-    public class InteractiveBrowserCredentialTests : ClientTestBase
+    public class InteractiveBrowserCredentialTests : CredentialTestBase
     {
-        private string TenantId = "a0287521-e002-0026-7112-207c0c000000";
-        private const string TenantIdHint = "a0287521-e002-0026-7112-207c0c001234";
-        private const string Scope = "https://vault.azure.net/.default";
-        private const string ClientId = "04b07795-8ddb-461a-bbee-02f9e1bf7b46";
-        private string expectedCode;
-        private string expectedToken;
-        private DateTimeOffset expiresOn;
-        private MockMsalPublicClient mockMsalClient;
-        private DeviceCodeResult deviceCodeResult;
-        private string expectedTenantId;
-
         public InteractiveBrowserCredentialTests(bool isAsync) : base(isAsync)
         { }
 
@@ -47,6 +36,15 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(expInnerExMessage, ex.InnerException.Message);
 
             await Task.CompletedTask;
+        }
+
+        [Test]
+        public void RespectsIsPIILoggingEnabled([Values(true, false)] bool isLoggingPIIEnabled)
+        {
+            var credential = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { IsLoggingPIIEnabled = isLoggingPIIEnabled});
+
+            Assert.NotNull(credential.Client);
+            Assert.AreEqual(isLoggingPIIEnabled, credential.Client.IsPiiLoggingEnabled);
         }
 
         [Test]
@@ -223,9 +221,9 @@ namespace Azure.Identity.Tests
         public async Task UsesTenantIdHint([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool allowMultiTenantAuthentication)
         {
             TestSetup();
-            var options = new InteractiveBrowserCredentialOptions { AllowMultiTenantAuthentication = allowMultiTenantAuthentication };
+            var options = new InteractiveBrowserCredentialOptions();
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options.AllowMultiTenantAuthentication);
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context);
 
             var credential = InstrumentClient(
                 new InteractiveBrowserCredential(
@@ -233,46 +231,12 @@ namespace Azure.Identity.Tests
                     ClientId,
                     options,
                     null,
-                    mockMsalClient));
+                    mockPublicMsalClient));
 
             var actualToken = await credential.GetTokenAsync(context, CancellationToken.None);
 
             Assert.AreEqual(expectedToken, actualToken.Token, "Token should match");
             Assert.AreEqual(expiresOn, actualToken.ExpiresOn, "expiresOn should match");
-        }
-
-        public void TestSetup()
-        {
-            expectedTenantId = null;
-            expectedCode = Guid.NewGuid().ToString();
-            expectedToken = Guid.NewGuid().ToString();
-            expiresOn = DateTimeOffset.Now.AddHours(1);
-            mockMsalClient = new MockMsalPublicClient();
-            deviceCodeResult = MockMsalPublicClient.GetDeviceCodeResult(deviceCode: expectedCode);
-            mockMsalClient.DeviceCodeResult = deviceCodeResult;
-            var result = new AuthenticationResult(
-                expectedToken,
-                false,
-                null,
-                expiresOn,
-                expiresOn,
-                TenantId,
-                new MockAccount("username"),
-                null,
-                new[] { Scope },
-                Guid.NewGuid(),
-                null,
-                "Bearer");
-            mockMsalClient.InteractiveAuthFactory = (_, _, _, _, tenant, _, _) =>
-            {
-                Assert.AreEqual(expectedTenantId, tenant, "TenantId passed to msal should match");
-                return result;
-            };
-            mockMsalClient.SilentAuthFactory = (_, tenant) =>
-            {
-                Assert.AreEqual(expectedTenantId, tenant, "TenantId passed to msal should match");
-                return result;
-            };
         }
     }
 }

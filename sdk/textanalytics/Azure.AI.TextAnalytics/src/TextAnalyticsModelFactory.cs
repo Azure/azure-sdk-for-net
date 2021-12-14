@@ -454,6 +454,168 @@ namespace Azure.AI.TextAnalytics
 
         #endregion Extract KeyPhrase
 
+        #region Extract Summary
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.ExtractSummaryResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
+        /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
+        /// <param name="sentences">Sets the collection of <see cref="TextAnalytics.SummarySentenceCollection"/>.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.ExtractSummaryResult"/> for mocking purposes.</returns>
+        public static ExtractSummaryResult ExtractSummaryResult(string id, TextDocumentStatistics statistics, SummarySentenceCollection sentences)
+        {
+            return new ExtractSummaryResult(id, statistics, sentences);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.ExtractSummaryResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
+        /// <param name="error">Sets the <see cref="TextAnalyticsResult.Error"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.ExtractSummaryResult"/> for mocking purposes.</returns>
+        public static ExtractSummaryResult ExtractSummaryResult(string id, TextAnalyticsError error)
+        {
+            return new ExtractSummaryResult(id, error);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.ExtractSummaryResultCollection"/> for mocking purposes.
+        /// </summary>
+        /// <param name="list">Sets the collection of <see cref="TextAnalytics.ExtractSummaryResult"/>.</param>
+        /// <param name="statistics">Sets the <see cref="ExtractSummaryResultCollection.Statistics"/> property.</param>
+        /// <param name="modelVersion">Sets the <see cref="ExtractSummaryResultCollection.ModelVersion"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.ExtractSummaryResultCollection"/> for mocking purposes.</returns>
+        public static ExtractSummaryResultCollection ExtractSummaryResultCollection(IEnumerable<ExtractSummaryResult> list, TextDocumentBatchStatistics statistics, string modelVersion)
+        {
+            return new ExtractSummaryResultCollection(list.ToList(), statistics, modelVersion);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.SummarySentence"/> for mocking purposes.
+        /// </summary>
+        /// <param name="text">Sets the <see cref="SummarySentence.Text"/> property.</param>
+        /// <param name="rankScore">Sets the <see cref="SummarySentence.RankScore"/> property.</param>
+        /// <param name="offset">Sets the <see cref="SummarySentence.Offset"/> property.</param>
+        /// <param name="length">Sets the <see cref="SummarySentence.Length"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.SummarySentence"/> for mocking purposes.</returns>
+        public static SummarySentence SummarySentence(string text, double rankScore, int offset, int length)
+        {
+            return new SummarySentence(new ExtractedSummarySentence(text, rankScore, offset, length));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.SummarySentenceCollection"/> for mocking purposes.
+        /// </summary>
+        /// <param name="sentences">Sets the collection of <see cref="TextAnalytics.SummarySentence"/>.</param>
+        /// <param name="warnings">Sets the <see cref="CategorizedEntityCollection.Warnings"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.SummarySentenceCollection"/> for mocking purposes.</returns>
+        public static SummarySentenceCollection SummarySentenceCollection(IEnumerable<SummarySentence> sentences, IEnumerable<TextAnalyticsWarning> warnings = default)
+        {
+            warnings ??= new List<TextAnalyticsWarning>();
+            return new SummarySentenceCollection(sentences.ToList(), warnings.ToList());
+        }
+
+        #endregion Extract Summary
+
+        #region Multi Category Classify
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.MultiCategoryClassifyResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
+        /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
+        /// <param name="documentClassificationCollection">Sets the of <see cref="MultiCategoryClassifyResult.Classifications"/>.</param>
+        /// <param name="warnings">Sets the collection of <see cref="MultiCategoryClassifyResult.Warnings"/>.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.MultiCategoryClassifyResult"/> for mocking purposes.</returns>
+        public static MultiCategoryClassifyResult MultiCategoryClassifyResult(string id, TextDocumentStatistics statistics, ClassificationCategoryCollection documentClassificationCollection, IEnumerable<TextAnalyticsWarning> warnings = default)
+        {
+            return new MultiCategoryClassifyResult(id, statistics, documentClassificationCollection, warnings.ToList());
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.MultiCategoryClassifyResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
+        /// <param name="error">Sets the <see cref="TextAnalyticsResult.Error"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.MultiCategoryClassifyResult"/> for mocking purposes.</returns>
+        public static MultiCategoryClassifyResult MultiCategoryClassifyResult(string id, TextAnalyticsError error)
+        {
+            return new MultiCategoryClassifyResult(id, error);
+        }
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.MultiCategoryClassifyResultCollection"/> for mocking purposes.
+        /// </summary>
+        /// <param name="classificationResultList">Sets the collection of <see cref="TextAnalytics.MultiCategoryClassifyResultCollection"/>.</param>
+        /// <param name="statistics">Sets the <see cref="MultiCategoryClassifyResultCollection.Statistics"/> property.</param>
+        /// <param name="projectName">Sets the <see cref="MultiCategoryClassifyResultCollection.ProjectName"/> property.</param>
+        /// <param name="deploymentName">Sets the <see cref="MultiCategoryClassifyResultCollection.DeploymentName"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.MultiCategoryClassifyResultCollection"/> for mocking purposes.</returns>
+        public static MultiCategoryClassifyResultCollection MultiCategoryClassifyResultCollection(IEnumerable<MultiCategoryClassifyResult> classificationResultList, TextDocumentBatchStatistics statistics, string projectName, string deploymentName)
+        {
+            return new MultiCategoryClassifyResultCollection(classificationResultList.ToList(), statistics, projectName, deploymentName);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.ClassificationCategoryCollection"/> for mocking purposes.
+        /// </summary>
+        /// <param name="classificationList">Sets the collection of <see cref="TextAnalytics.ClassificationCategory"/>.</param>
+        /// <param name="warnings">Sets the <see cref="ClassificationCategoryCollection.Warnings"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.ClassificationCategoryCollection"/> for mocking purposes.</returns>
+        public static ClassificationCategoryCollection ClassificationCategoryCollection(IEnumerable<ClassificationCategory> classificationList, IEnumerable<TextAnalyticsWarning> warnings)
+        {
+            return new ClassificationCategoryCollection(classificationList.ToList(), warnings.ToList());
+        }
+        #endregion
+
+        #region Single Category Classify
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.SingleCategoryClassifyResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
+        /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
+        /// <param name="classification">Sets the of <see cref="SingleCategoryClassifyResult.Classification"/>.</param>
+        /// <param name="warnings">Sets the collection of <see cref="SingleCategoryClassifyResult.Warnings"/>.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.SingleCategoryClassifyResult"/> for mocking purposes.</returns>
+        public static SingleCategoryClassifyResult SingleCategoryClassifyResult(string id, TextDocumentStatistics statistics, ClassificationCategory classification, IEnumerable<TextAnalyticsWarning> warnings = default)
+        {
+            return new SingleCategoryClassifyResult(id, statistics, classification, warnings.ToList());
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.SingleCategoryClassifyResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
+        /// <param name="error">Sets the <see cref="TextAnalyticsResult.Error"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.SingleCategoryClassifyResult"/> for mocking purposes.</returns>
+        public static SingleCategoryClassifyResult SingleCategoryClassifyResult(string id, TextAnalyticsError error)
+        {
+            return new SingleCategoryClassifyResult(id, error);
+        }
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.SingleCategoryClassifyResultCollection"/> for mocking purposes.
+        /// </summary>
+        /// <param name="classificationResultList">Sets the collection of <see cref="TextAnalytics.SingleCategoryClassifyResult"/>.</param>
+        /// <param name="statistics">Sets the <see cref="SingleCategoryClassifyResultCollection.Statistics"/> property.</param>
+        /// <param name="projectName">Sets the <see cref="SingleCategoryClassifyResultCollection.ProjectName"/> property.</param>
+        /// <param name="deploymentName">Sets the <see cref="SingleCategoryClassifyResultCollection.DeploymentName"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.SingleCategoryClassifyResultCollection"/> for mocking purposes.</returns>
+        public static SingleCategoryClassifyResultCollection SingleCategoryClassifyResultCollection(IEnumerable<SingleCategoryClassifyResult> classificationResultList, TextDocumentBatchStatistics statistics, string projectName, string deploymentName)
+        {
+            return new SingleCategoryClassifyResultCollection(classificationResultList.ToList(), statistics, projectName, deploymentName);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.ClassificationCategory"/> for mocking purposes.
+        /// </summary>
+        /// <param name="category">Sets the <see cref="ClassificationCategory.Category"/> property.</param>
+        /// <param name="confidenceScore">Sets the <see cref="ClassificationCategory.ConfidenceScore"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.ClassificationCategory"/> for mocking purposes.</returns>
+        public static ClassificationCategory ClassificationCategory(string category, double confidenceScore)
+        {
+            return new ClassificationCategory(new ClassificationResult(category, confidenceScore));
+        }
+        #endregion
+
         #region Linked Entities
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.LinkedEntity"/> for mocking purposes.
@@ -598,6 +760,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="recognizeLinkedEntitiesActionsResults">Sets the collection of <see cref="TextAnalytics.RecognizeLinkedEntitiesActionResult"/>.</param>
         /// <param name="analyzeSentimentActionsResults">Sets the collection of <see cref="TextAnalytics.AnalyzeSentimentActionResult"/>.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeActionsResult"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AnalyzeActionsResult AnalyzeActionsResult(
             IEnumerable<ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResult,
             IEnumerable<RecognizeEntitiesActionResult> recognizeEntitiesActionResults,
@@ -610,7 +773,64 @@ namespace Azure.AI.TextAnalytics
                 recognizeEntitiesActionResults.ToList(),
                 recognizePiiEntitiesActionResults.ToList(),
                 recognizeLinkedEntitiesActionsResults.ToList(),
-                analyzeSentimentActionsResults.ToList());
+                analyzeSentimentActionsResults.ToList(),
+                new List<ExtractSummaryActionResult>(),
+                new List<RecognizeCustomEntitiesActionResult>(),
+                new List<SingleCategoryClassifyActionResult>(),
+                new List<MultiCategoryClassifyActionResult>()
+                );
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.AnalyzeActionsResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="extractKeyPhrasesActionResults">Sets the collection of <see cref="TextAnalytics.ExtractKeyPhrasesActionResult"/>.</param>
+        /// <param name="recognizeEntitiesActionResults">Sets the collection of <see cref="TextAnalytics.RecognizeEntitiesActionResult"/>.</param>
+        /// <param name="recognizePiiEntitiesActionResults">Sets the collection of <see cref="TextAnalytics.RecognizePiiEntitiesActionResult"/>.</param>
+        /// <param name="recognizeLinkedEntitiesActionResults">Sets the collection of <see cref="TextAnalytics.RecognizeLinkedEntitiesActionResult"/>.</param>
+        /// <param name="analyzeSentimentActionResults">Sets the collection of <see cref="TextAnalytics.AnalyzeSentimentActionResult"/>.</param>
+        /// <param name="extractSummaryActionResults">Sets the collection of <see cref="TextAnalytics.ExtractSummaryActionResult"/>.</param>
+        /// <param name="recognizeCustomEntitiesActionResults">Sets the collection of <see cref="TextAnalytics.RecognizeCustomEntitiesActionResult"/>.</param>
+        /// <param name="singleCategoryClassifyActionResults">Sets the collection of <see cref="TextAnalytics.SingleCategoryClassifyActionResult"/>.</param>
+        /// <param name="multiCategoryClassifyActionResults">Sets the collection of <see cref="TextAnalytics.MultiCategoryClassifyActionResult"/>.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeActionsResult"/> for mocking purposes.</returns>
+        public static AnalyzeActionsResult AnalyzeActionsResult(
+            IEnumerable<ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResults,
+            IEnumerable<RecognizeEntitiesActionResult> recognizeEntitiesActionResults,
+            IEnumerable<RecognizePiiEntitiesActionResult> recognizePiiEntitiesActionResults,
+            IEnumerable<RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionResults,
+            IEnumerable<AnalyzeSentimentActionResult> analyzeSentimentActionResults,
+            IEnumerable<ExtractSummaryActionResult> extractSummaryActionResults,
+            IEnumerable<RecognizeCustomEntitiesActionResult> recognizeCustomEntitiesActionResults,
+            IEnumerable<SingleCategoryClassifyActionResult> singleCategoryClassifyActionResults,
+            IEnumerable<MultiCategoryClassifyActionResult> multiCategoryClassifyActionResults)
+        {
+            return new AnalyzeActionsResult(
+                extractKeyPhrasesActionResults.ToList(),
+                recognizeEntitiesActionResults.ToList(),
+                recognizePiiEntitiesActionResults.ToList(),
+                recognizeLinkedEntitiesActionResults.ToList(),
+                analyzeSentimentActionResults.ToList(),
+                extractSummaryActionResults.ToList(),
+                recognizeCustomEntitiesActionResults.ToList(),
+                singleCategoryClassifyActionResults.ToList(),
+                multiCategoryClassifyActionResults.ToList()
+                );
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.ExtractKeyPhrasesActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="result">Sets the <see cref="ExtractKeyPhrasesActionResult.DocumentsResults"/> property.</param>
+        /// <param name="actionName">Sets the <see cref="TextAnalyticsActionResult.ActionName"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.ExtractKeyPhrasesActionResult"/> for mocking purposes.</returns>
+        public static ExtractKeyPhrasesActionResult ExtractKeyPhrasesActionResult(
+            ExtractKeyPhrasesResultCollection result,
+            string actionName,
+            DateTimeOffset completedOn)
+        {
+            return new ExtractKeyPhrasesActionResult(result, actionName, completedOn);
         }
 
         /// <summary>
@@ -619,11 +839,29 @@ namespace Azure.AI.TextAnalytics
         /// <param name="result">Sets the <see cref="ExtractKeyPhrasesActionResult.DocumentsResults"/> property.</param>
         /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.ExtractKeyPhrasesActionResult"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ExtractKeyPhrasesActionResult ExtractKeyPhrasesActionResult(
             ExtractKeyPhrasesResultCollection result,
             DateTimeOffset completedOn)
         {
-            return new ExtractKeyPhrasesActionResult(result, completedOn);
+            return new ExtractKeyPhrasesActionResult(result, default, completedOn);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.ExtractKeyPhrasesActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="actionName">Sets the <see cref="TextAnalyticsActionResult.ActionName"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
+        /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.ExtractKeyPhrasesActionResult"/> for mocking purposes.</returns>
+        public static ExtractKeyPhrasesActionResult ExtractKeyPhrasesActionResult(
+            string actionName,
+            DateTimeOffset completedOn,
+            string code,
+            string message)
+        {
+            return new ExtractKeyPhrasesActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
         }
 
         /// <summary>
@@ -633,12 +871,276 @@ namespace Azure.AI.TextAnalytics
         /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
         /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.ExtractKeyPhrasesActionResult"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ExtractKeyPhrasesActionResult ExtractKeyPhrasesActionResult(
             DateTimeOffset completedOn,
             string code,
             string message)
         {
-            return new ExtractKeyPhrasesActionResult(completedOn, new TextAnalyticsErrorInternal(code, message));
+            return new ExtractKeyPhrasesActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.ExtractSummaryActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="result">Sets the <see cref="ExtractSummaryActionResult.DocumentsResults"/> property.</param>
+        /// <param name="actionName">Sets the <see cref="TextAnalyticsActionResult.ActionName"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.ExtractSummaryActionResult"/> for mocking purposes.</returns>
+        public static ExtractSummaryActionResult ExtractSummaryActionResult(
+            ExtractSummaryResultCollection result,
+            string actionName,
+            DateTimeOffset completedOn)
+        {
+            return new ExtractSummaryActionResult(result, actionName, completedOn);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.ExtractSummaryActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="result">Sets the <see cref="ExtractSummaryActionResult.DocumentsResults"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.ExtractSummaryActionResult"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ExtractSummaryActionResult ExtractSummaryActionResult(
+            ExtractSummaryResultCollection result,
+            DateTimeOffset completedOn)
+        {
+            return new ExtractSummaryActionResult(result, default, completedOn);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.ExtractSummaryActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="actionName">Sets the <see cref="TextAnalyticsActionResult.ActionName"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
+        /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.ExtractSummaryActionResult"/> for mocking purposes.</returns>
+        public static ExtractSummaryActionResult ExtractSummaryActionResult(
+            string actionName,
+            DateTimeOffset completedOn,
+            string code,
+            string message)
+        {
+            return new ExtractSummaryActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.ExtractSummaryActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
+        /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.ExtractSummaryActionResult"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ExtractSummaryActionResult ExtractSummaryActionResult(
+            DateTimeOffset completedOn,
+            string code,
+            string message)
+        {
+            return new ExtractSummaryActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.RecognizeCustomEntitiesActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="result">Sets the <see cref="RecognizeCustomEntitiesActionResult.DocumentsResults"/> property.</param>
+        /// <param name="actionName">Sets the <see cref="TextAnalyticsActionResult.ActionName"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.RecognizeCustomEntitiesActionResult"/> for mocking purposes.</returns>
+        public static RecognizeCustomEntitiesActionResult RecognizeCustomEntitiesActionResult(
+            RecognizeCustomEntitiesResultCollection result,
+            string actionName,
+            DateTimeOffset completedOn)
+        {
+            return new RecognizeCustomEntitiesActionResult(result, actionName, completedOn);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.RecognizeCustomEntitiesActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="result">Sets the <see cref="RecognizeCustomEntitiesActionResult.DocumentsResults"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.RecognizeCustomEntitiesActionResult"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RecognizeCustomEntitiesActionResult RecognizeCustomEntitiesActionResult(
+            RecognizeCustomEntitiesResultCollection result,
+            DateTimeOffset completedOn)
+        {
+            return new RecognizeCustomEntitiesActionResult(result, default, completedOn);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.RecognizeCustomEntitiesActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="actionName">Sets the <see cref="TextAnalyticsActionResult.ActionName"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
+        /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.RecognizeCustomEntitiesActionResult"/> for mocking purposes.</returns>
+        public static RecognizeCustomEntitiesActionResult RecognizeCustomEntitiesActionResult(
+            string actionName,
+            DateTimeOffset completedOn,
+            string code,
+            string message)
+        {
+            return new RecognizeCustomEntitiesActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.RecognizeCustomEntitiesActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
+        /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.RecognizeCustomEntitiesActionResult"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RecognizeCustomEntitiesActionResult RecognizeCustomEntitiesActionResult(
+            DateTimeOffset completedOn,
+            string code,
+            string message)
+        {
+            return new RecognizeCustomEntitiesActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.MultiCategoryClassifyActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="result">Sets the <see cref="MultiCategoryClassifyActionResult.DocumentsResults"/> property.</param>
+        /// <param name="actionName">Sets the <see cref="TextAnalyticsActionResult.ActionName"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.MultiCategoryClassifyActionResult"/> for mocking purposes.</returns>
+        public static MultiCategoryClassifyActionResult MultiCategoryClassifyActionResult(
+            MultiCategoryClassifyResultCollection result,
+            string actionName,
+            DateTimeOffset completedOn)
+        {
+            return new MultiCategoryClassifyActionResult(result, actionName, completedOn);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.MultiCategoryClassifyActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="result">Sets the <see cref="MultiCategoryClassifyActionResult.DocumentsResults"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.MultiCategoryClassifyActionResult"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MultiCategoryClassifyActionResult MultiCategoryClassifyActionResult(
+            MultiCategoryClassifyResultCollection result,
+            DateTimeOffset completedOn)
+        {
+            return new MultiCategoryClassifyActionResult(result, default, completedOn);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.MultiCategoryClassifyActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="actionName">Sets the <see cref="TextAnalyticsActionResult.ActionName"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
+        /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.MultiCategoryClassifyActionResult"/> for mocking purposes.</returns>
+        public static MultiCategoryClassifyActionResult MultiCategoryClassifyActionResult(
+            string actionName,
+            DateTimeOffset completedOn,
+            string code,
+            string message)
+        {
+            return new MultiCategoryClassifyActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.MultiCategoryClassifyActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
+        /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.MultiCategoryClassifyActionResult"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MultiCategoryClassifyActionResult MultiCategoryClassifyActionResult(
+            DateTimeOffset completedOn,
+            string code,
+            string message)
+        {
+            return new MultiCategoryClassifyActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.SingleCategoryClassifyActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="result">Sets the <see cref="SingleCategoryClassifyActionResult.DocumentsResults"/> property.</param>
+        /// <param name="actionName">Sets the <see cref="TextAnalyticsActionResult.ActionName"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.SingleCategoryClassifyActionResult"/> for mocking purposes.</returns>
+        public static SingleCategoryClassifyActionResult SingleCategoryClassifyActionResult(
+            SingleCategoryClassifyResultCollection result,
+            string actionName,
+            DateTimeOffset completedOn)
+        {
+            return new SingleCategoryClassifyActionResult(result, actionName, completedOn);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.SingleCategoryClassifyActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="result">Sets the <see cref="SingleCategoryClassifyActionResult.DocumentsResults"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.SingleCategoryClassifyActionResult"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SingleCategoryClassifyActionResult SingleCategoryClassifyActionResult(
+            SingleCategoryClassifyResultCollection result,
+            DateTimeOffset completedOn)
+        {
+            return new SingleCategoryClassifyActionResult(result, default, completedOn);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.SingleCategoryClassifyActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="actionName">Sets the <see cref="TextAnalyticsActionResult.ActionName"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
+        /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.SingleCategoryClassifyActionResult"/> for mocking purposes.</returns>
+        public static SingleCategoryClassifyActionResult SingleCategoryClassifyActionResult(
+            string actionName,
+            DateTimeOffset completedOn,
+            string code,
+            string message)
+        {
+            return new SingleCategoryClassifyActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.SingleCategoryClassifyActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
+        /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.SingleCategoryClassifyActionResult"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SingleCategoryClassifyActionResult SingleCategoryClassifyActionResult(
+            DateTimeOffset completedOn,
+            string code,
+            string message)
+        {
+            return new SingleCategoryClassifyActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.AnalyzeSentimentActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="result">Sets the <see cref="AnalyzeSentimentActionResult.DocumentsResults"/> property.</param>
+        /// <param name="actionName">Sets the <see cref="TextAnalyticsActionResult.ActionName"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeSentimentActionResult"/> for mocking purposes.</returns>
+        public static AnalyzeSentimentActionResult AnalyzeSentimentActionResult(
+            AnalyzeSentimentResultCollection result,
+            string actionName,
+            DateTimeOffset completedOn)
+        {
+            return new AnalyzeSentimentActionResult(result, actionName, completedOn);
         }
 
         /// <summary>
@@ -647,11 +1149,30 @@ namespace Azure.AI.TextAnalytics
         /// <param name="result">Sets the <see cref="AnalyzeSentimentActionResult.DocumentsResults"/> property.</param>
         /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeSentimentActionResult"/> for mocking purposes.</returns>
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AnalyzeSentimentActionResult AnalyzeSentimentActionResult(
             AnalyzeSentimentResultCollection result,
             DateTimeOffset completedOn)
         {
-            return new AnalyzeSentimentActionResult(result, completedOn);
+            return new AnalyzeSentimentActionResult(result, default, completedOn);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.AnalyzeSentimentActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="actionName">Sets the <see cref="TextAnalyticsActionResult.ActionName"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
+        /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeSentimentActionResult"/> for mocking purposes.</returns>
+        public static AnalyzeSentimentActionResult AnalyzeSentimentActionResult(
+            string actionName,
+            DateTimeOffset completedOn,
+            string code,
+            string message)
+        {
+            return new AnalyzeSentimentActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
         }
 
         /// <summary>
@@ -661,12 +1182,28 @@ namespace Azure.AI.TextAnalytics
         /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
         /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeSentimentActionResult"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AnalyzeSentimentActionResult AnalyzeSentimentActionResult(
             DateTimeOffset completedOn,
             string code,
             string message)
         {
-            return new AnalyzeSentimentActionResult(completedOn, new TextAnalyticsErrorInternal(code, message));
+            return new AnalyzeSentimentActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.RecognizeLinkedEntitiesActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="result">Sets the <see cref="RecognizeLinkedEntitiesActionResult.DocumentsResults"/> property.</param>
+        /// <param name="actionName">Sets the <see cref="TextAnalyticsActionResult.ActionName"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.RecognizeLinkedEntitiesActionResult"/> for mocking purposes.</returns>
+        public static RecognizeLinkedEntitiesActionResult RecognizeLinkedEntitiesActionResult(
+            RecognizeLinkedEntitiesResultCollection result,
+            string actionName,
+            DateTimeOffset completedOn)
+        {
+            return new RecognizeLinkedEntitiesActionResult(result, actionName, completedOn);
         }
 
         /// <summary>
@@ -675,11 +1212,29 @@ namespace Azure.AI.TextAnalytics
         /// <param name="result">Sets the <see cref="RecognizeLinkedEntitiesActionResult.DocumentsResults"/> property.</param>
         /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.RecognizeLinkedEntitiesActionResult"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static RecognizeLinkedEntitiesActionResult RecognizeLinkedEntitiesActionResult(
             RecognizeLinkedEntitiesResultCollection result,
             DateTimeOffset completedOn)
         {
-            return new RecognizeLinkedEntitiesActionResult(result, completedOn);
+            return new RecognizeLinkedEntitiesActionResult(result, default, completedOn);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.RecognizeLinkedEntitiesActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="actionName">Sets the <see cref="TextAnalyticsActionResult.ActionName"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
+        /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.RecognizeLinkedEntitiesActionResult"/> for mocking purposes.</returns>
+        public static RecognizeLinkedEntitiesActionResult RecognizeLinkedEntitiesActionResult(
+            string actionName,
+            DateTimeOffset completedOn,
+            string code,
+            string message)
+        {
+            return new RecognizeLinkedEntitiesActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
         }
 
         /// <summary>
@@ -689,12 +1244,28 @@ namespace Azure.AI.TextAnalytics
         /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
         /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.RecognizeLinkedEntitiesActionResult"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static RecognizeLinkedEntitiesActionResult RecognizeLinkedEntitiesActionResult(
             DateTimeOffset completedOn,
             string code,
             string message)
         {
-            return new RecognizeLinkedEntitiesActionResult(completedOn, new TextAnalyticsErrorInternal(code, message));
+            return new RecognizeLinkedEntitiesActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.RecognizeEntitiesActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="result">Sets the <see cref="RecognizeEntitiesActionResult.DocumentsResults"/> property.</param>
+        /// <param name="actionName">Sets the <see cref="TextAnalyticsActionResult.ActionName"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.RecognizeEntitiesActionResult"/> for mocking purposes.</returns>
+        public static RecognizeEntitiesActionResult RecognizeEntitiesActionResult(
+            RecognizeEntitiesResultCollection result,
+            string actionName,
+            DateTimeOffset completedOn)
+        {
+            return new RecognizeEntitiesActionResult(result, actionName, completedOn);
         }
 
         /// <summary>
@@ -703,11 +1274,29 @@ namespace Azure.AI.TextAnalytics
         /// <param name="result">Sets the <see cref="RecognizeEntitiesActionResult.DocumentsResults"/> property.</param>
         /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.RecognizeEntitiesActionResult"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static RecognizeEntitiesActionResult RecognizeEntitiesActionResult(
             RecognizeEntitiesResultCollection result,
             DateTimeOffset completedOn)
         {
-            return new RecognizeEntitiesActionResult(result, completedOn);
+            return new RecognizeEntitiesActionResult(result, default, completedOn);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.RecognizeEntitiesActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="actionName">Sets the <see cref="TextAnalyticsActionResult.ActionName"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
+        /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.RecognizeEntitiesActionResult"/> for mocking purposes.</returns>
+        public static RecognizeEntitiesActionResult RecognizeEntitiesActionResult(
+            string actionName,
+            DateTimeOffset completedOn,
+            string code,
+            string message)
+        {
+            return new RecognizeEntitiesActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
         }
 
         /// <summary>
@@ -717,25 +1306,59 @@ namespace Azure.AI.TextAnalytics
         /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
         /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.RecognizeEntitiesActionResult"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static RecognizeEntitiesActionResult RecognizeEntitiesActionResult(
             DateTimeOffset completedOn,
             string code,
             string message)
         {
-            return new RecognizeEntitiesActionResult(completedOn, new TextAnalyticsErrorInternal(code, message));
+            return new RecognizeEntitiesActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
         }
 
-        /// <summary>
+        /// <summary>`
+        /// Initializes a new instance of <see cref="TextAnalytics.RecognizePiiEntitiesActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="result">Sets the <see cref="RecognizePiiEntitiesActionResult.DocumentsResults"/> property.</param>
+        /// <param name="actionName">Sets the <see cref="TextAnalyticsActionResult.ActionName"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.RecognizePiiEntitiesActionResult"/> for mocking purposes.</returns>
+        public static RecognizePiiEntitiesActionResult RecognizePiiEntitiesActionResult(
+            RecognizePiiEntitiesResultCollection result,
+            string actionName,
+            DateTimeOffset completedOn)
+        {
+            return new RecognizePiiEntitiesActionResult(result, actionName, completedOn);
+        }
+
+        /// <summary>`
         /// Initializes a new instance of <see cref="TextAnalytics.RecognizePiiEntitiesActionResult"/> for mocking purposes.
         /// </summary>
         /// <param name="result">Sets the <see cref="RecognizePiiEntitiesActionResult.DocumentsResults"/> property.</param>
         /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.RecognizePiiEntitiesActionResult"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static RecognizePiiEntitiesActionResult RecognizePiiEntitiesActionResult(
             RecognizePiiEntitiesResultCollection result,
             DateTimeOffset completedOn)
         {
-            return new RecognizePiiEntitiesActionResult(result, completedOn);
+            return new RecognizePiiEntitiesActionResult(result, default, completedOn);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.RecognizePiiEntitiesActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="actionName">Sets the <see cref="TextAnalyticsActionResult.ActionName"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
+        /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.RecognizePiiEntitiesActionResult"/> for mocking purposes.</returns>
+        public static RecognizePiiEntitiesActionResult RecognizePiiEntitiesActionResult(
+            string actionName,
+            DateTimeOffset completedOn,
+            string code,
+            string message)
+        {
+            return new RecognizePiiEntitiesActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
         }
 
         /// <summary>
@@ -745,12 +1368,13 @@ namespace Azure.AI.TextAnalytics
         /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
         /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.RecognizePiiEntitiesActionResult"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static RecognizePiiEntitiesActionResult RecognizePiiEntitiesActionResult(
             DateTimeOffset completedOn,
             string code,
             string message)
         {
-            return new RecognizePiiEntitiesActionResult(completedOn, new TextAnalyticsErrorInternal(code, message));
+            return new RecognizePiiEntitiesActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
         }
 
         #endregion Action Result Models

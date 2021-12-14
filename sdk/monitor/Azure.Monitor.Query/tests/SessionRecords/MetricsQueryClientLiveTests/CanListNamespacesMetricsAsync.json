@@ -1,42 +1,40 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon3/providers/Microsoft.OperationalInsights/workspaces/pakrymmon3-logs/providers/microsoft.insights/metricNamespaces?api-version=2017-12-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmonitor/providers/Microsoft.OperationalInsights/workspaces/pakrymmonitor-logs/providers/microsoft.insights/metricNamespaces?api-version=2017-12-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-c5d4f587b747a540bbcc22274cce4303-3f30538898da8748-00",
+        "traceparent": "00-a09e5e075e54ab41ba7a574f49b95428-69ee61296dc03747-00",
         "User-Agent": [
-          "azsdk-net-Monitor.Query/1.0.0-alpha.20210513.1",
-          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19042 )"
+          "azsdk-net-Monitor.Query/1.1.0-alpha.20211203.1",
+          "(.NET 5.0.12; Microsoft Windows 10.0.19044)"
         ],
-        "x-ms-client-request-id": "8c8a93ce2d9a92f0bb494f5dcc2d2c0b",
+        "x-ms-client-request-id": "fcb489ac3dcf494a83e855b1faa6387d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Access-Control-Expose-Headers": "Request-Context",
         "Cache-Control": "no-cache",
-        "Content-Length": "795",
+        "Content-Length": "807",
         "Content-Type": "application/json",
-        "Date": "Thu, 13 May 2021 22:03:14 GMT",
-        "Request-Context": "appId=cid-v1:b021da79-5252-4375-9df5-2e17c1dcd822",
+        "Date": "Fri, 03 Dec 2021 20:12:19 GMT",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "8c6cf1b0-e6a4-4c3f-84fb-4addd8c1e100",
-        "x-ms-ratelimit-remaining-subscription-reads": "11981",
-        "x-ms-request-id": "{8c6cf1b0-e6a4-4c3f-84fb-4addd8c1e100}",
-        "x-ms-routing-request-id": "WESTUS:20210513T220315Z:8c6cf1b0-e6a4-4c3f-84fb-4addd8c1e100",
+        "x-ms-correlation-request-id": "1af59ceb-b27e-4b23-9248-9cd28c6035ea",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "{1af59ceb-b27e-4b23-9248-9cd28c6035ea}",
+        "x-ms-routing-request-id": "WESTUS:20211203T201219Z:1af59ceb-b27e-4b23-9248-9cd28c6035ea",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
         "value": [
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon3/providers/Microsoft.OperationalInsights/workspaces/pakrymmon3-logs/providers/microsoft.insights/metricNamespaces/Cows",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmonitor/providers/Microsoft.OperationalInsights/workspaces/pakrymmonitor-logs/providers/microsoft.insights/metricNamespaces/Cows",
             "name": "Cows",
             "type": "Microsoft.Insights/metricNamespaces",
             "classification": "Custom",
@@ -45,12 +43,12 @@
             }
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon3/providers/Microsoft.OperationalInsights/workspaces/pakrymmon3-logs/providers/microsoft.insights/metricNamespaces/Microsoft.OperationalInsights-workspaces",
-            "name": "Microsoft.OperationalInsights-workspaces",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmonitor/providers/Microsoft.OperationalInsights/workspaces/pakrymmonitor-logs/providers/microsoft.insights/metricNamespaces/microsoft.operationalinsights-workspaces",
+            "name": "microsoft.operationalinsights-workspaces",
             "type": "Microsoft.Insights/metricNamespaces",
             "classification": "Platform",
             "properties": {
-              "metricNamespaceName": "Microsoft.OperationalInsights/workspaces"
+              "metricNamespaceName": "microsoft.operationalinsights/workspaces"
             }
           }
         ]
@@ -58,9 +56,10 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-05-13T15:03:15.6517906-07:00",
-    "METRICS_RESOURCE_ID": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon3/providers/Microsoft.OperationalInsights/workspaces/pakrymmon3-logs",
-    "RandomSeed": "986176634",
+    "DateTimeOffsetNow": "2021-12-03T12:12:18.2694992-08:00",
+    "LOCATION": "westus2",
+    "METRICS_RESOURCE_ID": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmonitor/providers/Microsoft.OperationalInsights/workspaces/pakrymmonitor-logs",
+    "RandomSeed": "1690905089",
     "RESOURCE_MANAGER_URL": "https://management.azure.com/"
   }
 }

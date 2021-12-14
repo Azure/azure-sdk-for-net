@@ -3,6 +3,7 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -10,6 +11,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary>
     /// A class representing a sub-resource that contains only the ID.
     /// </summary>
+    [JsonConverter(typeof(WritableSubResourceConverter))]
     public partial class WritableSubResource : IUtf8JsonSerializable
     {
         /// <summary>
@@ -39,16 +41,29 @@ namespace Azure.ResourceManager.Resources.Models
         /// <returns>Deserialized WritableSubResource object.</returns>
         internal static WritableSubResource DeserializeWritableSubResource(JsonElement element)
         {
-            string id = default;
+            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }
             return new WritableSubResource(id);
+        }
+
+        internal partial class WritableSubResourceConverter : JsonConverter<WritableSubResource>
+        {
+            public override void Write(Utf8JsonWriter writer, WritableSubResource model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override WritableSubResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeWritableSubResource(document.RootElement);
+            }
         }
     }
 }

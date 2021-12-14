@@ -160,9 +160,9 @@ namespace Authorization.Tests
                         resourceName
                     );
                 }
-                catch (CloudException ce)
+                catch (ErrorResponseException e)
                 {
-                    Assert.Equal(HttpStatusCode.NotFound, ce.Response.StatusCode);
+                    Assert.Equal(HttpStatusCode.NotFound, e.Response.StatusCode);
                 }
             }
         }

@@ -67,6 +67,22 @@ namespace Azure.Messaging.EventGrid
         public static Azure.Messaging.EventGrid.SystemEvents.AcsSmsDeliveryReportReceivedEventData AcsSmsDeliveryReportReceivedEventData(string messageId = null, string from = null, string to = null, string deliveryStatus = null, string deliveryStatusDetails = null, System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.SystemEvents.AcsSmsDeliveryAttemptProperties> deliveryAttempts = null, System.DateTimeOffset? receivedTimestamp = default(System.DateTimeOffset?), string tag = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsSmsEventBaseProperties AcsSmsEventBaseProperties(string messageId = null, string from = null, string to = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsSmsReceivedEventData AcsSmsReceivedEventData(string messageId = null, string from = null, string to = null, string message = null, System.DateTimeOffset? receivedTimestamp = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsUserDisconnectedEventData AcsUserDisconnectedEventData(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel userCommunicationIdentifier = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.ApiManagementApiCreatedEventData ApiManagementApiCreatedEventData(string resourceUri = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.ApiManagementApiDeletedEventData ApiManagementApiDeletedEventData(string resourceUri = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.ApiManagementApiReleaseCreatedEventData ApiManagementApiReleaseCreatedEventData(string resourceUri = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.ApiManagementApiReleaseDeletedEventData ApiManagementApiReleaseDeletedEventData(string resourceUri = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.ApiManagementApiReleaseUpdatedEventData ApiManagementApiReleaseUpdatedEventData(string resourceUri = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.ApiManagementApiUpdatedEventData ApiManagementApiUpdatedEventData(string resourceUri = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.ApiManagementProductCreatedEventData ApiManagementProductCreatedEventData(string resourceUri = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.ApiManagementProductDeletedEventData ApiManagementProductDeletedEventData(string resourceUri = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.ApiManagementProductUpdatedEventData ApiManagementProductUpdatedEventData(string resourceUri = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.ApiManagementSubscriptionCreatedEventData ApiManagementSubscriptionCreatedEventData(string resourceUri = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.ApiManagementSubscriptionDeletedEventData ApiManagementSubscriptionDeletedEventData(string resourceUri = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.ApiManagementSubscriptionUpdatedEventData ApiManagementSubscriptionUpdatedEventData(string resourceUri = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.ApiManagementUserCreatedEventData ApiManagementUserCreatedEventData(string resourceUri = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.ApiManagementUserDeletedEventData ApiManagementUserDeletedEventData(string resourceUri = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.ApiManagementUserUpdatedEventData ApiManagementUserUpdatedEventData(string resourceUri = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AppConfigurationKeyValueDeletedEventData AppConfigurationKeyValueDeletedEventData(string key = null, string label = null, string etag = null, string syncToken = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AppConfigurationKeyValueModifiedEventData AppConfigurationKeyValueModifiedEventData(string key = null, string label = null, string etag = null, string syncToken = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AppEventTypeDetail AppEventTypeDetail(Azure.Messaging.EventGrid.SystemEvents.AppAction? action = default(Azure.Messaging.EventGrid.SystemEvents.AppAction?)) { throw null; }
@@ -80,6 +96,7 @@ namespace Azure.Messaging.EventGrid
         public static Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventRequest ContainerRegistryEventRequest(string id = null, string addr = null, string host = null, string method = null, string useragent = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventSource ContainerRegistryEventSource(string addr = null, string instanceID = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventTarget ContainerRegistryEventTarget(string mediaType = null, long? size = default(long?), string digest = null, long? length = default(long?), string repository = null, string url = null, string tag = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNewKubernetesVersionAvailableEventData ContainerServiceNewKubernetesVersionAvailableEventData(string latestSupportedKubernetesVersion = null, string latestStableKubernetesVersion = null, string lowestMinorKubernetesVersion = null, string latestPreviewKubernetesVersion = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.DeviceConnectionStateEventInfo DeviceConnectionStateEventInfo(string sequenceNumber = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.DeviceConnectionStateEventProperties DeviceConnectionStateEventProperties(string deviceId = null, string moduleId = null, string hubName = null, Azure.Messaging.EventGrid.SystemEvents.DeviceConnectionStateEventInfo deviceConnectionStateEventInfo = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.DeviceLifeCycleEventProperties DeviceLifeCycleEventProperties(string deviceId = null, string hubName = null, Azure.Messaging.EventGrid.SystemEvents.DeviceTwinInfo twin = null) { throw null; }
@@ -127,6 +144,7 @@ namespace Azure.Messaging.EventGrid
         public static Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputProgressEventData MediaJobOutputProgressEventData(string label = null, long? progress = default(long?), System.Collections.Generic.IReadOnlyDictionary<string, string> jobCorrelationData = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputStateChangeEventData MediaJobOutputStateChangeEventData(Azure.Messaging.EventGrid.SystemEvents.MediaJobState? previousState = default(Azure.Messaging.EventGrid.SystemEvents.MediaJobState?), Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput output = null, System.Collections.Generic.IReadOnlyDictionary<string, string> jobCorrelationData = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.MediaJobStateChangeEventData MediaJobStateChangeEventData(Azure.Messaging.EventGrid.SystemEvents.MediaJobState? previousState = default(Azure.Messaging.EventGrid.SystemEvents.MediaJobState?), Azure.Messaging.EventGrid.SystemEvents.MediaJobState? state = default(Azure.Messaging.EventGrid.SystemEvents.MediaJobState?), System.Collections.Generic.IReadOnlyDictionary<string, string> correlationData = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventChannelArchiveHeartbeatEventData MediaLiveEventChannelArchiveHeartbeatEventData(System.TimeSpan? channelLatency = default(System.TimeSpan?), string latencyResultCode = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventConnectionRejectedEventData MediaLiveEventConnectionRejectedEventData(string ingestUrl = null, string streamId = null, string encoderIp = null, string encoderPort = null, string resultCode = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventEncoderConnectedEventData MediaLiveEventEncoderConnectedEventData(string ingestUrl = null, string streamId = null, string encoderIp = null, string encoderPort = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventEncoderDisconnectedEventData MediaLiveEventEncoderDisconnectedEventData(string ingestUrl = null, string streamId = null, string encoderIp = null, string encoderPort = null, string resultCode = null) { throw null; }
@@ -134,7 +152,9 @@ namespace Azure.Messaging.EventGrid
         public static Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingStreamReceivedEventData MediaLiveEventIncomingStreamReceivedEventData(string ingestUrl = null, string trackType = null, string trackName = null, long? bitrate = default(long?), string encoderIp = null, string encoderPort = null, string timestamp = null, string duration = null, string timescale = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingStreamsOutOfSyncEventData MediaLiveEventIncomingStreamsOutOfSyncEventData(string minLastTimestamp = null, string typeOfStreamWithMinLastTimestamp = null, string maxLastTimestamp = null, string typeOfStreamWithMaxLastTimestamp = null, string timescaleOfMinLastTimestamp = null, string timescaleOfMaxLastTimestamp = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingVideoStreamsOutOfSyncEventData MediaLiveEventIncomingVideoStreamsOutOfSyncEventData(string firstTimestamp = null, string firstDuration = null, string secondTimestamp = null, string secondDuration = null, string timescale = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIngestHeartbeatEventData MediaLiveEventIngestHeartbeatEventData(string trackType = null, string trackName = null, long? bitrate = default(long?), long? incomingBitrate = default(long?), string lastTimestamp = null, string timescale = null, long? overlapCount = default(long?), long? discontinuityCount = default(long?), long? nonincreasingCount = default(long?), bool? unexpectedBitrate = default(bool?), string state = null, bool? healthy = default(bool?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIngestHeartbeatEventData MediaLiveEventIngestHeartbeatEventData(string trackType, string trackName, long? bitrate, long? incomingBitrate, string lastTimestamp, string timescale, long? overlapCount, long? discontinuityCount, long? nonincreasingCount, bool? unexpectedBitrate, string state, bool? healthy) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIngestHeartbeatEventData MediaLiveEventIngestHeartbeatEventData(string trackType = null, string trackName = null, string transcriptionLanguage = null, string transcriptionState = null, long? bitrate = default(long?), long? incomingBitrate = default(long?), int? ingestDriftValue = default(int?), System.DateTimeOffset? lastFragmentArrivalTime = default(System.DateTimeOffset?), string lastTimestamp = null, string timescale = null, long? overlapCount = default(long?), long? discontinuityCount = default(long?), long? nonincreasingCount = default(long?), bool? unexpectedBitrate = default(bool?), string state = null, bool? healthy = default(bool?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventTrackDiscontinuityDetectedEventData MediaLiveEventTrackDiscontinuityDetectedEventData(string trackType = null, string trackName = null, long? bitrate = default(long?), string previousTimestamp = null, string newTimestamp = null, string timescale = null, string discontinuityGap = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.MicrosoftTeamsUserIdentifierModel MicrosoftTeamsUserIdentifierModel(string userId = null, bool? isAnonymous = default(bool?), Azure.Messaging.EventGrid.SystemEvents.CommunicationCloudEnvironmentModel? cloud = default(Azure.Messaging.EventGrid.SystemEvents.CommunicationCloudEnvironmentModel?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.PhoneNumberIdentifierModel PhoneNumberIdentifierModel(string value = null) { throw null; }
@@ -251,12 +271,29 @@ namespace Azure.Messaging.EventGrid
         public const string AcsRecordingFileStatusUpdated = "Microsoft.Communication.RecordingFileStatusUpdated";
         public const string AcsSmsDeliveryReportReceived = "Microsoft.Communication.SMSDeliveryReportReceived";
         public const string AcsSmsReceived = "Microsoft.Communication.SMSReceived";
+        public const string AcsUserDisconnected = "Microsoft.Communication.UserDisconnected";
+        public const string ApiManagementApiCreated = "Microsoft.ApiManagement.APICreated";
+        public const string ApiManagementApiDeleted = "Microsoft.ApiManagement.APIDeleted";
+        public const string ApiManagementApiReleaseCreated = "Microsoft.ApiManagement.APIReleaseCreated";
+        public const string ApiManagementApiReleaseDeleted = "Microsoft.ApiManagement.APIReleaseDeleted";
+        public const string ApiManagementApiReleaseUpdated = "Microsoft.ApiManagement.APIReleaseUpdated";
+        public const string ApiManagementApiUpdated = "Microsoft.ApiManagement.APIUpdated";
+        public const string ApiManagementProductCreated = "Microsoft.ApiManagement.ProductCreated";
+        public const string ApiManagementProductDeleted = "Microsoft.ApiManagement.ProductDeleted";
+        public const string ApiManagementProductUpdated = "Microsoft.ApiManagement.ProductUpdated";
+        public const string ApiManagementSubscriptionCreated = "Microsoft.ApiManagement.SubscriptionCreated";
+        public const string ApiManagementSubscriptionDeleted = "Microsoft.ApiManagement.SubscriptionDeleted";
+        public const string ApiManagementSubscriptionUpdated = "Microsoft.ApiManagement.SubscriptionUpdated";
+        public const string ApiManagementUserCreated = "Microsoft.ApiManagement.UserCreated";
+        public const string ApiManagementUserDeleted = "Microsoft.ApiManagement.UserDeleted";
+        public const string ApiManagementUserUpdated = "Microsoft.ApiManagement.UserUpdated";
         public const string AppConfigurationKeyValueDeleted = "Microsoft.AppConfiguration.KeyValueDeleted";
         public const string AppConfigurationKeyValueModified = "Microsoft.AppConfiguration.KeyValueModified";
         public const string ContainerRegistryChartDeleted = "Microsoft.ContainerRegistry.ChartDeleted";
         public const string ContainerRegistryChartPushed = "Microsoft.ContainerRegistry.ChartPushed";
         public const string ContainerRegistryImageDeleted = "Microsoft.ContainerRegistry.ImageDeleted";
         public const string ContainerRegistryImagePushed = "Microsoft.ContainerRegistry.ImagePushed";
+        public const string ContainerServiceNewKubernetesVersionAvailable = "Microsoft.ContainerService.NewKubernetesVersionAvailable";
         public const string EventGridSubscriptionDeleted = "Microsoft.EventGrid.SubscriptionDeletedEvent";
         public const string EventGridSubscriptionValidation = "Microsoft.EventGrid.SubscriptionValidationEvent";
         public const string EventHubCaptureFileCreated = "Microsoft.EventHub.CaptureFileCreated";
@@ -298,6 +335,7 @@ namespace Azure.Messaging.EventGrid
         public const string MediaJobProcessing = "Microsoft.Media.JobProcessing";
         public const string MediaJobScheduled = "Microsoft.Media.JobScheduled";
         public const string MediaJobStateChange = "Microsoft.Media.JobStateChange";
+        public const string MediaLiveEventChannelArchiveHeartbeat = "Microsoft.Media.LiveEventChannelArchiveHeartbeat";
         public const string MediaLiveEventConnectionRejected = "Microsoft.Media.LiveEventConnectionRejected";
         public const string MediaLiveEventEncoderConnected = "Microsoft.Media.LiveEventEncoderConnected";
         public const string MediaLiveEventEncoderDisconnected = "Microsoft.Media.LiveEventEncoderDisconnected";
@@ -564,6 +602,86 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string Message { get { throw null; } }
         public System.DateTimeOffset? ReceivedTimestamp { get { throw null; } }
     }
+    public partial class AcsUserDisconnectedEventData
+    {
+        internal AcsUserDisconnectedEventData() { }
+        public Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel UserCommunicationIdentifier { get { throw null; } }
+    }
+    public partial class ApiManagementApiCreatedEventData
+    {
+        internal ApiManagementApiCreatedEventData() { }
+        public string ResourceUri { get { throw null; } }
+    }
+    public partial class ApiManagementApiDeletedEventData
+    {
+        internal ApiManagementApiDeletedEventData() { }
+        public string ResourceUri { get { throw null; } }
+    }
+    public partial class ApiManagementApiReleaseCreatedEventData
+    {
+        internal ApiManagementApiReleaseCreatedEventData() { }
+        public string ResourceUri { get { throw null; } }
+    }
+    public partial class ApiManagementApiReleaseDeletedEventData
+    {
+        internal ApiManagementApiReleaseDeletedEventData() { }
+        public string ResourceUri { get { throw null; } }
+    }
+    public partial class ApiManagementApiReleaseUpdatedEventData
+    {
+        internal ApiManagementApiReleaseUpdatedEventData() { }
+        public string ResourceUri { get { throw null; } }
+    }
+    public partial class ApiManagementApiUpdatedEventData
+    {
+        internal ApiManagementApiUpdatedEventData() { }
+        public string ResourceUri { get { throw null; } }
+    }
+    public partial class ApiManagementProductCreatedEventData
+    {
+        internal ApiManagementProductCreatedEventData() { }
+        public string ResourceUri { get { throw null; } }
+    }
+    public partial class ApiManagementProductDeletedEventData
+    {
+        internal ApiManagementProductDeletedEventData() { }
+        public string ResourceUri { get { throw null; } }
+    }
+    public partial class ApiManagementProductUpdatedEventData
+    {
+        internal ApiManagementProductUpdatedEventData() { }
+        public string ResourceUri { get { throw null; } }
+    }
+    public partial class ApiManagementSubscriptionCreatedEventData
+    {
+        internal ApiManagementSubscriptionCreatedEventData() { }
+        public string ResourceUri { get { throw null; } }
+    }
+    public partial class ApiManagementSubscriptionDeletedEventData
+    {
+        internal ApiManagementSubscriptionDeletedEventData() { }
+        public string ResourceUri { get { throw null; } }
+    }
+    public partial class ApiManagementSubscriptionUpdatedEventData
+    {
+        internal ApiManagementSubscriptionUpdatedEventData() { }
+        public string ResourceUri { get { throw null; } }
+    }
+    public partial class ApiManagementUserCreatedEventData
+    {
+        internal ApiManagementUserCreatedEventData() { }
+        public string ResourceUri { get { throw null; } }
+    }
+    public partial class ApiManagementUserDeletedEventData
+    {
+        internal ApiManagementUserDeletedEventData() { }
+        public string ResourceUri { get { throw null; } }
+    }
+    public partial class ApiManagementUserUpdatedEventData
+    {
+        internal ApiManagementUserUpdatedEventData() { }
+        public string ResourceUri { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AppAction : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.AppAction>
     {
@@ -758,6 +876,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class ContainerRegistryImagePushedEventData : Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventData
     {
         internal ContainerRegistryImagePushedEventData() { }
+    }
+    public partial class ContainerServiceNewKubernetesVersionAvailableEventData
+    {
+        internal ContainerServiceNewKubernetesVersionAvailableEventData() { }
+        public string LatestPreviewKubernetesVersion { get { throw null; } }
+        public string LatestStableKubernetesVersion { get { throw null; } }
+        public string LatestSupportedKubernetesVersion { get { throw null; } }
+        public string LowestMinorKubernetesVersion { get { throw null; } }
     }
     public partial class DeviceConnectionStateEventInfo
     {
@@ -1182,6 +1308,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public Azure.Messaging.EventGrid.SystemEvents.MediaJobState? PreviousState { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.MediaJobState? State { get { throw null; } }
     }
+    public partial class MediaLiveEventChannelArchiveHeartbeatEventData
+    {
+        internal MediaLiveEventChannelArchiveHeartbeatEventData() { }
+        public System.TimeSpan? ChannelLatency { get { throw null; } }
+        public string LatencyResultCode { get { throw null; } }
+    }
     public partial class MediaLiveEventConnectionRejectedEventData
     {
         internal MediaLiveEventConnectionRejectedEventData() { }
@@ -1257,6 +1389,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public long? DiscontinuityCount { get { throw null; } }
         public bool? Healthy { get { throw null; } }
         public long? IncomingBitrate { get { throw null; } }
+        public int? IngestDriftValue { get { throw null; } }
+        public System.DateTimeOffset? LastFragmentArrivalTime { get { throw null; } }
         public string LastTimestamp { get { throw null; } }
         public long? NonincreasingCount { get { throw null; } }
         public long? OverlapCount { get { throw null; } }
@@ -1264,6 +1398,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string Timescale { get { throw null; } }
         public string TrackName { get { throw null; } }
         public string TrackType { get { throw null; } }
+        public string TranscriptionLanguage { get { throw null; } }
+        public string TranscriptionState { get { throw null; } }
         public bool? UnexpectedBitrate { get { throw null; } }
     }
     public partial class MediaLiveEventTrackDiscontinuityDetectedEventData

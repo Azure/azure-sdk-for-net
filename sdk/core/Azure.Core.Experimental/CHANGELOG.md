@@ -1,15 +1,50 @@
 # Release History
 
-## 0.1.0-preview.15 (Unreleased)
+## 0.1.0-preview.19 (Unreleased)
 
 ### Features Added
 
+- Added `RequestOptions` to enable per-invocation control of the request pipeline.
+
 ### Breaking Changes
 
-### Key Bugs Fixed
+- The following types were removed:
+    - `ClassifiedResponse`
+    - `ExceptionFormattingResponseClassifier`
+    - `ResponseExtensions`
+    - `ResponsePropertiesPolicy`
 
-### Fixed
+### Bugs Fixed
 
+### Other Changes
+
+## 0.1.0-preview.18 (2021-11-03)
+
+- The following types were removed:
+    - `RequestOptions`
+    - `ResponseStatusOption`
+
+## 0.1.0-preview.17 (2021-10-01)
+
+### Breaking Changes
+
+- The following types were removed:
+    - `DynamicContent`
+    - `DynamicRequest`
+    - `DynamicResponse`
+    - `ProtocolClientOptions`
+
+## 0.1.0-preview.16 (2021-09-07)
+
+### Other Changes
+
+- Update `Azure.Core` version.
+
+## 0.1.0-preview.15 (2021-08-18)
+
+### Features Added
+
+- Added support for per call response classification.
 
 ## 0.1.0-preview.14 (2021-06-30)
 

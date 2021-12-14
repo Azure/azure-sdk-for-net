@@ -12,7 +12,7 @@ namespace Azure.Messaging.EventHubs.Processor
     /// <summary>
     ///   Contains information about a partition that has attempted to receive an event from the Azure Event Hub
     ///   service in an <c>EventProcessorClient</c> context, as well as the received event, if any.  It
-    ///   also provides a way of creating a checkpoint based on the information contained in the associated event.
+    ///   allows creating a checkpoint based on the associated event.
     /// </summary>
     ///
     /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor">Azure.Messaging.EventHubs.Processor (NuGet)</seealso>
@@ -21,8 +21,8 @@ namespace Azure.Messaging.EventHubs.Processor
     {
         /// <summary>
         ///   Indicates whether or not the arguments contain an event to be processed.  In
-        ///   the case where no event is contained, then the context and creation of
-        ///   checkpoints are also unavailable.
+        ///   the case where no event is contained, then the creation of checkpoints and reading the last
+        ///   enqueued event properties are unavailable.
         /// </summary>
         ///
         /// <value><c>true</c> if the arguments contain an event to be processed; otherwise, <c>false</c>.</value>
@@ -48,8 +48,16 @@ namespace Azure.Messaging.EventHubs.Processor
         public EventData Data { get; }
 
         /// <summary>
-        ///   A <see cref="System.Threading.CancellationToken"/> instance to signal the request to cancel the operation.
+        ///   A <see cref="System.Threading.CancellationToken"/> to indicate that the processor is requesting that the
+        ///   handler stop its activities.  If this token is requesting cancellation, then either the processor is
+        ///   attempting to shutdown or ownership of the partition has changed.
         /// </summary>
+        ///
+        /// <remarks>
+        ///   The handler processing events has responsibility for deciding whether or not to honor
+        ///   the cancellation request.  If the application chooses not to do so, the processor will wait for the
+        ///   handler to complete before taking further action.
+        /// </remarks>
         ///
         public CancellationToken CancellationToken { get; }
 

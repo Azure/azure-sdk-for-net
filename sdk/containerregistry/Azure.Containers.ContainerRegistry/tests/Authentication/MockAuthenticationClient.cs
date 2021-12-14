@@ -19,12 +19,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
             _acrAccessTokenFunc = acrAccessTokenFunc;
         }
 
-        public Response<AcrRefreshToken> ExchangeAadAccessTokenForAcrRefreshToken(string service, string aadAccessToken, CancellationToken token = default)
+        public Response<AcrRefreshToken> ExchangeAadAccessTokenForAcrRefreshToken(PostContentSchemaGrantType grantType, string service, string tenant = null, string refreshToken = null, string accessToken = null, CancellationToken cancellationToken = default)
         {
             return Response.FromValue(_acrRefreshTokenFunc(service), new MockResponse(200));
         }
 
-        public Task<Response<AcrRefreshToken>> ExchangeAadAccessTokenForAcrRefreshTokenAsync(string service, string aadAccessToken, CancellationToken token = default)
+        public Task<Response<AcrRefreshToken>> ExchangeAadAccessTokenForAcrRefreshTokenAsync(PostContentSchemaGrantType grantType, string service, string tenant = null, string refreshToken = null, string accessToken = null, CancellationToken cancellationToken = default)
         {
             return Task.FromResult(Response.FromValue(_acrRefreshTokenFunc(service), new MockResponse(200)));
         }

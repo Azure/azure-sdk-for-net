@@ -21,22 +21,31 @@ namespace Azure.Messaging.EventHubs.Producer
 {
     /// <summary>
     ///   A client responsible for publishing <see cref="EventData" /> to a specific Event Hub,
-    ///   grouped together in batches.  Depending on the options specified when sending, events data
-    ///   may be automatically routed to an available partition or sent to a specifically requested partition.
+    ///   grouped together in batches.  Depending on the options specified when sending, events may
+    ///   be automatically assigned an available partition or may request a specific partition.
+    ///
+    ///   The <see cref="EventHubProducerClient" /> publishes immediately, ensuring a deterministic
+    ///   outcome for each send operation, though requires that callers own the responsibility of
+    ///   building and managing batches.
+    ///
+    ///   In scenarios where it is not important to have events published immediately and where
+    ///   maximizing partition availability is not a requirement, it is recommended to consider
+    ///   using the <see cref="EventHubBufferedProducerClient" />, which takes responsibility for
+    ///   building and managing batches to reduce the complexity of doing so in application code.
     /// </summary>
     ///
     /// <remarks>
-    ///   <para>
-    ///     Allowing automatic routing of partitions is recommended when:
-    ///     <para>- The sending of events needs to be highly available.</para>
-    ///     <para>- The event data should be evenly distributed among all available partitions.</para>
-    ///   </para>
+    ///   <list type="bullet">
+    ///     <listheader><description>Allowing partition assignment is recommended when:</description></listheader>
+    ///     <item><description>The sending of events needs to be highly available.</description></item>
+    ///     <item><description>The event data should be evenly distributed among all available partitions.</description></item>
+    ///   </list>
     ///
-    ///   <para>
-    ///     If no partition is specified, the following rules are used for automatically selecting one:
-    ///     <para>1) Distribute the events equally amongst all available partitions using a round-robin approach.</para>
-    ///     <para>2) If a partition becomes unavailable, the Event Hubs service will automatically detect it and forward the message to another available partition.</para>
-    ///   </para>
+    ///   <list type="number">
+    ///     <listheader><description>If no partition is specified, the following rules are used for automatically selecting one:</description></listheader>
+    ///     <item><description>Distribute the events equally amongst all available partitions using a round-robin approach.</description></item>
+    ///     <item><description>If a partition becomes unavailable, the Event Hubs service will automatically detect it and forward the message to another available partition.</description></item>
+    ///   </list>
     ///
     ///   <para>
     ///     The <see cref="EventHubProducerClient" /> is safe to cache and use for the lifetime of an application, and that is best practice when the application
@@ -45,6 +54,8 @@ namespace Azure.Messaging.EventHubs.Producer
     ///     method as the application is shutting down will ensure that network resources and other unmanaged objects are properly cleaned up.
     ///   </para>
     /// </remarks>
+    ///
+    /// <seealso cref="EventHubBufferedProducerClient" />
     ///
     public class EventHubProducerClient : IAsyncDisposable
     {
@@ -341,6 +352,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="connection">The connection to use as the basis for delegation of client-type operations.</param>
         /// <param name="transportProducer">The transport producer instance to use as the basis for service communication.</param>
         /// <param name="partitionProducerPool">A <see cref="TransportProducerPool" /> used to manage a set of partition specific <see cref="TransportProducer" />.</param>
+        /// <param name="clientOptions">A set of options to apply when configuring the producer.</param>
         ///
         /// <remarks>
         ///   This constructor is intended to be used internally for functional
@@ -349,7 +361,8 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         internal EventHubProducerClient(EventHubConnection connection,
                                         TransportProducer transportProducer,
-                                        TransportProducerPool partitionProducerPool = default)
+                                        TransportProducerPool partitionProducerPool = default,
+                                        EventHubProducerClientOptions clientOptions = default)
         {
             Argument.AssertNotNull(connection, nameof(connection));
             Argument.AssertNotNull(transportProducer, nameof(transportProducer));
@@ -357,7 +370,7 @@ namespace Azure.Messaging.EventHubs.Producer
             OwnsConnection = false;
             Connection = connection;
             RetryPolicy = new EventHubsRetryOptions().ToRetryPolicy();
-            Options = new EventHubProducerClientOptions();
+            Options = clientOptions?.Clone() ?? new EventHubProducerClientOptions();
             Identifier = Guid.NewGuid().ToString();
             PartitionProducerPool = partitionProducerPool ?? new TransportProducerPool(partitionId => transportProducer);
 
@@ -486,8 +499,8 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   partition; calling this method for a partition before events have been published to it will return an empty set of properties.
         /// </remarks>
         ///
-        internal virtual async Task<PartitionPublishingProperties> GetPartitionPublishingPropertiesAsync(string partitionId,
-                                                                                                         CancellationToken cancellationToken = default)
+        internal virtual async Task<PartitionPublishingPropertiesInternal> GetPartitionPublishingPropertiesAsync(string partitionId,
+                                                                                                                 CancellationToken cancellationToken = default)
         {
             Argument.AssertNotClosed(IsClosed, nameof(EventHubProducerClient));
             Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
@@ -497,7 +510,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
             if (!RequiresStatefulPartitions(Options))
             {
-                return PartitionPublishingProperties.Empty;
+                return PartitionPublishingPropertiesInternal.Empty;
             }
 
             // If the state has not yet been initialized, then do so now.
@@ -536,18 +549,19 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <returns>
         ///   A task to be resolved on when the operation has completed; if no exception is thrown when awaited, the
-        ///   Event Hubs service has acknowledge receipt and assumed responsibility for delivery of the set of events.
+        ///   Event Hubs service has acknowledged receipt and assumed responsibility for delivery of the set of events to
+        ///   its partition.
         /// </returns>
-        ///
-        /// <exception cref="EventHubsException">
-        ///   Occurs when the set of events exceeds the maximum size allowed in a single batch, as determined by the Event Hubs service.  The <see cref="EventHubsException.Reason" /> will be set to
-        ///   <see cref="EventHubsException.FailureReason.MessageSizeExceeded"/> in this case.
-        /// </exception>
         ///
         /// <remarks>
         ///   When published, the result is atomic; either all events that belong to the set were successful or all
         ///   have failed.  Partial success is not possible.
         /// </remarks>
+        ///
+        /// <exception cref="EventHubsException">
+        ///   Occurs when the set of events exceeds the maximum size allowed in a single batch, as determined by the Event Hubs service.  The <see cref="EventHubsException.Reason" /> will be set to
+        ///   <see cref="EventHubsException.FailureReason.MessageSizeExceeded"/> in this case.
+        /// </exception>
         ///
         /// <seealso cref="SendAsync(IEnumerable{EventData}, SendEventOptions, CancellationToken)" />
         /// <seealso cref="SendAsync(EventDataBatch, CancellationToken)" />
@@ -570,18 +584,21 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <returns>
         ///   A task to be resolved on when the operation has completed; if no exception is thrown when awaited, the
-        ///   Event Hubs service has acknowledge receipt and assumed responsibility for delivery of the set of events.
+        ///   Event Hubs service has acknowledged receipt and assumed responsibility for delivery of the set of events to
+        ///   its partition.
         /// </returns>
-        ///
-        /// <exception cref="EventHubsException">
-        ///   Occurs when the set of events exceeds the maximum size allowed in a single batch, as determined by the Event Hubs service.  The <see cref="EventHubsException.Reason" /> will be set to
-        ///   <see cref="EventHubsException.FailureReason.MessageSizeExceeded"/> in this case.
-        /// </exception>
         ///
         /// <remarks>
         ///   When published, the result is atomic; either all events that belong to the set were successful or all
         ///   have failed.  Partial success is not possible.
         /// </remarks>
+        ///
+        /// <exception cref="InvalidOperationException">Occurs when both a partition identifier and partition key have been specified in the <paramref name="options"/>.</exception>
+        ///
+        /// <exception cref="EventHubsException">
+        ///   Occurs when the set of events exceeds the maximum size allowed in a single batch, as determined by the Event Hubs service.  The <see cref="EventHubsException.Reason" /> will be set to
+        ///   <see cref="EventHubsException.FailureReason.MessageSizeExceeded"/> in this case.
+        /// </exception>
         ///
         /// <seealso cref="SendAsync(IEnumerable{EventData}, CancellationToken)" />
         /// <seealso cref="SendAsync(EventDataBatch, CancellationToken)" />
@@ -630,6 +647,8 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   When published, the result is atomic; either all events that belong to the batch were successful or all
         ///   have failed.  Partial success is not possible.
         /// </remarks>
+        ///
+        /// <exception cref="InvalidOperationException">Occurs when both a partition identifier and partition key have been specified by the batch.</exception>
         ///
         /// <seealso cref="CreateBatchAsync(CancellationToken)" />
         ///
@@ -682,6 +701,8 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>An <see cref="EventDataBatch" /> with the requested <paramref name="options"/>.</returns>
+        ///
+        /// <exception cref="InvalidOperationException">Occurs when both a partition identifier and partition key have been specified in the <paramref name="options"/>.</exception>
         ///
         /// <seealso cref="CreateBatchAsync(CancellationToken)" />
         /// <seealso cref="SendAsync(EventDataBatch, CancellationToken)" />
@@ -938,20 +959,24 @@ namespace Azure.Messaging.EventHubs.Producer
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 EventHubsEventSource.Log.IdempotentPublishStart(EventHubName, options.PartitionId);
 
+                var resetStateOnError = false;
+                var releaseGuard = false;
                 var partitionState = PartitionState.GetOrAdd(options.PartitionId, new PartitionPublishingState(options.PartitionId));
 
                 try
                 {
-                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                    if (!partitionState.PublishingGuard.Wait(100, cancellationToken))
+                    {
+                        await partitionState.PublishingGuard.WaitAsync(cancellationToken).ConfigureAwait(false);
+                    }
 
-                    await partitionState.PublishingGuard.WaitAsync(cancellationToken).ConfigureAwait(false);
+                    releaseGuard = true;
                     EventHubsEventSource.Log.IdempotentSynchronizationAcquire(EventHubName, options.PartitionId);
 
                     // Ensure that the partition state has been initialized.
 
                     if (!partitionState.IsInitialized)
                     {
-                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                         await InitializePartitionStateAsync(partitionState, cancellationToken).ConfigureAwait(false);
                     }
 
@@ -970,7 +995,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
                     // Publish the events.
 
-                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                    resetStateOnError = true;
 
                     EventHubsEventSource.Log.IdempotentSequencePublish(EventHubName, options.PartitionId, firstSequence, lastSequence);
                     await SendInternalAsync(eventSet, options, cancellationToken).ConfigureAwait(false);
@@ -994,12 +1019,40 @@ namespace Azure.Messaging.EventHubs.Producer
                         eventData.ClearPublishingState();
                     }
 
+                    if (resetStateOnError)
+                    {
+                        // Reset the partition state and options to ensure that future attempts
+                        // are safe and do not risk data loss by reusing the same producer group identifier.
+
+                        if (!Options.PartitionOptions.TryGetValue(options.PartitionId, out var partitionOptions))
+                        {
+                            partitionOptions = new PartitionPublishingOptionsInternal();
+                            Options.PartitionOptions[options.PartitionId] = partitionOptions;
+                        }
+
+                        partitionOptions.ProducerGroupId = null;
+                        partitionOptions.OwnerLevel = null;
+                        partitionOptions.StartingSequenceNumber = null;
+
+                        partitionState.ProducerGroupId = null;
+                        partitionState.OwnerLevel = null;
+                        partitionState.LastPublishedSequenceNumber = null;
+
+                        // Expire the transport producer associated with the partition, to ensure
+                        // that the new idempotent state is used for the next publishing operation.
+
+                        await PartitionProducerPool.ExpirePooledProducerAsync(options.PartitionId, forceClose: true).ConfigureAwait(false);
+                    }
+
                     throw;
                 }
                 finally
                 {
-                    partitionState.PublishingGuard.Release();
-                    EventHubsEventSource.Log.IdempotentSynchronizationRelease(EventHubName, options.PartitionId);
+                    if (releaseGuard)
+                    {
+                        partitionState.PublishingGuard.Release();
+                        EventHubsEventSource.Log.IdempotentSynchronizationRelease(EventHubName, options.PartitionId);
+                    }
                 }
             }
             catch (Exception ex)
@@ -1033,6 +1086,8 @@ namespace Azure.Messaging.EventHubs.Producer
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 EventHubsEventSource.Log.IdempotentPublishStart(EventHubName, options.PartitionId);
 
+                var resetStateOnError = false;
+                var releaseGuard = false;
                 var partitionState = PartitionState.GetOrAdd(options.PartitionId, new PartitionPublishingState(options.PartitionId));
 
                 var eventSet = eventBatch.AsEnumerable<EventData>() switch
@@ -1043,16 +1098,18 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 try
                 {
-                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                    if (!partitionState.PublishingGuard.Wait(100, cancellationToken))
+                    {
+                        await partitionState.PublishingGuard.WaitAsync(cancellationToken).ConfigureAwait(false);
+                    }
 
-                    await partitionState.PublishingGuard.WaitAsync(cancellationToken).ConfigureAwait(false);
+                    releaseGuard = true;
                     EventHubsEventSource.Log.IdempotentSynchronizationAcquire(EventHubName, options.PartitionId);
 
                     // Ensure that the partition state has been initialized.
 
                     if (!partitionState.IsInitialized)
                     {
-                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                         await InitializePartitionStateAsync(partitionState, cancellationToken).ConfigureAwait(false);
                     }
 
@@ -1071,7 +1128,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
                     // Publish the events.
 
-                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                    resetStateOnError = true;
 
                     EventHubsEventSource.Log.IdempotentSequencePublish(EventHubName, options.PartitionId, firstSequence, lastSequence);
                     await SendInternalAsync(eventBatch, cancellationToken).ConfigureAwait(false);
@@ -1092,12 +1149,40 @@ namespace Azure.Messaging.EventHubs.Producer
                         eventData.ClearPublishingState();
                     }
 
+                    if (resetStateOnError)
+                    {
+                        // Reset the partition state and options to ensure that future attempts
+                        // are safe and do not risk data loss by reusing the same producer group identifier.
+
+                            if (!Options.PartitionOptions.TryGetValue(options.PartitionId, out var partitionOptions))
+                        {
+                            partitionOptions = new PartitionPublishingOptionsInternal();
+                            Options.PartitionOptions[options.PartitionId] = partitionOptions;
+                        }
+
+                        partitionOptions.ProducerGroupId = null;
+                        partitionOptions.OwnerLevel = null;
+                        partitionOptions.StartingSequenceNumber = null;
+
+                        partitionState.ProducerGroupId = null;
+                        partitionState.OwnerLevel = null;
+                        partitionState.LastPublishedSequenceNumber = null;
+
+                        // Expire the transport producer associated with the partition, to ensure
+                        // that the new idempotent state is used for the next publishing operation.
+
+                        await PartitionProducerPool.ExpirePooledProducerAsync(options.PartitionId, forceClose: true).ConfigureAwait(false);
+                    }
+
                     throw;
                 }
                 finally
                 {
-                    partitionState.PublishingGuard.Release();
-                    EventHubsEventSource.Log.IdempotentSynchronizationRelease(EventHubName, options.PartitionId);
+                    if (releaseGuard)
+                    {
+                        partitionState.PublishingGuard.Release();
+                        EventHubsEventSource.Log.IdempotentSynchronizationRelease(EventHubName, options.PartitionId);
+                    }
                 }
             }
             catch (Exception ex)
@@ -1188,8 +1273,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         private DiagnosticScope CreateDiagnosticScope(IEnumerable<string> diagnosticIdentifiers)
         {
-            DiagnosticScope scope = EventDataInstrumentation.ScopeFactory.CreateScope(DiagnosticProperty.ProducerActivityName);
-            scope.AddAttribute(DiagnosticProperty.KindAttribute, DiagnosticProperty.ClientKind);
+            DiagnosticScope scope = EventDataInstrumentation.ScopeFactory.CreateScope(DiagnosticProperty.ProducerActivityName, DiagnosticScope.ActivityKind.Client);
             scope.AddAttribute(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.EventHubsServiceContext);
             scope.AddAttribute(DiagnosticProperty.EventHubAttribute, EventHubName);
             scope.AddAttribute(DiagnosticProperty.EndpointAttribute, FullyQualifiedNamespace);
@@ -1342,9 +1426,9 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <returns>The set of properties that represents the current state.</returns>
         ///
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static PartitionPublishingProperties CreatePublishingPropertiesFromPartitionState(EventHubProducerClientOptions options,
-                                                                                                  PartitionPublishingState state) =>
-                    new PartitionPublishingProperties(options.EnableIdempotentPartitions,
+        private static PartitionPublishingPropertiesInternal CreatePublishingPropertiesFromPartitionState(EventHubProducerClientOptions options,
+                                                                                                          PartitionPublishingState state) =>
+                    new PartitionPublishingPropertiesInternal(options.EnableIdempotentPartitions,
                                                       state.ProducerGroupId,
                                                       state.OwnerLevel,
                                                       state.LastPublishedSequenceNumber);

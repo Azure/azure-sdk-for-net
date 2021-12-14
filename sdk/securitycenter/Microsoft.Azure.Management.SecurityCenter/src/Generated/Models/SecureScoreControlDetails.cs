@@ -135,37 +135,25 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Max != null)
+            if (Max < 0)
             {
-                if (Max < 0)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Max", 0);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "Max", 0);
             }
-            if (Current != null)
+            if (Current < 0)
             {
-                if (Current < 0)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Current", 0);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "Current", 0);
             }
-            if (Percentage != null)
+            if (Percentage > 1)
             {
-                if (Percentage > 1)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "Percentage", 1);
-                }
-                if (Percentage < 0)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Percentage", 0);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "Percentage", 1);
             }
-            if (Weight != null)
+            if (Percentage < 0)
             {
-                if (Weight < 0)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Weight", 0);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "Percentage", 0);
+            }
+            if (Weight < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "Weight", 0);
             }
             if (Definition != null)
             {

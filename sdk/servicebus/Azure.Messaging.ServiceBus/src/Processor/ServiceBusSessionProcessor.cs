@@ -176,6 +176,10 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// The handler responsible for processing messages received from the Queue or Subscription. Implementation is mandatory.
         /// </summary>
+        /// <remarks>
+        /// It is not recommended that the state of the processor be managed directly from within this handler; requesting to start or stop the processor may result in
+        /// a deadlock scenario.
+        /// </remarks>
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         public event Func<ProcessSessionMessageEventArgs, Task> ProcessMessageAsync
@@ -195,6 +199,10 @@ namespace Azure.Messaging.ServiceBus
         /// The handler responsible for processing unhandled exceptions thrown while this processor is running.
         /// Implementation is mandatory.
         /// </summary>
+        /// <remarks>
+        /// It is not recommended that the state of the processor be managed directly from within this handler; requesting to start or stop the processor may result in
+        /// a deadlock scenario.
+        /// </remarks>
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         public event Func<ProcessErrorEventArgs, Task> ProcessErrorAsync
@@ -213,6 +221,10 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Optional handler that can be set to be notified when a new session is about to be processed.
         /// </summary>
+        /// <remarks>
+        /// It is not recommended that the state of the processor be managed directly from within this handler; requesting to start or stop the processor may result in
+        /// a deadlock scenario.
+        /// </remarks>
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         public event Func<ProcessSessionEventArgs, Task> SessionInitializingAsync
@@ -233,6 +245,10 @@ namespace Azure.Messaging.ServiceBus
         /// This means that the most recent <see cref="ServiceBusReceiver.ReceiveMessageAsync"/> call timed out, or
         /// that <see cref="ProcessSessionMessageEventArgs.ReleaseSession"/> was called in the <see cref="ProcessMessageAsync"/> handler.
         /// </summary>
+        /// <remarks>
+        /// It is not recommended that the state of the processor be managed directly from within this handler; requesting to start or stop the processor may result in
+        /// a deadlock scenario.
+        /// </remarks>
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         public event Func<ProcessSessionEventArgs, Task> SessionClosingAsync
@@ -301,6 +317,18 @@ namespace Azure.Messaging.ServiceBus
         {
             await CloseAsync().ConfigureAwait(false);
             GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Updates the concurrency for the processor. This method can be used to dynamically change the concurrency of a running processor.
+        /// </summary>
+        /// <param name="maxConcurrentSessions">The new max concurrent sessions value. This will be reflected in the
+        /// <see cref="ServiceBusSessionProcessor.MaxConcurrentSessions"/>property.</param>
+        /// <param name="maxConcurrentCallsPerSession">The new max concurrent calls per session value. This will be reflect in the
+        /// <see cref="ServiceBusSessionProcessor.MaxConcurrentCallsPerSession"/>.</param>
+        public void UpdateConcurrency(int maxConcurrentSessions, int maxConcurrentCallsPerSession)
+        {
+            InnerProcessor.UpdateConcurrency(maxConcurrentSessions, maxConcurrentCallsPerSession);
         }
     }
 }

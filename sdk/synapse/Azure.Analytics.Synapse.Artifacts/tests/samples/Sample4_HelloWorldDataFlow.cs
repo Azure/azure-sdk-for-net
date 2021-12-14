@@ -17,10 +17,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
         public async Task DataFlowSample()
         {
             #region Snippet:CreateDataFlowClientPrep
+#if SNIPPET
             // Replace the string below with your actual endpoint url.
             string endpoint = "<my-endpoint-url>";
-            /*@@*/endpoint = TestEnvironment.EndpointUrl;
-
+#else
+            string endpoint = TestEnvironment.EndpointUrl;
+#endif
             string dataFlowName = "Test-DataFlow";
             #endregion
 

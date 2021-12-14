@@ -73,7 +73,7 @@
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Gallery>> GetWithHttpMessagesAsync(string resourceGroupName, string galleryName, Dictionary<string, List<string>> customHeaders = null)
+        public async Task<AzureOperationResponse<Gallery>> GetWithHttpMessagesAsync(string resourceGroupName, string galleryName, Dictionary<string, List<string>> customHeaders)
         {
             return await GetWithHttpMessagesAsync(resourceGroupName, galleryName, default(string), customHeaders, default(CancellationToken));
         }
@@ -108,7 +108,7 @@
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Gallery>> GetWithHttpMessagesAsync(string resourceGroupName, string galleryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Gallery>> GetWithHttpMessagesAsync(string resourceGroupName, string galleryName, Dictionary<string, List<string>> customHeaders, CancellationToken cancellationToken)
         {
             return await GetWithHttpMessagesAsync(resourceGroupName, galleryName, default(string), customHeaders, cancellationToken);
         }

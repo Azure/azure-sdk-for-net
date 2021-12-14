@@ -15,7 +15,7 @@ namespace Azure.Storage.Blobs.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="BlobErrorCode"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobErrorCode"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BlobErrorCode(string value)
         {
@@ -121,7 +121,7 @@ namespace Azure.Storage.Blobs.Models
         private const string SequenceNumberConditionNotMetValue = "SequenceNumberConditionNotMet";
         private const string SequenceNumberIncrementTooLargeValue = "SequenceNumberIncrementTooLarge";
         private const string SnapshotCountExceededValue = "SnapshotCountExceeded";
-        private const string SnaphotOperationRateExceededValue = "SnaphotOperationRateExceeded";
+        private const string SnapshotOperationRateExceededValue = "SnapshotOperationRateExceeded";
         private const string SnapshotsPresentValue = "SnapshotsPresent";
         private const string SourceConditionNotMetValue = "SourceConditionNotMet";
         private const string SystemInUseValue = "SystemInUse";
@@ -334,8 +334,8 @@ namespace Azure.Storage.Blobs.Models
         public static BlobErrorCode SequenceNumberIncrementTooLarge { get; } = new BlobErrorCode(SequenceNumberIncrementTooLargeValue);
         /// <summary> SnapshotCountExceeded. </summary>
         public static BlobErrorCode SnapshotCountExceeded { get; } = new BlobErrorCode(SnapshotCountExceededValue);
-        /// <summary> SnaphotOperationRateExceeded. </summary>
-        public static BlobErrorCode SnaphotOperationRateExceeded { get; } = new BlobErrorCode(SnaphotOperationRateExceededValue);
+        /// <summary> SnapshotOperationRateExceeded. </summary>
+        public static BlobErrorCode SnapshotOperationRateExceeded { get; } = new BlobErrorCode(SnapshotOperationRateExceededValue);
         /// <summary> SnapshotsPresent. </summary>
         public static BlobErrorCode SnapshotsPresent { get; } = new BlobErrorCode(SnapshotsPresentValue);
         /// <summary> SourceConditionNotMet. </summary>

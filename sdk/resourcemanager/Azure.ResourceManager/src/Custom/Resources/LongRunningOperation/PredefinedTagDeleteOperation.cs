@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Resources.Models
     {
         private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of PreDefinedTagDeleteOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of PredefinedTagDeleteOperation for mocking. </summary>
         protected PredefinedTagDeleteOperation()
         {
         }
 
         internal PredefinedTagDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PreDefinedTagDeleteOperation");
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PredefinedTagDeleteOperation");
         }
 
         /// <inheritdoc />

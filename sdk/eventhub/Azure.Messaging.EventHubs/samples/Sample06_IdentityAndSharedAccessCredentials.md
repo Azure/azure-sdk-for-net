@@ -45,15 +45,16 @@ For illustration, the `EventHubProducerClient` is demonstrated in these examples
 ## Publishing events with identity-based authorization
 
 ```C# Snippet:EventHubs_Sample06_DefaultAzureCredential
-TokenCredential credential = new DefaultAzureCredential();
+var credential = new DefaultAzureCredential();
 
 var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+
 var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
 
 try
 {
-    using var eventBatch = await producer.CreateBatchAsync();
+    using EventDataBatch eventBatch = await producer.CreateBatchAsync();
 
     for (var index = 0; index < 5; ++index)
     {
@@ -81,11 +82,12 @@ var credential = new AzureSasCredential("<< SHARED ACCESS KEY STRING >>");
 
 var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+
 var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
 
 try
 {
-    using var eventBatch = await producer.CreateBatchAsync();
+    using EventDataBatch eventBatch = await producer.CreateBatchAsync();
 
     for (var index = 0; index < 5; ++index)
     {
@@ -113,11 +115,12 @@ var credential = new AzureNamedKeyCredential("<< SHARED KEY NAME >>", "<< SHARED
 
 var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+
 var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
 
 try
 {
-    using var eventBatch = await producer.CreateBatchAsync();
+    using EventDataBatch eventBatch = await producer.CreateBatchAsync();
 
     for (var index = 0; index < 5; ++index)
     {
@@ -145,13 +148,13 @@ In some scenarios, it may be preferable to supplement token-based authorization 
 This example illustrates parsing the fully qualified namespace and, optionally, the Event Hub name from the connection string and using it with identity-based authorization.
 
 ```C# Snippet:EventHubs_Sample06_ConnectionStringParse
+var credential = new DefaultAzureCredential();
+
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 
 EventHubsConnectionStringProperties properties =
     EventHubsConnectionStringProperties.Parse(connectionString);
-
-TokenCredential credential = new DefaultAzureCredential();
 
 var producer = new EventHubProducerClient(
     properties.FullyQualifiedNamespace,
@@ -160,7 +163,7 @@ var producer = new EventHubProducerClient(
 
 try
 {
-    using var eventBatch = await producer.CreateBatchAsync();
+    using EventDataBatch eventBatch = await producer.CreateBatchAsync();
 
     for (var index = 0; index < 5; ++index)
     {

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
@@ -14,6 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
     public partial class MetricsAdvisorSamples : MetricsAdvisorTestEnvironment
     {
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/22575")]
         public async Task CreateAndDeleteAlertConfigurationAsync()
         {
             string endpoint = MetricsAdvisorUri;

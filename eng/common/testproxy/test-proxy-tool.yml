@@ -1,0 +1,34 @@
+parameters:
+  rootFolder: '$(Build.SourcesDirectory)'
+
+steps:
+  - pwsh: |
+        $(Build.SourcesDirectory)/eng/common/scripts/trust-proxy-certificate.ps1
+    displayName: 'Language Specific Certificate Trust'
+
+  - pwsh: |
+      Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Path]$(Build.SourcesDirectory)/eng/common/testproxy/dotnet-devcert.pfx"
+      Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Password]password"
+      Write-Host "##vso[task.setvariable variable=PROXY_MANUAL_START]true"
+    displayName: 'Configure Kestrel and PROXY_MANUAL_START Variables'
+
+  - pwsh: |
+      dotnet tool install azure.sdk.tools.testproxy `
+        --tool-path $(Build.BinariesDirectory)/test-proxy `
+        --add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json `
+        --version 1.0.0-dev.20211118.3
+    displayName: "Install test-proxy"
+
+  - pwsh: |
+      Start-Process $(Build.BinariesDirectory)/test-proxy/test-proxy.exe `
+        -ArgumentList "--storage-location ${{ parameters.rootFolder }}" `
+        -NoNewWindow -PassThru -RedirectStandardOutput $(Build.SourcesDirectory)/test-proxy.log
+    displayName: 'Run the testproxy - windows'
+    condition: and(succeeded(), eq(variables['Agent.OS'],'Windows_NT'))
+
+  # nohup does NOT continue beyond the current session if you use it within powershell
+  - bash: |
+      nohup $(Build.BinariesDirectory)/test-proxy/test-proxy > $(Build.SourcesDirectory)/test-proxy.log &
+    displayName: "Run the testproxy - linux/mac"
+    condition: and(succeeded(), ne(variables['Agent.OS'],'Windows_NT'))
+    workingDirectory: "${{ parameters.rootFolder }}"

@@ -16,33 +16,21 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// The latest version of the CallingServer service.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2021_06_15_Preview;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2021_08_30_Preview;
 
         internal string ApiVersion { get; }
 
         /// <summary>
-        /// Enable auto redirect
-        /// </summary>
-        internal bool AllowAutoRedirect { get; set; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="CallingServerClientOptions"/>.
         /// </summary>
-        public CallingServerClientOptions(ServiceVersion version = LatestVersion, bool allowAutoRedirect = false)
+        public CallingServerClientOptions(ServiceVersion version = LatestVersion)
         {
-            AllowAutoRedirect = allowAutoRedirect;
             ApiVersion = version switch
             {
                 ServiceVersion.V2021_06_15_Preview => "2021-06-15-preview",
+                ServiceVersion.V2021_08_30_Preview => "2021-08-30-preview",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
-
-            var clientHandler = new HttpClientHandler()
-            {
-                AllowAutoRedirect = allowAutoRedirect
-            };
-
-            Transport = new HttpClientTransport(clientHandler);
         }
 
         /// <summary>
@@ -54,7 +42,13 @@ namespace Azure.Communication.CallingServer
             /// The Beta of the CallingServer service.
             /// </summary>
 #pragma warning disable CA1707 // Identifiers should not contain underscores
-            V2021_06_15_Preview = 1
+            V2021_06_15_Preview = 1,
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+            /// <summary>
+            /// The Beta of the CallingServer service.
+            /// </summary>
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+            V2021_08_30_Preview = 2
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
     }

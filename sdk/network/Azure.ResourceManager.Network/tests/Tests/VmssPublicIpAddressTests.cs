@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#if false
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Network.Tests.Tests
+namespace Azure.ResourceManager.Network.Tests
 {
     public class VmssPublicIpAddressTests : NetworkTestsManagementClientBase
     {
@@ -26,12 +27,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             {
                 Initialize();
             }
-        }
-
-        [TearDown]
-        public async Task CleanupResourceGroup()
-        {
-            await CleanupResourceGroupsAsync();
         }
 
         private static string GetNameById(string Id, string resourceType)
@@ -49,14 +44,14 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Compute/virtualMachineScaleSets");
+            string location = TestEnvironment.Location;
             string deploymentName = Recording.GenerateAssetName("vmss");
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
+            var resourceGroup = CreateResourceGroup(resourceGroupName, location);
 
             await CreateVmss(ResourceManagementClient, resourceGroupName, deploymentName);
 
             string virtualMachineScaleSetName = "vmssip";
-            AsyncPageable<PublicIPAddress> vmssListAllPageResultAP = NetworkManagementClient.PublicIPAddresses.ListVirtualMachineScaleSetPublicIPAddressesAsync(resourceGroupName, virtualMachineScaleSetName);
+            AsyncPageable<PublicIPAddress> vmssListAllPageResultAP = NetworkManagementClient.PublicIPAddresses.GetVirtualMachineScaleSetPublicIPAddressesAsync(resourceGroupName, virtualMachineScaleSetName);
             List<PublicIPAddress> vmssListAllPageResult = await vmssListAllPageResultAP.ToEnumerableAsync();
             List<PublicIPAddress> vmssListAllResult = vmssListAllPageResult.ToList();
             PublicIPAddress firstResult = vmssListAllResult.First();
@@ -71,7 +66,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string ipConfigName = GetNameById(idItem, "ipConfigurations");
             string ipName = GetNameById(idItem, "publicIPAddresses");
 
-            AsyncPageable<PublicIPAddress> vmssListPageResultAP = NetworkManagementClient.PublicIPAddresses.ListVirtualMachineScaleSetVMPublicIPAddressesAsync(
+            AsyncPageable<PublicIPAddress> vmssListPageResultAP = NetworkManagementClient.PublicIPAddresses.GetVirtualMachineScaleSetVMPublicIPAddressesAsync(
                 resourceGroupName, virtualMachineScaleSetName, vmIndex, nicName, ipConfigName);
             List<PublicIPAddress> vmssListPageResult = await vmssListPageResultAP.ToEnumerableAsync();
             List<PublicIPAddress> vmssListResult = vmssListPageResult.ToList();
@@ -87,3 +82,4 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
     }
 }
+#endif

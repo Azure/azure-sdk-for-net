@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
+            if (Optional.IsDefined(Type))
+            {
+                writer.WritePropertyName("type");
+                writer.WriteStringValue(Type.Value.ToString());
+            }
             if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId");
@@ -32,20 +37,43 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("filter");
                 writer.WriteObjectValue(Filter);
             }
+            if (Optional.IsDefined(Scope))
+            {
+                writer.WritePropertyName("scope");
+                writer.WriteObjectValue(Scope);
+            }
+            if (Optional.IsDefined(CoverageLevel))
+            {
+                writer.WritePropertyName("coverageLevel");
+                writer.WriteStringValue(CoverageLevel.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
         internal static ConnectionMonitorEndpoint DeserializeConnectionMonitorEndpoint(JsonElement element)
         {
             string name = default;
+            Optional<EndpointType> type = default;
             Optional<string> resourceId = default;
             Optional<string> address = default;
             Optional<ConnectionMonitorEndpointFilter> filter = default;
+            Optional<ConnectionMonitorEndpointScope> scope = default;
+            Optional<CoverageLevel> coverageLevel = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new EndpointType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceId"))
@@ -68,8 +96,28 @@ namespace Azure.ResourceManager.Network.Models
                     filter = ConnectionMonitorEndpointFilter.DeserializeConnectionMonitorEndpointFilter(property.Value);
                     continue;
                 }
+                if (property.NameEquals("scope"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    scope = ConnectionMonitorEndpointScope.DeserializeConnectionMonitorEndpointScope(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("coverageLevel"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    coverageLevel = new CoverageLevel(property.Value.GetString());
+                    continue;
+                }
             }
-            return new ConnectionMonitorEndpoint(name, resourceId.Value, address.Value, filter.Value);
+            return new ConnectionMonitorEndpoint(name, Optional.ToNullable(type), resourceId.Value, address.Value, filter.Value, scope.Value, Optional.ToNullable(coverageLevel));
         }
     }
 }

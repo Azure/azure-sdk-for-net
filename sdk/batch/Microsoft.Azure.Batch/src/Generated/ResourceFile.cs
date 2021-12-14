@@ -33,13 +33,16 @@ namespace Microsoft.Azure.Batch
         /// <param name='autoStorageContainerName'>The storage container name in the auto storage account.</param>
         /// <param name='blobPrefix'>The blob prefix to use when downloading blobs from an Azure Storage container. Only the blobs whose names begin 
         /// with the specified prefix will be downloaded.</param>
+        /// <param name='identityReference'>The reference to the user assigned identity to use to access Azure Blob Storage specified by storageContainerUrl 
+        /// or httpUrl</param>
         internal ResourceFile(
             string httpUrl = default(string),
             string fileMode = default(string),
             string filePath = default(string),
             string storageContainerUrl = default(string),
             string autoStorageContainerName = default(string),
-            string blobPrefix = default(string))
+            string blobPrefix = default(string),
+            ComputeNodeIdentityReference identityReference = default(ComputeNodeIdentityReference))
         {
             this.HttpUrl = httpUrl;
             this.FileMode = fileMode;
@@ -47,6 +50,7 @@ namespace Microsoft.Azure.Batch
             this.StorageContainerUrl = storageContainerUrl;
             this.AutoStorageContainerName = autoStorageContainerName;
             this.BlobPrefix = blobPrefix;
+            this.IdentityReference = identityReference;
         }
 
         internal ResourceFile(Models.ResourceFile protocolObject)
@@ -56,6 +60,7 @@ namespace Microsoft.Azure.Batch
             this.FileMode = protocolObject.FileMode;
             this.FilePath = protocolObject.FilePath;
             this.HttpUrl = protocolObject.HttpUrl;
+            this.IdentityReference = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.IdentityReference, o => new ComputeNodeIdentityReference(o).Freeze());
             this.StorageContainerUrl = protocolObject.StorageContainerUrl;
         }
 
@@ -114,6 +119,12 @@ namespace Microsoft.Azure.Batch
         public string HttpUrl { get; }
 
         /// <summary>
+        /// Gets the reference to the user assigned identity to use to access Azure Blob Storage specified by storageContainerUrl 
+        /// or httpUrl
+        /// </summary>
+        public ComputeNodeIdentityReference IdentityReference { get; }
+
+        /// <summary>
         /// Gets the URL of the blob container within Azure Blob Storage.
         /// </summary>
         /// <remarks>
@@ -160,6 +171,7 @@ namespace Microsoft.Azure.Batch
                 FileMode = this.FileMode,
                 FilePath = this.FilePath,
                 HttpUrl = this.HttpUrl,
+                IdentityReference = UtilitiesInternal.CreateObjectWithNullCheck(this.IdentityReference, (o) => o.GetTransportObject()),
                 StorageContainerUrl = this.StorageContainerUrl,
             };
 

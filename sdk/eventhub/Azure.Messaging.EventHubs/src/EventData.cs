@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Text;
@@ -17,11 +16,10 @@ using Azure.Messaging.EventHubs.Producer;
 namespace Azure.Messaging.EventHubs
 {
     /// <summary>
-    ///   A set of data encapsulating an event and the associated metadata for
-    ///   use with Event Hubs operations.
+    ///   An Event Hubs event, encapsulating a set of data and its associated metadata.
     /// </summary>
     ///
-    public class EventData
+    public class EventData : MessageWithMetadata
     {
         /// <summary>The AMQP representation of the event, allowing access to additional protocol data elements not used directly by the Event Hubs client library.</summary>
         private readonly AmqpAnnotatedMessage _amqpMessage;
@@ -36,14 +34,19 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <remarks>
         ///   If the means for deserializing the raw data is not apparent to consumers, a
-        ///   common technique is to make use of <see cref="EventData.Properties" /> to associate serialization hints
-        ///   as an aid to consumers who wish to deserialize the binary data.
+        ///   common technique is to set the <see cref="EventData.ContentType" /> or make use of
+        ///   the <see cref="EventData.Properties" /> to associate serialization hints to aid consumers
+        ///   who wish to deserialize the binary data.
         /// </remarks>
         ///
         /// <seealso cref="BinaryData" />
         /// <seealso cref="EventData.Properties" />
         ///
-        public BinaryData EventBody => _amqpMessage.GetEventBody();
+        public BinaryData EventBody
+        {
+            get => _amqpMessage.GetEventBody();
+            set => _amqpMessage.Body = AmqpMessageBody.FromData(MessageBody.FromReadOnlyMemorySegment(value.ToMemory()));
+        }
 
         /// <summary>
         ///   A MIME type describing the data contained in the <see cref="EventBody" />,
@@ -59,13 +62,16 @@ namespace Azure.Messaging.EventHubs
         /// </value>
         ///
         /// <remarks>
-        ///   The <see cref="ContentType" /> is intended to allow coordination between event
-        ///   producers and consumers.  It has no meaning to the Event Hubs service.
+        ///   The <see cref="ContentType" /> is managed by the application and is intended to
+        ///   allow coordination between event producers and consumers.
+        ///
+        ///   Event Hubs does not read, generate, or populate this value.  It does not influence
+        ///   how Event Hubs stores or manages the event.
         /// </remarks>
         ///
         /// <seealso href="https://datatracker.ietf.org/doc/html/rfc2046">RFC2046 (MIME Types)</seealso>
         ///
-        public string ContentType
+        public override string ContentType
         {
             get
             {
@@ -91,18 +97,43 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Hidden property that shadows the <see cref="EventBody"/> property. This is added
+        ///   in order to inherit from <see cref="MessageWithMetadata"/>.
+        /// </summary>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override BinaryData Data
+        {
+            get => EventBody;
+            set => EventBody = value;
+        }
+
+        /// <summary>
+        ///   Hidden property that indicates that the <see cref="EventData"/> is not read-only. This is part of
+        ///   the <see cref="MessageWithMetadata"/> abstraction.
+        /// </summary>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool IsReadOnly => false;
+
+        /// <summary>
         ///   An application-defined value that uniquely identifies the event.  The identifier is
         ///   a free-form value and can reflect a GUID or an identifier derived from the application
         ///   context.
         /// </summary>
         ///
+        /// <value>
+        ///   The application identifier assigned to the event.
+        /// </value>
+        ///
         /// <remarks>
         ///   The <see cref="MessageId" /> is intended to allow coordination between event
-        ///   producers and consumers.  It has no meaning to the Event Hubs service, and does
-        ///   not influence how Event Hubs identifies the event.
+        ///   producers and consumers in applications.
+        ///
+        ///   Event Hubs does not read, generate, or populate this value.  It does not influence
+        ///   how Event Hubs identifies the event.
         /// </remarks>
         ///
-
         public string MessageId
         {
             get
@@ -136,10 +167,12 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <remarks>
         ///   The <see cref="CorrelationId" /> is intended to enable tracing of data within an application,
-        ///   such as an event's path from producer to consumer.  It has no meaning to the Event Hubs service.
+        ///   such as an event's path from producer to consumer.
+        ///
+        ///   Event Hubs does not read, generate, or populate this value.  It does not influence Event Hubs
+        ///   telemetry, distributed tracing, or logging.
         /// </remarks>
         ///
-
         public string CorrelationId
         {
             get
@@ -166,13 +199,14 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   The set of free-form event properties which may be used for passing metadata associated with the event body
-        ///   during Event Hubs operations.
+        ///   The set of free-form properties which may be used for associating metadata with the event that
+        ///   is meaningful within the application context.
         /// </summary>
         ///
         /// <remarks>
-        ///   A common use case for <see cref="EventData.Properties" /> is to associate serialization hints for the <see cref="EventData.EventBody" />
-        ///   as an aid to consumers who wish to deserialize the binary data.
+        ///   A common use case for <see cref="EventData.Properties" /> is to associate serialization hints
+        ///   for the <see cref="EventData.EventBody" /> as an aid to consumers who wish to deserialize the binary data
+        ///   when the <see cref="ContentType" /> alone does not offer sufficient context.
         /// </remarks>
         ///
         /// <example>
@@ -189,39 +223,21 @@ namespace Azure.Messaging.EventHubs
         ///   event or associated Event Hubs operation.
         /// </summary>
         ///
-        /// <remarks>
-        ///   These properties are only populated for events received from the Event Hubs service.  The set is otherwise
-        ///   empty.
-        /// </remarks>
-        ///
-        public IReadOnlyDictionary<string, object> SystemProperties => _systemProperties ??= new AmqpSystemProperties(_amqpMessage);
-
-        /// <summary>
-        ///   The publishing sequence number assigned to the event at the time it was successfully published.
-        /// </summary>
-        ///
         /// <value>
-        ///   The sequence number that was assigned during publishing, if the event was successfully
-        ///   published by a sequence-aware producer.  If the producer was not configured to apply
-        ///   sequence numbering or if the event has not yet been successfully published, this member
-        ///   will be <c>null</c>.
+        ///   These properties are read-only and will only be populated for events that have been read from Event Hubs.
+        ///   The default value when not populated is an empty set.
         /// </value>
         ///
-        /// <remarks>
-        ///   The published sequence number is only populated and relevant when certain features
-        ///   of the producer are enabled.  For example, it is used by idempotent publishing.
-        /// </remarks>
-        ///
-        internal int? PublishedSequenceNumber { get; private set; }
+        public IReadOnlyDictionary<string, object> SystemProperties => _systemProperties ??= new AmqpSystemProperties(_amqpMessage);
 
         /// <summary>
         ///   The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.
         /// </summary>
         ///
-        /// <remarks>
-        ///   This property is only populated for events received from the Event Hubs service. If this
-        ///   EventData was not received from the Event Hubs service, the value is <see cref="long.MinValue"/>.
-        /// </remarks>
+        /// <value>
+        ///   This value is read-only and will only be populated for events that have been read from Event Hubs. The default value
+        ///   when not populated is <see cref="long.MinValue"/>.
+        /// </value>
         ///
         public long SequenceNumber => _amqpMessage.GetSequenceNumber(long.MinValue);
 
@@ -229,10 +245,10 @@ namespace Azure.Messaging.EventHubs
         ///   The offset of the event when it was received from the associated Event Hub partition.
         /// </summary>
         ///
-        /// <remarks>
-        ///   This property is only populated for events received from the Event Hubs service. If this
-        ///   EventData was not received from the Event Hubs service, the value is <see cref="long.MinValue"/>.
-        /// </remarks>
+        /// <value>
+        ///   This value is read-only and will only be populated for events that have been read from Event Hubs. The default value
+        ///   when not populated is <see cref="long.MinValue"/>.
+        /// </value>
         ///
         public long Offset => _amqpMessage.GetOffset(long.MinValue);
 
@@ -240,10 +256,10 @@ namespace Azure.Messaging.EventHubs
         ///   The date and time, in UTC, of when the event was enqueued in the Event Hub partition.
         /// </summary>
         ///
-        /// <remarks>
-        ///   This property is only populated for events received from the Event Hubs service. If this
-        ///   EventData was not received from the Event Hubs service, the value <c>default(DateTimeOffset)</c>.
-        /// </remarks>
+        /// <value>
+        ///   This value is read-only and will only be populated for events that have been read from Event Hubs. The default value
+        ///   when not populated is <c>default(DateTimeOffset)</c>.
+        /// </value>
         ///
         public DateTimeOffset EnqueuedTime => _amqpMessage.GetEnqueuedTime();
 
@@ -251,8 +267,15 @@ namespace Azure.Messaging.EventHubs
         ///   The partition hashing key applied to the batch that the associated <see cref="EventData"/>, was published with.
         /// </summary>
         ///
+        /// <value>
+        ///   This value is read-only and will only be populated for events that have been read from Event Hubs. The default value
+        ///   when not populated is <c>null</c>.
+        /// </value>
+        ///
         /// <remarks>
-        ///   This property is only populated for events received from the Event Hubs service.
+        ///   To specify a partition key when publishing an event, specify your key in the <see cref="SendEventOptions" /> and
+        ///   use the <see cref="EventHubProducerClient.SendAsync(IEnumerable{EventData}, SendEventOptions, System.Threading.CancellationToken)"/>
+        ///   overload.
         /// </remarks>
         ///
         public string PartitionKey => _amqpMessage.GetPartitionKey();
@@ -299,10 +322,11 @@ namespace Azure.Messaging.EventHubs
         ///   event was received.
         /// </summary>
         ///
-        /// <remarks>
-        ///   This property is only populated for events received using an reader specifying
-        ///   <see cref="ReadEventOptions.TrackLastEnqueuedEventProperties" /> as enabled.
-        /// </remarks>
+        /// <value>
+        ///   This value is read-only and will only be populated for events that have been read from Event Hubs by a consumer
+        ///   specifying <see cref="ReadEventOptions.TrackLastEnqueuedEventProperties" /> as enabled.  The default value when not
+        ///   populated is <c>null</c>.
+        /// </value>
         ///
         internal long? LastPartitionSequenceNumber => _amqpMessage.GetLastPartitionSequenceNumber();
 
@@ -311,10 +335,11 @@ namespace Azure.Messaging.EventHubs
         ///   received.
         /// </summary>
         ///
-        /// <remarks>
-        ///   This property is only populated for events received using an reader specifying
-        ///   <see cref="ReadEventOptions.TrackLastEnqueuedEventProperties" /> as enabled.
-        /// </remarks>
+        /// <value>
+        ///   This value is read-only and will only be populated for events that have been read from Event Hubs by a consumer
+        ///   specifying <see cref="ReadEventOptions.TrackLastEnqueuedEventProperties" /> as enabled.  The default value when not
+        ///   populated is <c>null</c>.
+        /// </value>
         ///
         internal long? LastPartitionOffset => _amqpMessage.GetLastPartitionOffset();
 
@@ -323,10 +348,11 @@ namespace Azure.Messaging.EventHubs
         ///   which this event was received.
         /// </summary>
         ///
-        /// <remarks>
-        ///   This property is only populated for events received using an reader specifying
-        ///   <see cref="ReadEventOptions.TrackLastEnqueuedEventProperties" /> as enabled.
-        /// </remarks>
+        /// <value>
+        ///   This value is read-only and will only be populated for events that have been read from Event Hubs by a consumer
+        ///   specifying <see cref="ReadEventOptions.TrackLastEnqueuedEventProperties" /> as enabled.  The default value when not
+        ///   populated is <c>null</c>.
+        /// </value>
         ///
         internal DateTimeOffset? LastPartitionEnqueuedTime => _amqpMessage.GetLastPartitionEnqueuedTime();
 
@@ -335,25 +361,47 @@ namespace Azure.Messaging.EventHubs
         ///   from the Event Hubs service.
         /// </summary>
         ///
-        /// <remarks>
-        ///   This property is only populated for events received using an reader specifying
-        ///   <see cref="ReadEventOptions.TrackLastEnqueuedEventProperties" /> as enabled.
-        /// </remarks>
+        /// <value>
+        ///   This value is read-only and will only be populated for events that have been read from Event Hubs by a consumer
+        ///   specifying <see cref="ReadEventOptions.TrackLastEnqueuedEventProperties" /> as enabled.  The default value when not
+        ///   populated is <c>null</c>.
+        /// </value>
         ///
         internal DateTimeOffset? LastPartitionPropertiesRetrievalTime => _amqpMessage.GetLastPartitionPropertiesRetrievalTime();
+
+        /// <summary>
+        ///   The publishing-specific sequence number assigned to the event at the time it was successfully published.
+        /// </summary>
+        ///
+        /// <value>
+        ///   The sequence number that was assigned during publishing, if the event was successfully
+        ///   published.  If the event has not been published, this member will be <c>null</c>.
+        ///
+        ///   This sequence number is not the same as the <see cref="SequenceNumber" />, which is assigned
+        ///   by Event Hubs to represent the event's place in a partition; the published sequence number
+        ///   is informational and can only be used to verify that the event was published.  It cannot be
+        ///   used to specify a position to start reading from for consumers.
+        /// </value>
+        ///
+        /// <remarks>
+        ///   The publishing sequence number is only populated and relevant when idempotent retries
+        ///   are enabled for the producer.
+        /// </remarks>
+        ///
+        internal int? PublishedSequenceNumber { get; private set; }
 
         /// <summary>
         ///   The publishing sequence number assigned to the event as part of a publishing operation.
         /// </summary>
         ///
         /// <value>
-        ///   This member is only populated while a publishing operation is taking place; once the
+        ///   This member tracks active state for a producer during a publishing operation; once the
         ///   operation has completed, successfully or not, the value is cleared.
         /// </value>
         ///
         /// <remarks>
-        ///   The published sequence number is only populated and relevant when certain features
-        ///   of the producer are enabled.  For example, it is used by idempotent publishing.
+        ///   The publishing sequence number is only populated and relevant when idempotent retries
+        ///   are enabled for the producer.
         /// </remarks>
         ///
         internal int? PendingPublishSequenceNumber { get; set; }
@@ -363,13 +411,13 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <value>
-        ///   This member is only populated while a publishing operation is taking place; once the
+        ///   This member tracks active state for a producer during a publishing operation; once the
         ///   operation has completed, successfully or not, the value is cleared.
         /// </value>
         ///
         /// <remarks>
-        ///   The producer group identifier is only populated and relevant when certain features
-        ///   of the producer are enabled.  For example, it is used by idempotent publishing.
+        ///   The publishing sequence number is only populated and relevant when idempotent retries
+        ///   are enabled for the producer.
         /// </remarks>
         ///
         internal long? PendingProducerGroupId { get; set; }
@@ -379,13 +427,13 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <value>
-        ///   This member is only populated while a publishing operation is taking place; once the
+        ///   This member tracks active state for a producer during a publishing operation; once the
         ///   operation has completed, successfully or not, the value is cleared.
         /// </value>
         ///
         /// <remarks>
-        ///   The producer group identifier is only populated and relevant when certain features
-        ///   of the producer are enabled.  For example, it is used by idempotent publishing.
+        ///   The publishing sequence number is only populated and relevant when idempotent retries
+        ///   are enabled for the producer.
         /// </remarks>
         ///
         internal short? PendingProducerOwnerLevel { get; set; }
@@ -397,6 +445,14 @@ namespace Azure.Messaging.EventHubs
         /// <param name="eventBody">The raw data as binary to use as the body of the event.</param>
         ///
         public EventData(BinaryData eventBody) : this(eventBody, lastPartitionSequenceNumber: null)
+        {
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventData"/> class.
+        /// </summary>
+        ///
+        public EventData() : this(new BinaryData(Array.Empty<byte>()), lastPartitionSequenceNumber: null)
         {
         }
 

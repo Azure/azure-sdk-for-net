@@ -8,8 +8,8 @@ To create a new `DocumentTranslationClient` to run a translation operation for d
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
 ```C# Snippet:CreateDocumentTranslationClient
-string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
+string endpoint = "<Document Translator Resource Endpoint>";
+string apiKey = "<Document Translator Resource API Key>";
 var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
@@ -27,11 +27,11 @@ DocumentTranslationOperation operation = await client.StartTranslationAsync(inpu
 
 TimeSpan pollingInterval = new(1000);
 
-await foreach (DocumentStatus document in operation.GetAllDocumentStatusesAsync())
+await foreach (DocumentStatusResult document in operation.GetDocumentStatusesAsync())
 {
     Console.WriteLine($"Polling Status for document{document.SourceDocumentUri}");
 
-    Response<DocumentStatus> responseDocumentStatus = await operation.GetDocumentStatusAsync(document.Id);
+    Response<DocumentStatusResult> responseDocumentStatus = await operation.GetDocumentStatusAsync(document.Id);
 
     while (responseDocumentStatus.Value.Status != DocumentTranslationStatus.Failed &&
               responseDocumentStatus.Value.Status != DocumentTranslationStatus.Succeeded)
@@ -48,13 +48,13 @@ await foreach (DocumentStatus document in operation.GetAllDocumentStatusesAsync(
     if (responseDocumentStatus.Value.Status == DocumentTranslationStatus.Succeeded)
     {
         Console.WriteLine($"  Translated Document Uri: {document.TranslatedDocumentUri}");
-        Console.WriteLine($"  Translated to language: {document.TranslatedTo}.");
+        Console.WriteLine($"  Translated to language code: {document.TranslatedToLanguageCode}.");
         Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
     }
     else
     {
         Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
-        Console.WriteLine($"  Error Code: {document.Error.ErrorCode}");
+        Console.WriteLine($"  Error Code: {document.Error.Code}");
         Console.WriteLine($"  Message: {document.Error.Message}");
     }
 }

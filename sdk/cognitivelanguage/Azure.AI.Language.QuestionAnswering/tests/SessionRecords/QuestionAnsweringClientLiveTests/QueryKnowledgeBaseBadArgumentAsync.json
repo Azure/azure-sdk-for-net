@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/:query-knowledgebases?projectName=190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c\u0026deploymentName=test\u0026api-version=2021-05-01-preview",
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/:query-knowledgebases?projectName=190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c\u0026deploymentName=test\u0026api-version=2021-10-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "16",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-69079911ebb4cf48b6ba75b39aede2cd-268da8869af2f946-00",
+        "traceparent": "00-3ceb6653a5abd545a0216dfaec830f26-5d3733d82487d842-00",
         "User-Agent": [
-          "azsdk-net-AI.Language.QuestionAnswering/1.0.0-alpha.20210630.1",
-          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
+          "azsdk-net-AI.Language.QuestionAnswering/1.0.0-alpha.20211028.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
         ],
         "x-ms-client-request-id": "711fbbca6da7766bd6c8f2076186d32f",
         "x-ms-return-client-request-id": "true"
@@ -21,18 +21,18 @@
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "de5e1f0c-277f-4cf4-b8b9-96ff3c448905",
-        "Content-Length": "261",
+        "apim-request-id": "ca058bb0-421f-4213-a6c6-0a5b79b1cbe1",
+        "Content-Length": "265",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 30 Jun 2021 18:12:27 GMT",
+        "Date": "Thu, 28 Oct 2021 21:15:41 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "6"
+        "x-envoy-upstream-service-time": "4"
       },
       "ResponseBody": [
         "{\n",
         "  \u0022error\u0022: {\n",
-        "    \u0022code\u0022: \u0022BadArgument\u0022,\n",
+        "    \u0022code\u0022: \u0022InvalidArgument\u0022,\n",
         "    \u0022message\u0022: \u0022Invalid input. See details.\u0022,\n",
         "    \u0022details\u0022: [\n",
         "      {\n",
@@ -47,9 +47,9 @@
     }
   ],
   "Variables": {
-    "QNAMAKER_API_KEY": "Sanitized",
-    "QNAMAKER_PROJECT": "190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c",
-    "QNAMAKER_URI": "https://wuppe.api.cognitive.microsoft.com",
+    "QUESTIONANSWERING_ENDPOINT": "https://wuppe.api.cognitive.microsoft.com",
+    "QUESTIONANSWERING_KEY": "Sanitized",
+    "QUESTIONANSWERING_PROJECT": "190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c",
     "RandomSeed": "748977788"
   }
 }

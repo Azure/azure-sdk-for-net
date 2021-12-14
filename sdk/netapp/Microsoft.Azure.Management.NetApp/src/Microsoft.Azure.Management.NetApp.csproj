@@ -9,20 +9,27 @@
     <Description>Provides NetApp storage management capabilities for Microsoft Azure.</Description>
     <AssemblyTitle>Microsoft Azure NetApp Management</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.NetApp</AssemblyName>
-    <Version>1.13.0</Version>
+    <Version>1.15.0</Version>
     <PackageTags>MicrosoftAzure Management;NetApp</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        Version 1.13.0 relates to NetApp Files (ANF) 2021-04-01.
-          - Added Administrators to ActiveDirectory
-          - Added LastTransferSize, LastTransferType,TotalTransferBytes to BackupStatus
-          - Added GetVolumeRestoreStatus, RestoreStatus to get status of restore operations
-          - Added CoolAccess to CapacityPool and Volume
-          - Added CoolnessPeriod and UnixPermissions to Volume
-          - Added ChownMode to ExportPolicyRule          
-          - CheckFilePathAvailability has a new signature to allow subnetid parameter that should be used over old version that is still supported
-                    
-          
+        Version 1.15.0 relates to NetApp Files (ANF) 2021-08-01.          
+          - Added EncryptDCConnections to ActiveDirectory
+          - Added LogSpecifications to ServiceSpecification
+          - Added SubscriptionQuotaItemName to SubscriptionQuotaItem
+          - Added Support for VolumeGroups: VolumeGroupsOperations, VolumeGroup VolumeGroupDetails, VolumeGroupMetaData and VolumeGroupVolumeProperties					
+          - Added VolumeGroupName to Volume
+          - Added CapacityPoolResourceId to Volume
+          - Added ProximityPlacementGroup to Volume
+          - Added T2Network to Volume
+          - Added VolumeSpecName to Volume
+          - Added PlacementRules to Volume
+          					
+        Breakning changes:
+          - Removed extra Name1 property from BackupPolicy, BackupPolicyPatch and BackupPolicyDetails
+          - Fixed type of Value in SnapshotPolicyVolumeList changed to IList<Volume> rather than IList<object>
+          - Removed SubscriptionQuotaItemName from SubscriptionQuotaItem                              
+            
         Azure NetApp Files:
           Provides the capability to create multiple file system volumes through Microsoft Azure.
           Volumes reside within an account pool, a container representing the total data allocation available. A typical usage might be:

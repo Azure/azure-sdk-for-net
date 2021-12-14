@@ -23,9 +23,10 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// If <c>true</c>, enables the credential to fetch tokens for any tenants the user or multi-tenant application registration is a member of.
-        /// Otherwise the credential will only acquire tokens from the tenant configured when the credential was constructed.
+        /// Gets or sets value indicating if ETW logging that contains PII content should be logged.
+        /// Setting this property will not disable redaction of <see cref="Request"/> Content. To enable logging of sensitive <see cref="Request.Content"/>
+        /// the <see cref="DiagnosticsOptions.IsLoggingContentEnabled"/> property must be set to <c>true</c>.
         /// </summary>
-        public bool AllowMultiTenantAuthentication { get; set; }
+        internal bool IsLoggingPIIEnabled { get; set; }
     }
 }

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -300,14 +301,9 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="displayName"> The display name of the location. </param>
         /// <param name="regionalDisplayName"> The display name of the location and its region. </param>
         internal Location(string name, string displayName, string regionalDisplayName)
-            :this(name, displayName, regionalDisplayName, GetCanonicalNameFromDisplayName(displayName))
+            : this(name, displayName, regionalDisplayName, GetCanonicalNameFromDisplayName(displayName))
         {
         }
-
-        /// <summary>
-        /// Gets default Location object: West US.
-        /// </summary>
-        public static ref readonly Location Default => ref WestUS;
 
         /// <summary>
         /// Gets the name of a location object.
@@ -448,6 +444,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(this, obj))
@@ -467,6 +464,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
         {
             return Name.GetHashCode();

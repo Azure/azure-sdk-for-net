@@ -3,7 +3,12 @@
   <!-- Setup project type properties -->
   <PropertyGroup>
     <IsMgmtLibrary Condition="'$(IsMgmtLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.ResourceManager'))">true</IsMgmtLibrary>
+    <IsMgmtSubLibrary Condition="'$(IsMgmtSubLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.ResourceManager.'))">true</IsMgmtSubLibrary>
+
     <MgmtAutorestVersion>3.0.0-beta.20210504.1</MgmtAutorestVersion>
+
+    <!-- Enable documentation for all projects unless explicitly disabled. -->
+    <DocumentationFile>$(IntermediateOutputPath)$(TargetFramework)\$(MSBuildProjectName).xml</DocumentationFile>
 
     <!-- Client in this context is any library that is following the new Azure SDK guidelines -->
     <IsClientLibrary Condition="'$(IsClientLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.'))">true</IsClientLibrary>
@@ -19,12 +24,16 @@
 
   <!-- Setup default project properties -->
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>9</LangVersion>
     <!--
       Disable NU5105 NuGet Pack warning that the version is SemVer 2.0.
       SemVer 2.0 is supported by NuGet since 3.0.0 (July 2015) in some capacity, and fully since 3.5.0 (October 2016).
     -->
     <NoWarn>$(NoWarn);NU5105</NoWarn>
+    <!-- 
+      https://github.com/dotnet/roslyn-analyzers/issues/5628
+    -->
+    <NoWarn>$(NoWarn);CA1812</NoWarn>
     <!--
       Disable some FxCop rules
      -->
@@ -47,6 +56,13 @@
       CA1031; <!-- Don't catch generic exceptions -->
       CA2000; <!-- Call dispose on IDisposable objects -->
       CA2012; <!-- ValueTask should only be awaited once - conflicts with EnsureCompleted check -->
+    </NoWarn>
+    <!--
+      Disable some MSBuild warnings
+    -->
+    <NoWarn>
+      $(NoWarn);
+      MSB3245; <!-- Do not warn if a package reference is unavailable -->
     </NoWarn>
 
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -84,12 +100,6 @@
     </NoWarn>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(InheritDocEnabled)' != 'false' and '$(TargetFramework)' == 'netstandard2.0'">
-    <NoWarn>
-      $(NoWarn);IDT001<!-- InheritDoc related to malformed XML in netstandard.xml -->
-    </NoWarn>
-  </PropertyGroup>
-
   <!-- CodeAnalysis RuleSet -->
   <PropertyGroup Condition="'$(IsClientLibrary)' == 'true'">
     <CodeAnalysisRuleSet>$(RepoEngPath)\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
@@ -105,23 +115,15 @@
     <RequiredTargetFrameworks Condition="'$(SupportsNetStandard20)' == 'true'">netstandard2.0</RequiredTargetFrameworks>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsSamplesProject)' == 'true'">
+  <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsSamplesProject)' == 'true' or '$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true'">
     <IsPackable>false</IsPackable>
-    <RequiredTargetFrameworks>netcoreapp3.1;net5.0</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks>netcoreapp3.1;net6.0</RequiredTargetFrameworks>
     <!-- Also test net461 on Windows; it's listed first so that coverage reports are for netcoreapp3.1 (the "primary"). -->
-    <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">net461;netcoreapp3.1;net5.0</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">net461;netcoreapp3.1;net6.0</RequiredTargetFrameworks>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true'">
-    <IsPackable>false</IsPackable>
-    <RequiredTargetFrameworks>netcoreapp3.1;net5.0</RequiredTargetFrameworks>
-    <!-- Also test net461 on Windows; it's listed first so that coverage reports are for netcoreapp3.1 (the "primary"). -->
-    <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">net461;netcoreapp3.1;net5.0</RequiredTargetFrameworks>
-  </PropertyGroup>
-
-  <ItemGroup Condition="'$(IsMgmtLibrary)' == 'true'">
-    <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.Text.Json" />
+  <ItemGroup Condition="'$(IsMgmtSubLibrary)' == 'true' and !$(MSBuildProjectName.Equals('Azure.ResourceManager.Tests'))">
+    <ProjectReference Include="$(MSBuildThisFileDirectory)/../sdk/resourcemanager/Azure.ResourceManager/src/Azure.ResourceManager.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -140,8 +142,7 @@
     <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
     <Authors>Microsoft</Authors>
     <Product>Azure .NET SDK</Product>
-    <PackageIcon>pkgicon.png</PackageIcon>
-    <PackageIconPath>$(RepoEngPath)/images/$(PackageIcon)</PackageIconPath>
+    <PackageIconPath>$(RepoEngPath)/images/pkgicon.png</PackageIconPath>
     <RepositoryUrl>https://github.com/Azure/azure-sdk-for-net</RepositoryUrl>
     <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
@@ -164,13 +165,53 @@
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
+  <!-- Disable documentation for projects that need fixes before this can be enabled. -->
+  <PropertyGroup Condition="
+    $(MSBuildProjectName.Equals('Microsoft.Azure.ApplicationInsights.Query')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.AnomalyDetector')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Language.SpellCheck')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Language.TextAnalytics')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Personalizer')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingAutoSuggest')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingCustomImageSearch')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingCustomSearch')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingEntitySearch')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingImageSearch')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingLocalSearch')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingNewsSearch')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingVideoSearch')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingVisualSearch')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingWebSearch')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Vision.ComputerVision')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Vision.ContentModerator')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Vision.Face')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Vision.FormRecognizer')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.ContainerRegistry')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.EventGrid')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.HDInsight.Job')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.Graph.RBAC')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.KeyVault')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.KeyVault.Core')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.KeyVault.Cryptography')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.KeyVault.Extensions')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.KeyVault.WebKey')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.OperationalInsights')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.Synapse'))">
+    <DocumentationFile></DocumentationFile>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(IsClientLibrary)' == 'true'">
+    <PackageIconPath>$(RepoEngPath)/images/azureicon.png</PackageIconPath>
     <!-- Use a full key for the new client libraries and disable delay signing -->
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)AzureSDKClient.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
     <PublicSign>false</PublicSign>
     <ImportDefaultReferences>false</ImportDefaultReferences>
-    <DocumentationFile>$(IntermediateOutputPath)$(TargetFramework)\$(MSBuildProjectName).xml</DocumentationFile>
 
     <!-- The set of tags that should be added to the packages -->
     <PackageCommonTags>windowsazureofficial;azureofficial</PackageCommonTags>

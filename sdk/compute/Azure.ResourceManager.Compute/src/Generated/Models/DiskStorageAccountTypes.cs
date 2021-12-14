@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="DiskStorageAccountTypes"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskStorageAccountTypes"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DiskStorageAccountTypes(string value)
         {
@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.Compute.Models
         private const string PremiumLRSValue = "Premium_LRS";
         private const string StandardSSDLRSValue = "StandardSSD_LRS";
         private const string UltraSSDLRSValue = "UltraSSD_LRS";
+        private const string PremiumZRSValue = "Premium_ZRS";
+        private const string StandardSSDZRSValue = "StandardSSD_ZRS";
 
         /// <summary> Standard HDD locally redundant storage. Best for backup, non-critical, and infrequent access. </summary>
         public static DiskStorageAccountTypes StandardLRS { get; } = new DiskStorageAccountTypes(StandardLRSValue);
@@ -35,6 +37,10 @@ namespace Azure.ResourceManager.Compute.Models
         public static DiskStorageAccountTypes StandardSSDLRS { get; } = new DiskStorageAccountTypes(StandardSSDLRSValue);
         /// <summary> Ultra SSD locally redundant storage. Best for IO-intensive workloads such as SAP HANA, top tier databases (for example, SQL, Oracle), and other transaction-heavy workloads. </summary>
         public static DiskStorageAccountTypes UltraSSDLRS { get; } = new DiskStorageAccountTypes(UltraSSDLRSValue);
+        /// <summary> Premium SSD zone redundant storage. Best for the production workloads that need storage resiliency against zone failures. </summary>
+        public static DiskStorageAccountTypes PremiumZRS { get; } = new DiskStorageAccountTypes(PremiumZRSValue);
+        /// <summary> Standard SSD zone redundant storage. Best for web servers, lightly used enterprise applications and dev/test that need storage resiliency against zone failures. </summary>
+        public static DiskStorageAccountTypes StandardSSDZRS { get; } = new DiskStorageAccountTypes(StandardSSDZRSValue);
         /// <summary> Determines if two <see cref="DiskStorageAccountTypes"/> values are the same. </summary>
         public static bool operator ==(DiskStorageAccountTypes left, DiskStorageAccountTypes right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskStorageAccountTypes"/> values are not the same. </summary>

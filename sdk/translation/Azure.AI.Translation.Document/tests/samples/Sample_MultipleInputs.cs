@@ -10,28 +10,41 @@ using NUnit.Framework;
 
 namespace Azure.AI.Translation.Document.Samples
 {
-    [LiveOnly]
-    public partial class DocumentTranslationSamples : SamplesBase<DocumentTranslationTestEnvironment>
+    public partial class DocumentTranslationSamples : DocumentTranslationLiveTestBase
     {
         [Test]
-        [Ignore("Samples not working yet")]
+        [SyncOnly]
         public void MultipleInputs()
         {
+#if SNIPPET
+            string endpoint = "<Document Translator Resource Endpoint>";
+            string apiKey = "<Document Translator Resource API Key>";
+#else
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
+#endif
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            Uri source1SasUriUri = new Uri("<source1 SAS URI>");
+#if SNIPPET
+            Uri source1SasUri = new Uri("<source1 SAS URI>");
             Uri source2SasUri = new Uri("<source2 SAS URI>");
             Uri frenchTargetSasUri = new Uri("<french target SAS URI>");
             Uri arabicTargetSasUri = new Uri("<arabic target SAS URI>");
             Uri spanishTargetSasUri = new Uri("<spanish target SAS URI>");
             Uri frenchGlossarySasUri = new Uri("<french glossary SAS URI>");
-
+#else
+            Uri source1SasUri = CreateSourceContainer(oneTestDocuments);
+            Uri source2SasUri = CreateSourceContainer(new List<TestDocument> { new TestDocument("Document2.txt", "Second english test document") });
+            Uri frenchTargetSasUri = CreateTargetContainer();
+            Uri arabicTargetSasUri = CreateTargetContainer();
+            Uri spanishTargetSasUri = CreateTargetContainer();
+            var glossary = new TestDocument("glossary.tsv", "test\tglossarytest");
+            Uri frenchGlossarySasUri = CreateGlossary(glossary);
+#endif
             var glossaryFormat = "TSV";
 
-            var input1 = new DocumentTranslationInput(source1SasUriUri, frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri, glossaryFormat));
+            var input1 = new DocumentTranslationInput(source1SasUri, frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri, glossaryFormat));
             input1.AddTarget(spanishTargetSasUri, "es");
 
             var input2 = new DocumentTranslationInput(source2SasUri, arabicTargetSasUri, "ar");
@@ -74,20 +87,20 @@ namespace Azure.AI.Translation.Document.Samples
                 }
             }
 
-            foreach (DocumentStatus document in operation.GetValues())
+            foreach (DocumentStatusResult document in operation.GetValues())
             {
                 Console.WriteLine($"Document with Id: {document.Id}");
                 Console.WriteLine($"  Status:{document.Status}");
                 if (document.Status == DocumentTranslationStatus.Succeeded)
                 {
                     Console.WriteLine($"  Translated Document Uri: {document.TranslatedDocumentUri}");
-                    Console.WriteLine($"  Translated to language: {document.TranslatedTo}.");
+                    Console.WriteLine($"  Translated to language code: {document.TranslatedToLanguageCode}.");
                     Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
                 }
                 else
                 {
                     Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
-                    Console.WriteLine($"  Error Code: {document.Error.ErrorCode}");
+                    Console.WriteLine($"  Error Code: {document.Error.Code}");
                     Console.WriteLine($"  Message: {document.Error.Message}");
                 }
             }

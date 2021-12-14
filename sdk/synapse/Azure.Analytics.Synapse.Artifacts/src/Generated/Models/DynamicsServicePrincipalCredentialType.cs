@@ -11,11 +11,11 @@ using System.ComponentModel;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The service principal credential type to use in Server-To-Server authentication. &apos;ServicePrincipalKey&apos; for key/secret, &apos;ServicePrincipalCert&apos; for certificate. Type: string (or Expression with resultType string). </summary>
-    public readonly partial struct DynamicsServicePrincipalCredentialType : IEquatable<DynamicsServicePrincipalCredentialType>
+    internal readonly partial struct DynamicsServicePrincipalCredentialType : IEquatable<DynamicsServicePrincipalCredentialType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="DynamicsServicePrincipalCredentialType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicsServicePrincipalCredentialType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DynamicsServicePrincipalCredentialType(string value)
         {

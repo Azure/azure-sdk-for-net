@@ -8,13 +8,14 @@ title: Question Answering
 license-header: MICROSOFT_MIT_NO_VERSION
 
 batch:
-- input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/cf3dfdc605b3c7ae24e6d61a5a127b28614c809e/specification/cognitiveservices/data-plane/Language/preview/2021-05-01-preview/questionanswering.json
+- input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/34a2c0723155d134311419fd997925ce96b85bec/specification/cognitiveservices/data-plane/Language/stable/2021-10-01/questionanswering.json
   clear-output-folder: true
+  model-namespace: false
 
 # TODO: Uncomment when we ship authoring support and remove ./QuestionAnsweringClientOptions.cs.
-# - input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/cf3dfdc605b3c7ae24e6d61a5a127b28614c809e/specification/cognitiveservices/data-plane/Language/preview/2021-05-01-preview/questionanswering-authoring.json
+# - input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/34a2c0723155d134311419fd997925ce96b85bec/specification/cognitiveservices/data-plane/Language/stable/2021-10-01/questionanswering-authoring.json
 #   add-credentials: true
-#   low-level-client: true
+#   data-plane: true
 
 modelerfour:
   lenient-model-deduplication: true

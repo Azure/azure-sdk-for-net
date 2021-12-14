@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.Http;
 using System.Threading;
 using Azure.Core.Pipeline;
 
@@ -13,7 +12,7 @@ namespace Azure.Core
     /// <summary>
     /// Represents a context flowing through the <see cref="HttpPipeline"/>.
     /// </summary>
-    public sealed class HttpMessage: IDisposable
+    public sealed class HttpMessage : IDisposable
     {
         private Dictionary<string, object>? _properties;
 
@@ -68,7 +67,7 @@ namespace Azure.Core
         /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
         /// </summary>
-        public ResponseClassifier ResponseClassifier { get; }
+        public ResponseClassifier ResponseClassifier { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating if response would be buffered as part of the pipeline. Defaults to true.
@@ -80,6 +79,19 @@ namespace Azure.Core
         /// Defaults to <c>null</c>.
         /// </summary>
         public TimeSpan? NetworkTimeout { get; set; }
+
+        internal void AddPolicies(RequestContext? context)
+        {
+            if (context == null || context.Policies == null || context.Policies.Count == 0)
+            {
+                return;
+            }
+
+            Policies ??= new(context.Policies.Count);
+            Policies.AddRange(context.Policies);
+        }
+
+        internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }
 
         /// <summary>
         /// Gets a property that modifies the pipeline behavior. Please refer to individual policies documentation on what properties it supports.
@@ -115,7 +127,7 @@ namespace Azure.Core
             {
                 case ResponseShouldNotBeUsedStream responseContent:
                     return responseContent.Original;
-                case Stream stream :
+                case Stream stream:
                     _response.ContentStream = new ResponseShouldNotBeUsedStream(_response.ContentStream);
                     return stream;
                 default:
@@ -132,7 +144,7 @@ namespace Azure.Core
             _response?.Dispose();
         }
 
-        private class ResponseShouldNotBeUsedStream: Stream
+        private class ResponseShouldNotBeUsedStream : Stream
         {
             public Stream Original { get; }
 

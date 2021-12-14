@@ -8,6 +8,7 @@ using Microsoft.Azure.WebJobs.Description;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Config;
+using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Azure.WebJobs.Logging;
 using Microsoft.Azure.WebJobs.ServiceBus.Bindings;
 using Microsoft.Azure.WebJobs.ServiceBus.Listeners;
@@ -30,6 +31,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Config
         private readonly MessagingProvider _messagingProvider;
         private readonly IConverterManager _converterManager;
         private readonly ServiceBusClientFactory _clientFactory;
+        private readonly ConcurrencyManager _concurrencyManager;
 
         /// <summary>
         /// Creates a new <see cref="ServiceBusExtensionConfigProvider"/> instance.
@@ -41,7 +43,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Config
             INameResolver nameResolver,
             ILoggerFactory loggerFactory,
             IConverterManager converterManager,
-            ServiceBusClientFactory clientFactory)
+            ServiceBusClientFactory clientFactory,
+            ConcurrencyManager concurrencyManager)
         {
             _options = options.Value;
             _messagingProvider = messagingProvider;
@@ -49,6 +52,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Config
             _loggerFactory = loggerFactory ?? NullLoggerFactory.Instance;
             _converterManager = converterManager;
             _clientFactory = clientFactory;
+            _concurrencyManager = concurrencyManager;
         }
 
         /// <summary>
@@ -71,8 +75,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Config
             }
 
             // Set the default exception handler for background exceptions
-            // coming from MessageReceivers.
-            Options.ExceptionHandler = (e) =>
+            // if not already set.
+            Options.ProcessErrorAsync ??= (e) =>
             {
                 LogExceptionReceivedEvent(e, _loggerFactory);
                 return Task.CompletedTask;
@@ -81,10 +85,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Config
             context
                 .AddConverter(new MessageToStringConverter())
                 .AddConverter(new MessageToByteArrayConverter())
+                .AddConverter<ServiceBusReceivedMessage, BinaryData>(message => message.Body)
                 .AddOpenConverter<ServiceBusReceivedMessage, OpenType.Poco>(typeof(MessageToPocoConverter<>), _options.JsonSerializerSettings);
 
             // register our trigger binding provider
-            ServiceBusTriggerAttributeBindingProvider triggerBindingProvider = new ServiceBusTriggerAttributeBindingProvider(_nameResolver, _options, _messagingProvider, _loggerFactory, _converterManager, _clientFactory);
+            ServiceBusTriggerAttributeBindingProvider triggerBindingProvider = new ServiceBusTriggerAttributeBindingProvider(_nameResolver, _options, _messagingProvider, _loggerFactory, _converterManager, _clientFactory, _concurrencyManager);
             context.AddBindingRule<ServiceBusTriggerAttribute>()
                 .BindToTrigger(triggerBindingProvider);
 

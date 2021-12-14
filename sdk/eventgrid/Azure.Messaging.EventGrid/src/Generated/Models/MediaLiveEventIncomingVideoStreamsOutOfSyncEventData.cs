@@ -7,7 +7,7 @@
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Incoming video stream out of synch event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventIncomingVideoStreamsOutOfSync event. </summary>
+    /// <summary> Incoming video stream out of sync event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventIncomingVideoStreamsOutOfSync event. </summary>
     public partial class MediaLiveEventIncomingVideoStreamsOutOfSyncEventData
     {
         /// <summary> Initializes a new instance of MediaLiveEventIncomingVideoStreamsOutOfSyncEventData. </summary>

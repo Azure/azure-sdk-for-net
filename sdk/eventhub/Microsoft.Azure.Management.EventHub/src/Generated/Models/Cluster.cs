@@ -34,12 +34,17 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// <summary>
         /// Initializes a new instance of the Cluster class.
         /// </summary>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="sku">Properties of the cluster SKU.</param>
+        /// <param name="systemData">The system meta data relating to this
+        /// resource.</param>
         /// <param name="createdAt">The UTC time when the Event Hubs Cluster
         /// was created.</param>
         /// <param name="updatedAt">The UTC time when the Event Hubs Cluster
@@ -47,10 +52,11 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// <param name="metricId">The metric ID of the cluster resource.
         /// Provided by the service and not modifiable by the user.</param>
         /// <param name="status">Status of the Cluster resource</param>
-        public Cluster(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ClusterSku sku = default(ClusterSku), string createdAt = default(string), string updatedAt = default(string), string metricId = default(string), string status = default(string))
+        public Cluster(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ClusterSku sku = default(ClusterSku), SystemData systemData = default(SystemData), string createdAt = default(string), string updatedAt = default(string), string metricId = default(string), string status = default(string))
             : base(id, name, type, location, tags)
         {
             Sku = sku;
+            SystemData = systemData;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
             MetricId = metricId;
@@ -68,6 +74,12 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public ClusterSku Sku { get; set; }
+
+        /// <summary>
+        /// Gets the system meta data relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Gets the UTC time when the Event Hubs Cluster was created.

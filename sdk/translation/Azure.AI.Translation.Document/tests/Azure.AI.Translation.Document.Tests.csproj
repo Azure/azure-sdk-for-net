@@ -16,4 +16,8 @@
     <ProjectReference Include="..\src\Azure.AI.Translation.Document.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ExcludeFromProjectReferenceToConversion Include="Azure.Storage.Blobs" />
+  </ItemGroup>
+
 </Project>

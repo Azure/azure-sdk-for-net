@@ -16,7 +16,6 @@ namespace Azure.Data.Tables
         /// library.
         /// </summary>
         private const ServiceVersion Latest = ServiceVersion.V2019_02_02;
-        internal static TableClientOptions Default { get; } = new TableClientOptions();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TableClientOptions"/> class.

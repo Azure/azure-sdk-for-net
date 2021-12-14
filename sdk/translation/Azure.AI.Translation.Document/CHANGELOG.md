@@ -1,17 +1,56 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.7 (Unreleased)
 
 ### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.6 (2021-11-09)
+
+### Breaking Changes
+- Removed types `DocumentTranslationError` and `DocumentTranslationErrorCode`. These affected the classes `DocumentStatusResult` and `TranslationStatusResult`. Errors in both classes are now exposed as `ResponseError`.
+- Renamed method `DocumentStatus` to `DocumentStatusResult` in `DocumentTranslationModelFactory`, which now takes a `BinaryData` type instead of `DocumentTranslationError`.
+- Renamed method `TranslationStatus` to `TranslationStatusResult` in `DocumentTranslationModelFactory`, which now takes a `BinaryData` type instead of `DocumentTranslationError`.
+
+## 1.0.0-beta.5 (2021-09-08)
+
+### Breaking Changes
+- `DocumentFilter.CreatedAfter` and `DocumentFilter.CreatedBefore` are now nullable properties.
+- Renamed method `GetAllTranslationStatuses` to `GetTranslationStatuses`.
+- Renamed method `GetAllDocumentStatuses` to `GetDocumentStatuses`.
+- Renamed type `TranslationFilter` to `GetTranslationStatusesOptions`.
+- Renamed type `DocumentFilter` to `GetDocumentStatusesOptions`.
+- Renamed type `DocumentStatus` to `DocumentStatusResult`.
+- Renamed type `TranslationStatus` to `TranslationStatusResult`.
+- Renamed type `FileFormat` to `DocumentTranslationFileFormat`.
+- Renamed property `TranslatedTo` to `TranslatedToLanguageCode` in `DocumentStatusResult`.
+- Renamed parameter `asc` to `ascending` in `DocumentStatusResult` constructor.
+- Changed spelling of `cancelled`/`cancelling` to `canceled`/`cancelling`. The following changes have been made:
+  - property `DocumentsCancelled` to `DocumentsCanceled` in `DocumentTranslationOperation`
+  - property `DocumentsCancelled` to `DocumentsCanceled` in `TranslationStatusResult`
+  - value `Cancelled` to `Canceled` in `DocumentTranslationOperation`
+  - value `Cancelling` to `Canceling` in `DocumentTranslationOperation`
+  - parameter `Cancelled` to `Canceled` in function `DocumentTranslationModelFactory.TranslationStatus` 
+
+### Bugs Fixed
+- `GetDocumentStasus` and `GetDocumentStatusesAsync` no longer set CreatedAfter and CreatedBefore if the user doesn't set it.
+- In `GetTranslationStatuses`, `GetDocumentStatuses` and their async counterparts; URL parameters for `Ids`, `Statuses`, and `OrderBy` are no longer included in the request URL if the user does not set them.
+
+## 1.0.0-beta.4 (2021-08-10)
+
+### Features Added
+- Added filtering options to methods `GetAllTranslationStatuses`, `GetAllDocumentStatuses` and their async equivalent.
+- Added `DocumentTranslationModelFactory` static class to support mocking model types. 
 
 ### Breaking Changes
 - Properties `Suffix` and `Prefix` are now available under `TranslationSource` instead of in type `DocumentFilter`.
 - Type `DocumentTranslationError` is now a struct.
 - Type `StorageInputType` is now a regular enum instead of an extensible enum.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.3 (2021-07-07)
 ### Breaking changes

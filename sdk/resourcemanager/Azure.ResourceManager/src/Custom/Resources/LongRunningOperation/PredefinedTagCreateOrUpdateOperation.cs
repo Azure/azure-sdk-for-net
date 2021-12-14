@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Resources.Models
     {
         private readonly OperationOrResponseInternals<PredefinedTag> _operation;
 
-        /// <summary> Initializes a new instance of PreDefinedTagCreateOrUpdateOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of PredefinedTagCreateOrUpdateOperation for mocking. </summary>
         protected PredefinedTagCreateOrUpdateOperation()
         {
         }
 
-        internal PredefinedTagCreateOrUpdateOperation(OperationsBase parentOperation, Response<PredefinedTagData> response)
+        internal PredefinedTagCreateOrUpdateOperation(ArmResource parentOperation, Response<PredefinedTagData> response)
         {
             _operation = new OperationOrResponseInternals<PredefinedTag>(Response.FromValue(new PredefinedTag(parentOperation, response.Value), response.GetRawResponse()));
         }
