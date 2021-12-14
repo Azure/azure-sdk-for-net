@@ -13,8 +13,10 @@ namespace Azure.Communication
     /// </summary>
     public class CommunicationTokenRefreshOptions
     {
-        /// <summary>Default time span in minutes before token expiry that causes the 'tokenRefresher' to be called.</summary>
-        internal const int DefaultExpiringOffsetMinutes = 10;
+        /// <summary>Default time span in seconds before token expiry that causes the 'tokenRefresher' to be called.
+        /// The default value is 4.5 minutes to avoid MSAL compatibility issues.
+        /// </summary>
+        internal const int DefaultExpiringOffsetSeconds = 270;
         /// <summary>The initial token.</summary>
         public string InitialToken { get; set; }
         /// <summary>The asynchronous token refresher.</summary>
@@ -25,7 +27,7 @@ namespace Azure.Communication
         }
 
         /// <summary>The time span before token expiry that causes the 'tokenRefresher' to be called if 'refreshProactively' is true.</summary>
-        public TimeSpan RefreshTimeBeforeTokenExpiry { get; set; } = new TimeSpan(0, 0, DefaultExpiringOffsetMinutes, 0);
+        public TimeSpan RefreshIntervalBeforeTokenExpiry { get; set; } = new TimeSpan(0, 0, 0, DefaultExpiringOffsetSeconds);
         /// <summary>Determines whether the token should be proactively renewed prior to its expiry or on demand.</summary>
         internal bool RefreshProactively { get; }
         /// <summary>The callback function that acquires a fresh token from the Communication Identity API, e.g. by calling the CommunicationIdentityClient.</summary>
