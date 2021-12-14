@@ -1,5 +1,11 @@
 # Release History
 
+## 3.0.1 (2021-12-03)
+
+### Bugs Fixed
+
+- Added output binding for byte array to support integration with other languages
+
 ## 3.0.0 (2021-10-21)
 
 ### Features Added
