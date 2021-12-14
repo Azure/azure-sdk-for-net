@@ -110,7 +110,6 @@ namespace Azure.Search.Documents.Tests.Samples
         }
 
         [Test]
-        [IgnoreOnNet5("https://github.com/Azure/azure-sdk-for-net/issues/16963")]
         [LiveOnly]
         public async Task SimpleIndexing()
         {
