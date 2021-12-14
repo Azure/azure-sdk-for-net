@@ -38,7 +38,7 @@ Now that we have the resource group created, we can manage the ConfigurationStor
 
 ```C# Snippet:Managing_ConfigurationStores_CreateAConfigurationStore
 string configurationStoreName = ("myApp");
-ConfigurationStoreData configurationStoreData = new ConfigurationStoreData("westus", new Sku("Standard"))
+ConfigurationStoreData configurationStoreData = new ConfigurationStoreData("westus", new Models.Sku("Standard"))
 {
     PublicNetworkAccess = PublicNetworkAccess.Disabled
 };

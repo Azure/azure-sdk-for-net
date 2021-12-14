@@ -1768,11 +1768,11 @@ namespace Azure.ResourceManager.Sql
 
         #region DataMaskingPolicy
 
-        /// <summary> Gets a collection of DataMaskingPolicies in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of DataMaskingPolicies and their operations over a SqlDatabase. </returns>
-        public DataMaskingPolicyCollection GetDataMaskingPolicies()
+        /// <summary> Gets an object representing a DataMaskingPolicy along with the instance operations that can be performed on it in the SqlDatabase. </summary>
+        /// <returns> Returns a <see cref="DataMaskingPolicy" /> object. </returns>
+        public DataMaskingPolicy GetDataMaskingPolicy()
         {
-            return new DataMaskingPolicyCollection(this);
+            return new DataMaskingPolicy(this, new ResourceIdentifier(Id.ToString() + "/dataMaskingPolicies/Default"));
         }
         #endregion
 
