@@ -24,6 +24,11 @@ namespace Azure.ResourceManager.Models
         [InitializationConstructor]
         protected TrackedResource(Location location)
         {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
             Tags = new ChangeTrackingDictionary<string, string>();
             Location = location;
         }
