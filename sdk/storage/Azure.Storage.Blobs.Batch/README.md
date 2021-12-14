@@ -33,7 +33,7 @@ az storage account create --name MyStorageAccount --resource-group MyResourceGro
 
 ### Authenticate the client
 
-In order to interact with the Azure Storage Blobs service for batch operations, you'll need to create an instance of the BlobServiceClient class.  The [Azure Identity library][identity] makes it easy to add Azure Active Directory support for authenticating Azure SDK clients with their corresponding Azure services.
+In order to interact with the Azure Blobs Storage service for batch operations, you'll need to create an instance of the BlobServiceClient class.  The [Azure Identity library][identity] makes it easy to add Azure Active Directory support for authenticating Azure SDK clients with their corresponding Azure services.
 
 ```C# Snippet:SampleSnippetsBlobBatch_Auth
 // Create a BlobServiceClient that will authenticate through Active Directory
