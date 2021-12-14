@@ -30,19 +30,15 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
             /// <param name='sentinelOnboardingStateName'>
             /// The Sentinel onboarding state name. Supports - default
             /// </param>
-            public static SentinelOnboardingState Get(this ISentinelOnboardingStatesOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string sentinelOnboardingStateName)
+            public static SentinelOnboardingState Get(this ISentinelOnboardingStatesOperations operations, string resourceGroupName, string workspaceName, string sentinelOnboardingStateName)
             {
-                return operations.GetAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, sentinelOnboardingStateName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, workspaceName, sentinelOnboardingStateName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -54,10 +50,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
@@ -67,9 +59,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SentinelOnboardingState> GetAsync(this ISentinelOnboardingStatesOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string sentinelOnboardingStateName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SentinelOnboardingState> GetAsync(this ISentinelOnboardingStatesOperations operations, string resourceGroupName, string workspaceName, string sentinelOnboardingStateName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, sentinelOnboardingStateName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, workspaceName, sentinelOnboardingStateName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -84,10 +76,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
@@ -100,9 +88,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='customerManagedKey'>
             /// Flag that indicates the status of the CMK setting
             /// </param>
-            public static SentinelOnboardingState Create(this ISentinelOnboardingStatesOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string sentinelOnboardingStateName, string etag = default(string), bool? customerManagedKey = default(bool?))
+            public static SentinelOnboardingState Create(this ISentinelOnboardingStatesOperations operations, string resourceGroupName, string workspaceName, string sentinelOnboardingStateName, string etag = default(string), bool? customerManagedKey = default(bool?))
             {
-                return operations.CreateAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, sentinelOnboardingStateName, etag, customerManagedKey).GetAwaiter().GetResult();
+                return operations.CreateAsync(resourceGroupName, workspaceName, sentinelOnboardingStateName, etag, customerManagedKey).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -113,10 +101,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -133,9 +117,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SentinelOnboardingState> CreateAsync(this ISentinelOnboardingStatesOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string sentinelOnboardingStateName, string etag = default(string), bool? customerManagedKey = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SentinelOnboardingState> CreateAsync(this ISentinelOnboardingStatesOperations operations, string resourceGroupName, string workspaceName, string sentinelOnboardingStateName, string etag = default(string), bool? customerManagedKey = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, sentinelOnboardingStateName, etag, customerManagedKey, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, workspaceName, sentinelOnboardingStateName, etag, customerManagedKey, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -150,19 +134,15 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
             /// <param name='sentinelOnboardingStateName'>
             /// The Sentinel onboarding state name. Supports - default
             /// </param>
-            public static void Delete(this ISentinelOnboardingStatesOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string sentinelOnboardingStateName)
+            public static void Delete(this ISentinelOnboardingStatesOperations operations, string resourceGroupName, string workspaceName, string sentinelOnboardingStateName)
             {
-                operations.DeleteAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, sentinelOnboardingStateName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, workspaceName, sentinelOnboardingStateName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -174,10 +154,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
@@ -187,9 +163,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this ISentinelOnboardingStatesOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string sentinelOnboardingStateName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this ISentinelOnboardingStatesOperations operations, string resourceGroupName, string workspaceName, string sentinelOnboardingStateName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, sentinelOnboardingStateName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, sentinelOnboardingStateName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -200,17 +176,13 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
-            public static SentinelOnboardingStatesList List(this ISentinelOnboardingStatesOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName)
+            public static SentinelOnboardingStatesList List(this ISentinelOnboardingStatesOperations operations, string resourceGroupName, string workspaceName)
             {
-                return operations.ListAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, workspaceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -221,10 +193,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -232,9 +200,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SentinelOnboardingStatesList> ListAsync(this ISentinelOnboardingStatesOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SentinelOnboardingStatesList> ListAsync(this ISentinelOnboardingStatesOperations operations, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, workspaceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

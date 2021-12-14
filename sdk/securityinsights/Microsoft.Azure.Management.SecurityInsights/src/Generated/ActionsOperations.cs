@@ -56,10 +56,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='operationalInsightsResourceProvider'>
-        /// The namespace of workspaces resource provider-
-        /// Microsoft.OperationalInsights.
-        /// </param>
         /// <param name='workspaceName'>
         /// The name of the workspace.
         /// </param>
@@ -87,7 +83,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ActionResponse>>> ListByAlertRuleWithHttpMessagesAsync(string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string ruleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ActionResponse>>> ListByAlertRuleWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string ruleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -126,10 +122,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
             }
-            if (operationalInsightsResourceProvider == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "operationalInsightsResourceProvider");
-            }
             if (workspaceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "workspaceName");
@@ -157,7 +149,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("operationalInsightsResourceProvider", operationalInsightsResourceProvider);
                 tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("ruleId", ruleId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -165,10 +156,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{operationalInsightsResourceProvider}/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}/actions").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}/actions").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{operationalInsightsResourceProvider}", System.Uri.EscapeDataString(operationalInsightsResourceProvider));
             _url = _url.Replace("{workspaceName}", System.Uri.EscapeDataString(workspaceName));
             _url = _url.Replace("{ruleId}", System.Uri.EscapeDataString(ruleId));
             List<string> _queryParameters = new List<string>();
@@ -307,10 +297,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='operationalInsightsResourceProvider'>
-        /// The namespace of workspaces resource provider-
-        /// Microsoft.OperationalInsights.
-        /// </param>
         /// <param name='workspaceName'>
         /// The name of the workspace.
         /// </param>
@@ -341,7 +327,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ActionResponse>> GetWithHttpMessagesAsync(string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string ruleId, string actionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ActionResponse>> GetWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string ruleId, string actionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -380,10 +366,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
             }
-            if (operationalInsightsResourceProvider == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "operationalInsightsResourceProvider");
-            }
             if (workspaceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "workspaceName");
@@ -415,7 +397,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("operationalInsightsResourceProvider", operationalInsightsResourceProvider);
                 tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("ruleId", ruleId);
                 tracingParameters.Add("actionId", actionId);
@@ -424,10 +405,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{operationalInsightsResourceProvider}/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}/actions/{actionId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}/actions/{actionId}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{operationalInsightsResourceProvider}", System.Uri.EscapeDataString(operationalInsightsResourceProvider));
             _url = _url.Replace("{workspaceName}", System.Uri.EscapeDataString(workspaceName));
             _url = _url.Replace("{ruleId}", System.Uri.EscapeDataString(ruleId));
             _url = _url.Replace("{actionId}", System.Uri.EscapeDataString(actionId));
@@ -567,10 +547,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='operationalInsightsResourceProvider'>
-        /// The namespace of workspaces resource provider-
-        /// Microsoft.OperationalInsights.
-        /// </param>
         /// <param name='workspaceName'>
         /// The name of the workspace.
         /// </param>
@@ -604,7 +580,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ActionResponse>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string ruleId, string actionId, ActionRequest action, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ActionResponse>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string ruleId, string actionId, ActionRequest action, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -642,10 +618,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
-            }
-            if (operationalInsightsResourceProvider == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "operationalInsightsResourceProvider");
             }
             if (workspaceName == null)
             {
@@ -686,7 +658,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("operationalInsightsResourceProvider", operationalInsightsResourceProvider);
                 tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("ruleId", ruleId);
                 tracingParameters.Add("actionId", actionId);
@@ -696,10 +667,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{operationalInsightsResourceProvider}/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}/actions/{actionId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}/actions/{actionId}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{operationalInsightsResourceProvider}", System.Uri.EscapeDataString(operationalInsightsResourceProvider));
             _url = _url.Replace("{workspaceName}", System.Uri.EscapeDataString(workspaceName));
             _url = _url.Replace("{ruleId}", System.Uri.EscapeDataString(ruleId));
             _url = _url.Replace("{actionId}", System.Uri.EscapeDataString(actionId));
@@ -863,10 +833,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='operationalInsightsResourceProvider'>
-        /// The namespace of workspaces resource provider-
-        /// Microsoft.OperationalInsights.
-        /// </param>
         /// <param name='workspaceName'>
         /// The name of the workspace.
         /// </param>
@@ -894,7 +860,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string ruleId, string actionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string ruleId, string actionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -933,10 +899,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
             }
-            if (operationalInsightsResourceProvider == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "operationalInsightsResourceProvider");
-            }
             if (workspaceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "workspaceName");
@@ -968,7 +930,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("operationalInsightsResourceProvider", operationalInsightsResourceProvider);
                 tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("ruleId", ruleId);
                 tracingParameters.Add("actionId", actionId);
@@ -977,10 +938,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{operationalInsightsResourceProvider}/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}/actions/{actionId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}/actions/{actionId}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{operationalInsightsResourceProvider}", System.Uri.EscapeDataString(operationalInsightsResourceProvider));
             _url = _url.Replace("{workspaceName}", System.Uri.EscapeDataString(workspaceName));
             _url = _url.Replace("{ruleId}", System.Uri.EscapeDataString(ruleId));
             _url = _url.Replace("{actionId}", System.Uri.EscapeDataString(actionId));

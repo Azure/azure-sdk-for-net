@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
-                var Settings = SecurityInsightsClient.ProductSettings.List(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName);
+                var Settings = SecurityInsightsClient.ProductSettings.List(TestHelper.ResourceGroup, TestHelper.WorkspaceName);
                 ValidateSettings(Settings);
             }
         }
@@ -53,9 +53,9 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                    Etag = "*"
                 };
 
-                var Setting = SecurityInsightsClient.ProductSettings.Update(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, SettingId, SettingsProperties);
+                var Setting = SecurityInsightsClient.ProductSettings.Update(TestHelper.ResourceGroup, TestHelper.WorkspaceName, SettingId, SettingsProperties);
                 ValidateSetting(Setting);
-                SecurityInsightsClient.ProductSettings.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, SettingId);
+                SecurityInsightsClient.ProductSettings.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, SettingId);
             }
         }
 
@@ -74,10 +74,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     Etag = "*"
                 };
 
-                SecurityInsightsClient.ProductSettings.Update(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, SettingId, SettingsProperties);
-                var Setting = SecurityInsightsClient.ProductSettings.Get(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, SettingId);
+                SecurityInsightsClient.ProductSettings.Update(TestHelper.ResourceGroup, TestHelper.WorkspaceName, SettingId, SettingsProperties);
+                var Setting = SecurityInsightsClient.ProductSettings.Get(TestHelper.ResourceGroup, TestHelper.WorkspaceName, SettingId);
                 ValidateSetting(Setting);
-                SecurityInsightsClient.ProductSettings.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, SettingId);
+                SecurityInsightsClient.ProductSettings.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, SettingId);
 
             }
         }
@@ -97,8 +97,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     Etag = "*"
                 };
 
-                SecurityInsightsClient.ProductSettings.Update(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, SettingId, SettingsProperties);
-                SecurityInsightsClient.ProductSettings.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, SettingId);
+                SecurityInsightsClient.ProductSettings.Update(TestHelper.ResourceGroup, TestHelper.WorkspaceName, SettingId, SettingsProperties);
+                SecurityInsightsClient.ProductSettings.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, SettingId);
             }
         }
 

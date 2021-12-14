@@ -30,16 +30,12 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
-            public static IPage<Bookmark> List(this IBookmarksOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName)
+            public static IPage<Bookmark> List(this IBookmarksOperations operations, string resourceGroupName, string workspaceName)
             {
-                return operations.ListAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, workspaceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -51,19 +47,15 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Bookmark>> ListAsync(this IBookmarksOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Bookmark>> ListAsync(this IBookmarksOperations operations, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, workspaceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -78,19 +70,15 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
             /// <param name='bookmarkId'>
             /// Bookmark ID
             /// </param>
-            public static Bookmark Get(this IBookmarksOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string bookmarkId)
+            public static Bookmark Get(this IBookmarksOperations operations, string resourceGroupName, string workspaceName, string bookmarkId)
             {
-                return operations.GetAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, bookmarkId).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, workspaceName, bookmarkId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -102,10 +90,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
@@ -115,9 +99,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Bookmark> GetAsync(this IBookmarksOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string bookmarkId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Bookmark> GetAsync(this IBookmarksOperations operations, string resourceGroupName, string workspaceName, string bookmarkId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, bookmarkId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, workspaceName, bookmarkId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -132,10 +116,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
@@ -145,9 +125,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='bookmark'>
             /// The bookmark
             /// </param>
-            public static Bookmark CreateOrUpdate(this IBookmarksOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string bookmarkId, Bookmark bookmark)
+            public static Bookmark CreateOrUpdate(this IBookmarksOperations operations, string resourceGroupName, string workspaceName, string bookmarkId, Bookmark bookmark)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, bookmarkId, bookmark).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, workspaceName, bookmarkId, bookmark).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -158,10 +138,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -175,9 +151,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Bookmark> CreateOrUpdateAsync(this IBookmarksOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string bookmarkId, Bookmark bookmark, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Bookmark> CreateOrUpdateAsync(this IBookmarksOperations operations, string resourceGroupName, string workspaceName, string bookmarkId, Bookmark bookmark, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, bookmarkId, bookmark, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, workspaceName, bookmarkId, bookmark, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -192,19 +168,15 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
             /// <param name='bookmarkId'>
             /// Bookmark ID
             /// </param>
-            public static void Delete(this IBookmarksOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string bookmarkId)
+            public static void Delete(this IBookmarksOperations operations, string resourceGroupName, string workspaceName, string bookmarkId)
             {
-                operations.DeleteAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, bookmarkId).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, workspaceName, bookmarkId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -216,10 +188,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
@@ -229,9 +197,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IBookmarksOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string bookmarkId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IBookmarksOperations operations, string resourceGroupName, string workspaceName, string bookmarkId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, bookmarkId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, bookmarkId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

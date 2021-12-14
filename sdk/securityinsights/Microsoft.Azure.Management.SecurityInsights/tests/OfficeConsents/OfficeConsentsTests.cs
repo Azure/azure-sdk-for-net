@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
-                var OfficeConsents = SecurityInsightsClient.OfficeConsents.List(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName);
+                var OfficeConsents = SecurityInsightsClient.OfficeConsents.List(TestHelper.ResourceGroup, TestHelper.WorkspaceName);
                 ValidateOfficeConsents(OfficeConsents);
             }
         }
@@ -43,9 +43,9 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
                 //No way to create one, as its for multi-teanant which isnt supported.
-                var OfficeConsents = SecurityInsightsClient.OfficeConsents.List(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName);
+                var OfficeConsents = SecurityInsightsClient.OfficeConsents.List(TestHelper.ResourceGroup, TestHelper.WorkspaceName);
                 ValidateOfficeConsents(OfficeConsents);
-                //var OfficeConsent = SecurityInsightsClient.OfficeConsents.Get(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, OfficeConsents.GetEnumerator().Current.Name);
+                //var OfficeConsent = SecurityInsightsClient.OfficeConsents.Get(TestHelper.ResourceGroup, TestHelper.WorkspaceName, OfficeConsents.GetEnumerator().Current.Name);
                 //ValidateOfficeConsent(OfficeConsent);
             }
         }
@@ -57,10 +57,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
                 //No way to create one, as its for multi-teanant which isnt supported.
-                var OfficeConsents = SecurityInsightsClient.OfficeConsents.List(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName);
+                var OfficeConsents = SecurityInsightsClient.OfficeConsents.List(TestHelper.ResourceGroup, TestHelper.WorkspaceName);
                 ValidateOfficeConsents(OfficeConsents);
-                //var OfficeConsent = SecurityInsightsClient.OfficeConsents.Get(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, OfficeConsents.GetEnumerator().Current.Name);
-                //SecurityInsightsClient.OfficeConsents.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, OfficeConsent.Name);
+                //var OfficeConsent = SecurityInsightsClient.OfficeConsents.Get(TestHelper.ResourceGroup, TestHelper.WorkspaceName, OfficeConsents.GetEnumerator().Current.Name);
+                //SecurityInsightsClient.OfficeConsents.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, OfficeConsent.Name);
             }
         }
 

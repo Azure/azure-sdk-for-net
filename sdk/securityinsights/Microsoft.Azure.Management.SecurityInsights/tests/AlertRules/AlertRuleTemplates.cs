@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
-                var AlertRuleTemplates = SecurityInsightsClient.AlertRuleTemplates.List(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName);
+                var AlertRuleTemplates = SecurityInsightsClient.AlertRuleTemplates.List(TestHelper.ResourceGroup, TestHelper.WorkspaceName);
                 ValidateAlertRuleTemplates(AlertRuleTemplates);
             }
         }
@@ -43,9 +43,9 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
-                var AlertRuleTemplates = SecurityInsightsClient.AlertRuleTemplates.List(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName);
+                var AlertRuleTemplates = SecurityInsightsClient.AlertRuleTemplates.List(TestHelper.ResourceGroup, TestHelper.WorkspaceName);
                 var AlertRuleTemplateId = AlertRuleTemplates.First().Name;
-                var AlertRuleTemplate = SecurityInsightsClient.AlertRuleTemplates.Get(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, AlertRuleTemplateId);
+                var AlertRuleTemplate = SecurityInsightsClient.AlertRuleTemplates.Get(TestHelper.ResourceGroup, TestHelper.WorkspaceName, AlertRuleTemplateId);
                 ValidateAlertRuleTemplate(AlertRuleTemplate);
             }
         }

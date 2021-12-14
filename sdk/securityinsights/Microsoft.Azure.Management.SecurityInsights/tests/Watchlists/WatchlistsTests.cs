@@ -39,11 +39,11 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     ItemsSearchKey = "ipaddress"
                 };
 
-                var Watchlist = SecurityInsightsClient.Watchlists.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, WatchlistId, WatchlistProperties);
+                var Watchlist = SecurityInsightsClient.Watchlists.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, WatchlistId, WatchlistProperties);
                 
-                var Watchlists = SecurityInsightsClient.Watchlists.List(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName);
+                var Watchlists = SecurityInsightsClient.Watchlists.List(TestHelper.ResourceGroup, TestHelper.WorkspaceName);
                 ValidateWatchlists(Watchlists);
-                SecurityInsightsClient.Watchlists.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, WatchlistId);
+                SecurityInsightsClient.Watchlists.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, WatchlistId);
 
             }
         }
@@ -64,9 +64,9 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     ItemsSearchKey = "ipaddress"
                 };
 
-                var Watchlist = SecurityInsightsClient.Watchlists.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, WatchlistId, WatchlistProperties);
+                var Watchlist = SecurityInsightsClient.Watchlists.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, WatchlistId, WatchlistProperties);
                 ValidateWatchlist(Watchlist);
-                SecurityInsightsClient.Watchlists.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, WatchlistId);
+                SecurityInsightsClient.Watchlists.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, WatchlistId);
             }
         }
 
@@ -85,10 +85,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     ItemsSearchKey = "ipaddress"
                 };
 
-                SecurityInsightsClient.Watchlists.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, WatchlistId, WatchlistProperties);
-                var Watchlist = SecurityInsightsClient.Watchlists.Get(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, WatchlistId);
+                SecurityInsightsClient.Watchlists.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, WatchlistId, WatchlistProperties);
+                var Watchlist = SecurityInsightsClient.Watchlists.Get(TestHelper.ResourceGroup, TestHelper.WorkspaceName, WatchlistId);
                 ValidateWatchlist(Watchlist);
-                SecurityInsightsClient.Watchlists.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, WatchlistId);
+                SecurityInsightsClient.Watchlists.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, WatchlistId);
             }
         }
 
@@ -107,8 +107,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                         ItemsSearchKey = "ipaddress"
                     };
 
-                    var Watchlist = SecurityInsightsClient.Watchlists.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, WatchlistId, WatchlistProperties);
-                    SecurityInsightsClient.Watchlists.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, WatchlistId);
+                    var Watchlist = SecurityInsightsClient.Watchlists.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, WatchlistId, WatchlistProperties);
+                    SecurityInsightsClient.Watchlists.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, WatchlistId);
                 }
             }
 

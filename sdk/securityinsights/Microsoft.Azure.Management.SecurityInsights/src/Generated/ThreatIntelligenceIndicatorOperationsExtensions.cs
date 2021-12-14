@@ -32,19 +32,15 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
             /// <param name='threatIntelligenceProperties'>
             /// Properties of threat intelligence indicators to create and update.
             /// </param>
-            public static ThreatIntelligenceInformation CreateIndicator(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, ThreatIntelligenceIndicatorModelForRequestBody threatIntelligenceProperties)
+            public static ThreatIntelligenceInformation CreateIndicator(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string workspaceName, ThreatIntelligenceIndicatorModelForRequestBody threatIntelligenceProperties)
             {
-                return operations.CreateIndicatorAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, threatIntelligenceProperties).GetAwaiter().GetResult();
+                return operations.CreateIndicatorAsync(resourceGroupName, workspaceName, threatIntelligenceProperties).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -56,10 +52,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
@@ -69,9 +61,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ThreatIntelligenceInformation> CreateIndicatorAsync(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, ThreatIntelligenceIndicatorModelForRequestBody threatIntelligenceProperties, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ThreatIntelligenceInformation> CreateIndicatorAsync(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string workspaceName, ThreatIntelligenceIndicatorModelForRequestBody threatIntelligenceProperties, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateIndicatorWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, threatIntelligenceProperties, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateIndicatorWithHttpMessagesAsync(resourceGroupName, workspaceName, threatIntelligenceProperties, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -86,19 +78,15 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
             /// <param name='name'>
             /// Threat intelligence indicator name field.
             /// </param>
-            public static ThreatIntelligenceInformation Get(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string name)
+            public static ThreatIntelligenceInformation Get(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string workspaceName, string name)
             {
-                return operations.GetAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, name).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, workspaceName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -110,10 +98,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
@@ -123,9 +107,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ThreatIntelligenceInformation> GetAsync(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ThreatIntelligenceInformation> GetAsync(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string workspaceName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, name, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, workspaceName, name, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -140,10 +124,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
@@ -153,9 +133,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='threatIntelligenceProperties'>
             /// Properties of threat intelligence indicators to create and update.
             /// </param>
-            public static ThreatIntelligenceInformation Create(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string name, ThreatIntelligenceIndicatorModelForRequestBody threatIntelligenceProperties)
+            public static ThreatIntelligenceInformation Create(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string workspaceName, string name, ThreatIntelligenceIndicatorModelForRequestBody threatIntelligenceProperties)
             {
-                return operations.CreateAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, name, threatIntelligenceProperties).GetAwaiter().GetResult();
+                return operations.CreateAsync(resourceGroupName, workspaceName, name, threatIntelligenceProperties).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -167,10 +147,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
@@ -183,9 +159,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ThreatIntelligenceInformation> CreateAsync(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string name, ThreatIntelligenceIndicatorModelForRequestBody threatIntelligenceProperties, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ThreatIntelligenceInformation> CreateAsync(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string workspaceName, string name, ThreatIntelligenceIndicatorModelForRequestBody threatIntelligenceProperties, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, name, threatIntelligenceProperties, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, workspaceName, name, threatIntelligenceProperties, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -200,19 +176,15 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
             /// <param name='name'>
             /// Threat intelligence indicator name field.
             /// </param>
-            public static void Delete(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string name)
+            public static void Delete(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string workspaceName, string name)
             {
-                operations.DeleteAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, name).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, workspaceName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -224,10 +196,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
@@ -237,9 +205,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string workspaceName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -250,10 +218,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -261,9 +225,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='threatIntelligenceFilteringCriteria'>
             /// Filtering criteria for querying threat intelligence indicators.
             /// </param>
-            public static IPage<ThreatIntelligenceInformation> QueryIndicators(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, ThreatIntelligenceFilteringCriteria threatIntelligenceFilteringCriteria)
+            public static IPage<ThreatIntelligenceInformation> QueryIndicators(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string workspaceName, ThreatIntelligenceFilteringCriteria threatIntelligenceFilteringCriteria)
             {
-                return operations.QueryIndicatorsAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, threatIntelligenceFilteringCriteria).GetAwaiter().GetResult();
+                return operations.QueryIndicatorsAsync(resourceGroupName, workspaceName, threatIntelligenceFilteringCriteria).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -274,10 +238,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -288,9 +248,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ThreatIntelligenceInformation>> QueryIndicatorsAsync(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, ThreatIntelligenceFilteringCriteria threatIntelligenceFilteringCriteria, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ThreatIntelligenceInformation>> QueryIndicatorsAsync(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string workspaceName, ThreatIntelligenceFilteringCriteria threatIntelligenceFilteringCriteria, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.QueryIndicatorsWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, threatIntelligenceFilteringCriteria, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.QueryIndicatorsWithHttpMessagesAsync(resourceGroupName, workspaceName, threatIntelligenceFilteringCriteria, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -305,10 +265,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
@@ -318,9 +274,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='threatIntelligenceTags'>
             /// List of tags to be appended.
             /// </param>
-            public static void AppendTags(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string name, IList<string> threatIntelligenceTags = default(IList<string>))
+            public static void AppendTags(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string workspaceName, string name, IList<string> threatIntelligenceTags = default(IList<string>))
             {
-                operations.AppendTagsAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, name, threatIntelligenceTags).GetAwaiter().GetResult();
+                operations.AppendTagsAsync(resourceGroupName, workspaceName, name, threatIntelligenceTags).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -332,10 +288,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
@@ -348,9 +300,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task AppendTagsAsync(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string name, IList<string> threatIntelligenceTags = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task AppendTagsAsync(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string workspaceName, string name, IList<string> threatIntelligenceTags = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.AppendTagsWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, name, threatIntelligenceTags, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.AppendTagsWithHttpMessagesAsync(resourceGroupName, workspaceName, name, threatIntelligenceTags, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -361,10 +313,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -375,9 +323,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='threatIntelligenceReplaceTags'>
             /// Tags in the threat intelligence indicator to be replaced.
             /// </param>
-            public static ThreatIntelligenceInformation ReplaceTags(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string name, ThreatIntelligenceIndicatorModelForRequestBody threatIntelligenceReplaceTags)
+            public static ThreatIntelligenceInformation ReplaceTags(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string workspaceName, string name, ThreatIntelligenceIndicatorModelForRequestBody threatIntelligenceReplaceTags)
             {
-                return operations.ReplaceTagsAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, name, threatIntelligenceReplaceTags).GetAwaiter().GetResult();
+                return operations.ReplaceTagsAsync(resourceGroupName, workspaceName, name, threatIntelligenceReplaceTags).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -388,10 +336,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -405,9 +349,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ThreatIntelligenceInformation> ReplaceTagsAsync(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string name, ThreatIntelligenceIndicatorModelForRequestBody threatIntelligenceReplaceTags, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ThreatIntelligenceInformation> ReplaceTagsAsync(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string workspaceName, string name, ThreatIntelligenceIndicatorModelForRequestBody threatIntelligenceReplaceTags, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ReplaceTagsWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, name, threatIntelligenceReplaceTags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ReplaceTagsWithHttpMessagesAsync(resourceGroupName, workspaceName, name, threatIntelligenceReplaceTags, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

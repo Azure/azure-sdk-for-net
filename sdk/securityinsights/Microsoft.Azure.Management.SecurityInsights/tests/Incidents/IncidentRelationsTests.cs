@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     Status = "Active",
                     Severity = "Low"
                 };
-                var Incident = SecurityInsightsClient.Incidents.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId, IncidentBody);
+                var Incident = SecurityInsightsClient.Incidents.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId, IncidentBody);
 
                 var Labels = new List<string>();
                 var BookmarkId = Guid.NewGuid().ToString();
@@ -51,17 +51,17 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     Labels = Labels,
                     EventTime = DateTime.Now,
                 };
-                var Bookmark = SecurityInsightsClient.Bookmarks.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, BookmarkId, BookmarkBody);
+                var Bookmark = SecurityInsightsClient.Bookmarks.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkBody);
                 
                 var IncidentReltationName = Guid.NewGuid().ToString();
-                var IncidentRelation = SecurityInsightsClient.IncidentRelations.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId, IncidentReltationName, Bookmark.Id);
+                var IncidentRelation = SecurityInsightsClient.IncidentRelations.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId, IncidentReltationName, Bookmark.Id);
                 
-                var IncidentRelations = SecurityInsightsClient.IncidentRelations.List(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId);
+                var IncidentRelations = SecurityInsightsClient.IncidentRelations.List(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId);
                 ValidateIncidentRelations(IncidentRelations);
 
-                SecurityInsightsClient.IncidentRelations.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId, IncidentReltationName);
-                SecurityInsightsClient.Bookmarks.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, BookmarkId);
-                SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId);
+                SecurityInsightsClient.IncidentRelations.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId, IncidentReltationName);
+                SecurityInsightsClient.Bookmarks.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId);
+                SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId);
             }
         }
 
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     Status = "Active",
                     Severity = "Low"
                 };
-                var Incident = SecurityInsightsClient.Incidents.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId, IncidentBody);
+                var Incident = SecurityInsightsClient.Incidents.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId, IncidentBody);
 
                 var Labels = new List<string>();
                 var BookmarkId = Guid.NewGuid().ToString();
@@ -91,15 +91,15 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     Labels = Labels,
                     EventTime = DateTime.Now,
                 };
-                var Bookmark = SecurityInsightsClient.Bookmarks.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, BookmarkId, BookmarkBody);
+                var Bookmark = SecurityInsightsClient.Bookmarks.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkBody);
 
                 var IncidentReltationName = Guid.NewGuid().ToString();
-                var IncidentRelation = SecurityInsightsClient.IncidentRelations.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId, IncidentReltationName, Bookmark.Id);
+                var IncidentRelation = SecurityInsightsClient.IncidentRelations.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId, IncidentReltationName, Bookmark.Id);
                 ValidateIncidentRelation(IncidentRelation);
 
-                SecurityInsightsClient.IncidentRelations.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId, IncidentReltationName);
-                SecurityInsightsClient.Bookmarks.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, BookmarkId);
-                SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId);
+                SecurityInsightsClient.IncidentRelations.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId, IncidentReltationName);
+                SecurityInsightsClient.Bookmarks.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId);
+                SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId);
             }
         }
 
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     Status = "Active",
                     Severity = "Low"
                 };
-                var Incident = SecurityInsightsClient.Incidents.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId, IncidentBody);
+                var Incident = SecurityInsightsClient.Incidents.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId, IncidentBody);
 
                 var Labels = new List<string>();
                 var BookmarkId = Guid.NewGuid().ToString();
@@ -128,16 +128,16 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     Labels = Labels,
                     EventTime = DateTime.Now,
                 };
-                var Bookmark = SecurityInsightsClient.Bookmarks.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, BookmarkId, BookmarkBody);
+                var Bookmark = SecurityInsightsClient.Bookmarks.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkBody);
 
                 var IncidentReltationName = Guid.NewGuid().ToString();
-                SecurityInsightsClient.IncidentRelations.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId, IncidentReltationName, Bookmark.Id);
-                var IncidentRelation = SecurityInsightsClient.IncidentRelations.Get(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId, IncidentReltationName);
+                SecurityInsightsClient.IncidentRelations.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId, IncidentReltationName, Bookmark.Id);
+                var IncidentRelation = SecurityInsightsClient.IncidentRelations.Get(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId, IncidentReltationName);
                 ValidateIncidentRelation(IncidentRelation);
 
-                SecurityInsightsClient.IncidentRelations.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId, IncidentReltationName);
-                SecurityInsightsClient.Bookmarks.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, BookmarkId);
-                SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId);
+                SecurityInsightsClient.IncidentRelations.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId, IncidentReltationName);
+                SecurityInsightsClient.Bookmarks.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId);
+                SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId);
 
             }
         }
@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     Status = "Active",
                     Severity = "Low"
                 };
-                var Incident = SecurityInsightsClient.Incidents.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId, IncidentBody);
+                var Incident = SecurityInsightsClient.Incidents.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId, IncidentBody);
 
                 var Labels = new List<string>();
                 var BookmarkId = Guid.NewGuid().ToString();
@@ -167,13 +167,13 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     Labels = Labels,
                     EventTime = DateTime.Now,
                 };
-                var Bookmark = SecurityInsightsClient.Bookmarks.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, BookmarkId, BookmarkBody);
+                var Bookmark = SecurityInsightsClient.Bookmarks.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkBody);
 
                 var IncidentRelationName = Guid.NewGuid().ToString();
-                SecurityInsightsClient.IncidentRelations.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId, IncidentRelationName, Bookmark.Id);
-                SecurityInsightsClient.IncidentRelations.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId, IncidentRelationName);
-                SecurityInsightsClient.Bookmarks.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, BookmarkId);
-                SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId);
+                SecurityInsightsClient.IncidentRelations.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId, IncidentRelationName, Bookmark.Id);
+                SecurityInsightsClient.IncidentRelations.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId, IncidentRelationName);
+                SecurityInsightsClient.Bookmarks.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId);
+                SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId);
             }
         }
 

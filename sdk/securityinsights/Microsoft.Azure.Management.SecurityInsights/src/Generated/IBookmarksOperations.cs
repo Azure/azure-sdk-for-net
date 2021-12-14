@@ -29,10 +29,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='operationalInsightsResourceProvider'>
-        /// The namespace of workspaces resource provider-
-        /// Microsoft.OperationalInsights.
-        /// </param>
         /// <param name='workspaceName'>
         /// The name of the workspace.
         /// </param>
@@ -51,16 +47,12 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Bookmark>>> ListWithHttpMessagesAsync(string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Bookmark>>> ListWithHttpMessagesAsync(string resourceGroupName, string workspaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a bookmark.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
-        /// </param>
-        /// <param name='operationalInsightsResourceProvider'>
-        /// The namespace of workspaces resource provider-
-        /// Microsoft.OperationalInsights.
         /// </param>
         /// <param name='workspaceName'>
         /// The name of the workspace.
@@ -83,16 +75,12 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Bookmark>> GetWithHttpMessagesAsync(string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string bookmarkId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Bookmark>> GetWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string bookmarkId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or updates the bookmark.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
-        /// </param>
-        /// <param name='operationalInsightsResourceProvider'>
-        /// The namespace of workspaces resource provider-
-        /// Microsoft.OperationalInsights.
         /// </param>
         /// <param name='workspaceName'>
         /// The name of the workspace.
@@ -118,16 +106,12 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Bookmark>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string bookmarkId, Bookmark bookmark, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Bookmark>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string bookmarkId, Bookmark bookmark, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete the bookmark.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
-        /// </param>
-        /// <param name='operationalInsightsResourceProvider'>
-        /// The namespace of workspaces resource provider-
-        /// Microsoft.OperationalInsights.
         /// </param>
         /// <param name='workspaceName'>
         /// The name of the workspace.
@@ -147,7 +131,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string bookmarkId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string bookmarkId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all bookmarks.
         /// </summary>

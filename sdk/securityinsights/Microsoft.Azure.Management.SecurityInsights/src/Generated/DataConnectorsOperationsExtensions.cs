@@ -30,16 +30,12 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
-            public static IPage<DataConnector> List(this IDataConnectorsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName)
+            public static IPage<DataConnector> List(this IDataConnectorsOperations operations, string resourceGroupName, string workspaceName)
             {
-                return operations.ListAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, workspaceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -51,19 +47,15 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<DataConnector>> ListAsync(this IDataConnectorsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<DataConnector>> ListAsync(this IDataConnectorsOperations operations, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, workspaceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -78,19 +70,15 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
             /// <param name='dataConnectorId'>
             /// Connector ID
             /// </param>
-            public static DataConnector Get(this IDataConnectorsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string dataConnectorId)
+            public static DataConnector Get(this IDataConnectorsOperations operations, string resourceGroupName, string workspaceName, string dataConnectorId)
             {
-                return operations.GetAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, dataConnectorId).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, workspaceName, dataConnectorId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -102,10 +90,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
@@ -115,9 +99,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DataConnector> GetAsync(this IDataConnectorsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string dataConnectorId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataConnector> GetAsync(this IDataConnectorsOperations operations, string resourceGroupName, string workspaceName, string dataConnectorId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, dataConnectorId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, workspaceName, dataConnectorId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -132,10 +116,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
@@ -145,9 +125,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='dataConnector'>
             /// The data connector
             /// </param>
-            public static DataConnector CreateOrUpdate(this IDataConnectorsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string dataConnectorId, DataConnector dataConnector)
+            public static DataConnector CreateOrUpdate(this IDataConnectorsOperations operations, string resourceGroupName, string workspaceName, string dataConnectorId, DataConnector dataConnector)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, dataConnectorId, dataConnector).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, workspaceName, dataConnectorId, dataConnector).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -158,10 +138,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -175,9 +151,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DataConnector> CreateOrUpdateAsync(this IDataConnectorsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string dataConnectorId, DataConnector dataConnector, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataConnector> CreateOrUpdateAsync(this IDataConnectorsOperations operations, string resourceGroupName, string workspaceName, string dataConnectorId, DataConnector dataConnector, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, dataConnectorId, dataConnector, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, workspaceName, dataConnectorId, dataConnector, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -192,19 +168,15 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
             /// <param name='dataConnectorId'>
             /// Connector ID
             /// </param>
-            public static void Delete(this IDataConnectorsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string dataConnectorId)
+            public static void Delete(this IDataConnectorsOperations operations, string resourceGroupName, string workspaceName, string dataConnectorId)
             {
-                operations.DeleteAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, dataConnectorId).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, workspaceName, dataConnectorId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -216,10 +188,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
@@ -229,9 +197,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IDataConnectorsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string dataConnectorId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IDataConnectorsOperations operations, string resourceGroupName, string workspaceName, string dataConnectorId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, dataConnectorId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, dataConnectorId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -242,10 +210,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -256,9 +220,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='connectBody'>
             /// The data connector
             /// </param>
-            public static void Connect(this IDataConnectorsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string dataConnectorId, DataConnectorConnectBody connectBody)
+            public static void Connect(this IDataConnectorsOperations operations, string resourceGroupName, string workspaceName, string dataConnectorId, DataConnectorConnectBody connectBody)
             {
-                operations.ConnectAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, dataConnectorId, connectBody).GetAwaiter().GetResult();
+                operations.ConnectAsync(resourceGroupName, workspaceName, dataConnectorId, connectBody).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -269,10 +233,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -286,9 +246,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ConnectAsync(this IDataConnectorsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string dataConnectorId, DataConnectorConnectBody connectBody, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task ConnectAsync(this IDataConnectorsOperations operations, string resourceGroupName, string workspaceName, string dataConnectorId, DataConnectorConnectBody connectBody, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.ConnectWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, dataConnectorId, connectBody, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.ConnectWithHttpMessagesAsync(resourceGroupName, workspaceName, dataConnectorId, connectBody, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -299,10 +259,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -310,9 +266,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='dataConnectorId'>
             /// Connector ID
             /// </param>
-            public static void Disconnect(this IDataConnectorsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string dataConnectorId)
+            public static void Disconnect(this IDataConnectorsOperations operations, string resourceGroupName, string workspaceName, string dataConnectorId)
             {
-                operations.DisconnectAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, dataConnectorId).GetAwaiter().GetResult();
+                operations.DisconnectAsync(resourceGroupName, workspaceName, dataConnectorId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -323,10 +279,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -337,9 +289,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DisconnectAsync(this IDataConnectorsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string dataConnectorId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DisconnectAsync(this IDataConnectorsOperations operations, string resourceGroupName, string workspaceName, string dataConnectorId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DisconnectWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, dataConnectorId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DisconnectWithHttpMessagesAsync(resourceGroupName, workspaceName, dataConnectorId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

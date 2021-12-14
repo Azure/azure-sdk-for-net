@@ -40,11 +40,11 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     Severity = "Low"
                 };
 
-                SecurityInsightsClient.Incidents.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId, IncidentBody);
+                SecurityInsightsClient.Incidents.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId, IncidentBody);
                 
-                var Incidents = SecurityInsightsClient.Incidents.List(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName);
+                var Incidents = SecurityInsightsClient.Incidents.List(TestHelper.ResourceGroup, TestHelper.WorkspaceName);
                 ValidateIncidents(Incidents);
-                SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId);
+                SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId);
             }
         }
 
@@ -63,9 +63,9 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     Severity = "Low"
                 };
 
-                var Incident = SecurityInsightsClient.Incidents.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId, IncidentBody);
+                var Incident = SecurityInsightsClient.Incidents.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId, IncidentBody);
                 ValidateIncident(Incident);
-                SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId);
+                SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId);
             }
         }
 
@@ -83,10 +83,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     Severity = "Low"
                 };
 
-                SecurityInsightsClient.Incidents.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId, IncidentBody);
-                var Incident = SecurityInsightsClient.Incidents.Get(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId);
+                SecurityInsightsClient.Incidents.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId, IncidentBody);
+                var Incident = SecurityInsightsClient.Incidents.Get(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId);
                 ValidateIncident(Incident);
-                SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId);
+                SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId);
 
             }
         }
@@ -105,35 +105,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     Severity = "Low"
                 };
 
-                SecurityInsightsClient.Incidents.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId, IncidentBody);
-                SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId);
-            }
-        }
-
-        [Fact]
-        public void IncidentTeam_Create()
-        {
-            using (var context = MockContext.Start(this.GetType()))
-            {
-                var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
-                var IncidentId = Guid.NewGuid().ToString();
-                var IncidentBody = new Incident()
-                {
-                    Title = "SDKCreateIncidentTest",
-                    Status = "Active",
-                    Severity = "Low"
-                };
-
-                SecurityInsightsClient.Incidents.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId, IncidentBody);
-
-                var IncidentTeamProperties = new TeamProperties()
-                { 
-                    TeamName = Guid.NewGuid().ToString()
-                };
-                //Error email sent to PM team
-                var IncidentTeam = SecurityInsightsClient.Incidents.CreateTeam(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId, IncidentTeamProperties);
-                ValidateIncidentTeam(IncidentTeam);
-                SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId);
+                SecurityInsightsClient.Incidents.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId, IncidentBody);
+                SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId);
             }
         }
 
@@ -151,10 +124,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     Severity = "Low"
                 };
 
-                SecurityInsightsClient.Incidents.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId, IncidentBody);
-                var IncidentAlerts = SecurityInsightsClient.Incidents.ListAlerts(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId);
+                SecurityInsightsClient.Incidents.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId, IncidentBody);
+                var IncidentAlerts = SecurityInsightsClient.Incidents.ListAlerts(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId);
                 ValidateIncidentAlerts(IncidentAlerts);
-                SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId);
+                SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId);
 
             }
         }
@@ -173,10 +146,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     Severity = "Low"
                 };
 
-                SecurityInsightsClient.Incidents.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId, IncidentBody);
-                var IncidentBookmarks = SecurityInsightsClient.Incidents.ListBookmarks(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId);
+                SecurityInsightsClient.Incidents.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId, IncidentBody);
+                var IncidentBookmarks = SecurityInsightsClient.Incidents.ListBookmarks(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId);
                 ValidateIncidentBookmarks(IncidentBookmarks);
-                SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId);
+                SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId);
 
             }
         }
@@ -195,10 +168,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     Severity = "Low"
                 };
 
-                SecurityInsightsClient.Incidents.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId, IncidentBody);
-                var IncidentEntities = SecurityInsightsClient.Incidents.ListEntities(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId);
+                SecurityInsightsClient.Incidents.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId, IncidentBody);
+                var IncidentEntities = SecurityInsightsClient.Incidents.ListEntities(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId);
                 ValidateIncidentEntities(IncidentEntities);
-                SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId);
+                SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId);
 
             }
         }

@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
-                var Metadatas = SecurityInsightsClient.Metadata.List(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName);
+                var Metadatas = SecurityInsightsClient.Metadata.List(TestHelper.ResourceGroup, TestHelper.WorkspaceName);
                 ValidateMetadatas(Metadatas);
             }
         }
@@ -51,9 +51,9 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                    ContentId = Guid.NewGuid().ToString()
                 };
 
-                var Metadata = SecurityInsightsClient.Metadata.Create(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, MetadataId, MetadataProperties);
+                var Metadata = SecurityInsightsClient.Metadata.Create(TestHelper.ResourceGroup, TestHelper.WorkspaceName, MetadataId, MetadataProperties);
                 ValidateMetadata(Metadata);
-                SecurityInsightsClient.Metadata.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, MetadataId);
+                SecurityInsightsClient.Metadata.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, MetadataId);
             }
         }
 
@@ -71,10 +71,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     ContentId = Guid.NewGuid().ToString()
                 };
 
-                SecurityInsightsClient.Metadata.Create(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, MetadataId, MetadataProperties);
-                var Metadata = SecurityInsightsClient.Metadata.Get(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, MetadataId);
+                SecurityInsightsClient.Metadata.Create(TestHelper.ResourceGroup, TestHelper.WorkspaceName, MetadataId, MetadataProperties);
+                var Metadata = SecurityInsightsClient.Metadata.Get(TestHelper.ResourceGroup, TestHelper.WorkspaceName, MetadataId);
                 ValidateMetadata(Metadata);
-                SecurityInsightsClient.Metadata.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, MetadataId);
+                SecurityInsightsClient.Metadata.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, MetadataId);
             }
         }
 
@@ -92,8 +92,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     ContentId = Guid.NewGuid().ToString()
                 };
 
-                var Metadata = SecurityInsightsClient.Metadata.Create(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, MetadataId, MetadataProperties);
-                SecurityInsightsClient.Metadata.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, MetadataId);
+                var Metadata = SecurityInsightsClient.Metadata.Create(TestHelper.ResourceGroup, TestHelper.WorkspaceName, MetadataId, MetadataProperties);
+                SecurityInsightsClient.Metadata.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, MetadataId);
             }
         }
 

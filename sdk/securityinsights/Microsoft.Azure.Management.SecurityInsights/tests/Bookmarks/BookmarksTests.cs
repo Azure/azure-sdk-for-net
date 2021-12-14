@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
-                var Bookmarks = SecurityInsightsClient.Bookmarks.List(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName);
+                var Bookmarks = SecurityInsightsClient.Bookmarks.List(TestHelper.ResourceGroup, TestHelper.WorkspaceName);
                 ValidateBookmarks(Bookmarks);
             }
         }
@@ -54,9 +54,9 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     EventTime = DateTime.Now
                 };
 
-                var Bookmark = SecurityInsightsClient.Bookmarks.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, BookmarkId, BookmarkBody);
+                var Bookmark = SecurityInsightsClient.Bookmarks.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkBody);
                 ValidateBookmark(Bookmark);
-                SecurityInsightsClient.Bookmarks.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, BookmarkId);
+                SecurityInsightsClient.Bookmarks.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId);
             }
         }
 
@@ -75,8 +75,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     Labels = Labels,
                     EventTime = DateTime.Now
                 };
-                SecurityInsightsClient.Bookmarks.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, BookmarkId, BookmarkBody);
-                var Bookmark = SecurityInsightsClient.Bookmarks.Get(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, BookmarkId);
+                SecurityInsightsClient.Bookmarks.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkBody);
+                var Bookmark = SecurityInsightsClient.Bookmarks.Get(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId);
                 ValidateBookmark(Bookmark);
 
             }
@@ -97,43 +97,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     Labels = Labels,
                     EventTime = DateTime.Now
                 };
-                SecurityInsightsClient.Bookmarks.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, BookmarkId, BookmarkBody);
-                SecurityInsightsClient.Bookmarks.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, BookmarkId);
-            }
-        }
-
-        [Fact]
-        public void Bookmark_Expand()
-        {
-            using (var context = MockContext.Start(this.GetType()))
-            {
-                var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
-
-                var Labels = new List<string>();
-                var BookmarkId = Guid.NewGuid().ToString();
-                var EndTime = DateTime.Now;
-                var BookmarkBody = new Bookmark()
-                {
-                    DisplayName = "SDKTestBookmark",
-                    Query = "SecurityEvent | take 10",
-                    Labels = Labels,
-                    EventTime = DateTime.Now,
-                    QueryStartTime = DateTime.Now.AddDays(-1),
-                    QueryEndTime = EndTime,
-                };
-                SecurityInsightsClient.Bookmarks.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, BookmarkId, BookmarkBody);
-
-                var BookmarkExpandParameters = new BookmarkExpandParameters()
-                {
-                    StartTime = DateTime.Now.AddDays(-2),
-                    EndTime = EndTime,
-                    ExpansionId = Guid.NewGuid()
-                };
-
-                //Bug?
-                var BookmarkExpand = SecurityInsightsClient.Bookmark.Expand(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, BookmarkId, BookmarkExpandParameters);
-                ValidateBookmarkExpand(BookmarkExpand);
-                SecurityInsightsClient.Bookmarks.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, BookmarkId);
+                SecurityInsightsClient.Bookmarks.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkBody);
+                SecurityInsightsClient.Bookmarks.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId);
             }
         }
 

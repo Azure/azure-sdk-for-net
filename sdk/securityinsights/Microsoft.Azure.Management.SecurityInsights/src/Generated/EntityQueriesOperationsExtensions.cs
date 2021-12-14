@@ -30,10 +30,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
@@ -41,9 +37,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// The entity query kind we want to fetch. Possible values include:
             /// 'Expansion', 'Activity'
             /// </param>
-            public static IPage<EntityQuery> List(this IEntityQueriesOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string kind = default(string))
+            public static IPage<EntityQuery> List(this IEntityQueriesOperations operations, string resourceGroupName, string workspaceName, string kind = default(string))
             {
-                return operations.ListAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, kind).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, workspaceName, kind).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -55,10 +51,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
@@ -69,9 +61,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<EntityQuery>> ListAsync(this IEntityQueriesOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string kind = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<EntityQuery>> ListAsync(this IEntityQueriesOperations operations, string resourceGroupName, string workspaceName, string kind = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, kind, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, workspaceName, kind, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -86,19 +78,15 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
             /// <param name='entityQueryId'>
             /// entity query ID
             /// </param>
-            public static EntityQuery Get(this IEntityQueriesOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string entityQueryId)
+            public static EntityQuery Get(this IEntityQueriesOperations operations, string resourceGroupName, string workspaceName, string entityQueryId)
             {
-                return operations.GetAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, entityQueryId).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, workspaceName, entityQueryId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -110,10 +98,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
@@ -123,9 +107,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<EntityQuery> GetAsync(this IEntityQueriesOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string entityQueryId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<EntityQuery> GetAsync(this IEntityQueriesOperations operations, string resourceGroupName, string workspaceName, string entityQueryId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, entityQueryId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, workspaceName, entityQueryId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -140,10 +124,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
@@ -153,9 +133,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='entityQuery'>
             /// The entity query we want to create or update
             /// </param>
-            public static EntityQuery CreateOrUpdate(this IEntityQueriesOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string entityQueryId, CustomEntityQuery entityQuery)
+            public static EntityQuery CreateOrUpdate(this IEntityQueriesOperations operations, string resourceGroupName, string workspaceName, string entityQueryId, CustomEntityQuery entityQuery)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, entityQueryId, entityQuery).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, workspaceName, entityQueryId, entityQuery).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -166,10 +146,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -183,9 +159,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<EntityQuery> CreateOrUpdateAsync(this IEntityQueriesOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string entityQueryId, CustomEntityQuery entityQuery, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<EntityQuery> CreateOrUpdateAsync(this IEntityQueriesOperations operations, string resourceGroupName, string workspaceName, string entityQueryId, CustomEntityQuery entityQuery, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, entityQueryId, entityQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, workspaceName, entityQueryId, entityQuery, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -200,19 +176,15 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
             /// <param name='entityQueryId'>
             /// entity query ID
             /// </param>
-            public static void Delete(this IEntityQueriesOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string entityQueryId)
+            public static void Delete(this IEntityQueriesOperations operations, string resourceGroupName, string workspaceName, string entityQueryId)
             {
-                operations.DeleteAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, entityQueryId).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, workspaceName, entityQueryId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -224,10 +196,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
@@ -237,9 +205,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IEntityQueriesOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string entityQueryId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IEntityQueriesOperations operations, string resourceGroupName, string workspaceName, string entityQueryId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, entityQueryId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, entityQueryId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

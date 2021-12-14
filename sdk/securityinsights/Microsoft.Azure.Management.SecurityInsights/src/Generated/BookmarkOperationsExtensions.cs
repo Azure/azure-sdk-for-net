@@ -30,10 +30,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
@@ -44,9 +40,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// The parameters required to execute an expand operation on the given
             /// bookmark.
             /// </param>
-            public static BookmarkExpandResponse Expand(this IBookmarkOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string bookmarkId, BookmarkExpandParameters parameters)
+            public static BookmarkExpandResponse Expand(this IBookmarkOperations operations, string resourceGroupName, string workspaceName, string bookmarkId, BookmarkExpandParameters parameters)
             {
-                return operations.ExpandAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, bookmarkId, parameters).GetAwaiter().GetResult();
+                return operations.ExpandAsync(resourceGroupName, workspaceName, bookmarkId, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -57,10 +53,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -75,9 +67,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BookmarkExpandResponse> ExpandAsync(this IBookmarkOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string bookmarkId, BookmarkExpandParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BookmarkExpandResponse> ExpandAsync(this IBookmarkOperations operations, string resourceGroupName, string workspaceName, string bookmarkId, BookmarkExpandParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ExpandWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, bookmarkId, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ExpandWithHttpMessagesAsync(resourceGroupName, workspaceName, bookmarkId, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

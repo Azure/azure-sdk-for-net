@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
-                var AutomationRules = SecurityInsightsClient.AutomationRules.List(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName);
+                var AutomationRules = SecurityInsightsClient.AutomationRules.List(TestHelper.ResourceGroup, TestHelper.WorkspaceName);
                 ValidateAutomationRules(AutomationRules);
             }
         }
@@ -68,9 +68,9 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     
                 };
 
-                var AutomationRule = SecurityInsightsClient.AutomationRules.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, AutomationRuleId, AutomationRuleProperties);
+                var AutomationRule = SecurityInsightsClient.AutomationRules.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, AutomationRuleId, AutomationRuleProperties);
                 ValidateAutomationRule(AutomationRule);
-                SecurityInsightsClient.AutomationRules.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, AutomationRuleId);
+                SecurityInsightsClient.AutomationRules.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, AutomationRuleId);
             }
         }
 
@@ -107,10 +107,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
 
                 };
 
-                SecurityInsightsClient.AutomationRules.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, AutomationRuleId, AutomationRuleProperties);
-                var AutomationRule = SecurityInsightsClient.AutomationRules.Get(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, AutomationRuleId);
+                SecurityInsightsClient.AutomationRules.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, AutomationRuleId, AutomationRuleProperties);
+                var AutomationRule = SecurityInsightsClient.AutomationRules.Get(TestHelper.ResourceGroup, TestHelper.WorkspaceName, AutomationRuleId);
                 ValidateAutomationRule(AutomationRule);
-                SecurityInsightsClient.AutomationRules.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, AutomationRuleId);
+                SecurityInsightsClient.AutomationRules.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, AutomationRuleId);
 
             }
         }
@@ -147,8 +147,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
 
                 };
 
-                SecurityInsightsClient.AutomationRules.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, AutomationRuleId, AutomationRuleProperties);
-                SecurityInsightsClient.AutomationRules.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, AutomationRuleId);
+                SecurityInsightsClient.AutomationRules.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, AutomationRuleId, AutomationRuleProperties);
+                SecurityInsightsClient.AutomationRules.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, AutomationRuleId);
             }
         }
 

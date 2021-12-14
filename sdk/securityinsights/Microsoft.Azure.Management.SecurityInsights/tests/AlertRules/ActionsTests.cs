@@ -37,17 +37,17 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     Enabled = true,
                     DisplayName = "SDKTest"
                 };
-                SecurityInsightsClient.AlertRules.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, RuleId, Rule);
+                SecurityInsightsClient.AlertRules.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, RuleId, Rule);
                 var ActionId = Guid.NewGuid().ToString();
                 var Action = new ActionRequest
                 {
                     LogicAppResourceId = TestHelper.ActionLAResourceID,
                     TriggerUri = TestHelper.ActionLATriggerUri
                 };
-                SecurityInsightsClient.Actions.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, RuleId, ActionId, Action);
-                var Actions = SecurityInsightsClient.Actions.ListByAlertRule(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, RuleId);
+                SecurityInsightsClient.Actions.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, RuleId, ActionId, Action);
+                var Actions = SecurityInsightsClient.Actions.ListByAlertRule(TestHelper.ResourceGroup, TestHelper.WorkspaceName, RuleId);
                 ValidateActions(Actions);
-                SecurityInsightsClient.AlertRules.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, RuleId);
+                SecurityInsightsClient.AlertRules.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, RuleId);
             }
         }
 
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     DisplayName = "SDKTest"
                 };
 
-                var alertRule = SecurityInsightsClient.AlertRules.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, RuleId, Rule);
+                var alertRule = SecurityInsightsClient.AlertRules.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, RuleId, Rule);
                 var ActionId = Guid.NewGuid().ToString();
                 var Action = new ActionRequest
                 {
@@ -73,9 +73,9 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     TriggerUri = TestHelper.ActionLATriggerUri
                 };
 
-                var alertRuleAction = SecurityInsightsClient.Actions.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, RuleId, ActionId, Action);
+                var alertRuleAction = SecurityInsightsClient.Actions.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, RuleId, ActionId, Action);
                 ValidateAction(alertRuleAction);
-                SecurityInsightsClient.AlertRules.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, RuleId);
+                SecurityInsightsClient.AlertRules.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, RuleId);
             }
         }
 
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     DisplayName = "SDKTest"
                 };
 
-                SecurityInsightsClient.AlertRules.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, RuleId, Rule);
+                SecurityInsightsClient.AlertRules.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, RuleId, Rule);
                 var ActionId = Guid.NewGuid().ToString();
                 var Action = new ActionRequest
                 {
@@ -101,10 +101,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     TriggerUri = TestHelper.ActionLATriggerUri
                 };
 
-                SecurityInsightsClient.Actions.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, RuleId, ActionId, Action);
-                var alertRuleAction = SecurityInsightsClient.Actions.Get(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, RuleId, ActionId);
+                SecurityInsightsClient.Actions.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, RuleId, ActionId, Action);
+                var alertRuleAction = SecurityInsightsClient.Actions.Get(TestHelper.ResourceGroup, TestHelper.WorkspaceName, RuleId, ActionId);
                 ValidateAction(alertRuleAction);
-                SecurityInsightsClient.AlertRules.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, RuleId);
+                SecurityInsightsClient.AlertRules.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, RuleId);
             }
         }
 
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     DisplayName = "SDKTest"
                 };
 
-                SecurityInsightsClient.AlertRules.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, RuleId, Rule);
+                SecurityInsightsClient.AlertRules.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, RuleId, Rule);
                 var ActionId = Guid.NewGuid().ToString();
                 var Action = new ActionRequest
                 {
@@ -130,9 +130,9 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     TriggerUri = TestHelper.ActionLATriggerUri
                 };
 
-                SecurityInsightsClient.Actions.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, RuleId, ActionId, Action);
-                SecurityInsightsClient.Actions.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, RuleId, ActionId);
-                SecurityInsightsClient.AlertRules.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, RuleId);
+                SecurityInsightsClient.Actions.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, RuleId, ActionId, Action);
+                SecurityInsightsClient.Actions.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, RuleId, ActionId);
+                SecurityInsightsClient.AlertRules.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, RuleId);
             }
         }
 

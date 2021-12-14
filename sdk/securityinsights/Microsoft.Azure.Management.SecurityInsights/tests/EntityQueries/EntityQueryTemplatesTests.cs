@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
 
-                var EntityQueryTemplates = SecurityInsightsClient.EntityQueryTemplates.List(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName);
+                var EntityQueryTemplates = SecurityInsightsClient.EntityQueryTemplates.List(TestHelper.ResourceGroup, TestHelper.WorkspaceName);
                 ValidateEntityQueryTemplates(EntityQueryTemplates);
             }
         }
@@ -44,8 +44,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
              
-                var EntityQueryTemplates = SecurityInsightsClient.EntityQueryTemplates.List(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName);
-                var EntityQueryTemplate = SecurityInsightsClient.EntityQueryTemplates.Get(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, EntityQueryTemplates.First().Name);
+                var EntityQueryTemplates = SecurityInsightsClient.EntityQueryTemplates.List(TestHelper.ResourceGroup, TestHelper.WorkspaceName);
+                var EntityQueryTemplate = SecurityInsightsClient.EntityQueryTemplates.Get(TestHelper.ResourceGroup, TestHelper.WorkspaceName, EntityQueryTemplates.First().Name);
                 ValidateEntityQueryTemplate(EntityQueryTemplate);
             }
         }

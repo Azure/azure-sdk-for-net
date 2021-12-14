@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
-                var SourceControls = SecurityInsightsClient.SourceControls.List(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName);
+                var SourceControls = SecurityInsightsClient.SourceControls.List(TestHelper.ResourceGroup, TestHelper.WorkspaceName);
                 ValidateSourceControls(SourceControls);
             }
         }
@@ -60,10 +60,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                    Repository = RepoProperties
                 };
 
-                var SourceControls = SecurityInsightsClient.SourceControls.List(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName);
-                //var SourceControl = SecurityInsightsClient.SourceControls.Create(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, SourceControlId, SourceControlsProperties);
+                var SourceControls = SecurityInsightsClient.SourceControls.List(TestHelper.ResourceGroup, TestHelper.WorkspaceName);
+                //var SourceControl = SecurityInsightsClient.SourceControls.Create(TestHelper.ResourceGroup, TestHelper.WorkspaceName, SourceControlId, SourceControlsProperties);
                 //ValidateSourceControl(SourceControl);
-                //SecurityInsightsClient.SourceControls.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, SourceControlId);
+                //SecurityInsightsClient.SourceControls.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, SourceControlId);
             }
         }
 
@@ -88,11 +88,11 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     ContentTypes = ContentTypes,
                     Repository = RepoProperties
                 };
-                var SourceControls = SecurityInsightsClient.SourceControls.List(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName);
-                //SecurityInsightsClient.SourceControls.Create(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, SourceControlId, SourceControlsProperties);
-                //var SourceControl = SecurityInsightsClient.SourceControls.Get(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, SourceControlId);
+                var SourceControls = SecurityInsightsClient.SourceControls.List(TestHelper.ResourceGroup, TestHelper.WorkspaceName);
+                //SecurityInsightsClient.SourceControls.Create(TestHelper.ResourceGroup, TestHelper.WorkspaceName, SourceControlId, SourceControlsProperties);
+                //var SourceControl = SecurityInsightsClient.SourceControls.Get(TestHelper.ResourceGroup, TestHelper.WorkspaceName, SourceControlId);
                 //ValidateSourceControl(SourceControl);
-                //SecurityInsightsClient.SourceControls.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, SourceControlId);
+                //SecurityInsightsClient.SourceControls.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, SourceControlId);
 
             }
         }
@@ -119,9 +119,9 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     Repository = RepoProperties
                 };
 
-                var SourceControls = SecurityInsightsClient.SourceControls.List(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName);
-                //SecurityInsightsClient.SourceControls.Create(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, SourceControlId, SourceControlsProperties);
-                //SecurityInsightsClient.SourceControls.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, SourceControlId);
+                var SourceControls = SecurityInsightsClient.SourceControls.List(TestHelper.ResourceGroup, TestHelper.WorkspaceName);
+                //SecurityInsightsClient.SourceControls.Create(TestHelper.ResourceGroup, TestHelper.WorkspaceName, SourceControlId, SourceControlsProperties);
+                //SecurityInsightsClient.SourceControls.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, SourceControlId);
             }
         }
 

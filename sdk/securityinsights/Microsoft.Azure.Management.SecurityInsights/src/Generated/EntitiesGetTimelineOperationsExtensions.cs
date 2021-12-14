@@ -30,10 +30,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
@@ -44,9 +40,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// The parameters required to execute an timeline operation on the given
             /// entity.
             /// </param>
-            public static EntityTimelineResponse List(this IEntitiesGetTimelineOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string entityId, EntityTimelineParameters parameters)
+            public static EntityTimelineResponse List(this IEntitiesGetTimelineOperations operations, string resourceGroupName, string workspaceName, string entityId, EntityTimelineParameters parameters)
             {
-                return operations.ListAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, entityId, parameters).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, workspaceName, entityId, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -57,10 +53,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -75,9 +67,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<EntityTimelineResponse> ListAsync(this IEntitiesGetTimelineOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string entityId, EntityTimelineParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<EntityTimelineResponse> ListAsync(this IEntitiesGetTimelineOperations operations, string resourceGroupName, string workspaceName, string entityId, EntityTimelineParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, entityId, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, workspaceName, entityId, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

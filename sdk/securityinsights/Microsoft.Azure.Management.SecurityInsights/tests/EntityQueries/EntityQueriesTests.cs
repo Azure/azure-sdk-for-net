@@ -59,11 +59,11 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
 
                 };
 
-                SecurityInsightsClient.EntityQueries.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, EntityQueriesId, EntityQueriesProperties);
+                SecurityInsightsClient.EntityQueries.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, EntityQueriesId, EntityQueriesProperties);
                 
-                var EntityQueries = SecurityInsightsClient.EntityQueries.List(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName);
+                var EntityQueries = SecurityInsightsClient.EntityQueries.List(TestHelper.ResourceGroup, TestHelper.WorkspaceName);
                 ValidateEntityQueries(EntityQueries);
-                SecurityInsightsClient.EntityQueries.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, EntityQueriesId);
+                SecurityInsightsClient.EntityQueries.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, EntityQueriesId);
             }
         }
 
@@ -99,9 +99,9 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
 
                 };
 
-                var EntityQuery = SecurityInsightsClient.EntityQueries.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, EntityQueryId, EntityQueriesProperties);
+                var EntityQuery = SecurityInsightsClient.EntityQueries.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, EntityQueryId, EntityQueriesProperties);
                 ValidateEntityQuery(EntityQuery);
-                SecurityInsightsClient.EntityQueries.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, EntityQueryId);
+                SecurityInsightsClient.EntityQueries.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, EntityQueryId);
             }
         }
 
@@ -136,10 +136,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
 
                 };
 
-                SecurityInsightsClient.EntityQueries.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, EntityQueryId, EntityQueriesProperties);
-                var EntityQuery = SecurityInsightsClient.EntityQueries.Get(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, EntityQueryId);
+                SecurityInsightsClient.EntityQueries.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, EntityQueryId, EntityQueriesProperties);
+                var EntityQuery = SecurityInsightsClient.EntityQueries.Get(TestHelper.ResourceGroup, TestHelper.WorkspaceName, EntityQueryId);
                 ValidateEntityQuery(EntityQuery);
-                SecurityInsightsClient.EntityQueries.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, EntityQueryId);
+                SecurityInsightsClient.EntityQueries.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, EntityQueryId);
 
             }
         }
@@ -176,8 +176,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
 
                 };
 
-                SecurityInsightsClient.EntityQueries.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, EntityQueryId, EntityQueriesProperties);
-                SecurityInsightsClient.EntityQueries.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, EntityQueryId);
+                SecurityInsightsClient.EntityQueries.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, EntityQueryId, EntityQueriesProperties);
+                SecurityInsightsClient.EntityQueries.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, EntityQueryId);
             }
         }
 

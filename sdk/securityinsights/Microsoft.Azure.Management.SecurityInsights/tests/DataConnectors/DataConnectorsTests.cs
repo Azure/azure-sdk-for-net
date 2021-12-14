@@ -40,10 +40,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
 
                 };
 
-                SecurityInsightsClient.DataConnectors.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, DataConnectorId, DataConnectorBody);
-                var DataConnectors = SecurityInsightsClient.DataConnectors.List(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName);
+                SecurityInsightsClient.DataConnectors.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, DataConnectorId, DataConnectorBody);
+                var DataConnectors = SecurityInsightsClient.DataConnectors.List(TestHelper.ResourceGroup, TestHelper.WorkspaceName);
                 ValidateDataConnectors(DataConnectors);
-                SecurityInsightsClient.DataConnectors.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, DataConnectorId);
+                SecurityInsightsClient.DataConnectors.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, DataConnectorId);
             }
         }
 
@@ -62,9 +62,9 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
 
                 };
 
-                var DataConnector = SecurityInsightsClient.DataConnectors.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, DataConnectorId, DataConnectorBody);
+                var DataConnector = SecurityInsightsClient.DataConnectors.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, DataConnectorId, DataConnectorBody);
                 ValidateDataConnector(DataConnector);
-                SecurityInsightsClient.DataConnectors.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, DataConnectorId);
+                SecurityInsightsClient.DataConnectors.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, DataConnectorId);
             }
         }
 
@@ -82,10 +82,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
 
                 };
 
-                SecurityInsightsClient.DataConnectors.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, DataConnectorId, DataConnectorBody);
-                var DataConnector = SecurityInsightsClient.DataConnectors.Get(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, DataConnectorId);
+                SecurityInsightsClient.DataConnectors.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, DataConnectorId, DataConnectorBody);
+                var DataConnector = SecurityInsightsClient.DataConnectors.Get(TestHelper.ResourceGroup, TestHelper.WorkspaceName, DataConnectorId);
                 ValidateDataConnector(DataConnector);
-                SecurityInsightsClient.DataConnectors.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, DataConnectorId);
+                SecurityInsightsClient.DataConnectors.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, DataConnectorId);
 
             }
         }
@@ -104,8 +104,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
 
                 };
 
-                SecurityInsightsClient.DataConnectors.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, DataConnectorId, DataConnectorBody);
-                SecurityInsightsClient.DataConnectors.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, DataConnectorId);
+                SecurityInsightsClient.DataConnectors.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, DataConnectorId, DataConnectorBody);
+                SecurityInsightsClient.DataConnectors.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, DataConnectorId);
             }
         }
 
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     SubscriptionId = TestHelper.TestEnvironment.SubscriptionId.ToString()
                 }; 
 
-                var DataConnectorCheckRequirement = SecurityInsightsClient.DataConnectorsCheckRequirements.Post(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, DataConnectorsCheckRequirements);
+                var DataConnectorCheckRequirement = SecurityInsightsClient.DataConnectorsCheckRequirements.Post(TestHelper.ResourceGroup, TestHelper.WorkspaceName, DataConnectorsCheckRequirements);
                 ValidateDataConnectorCheckRequirement(DataConnectorCheckRequirement);
             }
         }

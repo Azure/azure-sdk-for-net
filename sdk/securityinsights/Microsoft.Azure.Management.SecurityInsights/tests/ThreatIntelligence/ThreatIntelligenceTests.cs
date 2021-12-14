@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
-                var ThreatIntelligences = SecurityInsightsClient.ThreatIntelligenceIndicators.List(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName);
+                var ThreatIntelligences = SecurityInsightsClient.ThreatIntelligenceIndicators.List(TestHelper.ResourceGroup, TestHelper.WorkspaceName);
                 ValidateThreatIntelligences(ThreatIntelligences);
             }
         }
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                    Confidence = 10
                 };
                 
-                var ThreatIntelligence = SecurityInsightsClient.ThreatIntelligenceIndicator.CreateIndicator(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceProperties);
+                var ThreatIntelligence = SecurityInsightsClient.ThreatIntelligenceIndicator.CreateIndicator(TestHelper.ResourceGroup, TestHelper.WorkspaceName, ThreatIntelligenceProperties);
                 ValidateThreatIntelligence(ThreatIntelligence);
             }
         }
@@ -86,10 +86,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                 var FilteringCriteria = new ThreatIntelligenceFilteringCriteria()
                 { PageSize = 10 };
 
-                var Indicator = SecurityInsightsClient.ThreatIntelligenceIndicator.CreateIndicator(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceProperties);
-                var ThreatIntelligence = SecurityInsightsClient.ThreatIntelligenceIndicator.Get(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, Indicator.Name);
+                var Indicator = SecurityInsightsClient.ThreatIntelligenceIndicator.CreateIndicator(TestHelper.ResourceGroup, TestHelper.WorkspaceName, ThreatIntelligenceProperties);
+                var ThreatIntelligence = SecurityInsightsClient.ThreatIntelligenceIndicator.Get(TestHelper.ResourceGroup, TestHelper.WorkspaceName, Indicator.Name);
                 ValidateThreatIntelligence(ThreatIntelligence);
-                SecurityInsightsClient.ThreatIntelligenceIndicator.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, Indicator.Name);
+                SecurityInsightsClient.ThreatIntelligenceIndicator.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, Indicator.Name);
 
             }
         }
@@ -113,8 +113,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     Source = "Azure Sentinel"
                 };
 
-                var Indicator = SecurityInsightsClient.ThreatIntelligenceIndicator.CreateIndicator(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceProperties);
-                SecurityInsightsClient.ThreatIntelligenceIndicator.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, Indicator.Name);
+                var Indicator = SecurityInsightsClient.ThreatIntelligenceIndicator.CreateIndicator(TestHelper.ResourceGroup, TestHelper.WorkspaceName, ThreatIntelligenceProperties);
+                SecurityInsightsClient.ThreatIntelligenceIndicator.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, Indicator.Name);
             }
         }
 
@@ -142,10 +142,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                 };
 
 
-                var Indicator = SecurityInsightsClient.ThreatIntelligenceIndicator.CreateIndicator(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceProperties);
-                var ThreatIntelligences = SecurityInsightsClient.ThreatIntelligenceIndicator.QueryIndicators(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceFilter);
+                var Indicator = SecurityInsightsClient.ThreatIntelligenceIndicator.CreateIndicator(TestHelper.ResourceGroup, TestHelper.WorkspaceName, ThreatIntelligenceProperties);
+                var ThreatIntelligences = SecurityInsightsClient.ThreatIntelligenceIndicator.QueryIndicators(TestHelper.ResourceGroup, TestHelper.WorkspaceName, ThreatIntelligenceFilter);
                 ValidateThreatIntelligences(ThreatIntelligences);
-                SecurityInsightsClient.ThreatIntelligenceIndicator.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, Indicator.Name);
+                SecurityInsightsClient.ThreatIntelligenceIndicator.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, Indicator.Name);
             }
         }
 
@@ -168,10 +168,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     Source = "Azure Sentinel"
                 };
 
-                var Indicator = SecurityInsightsClient.ThreatIntelligenceIndicator.CreateIndicator(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceProperties);
-                var ThreatIntelligenceMetrics = SecurityInsightsClient.ThreatIntelligenceIndicatorMetrics.List(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName);
+                var Indicator = SecurityInsightsClient.ThreatIntelligenceIndicator.CreateIndicator(TestHelper.ResourceGroup, TestHelper.WorkspaceName, ThreatIntelligenceProperties);
+                var ThreatIntelligenceMetrics = SecurityInsightsClient.ThreatIntelligenceIndicatorMetrics.List(TestHelper.ResourceGroup, TestHelper.WorkspaceName);
                 ValidateThreatIntelligenceMetrics(ThreatIntelligenceMetrics);
-                SecurityInsightsClient.ThreatIntelligenceIndicator.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, Indicator.Name);
+                SecurityInsightsClient.ThreatIntelligenceIndicator.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, Indicator.Name);
             }
         }
 
@@ -194,15 +194,15 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     Source = "Azure Sentinel"
                 };
 
-                var Indicator = SecurityInsightsClient.ThreatIntelligenceIndicator.CreateIndicator(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceProperties);
+                var Indicator = SecurityInsightsClient.ThreatIntelligenceIndicator.CreateIndicator(TestHelper.ResourceGroup, TestHelper.WorkspaceName, ThreatIntelligenceProperties);
 
                 IList<string> ThreatIntelligenceTags = new List<string>
                 {
                     "sdktest"
                 };
 
-                SecurityInsightsClient.ThreatIntelligenceIndicator.AppendTags(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, Indicator.Name, ThreatIntelligenceTags);
-                SecurityInsightsClient.ThreatIntelligenceIndicator.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, Indicator.Name);
+                SecurityInsightsClient.ThreatIntelligenceIndicator.AppendTags(TestHelper.ResourceGroup, TestHelper.WorkspaceName, Indicator.Name, ThreatIntelligenceTags);
+                SecurityInsightsClient.ThreatIntelligenceIndicator.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, Indicator.Name);
 
             }
         }
@@ -226,15 +226,15 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     Source = "Azure Sentinel"
                 };
 
-                var Indicator = SecurityInsightsClient.ThreatIntelligenceIndicator.CreateIndicator(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, ThreatIntelligenceProperties);
+                var Indicator = SecurityInsightsClient.ThreatIntelligenceIndicator.CreateIndicator(TestHelper.ResourceGroup, TestHelper.WorkspaceName, ThreatIntelligenceProperties);
 
                 IList<string> ThreatIntelligenceTags = new List<string>
                 {
                     "sdktest"
                 };
 
-                SecurityInsightsClient.ThreatIntelligenceIndicator.ReplaceTags(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, Indicator.Name, ThreatIntelligenceProperties);
-                SecurityInsightsClient.ThreatIntelligenceIndicator.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, Indicator.Name);
+                SecurityInsightsClient.ThreatIntelligenceIndicator.ReplaceTags(TestHelper.ResourceGroup, TestHelper.WorkspaceName, Indicator.Name, ThreatIntelligenceProperties);
+                SecurityInsightsClient.ThreatIntelligenceIndicator.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, Indicator.Name);
 
             }
         }

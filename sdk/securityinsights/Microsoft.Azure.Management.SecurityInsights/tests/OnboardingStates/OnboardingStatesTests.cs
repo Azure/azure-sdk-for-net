@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
-                var OnboardingStates = SecurityInsightsClient.SentinelOnboardingStates.List(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName);
+                var OnboardingStates = SecurityInsightsClient.SentinelOnboardingStates.List(TestHelper.ResourceGroup, TestHelper.WorkspaceName);
                 ValidateOnboardingStates(OnboardingStates);
             }
         }
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
                 var OnboardingStateId = "default";
 
-                var OnboardingState = SecurityInsightsClient.SentinelOnboardingStates.Create(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, OnboardingStateId, null, false);
+                var OnboardingState = SecurityInsightsClient.SentinelOnboardingStates.Create(TestHelper.ResourceGroup, TestHelper.WorkspaceName, OnboardingStateId, null, false);
                 ValidateOnboardingState(OnboardingState);
-                SecurityInsightsClient.SentinelOnboardingStates.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, OnboardingStateId);
+                SecurityInsightsClient.SentinelOnboardingStates.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, OnboardingStateId);
             }
         }
 
@@ -60,24 +60,11 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
                 var OnboardingStateId = "default";
 
-                SecurityInsightsClient.SentinelOnboardingStates.Create(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, OnboardingStateId, null, false);
-                var OnboardingState = SecurityInsightsClient.SentinelOnboardingStates.Get(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, OnboardingStateId);
+                SecurityInsightsClient.SentinelOnboardingStates.Create(TestHelper.ResourceGroup, TestHelper.WorkspaceName, OnboardingStateId, null, false);
+                var OnboardingState = SecurityInsightsClient.SentinelOnboardingStates.Get(TestHelper.ResourceGroup, TestHelper.WorkspaceName, OnboardingStateId);
                 ValidateOnboardingState(OnboardingState);
-                SecurityInsightsClient.SentinelOnboardingStates.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, OnboardingStateId);
+                SecurityInsightsClient.SentinelOnboardingStates.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, OnboardingStateId);
 
-            }
-        }
-
-        [Fact]
-        public void OnboardingStates_Delete()
-        {
-            using (var context = MockContext.Start(this.GetType()))
-            {
-                var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
-                var OnboardingStateId = "default";
-
-                SecurityInsightsClient.SentinelOnboardingStates.Create(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, OnboardingStateId, null, false);
-                SecurityInsightsClient.SentinelOnboardingStates.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, OnboardingStateId);
             }
         }
 

@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
-                var AlertRules = SecurityInsightsClient.AlertRules.List(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName);
+                var AlertRules = SecurityInsightsClient.AlertRules.List(TestHelper.ResourceGroup, TestHelper.WorkspaceName);
                 ValidateAlertRules(AlertRules);
             }
         }
@@ -51,9 +51,9 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     DisplayName = "SDKTest"
                 };
 
-                var AlertRule = SecurityInsightsClient.AlertRules.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, AlertRuleId, AlertRuleProperties);
+                var AlertRule = SecurityInsightsClient.AlertRules.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, AlertRuleId, AlertRuleProperties);
                 ValidateAlertRule(AlertRule);
-                SecurityInsightsClient.AlertRules.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, AlertRuleId);
+                SecurityInsightsClient.AlertRules.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, AlertRuleId);
             }
         }
 
@@ -71,10 +71,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     DisplayName = "SDKTest"
                 };
 
-                SecurityInsightsClient.AlertRules.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, AlertRuleId, AlertRuleProperties);
-                var AlertRule = SecurityInsightsClient.AlertRules.Get(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, AlertRuleId);
+                SecurityInsightsClient.AlertRules.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, AlertRuleId, AlertRuleProperties);
+                var AlertRule = SecurityInsightsClient.AlertRules.Get(TestHelper.ResourceGroup, TestHelper.WorkspaceName, AlertRuleId);
                 ValidateAlertRule(AlertRule);
-                SecurityInsightsClient.AlertRules.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, AlertRuleId);
+                SecurityInsightsClient.AlertRules.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, AlertRuleId);
             }
         }
 
@@ -92,8 +92,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                         DisplayName = "SDKTest"
                     };
 
-                    var alertRule = SecurityInsightsClient.AlertRules.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, AlertRuleId, AlertRuleProperties);
-                    SecurityInsightsClient.AlertRules.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, AlertRuleId);
+                    var alertRule = SecurityInsightsClient.AlertRules.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, AlertRuleId, AlertRuleProperties);
+                    SecurityInsightsClient.AlertRules.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, AlertRuleId);
                 }
             }
 

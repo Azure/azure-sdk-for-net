@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// <param name="isDomainJoined">Determines whether this is a domain
         /// account.</param>
         /// <param name="ntDomain">The NetBIOS domain name as it appears in the
-        /// alert format domain\username. Examples: NT AUTHORITY.</param>
+        /// alert format domain/username. Examples: NT AUTHORITY.</param>
         /// <param name="objectGuid">The objectGUID attribute is a single-value
         /// attribute that is the unique identifier for the object, assigned by
         /// active directory.</param>
@@ -153,7 +153,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
 
         /// <summary>
         /// Gets the NetBIOS domain name as it appears in the alert format
-        /// domain\username. Examples: NT AUTHORITY.
+        /// domain/username. Examples: NT AUTHORITY.
         /// </summary>
         [JsonProperty(PropertyName = "properties.ntDomain")]
         public string NtDomain { get; private set; }

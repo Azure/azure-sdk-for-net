@@ -30,10 +30,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
@@ -52,9 +48,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// nextLink element will include a skiptoken parameter that specifies a
             /// starting point to use for subsequent calls. Optional.
             /// </param>
-            public static IPage<ThreatIntelligenceInformation> List(this IThreatIntelligenceIndicatorsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string filter = default(string), string orderby = default(string), int? top = default(int?), string skipToken = default(string))
+            public static IPage<ThreatIntelligenceInformation> List(this IThreatIntelligenceIndicatorsOperations operations, string resourceGroupName, string workspaceName, string filter = default(string), string orderby = default(string), int? top = default(int?), string skipToken = default(string))
             {
-                return operations.ListAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, filter, orderby, top, skipToken).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, workspaceName, filter, orderby, top, skipToken).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -65,10 +61,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -91,9 +83,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ThreatIntelligenceInformation>> ListAsync(this IThreatIntelligenceIndicatorsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string filter = default(string), string orderby = default(string), int? top = default(int?), string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ThreatIntelligenceInformation>> ListAsync(this IThreatIntelligenceIndicatorsOperations operations, string resourceGroupName, string workspaceName, string filter = default(string), string orderby = default(string), int? top = default(int?), string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, filter, orderby, top, skipToken, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, workspaceName, filter, orderby, top, skipToken, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

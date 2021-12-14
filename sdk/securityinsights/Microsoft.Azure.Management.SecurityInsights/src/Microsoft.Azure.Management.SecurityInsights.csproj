@@ -8,7 +8,7 @@
     <PackageId>Microsoft.Azure.Management.SecurityInsights</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider SecurityInsights</Description>
     <PackageTags>azure;management;arm;resource manager;securityinsights</PackageTags>
-    <PackageReleaseNotes>New API versions and updates.</PackageReleaseNotes>
+    <PackageReleaseNotes>New API version 2021-09-01-preview and updates.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

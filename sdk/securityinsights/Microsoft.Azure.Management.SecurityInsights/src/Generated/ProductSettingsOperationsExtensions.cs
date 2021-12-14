@@ -30,16 +30,12 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
-            public static SettingList List(this IProductSettingsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName)
+            public static SettingList List(this IProductSettingsOperations operations, string resourceGroupName, string workspaceName)
             {
-                return operations.ListAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, workspaceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -51,19 +47,15 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SettingList> ListAsync(this IProductSettingsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SettingList> ListAsync(this IProductSettingsOperations operations, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, workspaceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -78,19 +70,15 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
             /// <param name='settingsName'>
             /// The setting name. Supports - Anomalies, EyesOn, EntityAnalytics, Ueba
             /// </param>
-            public static Settings Get(this IProductSettingsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string settingsName)
+            public static Settings Get(this IProductSettingsOperations operations, string resourceGroupName, string workspaceName, string settingsName)
             {
-                return operations.GetAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, settingsName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, workspaceName, settingsName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -102,10 +90,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
@@ -115,9 +99,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Settings> GetAsync(this IProductSettingsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string settingsName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Settings> GetAsync(this IProductSettingsOperations operations, string resourceGroupName, string workspaceName, string settingsName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, settingsName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, workspaceName, settingsName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -132,19 +116,15 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
             /// <param name='settingsName'>
             /// The setting name. Supports - Anomalies, EyesOn, EntityAnalytics, Ueba
             /// </param>
-            public static void Delete(this IProductSettingsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string settingsName)
+            public static void Delete(this IProductSettingsOperations operations, string resourceGroupName, string workspaceName, string settingsName)
             {
-                operations.DeleteAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, settingsName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, workspaceName, settingsName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -156,10 +136,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
@@ -169,9 +145,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IProductSettingsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string settingsName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IProductSettingsOperations operations, string resourceGroupName, string workspaceName, string settingsName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, settingsName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, settingsName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -182,10 +158,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -196,9 +168,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='settings'>
             /// The setting
             /// </param>
-            public static Settings Update(this IProductSettingsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string settingsName, Settings settings)
+            public static Settings Update(this IProductSettingsOperations operations, string resourceGroupName, string workspaceName, string settingsName, Settings settings)
             {
-                return operations.UpdateAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, settingsName, settings).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, workspaceName, settingsName, settings).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -209,10 +181,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -226,9 +194,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Settings> UpdateAsync(this IProductSettingsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string settingsName, Settings settings, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Settings> UpdateAsync(this IProductSettingsOperations operations, string resourceGroupName, string workspaceName, string settingsName, Settings settings, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, settingsName, settings, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, workspaceName, settingsName, settings, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

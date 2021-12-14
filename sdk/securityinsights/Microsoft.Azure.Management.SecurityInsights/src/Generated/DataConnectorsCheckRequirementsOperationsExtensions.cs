@@ -30,19 +30,15 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
             /// <param name='dataConnectorsCheckRequirements'>
             /// The parameters for requirements check message
             /// </param>
-            public static DataConnectorRequirementsState Post(this IDataConnectorsCheckRequirementsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, DataConnectorsCheckRequirements dataConnectorsCheckRequirements)
+            public static DataConnectorRequirementsState Post(this IDataConnectorsCheckRequirementsOperations operations, string resourceGroupName, string workspaceName, DataConnectorsCheckRequirements dataConnectorsCheckRequirements)
             {
-                return operations.PostAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, dataConnectorsCheckRequirements).GetAwaiter().GetResult();
+                return operations.PostAsync(resourceGroupName, workspaceName, dataConnectorsCheckRequirements).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -54,10 +50,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
@@ -67,9 +59,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DataConnectorRequirementsState> PostAsync(this IDataConnectorsCheckRequirementsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, DataConnectorsCheckRequirements dataConnectorsCheckRequirements, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataConnectorRequirementsState> PostAsync(this IDataConnectorsCheckRequirementsOperations operations, string resourceGroupName, string workspaceName, DataConnectorsCheckRequirements dataConnectorsCheckRequirements, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PostWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, dataConnectorsCheckRequirements, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.PostWithHttpMessagesAsync(resourceGroupName, workspaceName, dataConnectorsCheckRequirements, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

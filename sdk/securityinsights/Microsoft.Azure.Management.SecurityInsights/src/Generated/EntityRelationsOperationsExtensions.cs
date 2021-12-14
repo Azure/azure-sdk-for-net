@@ -30,10 +30,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
@@ -43,9 +39,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='relationName'>
             /// Relation Name
             /// </param>
-            public static Relation GetRelation(this IEntityRelationsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string entityId, string relationName)
+            public static Relation GetRelation(this IEntityRelationsOperations operations, string resourceGroupName, string workspaceName, string entityId, string relationName)
             {
-                return operations.GetRelationAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, entityId, relationName).GetAwaiter().GetResult();
+                return operations.GetRelationAsync(resourceGroupName, workspaceName, entityId, relationName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -56,10 +52,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -73,9 +65,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Relation> GetRelationAsync(this IEntityRelationsOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string entityId, string relationName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Relation> GetRelationAsync(this IEntityRelationsOperations operations, string resourceGroupName, string workspaceName, string entityId, string relationName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetRelationWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, entityId, relationName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetRelationWithHttpMessagesAsync(resourceGroupName, workspaceName, entityId, relationName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

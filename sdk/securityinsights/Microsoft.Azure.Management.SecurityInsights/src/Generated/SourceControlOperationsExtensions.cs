@@ -30,19 +30,15 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
             /// <param name='repoType'>
             /// The repo type. Possible values include: 'Github', 'DevOps'
             /// </param>
-            public static IPage<Repo> ListRepositories(this ISourceControlOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string repoType)
+            public static IPage<Repo> ListRepositories(this ISourceControlOperations operations, string resourceGroupName, string workspaceName, string repoType)
             {
-                return operations.ListRepositoriesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, repoType).GetAwaiter().GetResult();
+                return operations.ListRepositoriesAsync(resourceGroupName, workspaceName, repoType).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -54,10 +50,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='operationalInsightsResourceProvider'>
-            /// The namespace of workspaces resource provider-
-            /// Microsoft.OperationalInsights.
-            /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
@@ -67,9 +59,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Repo>> ListRepositoriesAsync(this ISourceControlOperations operations, string resourceGroupName, string operationalInsightsResourceProvider, string workspaceName, string repoType, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Repo>> ListRepositoriesAsync(this ISourceControlOperations operations, string resourceGroupName, string workspaceName, string repoType, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListRepositoriesWithHttpMessagesAsync(resourceGroupName, operationalInsightsResourceProvider, workspaceName, repoType, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListRepositoriesWithHttpMessagesAsync(resourceGroupName, workspaceName, repoType, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

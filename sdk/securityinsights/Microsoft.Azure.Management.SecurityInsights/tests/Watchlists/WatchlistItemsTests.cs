@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     Source = "sdktest",
                     ItemsSearchKey = "ipaddress"
                 };
-                SecurityInsightsClient.Watchlists.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, WatchlistId, WatchlistProperties);
+                SecurityInsightsClient.Watchlists.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, WatchlistId, WatchlistProperties);
 
                 var WatchlistItemId = Guid.NewGuid().ToString();
                 IDictionary<string, string> d = new Dictionary<string, string>();
@@ -47,11 +47,11 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                 { 
                     ItemsKeyValue = d
                 };
-                SecurityInsightsClient.WatchlistItems.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, WatchlistId, WatchlistItemId, WatchlistItemProperties);
+                SecurityInsightsClient.WatchlistItems.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, WatchlistId, WatchlistItemId, WatchlistItemProperties);
 
-                var WatchlistItems = SecurityInsightsClient.WatchlistItems.List(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, WatchlistId);
+                var WatchlistItems = SecurityInsightsClient.WatchlistItems.List(TestHelper.ResourceGroup, TestHelper.WorkspaceName, WatchlistId);
                 ValidateWatchlistItems(WatchlistItems);
-                SecurityInsightsClient.Watchlists.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, WatchlistId);
+                SecurityInsightsClient.Watchlists.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, WatchlistId);
             }
         }
 
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     Source = "sdktest",
                     ItemsSearchKey = "ipaddress"
                 };
-                SecurityInsightsClient.Watchlists.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, WatchlistId, WatchlistProperties);
+                SecurityInsightsClient.Watchlists.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, WatchlistId, WatchlistProperties);
 
                 var WatchlistItemId = Guid.NewGuid().ToString();
                 IDictionary<string, string> d = new Dictionary<string, string>();
@@ -80,9 +80,9 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     ItemsKeyValue = d
                 };
                 
-                var WatchlistItem = SecurityInsightsClient.WatchlistItems.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, WatchlistId, WatchlistItemId, WatchlistItemProperties);
+                var WatchlistItem = SecurityInsightsClient.WatchlistItems.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, WatchlistId, WatchlistItemId, WatchlistItemProperties);
                 ValidateWatchlistItem(WatchlistItem);
-                SecurityInsightsClient.Watchlists.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, WatchlistId);
+                SecurityInsightsClient.Watchlists.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, WatchlistId);
             }
         }
 
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     Source = "sdktest",
                     ItemsSearchKey = "ipaddress"
                 };
-                SecurityInsightsClient.Watchlists.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, WatchlistId, WatchlistProperties);
+                SecurityInsightsClient.Watchlists.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, WatchlistId, WatchlistProperties);
 
                 var WatchlistItemId = Guid.NewGuid().ToString();
                 IDictionary<string, string> d = new Dictionary<string, string>();
@@ -109,11 +109,11 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                 {
                     ItemsKeyValue = d
                 };
-                SecurityInsightsClient.WatchlistItems.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, WatchlistId, WatchlistItemId, WatchlistItemProperties);
+                SecurityInsightsClient.WatchlistItems.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, WatchlistId, WatchlistItemId, WatchlistItemProperties);
                 
-                var WatchlistItem = SecurityInsightsClient.WatchlistItems.Get(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, WatchlistId, WatchlistItemId);
+                var WatchlistItem = SecurityInsightsClient.WatchlistItems.Get(TestHelper.ResourceGroup, TestHelper.WorkspaceName, WatchlistId, WatchlistItemId);
                 ValidateWatchlistItem(WatchlistItem);
-                SecurityInsightsClient.Watchlists.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, WatchlistId);
+                SecurityInsightsClient.Watchlists.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, WatchlistId);
             }
         }
 
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                         Source = "sdktest",
                         ItemsSearchKey = "ipaddress"
                     };
-                    SecurityInsightsClient.Watchlists.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, WatchlistId, WatchlistProperties);
+                    SecurityInsightsClient.Watchlists.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, WatchlistId, WatchlistProperties);
 
                     var WatchlistItemId = Guid.NewGuid().ToString();
                     IDictionary<string, string> d = new Dictionary<string, string>();
@@ -140,9 +140,9 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     {
                         ItemsKeyValue = d
                     };
-                    SecurityInsightsClient.WatchlistItems.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, WatchlistId, WatchlistItemId, WatchlistItemProperties);
-                    SecurityInsightsClient.WatchlistItems.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, WatchlistId, WatchlistItemId);
-                    SecurityInsightsClient.Watchlists.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, WatchlistId);
+                    SecurityInsightsClient.WatchlistItems.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, WatchlistId, WatchlistItemId, WatchlistItemProperties);
+                    SecurityInsightsClient.WatchlistItems.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, WatchlistId, WatchlistItemId);
+                    SecurityInsightsClient.Watchlists.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, WatchlistId);
                 }
             }
 

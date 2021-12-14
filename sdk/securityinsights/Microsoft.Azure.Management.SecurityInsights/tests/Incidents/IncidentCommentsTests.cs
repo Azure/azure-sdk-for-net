@@ -39,12 +39,12 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     Severity = "Low"
                 };
 
-                SecurityInsightsClient.Incidents.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId, IncidentBody);
+                SecurityInsightsClient.Incidents.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId, IncidentBody);
                 var IncidentCommentId = Guid.NewGuid().ToString();
-                SecurityInsightsClient.IncidentComments.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId, IncidentCommentId, "sdk test comment");
-                var incidentComments = SecurityInsightsClient.IncidentComments.List(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId);
+                SecurityInsightsClient.IncidentComments.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId, IncidentCommentId, "sdk test comment");
+                var incidentComments = SecurityInsightsClient.IncidentComments.List(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId);
                 ValidateIncidentComments(incidentComments);
-                SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId);
+                SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId);
             }
         }
 
@@ -63,11 +63,11 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     Severity = "Low"
                 };
 
-                SecurityInsightsClient.Incidents.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId, IncidentBody);
+                SecurityInsightsClient.Incidents.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId, IncidentBody);
                 var IncidentCommentId = Guid.NewGuid().ToString();
-                var incidentComment = SecurityInsightsClient.IncidentComments.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId, IncidentCommentId, "sdk test comment");
+                var incidentComment = SecurityInsightsClient.IncidentComments.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId, IncidentCommentId, "sdk test comment");
                 ValidateIncidentComment(incidentComment);
-                SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId);
+                SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId);
             }
         }
 
@@ -85,12 +85,12 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                     Severity = "Low"
                 };
 
-                SecurityInsightsClient.Incidents.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId, IncidentBody);
+                SecurityInsightsClient.Incidents.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId, IncidentBody);
                 var IncidentCommentId = Guid.NewGuid().ToString();
-                SecurityInsightsClient.IncidentComments.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId, IncidentCommentId, "sdk test comment");
-                var incidentComment = SecurityInsightsClient.IncidentComments.Get(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId, IncidentCommentId);
+                SecurityInsightsClient.IncidentComments.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId, IncidentCommentId, "sdk test comment");
+                var incidentComment = SecurityInsightsClient.IncidentComments.Get(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId, IncidentCommentId);
                 ValidateIncidentComment(incidentComment);
-                SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.OperationalInsightsResourceProvider, TestHelper.WorkspaceName, IncidentId);
+                SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId);
 
             }
         }
