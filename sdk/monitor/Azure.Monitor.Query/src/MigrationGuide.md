@@ -2,7 +2,7 @@
 
 This guide assists you in the migration from [Microsoft.Azure.OperationalInsights](https://www.nuget.org/packages/Microsoft.Azure.OperationalInsights/) v1.1.0 to [Azure.Monitor.Query](https://www.nuget.org/packages/Azure.Monitor.Query/) v1.0.x. Side-by-side comparisons are provided for similar operations between the two client libraries.
 
-Familiarity with the `Microsoft.Azure.OperationalInsights` v1.1.0 package is assumed. If you're new to the `Azure.Monitor.Query` client library for .NET, see the [README for `Azure.Monitor.Query`](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.Query#readme) instead of this guide.
+Familiarity with the `Microsoft.Azure.OperationalInsights` v1.1.0 package is assumed. If you're new to the `Azure.Monitor.Query` client library for .NET, see the [README file](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.Query#readme) instead of this guide.
 
 ## Table of contents
 
