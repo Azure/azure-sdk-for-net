@@ -1,4 +1,5 @@
 . (Join-Path $PSScriptRoot ../../common/scripts/common.ps1)
+$ErrorActionPreference = 'Continue'
 
 $NugetSource="https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v2"
 $allPackages = Get-AllPkgProperties
