@@ -702,11 +702,11 @@ namespace Azure.ResourceManager.AppService
 
         #region HybridConnectionLimits
 
-        /// <summary> Gets a collection of HybridConnectionLimits in the AppServicePlan. </summary>
-        /// <returns> An object representing collection of HybridConnectionLimits and their operations over a AppServicePlan. </returns>
-        public HybridConnectionLimitsCollection GetHybridConnectionLimits()
+        /// <summary> Gets an object representing a HybridConnectionLimits along with the instance operations that can be performed on it in the AppServicePlan. </summary>
+        /// <returns> Returns a <see cref="HybridConnectionLimits" /> object. </returns>
+        public HybridConnectionLimits GetHybridConnectionLimits()
         {
-            return new HybridConnectionLimitsCollection(this);
+            return new HybridConnectionLimits(this, new ResourceIdentifier(Id.ToString() + "/hybridConnectionPlanLimits/limit"));
         }
         #endregion
 
