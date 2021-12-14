@@ -60,7 +60,6 @@ known_presence_issues:
   - ['sdk/cognitiveservices/Vision.CustomVision.Training','Track 1']
   - ['sdk/cognitiveservices/Vision.Face','Track 1']
   - ['sdk/containerregistry/Microsoft.Azure.ContainerRegistry','Track 1']
-  - ['sdk/eventgrid/Azure.Messaging.EventGrid/EventGridSourceGenerator','***WHY IS THIS REQUIRED?']
   - ['sdk/eventgrid/Microsoft.Azure.EventGrid','Track 1']
   - ['sdk/eventhub/Microsoft.Azure.EventHubs.Processor','Track 1']
   - ['sdk/eventhub/Microsoft.Azure.EventHubs.ServiceFabricProcessor','Track 1']
@@ -79,55 +78,53 @@ known_presence_issues:
   - ['sdk/search/Microsoft.Azure.Search.Common/CHANGELOG.md','Track 1']
   - ['sdk/search/Microsoft.Azure.Search.Data/CHANGELOG.md','Track 1']
   - ['sdk/search/Microsoft.Azure.Search.Service/CHANGELOG.md','Track 1']
+  
+  - ['sdk/eventgrid/Azure.Messaging.EventGrid/EventGridSourceGenerator','https://github.com/Azure/azure-sdk-tools/issues/2444']
 
 known_content_issues:
-  - ['README.md','Root readme']
-  - ['doc/README.md','Doc readme']
-  - ['sdk/alertsmanagement/Microsoft.Azure.Management.AlertsManagement/README.md','Track 1']
-  - ['sdk/appconfiguration/README.md','azure-sdk-tools/issues/42']
   - ['sdk/batch/Microsoft.Azure.Batch.Conventions.Files/README.md','Track 1']
   - ['sdk/batch/Microsoft.Azure.Batch/README.md','Track 1']
+  - ['sdk/alertsmanagement/Microsoft.Azure.Management.AlertsManagement/README.md','Track 1']
   - ['sdk/cognitiveservices/FormRecognizer/README.md','Track 1']
   - ['sdk/cognitiveservices/Language.TextAnalytics/src/README.md','Track 1']
   - ['sdk/cognitiveservices/Personalizer/src/README.md','Track 1']
+  - ['sdk/eventhub/Microsoft.Azure.EventHubs/README.md','Track 1']
+  - ['sdk/keyvault/Microsoft.Azure.KeyVault/README.md','Track 1']
+  - ['sdk/servicebus/Microsoft.Azure.ServiceBus/README.md','Track 1']
+  - ['sdk/synapse/Microsoft.Azure.Synapse/README.md','Track 1']
+
+  - ['README.md','Not a package: azure-sdk-tools/issues/42']
+  - ['doc/README.md','Not a package: azure-sdk-tools/issues/42']
+  - ['sdk/appconfiguration/README.md','azure-sdk-tools/issues/42']
+  - ['sdk/eventgrid/README.md','Not a package: azure-sdk-tools/issues/42']
+  - ['sdk/eventhub/README.md','Not a package: azure-sdk-tools/issues/42']
+  - ['sdk/extensions/README.md','Not a package: azure-sdk-tools/issues/42']
+  - ['sdk/personalizer/README.md','Not a package: azure-sdk-tools/issues/42']
+  - ['sdk/search/README.md','Not a package: azure-sdk-tools/issues/42']  
+  - ['sdk/storage/README.md','Not a package: azure-sdk-tools/issues/42']
 
   - ['sdk/core/Azure.Core.Amqp/README.md', 'Opt out of sections: https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/core/Azure.Core.Experimental/README.md', 'Opt out of sections: https://github.com/Azure/azure-sdk-tools/issues/404']
-  - ['sdk/core/Azure.Core.TestFramework/README.md', '#11492']
+  - ['sdk/core/Azure.Core.TestFramework/README.md', 'Opt out of sections: https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/core/Azure.Core/README.md', 'Opt out of sections: https://github.com/Azure/azure-sdk-tools/issues/404']
-
-  - ['sdk/core/Microsoft.Azure.Core.NewtonsoftJson/README.md', '#15423']
-  - ['sdk/core/Microsoft.Azure.Core.Spatial.NewtonsoftJson/README.md', '#15423']
-  - ['sdk/core/Microsoft.Azure.Core.Spatial/README.md', '#15423']
-  - ['sdk/core/System.Memory.Data/README.md', '#5499']
-
-  - ['sdk/eventgrid/Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents/README.md', '#15423']  
-  - ['sdk/eventgrid/README.md','azure-sdk-tools/issues/42']
-  - ['sdk/eventhub/Azure.Messaging.EventHubs.Shared/README.md','Not a service library']
-  - ['sdk/eventhub/Microsoft.Azure.EventHubs/README.md','Track 1']
-  - ['sdk/eventhub/README.md','azure-sdk-tools/issues/42']
-  
+  - ['sdk/core/Microsoft.Azure.Core.NewtonsoftJson/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/core/Microsoft.Azure.Core.Spatial.NewtonsoftJson/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/core/Microsoft.Azure.Core.Spatial/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/core/System.Memory.Data/README.md', 'Opt out of sections: https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/eventgrid/Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404', 'Missing section: Azure .+ client library for .NET']
+  - ['sdk/eventhub/Azure.Messaging.EventHubs.Shared/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/eventhub/Azure.Messaging.EventHubs.Experimental/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/extensions/Azure.Extensions.AspNetCore.Configuration.Secrets/README.md', 'azure-sdk-tools/issues/404']
   - ['sdk/extensions/Azure.Extensions.AspNetCore.DataProtection.Blobs/README.md','azure-sdk-tools/issues/404']
   - ['sdk/extensions/Azure.Extensions.AspNetCore.DataProtection.Keys/README.md','azure-sdk-tools/issues/404']
   - ['sdk/extensions/Microsoft.Azure.WebJobs.Extensions.Clients/README.md','azure-sdk-tools/issues/404']
-  - ['sdk/extensions/Microsoft.Extensions.Azure/README.md','#5499']
-  - ['sdk/extensions/README.md','azure-sdk-tools/issues/42']
+  - ['sdk/extensions/Microsoft.Extensions.Azure/README.md','azure-sdk-tools/issues/404']
+  - ['sdk/storage/Azure.Storage.Common/README.md','azure-sdk-tools/issues/404']
 
-  - ['sdk/keyvault/Microsoft.Azure.KeyVault/README.md','Track 1']
-
-  - ['sdk/personalizer/Azure.AI.Personalizer/README.md','azure-sdk-tools/issues/42']
-  - ['sdk/personalizer/README.md','azure-sdk-tools/issues/42']
-
-  - ['sdk/search/README.md','azure-sdk-tools/issues/42']
-
-  - ['sdk/servicebus/Microsoft.Azure.ServiceBus/README.md','Track 1']
-  - ['sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/README.md', '#15423']
-
-  - ['sdk/storage/Azure.Storage.Common/README.md','azure-sdk-tools/issues/42']
-  - ['sdk/storage/README.md','azure-sdk-tools/issues/42']
-
-  - ['sdk/synapse/Microsoft.Azure.Synapse/README.md','Track 1']
+  - ['sdk/anomalydetector/Azure.AI.AnomalyDetector/README.md', '#25936']
+  - ['sdk/personalizer/Azure.AI.Personalizer/README.md','#5499']
+  - ['sdk/storage/Azure.Storage.Files.DataLake/README.md', 'Storage: #11492']
+  - ['sdk/storage/Azure.Storage.Files.Shares/README.md', 'Storage: #11492']  
 
 # .net climbs upwards. placing these to prevent assigning readmes to the wrong project
 package_indexing_exclusion_list:
