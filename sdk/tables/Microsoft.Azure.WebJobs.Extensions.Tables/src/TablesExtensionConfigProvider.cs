@@ -7,7 +7,9 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Data.Tables;
+using Azure.Data.Tables.Models;
 using Microsoft.Azure.WebJobs.Description;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Config;
@@ -103,8 +105,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 
         public ITableEntity JObjectToTableEntityConverterFunc(JObject source, TableAttribute attribute)
         {
-            var result = CreateTableEntityFromJObject(attribute.PartitionKey, attribute.RowKey, source);
-            return result;
+            if (source == null)
+            {
+                return null;
+            }
+            return CreateTableEntityFromJObject(attribute.PartitionKey, attribute.RowKey, source);
         }
 
         private static JObject ConvertEntityToJObject(TableEntity tableEntity)
@@ -172,18 +177,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             {
                 var table = _bindingProvider.GetTable(attribute);
 
-                var result = await table.GetEntityAsync<TableEntity>(
-                    attribute.PartitionKey,
-                    attribute.RowKey,
-                    cancellationToken: CancellationToken.None).ConfigureAwait(false);
-                TableEntity entity = (TableEntity)result.Value;
-                if (entity == null)
+                try
+                {
+                    var result = await table.GetEntityAsync<TableEntity>(
+                        attribute.PartitionKey,
+                        attribute.RowKey,
+                        cancellationToken: CancellationToken.None).ConfigureAwait(false);
+                    return ConvertEntityToJObject(result);
+                }
+                catch (RequestFailedException e) when
+                    (e.Status == 404 && (e.ErrorCode == TableErrorCode.TableNotFound || e.ErrorCode == TableErrorCode.ResourceNotFound))
                 {
                     return null;
-                }
-                else
-                {
-                    return ConvertEntityToJObject(entity);
                 }
             }
 
@@ -193,30 +198,33 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             {
                 var table = _bindingProvider.GetTable(attribute);
 
-                string finalQuery = attribute.Filter;
+                string filter = attribute.Filter;
                 if (!string.IsNullOrEmpty(attribute.PartitionKey))
                 {
                     var partitionKeyPredicate = TableClient.CreateQueryFilter($"PartitionKey eq {attribute.PartitionKey}");
                     if (!string.IsNullOrEmpty(attribute.Filter))
                     {
-                        finalQuery = $"{partitionKeyPredicate} and {attribute.Filter}";
+                        filter = $"{partitionKeyPredicate} and {attribute.Filter}";
                     }
                     else
                     {
-                        finalQuery = partitionKeyPredicate;
+                        filter = partitionKeyPredicate;
                     }
                 }
 
-                int? take = null;
+                int? maxPerPage = null;
                 if (attribute.Take > 0)
                 {
-                    take = attribute.Take;
+                    maxPerPage = attribute.Take;
                 }
 
                 int countRemaining = attribute.Take;
 
                 JArray entityArray = new JArray();
-                var entities = table.QueryAsync<TableEntity>(finalQuery, take, cancellationToken: cancellation).ConfigureAwait(false);
+                var entities = table.QueryAsync<TableEntity>(
+                    filter: filter,
+                    maxPerPage: maxPerPage,
+                    cancellationToken: cancellation).ConfigureAwait(false);
 
                 await foreach (var entity in entities)
                 {

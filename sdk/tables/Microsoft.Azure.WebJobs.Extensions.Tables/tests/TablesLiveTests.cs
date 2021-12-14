@@ -184,21 +184,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
             // Act
             var result1 = await CallAsync<BindTableEntityToJArrayProgram>(nameof(BindTableEntityToJArrayProgram.CallTakeFilter));
-            Assert.AreEqual("x1;x3;", result1._result);
+            Assert.AreEqual("x1;x3;", result1.Result);
 
             var result2 = await CallAsync<BindTableEntityToJArrayProgram>(nameof(BindTableEntityToJArrayProgram.CallFilter));
-            Assert.AreEqual("x1;x3;x4;", result2._result);
+            Assert.AreEqual("x1;x3;x4;", result2.Result);
 
             var result3 = await CallAsync<BindTableEntityToJArrayProgram>(nameof(BindTableEntityToJArrayProgram.CallTake));
-            Assert.AreEqual("x1;x2;x3;", result3._result);
+            Assert.AreEqual("x1;x2;x3;", result3.Result);
 
             var result4 = await CallAsync<BindTableEntityToJArrayProgram>(nameof(BindTableEntityToJArrayProgram.Call));
-            Assert.AreEqual("x1;x2;x3;x4;", result4._result);
+            Assert.AreEqual("x1;x2;x3;x4;", result4.Result);
         }
 
         private class BindTableEntityToJArrayProgram
         {
-            public string _result;
+            public string Result;
 
             // Helper to flatten a Jarray for quick testing.
             private static string Flatten(JArray array)
@@ -215,23 +215,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
             public void CallTakeFilter([Table(TableNameExpression, PartitionKey, Take = 2, Filter = "Value ne 'x2'")] JArray array)
             {
-                this._result = Flatten(array);
+                Result = Flatten(array);
             }
 
             public void CallFilter([Table(TableNameExpression, PartitionKey, Filter = "Value ne 'x2'")] JArray array)
             {
-                this._result = Flatten(array);
+                Result = Flatten(array);
             }
 
             public void CallTake([Table(TableNameExpression, PartitionKey, Take = 3)] JArray array)
             {
-                this._result = Flatten(array);
+                Result = Flatten(array);
             }
 
             // No take or filters
             public void Call([Table(TableNameExpression, PartitionKey)] JArray array)
             {
-                this._result = Flatten(array);
+                Result = Flatten(array);
             }
         }
 
@@ -323,6 +323,30 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 entity.Fruit = Fruit.Pear;
                 entity.Duration = TimeSpan.FromMinutes(2);
                 entity.Value = "Bar";
+            }
+        }
+
+        [Test]
+        public Task TableEntity_IfBoundToPocoThatDoesntExist_Null_PocoTableEntity() =>
+            CallAsync<BindTableEntityToPocoTableEntityDoesntExistProgram<PocoTableEntity>>();
+
+        [Test]
+        public Task TableEntity_IfBoundToPocoThatDoesntExist_Null_JObject() =>
+            CallAsync<BindTableEntityToPocoTableEntityDoesntExistProgram<JObject>>();
+
+        [Test]
+        public Task TableEntity_IfBoundToPocoThatDoesntExist_Null_ITableEntity() =>
+            CallAsync<BindTableEntityToPocoTableEntityDoesntExistProgram<ITableEntity>>();
+
+        [Test]
+        public Task TableEntity_IfBoundToPocoThatDoesntExist_Null_TableEntity() =>
+            CallAsync<BindTableEntityToPocoTableEntityDoesntExistProgram<TableEntity>>();
+
+        private class BindTableEntityToPocoTableEntityDoesntExistProgram<T>
+        {
+            public static void Call([Table(TableNameExpression, PartitionKey, RowKey)] T entity)
+            {
+                Assert.IsNull(entity);
             }
         }
 

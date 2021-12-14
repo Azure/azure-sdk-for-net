@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Data.Tables;
+using Azure.Data.Tables.Models;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
@@ -25,7 +26,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                     value.PartitionKey, value.RowKey).ConfigureAwait(false);
                 entity = result.Value;
             }
-            catch (RequestFailedException e) when (e.Status == 404 && e.ErrorCode == "TableNotFound")
+            catch (RequestFailedException e) when
+                (e.Status == 404 && (e.ErrorCode == TableErrorCode.TableNotFound || e.ErrorCode == TableErrorCode.ResourceNotFound))
             {
                 return new NullEntityValueProvider<TElement>(value);
             }

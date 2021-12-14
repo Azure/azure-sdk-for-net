@@ -73,7 +73,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 
             if (HasChanges(entity))
             {
-                return _entityContext.Table.UpdateEntityAsync(entity, entity.ETag, cancellationToken: cancellationToken);
+                return _entityContext.Table.UpdateEntityAsync(entity, entity.ETag, TableUpdateMode.Replace, cancellationToken: cancellationToken);
             }
 
             return Task.FromResult(0);
