@@ -5042,7 +5042,8 @@ namespace DataFactory.Tests.JsonSamples
               ""recursive"": true,
               ""wildcardFolderPath"": ""A*"",
               ""wildcardFileName"":  ""*.csv"",
-              ""useBinaryTransfer"":  true
+              ""useBinaryTransfer"":  true,
+              ""disableChunking"":  true
             },
             ""formatSettings"": {
               ""type"": ""DelimitedTextReadSettings"",

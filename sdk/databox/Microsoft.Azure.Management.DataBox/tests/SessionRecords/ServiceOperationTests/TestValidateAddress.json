@@ -1,28 +1,28 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/providers/Microsoft.DataBox/locations/westus/validateAddress?api-version=2020-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveC9sb2NhdGlvbnMvd2VzdHVzL3ZhbGlkYXRlQWRkcmVzcz9hcGktdmVyc2lvbj0yMDIwLTExLTAx",
+      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/providers/Microsoft.DataBox/locations/westus/validateAddress?api-version=2021-08-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveC9sb2NhdGlvbnMvd2VzdHVzL3ZhbGlkYXRlQWRkcmVzcz9hcGktdmVyc2lvbj0yMDIxLTA4LTAxLXByZXZpZXc=",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"validationType\": \"ValidateAddress\",\r\n  \"shippingAddress\": {\r\n    \"streetAddress1\": \"16 TOWNSEND ST\",\r\n    \"streetAddress2\": \"Unit 1\",\r\n    \"city\": \"San Francisco\",\r\n    \"stateOrProvince\": \"CA\",\r\n    \"country\": \"US\",\r\n    \"postalCode\": \"94107\",\r\n    \"companyName\": \"Microsoft\",\r\n    \"addressType\": \"Commercial\"\r\n  },\r\n  \"deviceType\": \"DataBox\"\r\n}",
+      "RequestBody": "{\r\n  \"validationType\": \"ValidateAddress\",\r\n  \"shippingAddress\": {\r\n    \"streetAddress1\": \"164 TOWNSEND ST\",\r\n    \"streetAddress2\": \"Unit 1\",\r\n    \"city\": \"San Francisco\",\r\n    \"stateOrProvince\": \"CA\",\r\n    \"country\": \"US\",\r\n    \"postalCode\": \"94107\",\r\n    \"companyName\": \"Microsoft\",\r\n    \"addressType\": \"Commercial\"\r\n  },\r\n  \"deviceType\": \"DataBox\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "86336371-407f-49bd-9bfd-df64c14ae33b"
+          "125a6ded-880f-45a4-a1ea-062fb0b3938b"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29321.03",
+          "FxVersion/5.0.1221.52207",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.2.0"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/2.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "351"
+          "352"
         ]
       },
       "ResponseHeaders": {
@@ -42,25 +42,25 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "d17058c0-bb38-4dcc-9ab5-a05b179a8b8a"
+          "d11cd41a-e970-4ede-80fb-7c1f5caef412"
         ],
         "x-ms-client-request-id": [
-          "86336371-407f-49bd-9bfd-df64c14ae33b"
+          "125a6ded-880f-45a4-a1ea-062fb0b3938b"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-correlation-request-id": [
-          "d17058c0-bb38-4dcc-9ab5-a05b179a8b8a"
+          "d11cd41a-e970-4ede-80fb-7c1f5caef412"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUSEUAP:20201110T132444Z:d17058c0-bb38-4dcc-9ab5-a05b179a8b8a"
+          "SOUTHEASTASIA:20211112T121922Z:d11cd41a-e970-4ede-80fb-7c1f5caef412"
         ],
         "Date": [
-          "Tue, 10 Nov 2020 13:24:44 GMT"
+          "Fri, 12 Nov 2021 12:19:21 GMT"
         ],
         "Content-Length": [
-          "428"
+          "429"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -69,7 +69,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"validationStatus\": \"Valid\",\r\n    \"alternateAddresses\": [\r\n      {\r\n        \"streetAddress1\": \"16 TOWNSEND ST\",\r\n        \"streetAddress2\": \"Unit 1\",\r\n        \"streetAddress3\": \"\",\r\n        \"city\": \"SAN FRANCISCO\",\r\n        \"stateOrProvince\": \"CA\",\r\n        \"country\": \"US\",\r\n        \"postalCode\": \"94107\",\r\n        \"addressType\": \"None\"\r\n      }\r\n    ],\r\n    \"validationType\": \"ValidateAddress\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"validationStatus\": \"Valid\",\r\n    \"alternateAddresses\": [\r\n      {\r\n        \"streetAddress1\": \"164 TOWNSEND ST\",\r\n        \"streetAddress2\": \"Unit 1\",\r\n        \"streetAddress3\": \"\",\r\n        \"city\": \"SAN FRANCISCO\",\r\n        \"stateOrProvince\": \"CA\",\r\n        \"country\": \"US\",\r\n        \"postalCode\": \"94107\",\r\n        \"addressType\": \"None\"\r\n      }\r\n    ],\r\n    \"validationType\": \"ValidateAddress\"\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],
