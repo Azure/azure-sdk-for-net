@@ -161,9 +161,9 @@ namespace Azure.Search.Documents.Models
         public static QueryLanguage ArJo { get; } = new QueryLanguage(ArJoValue);
         /// <summary> Query language value for Danish (Denmark). </summary>
         public static QueryLanguage DaDk { get; } = new QueryLanguage(DaDkValue);
-        /// <summary> Query language value for Norwegian (Normway). </summary>
+        /// <summary> Query language value for Norwegian (Norway). </summary>
         public static QueryLanguage NoNo { get; } = new QueryLanguage(NoNoValue);
-        /// <summary> Query language value for Bulgarian (Bulgary). </summary>
+        /// <summary> Query language value for Bulgarian (Bulgaria). </summary>
         public static QueryLanguage BgBg { get; } = new QueryLanguage(BgBgValue);
         /// <summary> Query language value for Croatian (Croatia). </summary>
         public static QueryLanguage HrHr { get; } = new QueryLanguage(HrHrValue);

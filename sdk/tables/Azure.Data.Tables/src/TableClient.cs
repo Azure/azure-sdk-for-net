@@ -318,7 +318,8 @@ namespace Azure.Data.Tables
             ClientDiagnostics diagnostics,
             bool isPremiumEndpoint,
             Uri endpoint,
-            HttpPipeline pipeline)
+            HttpPipeline pipeline,
+            TableSharedKeyCredential credential)
         {
             _endpoint = TableUriBuilder.GetEndpointWithoutTableName(endpoint, table);
             _tableOperations = tableOperations;
@@ -329,6 +330,7 @@ namespace Azure.Data.Tables
             _diagnostics = diagnostics;
             _isCosmosEndpoint = isPremiumEndpoint;
             _pipeline = pipeline;
+            _tableSharedKeyCredential = credential;
         }
 
         /// <summary>

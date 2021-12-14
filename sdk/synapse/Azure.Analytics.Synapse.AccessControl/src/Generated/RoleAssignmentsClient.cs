@@ -50,14 +50,14 @@ namespace Azure.Analytics.Synapse.AccessControl
 
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
 
         /// <summary> Check if the given principalId has access to perform list of actions at a given scope. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -118,7 +118,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCheckPrincipalAccessRequest(content);
+                using HttpMessage message = CreateCheckPrincipalAccessRequest(content, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -130,7 +130,7 @@ namespace Azure.Analytics.Synapse.AccessControl
 
         /// <summary> Check if the given principalId has access to perform list of actions at a given scope. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -191,7 +191,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCheckPrincipalAccessRequest(content);
+                using HttpMessage message = CreateCheckPrincipalAccessRequest(content, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -206,7 +206,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="principalId"> Object ID of the AAD principal or security-group. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
         /// <param name="continuationToken"> Continuation token. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -248,7 +248,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             scope0.Start();
             try
             {
-                using HttpMessage message = CreateGetRoleAssignmentsRequest(roleId, principalId, scope, continuationToken);
+                using HttpMessage message = CreateGetRoleAssignmentsRequest(roleId, principalId, scope, continuationToken, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -263,7 +263,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="principalId"> Object ID of the AAD principal or security-group. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
         /// <param name="continuationToken"> Continuation token. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -305,7 +305,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             scope0.Start();
             try
             {
-                using HttpMessage message = CreateGetRoleAssignmentsRequest(roleId, principalId, scope, continuationToken);
+                using HttpMessage message = CreateGetRoleAssignmentsRequest(roleId, principalId, scope, continuationToken, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -318,7 +318,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> Create role assignment. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -364,7 +364,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             scope0.Start();
             try
             {
-                using HttpMessage message = CreateCreateRoleAssignmentRequest(roleAssignmentId, content);
+                using HttpMessage message = CreateCreateRoleAssignmentRequest(roleAssignmentId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -377,7 +377,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> Create role assignment. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -423,7 +423,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             scope0.Start();
             try
             {
-                using HttpMessage message = CreateCreateRoleAssignmentRequest(roleAssignmentId, content);
+                using HttpMessage message = CreateCreateRoleAssignmentRequest(roleAssignmentId, content, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -435,7 +435,7 @@ namespace Azure.Analytics.Synapse.AccessControl
 
         /// <summary> Get role assignment by role assignment Id. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -473,7 +473,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             scope0.Start();
             try
             {
-                using HttpMessage message = CreateGetRoleAssignmentByIdRequest(roleAssignmentId);
+                using HttpMessage message = CreateGetRoleAssignmentByIdRequest(roleAssignmentId, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -485,7 +485,7 @@ namespace Azure.Analytics.Synapse.AccessControl
 
         /// <summary> Get role assignment by role assignment Id. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -523,7 +523,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             scope0.Start();
             try
             {
-                using HttpMessage message = CreateGetRoleAssignmentByIdRequest(roleAssignmentId);
+                using HttpMessage message = CreateGetRoleAssignmentByIdRequest(roleAssignmentId, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -536,7 +536,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> Delete role assignment by role assignment Id. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
@@ -565,7 +565,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             scope0.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRoleAssignmentByIdRequest(roleAssignmentId, scope);
+                using HttpMessage message = CreateDeleteRoleAssignmentByIdRequest(roleAssignmentId, scope, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -578,7 +578,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> Delete role assignment by role assignment Id. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
@@ -607,7 +607,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             scope0.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRoleAssignmentByIdRequest(roleAssignmentId, scope);
+                using HttpMessage message = CreateDeleteRoleAssignmentByIdRequest(roleAssignmentId, scope, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -617,9 +617,9 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        internal HttpMessage CreateCheckPrincipalAccessRequest(RequestContent content)
+        internal HttpMessage CreateCheckPrincipalAccessRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -634,9 +634,9 @@ namespace Azure.Analytics.Synapse.AccessControl
             return message;
         }
 
-        internal HttpMessage CreateGetRoleAssignmentsRequest(string roleId, string principalId, string scope, string continuationToken)
+        internal HttpMessage CreateGetRoleAssignmentsRequest(string roleId, string principalId, string scope, string continuationToken, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -665,9 +665,9 @@ namespace Azure.Analytics.Synapse.AccessControl
             return message;
         }
 
-        internal HttpMessage CreateCreateRoleAssignmentRequest(string roleAssignmentId, RequestContent content)
+        internal HttpMessage CreateCreateRoleAssignmentRequest(string roleAssignmentId, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -683,9 +683,9 @@ namespace Azure.Analytics.Synapse.AccessControl
             return message;
         }
 
-        internal HttpMessage CreateGetRoleAssignmentByIdRequest(string roleAssignmentId)
+        internal HttpMessage CreateGetRoleAssignmentByIdRequest(string roleAssignmentId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -699,9 +699,9 @@ namespace Azure.Analytics.Synapse.AccessControl
             return message;
         }
 
-        internal HttpMessage CreateDeleteRoleAssignmentByIdRequest(string roleAssignmentId, string scope)
+        internal HttpMessage CreateDeleteRoleAssignmentByIdRequest(string roleAssignmentId, string scope, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
