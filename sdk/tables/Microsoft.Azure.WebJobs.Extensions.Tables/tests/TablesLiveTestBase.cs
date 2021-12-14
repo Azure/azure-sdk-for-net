@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core.TestFramework;
-using Microsoft.Azure.Cosmos.Table;
+using Azure.Data.Tables;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Configuration;
@@ -24,24 +25,27 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         protected const string RowKey = "RK";
         private readonly Random _random = new();
         protected string TableName;
-        private protected StorageAccount Account;
-        protected CloudTable CloudTable;
+        protected TableServiceClient ServiceClient;
+        protected TableClient TableClient;
 
         [SetUp]
         public async Task SetUp()
         {
-            TableName = "testtable" + _random.Next();
+            TableName = GetRandomTableName();
 
-            Account = StorageAccount.NewFromConnectionString(TestEnvironment.StorageConnectionString);
-            var tableClient = Account.CreateCloudTableClient();
-            CloudTable = tableClient.GetTableReference(TableName);
-            await CloudTable.CreateAsync();
+            ServiceClient = new TableServiceClient(TestEnvironment.StorageConnectionString);
+            TableClient = ServiceClient.GetTableClient(TableName);
+            await TableClient.CreateAsync();
         }
-
         [TearDown]
         public async Task TearDown()
         {
-            await CloudTable.DeleteIfExistsAsync();
+            try
+            {
+                await TableClient.DeleteAsync();
+            }
+            catch
+            { }
         }
 
         protected async Task<T> CallAsync<T>(string methodName = null, object arguments = null, Action<HostBuilder> configure = null)
@@ -107,6 +111,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             {
                 return (T)_instances[typeof(T)];
             }
+        }
+
+        protected Task<bool> TableExistsAsync(string name)
+        {
+            return TableExistsAsync(ServiceClient.GetTableClient(name));
+        }
+        protected static async Task<bool> TableExistsAsync(TableClient client)
+        {
+            try
+            {
+                await client.QueryAsync<TableEntity>().ToEnumerableAsync();
+                return true;
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return false;
+            }
+        }
+
+        protected string GetRandomTableName()
+        {
+            return "testtable" + _random.Next();
         }
     }
 }

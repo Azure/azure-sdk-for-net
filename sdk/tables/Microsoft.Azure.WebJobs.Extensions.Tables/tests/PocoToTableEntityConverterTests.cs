@@ -4,8 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Azure.Data.Tables;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
-using Microsoft.Azure.Cosmos.Table;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests

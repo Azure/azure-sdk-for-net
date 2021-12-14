@@ -41,9 +41,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             string tableName = _tableNameTemplate.Bind(bindingData);
             string partitionKey = _partitionKeyTemplate.Bind(bindingData);
             string rowKey = _rowKeyTemplate.Bind(bindingData);
-            TableClient.ValidateAzureTableName(tableName);
-            TableClient.ValidateAzureTableKeyValue(partitionKey);
-            TableClient.ValidateAzureTableKeyValue(rowKey);
+            TableClientHelpers.ValidateAzureTableName(tableName);
+            TableClientHelpers.ValidateAzureTableKeyValue(partitionKey);
+            TableClientHelpers.ValidateAzureTableKeyValue(rowKey);
             return new TableEntityPath(tableName, partitionKey, rowKey);
         }
 

@@ -2,20 +2,12 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Azure.Cosmos.Table;
+using Azure;
+using Azure.Data.Tables;
 using Microsoft.Azure.WebJobs.Host;
-using Microsoft.Azure.WebJobs.Extensions.Tables.Tests;
-using Microsoft.Azure.WebJobs.Host.TestCommon;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
@@ -33,31 +25,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             await CallAsync<MissingTableProgram>(methodName);
             // Assert
-            var table = Account.CreateCloudTableClient().GetTableReference(TableName);
-            Assert.False(await table.ExistsAsync());
+            Assert.False(await TableExistsAsync(TableName));
         }
 
         [Test]
-        public async Task Table_IfBoundToCloudTableAndTableIsMissing_Creates()
+        public async Task Table_IfBoundToTableClientAndTableIsMissing_Creates()
         {
-            TableName = "ThisTableDoesntExist";
-            var tableReference = Account.CreateCloudTableClient().GetTableReference(TableName);
+            TableName = GetRandomTableName();
+            var tableReference = ServiceClient.GetTableClient(TableName);
 
             // Act
-            await CallAsync<BindToCloudTableProgram>();
+            await CallAsync<BindToTableClientProgram>();
 
             // Assert
-
-            var table = tableReference;
-            Assert.True(await table.ExistsAsync());
+            Assert.True(await TableExistsAsync(tableReference.Name));
         }
 
-        private class BindToCloudTableProgram
+        private class BindToTableClientProgram
         {
-            public async Task BindToCloudTable([Table(TableNameExpression)] CloudTable table)
+            public async Task BindToTableClient([Table(TableNameExpression)] TableClient table)
             {
                 Assert.NotNull(table);
-                await table.ExistsAsync();
+                Assert.True(await TableExistsAsync(table));
             }
         }
 
@@ -71,21 +60,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             public static void Call([Table(TableNameExpression)] ICollector<ITableEntity> table)
             {
-                table.Add(new DynamicTableEntity(PartitionKey, RowKey));
+                table.Add(new TableEntity(PartitionKey, RowKey));
             }
         }
 
         [Test]
-        public async Task Table_IfBoundToICollectorDynamicTableEntity_CanCall()
+        public async Task Table_IfBoundToICollectorTableEntity_CanCall()
         {
-            await TestTableBoundToCollectorCanCallAsync<BindTableToICollectorDynamicTableEntity>();
+            await TestTableBoundToCollectorCanCallAsync<BindTableToICollectorTableEntity>();
         }
 
-        private class BindTableToICollectorDynamicTableEntity
+        private class BindTableToICollectorTableEntity
         {
-            public static void Call([Table(TableNameExpression)] ICollector<DynamicTableEntity> table)
+            public static void Call([Table(TableNameExpression)] ICollector<TableEntity> table)
             {
-                table.Add(new DynamicTableEntity(PartitionKey, RowKey));
+                table.Add(new TableEntity(PartitionKey, RowKey));
             }
         }
 
@@ -113,21 +102,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             public static Task Call([Table(TableNameExpression)] IAsyncCollector<ITableEntity> table)
             {
-                return table.AddAsync(new DynamicTableEntity(PartitionKey, RowKey));
+                return table.AddAsync(new TableEntity(PartitionKey, RowKey));
             }
         }
 
         [Test]
-        public async Task Table_IfBoundToIAsyncCollectorDynamicTableEntity_CanCall()
+        public async Task Table_IfBoundToIAsyncCollectorTableEntity_CanCall()
         {
-            await TestTableBoundToCollectorCanCallAsync<BindTableToIAsyncCollectorDynamicTableEntity>();
+            await TestTableBoundToCollectorCanCallAsync<BindTableToIAsyncCollectorTableEntity>();
         }
 
-        private class BindTableToIAsyncCollectorDynamicTableEntity
+        private class BindTableToIAsyncCollectorTableEntity
         {
-            public static Task Call([Table(TableNameExpression)] IAsyncCollector<DynamicTableEntity> table)
+            public static Task Call([Table(TableNameExpression)] IAsyncCollector<TableEntity> table)
             {
-                return table.AddAsync(new DynamicTableEntity(PartitionKey, RowKey));
+                return table.AddAsync(new TableEntity(PartitionKey, RowKey));
             }
         }
 
@@ -151,7 +140,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             await CallAsync<T>();
 
             // Assert
-            DynamicTableEntity entity = CloudTable.Retrieve<DynamicTableEntity>(PartitionKey, RowKey);
+            TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
             Assert.NotNull(entity);
         }
 
@@ -163,51 +152,53 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
         private class BindTableToCollectorFoo
         {
-            public static void Call([Table(TableNameExpression)] ICollector<ITableEntity> collector,
-                [Table(TableNameExpression)] CloudTable table)
+            public static async Task Call([Table(TableNameExpression)] ICollector<ITableEntity> collector,
+                [Table(TableNameExpression)] TableClient table)
             {
-                SdkTableEntity entity = table.Retrieve<SdkTableEntity>(PartitionKey, RowKey);
+                SdkTableEntity entity = await table.GetEntityAsync<SdkTableEntity>(PartitionKey, RowKey);
                 Assert.NotNull(entity);
                 Assert.AreEqual("Foo", entity.Value);
                 // Update the entity to invalidate the version read by this method.
-                table.Replace(new SdkTableEntity
+                await table.UpdateEntityAsync(new SdkTableEntity
                 {
                     PartitionKey = PartitionKey,
                     RowKey = RowKey,
-                    ETag = "*",
                     Value = "FooBackground"
-                });
+                }, ETag.All);
                 // The attempted update by this method should now fail.
-                collector.Add(new DynamicTableEntity(PartitionKey, RowKey, entity.ETag,
-                    new Dictionary<string, EntityProperty> { { "Value", new EntityProperty("Bar") } }));
+                collector.Add(new TableEntity(PartitionKey, RowKey)
+                {
+                    ETag = entity.ETag,
+                    ["Value"] = "Bar"
+                });
             }
         }
 
         [Test]
         public async Task TableEntity_IfBoundToJArray_CanCall()
         {
-            CloudTable.InsertOrReplace(CreateTableEntity(PartitionKey, RowKey + "1", "Value", "x1", "*"));
-            CloudTable.InsertOrReplace(CreateTableEntity(PartitionKey, RowKey + "2", "Value", "x2", "*"));
-            CloudTable.InsertOrReplace(CreateTableEntity(PartitionKey, RowKey + "3", "Value", "x3", "*"));
-            CloudTable.InsertOrReplace(CreateTableEntity(PartitionKey, RowKey + "4", "Value", "x4", "*"));
+            await TableClient.AddEntityAsync(CreateTableEntity(PartitionKey, RowKey + "1", "Value", "x1"));
+            await TableClient.AddEntityAsync(CreateTableEntity(PartitionKey, RowKey + "2", "Value", "x2"));
+            await TableClient.AddEntityAsync(CreateTableEntity(PartitionKey, RowKey + "3", "Value", "x3"));
+            await TableClient.AddEntityAsync(CreateTableEntity(PartitionKey, RowKey + "4", "Value", "x4"));
 
             // Act
             var result1 = await CallAsync<BindTableEntityToJArrayProgram>(nameof(BindTableEntityToJArrayProgram.CallTakeFilter));
-            Assert.AreEqual("x1;x3;", result1._result);
+            Assert.AreEqual("x1;x3;", result1.Result);
 
             var result2 = await CallAsync<BindTableEntityToJArrayProgram>(nameof(BindTableEntityToJArrayProgram.CallFilter));
-            Assert.AreEqual("x1;x3;x4;", result2._result);
+            Assert.AreEqual("x1;x3;x4;", result2.Result);
 
             var result3 = await CallAsync<BindTableEntityToJArrayProgram>(nameof(BindTableEntityToJArrayProgram.CallTake));
-            Assert.AreEqual("x1;x2;x3;", result3._result);
+            Assert.AreEqual("x1;x2;x3;", result3.Result);
 
             var result4 = await CallAsync<BindTableEntityToJArrayProgram>(nameof(BindTableEntityToJArrayProgram.Call));
-            Assert.AreEqual("x1;x2;x3;x4;", result4._result);
+            Assert.AreEqual("x1;x2;x3;x4;", result4.Result);
         }
 
         private class BindTableEntityToJArrayProgram
         {
-            public string _result;
+            public string Result;
 
             // Helper to flatten a Jarray for quick testing.
             private static string Flatten(JArray array)
@@ -224,23 +215,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
             public void CallTakeFilter([Table(TableNameExpression, PartitionKey, Take = 2, Filter = "Value ne 'x2'")] JArray array)
             {
-                this._result = Flatten(array);
+                Result = Flatten(array);
             }
 
             public void CallFilter([Table(TableNameExpression, PartitionKey, Filter = "Value ne 'x2'")] JArray array)
             {
-                this._result = Flatten(array);
+                Result = Flatten(array);
             }
 
             public void CallTake([Table(TableNameExpression, PartitionKey, Take = 3)] JArray array)
             {
-                this._result = Flatten(array);
+                Result = Flatten(array);
             }
 
             // No take or filters
             public void Call([Table(TableNameExpression, PartitionKey)] JArray array)
             {
-                this._result = Flatten(array);
+                Result = Flatten(array);
             }
         }
 
@@ -248,7 +239,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         public async Task TableEntity_IfBoundToJObject_CanCall()
         {
             // Arrange
-            CloudTable.Insert(CreateTableEntity(PartitionKey, RowKey, "Value", "Foo"));
+            await TableClient.AddEntityAsync(CreateTableEntity(PartitionKey, RowKey, "Value", "Foo"));
 
             await CallAsync<BindTableEntityToJObjectProgram>(arguments: new
             {
@@ -258,7 +249,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             });
 
             // Assert
-            SdkTableEntity entity = CloudTable.Retrieve<SdkTableEntity>(PartitionKey, RowKey);
+            SdkTableEntity entity = await TableClient.GetEntityAsync<SdkTableEntity>(PartitionKey, RowKey);
             Assert.NotNull(entity);
         }
 
@@ -275,11 +266,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         public async Task TableEntity_IfBoundToSdkTableEntity_CanCall()
         {
             // Arrange
-            CloudTable.Insert(CreateTableEntity(PartitionKey, RowKey, "Value", "Foo"));
+            await TableClient.AddEntityAsync(CreateTableEntity(PartitionKey, RowKey, "Value", "Foo"));
             // Act
             await CallAsync<BindTableEntityToSdkTableEntityProgram>();
             // Assert
-            SdkTableEntity entity = CloudTable.Retrieve<SdkTableEntity>(PartitionKey, RowKey);
+            SdkTableEntity entity = await TableClient.GetEntityAsync<SdkTableEntity>(PartitionKey, RowKey);
             Assert.NotNull(entity);
             Assert.AreEqual("Bar", entity.Value);
         }
@@ -298,33 +289,27 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         public async Task TableEntity_IfBoundToPocoTableEntity_CanCall()
         {
             // Arrange
-            CloudTable.Insert(new DynamicTableEntity(PartitionKey, RowKey, null, new Dictionary<string, EntityProperty>
+            await TableClient.AddEntityAsync(new TableEntity(PartitionKey, RowKey)
             {
-                { "Fruit", new EntityProperty("Banana") },
-                { "Duration", new EntityProperty("\"00:00:01\"") },
-                { "Value", new EntityProperty("Foo") }
-            }));
+                { "Fruit", ("Banana") },
+                { "Duration", ("\"00:00:01\"") },
+                { "Value", ("Foo") }
+            });
 
             // Act
             await CallAsync<BindTableEntityToPocoTableEntityProgram>();
 
             // Assert
-            DynamicTableEntity entity = CloudTable.Retrieve<DynamicTableEntity>(PartitionKey, RowKey);
+            TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
             Assert.NotNull(entity);
             Assert.AreEqual(PartitionKey, entity.PartitionKey); // Guard
             Assert.AreEqual(RowKey, entity.RowKey); // Guard
-            IDictionary<string, EntityProperty> properties = entity.Properties;
-            Assert.AreEqual(3, properties.Count);
-            Assert.True(properties.ContainsKey("Value"));
-            EntityProperty fruitProperty = properties["Fruit"];
-            Assert.AreEqual(EdmType.String, fruitProperty.PropertyType);
-            Assert.AreEqual("Pear", fruitProperty.StringValue);
-            EntityProperty durationProperty = properties["Duration"];
-            Assert.AreEqual(EdmType.String, durationProperty.PropertyType);
-            Assert.AreEqual("\"00:02:00\"", durationProperty.StringValue);
-            EntityProperty valueProperty = properties["Value"];
-            Assert.AreEqual(EdmType.String, valueProperty.PropertyType);
-            Assert.AreEqual("Bar", valueProperty.StringValue);
+
+            // TODO: behavior change. Was 3 before
+            Assert.AreEqual(7, entity.Count);
+            Assert.AreEqual("Pear", entity["Fruit"]);
+            Assert.AreEqual("\"00:02:00\"", entity["Duration"]);
+            Assert.AreEqual("Bar", entity["Value"]);
         }
 
         private class BindTableEntityToPocoTableEntityProgram
@@ -338,6 +323,30 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 entity.Fruit = Fruit.Pear;
                 entity.Duration = TimeSpan.FromMinutes(2);
                 entity.Value = "Bar";
+            }
+        }
+
+        [Test]
+        public Task TableEntity_IfBoundToPocoThatDoesntExist_Null_PocoTableEntity() =>
+            CallAsync<BindTableEntityToPocoTableEntityDoesntExistProgram<PocoTableEntity>>();
+
+        [Test]
+        public Task TableEntity_IfBoundToPocoThatDoesntExist_Null_JObject() =>
+            CallAsync<BindTableEntityToPocoTableEntityDoesntExistProgram<JObject>>();
+
+        [Test]
+        public Task TableEntity_IfBoundToPocoThatDoesntExist_Null_ITableEntity() =>
+            CallAsync<BindTableEntityToPocoTableEntityDoesntExistProgram<ITableEntity>>();
+
+        [Test]
+        public Task TableEntity_IfBoundToPocoThatDoesntExist_Null_TableEntity() =>
+            CallAsync<BindTableEntityToPocoTableEntityDoesntExistProgram<TableEntity>>();
+
+        private class BindTableEntityToPocoTableEntityDoesntExistProgram<T>
+        {
+            public static void Call([Table(TableNameExpression, PartitionKey, RowKey)] T entity)
+            {
+                Assert.IsNull(entity);
             }
         }
 
@@ -363,19 +372,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
         private class BindTableEntityToConcurrentlyUpdatedSdkTableEntity
         {
-            public static void Call([Table(TableNameExpression, PartitionKey, RowKey)] SdkTableEntity entity,
-                [Table(TableNameExpression)] CloudTable table)
+            public static async Task Call([Table(TableNameExpression, PartitionKey, RowKey)] SdkTableEntity entity,
+                [Table(TableNameExpression)] TableClient table)
             {
                 Assert.NotNull(entity);
                 Assert.AreEqual("Foo", entity.Value);
                 // Update the entity to invalidate the version read by this method.
-                table.Replace(new SdkTableEntity
+                await table.UpdateEntityAsync(new SdkTableEntity
                 {
                     PartitionKey = PartitionKey,
                     RowKey = RowKey,
-                    ETag = "*",
                     Value = "FooBackground"
-                });
+                }, ETag.All);
                 // The attempted update by this method should now fail.
                 entity.Value = "Bar";
             }
@@ -389,19 +397,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
         private class BindTableEntityToConcurrentlyUpdatedPocoTableEntity
         {
-            public static void Call([Table(TableNameExpression, PartitionKey, RowKey)] PocoTableEntity entity,
-                [Table(TableNameExpression)] CloudTable table)
+            public static async Task Call([Table(TableNameExpression, PartitionKey, RowKey)] PocoTableEntity entity,
+                [Table(TableNameExpression)] TableClient table)
             {
                 Assert.NotNull(entity);
                 Assert.AreEqual("Foo", entity.Value);
                 // Update the entity to invalidate the version read by this method.
-                table.Replace(new SdkTableEntity
+                await table.UpdateEntityAsync(new SdkTableEntity
                 {
                     PartitionKey = PartitionKey,
                     RowKey = RowKey,
-                    ETag = "*",
                     Value = "FooBackground"
-                });
+                }, ETag.All);
                 // The attempted update by this method should now fail.
                 entity.Value = "Bar";
             }
@@ -415,14 +422,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         private async Task TestBindToConcurrentlyUpdatedTableEntity<T>(string parameterName)
         {
             // Arrange
-            await CloudTable.CreateIfNotExistsAsync();
-            CloudTable.Insert(CreateTableEntity(PartitionKey, RowKey, "Value", "Foo"));
+            await TableClient.CreateIfNotExistsAsync();
+            await TableClient.AddEntityAsync(CreateTableEntity(PartitionKey, RowKey, "Value", "Foo"));
 
             // Act & Assert
             var exception = Assert.CatchAsync<FunctionInvocationException>(async () => await CallAsync<T>("Call"));
 
             AssertInvocationETagFailure(parameterName, exception);
-            SdkTableEntity entity = CloudTable.Retrieve<SdkTableEntity>(PartitionKey, RowKey);
+            SdkTableEntity entity = await TableClient.GetEntityAsync<SdkTableEntity>(PartitionKey, RowKey);
             Assert.NotNull(entity);
             Assert.AreEqual("FooBackground", entity.Value);
         }
@@ -437,21 +444,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             Assert.AreEqual(expectedMessage, exception.InnerException.Message);
 
             Exception innerException = exception.InnerException.InnerException;
-            Assert.IsInstanceOf<StorageException>(innerException);
+            Assert.IsInstanceOf<RequestFailedException>(innerException);
 
-            StorageException invalidOperationException = (StorageException)innerException;
+            RequestFailedException invalidOperationException = (RequestFailedException)innerException;
             Assert.NotNull(invalidOperationException.Message);
             //"Precondition Failed",
             Assert.That(invalidOperationException.Message, Contains.Substring("UpdateConditionNotSatisfied").Or.Contains("Precondition Failed"));
         }
 
-        private ITableEntity CreateTableEntity(string partitionKey, string rowKey, string propertyName,
+        private TableEntity CreateTableEntity(string partitionKey, string rowKey, string propertyName,
             string propertyValue, string eTag = null)
         {
-            return new DynamicTableEntity(partitionKey, rowKey, eTag, new Dictionary<string, EntityProperty>
+            return new TableEntity(partitionKey, rowKey)
             {
-                { propertyName, new EntityProperty(propertyValue) }
-            });
+                ETag = eTag != null ? new ETag(eTag) : default,
+                [propertyName] = propertyValue
+            };
         }
 
         private class MissingTableProgram
@@ -477,9 +485,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }
         }
 
-        private class SdkTableEntity : TableEntity
+        private class SdkTableEntity : ITableEntity
         {
             public string Value { get; set; }
+            public string PartitionKey { get; set; }
+            public string RowKey { get; set; }
+            public DateTimeOffset? Timestamp { get; set; }
+            public ETag ETag { get; set; }
         }
 
         private class PocoTableEntity

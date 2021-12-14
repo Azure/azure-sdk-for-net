@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Microsoft.Azure.Cosmos.Table;
+using Azure.Data.Tables;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
@@ -17,13 +17,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
     // Naming rules:
     // RowKey  - no \,/, #, ?, less than 1 kb in size
     // Table name is restrictive, must match: "^[A-Za-z][A-Za-z0-9]{2,62}$"
-    internal static class TableClient
+    internal static class TableClientHelpers
     {
         private static readonly char[] InvalidKeyValueCharacters = GetInvalidTableKeyValueCharacters();
 
-        public static string GetAccountName(CloudTableClient client)
+        public static string GetAccountName(TableServiceClient client)
         {
-            return client?.Credentials?.AccountName;
+            return client?.AccountName;
         }
 
         // http://msdn.microsoft.com/en-us/library/windowsazure/dd179338.aspx
