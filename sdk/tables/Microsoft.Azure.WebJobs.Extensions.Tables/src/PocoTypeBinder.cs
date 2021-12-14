@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using System.Reflection;
 using Azure;
 using Azure.Data.Tables;
 using Azure.Monitor.Query;
@@ -15,10 +16,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
         public static PocoTypeBinder Shared { get; } = new();
         protected override void Set<T>(TableEntity destination, T value, BoundMemberInfo memberInfo)
         {
-            // Remove the ETag and Timestamp properties, as they do not need to be serialized
-            if (memberInfo.Name == TableConstants.PropertyNames.ETag || memberInfo.Name == TableConstants.PropertyNames.Timestamp)
+            // TODO: this is not the best place for this check
+            if (memberInfo.MemberInfo is PropertyInfo { GetMethod: { IsPrivate: true } })
             {
                 return;
+            }
+
+            switch (memberInfo.Name)
+            {
+                case TableConstants.PropertyNames.ETag:
+                    destination.ETag = new ETag((string)(object)value);
+                    return;
+                case TableConstants.PropertyNames.Timestamp:
+                    destination.Timestamp = (DateTimeOffset)(object)value;
+                    return;
+                case TableConstants.PropertyNames.RowKey:
+                    destination.RowKey = (string)(object)value;
+                    return;
+                case TableConstants.PropertyNames.PartitionKey:
+                    destination.PartitionKey = (string)(object)value;
+                    return;
             }
 
             if (typeof(T) == typeof(bool) ||
@@ -55,6 +72,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
         protected override bool TryGet<T>(BoundMemberInfo memberInfo, TableEntity source, out T value)
         {
             value = default;
+
+            // TODO: this is not the best place for this check
+            if (memberInfo.MemberInfo is PropertyInfo { SetMethod: { IsPrivate: true } })
+            {
+                return false;
+            }
 
             var key = memberInfo.Name switch
             {
@@ -167,7 +190,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             else if (typeof(T) == typeof(TimeSpan))
             {
                 // TODO: this is new. Who handled this before?
-                value = (T)JsonConvert.DeserializeObject<T>(source.GetString(key));
+                value = JsonConvert.DeserializeObject<T>(source.GetString(key));
             }
 
             return true;

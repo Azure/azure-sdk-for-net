@@ -20,6 +20,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             ConvertsPartitionKey = HasGetter<string>("PartitionKey");
             ConvertsRowKey = HasGetter<string>("RowKey");
             ConvertsETag = HasGetter<string>("ETag");
+            HasGetter<DateTimeOffset>("Timestamp");
         }
 
         public bool ConvertsPartitionKey { get; }
