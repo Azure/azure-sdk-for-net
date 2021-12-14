@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -30,9 +31,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="diskEncryptionSetId">A relative URI containing the
         /// resource ID of the disk encryption set.</param>
-        public OSDiskImageEncryption(string diskEncryptionSetId = default(string))
+        /// <param name="securityProfile">This property specifies the security
+        /// profile of an OS disk image.</param>
+        public OSDiskImageEncryption(string diskEncryptionSetId = default(string), OSDiskImageSecurityProfile securityProfile = default(OSDiskImageSecurityProfile))
             : base(diskEncryptionSetId)
         {
+            SecurityProfile = securityProfile;
             CustomInit();
         }
 
@@ -40,6 +44,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets this property specifies the security profile of an OS
+        /// disk image.
+        /// </summary>
+        [JsonProperty(PropertyName = "securityProfile")]
+        public OSDiskImageSecurityProfile SecurityProfile { get; set; }
 
     }
 }
