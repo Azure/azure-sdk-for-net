@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.AppService
     public static partial class TenantExtensions
     {
         #region User
-        /// <summary> Gets an object representing a UserCollection along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a User along with the instance operations that can be performed on it. </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="UserCollection" /> object. </returns>
-        public static UserCollection GetUsers(this Tenant tenant)
+        /// <returns> Returns a <see cref="User" /> object. </returns>
+        public static User GetUser(this Tenant tenant)
         {
-            return new UserCollection(tenant);
+            return new User(tenant, new ResourceIdentifier(tenant.Id + "/providers/Microsoft.Web/publishingUsers/web"));
         }
         #endregion
 
