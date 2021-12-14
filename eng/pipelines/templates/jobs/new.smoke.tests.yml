@@ -8,6 +8,9 @@ parameters:
   - name: ArtifactName
     type: string
     default: ""
+  - name: TimeoutInMinutes
+    type: number
+    default: 60
 
 jobs:
   - job: SmokeTest
@@ -34,3 +37,4 @@ jobs:
             arguments: -CI -ArtifactsPath "$(Pipeline.Workspace)/${{ parameters.ArtifactName }}"
             workingDirectory: common/SmokeTests/SmokeTest
             pwsh: true
+    timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
