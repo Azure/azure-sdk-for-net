@@ -1,22 +1,25 @@
 omitted_paths:
   - archive/*
-  - eng/*
-  - tools/*
-  - src/*
-  - Documentation/*
-  - sdk/*mgmt*/*
-  - sdk/*/*.Management.*/*
-  - samples/*
   - common/Perf/*
   - common/SmokeTests/*
   - common/Stress/*
-  - sdk/*/*/perf/*
-  - sdk/*/samples/*
-  - sdk/*/*/samples/*
-  - sdk/*/swagger/*
   - doc/ApiDocGeneration/*
+  - Documentation/*
+  - eng/*
+  - samples/*
+  - sdk/*/*.Management.*/*
+  - sdk/*/*/perf/*
+  - sdk/*/*/samples/*
+  - sdk/*/samples/*
+  - sdk/*/swagger/*
+  - sdk/*mgmt*/*
+  - sdk/resourcemanager/*
+  - src/*
+  - tools/*
+
 language: net
 root_check_enabled: True
+
 required_readme_sections:
   - "Azure .+ client library for .NET"
   - "^Getting started$":
@@ -28,8 +31,8 @@ required_readme_sections:
   - ^Troubleshooting$
   - ^Next steps$
   - ^Contributing$
-known_presence_issues:
 
+known_presence_issues:
   - ['sdk/applicationinsights/Microsoft.Azure.ApplicationInsights.Query','Track 1']
   - ['sdk/attestation/Microsoft.Azure.Attestation','Track 1']
   - ['sdk/batch/Microsoft.Azure.Batch.FileStaging','Track 1']
@@ -81,52 +84,48 @@ known_content_issues:
   - ['README.md','Root readme']
   - ['doc/README.md','Doc readme']
   - ['sdk/alertsmanagement/Microsoft.Azure.Management.AlertsManagement/README.md','Track 1']
-
   - ['sdk/appconfiguration/README.md','azure-sdk-tools/issues/42']
-
-  - ['sdk/batch/Microsoft.Azure.Batch/README.md','Track 1']
   - ['sdk/batch/Microsoft.Azure.Batch.Conventions.Files/README.md','Track 1']
-
+  - ['sdk/batch/Microsoft.Azure.Batch/README.md','Track 1']
   - ['sdk/cognitiveservices/FormRecognizer/README.md','Track 1']
   - ['sdk/cognitiveservices/Language.TextAnalytics/src/README.md','Track 1']
   - ['sdk/cognitiveservices/Personalizer/src/README.md','Track 1']
 
-  - ['sdk/core/Azure.Core/README.md', 'Opt out of sections: https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/core/Azure.Core.Amqp/README.md', 'Opt out of sections: https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/core/Azure.Core.Experimental/README.md', 'Opt out of sections: https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/core/Azure.Core.TestFramework/README.md', '#11492']
+  - ['sdk/core/Azure.Core/README.md', 'Opt out of sections: https://github.com/Azure/azure-sdk-tools/issues/404']
 
   - ['sdk/core/Microsoft.Azure.Core.NewtonsoftJson/README.md', '#15423']
-  - ['sdk/core/Microsoft.Azure.Core.Spatial/README.md', '#15423']
   - ['sdk/core/Microsoft.Azure.Core.Spatial.NewtonsoftJson/README.md', '#15423']
-
+  - ['sdk/core/Microsoft.Azure.Core.Spatial/README.md', '#15423']
   - ['sdk/core/System.Memory.Data/README.md', '#5499']
 
-  - ['sdk/eventgrid/README.md','azure-sdk-tools/issues/42']
   - ['sdk/eventgrid/Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents/README.md', '#15423']  
-  - ['sdk/eventhub/README.md','azure-sdk-tools/issues/42']
+  - ['sdk/eventgrid/README.md','azure-sdk-tools/issues/42']
   - ['sdk/eventhub/Azure.Messaging.EventHubs.Shared/README.md','Not a service library']
   - ['sdk/eventhub/Microsoft.Azure.EventHubs/README.md','Track 1']
+  - ['sdk/eventhub/README.md','azure-sdk-tools/issues/42']
   
-  - ['sdk/extensions/README.md','azure-sdk-tools/issues/42']
+  - ['sdk/extensions/Azure.Extensions.AspNetCore.Configuration.Secrets/README.md', 'azure-sdk-tools/issues/404']
   - ['sdk/extensions/Azure.Extensions.AspNetCore.DataProtection.Blobs/README.md','azure-sdk-tools/issues/404']
   - ['sdk/extensions/Azure.Extensions.AspNetCore.DataProtection.Keys/README.md','azure-sdk-tools/issues/404']
-  - ['sdk/extensions/Azure.Extensions.AspNetCore.Configuration.Secrets/README.md', 'azure-sdk-tools/issues/404']
   - ['sdk/extensions/Microsoft.Azure.WebJobs.Extensions.Clients/README.md','azure-sdk-tools/issues/404']
   - ['sdk/extensions/Microsoft.Extensions.Azure/README.md','#5499']
+  - ['sdk/extensions/README.md','azure-sdk-tools/issues/42']
 
   - ['sdk/keyvault/Microsoft.Azure.KeyVault/README.md','Track 1']
 
-  - ['sdk/personalizer/README.md','azure-sdk-tools/issues/42']
   - ['sdk/personalizer/Azure.AI.Personalizer/README.md','azure-sdk-tools/issues/42']
+  - ['sdk/personalizer/README.md','azure-sdk-tools/issues/42']
 
   - ['sdk/search/README.md','azure-sdk-tools/issues/42']
 
-  - ['sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/README.md', '#15423']
   - ['sdk/servicebus/Microsoft.Azure.ServiceBus/README.md','Track 1']
+  - ['sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/README.md', '#15423']
 
-  - ['sdk/storage/README.md','azure-sdk-tools/issues/42']
   - ['sdk/storage/Azure.Storage.Common/README.md','azure-sdk-tools/issues/42']
+  - ['sdk/storage/README.md','azure-sdk-tools/issues/42']
 
   - ['sdk/synapse/Microsoft.Azure.Synapse/README.md','Track 1']
 
