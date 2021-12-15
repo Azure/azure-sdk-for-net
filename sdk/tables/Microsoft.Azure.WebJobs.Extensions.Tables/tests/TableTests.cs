@@ -192,7 +192,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 NullableDateTimeProperty = null,
                 DateTimeOffsetProperty = DateTimeOffset.MaxValue,
                 NullableDateTimeOffsetProperty = null,
-                DoubleProperty = 3.14,
+                DoubleProperty = 1.2,
                 NullableDoubleProperty = null,
                 GuidProperty = Recording.Random.NewGuid(),
                 NullableGuidProperty = null,
@@ -458,15 +458,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
         private class Poco
         {
-            public string PartitionKey { get; set; }
             public string RowKey { get; set; }
+            public string PartitionKey { get; set; }
             public string Property { get; set; }
         }
 
         private class PocoWithAllTypes
         {
-            public string PartitionKey { get; set; }
             public string RowKey { get; set; }
+            public string PartitionKey { get; set; }
             public bool BooleanProperty { get; set; }
             public bool? NullableBooleanProperty { get; set; }
             public byte[] ByteArrayProperty { get; set; }
