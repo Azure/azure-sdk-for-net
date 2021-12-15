@@ -13,5 +13,9 @@ skip-csproj: true
 output-folder: Generated/
 mgmt-debug:
   suppress-list-exception: true
+directive:
+  - rename-operation:
+      from: ApiManagementOperations_List
+      to: Operations_List
 
 ```
