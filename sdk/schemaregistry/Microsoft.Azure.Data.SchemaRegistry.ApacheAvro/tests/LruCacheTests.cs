@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             cache.AddOrUpdate("3", 3);
             // 1 is moved to head of list
             Assert.IsTrue(cache.TryGet("1", out _));
-            // 4 is moved to head of list
+            // 4 is added to head of list, which evicts 2, the least recently used item 
             cache.AddOrUpdate("4", 4);
             // 2 should be evicted
             Assert.IsFalse(cache.TryGet("2", out _));
