@@ -43,14 +43,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             _createTable = createTable;
             // https://github.com/Azure/azure-sdk-tools/issues/2448
             Sanitizer.BodyRegexSanitizers.Add(new BodyRegexSanitizer("(batch|changeset)_[\\w\\d-]+", "multipart_boundary"));
-            // https://github.com/Azure/azure-sdk-tools/issues/2453
-            Sanitizer.BodyRegexSanitizers.Add(
-                new BodyRegexSanitizer(
-                    "[^\\r](?<break>\\n)",
-                    "\r\n")
-                {
-                    GroupForReplace = "break"
-                });
         }
 
         public override async Task StartTestRecordingAsync()

@@ -178,6 +178,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         [RecordedTest]
+        // This test creates a payload that has newline characters that don't match cross-plat
+        [LiveOnly(alwaysRunLocally: true)]
         public async Task Table_IfBoundToICollectorPoco_AddInsertsUsingNativeTableTypes()
         {
             // Arrange
