@@ -5,10 +5,14 @@
 
 #nullable disable
 
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
     /// <summary> A reference to a related private endpoint connection. </summary>
-    public partial class PrivateEndpointConnectionReference
+    public partial class PrivateEndpointConnectionReference : Resource
     {
         /// <summary> Initializes a new instance of PrivateEndpointConnectionReference. </summary>
         internal PrivateEndpointConnectionReference()
@@ -16,32 +20,23 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> Initializes a new instance of PrivateEndpointConnectionReference. </summary>
-        /// <param name="id"> The resource ID. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
         /// <param name="provisioningState"> The provisioning status of the private endpoint connection. </param>
         /// <param name="privateEndpoint"> The resource of private endpoint. </param>
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        internal PrivateEndpointConnectionReference(string id, string name, string type, ProvisioningState? provisioningState, PrivateEndpoint privateEndpoint, PrivateLinkServiceConnectionState privateLinkServiceConnectionState)
+        internal PrivateEndpointConnectionReference(ResourceIdentifier id, string name, ResourceType type, ProvisioningState? provisioningState, WritableSubResource privateEndpoint, PrivateLinkServiceConnectionState privateLinkServiceConnectionState) : base(id, name, type)
         {
-            Id = id;
-            Name = name;
-            Type = type;
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
         }
 
-        /// <summary> The resource ID. </summary>
-        public string Id { get; }
-        /// <summary> The name of the resource. </summary>
-        public string Name { get; }
-        /// <summary> The type of the resource. </summary>
-        public string Type { get; }
         /// <summary> The provisioning status of the private endpoint connection. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The resource of private endpoint. </summary>
-        public PrivateEndpoint PrivateEndpoint { get; }
+        public WritableSubResource PrivateEndpoint { get; }
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         public PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; }
     }

@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static SubResource DeserializeSubResource(JsonElement element)
         {
-            string id = default;
+            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

@@ -581,13 +581,15 @@ namespace Azure.Storage
                 Sas.Permissions.Write,
                 Sas.Permissions.Delete,
                 Sas.Permissions.DeleteBlobVersion,
+                Sas.Permissions.PermanentDelete,
                 Sas.Permissions.List,
                 Sas.Permissions.Tag,
                 Sas.Permissions.Update,
                 Sas.Permissions.Process,
                 Sas.Permissions.FilterByTags,
                 Sas.Permissions.Move,
-                Sas.Permissions.Execute
+                Sas.Permissions.Execute,
+                Sas.Permissions.SetImmutabilityPolicy,
             };
 
             /// <summary>

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="operations"> The operations object to copy the client parameters from. </param>
         /// <param name="tenantData"> The data model representing the generic azure resource. </param>
         internal Tenant(ArmResource operations, TenantData tenantData)
-            : base(operations, ResourceIdentifier.RootResourceIdentifier)
+            : base(operations, ResourceIdentifier.Root)
         {
             _data = tenantData;
             HasData = true;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="baseUri"> The base URI of the service. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         internal Tenant(ArmClientOptions options, TokenCredential credential, Uri baseUri, HttpPipeline pipeline)
-            : base(new ClientContext(options, credential, baseUri, pipeline), ResourceIdentifier.RootResourceIdentifier)
+            : base(new ClientContext(options, credential, baseUri, pipeline), ResourceIdentifier.Root)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _providerRestOperations = new ProviderRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Guid.Empty.ToString(), BaseUri);

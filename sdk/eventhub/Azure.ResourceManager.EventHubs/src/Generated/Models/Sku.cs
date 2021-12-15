@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of Sku. </summary>
         /// <param name="name"> Name of this SKU. </param>
         /// <param name="tier"> The billing tier of this particular SKU. </param>
-        /// <param name="capacity"> The Event Hubs throughput units, value should be 0 to 20 throughput units. </param>
+        /// <param name="capacity"> The Event Hubs throughput units for Basic or Standard tiers, where value should be 0 to 20 throughput units. The Event Hubs premium units for Premium tier, where value should be 0 to 10 premium units. </param>
         internal Sku(SkuName name, SkuTier? tier, int? capacity)
         {
             Name = name;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         public SkuName Name { get; set; }
         /// <summary> The billing tier of this particular SKU. </summary>
         public SkuTier? Tier { get; set; }
-        /// <summary> The Event Hubs throughput units, value should be 0 to 20 throughput units. </summary>
+        /// <summary> The Event Hubs throughput units for Basic or Standard tiers, where value should be 0 to 20 throughput units. The Event Hubs premium units for Premium tier, where value should be 0 to 10 premium units. </summary>
         public int? Capacity { get; set; }
     }
 }

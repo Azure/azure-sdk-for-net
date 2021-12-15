@@ -15,7 +15,7 @@ namespace Azure.Identity.Tests
     {
         private const string ExpectedServiceName = "VS Code Azure";
 
-        public VisualStudioCodeCredentialLiveTests(bool isAsync) : base(isAsync)
+        public VisualStudioCodeCredentialLiveTests(bool isAsync) : base(isAsync, useLegacyTransport: true)
         {
         }
 

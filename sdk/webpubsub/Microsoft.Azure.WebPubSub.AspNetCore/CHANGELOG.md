@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,11 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.2 (2021-11-24)
+
+### Features Added
+- Add a `ConnectionStates` dictionary to `UserEventResponse` and `ConnectEventResponse` to manage connection state.
 
 ## 1.0.0-beta.1 (2021-11-09)
 

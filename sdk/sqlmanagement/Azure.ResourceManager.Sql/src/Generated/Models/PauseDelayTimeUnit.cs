@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="PauseDelayTimeUnit"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="PauseDelayTimeUnit"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PauseDelayTimeUnit(string value)
         {

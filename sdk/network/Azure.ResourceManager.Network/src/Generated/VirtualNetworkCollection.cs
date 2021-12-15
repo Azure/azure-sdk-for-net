@@ -21,11 +21,12 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of VirtualNetwork and their operations over a ResourceGroup. </summary>
+    /// <summary> A class representing collection of VirtualNetwork and their operations over its parent. </summary>
     public partial class VirtualNetworkCollection : ArmCollection, IEnumerable<VirtualNetwork>, IAsyncEnumerable<VirtualNetwork>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly VirtualNetworksRestOperations _restClient;
+        private readonly VirtualNetworksRestOperations _virtualNetworksRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="VirtualNetworkCollection"/> class for mocking. </summary>
         protected VirtualNetworkCollection()
@@ -37,22 +38,7 @@ namespace Azure.ResourceManager.Network
         internal VirtualNetworkCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new VirtualNetworksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        IEnumerator<VirtualNetwork> IEnumerable<VirtualNetwork>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<VirtualNetwork> IAsyncEnumerable<VirtualNetwork>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            _virtualNetworksRestClient = new VirtualNetworksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -81,8 +67,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, virtualNetworkName, parameters, cancellationToken);
-                var operation = new VirtualNetworkCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, virtualNetworkName, parameters).Request, response);
+                var response = _virtualNetworksRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, parameters, cancellationToken);
+                var operation = new VirtualNetworkCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _virtualNetworksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -115,8 +101,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, virtualNetworkName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualNetworkCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, virtualNetworkName, parameters).Request, response);
+                var response = await _virtualNetworksRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualNetworkCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _virtualNetworksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -128,22 +114,23 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the specified virtual network by resource group. </summary>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         public virtual Response<VirtualNetwork> Get(string virtualNetworkName, string expand = null, CancellationToken cancellationToken = default)
         {
+            if (virtualNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkCollection.Get");
             scope.Start();
             try
             {
-                if (virtualNetworkName == null)
-                {
-                    throw new ArgumentNullException(nameof(virtualNetworkName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, virtualNetworkName, expand, cancellationToken: cancellationToken);
+                var response = _virtualNetworksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualNetwork(Parent, response.Value), response.GetRawResponse());
@@ -155,22 +142,23 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the specified virtual network by resource group. </summary>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         public async virtual Task<Response<VirtualNetwork>> GetAsync(string virtualNetworkName, string expand = null, CancellationToken cancellationToken = default)
         {
+            if (virtualNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkCollection.Get");
             scope.Start();
             try
             {
-                if (virtualNetworkName == null)
-                {
-                    throw new ArgumentNullException(nameof(virtualNetworkName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, virtualNetworkName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _virtualNetworksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new VirtualNetwork(Parent, response.Value), response.GetRawResponse());
@@ -185,19 +173,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         public virtual Response<VirtualNetwork> GetIfExists(string virtualNetworkName, string expand = null, CancellationToken cancellationToken = default)
         {
+            if (virtualNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (virtualNetworkName == null)
-                {
-                    throw new ArgumentNullException(nameof(virtualNetworkName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, virtualNetworkName, expand, cancellationToken: cancellationToken);
+                var response = _virtualNetworksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, expand, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<VirtualNetwork>(null, response.GetRawResponse())
                     : Response.FromValue(new VirtualNetwork(this, response.Value), response.GetRawResponse());
@@ -212,19 +201,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         public async virtual Task<Response<VirtualNetwork>> GetIfExistsAsync(string virtualNetworkName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkCollection.GetIfExists");
+            if (virtualNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (virtualNetworkName == null)
-                {
-                    throw new ArgumentNullException(nameof(virtualNetworkName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, virtualNetworkName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _virtualNetworksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<VirtualNetwork>(null, response.GetRawResponse())
                     : Response.FromValue(new VirtualNetwork(this, response.Value), response.GetRawResponse());
@@ -239,18 +229,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string virtualNetworkName, string expand = null, CancellationToken cancellationToken = default)
         {
+            if (virtualNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkCollection.CheckIfExists");
             scope.Start();
             try
             {
-                if (virtualNetworkName == null)
-                {
-                    throw new ArgumentNullException(nameof(virtualNetworkName));
-                }
-
                 var response = GetIfExists(virtualNetworkName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -264,18 +255,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string virtualNetworkName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkCollection.CheckIfExists");
+            if (virtualNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (virtualNetworkName == null)
-                {
-                    throw new ArgumentNullException(nameof(virtualNetworkName));
-                }
-
                 var response = await GetIfExistsAsync(virtualNetworkName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -297,7 +289,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAll(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _virtualNetworksRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualNetwork(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -312,7 +304,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _virtualNetworksRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualNetwork(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -335,7 +327,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _virtualNetworksRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualNetwork(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -350,7 +342,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _virtualNetworksRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualNetwork(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -408,7 +400,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        IEnumerator<VirtualNetwork> IEnumerable<VirtualNetwork>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<VirtualNetwork> IAsyncEnumerable<VirtualNetwork>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, VirtualNetwork, VirtualNetworkData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, VirtualNetwork, VirtualNetworkData> Construct() { }
     }
 }

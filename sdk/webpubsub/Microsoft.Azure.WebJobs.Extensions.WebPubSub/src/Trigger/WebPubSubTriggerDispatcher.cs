@@ -13,6 +13,8 @@ using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.Logging;
 
+using NewtonsoftJsonLinq = Newtonsoft.Json.Linq;
+
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     internal class WebPubSubTriggerDispatcher : IWebPubSubTriggerDispatcher
@@ -146,12 +148,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                             // Skip no returns
                             if (response != null)
                             {
-                                var validResponse = Utilities.BuildValidResponse(response, requestType, context);
-
-                                if (validResponse != null)
+                                if (response is WebPubSubEventResponse wpsResponse)
                                 {
-                                    return validResponse;
+                                    return Utilities.BuildValidResponse(wpsResponse, requestType, context);
                                 }
+                                if (response is NewtonsoftJsonLinq.JToken jResponse)
+                                {
+                                    return Utilities.BuildValidResponse(jResponse, requestType, context);
+                                }
+
                                 _logger.LogWarning($"Invalid response type {response.GetType()} regarding current request: {requestType}");
                             }
                         }
@@ -191,7 +196,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 {
                     userId = values.SingleOrDefault();
                 }
-                Dictionary<string, object> states = null;
+                Dictionary<string, BinaryData> states = null;
                 if (request.Headers.TryGetValues(Constants.Headers.CloudEvents.State, out var connectionStates))
                 {
                     states = connectionStates.SingleOrDefault().DecodeConnectionStates();
@@ -200,7 +205,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 context = new WebPubSubConnectionContext(eventType, eventName, hub, connectionId, userId, signature, origin, states, headers);
                 return true;
             }
-            catch (Exception)
+            catch
             {
                 context = null;
                 return false;

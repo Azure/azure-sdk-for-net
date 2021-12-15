@@ -521,3 +521,10 @@ function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
   }
   Set-Content -Path $DocConfigFile -Value $outputLines
 }
+
+function Import-Dev-Cert-net
+{
+  Write-Host "Importing dev certificate"
+  dotnet dev-certs https --clean --import eng/common/testproxy/dotnet-devcert.pfx --password="password"
+  dotnet dev-certs https --trust
+}

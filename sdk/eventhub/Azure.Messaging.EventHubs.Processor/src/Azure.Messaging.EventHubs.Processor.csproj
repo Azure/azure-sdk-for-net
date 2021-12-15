@@ -13,7 +13,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!--
+        TEMP: Move Core to a project reference until the MessageWithMetadata are shipped in Azure.Core.
+
     <PackageReference Include="Azure.Core" />
+    -->
+    <ProjectReference Include="..\..\..\core\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj" />
+    <!-- END TEMP -->
 
     <!--
       TEMP: Move Event Hubs to a project reference until the

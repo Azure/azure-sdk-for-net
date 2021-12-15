@@ -23,7 +23,8 @@ namespace Azure.ResourceManager.Network
     public partial class ExpressRouteCrossConnectionPeering : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ExpressRouteCrossConnectionPeeringsRestOperations _restClient;
+        private readonly ExpressRouteCrossConnectionPeeringsRestOperations _expressRouteCrossConnectionPeeringsRestClient;
+        private readonly ExpressRouteCrossConnectionsRestOperations _expressRouteCrossConnectionsRestClient;
         private readonly ExpressRouteCrossConnectionPeeringData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteCrossConnectionPeering"/> class for mocking. </summary>
@@ -34,12 +35,13 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "ExpressRouteCrossConnectionPeering"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal ExpressRouteCrossConnectionPeering(ArmResource options, ExpressRouteCrossConnectionPeeringData resource) : base(options, resource.Id)
+        internal ExpressRouteCrossConnectionPeering(ArmResource options, ExpressRouteCrossConnectionPeeringData resource) : base(options, new ResourceIdentifier(resource.Id))
         {
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ExpressRouteCrossConnectionPeeringsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _expressRouteCrossConnectionPeeringsRestClient = new ExpressRouteCrossConnectionPeeringsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _expressRouteCrossConnectionsRestClient = new ExpressRouteCrossConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteCrossConnectionPeering"/> class. </summary>
@@ -48,7 +50,8 @@ namespace Azure.ResourceManager.Network
         internal ExpressRouteCrossConnectionPeering(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ExpressRouteCrossConnectionPeeringsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _expressRouteCrossConnectionPeeringsRestClient = new ExpressRouteCrossConnectionPeeringsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _expressRouteCrossConnectionsRestClient = new ExpressRouteCrossConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteCrossConnectionPeering"/> class. </summary>
@@ -60,7 +63,8 @@ namespace Azure.ResourceManager.Network
         internal ExpressRouteCrossConnectionPeering(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ExpressRouteCrossConnectionPeeringsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _expressRouteCrossConnectionPeeringsRestClient = new ExpressRouteCrossConnectionPeeringsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _expressRouteCrossConnectionsRestClient = new ExpressRouteCrossConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _expressRouteCrossConnectionPeeringsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ExpressRouteCrossConnectionPeering(this, response.Value), response.GetRawResponse());
@@ -112,7 +116,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _expressRouteCrossConnectionPeeringsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ExpressRouteCrossConnectionPeering(this, response.Value), response.GetRawResponse());
@@ -149,8 +153,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ExpressRouteCrossConnectionPeeringDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _expressRouteCrossConnectionPeeringsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ExpressRouteCrossConnectionPeeringDeleteOperation(_clientDiagnostics, Pipeline, _expressRouteCrossConnectionPeeringsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -171,8 +175,182 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ExpressRouteCrossConnectionPeeringDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _expressRouteCrossConnectionPeeringsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new ExpressRouteCrossConnectionPeeringDeleteOperation(_clientDiagnostics, Pipeline, _expressRouteCrossConnectionPeeringsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the currently advertised ARP table associated with the express route cross connection in a resource group. </summary>
+        /// <param name="devicePath"> The path of the device. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
+        public async virtual Task<ExpressRouteCrossConnectionListArpTableOperation> GetArpTableExpressRouteCrossConnectionAsync(string devicePath, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (devicePath == null)
+            {
+                throw new ArgumentNullException(nameof(devicePath));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeering.GetArpTableExpressRouteCrossConnection");
+            scope.Start();
+            try
+            {
+                var response = await _expressRouteCrossConnectionsRestClient.ListArpTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, cancellationToken).ConfigureAwait(false);
+                var operation = new ExpressRouteCrossConnectionListArpTableOperation(_clientDiagnostics, Pipeline, _expressRouteCrossConnectionsRestClient.CreateListArpTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the currently advertised ARP table associated with the express route cross connection in a resource group. </summary>
+        /// <param name="devicePath"> The path of the device. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
+        public virtual ExpressRouteCrossConnectionListArpTableOperation GetArpTableExpressRouteCrossConnection(string devicePath, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (devicePath == null)
+            {
+                throw new ArgumentNullException(nameof(devicePath));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeering.GetArpTableExpressRouteCrossConnection");
+            scope.Start();
+            try
+            {
+                var response = _expressRouteCrossConnectionsRestClient.ListArpTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, cancellationToken);
+                var operation = new ExpressRouteCrossConnectionListArpTableOperation(_clientDiagnostics, Pipeline, _expressRouteCrossConnectionsRestClient.CreateListArpTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the route table summary associated with the express route cross connection in a resource group. </summary>
+        /// <param name="devicePath"> The path of the device. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
+        public async virtual Task<ExpressRouteCrossConnectionListRoutesTableSummaryOperation> GetRoutesTableSummaryExpressRouteCrossConnectionAsync(string devicePath, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (devicePath == null)
+            {
+                throw new ArgumentNullException(nameof(devicePath));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeering.GetRoutesTableSummaryExpressRouteCrossConnection");
+            scope.Start();
+            try
+            {
+                var response = await _expressRouteCrossConnectionsRestClient.ListRoutesTableSummaryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, cancellationToken).ConfigureAwait(false);
+                var operation = new ExpressRouteCrossConnectionListRoutesTableSummaryOperation(_clientDiagnostics, Pipeline, _expressRouteCrossConnectionsRestClient.CreateListRoutesTableSummaryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the route table summary associated with the express route cross connection in a resource group. </summary>
+        /// <param name="devicePath"> The path of the device. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
+        public virtual ExpressRouteCrossConnectionListRoutesTableSummaryOperation GetRoutesTableSummaryExpressRouteCrossConnection(string devicePath, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (devicePath == null)
+            {
+                throw new ArgumentNullException(nameof(devicePath));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeering.GetRoutesTableSummaryExpressRouteCrossConnection");
+            scope.Start();
+            try
+            {
+                var response = _expressRouteCrossConnectionsRestClient.ListRoutesTableSummary(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, cancellationToken);
+                var operation = new ExpressRouteCrossConnectionListRoutesTableSummaryOperation(_clientDiagnostics, Pipeline, _expressRouteCrossConnectionsRestClient.CreateListRoutesTableSummaryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the currently advertised routes table associated with the express route cross connection in a resource group. </summary>
+        /// <param name="devicePath"> The path of the device. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
+        public async virtual Task<ExpressRouteCrossConnectionListRoutesTableOperation> GetRoutesTableExpressRouteCrossConnectionAsync(string devicePath, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (devicePath == null)
+            {
+                throw new ArgumentNullException(nameof(devicePath));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeering.GetRoutesTableExpressRouteCrossConnection");
+            scope.Start();
+            try
+            {
+                var response = await _expressRouteCrossConnectionsRestClient.ListRoutesTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, cancellationToken).ConfigureAwait(false);
+                var operation = new ExpressRouteCrossConnectionListRoutesTableOperation(_clientDiagnostics, Pipeline, _expressRouteCrossConnectionsRestClient.CreateListRoutesTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the currently advertised routes table associated with the express route cross connection in a resource group. </summary>
+        /// <param name="devicePath"> The path of the device. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
+        public virtual ExpressRouteCrossConnectionListRoutesTableOperation GetRoutesTableExpressRouteCrossConnection(string devicePath, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (devicePath == null)
+            {
+                throw new ArgumentNullException(nameof(devicePath));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeering.GetRoutesTableExpressRouteCrossConnection");
+            scope.Start();
+            try
+            {
+                var response = _expressRouteCrossConnectionsRestClient.ListRoutesTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, cancellationToken);
+                var operation = new ExpressRouteCrossConnectionListRoutesTableOperation(_clientDiagnostics, Pipeline, _expressRouteCrossConnectionsRestClient.CreateListRoutesTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

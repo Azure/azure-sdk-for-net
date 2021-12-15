@@ -10,12 +10,12 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> If enabled, connections that have application intent set to readonly in their connection string may be routed to a readonly secondary replica. This property is only settable for Premium and Business Critical databases. </summary>
+    /// <summary> The state of read-only routing. If enabled, connections that have application intent set to readonly in their connection string may be routed to a readonly secondary replica in the same region. </summary>
     public readonly partial struct DatabaseReadScale : IEquatable<DatabaseReadScale>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="DatabaseReadScale"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseReadScale"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DatabaseReadScale(string value)
         {

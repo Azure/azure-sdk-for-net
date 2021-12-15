@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Tests
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             _ipGroupName = SessionRecording.GenerateAssetName("IpGroupRG-");
-            StopSessionRecording();
+            await StopSessionRecordingAsync();
         }
 
         [OneTimeTearDown]

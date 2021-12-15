@@ -1,6 +1,6 @@
 # Azure Cognitive Services Anomaly Detector client library for .NET
 
-Microsoft Azure Cognitive Services Anomaly Detector API enables you to monitor and detect abnormalities in your time series data with machine learning. 
+Microsoft Azure Cognitive Services Anomaly Detector API enables you to monitor and detect abnormalities in your time series data with machine learning.
 
 [Source code][anomalydetector_client_src] | [Package (NuGet)][anomalydetector_nuget_package] | [API reference documentation][anomalydetector_refdocs] | [Product documentation][anomalydetector_docs]
 

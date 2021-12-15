@@ -23,11 +23,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             {
                 return GetType().Name;
             }
-            set
-            {
-                // used in type-less for deserialize.
-                _ = value;
-            }
         }
 
         /// <summary>

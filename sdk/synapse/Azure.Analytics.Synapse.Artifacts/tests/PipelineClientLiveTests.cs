@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
     /// </remarks>
     public class PipelineClientLiveTests : RecordedTestBase<SynapseTestEnvironment>
     {
-        public PipelineClientLiveTests(bool isAsync) : base(isAsync)
+        public PipelineClientLiveTests(bool isAsync) : base(isAsync, useLegacyTransport: true)
         {
         }
 

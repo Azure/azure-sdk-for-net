@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -31,6 +32,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(TimeCreated))
+            {
+                writer.WritePropertyName("timeCreated");
+                writer.WriteStringValue(TimeCreated.Value, "O");
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -44,12 +50,12 @@ namespace Azure.ResourceManager.Compute
             Optional<RestorePointSourceMetadata> sourceMetadata = default;
             Optional<string> provisioningState = default;
             Optional<ConsistencyModeTypes> consistencyMode = default;
-            Optional<RestorePointProvisioningDetails> provisioningDetails = default;
+            Optional<DateTimeOffset> timeCreated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -111,21 +117,21 @@ namespace Azure.ResourceManager.Compute
                             consistencyMode = new ConsistencyModeTypes(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningDetails"))
+                        if (property0.NameEquals("timeCreated"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningDetails = RestorePointProvisioningDetails.DeserializeRestorePointProvisioningDetails(property0.Value);
+                            timeCreated = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new RestorePointData(id, name, type, Optional.ToList(excludeDisks), sourceMetadata.Value, provisioningState.Value, Optional.ToNullable(consistencyMode), provisioningDetails.Value);
+            return new RestorePointData(id, name, type, Optional.ToList(excludeDisks), sourceMetadata.Value, provisioningState.Value, Optional.ToNullable(consistencyMode), Optional.ToNullable(timeCreated));
         }
     }
 }

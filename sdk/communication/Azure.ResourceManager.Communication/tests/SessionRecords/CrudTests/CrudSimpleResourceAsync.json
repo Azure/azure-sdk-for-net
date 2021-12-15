@@ -2314,6 +2314,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
+        "Content-Length": "0",
         "traceparent": "00-c503bca682f01045bef0b9abf85139c5-6451e26d553a3f4f-00",
         "User-Agent": [
           "azsdk-net-ResourceManager.Communication/1.1.0-alpha.20210831.1",

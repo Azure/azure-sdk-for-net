@@ -5,10 +5,13 @@
 
 #nullable disable
 
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Represents a database data masking rule. </summary>
-    public partial class DataMaskingRule : ProxyResource
+    public partial class DataMaskingRule : Resource
     {
         /// <summary> Initializes a new instance of DataMaskingRule. </summary>
         public DataMaskingRule()
@@ -16,9 +19,9 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of DataMaskingRule. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
         /// <param name="location"> The location of the data masking rule. </param>
         /// <param name="kind"> The kind of Data Masking Rule. Metadata, used for Azure portal. </param>
         /// <param name="idPropertiesId"> The rule Id. </param>
@@ -33,7 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="prefixSize"> If maskingFunction is set to Text, the number of characters to show unmasked in the beginning of the string. Otherwise, this parameter will be ignored. </param>
         /// <param name="suffixSize"> If maskingFunction is set to Text, the number of characters to show unmasked at the end of the string. Otherwise, this parameter will be ignored. </param>
         /// <param name="replacementString"> If maskingFunction is set to Text, the character to use for masking the unexposed part of the string. Otherwise, this parameter will be ignored. </param>
-        internal DataMaskingRule(string id, string name, string type, string location, string kind, string idPropertiesId, string aliasName, DataMaskingRuleState? ruleState, string schemaName, string tableName, string columnName, DataMaskingFunction? maskingFunction, string numberFrom, string numberTo, string prefixSize, string suffixSize, string replacementString) : base(id, name, type)
+        internal DataMaskingRule(ResourceIdentifier id, string name, ResourceType type, string location, string kind, string idPropertiesId, string aliasName, DataMaskingRuleState? ruleState, string schemaName, string tableName, string columnName, DataMaskingFunction? maskingFunction, string numberFrom, string numberTo, string prefixSize, string suffixSize, string replacementString) : base(id, name, type)
         {
             Location = location;
             Kind = kind;

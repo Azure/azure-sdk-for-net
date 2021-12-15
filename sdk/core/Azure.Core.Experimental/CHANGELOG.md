@@ -4,7 +4,15 @@
 
 ### Features Added
 
+- Added `RequestOptions` to enable per-invocation control of the request pipeline.
+
 ### Breaking Changes
+
+- The following types were removed:
+    - `ClassifiedResponse`
+    - `ExceptionFormattingResponseClassifier`
+    - `ResponseExtensions`
+    - `ResponsePropertiesPolicy`
 
 ### Bugs Fixed
 
