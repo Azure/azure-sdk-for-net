@@ -45,8 +45,7 @@ jobs:
           parameters:
               Paths:
                 - "!SessionRecords"
-                - "/*"
-                - "/sdk/${{ parameters.ServiceToTest }}/*/SessionRecords"
+                - "/sdk/${{ parameters.ServiceToTest }}/**/SessionRecords"
       - pwsh: |
           $(Build.SourcesDirectory)/eng/common/scripts/trust-proxy-certificate.ps1
         displayName: 'Language Specific Certificate Trust'
