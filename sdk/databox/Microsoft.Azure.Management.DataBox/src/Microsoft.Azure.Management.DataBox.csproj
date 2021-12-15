@@ -33,21 +33,6 @@
 	<ItemGroup>
 		<PackageReference Include="System.Text.Encoding" Version="4.3.0" />
 	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'net452'">
-	  <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework">
-	    <Version>1.7.7</Version>
-	  </PackageReference>
-	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'net461'">
-	  <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework">
-	    <Version>1.7.7</Version>
-	  </PackageReference>
-	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-	  <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework">
-	    <Version>1.7.7</Version>
-	  </PackageReference>
-	</ItemGroup>
 
 	<!-- Please do not move/edit code below this line -->
 	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
