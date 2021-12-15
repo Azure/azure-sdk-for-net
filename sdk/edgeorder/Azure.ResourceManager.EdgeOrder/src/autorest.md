@@ -14,8 +14,16 @@ output-folder: Generated/
 clear-output-folder: true
 mgmt-debug:
   suppress-list-exception: true
-  
+modelerfour:
+  lenient-model-deduplication: true
 directive:
+  - from: swagger-document
+    where: $.definitions.Origin
+    transform: >
+      $['x-ms-enum'] = {
+          "name": "OperationOrigin",
+          "modelAsString": true
+      }
   - rename-model:
       from: Configuration
       to: ProductConfiguration
@@ -43,5 +51,5 @@ directive:
   - rename-model:
       from: Specification
       to: ProductSpecification
-	  
+
 ```
