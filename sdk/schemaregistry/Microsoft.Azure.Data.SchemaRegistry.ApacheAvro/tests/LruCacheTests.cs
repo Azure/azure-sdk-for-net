@@ -37,9 +37,11 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             cache.AddOrUpdate("3", 3);
             // 1 is moved to head of list
             Assert.IsTrue(cache.TryGet("1", out _));
+            // 4 is moved to head of list
             cache.AddOrUpdate("4", 4);
             // 2 should be evicted
             Assert.IsFalse(cache.TryGet("2", out _));
+            // 5 is moved to head of list
             cache.AddOrUpdate("5", 4);
             // 3 should be evicted
             Assert.IsFalse(cache.TryGet("3", out _));
