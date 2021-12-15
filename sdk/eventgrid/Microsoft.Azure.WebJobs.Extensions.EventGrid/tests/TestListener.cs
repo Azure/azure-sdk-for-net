@@ -173,11 +173,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
 
             var request = CreateDispatchRequest(functionName,
                 JObject.Parse($"{{'subject':'one','data':{{'prop':'alpha'}},'traceparent':'{traceparent1}','tracestate':'{tracestate1}'}}"),
-                JObject.Parse($"{{'subject':'one','data':{{'prop':'alpha'}},'traceparent':'{traceparent2}'}}")); // will fail because of dup subject
+                JObject.Parse($"{{'subject':'one','data':{{'prop':'alpha'}},'traceparent':'{traceparent2}'}}"));
 
             var response = await ext.ConvertAsync(request, CancellationToken.None);
 
             Assert.AreEqual(2, testListener.Scopes.Count);
+
+            // one of executions will fail because of dup subject
+            Assert.AreEqual(1, testListener.Scopes.Count(s => s.Exception != null));
 
             bool fullFound = false, parentOnlyFound = false;
             for (int i = 0; i < 2; i++)
@@ -192,15 +195,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                 {
                     Assert.AreEqual(tracestate1, link.Tracestate);
                     Assert.IsFalse(fullFound);
-                    Assert.Null(executionScope.Exception);
                     fullFound = true;
                 }
                 else
                 {
                     Assert.IsNull(link.Tracestate);
                     Assert.IsFalse(parentOnlyFound);
-                    // failed because of duplicate subject (function logic)
-                    Assert.NotNull(executionScope.Exception);
                     parentOnlyFound = true;
                 }
             }
