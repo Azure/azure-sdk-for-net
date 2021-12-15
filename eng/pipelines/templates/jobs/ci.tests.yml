@@ -45,6 +45,7 @@ jobs:
           parameters:
               Paths:
                 - "/sdk"
+                - "/common"
                 - "!SessionRecords"
                 - "/sdk/${{ parameters.ServiceToTest }}/**/SessionRecords"
       - pwsh: |
