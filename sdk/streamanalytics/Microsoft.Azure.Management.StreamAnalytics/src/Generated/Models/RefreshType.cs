@@ -12,13 +12,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
 
     /// <summary>
-    /// Defines values for EventSerializationType.
+    /// Defines values for RefreshType.
     /// </summary>
-    public static class EventSerializationType
+    public static class RefreshType
     {
-        public const string Csv = "Csv";
-        public const string Avro = "Avro";
-        public const string Json = "Json";
-        public const string Parquet = "Parquet";
+        public const string Static = "Static";
+        public const string RefreshPeriodicallyWithFull = "RefreshPeriodicallyWithFull";
+        public const string RefreshPeriodicallyWithDelta = "RefreshPeriodicallyWithDelta";
     }
 }

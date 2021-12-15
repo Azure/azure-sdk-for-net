@@ -29,6 +29,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// <summary>
         /// Initializes a new instance of the Identity class.
         /// </summary>
+        /// <param name="tenantId">The identity tenantId</param>
+        /// <param name="principalId">The identity principal ID</param>
+        /// <param name="type">The identity type</param>
         public Identity(string tenantId = default(string), string principalId = default(string), string type = default(string))
         {
             TenantId = tenantId;
@@ -43,16 +46,19 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the identity tenantId
         /// </summary>
         [JsonProperty(PropertyName = "tenantId")]
         public string TenantId { get; set; }
 
         /// <summary>
+        /// Gets or sets the identity principal ID
         /// </summary>
         [JsonProperty(PropertyName = "principalId")]
         public string PrincipalId { get; set; }
 
         /// <summary>
+        /// Gets or sets the identity type
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
