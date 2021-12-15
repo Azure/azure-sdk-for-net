@@ -34,7 +34,7 @@
             "dimensionName": "dimensionB"
           }
         ],
-        "dataStartFrom": "2020-10-01T00:00:00Z"
+        "dataStartFrom": "2020-10-01T00:00:00.0000000Z"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -93,7 +93,7 @@
             "dimensionDisplayName": "dimensionB"
           }
         ],
-        "dataStartFrom": "2020-10-01T00:00:00Z",
+        "dataStartFrom": "2020-10-01T00:00:00.0000000Z",
         "dataSourceType": "SqlServer",
         "timestampColumn": "",
         "startOffsetInSeconds": 0,
