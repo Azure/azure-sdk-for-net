@@ -15,7 +15,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void Test()
+        public void ValidateAllTestsAreSync()
         {
             Assert.IsFalse(IsAsync);
         }
