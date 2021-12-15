@@ -4,20 +4,20 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Data.Tables;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Protocols;
-using Microsoft.Azure.Cosmos.Table;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
     internal class TableEntityCollectorBinder<T> : IValueBinder, IWatchable
         where T : ITableEntity
     {
-        private readonly CloudTable _table;
+        private readonly TableClient _table;
         private readonly TableEntityWriter<T> _tableWriter;
         private readonly Type _valueType;
 
-        public TableEntityCollectorBinder(CloudTable table, TableEntityWriter<T> tableWriter, Type valueType)
+        public TableEntityCollectorBinder(TableClient table, TableEntityWriter<T> tableWriter, Type valueType)
         {
             if (tableWriter != null && !valueType.IsAssignableFrom(tableWriter.GetType()))
             {

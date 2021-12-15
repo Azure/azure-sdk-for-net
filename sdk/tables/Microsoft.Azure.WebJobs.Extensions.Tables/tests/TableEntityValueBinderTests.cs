@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Azure.Cosmos.Table;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests

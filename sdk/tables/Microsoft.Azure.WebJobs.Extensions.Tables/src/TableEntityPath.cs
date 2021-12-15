@@ -59,19 +59,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             string tableName = components[0];
             string partitionKey = components[1];
             string rowKey = components[2];
-            if (!TableClient.IsValidAzureTableName(tableName))
+            if (!TableClientHelpers.IsValidAzureTableName(tableName))
             {
                 path = null;
                 return false;
             }
 
-            if (!TableClient.IsValidAzureTableKeyValue(partitionKey))
+            if (!TableClientHelpers.IsValidAzureTableKeyValue(partitionKey))
             {
                 path = null;
                 return false;
             }
 
-            if (!TableClient.IsValidAzureTableKeyValue(rowKey))
+            if (!TableClientHelpers.IsValidAzureTableKeyValue(rowKey))
             {
                 path = null;
                 return false;
