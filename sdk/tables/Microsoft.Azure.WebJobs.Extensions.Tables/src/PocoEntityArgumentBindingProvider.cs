@@ -21,7 +21,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 return null;
             }
 
-            TableClient.VerifyDefaultConstructor(parameter.ParameterType);
+            TableClientHelpers.VerifyDefaultConstructor(parameter.ParameterType);
             return CreateBinding(parameter.ParameterType);
         }
 

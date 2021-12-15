@@ -16,12 +16,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 return null;
             }
 
-            if (!TableClient.ImplementsITableEntity(parameter.ParameterType))
+            if (!TableClientHelpers.ImplementsITableEntity(parameter.ParameterType))
             {
                 return null;
             }
 
-            TableClient.VerifyDefaultConstructor(parameter.ParameterType);
+            TableClientHelpers.VerifyDefaultConstructor(parameter.ParameterType);
             return CreateBinding(parameter.ParameterType);
         }
 

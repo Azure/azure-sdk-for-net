@@ -4389,11 +4389,11 @@ namespace Azure.ResourceManager.AppService
 
         #region SiteExtension
 
-        /// <summary> Gets a collection of SiteExtensions in the WebSite. </summary>
-        /// <returns> An object representing collection of SiteExtensions and their operations over a WebSite. </returns>
-        public SiteExtensionCollection GetSiteExtensions()
+        /// <summary> Gets an object representing a SiteExtension along with the instance operations that can be performed on it in the WebSite. </summary>
+        /// <returns> Returns a <see cref="SiteExtension" /> object. </returns>
+        public SiteExtension GetSiteExtension()
         {
-            return new SiteExtensionCollection(this);
+            return new SiteExtension(this, new ResourceIdentifier(Id.ToString() + "/extensions/MSDeploy"));
         }
         #endregion
 
@@ -4449,11 +4449,11 @@ namespace Azure.ResourceManager.AppService
 
         #region SiteNetworkConfig
 
-        /// <summary> Gets a collection of SiteNetworkConfigs in the WebSite. </summary>
-        /// <returns> An object representing collection of SiteNetworkConfigs and their operations over a WebSite. </returns>
-        public SiteNetworkConfigCollection GetSiteNetworkConfigs()
+        /// <summary> Gets an object representing a SiteNetworkConfig along with the instance operations that can be performed on it in the WebSite. </summary>
+        /// <returns> Returns a <see cref="SiteNetworkConfig" /> object. </returns>
+        public SiteNetworkConfig GetSiteNetworkConfig()
         {
-            return new SiteNetworkConfigCollection(this);
+            return new SiteNetworkConfig(this, new ResourceIdentifier(Id.ToString() + "/networkConfig/virtualNetwork"));
         }
         #endregion
 

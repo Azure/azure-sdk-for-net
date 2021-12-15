@@ -30,7 +30,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// Initializes a new instance of the Sku class.
         /// </summary>
         /// <param name="name">The sku name. Possible values include:
-        /// 'DataBox', 'DataBoxDisk', 'DataBoxHeavy'</param>
+        /// 'DataBox', 'DataBoxDisk', 'DataBoxHeavy',
+        /// 'DataBoxCustomerDisk'</param>
         /// <param name="displayName">The display name of the sku.</param>
         /// <param name="family">The sku family.</param>
         public Sku(SkuName name, string displayName = default(string), string family = default(string))
@@ -48,7 +49,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
 
         /// <summary>
         /// Gets or sets the sku name. Possible values include: 'DataBox',
-        /// 'DataBoxDisk', 'DataBoxHeavy'
+        /// 'DataBoxDisk', 'DataBoxHeavy', 'DataBoxCustomerDisk'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public SkuName Name { get; set; }
