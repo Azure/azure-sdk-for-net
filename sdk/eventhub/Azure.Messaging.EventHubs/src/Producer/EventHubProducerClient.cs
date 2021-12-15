@@ -1282,7 +1282,7 @@ namespace Azure.Messaging.EventHubs.Producer
             {
                 foreach (var identifier in diagnosticIdentifiers)
                 {
-                    scope.AddLink(identifier);
+                    scope.AddLink(identifier, null);
                 }
             }
 
