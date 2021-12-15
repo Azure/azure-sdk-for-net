@@ -17,7 +17,7 @@
         "x-ms-client-request-id": "040a3b8354deb0850020c59caa4f4de5",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "{\u0022startTime\u0022:\u00222020-09-26T00:00:00Z\u0022,\u0022endTime\u0022:\u00222020-09-29T00:00:00Z\u0022,\u0022value\u0022:{\u0022commentValue\u0022:\u0022Feedback created in a .NET test.\u0022},\u0022feedbackType\u0022:\u0022Comment\u0022,\u0022metricId\u0022:\u0022390d1139-98fb-45af-b831-8d5ad61b150a\u0022,\u0022dimensionFilter\u0022:{\u0022dimension\u0022:{\u0022region\u0022:\u0022Cairo\u0022,\u0022category\u0022:\u0022Shoes Handbags \u0026 Sunglasses\u0022}}}",
+      "RequestBody": "{\u0022startTime\u0022:\u00222020-09-26T00:00:00.0000000Z\u0022,\u0022endTime\u0022:\u00222020-09-29T00:00:00.0000000Z\u0022,\u0022value\u0022:{\u0022commentValue\u0022:\u0022Feedback created in a .NET test.\u0022},\u0022feedbackType\u0022:\u0022Comment\u0022,\u0022metricId\u0022:\u0022390d1139-98fb-45af-b831-8d5ad61b150a\u0022,\u0022dimensionFilter\u0022:{\u0022dimension\u0022:{\u0022region\u0022:\u0022Cairo\u0022,\u0022category\u0022:\u0022Shoes Handbags \u0026 Sunglasses\u0022}}}",
       "StatusCode": 201,
       "ResponseHeaders": {
         "apim-request-id": "038932b9-a85b-498a-92a2-251cee572e06",
@@ -70,8 +70,8 @@
           }
         },
         "feedbackType": "Comment",
-        "startTime": "2020-09-26T00:00:00Z",
-        "endTime": "2020-09-29T00:00:00Z",
+        "startTime": "2020-09-26T00:00:00.0000000Z",
+        "endTime": "2020-09-29T00:00:00.0000000Z",
         "value": {
           "commentValue": "Feedback created in a .NET test."
         }
