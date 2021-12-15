@@ -120,11 +120,12 @@ known_content_issues:
   - ['sdk/extensions/Microsoft.Azure.WebJobs.Extensions.Clients/README.md','azure-sdk-tools/issues/404']
   - ['sdk/extensions/Microsoft.Extensions.Azure/README.md','azure-sdk-tools/issues/404']
   - ['sdk/storage/Azure.Storage.Common/README.md','azure-sdk-tools/issues/404']
+  - ['sdk/webpubsub/Azure.Messaging.WebPubSub/README.md', 'azure-sdk-tools/issues/404 - requires different name for auth section']
 
-  - ['sdk/anomalydetector/Azure.AI.AnomalyDetector/README.md', '#25936']
-  - ['sdk/personalizer/Azure.AI.Personalizer/README.md','#5499']
-  - ['sdk/storage/Azure.Storage.Files.DataLake/README.md', 'Storage: #11492']
-  - ['sdk/storage/Azure.Storage.Files.Shares/README.md', 'Storage: #11492']  
+  - ['sdk/anomalydetector/Azure.AI.AnomalyDetector/README.md', '#25936: Needs Examples']
+  - ['sdk/personalizer/Azure.AI.Personalizer/README.md','#24535: Needs content']
+  - ['sdk/storage/Azure.Storage.Files.DataLake/README.md', 'Storage: #11492: Needs auth section']
+  - ['sdk/storage/Azure.Storage.Files.Shares/README.md', 'Storage: #11492: Needs auth section']
 
 # .net climbs upwards. placing these to prevent assigning readmes to the wrong project
 package_indexing_exclusion_list:
