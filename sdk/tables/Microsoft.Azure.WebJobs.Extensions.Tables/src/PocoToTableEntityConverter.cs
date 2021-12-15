@@ -2,120 +2,58 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
-using Microsoft.Azure.Cosmos.Table;
-using Microsoft.Azure.WebJobs.Host;
+using Azure.Data.Tables;
+using Azure.Monitor.Query;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
-    internal class PocoToTableEntityConverter<TInput> : IConverter<TInput, ITableEntity>
+    internal class PocoToTableEntityConverter<TInput> : IConverter<TInput, TableEntity>
     {
-        private readonly IPropertyGetter<TInput, string> _partitionKeyGetter;
-        private readonly IPropertyGetter<TInput, string> _rowKeyGetter;
-        private readonly IPropertyGetter<TInput, DateTimeOffset> _timestampGetter;
-        private readonly IPropertyGetter<TInput, string> _eTagKeyGetter;
-        private readonly IReadOnlyDictionary<string, IPropertyGetter<TInput, EntityProperty>> _otherPropertyGetters;
+        private readonly TypeBinder<TableEntity>.BoundTypeInfo _info;
 
-        private PocoToTableEntityConverter(
-            IPropertyGetter<TInput, string> partitionKeyGetter,
-            IPropertyGetter<TInput, string> rowKeyGetter,
-            IPropertyGetter<TInput, DateTimeOffset> timestampGetter,
-            IPropertyGetter<TInput, string> eTagKeyGetter,
-            IReadOnlyDictionary<string, IPropertyGetter<TInput, EntityProperty>> otherPropertyGetters)
+        public PocoToTableEntityConverter()
         {
-            Debug.Assert(otherPropertyGetters != null);
-            _partitionKeyGetter = partitionKeyGetter;
-            _rowKeyGetter = rowKeyGetter;
-            _timestampGetter = timestampGetter;
-            _eTagKeyGetter = eTagKeyGetter;
-            _otherPropertyGetters = otherPropertyGetters;
+            _info = PocoTypeBinder.Shared.GetBinderInfo(typeof(TInput));
+
+            ConvertsPartitionKey = HasGetter<string>("PartitionKey");
+            ConvertsRowKey = HasGetter<string>("RowKey");
+            ConvertsETag = HasGetter<string>("ETag");
+            HasGetter<DateTimeOffset>("Timestamp");
         }
 
-        public bool ConvertsPartitionKey => _partitionKeyGetter != null;
+        public bool ConvertsPartitionKey { get; }
 
-        public bool ConvertsRowKey => _rowKeyGetter != null;
+        public bool ConvertsRowKey { get; }
 
-        public bool ConvertsETag => _eTagKeyGetter != null;
+        public bool ConvertsETag { get; }
 
-        public ITableEntity Convert(TInput input)
+        public TableEntity Convert(TInput input)
         {
             if (input == null)
             {
                 return null;
             }
 
-            DynamicTableEntity result = new DynamicTableEntity();
-            if (_partitionKeyGetter != null)
+            if (input is TableEntity te)
             {
-                result.PartitionKey = _partitionKeyGetter.GetValue(input);
+                return te;
             }
 
-            if (_rowKeyGetter != null)
-            {
-                result.RowKey = _rowKeyGetter.GetValue(input);
-            }
-
-            if (_timestampGetter != null)
-            {
-                result.Timestamp = _timestampGetter.GetValue(input);
-            }
-
-            IDictionary<string, EntityProperty> properties = new Dictionary<string, EntityProperty>();
-            foreach (KeyValuePair<string, IPropertyGetter<TInput, EntityProperty>> pair in _otherPropertyGetters)
-            {
-                string propertyName = pair.Key;
-                IPropertyGetter<TInput, EntityProperty> getter = pair.Value;
-                Debug.Assert(getter != null);
-                EntityProperty propertyValue = getter.GetValue(input);
-                properties.Add(propertyName, propertyValue);
-            }
-
-            result.ReadEntity(properties, operationContext: null);
-            if (_eTagKeyGetter != null)
-            {
-                result.ETag = _eTagKeyGetter.GetValue(input);
-            }
-
+            TableEntity result = new TableEntity();
+            _info.Serialize(input, result);
             return result;
         }
 
-        public static PocoToTableEntityConverter<TInput> Create()
-        {
-            IPropertyGetter<TInput, string> partitionKeyGetter = GetGetter<string>("PartitionKey");
-            IPropertyGetter<TInput, string> rowKeyGetter = GetGetter<string>("RowKey");
-            IPropertyGetter<TInput, DateTimeOffset> timestampGetter = GetGetter<DateTimeOffset>("Timestamp");
-            IPropertyGetter<TInput, string> eTagGetter = GetGetter<string>("ETag");
-            Dictionary<string, IPropertyGetter<TInput, EntityProperty>> otherPropertyGetters =
-                new Dictionary<string, IPropertyGetter<TInput, EntityProperty>>();
-            PropertyInfo[] properties = typeof(TInput).GetProperties(BindingFlags.Instance | BindingFlags.Public);
-            Debug.Assert(properties != null);
-            foreach (PropertyInfo property in properties)
-            {
-                Debug.Assert(property != null);
-                if (TableClient.IsSystemProperty(property.Name) || !property.CanRead ||
-                    property.GetIndexParameters().Length != 0 || !property.HasPublicGetMethod())
-                {
-                    continue;
-                }
-
-                IPropertyGetter<TInput, EntityProperty> otherPropertyGetter = GetOtherGetter(property);
-                otherPropertyGetters.Add(property.Name, otherPropertyGetter);
-            }
-
-            return new PocoToTableEntityConverter<TInput>(partitionKeyGetter, rowKeyGetter, timestampGetter, eTagGetter,
-                otherPropertyGetters);
-        }
-
-        private static IPropertyGetter<TInput, TProperty> GetGetter<TProperty>(string propertyName)
+        private static bool HasGetter<TProperty>(string propertyName)
         {
             PropertyInfo property = typeof(TInput).GetProperty(propertyName,
                 BindingFlags.Instance | BindingFlags.Public);
+
             if (property == null || !property.CanRead || !property.HasPublicGetMethod())
             {
-                return null;
+                return false;
             }
 
             if (property.PropertyType != typeof(TProperty))
@@ -132,26 +70,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 throw new InvalidOperationException(message);
             }
 
-            return PropertyAccessorFactory<TInput>.CreateGetter<TProperty>(property);
-        }
-
-        private static IPropertyGetter<TInput, EntityProperty> GetOtherGetter(PropertyInfo property)
-        {
-            MethodInfo genericMethodTemplate = typeof(PocoToTableEntityConverter<TInput>).GetMethod(
-                "GetOtherGetterGeneric", BindingFlags.Static | BindingFlags.NonPublic);
-            MethodInfo genericMethod = genericMethodTemplate.MakeGenericMethod(property.PropertyType);
-            Func<PropertyInfo, IPropertyGetter<TInput, EntityProperty>> invoker =
-                (Func<PropertyInfo, IPropertyGetter<TInput, EntityProperty>>)genericMethod.CreateDelegate(
-                    typeof(Func<PropertyInfo, IPropertyGetter<TInput, EntityProperty>>));
-            return invoker.Invoke(property);
-        }
-
-        private static IPropertyGetter<TInput, EntityProperty> GetOtherGetterGeneric<TProperty>(PropertyInfo property)
-        {
-            IPropertyGetter<TInput, TProperty> propertyGetter =
-                PropertyAccessorFactory<TInput>.CreateGetter<TProperty>(property);
-            IConverter<TProperty, EntityProperty> converter = TToEntityPropertyConverterFactory.Create<TProperty>();
-            return new ConverterPropertyGetter<TInput, TProperty, EntityProperty>(propertyGetter, converter);
+            return true;
         }
     }
 }
