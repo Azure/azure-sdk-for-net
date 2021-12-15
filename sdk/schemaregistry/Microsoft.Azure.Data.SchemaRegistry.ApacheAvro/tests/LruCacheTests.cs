@@ -27,6 +27,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
                 Assert.AreEqual(i, value);
             }
         }
+
         [Test]
         public void CacheOrderingRespected()
         {
