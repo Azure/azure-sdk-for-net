@@ -164,7 +164,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                     // Commit the batch
                     await _table.SubmitTransactionAsync(partition.Values, cancellationToken).ConfigureAwait(false);
                 }
-                catch (RequestFailedException e) when (e.Status == 404 && e.ErrorCode == TableErrorCode.TableNotFound)
+                catch (RequestFailedException e) when
+                    (e.Status == 404 && (e.ErrorCode == TableErrorCode.TableNotFound || e.ErrorCode == TableErrorCode.ResourceNotFound))
                 {
                     exception = e;
                 }
