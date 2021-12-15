@@ -11,6 +11,7 @@ using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 {
+    [LiveOnly]
     public class TableConnectionTests : TablesLiveTestBase
     {
         public TableConnectionTests(bool isAsync, bool useCosmos) : base(isAsync, useCosmos, createTable: false)
