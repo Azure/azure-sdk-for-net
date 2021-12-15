@@ -310,11 +310,6 @@ namespace Azure.ResourceManager.Resources.Models
                     return value;
                 }
             }
-            else
-            {
-                //temp for back compat
-                return new Location("");
-            }
 
             return new Location(other);
         }
