@@ -87,9 +87,9 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        public void AddLink(string id, IDictionary<string, string>? attributes = null)
+        public void AddLink(string traceparent, string tracestate, IDictionary<string, string>? attributes = null)
         {
-            _activityAdapter?.AddLink(id, attributes);
+            _activityAdapter?.AddLink(traceparent, tracestate, attributes);
         }
 
         public void Start()
@@ -246,11 +246,12 @@ namespace Azure.Core.Pipeline
                 return linkCollection;
             }
 
-            public void AddLink(string id, IDictionary<string, string>? attributes)
+            public void AddLink(string traceparent, string tracestate, IDictionary<string, string>? attributes)
             {
                 var linkedActivity = new Activity("LinkedActivity");
                 linkedActivity.SetW3CFormat();
-                linkedActivity.SetParentId(id);
+                linkedActivity.SetParentId(traceparent);
+                linkedActivity.TraceStateString = tracestate;
 
                 if (attributes != null)
                 {

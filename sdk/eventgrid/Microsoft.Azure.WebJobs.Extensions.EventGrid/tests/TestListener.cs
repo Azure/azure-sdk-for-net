@@ -12,6 +12,10 @@ using Newtonsoft.Json.Linq;
 using Microsoft.Extensions.Logging.Abstractions;
 using NUnit.Framework;
 using Microsoft.Extensions.Logging;
+using Azure.Core.Tests;
+using System.Collections.Generic;
+using System.Linq;
+using System.Diagnostics;
 
 namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
 {
@@ -128,6 +132,150 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         }
 
         [Test]
+        public async Task TestSingleCloudEventWithTracing()
+        {
+            // individual elements
+            var ext = new EventGridExtensionConfigProvider(new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), NullLoggerFactory.Instance);
+            var host = TestHelpers.NewHost<MyProg1>(ext);
+            await host.StartAsync(); // add listener
+
+            using var testListener = new ClientDiagnosticListener("Azure.WebJobs.Extensions.EventGrid");
+            const string functionName = "TestEventGrid";
+            const string traceparent = "00-0123456789abcdef0123456789abcdef-0123456789abcdef-01";
+            var request = CreateSingleRequest(functionName,
+                JObject.Parse($"{{'subject':'one','data':{{'prop':'alpha'}}, 'traceparent':'{traceparent}'}}"));
+            var response = await ext.ConvertAsync(request, CancellationToken.None);
+
+            Assert.AreEqual(1, testListener.Scopes.Count);
+            var executionScope = testListener.AssertScope(functionName,
+                new KeyValuePair<string, string>("az.namespace", "Microsoft.EventGrid"));
+
+            var expectedLinks = new[] { new ClientDiagnosticListener.ProducedLink(traceparent) };
+            Assert.That(executionScope.Links, Is.EquivalentTo(expectedLinks));
+            Assert.Null(executionScope.Exception);
+            Assert.True(_log.TryGetValue(executionScope.Activity.Id, out var activityName));
+            Assert.AreEqual(functionName, activityName);
+        }
+
+        [Test]
+        public async Task TestMultipleCloudEventsWithTracingSingleDispatch()
+        {
+            // individual elements
+            var ext = new EventGridExtensionConfigProvider(new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), NullLoggerFactory.Instance);
+            var host = TestHelpers.NewHost<MyProg1>(ext);
+            await host.StartAsync(); // add listener
+
+            using var testListener = new ClientDiagnosticListener("Azure.WebJobs.Extensions.EventGrid");
+            const string functionName = "TestEventGrid";
+            const string traceparent1 = "00-0123456789abcdef0123456789abcdef-0123456789abcdef-01";
+            const string tracestate1 = "foo1=bar1";
+            const string traceparent2 = "00-1123456789abcdef0123456789abcdef-1123456789abcdef-01";
+
+            var request = CreateDispatchRequest(functionName,
+                JObject.Parse($"{{'subject':'one','data':{{'prop':'alpha'}},'traceparent':'{traceparent1}','tracestate':'{tracestate1}'}}"),
+                JObject.Parse($"{{'subject':'one','data':{{'prop':'alpha'}},'traceparent':'{traceparent2}'}}")); // will fail because of dup subject
+
+            var response = await ext.ConvertAsync(request, CancellationToken.None);
+
+            Assert.AreEqual(2, testListener.Scopes.Count);
+
+            bool fullFound = false, parentOnlyFound = false;
+            for (int i = 0; i < 2; i++)
+            {
+                var executionScope = testListener.AssertAndRemoveScope(functionName, new KeyValuePair<string, string>("az.namespace", "Microsoft.EventGrid"));
+                Assert.AreEqual(1, executionScope.Links.Count);
+                Assert.True(_log.TryGetValue(executionScope.Activity.Id, out var activityName));
+                Assert.AreEqual(functionName, activityName);
+
+                var link = executionScope.Links.Single();
+                if (link.Traceparent == traceparent1)
+                {
+                    Assert.AreEqual(tracestate1, link.Tracestate);
+                    Assert.IsFalse(fullFound);
+                    Assert.Null(executionScope.Exception);
+                    fullFound = true;
+                }
+                else
+                {
+                    Assert.IsNull(link.Tracestate);
+                    Assert.IsFalse(parentOnlyFound);
+                    // failed because of duplicate subject (function logic)
+                    Assert.NotNull(executionScope.Exception);
+                    parentOnlyFound = true;
+                }
+            }
+
+            Assert.IsTrue(fullFound);
+            Assert.IsTrue(parentOnlyFound);
+        }
+
+        [Test]
+        public async Task TestMultipleCloudEventsWithTracingMultiDispatch()
+        {
+            // individual elements
+            var ext = new EventGridExtensionConfigProvider(new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), NullLoggerFactory.Instance);
+            var host = TestHelpers.NewHost<MyProg4>(ext);
+            await host.StartAsync(); // add listener
+
+            using var testListener = new ClientDiagnosticListener("Azure.WebJobs.Extensions.EventGrid");
+            const string functionName = "EventGridMultiple";
+            const string traceparent1 = "00-0123456789abcdef0123456789abcdef-0123456789abcdef-01";
+            const string tracestate1 = "foo1=bar1";
+            const string traceparent2 = "00-1123456789abcdef0123456789abcdef-1123456789abcdef-01";
+
+            var request = CreateDispatchRequest(functionName,
+                JObject.Parse($"{{'subject':'one','data':{{'prop':'alpha'}},'traceparent':'{traceparent1}','tracestate':'{tracestate1}'}}"),
+                JObject.Parse($"{{'subject':'two','data':{{'prop':'alpha'}},'traceparent':'{traceparent2}'}}"),
+                JObject.Parse($"{{'subject':'two','data':{{'prop':'alpha'}},'tracestate':'ignored'}}"));
+
+            var response = await ext.ConvertAsync(request, CancellationToken.None);
+
+            Assert.AreEqual(1, testListener.Scopes.Count);
+            var executionScope = testListener.AssertScope(functionName,
+                new KeyValuePair<string, string>("az.namespace", "Microsoft.EventGrid"));
+
+            var expectedLinks = new[] { new ClientDiagnosticListener.ProducedLink(traceparent1, tracestate1),
+                                        new ClientDiagnosticListener.ProducedLink(traceparent2, null)};
+
+            Assert.That(executionScope.Links, Is.EquivalentTo(expectedLinks));
+            Assert.Null(executionScope.Exception);
+            Assert.True(_log.TryGetValue(executionScope.Activity.Id, out var activityName));
+            Assert.AreEqual(functionName, activityName);
+        }
+
+        [Test]
+        public async Task TestMultipleCloudEventsWithTracingMultiDispatchError()
+        {
+            // individual elements
+            var ext = new EventGridExtensionConfigProvider(new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), NullLoggerFactory.Instance);
+            var host = TestHelpers.NewHost<MyProg3>(ext);
+            await host.StartAsync(); // add listener
+
+            using var testListener = new ClientDiagnosticListener("Azure.WebJobs.Extensions.EventGrid");
+            const string functionName = "EventGridThrowsExceptionMultiple";
+            const string traceparent1 = "00-0123456789abcdef0123456789abcdef-0123456789abcdef-01";
+            const string traceparent2 = "00-1123456789abcdef0123456789abcdef-1123456789abcdef-01";
+
+            var request = CreateDispatchRequest(functionName,
+                JObject.Parse($"{{'subject':'one','data':{{'prop':'alpha'}},'traceparent':'{traceparent1}'}}"),
+                JObject.Parse($"{{'subject':'two','data':{{'prop':'alpha'}},'traceparent':'{traceparent2}'}}"));
+
+            var response = await ext.ConvertAsync(request, CancellationToken.None);
+
+            Assert.AreEqual(1, testListener.Scopes.Count);
+            var executionScope = testListener.AssertScope(functionName,
+                new KeyValuePair<string, string>("az.namespace", "Microsoft.EventGrid"));
+
+            var expectedLinks = new[] { new ClientDiagnosticListener.ProducedLink(traceparent1, null),
+                                        new ClientDiagnosticListener.ProducedLink(traceparent2, null)};
+
+            Assert.That(executionScope.Links, Is.EquivalentTo(expectedLinks));
+            Assert.NotNull(executionScope.Exception);
+            Assert.True(_log.TryGetValue(executionScope.Activity.Id, out var activityName));
+            Assert.AreEqual(functionName, activityName);
+        }
+
+        [Test]
         public async Task WrongFunctionNameTest()
         {
             var ext = new EventGridExtensionConfigProvider(new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), NullLoggerFactory.Instance);
@@ -223,6 +371,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                 [EventGridTrigger] JObject value,
                 [BindingData("{data.prop}")] string prop)
             {
+                if (Activity.Current != null)
+                {
+                    _log.TryAdd(Activity.Current.Id, Activity.Current.OperationName);
+                }
+
                 // if the key already exists, we should error
                 if (!_log.TryAdd((string)value["subject"], prop))
                 {
@@ -245,7 +398,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             [FunctionName("EventGridThrowsExceptionMultiple")]
             public void Run([EventGridTrigger] JObject[] value)
             {
+                if (Activity.Current != null)
+                {
+                    _log.TryAdd(Activity.Current.Id, Activity.Current.OperationName);
+                }
+
                 throw new InvalidOperationException($"failed with {value.ToString()}");
+            }
+        }
+
+        public class MyProg4
+        {
+            [FunctionName("EventGridMultiple")]
+            public void Run([EventGridTrigger] JObject[] values)
+            {
+                if (Activity.Current != null)
+                {
+                    _log.TryAdd(Activity.Current.Id, Activity.Current.OperationName);
+                }
             }
         }
     }

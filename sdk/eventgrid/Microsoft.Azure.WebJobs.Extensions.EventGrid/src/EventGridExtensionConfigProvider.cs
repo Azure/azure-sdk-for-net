@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using Azure;
+using Azure.Core.Pipeline;
 using Azure.Messaging;
 using Azure.Messaging.EventGrid;
 using Microsoft.Azure.WebJobs.Description;
@@ -34,6 +35,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
         private readonly ILoggerFactory _loggerFactory;
         private readonly Func<EventGridAttribute, IAsyncCollector<object>> _converter;
         private readonly HttpRequestProcessor _httpRequestProcessor;
+        private readonly DiagnosticScopeFactory _diagnosticScopeFactory;
+
+        // ApplicationInsights SDK listens to all Azure SDK sources that look like 'Azure.*'
+        private const string DiagnosticScopeNamespace = "Azure.WebJobs.Extensions.EventGrid";
+        private const string ResourceProviderNamespace = "Microsoft.EventGrid";
 
         // for end to end testing
         internal EventGridExtensionConfigProvider(
@@ -44,6 +50,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
             _converter = converter;
             _httpRequestProcessor = httpRequestProcessor;
             _loggerFactory = loggerFactory;
+            _diagnosticScopeFactory = new DiagnosticScopeFactory(DiagnosticScopeNamespace, ResourceProviderNamespace, true);
         }
 
         // default constructor
@@ -52,6 +59,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
             _converter = (attr => new EventGridAsyncCollector(new EventGridPublisherClient(new Uri(attr.TopicEndpointUri), new AzureKeyCredential(attr.TopicKeySetting))));
             _httpRequestProcessor = httpRequestProcessor;
             _loggerFactory = loggerFactory;
+            _diagnosticScopeFactory = new DiagnosticScopeFactory(DiagnosticScopeNamespace, ResourceProviderNamespace, true);
         }
 
         public void Initialize(ExtensionConfigContext context)
@@ -147,7 +155,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                     {
                         TriggerValue = ev
                     };
-                    executions.Add(_listeners[functionName].Executor.TryExecuteAsync(triggerData, CancellationToken.None));
+                    executions.Add(ExecuteWithTracingAsync(functionName, triggerData));
                 }
             }
             // Batch Dispatch
@@ -157,8 +165,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                 {
                     TriggerValue = events
                 };
-                executions.Add(_listeners[functionName].Executor.TryExecuteAsync(triggerData, CancellationToken.None));
+                executions.Add(ExecuteWithTracingAsync(functionName, triggerData));
             }
+
             await Task.WhenAll(executions).ConfigureAwait(false);
 
             // FIXME without internal queuing, we are going to process all events in parallel
@@ -172,6 +181,58 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
             }
 
             return new HttpResponseMessage(HttpStatusCode.Accepted);
+        }
+
+        private async Task<FunctionResult> ExecuteWithTracingAsync(string functionName, TriggeredFunctionData triggerData)
+        {
+            using DiagnosticScope scope = _diagnosticScopeFactory.CreateScope(functionName, DiagnosticScope.ActivityKind.Consumer);
+            if (scope.IsEnabled)
+            {
+                if (triggerData.TriggerValue is JArray evntArray)
+                {
+                    foreach (JToken eventToken in evntArray)
+                    {
+                        AddLinkIfEventHasContext(scope, eventToken);
+                    }
+                }
+                else if (triggerData.TriggerValue is JToken eventToken)
+                {
+                    AddLinkIfEventHasContext(scope, eventToken);
+                }
+            }
+
+            scope.Start();
+
+            try
+            {
+                FunctionResult result = await _listeners[functionName].Executor.TryExecuteAsync(triggerData, CancellationToken.None).ConfigureAwait(false);
+                if (result.Exception != null)
+                {
+                    scope.Failed(result.Exception);
+                }
+                return result;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private static void AddLinkIfEventHasContext(DiagnosticScope scope, JToken evnt)
+        {
+            if (evnt is JObject eventObj &&
+                    eventObj.TryGetValue("traceparent", out JToken traceparent) &&
+                    traceparent.Type == JTokenType.String)
+            {
+                string tracestateStr = null;
+                if (eventObj.TryGetValue("tracestate", out JToken tracestate) &&
+                    tracestate.Type == JTokenType.String)
+                {
+                    tracestateStr = tracestate.Value<string>();
+                }
+                scope.AddLink(traceparent.Value<string>(), tracestateStr);
+            }
         }
 
         private class JTokenToPocoConverter<T> : IConverter<JToken, T>
