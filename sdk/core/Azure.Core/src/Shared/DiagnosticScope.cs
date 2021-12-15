@@ -236,7 +236,7 @@ namespace Azure.Core.Pipeline
                         }
                     }
 
-                    var link = ActivityExtensions.CreateActivityLink(activity.ParentId!, linkTagsCollection);
+                    var link = ActivityExtensions.CreateActivityLink(activity.ParentId!, activity.TraceStateString, linkTagsCollection);
                     if (link != null)
                     {
                         linkCollection.Add(link);
@@ -368,7 +368,7 @@ namespace Azure.Core.Pipeline
         private static Action<Activity, string, object?>? ActivityAddTagMethod;
         private static Func<object, string, int, ICollection<KeyValuePair<string, object>>?, IList?, DateTimeOffset, Activity?>? ActivitySourceStartActivityMethod;
         private static Func<object, bool>? ActivitySourceHasListenersMethod;
-        private static Func<string, ICollection<KeyValuePair<string, object>>?, object?>? CreateActivityLinkMethod;
+        private static Func<string, string?, ICollection<KeyValuePair<string, object>>?, object?>? CreateActivityLinkMethod;
         private static Func<ICollection<KeyValuePair<string,object>>?>? CreateTagsCollectionMethod;
 
         private static readonly ParameterExpression ActivityParameter = Expression.Parameter(typeof(Activity));
@@ -491,7 +491,7 @@ namespace Azure.Core.Pipeline
             return CreateTagsCollectionMethod();
         }
 
-        public static object? CreateActivityLink(string id, ICollection<KeyValuePair<string,object>>? tags)
+        public static object? CreateActivityLink(string traceparent, string? tracestate, ICollection<KeyValuePair<string,object>>? tags)
         {
             if (ActivityLinkType == null)
             {
@@ -508,24 +508,25 @@ namespace Azure.Core.Pipeline
                     ActivityTagsCollectionType == null ||
                     ActivityContextType == null)
                 {
-                    CreateActivityLinkMethod = (_, _) => null;
+                    CreateActivityLinkMethod = (_, _, _) => null;
                 }
                 else
                 {
-                    var nameParameter = Expression.Parameter(typeof(string));
+                    var traceparentParameter = Expression.Parameter(typeof(string));
+                    var tracestateParameter = Expression.Parameter(typeof(string));
                     var tagsParameter = Expression.Parameter(typeof(ICollection<KeyValuePair<string,object>>));
 
-                    CreateActivityLinkMethod = Expression.Lambda<Func<string, ICollection<KeyValuePair<string, object>>?, object?>>(
+                    CreateActivityLinkMethod = Expression.Lambda<Func<string, string?, ICollection<KeyValuePair<string, object>>?, object?>>(
                         Expression.TryCatch(
                                 Expression.Convert(Expression.New(ctor,
-                                        Expression.Call(parseMethod, nameParameter, Expression.Default(typeof(string))),
+                                        Expression.Call(parseMethod, traceparentParameter, tracestateParameter),
                                 Expression.Convert(tagsParameter, ActivityTagsCollectionType)), typeof(object)),
                         Expression.Catch(typeof(Exception), Expression.Default(typeof(object)))),
-                             nameParameter, tagsParameter).Compile();
+                             traceparentParameter, tracestateParameter, tagsParameter).Compile();
                 }
             }
 
-            return CreateActivityLinkMethod(id, tags);
+            return CreateActivityLinkMethod(traceparent, tracestate, tags);
         }
 
         public static bool ActivitySourceHasListeners(object? activitySource)
