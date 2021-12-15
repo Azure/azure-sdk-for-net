@@ -4209,10 +4209,10 @@ namespace Azure.ResourceManager.AppService
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.AppServiceGithubToken>> GenerateGithubAccessTokenForAppserviceCLIAsyncAsync(this Azure.ResourceManager.Resources.Tenant tenant, string code, string state, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.AppService.Models.ApplicationStackResource> GetAvailableStacksProviders(this Azure.ResourceManager.Resources.Tenant tenant, Azure.ResourceManager.AppService.Models.OsTypeSelected? osTypeSelected = default(Azure.ResourceManager.AppService.Models.OsTypeSelected?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.ApplicationStackResource> GetAvailableStacksProvidersAsync(this Azure.ResourceManager.Resources.Tenant tenant, Azure.ResourceManager.AppService.Models.OsTypeSelected? osTypeSelected = default(Azure.ResourceManager.AppService.Models.OsTypeSelected?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.AppService.Models.FunctionAppStack> GetFunctionAppStacksForLocationProviders(this Azure.ResourceManager.Resources.Tenant tenant, string location, Azure.ResourceManager.AppService.Models.Enum11? stackOsType = default(Azure.ResourceManager.AppService.Models.Enum11?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.FunctionAppStack> GetFunctionAppStacksForLocationProvidersAsync(this Azure.ResourceManager.Resources.Tenant tenant, string location, Azure.ResourceManager.AppService.Models.Enum11? stackOsType = default(Azure.ResourceManager.AppService.Models.Enum11?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.AppService.Models.FunctionAppStack> GetFunctionAppStacksProviders(this Azure.ResourceManager.Resources.Tenant tenant, Azure.ResourceManager.AppService.Models.Enum9? stackOsType = default(Azure.ResourceManager.AppService.Models.Enum9?), Azure.ResourceManager.AppService.Models.StackOsType? stackOsType1 = default(Azure.ResourceManager.AppService.Models.StackOsType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.FunctionAppStack> GetFunctionAppStacksProvidersAsync(this Azure.ResourceManager.Resources.Tenant tenant, Azure.ResourceManager.AppService.Models.Enum9? stackOsType = default(Azure.ResourceManager.AppService.Models.Enum9?), Azure.ResourceManager.AppService.Models.StackOsType? stackOsType1 = default(Azure.ResourceManager.AppService.Models.StackOsType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.AppService.Models.FunctionAppStack> GetFunctionAppStacksForLocationProviders(this Azure.ResourceManager.Resources.Tenant tenant, string location, Azure.ResourceManager.AppService.Models.StackOsType? stackOsType = default(Azure.ResourceManager.AppService.Models.StackOsType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.FunctionAppStack> GetFunctionAppStacksForLocationProvidersAsync(this Azure.ResourceManager.Resources.Tenant tenant, string location, Azure.ResourceManager.AppService.Models.StackOsType? stackOsType = default(Azure.ResourceManager.AppService.Models.StackOsType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.AppService.Models.FunctionAppStack> GetFunctionAppStacksProviders(this Azure.ResourceManager.Resources.Tenant tenant, Azure.ResourceManager.AppService.Models.StackOsType? stackOsType = default(Azure.ResourceManager.AppService.Models.StackOsType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.FunctionAppStack> GetFunctionAppStacksProvidersAsync(this Azure.ResourceManager.Resources.Tenant tenant, Azure.ResourceManager.AppService.Models.StackOsType? stackOsType = default(Azure.ResourceManager.AppService.Models.StackOsType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.AppService.Models.CsmOperationDescription> GetOperationsCertificateRegistrationProviders(this Azure.ResourceManager.Resources.Tenant tenant, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.CsmOperationDescription> GetOperationsCertificateRegistrationProvidersAsync(this Azure.ResourceManager.Resources.Tenant tenant, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.AppService.Models.CsmOperationDescription> GetOperationsDomainRegistrationProviders(this Azure.ResourceManager.Resources.Tenant tenant, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -4221,10 +4221,10 @@ namespace Azure.ResourceManager.AppService
         public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.CsmOperationDescription> GetOperationsProvidersAsync(this Azure.ResourceManager.Resources.Tenant tenant, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.AppService.SourceControlCollection GetSourceControls(this Azure.ResourceManager.Resources.Tenant tenant) { throw null; }
         public static Azure.ResourceManager.AppService.User GetUser(this Azure.ResourceManager.Resources.Tenant tenant) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.AppService.Models.WebAppStack> GetWebAppStacksForLocationProviders(this Azure.ResourceManager.Resources.Tenant tenant, string location, Azure.ResourceManager.AppService.Models.Enum12? stackOsType = default(Azure.ResourceManager.AppService.Models.Enum12?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.WebAppStack> GetWebAppStacksForLocationProvidersAsync(this Azure.ResourceManager.Resources.Tenant tenant, string location, Azure.ResourceManager.AppService.Models.Enum12? stackOsType = default(Azure.ResourceManager.AppService.Models.Enum12?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.AppService.Models.WebAppStack> GetWebAppStacksProviders(this Azure.ResourceManager.Resources.Tenant tenant, Azure.ResourceManager.AppService.Models.Enum13? stackOsType = default(Azure.ResourceManager.AppService.Models.Enum13?), Azure.ResourceManager.AppService.Models.StackOsType? stackOsType1 = default(Azure.ResourceManager.AppService.Models.StackOsType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.WebAppStack> GetWebAppStacksProvidersAsync(this Azure.ResourceManager.Resources.Tenant tenant, Azure.ResourceManager.AppService.Models.Enum13? stackOsType = default(Azure.ResourceManager.AppService.Models.Enum13?), Azure.ResourceManager.AppService.Models.StackOsType? stackOsType1 = default(Azure.ResourceManager.AppService.Models.StackOsType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.AppService.Models.WebAppStack> GetWebAppStacksForLocationProviders(this Azure.ResourceManager.Resources.Tenant tenant, string location, Azure.ResourceManager.AppService.Models.StackOsType? stackOsType = default(Azure.ResourceManager.AppService.Models.StackOsType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.WebAppStack> GetWebAppStacksForLocationProvidersAsync(this Azure.ResourceManager.Resources.Tenant tenant, string location, Azure.ResourceManager.AppService.Models.StackOsType? stackOsType = default(Azure.ResourceManager.AppService.Models.StackOsType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.AppService.Models.WebAppStack> GetWebAppStacksProviders(this Azure.ResourceManager.Resources.Tenant tenant, Azure.ResourceManager.AppService.Models.StackOsType? stackOsType = default(Azure.ResourceManager.AppService.Models.StackOsType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.WebAppStack> GetWebAppStacksProvidersAsync(this Azure.ResourceManager.Resources.Tenant tenant, Azure.ResourceManager.AppService.Models.StackOsType? stackOsType = default(Azure.ResourceManager.AppService.Models.StackOsType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TopLevelDomain : Azure.ResourceManager.Core.ArmResource
     {
@@ -6235,82 +6235,6 @@ namespace Azure.ResourceManager.AppService.Models
         public bool? IsAccessible { get { throw null; } }
         public double? Latency { get { throw null; } }
         public int? Port { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Enum11 : System.IEquatable<Azure.ResourceManager.AppService.Models.Enum11>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Enum11(string value) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.Enum11 All { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.Enum11 Linux { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.Enum11 Windows { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AppService.Models.Enum11 other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AppService.Models.Enum11 left, Azure.ResourceManager.AppService.Models.Enum11 right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppService.Models.Enum11 (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AppService.Models.Enum11 left, Azure.ResourceManager.AppService.Models.Enum11 right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Enum12 : System.IEquatable<Azure.ResourceManager.AppService.Models.Enum12>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Enum12(string value) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.Enum12 All { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.Enum12 Linux { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.Enum12 Windows { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AppService.Models.Enum12 other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AppService.Models.Enum12 left, Azure.ResourceManager.AppService.Models.Enum12 right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppService.Models.Enum12 (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AppService.Models.Enum12 left, Azure.ResourceManager.AppService.Models.Enum12 right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Enum13 : System.IEquatable<Azure.ResourceManager.AppService.Models.Enum13>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Enum13(string value) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.Enum13 All { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.Enum13 Linux { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.Enum13 Windows { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AppService.Models.Enum13 other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AppService.Models.Enum13 left, Azure.ResourceManager.AppService.Models.Enum13 right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppService.Models.Enum13 (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AppService.Models.Enum13 left, Azure.ResourceManager.AppService.Models.Enum13 right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Enum9 : System.IEquatable<Azure.ResourceManager.AppService.Models.Enum9>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Enum9(string value) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.Enum9 All { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.Enum9 Linux { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.Enum9 Windows { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AppService.Models.Enum9 other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AppService.Models.Enum9 left, Azure.ResourceManager.AppService.Models.Enum9 right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppService.Models.Enum9 (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AppService.Models.Enum9 left, Azure.ResourceManager.AppService.Models.Enum9 right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ErrorEntity
     {
