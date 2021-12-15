@@ -169,7 +169,6 @@ namespace Azure.Core.TestFramework
         {
             Logger?.Dispose();
             Logger = null;
-            _proxy?.Stop();
         }
 
         [SetUp]
