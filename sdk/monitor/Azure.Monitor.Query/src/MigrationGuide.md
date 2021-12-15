@@ -60,21 +60,15 @@ In `Microsoft.Azure.OperationalInsights` v1.1.0:
 using Microsoft.Azure.OperationalInsights;
 using Microsoft.Rest.Azure.Authentication;
 
-string clientId = "clientId";
-string clientSecret = "clientSecret";
-string domain = "domain"; //tenantId
-
-var authEndpoint = "https://login.microsoftonline.com";
-var tokenAudience = "https://api.loganalytics.io/";
-
 var adSettings = new ActiveDirectoryServiceSettings
-{
-    AuthenticationEndpoint = new Uri(authEndpoint),
-    TokenAudience = new Uri(tokenAudience),
-    ValidateAuthority = true
-};
-
-ServiceClientCredentials credentials = ApplicationTokenProvider.LoginSilentAsync(domain, clientId, clientSecret, adSettings).GetAwaiter().GetResult();
+	{
+	    AuthenticationEndpoint = new Uri("https://login.microsoftonline.com"),
+	    TokenAudience = new Uri("https://api.loganalytics.io/"),
+	    ValidateAuthority = true
+	};
+	
+ServiceClientCredentials credentials = ApplicationTokenProvider.LoginSilentAsync(
+	    "<domainId or tenantId>", "<clientId>", "<clientSecret>", adSettings).GetAwaiter().GetResult();
 var client = new OperationalInsightsDataClient(credentials);
 ```
 
@@ -89,26 +83,23 @@ var client = new LogsQueryClient(new DefaultAzureCredential());
 
 ### Send a single query request
 
-In version 1.0 of the Monitor Query library:
-
-- The `QueryBody` is flattened. Users are expected to pass the Kusto query directly to the API.
-- The `timespan` attribute is now required, which helped to avoid querying over the entire data set.
-
 In `Microsoft.Azure.OperationalInsights` v1.1.0:
 
 ```csharp
-QueryResults queryResults = client.Query($"endtoendlogs_CL | where Message == '{testIdentifierEntries}'");
+QueryResults queryResults = client.Query("AzureActivity | top 10 by TimeGenerated");
 HttpOperationResponse httpResponse = await client.QueryWithHttpMessagesAsync($"endtoendlogs_CL | where Message == '{testIdentifierEntries}'");
 ```
 
 In `Azure.Monitor.Query` v1.0.x:
 
+- The `QueryBody` is flattened. Users are expected to pass the Kusto query directly to the API.
+- The `timespan` attribute is now required, which helped to avoid querying over the entire data set.
+
 ```csharp
-string query = "AzureActivity | top 10 by TimeGenerated";
 Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
-    workspaceId,
-    query,
-    new QueryTimeRange(TimeSpan.FromDays(1)));
+	workspaceId,
+	"AzureActivity | top 10 by TimeGenerated",
+	new QueryTimeRange(TimeSpan.FromDays(1)));
 ```
 
 ## Additional samples
