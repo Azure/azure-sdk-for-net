@@ -20,6 +20,12 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             {
                 Assert.IsFalse(cache.TryGet(i.ToString(), out _));
             }
+
+            for (int i = 11; i < 20; i++)
+            {
+                Assert.IsTrue(cache.TryGet(i.ToString(), out var value));
+                Assert.AreEqual(i, value);
+            }
         }
         [Test]
         public void CacheOrderingRespected()
