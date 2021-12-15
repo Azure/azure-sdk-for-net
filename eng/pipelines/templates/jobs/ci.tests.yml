@@ -44,8 +44,7 @@ jobs:
         - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
           parameters:
               Paths:
-                - "/sdk"
-                - "/common"
+                - "/*"
                 - "!SessionRecords"
                 - "/sdk/${{ parameters.ServiceToTest }}/**/SessionRecords"
       - pwsh: |
