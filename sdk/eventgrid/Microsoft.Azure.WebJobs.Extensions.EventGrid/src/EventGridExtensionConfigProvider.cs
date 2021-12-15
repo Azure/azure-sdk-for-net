@@ -203,20 +203,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
 
             scope.Start();
 
-            try
+            FunctionResult result = await _listeners[functionName].Executor.TryExecuteAsync(triggerData, CancellationToken.None).ConfigureAwait(false);
+            if (result.Exception != null)
             {
-                FunctionResult result = await _listeners[functionName].Executor.TryExecuteAsync(triggerData, CancellationToken.None).ConfigureAwait(false);
-                if (result.Exception != null)
-                {
-                    scope.Failed(result.Exception);
-                }
-                return result;
+                scope.Failed(result.Exception);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return result;
         }
 
         private static void AddLinkIfEventHasContext(DiagnosticScope scope, JToken evnt)
