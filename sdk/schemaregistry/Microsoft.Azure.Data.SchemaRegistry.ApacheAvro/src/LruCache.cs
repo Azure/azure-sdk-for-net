@@ -5,6 +5,11 @@ using System.Collections.Generic;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 {
+    /// <summary>
+    /// A simple LRU cache implementation using a doubly linked list and dictionary.
+    /// </summary>
+    /// <typeparam name="K">The type of key</typeparam>
+    /// <typeparam name="V">The type of value</typeparam>
     internal class LruCache<K,V>
     {
         private readonly int _capacity;
@@ -28,7 +33,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
                 {
                     value = node.Value.Value;
                     _linkedList.Remove(node);
-                    _linkedList.AddLast(node);
+                    _linkedList.AddFirst(node);
                     return true;
                 }
 
@@ -43,24 +48,21 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             {
                 if (_map.TryGetValue(key, out var existingNode))
                 {
-                    // move node to the head of the list
+                    // remove node - we will re-add a new node for this key at the head of the list, as the value may be different
                     _linkedList.Remove(existingNode);
-                    _linkedList.AddLast(existingNode);
-                }
-                else
-                {
-                    // add new node
-                    var node = new LinkedListNode<KeyValuePair<K, V>>(new KeyValuePair<K, V>(key, val));
-                    _linkedList.AddLast(node);
-                    _map[key] = node;
                 }
 
-                if (_map.Count >= _capacity)
+                // add new node
+                var node = new LinkedListNode<KeyValuePair<K, V>>(new KeyValuePair<K, V>(key, val));
+                _linkedList.AddFirst(node);
+                _map[key] = node;
+
+                if (_map.Count > _capacity)
                 {
                     // remove least recently used node
-                    LinkedListNode<KeyValuePair<K, V>> first = _linkedList.First;
-                    _linkedList.RemoveFirst();
-                    _map.Remove(first.Value.Key);
+                    LinkedListNode<KeyValuePair<K, V>> last = _linkedList.Last;
+                    _linkedList.RemoveLast();
+                    _map.Remove(last.Value.Key);
                 }
             }
         }
