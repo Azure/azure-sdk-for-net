@@ -4,6 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Data.Tables;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Config;
@@ -19,11 +20,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
     {
         private const string PropertyName = "Property";
 
-        public TableTests(bool useCosmos) : base(useCosmos)
+        public TableTests(bool isAsync, bool useCosmos) : base(isAsync, useCosmos)
         {
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Table_IndexingFails()
         {
             async Task AssertIndexingError<TProgram>(string methodName, string expectedErrorMessage)
@@ -61,7 +62,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Table_SingleOut_Supported()
         {
             await CallAsync<BindToSingleOutProgram>();
@@ -82,7 +83,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         // TableName can have {  } pairs.
-        [Test]
+        [RecordedTest]
         public async Task Table_ResolvedName()
         {
             await CallAsync<BindToICollectorITableEntityResolvedTableProgram>(arguments: new { t1 = TableName });
@@ -100,7 +101,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Table_IfBoundToCustomTableBindingExtension_BindsCorrectly()
         {
             // Arrange
@@ -127,7 +128,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Table_IfBoundToICollectorJObject_AddInsertsEntity()
         {
             // Act
@@ -141,7 +142,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         // Partition and RowKey values are in the attribute
-        [Test]
+        [RecordedTest]
         public async Task Table_IfBoundToICollectorJObject__WithAttrKeys_AddInsertsEntity()
         {
             // Act
@@ -151,7 +152,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             await AssertStringPropertyAsync("ValueStr", "abcdef").ConfigureAwait(false);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Table_IfBoundToICollectorITableEntity_AddInsertsEntity()
         {
             // Act
@@ -164,7 +165,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             await AssertStringPropertyAsync(PropertyName, "abc").ConfigureAwait(false);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Table_IfBoundToICollectorPoco_AddInsertsEntity()
         {
             // Act
@@ -176,7 +177,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             await AssertStringPropertyAsync(PropertyName, "abc").ConfigureAwait(false);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Table_IfBoundToICollectorPoco_AddInsertsUsingNativeTableTypes()
         {
             // Arrange
@@ -187,13 +188,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 BooleanProperty = true,
                 NullableBooleanProperty = null,
                 ByteArrayProperty = new byte[] { 0x12, 0x34 },
-                DateTimeProperty = DateTime.UtcNow,
+                DateTimeProperty = DateTime.SpecifyKind(Recording.UtcNow.DateTime, DateTimeKind.Utc),
                 NullableDateTimeProperty = null,
                 DateTimeOffsetProperty = DateTimeOffset.MaxValue,
                 NullableDateTimeOffsetProperty = null,
                 DoubleProperty = 3.14,
                 NullableDoubleProperty = null,
-                GuidProperty = Guid.NewGuid(),
+                GuidProperty = Recording.Random.NewGuid(),
                 NullableGuidProperty = null,
                 Int32Property = 123,
                 NullableInt32Property = null,
