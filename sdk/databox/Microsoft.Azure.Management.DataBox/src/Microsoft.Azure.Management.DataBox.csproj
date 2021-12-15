@@ -7,7 +7,7 @@
 		<PackageId>Microsoft.Azure.Management.DataBox</PackageId>
 		<Description>Microsoft Azure Management DataBox library</Description>
 		<AssemblyName>Microsoft.Azure.Management.DataBox</AssemblyName>
-		<Version>2.0.0</Version>
+		<Version>2.0.1</Version>
 		<PackageTags>AzureDataBox;DataBox;</PackageTags>
     <PackageReleaseNotes>
 
