@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppConfiguration
         internal static ConfigurationStoreData DeserializeConfigurationStoreData(JsonElement element)
         {
             Optional<ResourceIdentity> identity = default;
-            Models.Sku sku = default;
+            Sku sku = default;
             IDictionary<string, string> tags = default;
             Location location = default;
             ResourceIdentifier id = default;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 }
                 if (property.NameEquals("sku"))
                 {
-                    sku = Models.Sku.DeserializeSku(property.Value);
+                    sku = Sku.DeserializeSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))

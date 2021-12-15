@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Sql
         internal static ManagedInstanceData DeserializeManagedInstanceData(JsonElement element)
         {
             Optional<Models.ResourceIdentity> identity = default;
-            Optional<Models.Sku> sku = default;
+            Optional<Sku> sku = default;
             IDictionary<string, string> tags = default;
             Location location = default;
             ResourceIdentifier id = default;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Sql
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Models.Sku.DeserializeSku(property.Value);
+                    sku = Sku.DeserializeSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))

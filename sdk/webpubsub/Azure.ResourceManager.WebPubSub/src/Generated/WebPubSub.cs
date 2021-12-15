@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.WebPubSub
 
         /// <summary> List all available skus of the resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<IReadOnlyList<Models.Sku>>> GetSkusAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<IReadOnlyList<Sku>>> GetSkusAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSub.GetSkus");
             scope.Start();
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.WebPubSub
 
         /// <summary> List all available skus of the resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<Models.Sku>> GetSkus(CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<Sku>> GetSkus(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSub.GetSkus");
             scope.Start();
