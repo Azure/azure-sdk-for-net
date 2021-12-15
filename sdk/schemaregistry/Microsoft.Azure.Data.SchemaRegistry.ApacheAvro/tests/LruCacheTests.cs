@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         }
 
         [Test]
-        public void CacheOrderingRespected()
+        public void CacheEvictsLeastRecentlyAccessedItemFirst()
         {
             var cache = new LruCache<string, int>(3);
 
