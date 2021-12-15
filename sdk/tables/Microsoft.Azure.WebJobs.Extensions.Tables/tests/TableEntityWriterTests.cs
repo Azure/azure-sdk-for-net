@@ -1,7 +1,9 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Cosmos.Table;
+using System.Threading.Tasks;
+using Azure.Data.Tables;
+using Moq;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
@@ -10,21 +12,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
     {
         [Test]
         [Ignore("TODO")]
-        public void FlushAfterAdd_PersistsEntity()
+        public async Task FlushAfterAdd_PersistsEntity()
         {
             // Arrange
-            var account = new FakeStorageAccount();
-            var client = account.CreateCloudTableClient();
-            var table = client.GetTableReference("Table");
+            var table = Mock.Of<TableClient>();
             TableEntityWriter<ITableEntity> product = new TableEntityWriter<ITableEntity>(table);
             const string partitionKey = "PK";
             const string rowKey = "RK";
-            DynamicTableEntity entity = new DynamicTableEntity(partitionKey, rowKey);
+            TableEntity entity = new TableEntity(partitionKey, rowKey);
             product.Add(entity);
             // Act
             product.FlushAsync().GetAwaiter().GetResult();
             // Assert
-            DynamicTableEntity persisted = table.Retrieve<DynamicTableEntity>(partitionKey, rowKey);
+            TableEntity persisted = await table.GetEntityAsync<TableEntity>(partitionKey, rowKey);
             Assert.NotNull(persisted);
         }
     }

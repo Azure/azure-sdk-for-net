@@ -35,7 +35,12 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// Data Box Heavy orders.
         /// </summary>
         [EnumMember(Value = "DataBoxHeavy")]
-        DataBoxHeavy
+        DataBoxHeavy,
+        /// <summary>
+        /// Data Box Customer Disk orders.
+        /// </summary>
+        [EnumMember(Value = "DataBoxCustomerDisk")]
+        DataBoxCustomerDisk
     }
     internal static class ClassDiscriminatorEnumExtension
     {
@@ -54,6 +59,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
                     return "DataBoxDisk";
                 case ClassDiscriminator.DataBoxHeavy:
                     return "DataBoxHeavy";
+                case ClassDiscriminator.DataBoxCustomerDisk:
+                    return "DataBoxCustomerDisk";
             }
             return null;
         }
@@ -68,6 +75,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
                     return ClassDiscriminator.DataBoxDisk;
                 case "DataBoxHeavy":
                     return ClassDiscriminator.DataBoxHeavy;
+                case "DataBoxCustomerDisk":
+                    return ClassDiscriminator.DataBoxCustomerDisk;
             }
             return null;
         }

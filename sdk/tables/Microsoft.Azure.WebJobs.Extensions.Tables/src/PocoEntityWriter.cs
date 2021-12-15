@@ -3,9 +3,9 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Data.Tables;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Protocols;
-using Microsoft.Azure.Cosmos.Table;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
@@ -15,14 +15,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
     /// <typeparam name="T">The POCO type.</typeparam>
     internal class PocoEntityWriter<T> : ICollector<T>, IAsyncCollector<T>, IWatcher
     {
-        private static readonly IConverter<T, ITableEntity> Converter = PocoToTableEntityConverter<T>.Create();
+        private static readonly IConverter<T, TableEntity> Converter = new PocoToTableEntityConverter<T>();
 
-        public PocoEntityWriter(CloudTable table, TableParameterLog tableStatistics)
+        public PocoEntityWriter(TableClient table, TableParameterLog tableStatistics)
         {
             TableEntityWriter = new TableEntityWriter<ITableEntity>(table, tableStatistics);
         }
 
-        public PocoEntityWriter(CloudTable table)
+        public PocoEntityWriter(TableClient table)
         {
             TableEntityWriter = new TableEntityWriter<ITableEntity>(table);
         }
