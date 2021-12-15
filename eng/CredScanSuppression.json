@@ -61,9 +61,7 @@
                 "sdk/identity/Azure.Identity/tests/Data/mock-arc-mi-key.key",
                 "sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/PemReaderTests.Keys.cs",
                 "sdk/storage/Azure.Storage.Common/tests/Shared/azurite_cert.pem",
-                "sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Common/tests/cert.pem",
-                "sdk/storage/Azure.Storage.Common/tests/Shared/AzuriteFixture.cs",
-                "sdk/mixedreality/Azure.MixedReality.Authentication/tests/Azure.MixedReality.Authentication.Tests/SessionRecords/MixedRealityStsClientLiveTests/GetToken"
+                "sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Common/tests/cert.pem"
             ],
             "_justification": "File contains private key used by test code."
         }    
