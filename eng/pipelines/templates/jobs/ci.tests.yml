@@ -40,6 +40,13 @@ jobs:
       # Add a default so the job doesn't fail when the matrix is empty
       container: $[ variables['Container'] ]
     steps:
+      - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
+        - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+          parameters:
+              Paths:
+                - "!SessionRecords"
+                - "/*"
+                - "/sdk/${{ parameters.ServiceToTest }}/*/SessionRecords"
       - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
         parameters:
           AgentImage: $(OSVmImage)
@@ -58,6 +65,7 @@ jobs:
           /p:RunApiCompat=false /p:InheritDocEnabled=false
           /p:Configuration=$(BuildConfiguration)
           /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}
+          /p:EnableSourceLink=false
           $(AdditionalTestArguments)
         displayName: "Build & Test ($(TestTargetFramework))"
       - task: PublishTestResults@2
