@@ -1172,19 +1172,19 @@ namespace Azure.Communication.CallingServer.Tests
         [TestCaseSource(nameof(TestData_DeleteAudioRoutingGroup))]
         public async Task DeleteAudioRoutingGroupAsync_Passes(string callConnectionId, string audioRoutingGroupId)
         {
-            var callConnection = CreateMockCallConnection(202, callConnectionId: callConnectionId);
+            var callConnection = CreateMockCallConnection(200, callConnectionId: callConnectionId);
 
             var response = await callConnection.DeleteAudioRoutingGroupAsync(audioRoutingGroupId).ConfigureAwait(false);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
+            Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
         }
 
         [TestCaseSource(nameof(TestData_DeleteAudioRoutingGroup))]
         public void DeleteAudioRoutingGroup_Passes(string callConnectionId, string audioRoutingGroupId)
         {
-            var callConnection = CreateMockCallConnection(202, callConnectionId: callConnectionId);
+            var callConnection = CreateMockCallConnection(200, callConnectionId: callConnectionId);
 
             var response = callConnection.DeleteAudioRoutingGroup(audioRoutingGroupId);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
+            Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
         }
 
         [TestCaseSource(nameof(TestData_DeleteAudioRoutingGroup))]
