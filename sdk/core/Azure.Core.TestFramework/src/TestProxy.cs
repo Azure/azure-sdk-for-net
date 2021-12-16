@@ -163,15 +163,9 @@ namespace Azure.Core.TestFramework
                         .Single(a => a.Key == "TestProxyPath")
                         .Value);
 
-                    AppDomain.CurrentDomain.ProcessExit += (_, _) =>
+                    AppDomain.CurrentDomain.DomainUnload += (_, _) =>
                     {
-                        try
-                        {
-                            shared._testProxyProcess?.Kill();
-                        }
-                        catch
-                        {
-                        }
+                        shared._testProxyProcess?.Kill();
                     };
 
                     _shared = shared;
