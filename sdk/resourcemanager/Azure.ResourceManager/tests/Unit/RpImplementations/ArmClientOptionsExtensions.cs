@@ -8,7 +8,7 @@ namespace Azure.ResourceManager.Tests
         {
             Dictionary<ResourceType, string> versions = new Dictionary<ResourceType, string>();
             versions.Add(new ResourceType("Microsoft.fakedService/fakedApi"), FakeResourceApiVersions.Default);
-            return azureResourceManagerClientOptions.GetOverrideObject<FakeRpApiVersions>(() => versions) as FakeRpApiVersions;
+            return new FakeRpApiVersions();
         }
     }
 }

@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Resources
     public class GenericResourceCollection : ArmCollection, IEnumerable<GenericResource>, IAsyncEnumerable<GenericResource>
     {
         private ClientDiagnostics _clientDiagnostics;
+        private readonly ProviderCollection _providerCollection;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericResourceCollection"/> class for mocking.
@@ -36,6 +37,7 @@ namespace Azure.ResourceManager.Resources
         internal GenericResourceCollection(ClientContext clientContext, ResourceIdentifier id)
             : base(clientContext, id)
         {
+            _providerCollection = new ProviderCollection(this, Id.GetSubscriptionResourceIdentifier());
         }
 
         /// <inheritdoc/>
@@ -365,7 +367,7 @@ namespace Azure.ResourceManager.Resources
 
         private string GetApiVersion(ResourceIdentifier resourceId, CancellationToken cancellationToken)
         {
-            string version = ClientOptions.ApiVersions.TryGetApiVersion(resourceId.ResourceType, cancellationToken);
+            string version = _providerCollection.TryGetApiVersion(resourceId.ResourceType, cancellationToken);
             if (version is null)
             {
                 throw new InvalidOperationException($"An invalid resouce id was given {resourceId}");
@@ -375,7 +377,7 @@ namespace Azure.ResourceManager.Resources
 
         private async Task<string> GetApiVersionAsync(ResourceIdentifier resourceId, CancellationToken cancellationToken)
         {
-            string version = await ClientOptions.ApiVersions.TryGetApiVersionAsync(resourceId.ResourceType, cancellationToken).ConfigureAwait(false);
+            string version = await _providerCollection.TryGetApiVersionAsync(resourceId.ResourceType, cancellationToken).ConfigureAwait(false);
             if (version is null)
             {
                 throw new InvalidOperationException($"An invalid resouce id was given {resourceId}");

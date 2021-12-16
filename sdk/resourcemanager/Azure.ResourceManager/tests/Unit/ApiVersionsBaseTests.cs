@@ -144,9 +144,7 @@ namespace Azure.ResourceManager.Tests
         [TestCase]
         public void ImplicitToString()
         {
-            ArmClientOptions options = new ArmClientOptions();
-            options.FakeRestApiVersions().FakeResourceVersion = FakeResourceApiVersions.V2019_12_01;
-            string version = options.FakeRestApiVersions().FakeResourceVersion;
+            string version = FakeResourceApiVersions.V2019_12_01;
             Assert.IsTrue(version == "2019-12-01");
         }
 
@@ -292,21 +290,6 @@ namespace Azure.ResourceManager.Tests
             FakeResourceApiVersions left = ConvertFromString(leftString);
             FakeResourceApiVersions right = ConvertFromString(rightString);
             Assert.IsFalse(left <= right);
-        }
-
-        [TestCase]
-        public void ValidateClone()
-        {
-            var options = new ArmClientOptions();
-            var apiVersions1 = new ApiVersions(options);
-            var apiVersions2 = apiVersions1.Clone();
-
-            Assert.IsFalse(ReferenceEquals(apiVersions1, apiVersions2));
-            Assert.AreEqual(apiVersions1.TryGetApiVersion("{Microsoft.Resources/subscriptions/resourceGroups}"), apiVersions2.TryGetApiVersion("{Microsoft.Resources/subscriptions/resourceGroups}"));
-
-            apiVersions1.SetApiVersion("{Microsoft.Resources/subscriptions/resourceGroups}", "1500-10-10");
-            Assert.IsFalse(ReferenceEquals(apiVersions1, apiVersions2));
-            Assert.AreNotEqual(apiVersions1, apiVersions2);
         }
     }
 }

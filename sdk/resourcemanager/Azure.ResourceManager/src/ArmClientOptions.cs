@@ -16,64 +16,26 @@ namespace Azure.ResourceManager
     public sealed class ArmClientOptions : ClientOptions
 #pragma warning restore AZC0008 // ClientOptions should have a nested enum called ServiceVersion
     {
-        private readonly ConcurrentDictionary<Type, Dictionary<ResourceType, string>> _overrides = new ConcurrentDictionary<Type, Dictionary<ResourceType, string>>();
-
-        /// <summary>
-        /// Gets the ApiVersions object
-        /// </summary>
-        public ApiVersions ApiVersions { get; private set; }
-
         /// <summary>
         /// Gets the ApiVersions object
         /// </summary>
         public string Scope { get; set; } = "https://management.core.windows.net/.default";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ArmClientOptions"/> class.
-        /// </summary>
-        public ArmClientOptions()
-        {
-            ApiVersions = new ApiVersions(this);
-        }
-
-        /// <summary>
         /// Dictionary of ResourceType to version overrides.
         /// </summary>
         public Dictionary<ResourceType, string> ResourceApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
 
-        internal Dictionary<string, Dictionary<string, string>> ResourceApiVersions { get; private set; } = new Dictionary<string, Dictionary<string, string>>();
-
-        /// <summary>
-        /// Gets override object.
-        /// </summary>
-        /// <typeparam name="T"> The type of the underlying model this class wraps. </typeparam>
-        /// <param name="objectConstructor"> A function used to construct a new object if none was found. </param>
-        /// <returns> The override object. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public object GetOverrideObject<T>(Func<Dictionary<ResourceType, string>> objectConstructor)
-        {
-            if (objectConstructor is null)
-                throw new ArgumentNullException(nameof(objectConstructor));
-
-            return _overrides.GetOrAdd(typeof(T), objectConstructor());
-        }
+        internal ConcurrentDictionary<string, Dictionary<string, string>> ResourceApiVersions { get; private set; } = new ConcurrentDictionary<string, Dictionary<string, string>>();
 
         internal ArmClientOptions Clone()
         {
             ArmClientOptions copy = new ArmClientOptions();
 
-            copy.ApiVersions = ApiVersions.Clone();
             copy.Transport = Transport;
-            copy.ResourceApiVersions = ResourceApiVersions;
 
             //copy overrrides
             CopyApiVersions(copy, ResourceApiVersionOverrides);
-
-            //copy rp defaults
-            foreach (var rpDefaults in _overrides.Values)
-            {
-                CopyApiVersions(copy, rpDefaults);
-            }
 
             return copy;
         }
@@ -85,7 +47,7 @@ namespace Azure.ResourceManager
                 if (!copy.ResourceApiVersions.TryGetValue(resourceType.Key.Namespace, out var versionOverrides))
                 {
                     versionOverrides = new Dictionary<string, string>();
-                    copy.ResourceApiVersions.Add(resourceType.Key.Namespace, versionOverrides);
+                    copy.ResourceApiVersions.TryAdd(resourceType.Key.Namespace, versionOverrides);
                 }
                 versionOverrides[resourceType.Key.Type] = resourceType.Value;
             }

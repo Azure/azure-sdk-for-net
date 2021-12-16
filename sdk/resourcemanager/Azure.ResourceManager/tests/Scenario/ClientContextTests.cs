@@ -7,13 +7,14 @@ using System.Threading;
 using Azure.Core.TestFramework;
 using System.Threading.Tasks;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Tests
 {
     public class ClientContextTests : ResourceManagerTestBase
     {
         public ClientContextTests(bool isAsync)
-            : base(isAsync) //, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -59,18 +60,33 @@ namespace Azure.ResourceManager.Tests
             }
         }
 
-        [TestCase]
         [RecordedTest]
-        public void ValidateOptionsTestApiVersions()
+        public async Task ValidateOptionsTestApiVersions()
         {
+            var fakeVersion = "1500-10-10";
             var x = new ArmClientOptions();
             var y = x.Clone();
-            Assert.IsFalse(ReferenceEquals(x.ApiVersions, y.ApiVersions));
-            Assert.AreEqual(x.ApiVersions.TryGetApiVersion("{Microsoft.Resources/subscriptions/resourceGroups}"), y.ApiVersions.TryGetApiVersion("{Microsoft.Resources/subscriptions/resourceGroups}"));
+            Assert.IsFalse(ReferenceEquals(x.ResourceApiVersions, y.ResourceApiVersions));
+            Assert.IsFalse(ReferenceEquals(x.ResourceApiVersionOverrides, y.ResourceApiVersionOverrides));
 
-            x.ApiVersions.SetApiVersion("{Microsoft.Resources/subscriptions/resourceGroups}", "1500-10-10");
-            Assert.IsFalse(ReferenceEquals(x.ApiVersions, y.ApiVersions));
-            Assert.AreNotEqual(x.ApiVersions, y.ApiVersions);
+            var clientX = GetArmClient(x);
+            var clientY = GetArmClient(y);
+            var subX = await clientX.GetDefaultSubscriptionAsync();
+            var subY = await clientY.GetDefaultSubscriptionAsync();
+            var versionX = await subX.GetProviders().TryGetApiVersionAsync(ResourceGroup.ResourceType);
+            var versionY = await subY.GetProviders().TryGetApiVersionAsync(ResourceGroup.ResourceType);
+            Assert.AreEqual(versionX, versionY);
+            Assert.AreNotEqual(versionY, fakeVersion);
+            Assert.AreNotEqual(versionX, fakeVersion);
+
+            x.ResourceApiVersionOverrides[ResourceGroup.ResourceType] = fakeVersion;
+            clientX = GetArmClient(x);
+            subX = await clientX.GetDefaultSubscriptionAsync();
+            Assert.IsFalse(ReferenceEquals(x.ResourceApiVersions, y.ResourceApiVersions));
+            Assert.IsFalse(ReferenceEquals(x.ResourceApiVersionOverrides, y.ResourceApiVersionOverrides));
+            versionX = await subX.GetProviders().TryGetApiVersionAsync(ResourceGroup.ResourceType);
+            versionY = await subY.GetProviders().TryGetApiVersionAsync(ResourceGroup.ResourceType);
+            Assert.AreNotEqual(versionX, versionY);
         }
     }
 }

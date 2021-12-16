@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Tests
             _ = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
             var asetid = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{rgName}/providers/Microsoft.NotAValidNameSpace123/availabilitySets/testavset";
             var genericResourceOperations = Client.GetGenericResource(new ResourceIdentifier(asetid));
-            InvalidOperationException exception = Assert.ThrowsAsync<InvalidOperationException>(async () => await genericResourceOperations.GetAsync());
-            Assert.IsTrue(exception.Message.Equals($"An invalid resouce id was given {asetid}"));
+            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => await genericResourceOperations.GetAsync());
+            Assert.AreEqual(404, exception.Status);
         }
 
         [TestCase]
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Tests
             var rgOp = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
             ResourceGroup rg = rgOp.Value;
             ArmClientOptions options = new ArmClientOptions();
-            options.ApiVersions.SetApiVersion(rg.Id.ResourceType, "1500-10-10");
+            options.ResourceApiVersionOverrides[rg.Id.ResourceType] = "1500-10-10";
             var client = GetArmClient(options);
             var genericResourceOperations = client.GetGenericResource(rg.Id);
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => await genericResourceOperations.GetAsync());

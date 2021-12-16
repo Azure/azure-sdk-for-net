@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.Tests.Unit
+namespace Azure.ResourceManager.Tests
 {
     [Parallelizable]
     class ResourceIdentifierExtensionsTests
@@ -15,6 +15,30 @@ namespace Azure.ResourceManager.Tests.Unit
             ResourceIdentifier id = new ResourceIdentifier(resourceId);
             string result = id.SubstringAfterProviderNamespace();
             Assert.AreEqual(expected, result);
+        }
+
+        [TestCase("/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg/providers/Microsoft.Compute/virtualMachines/myVm", false)]
+        [TestCase("/providers/Microsoft.Compute/virtualMachines/myVm", true)]
+        [TestCase("/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575", false)]
+        public void GetSubscriptionResourceIdentifier(string resourceId, bool shouldBeNull)
+        {
+            ResourceIdentifier id = new ResourceIdentifier(resourceId);
+            ResourceIdentifier subId = id.GetSubscriptionResourceIdentifier();
+            if (shouldBeNull)
+            {
+                Assert.IsNull(subId);
+            }
+            else
+            {
+                Assert.IsNotNull(subId);
+            }
+        }
+
+        [Test]
+        public void GetSubscriptionResourceIdentifierFromRoot()
+        {
+            ResourceIdentifier subId = ResourceIdentifier.Root.GetSubscriptionResourceIdentifier();
+            Assert.IsNull(subId);
         }
     }
 }

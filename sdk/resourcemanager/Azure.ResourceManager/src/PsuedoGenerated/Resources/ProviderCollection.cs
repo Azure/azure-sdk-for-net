@@ -303,25 +303,14 @@ namespace Azure.ResourceManager.Resources
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
 
-        private Dictionary<string, bool> _hasLoadedResourcesFromApi = new Dictionary<string, bool>();
-        private static readonly object s_getResourceVersionLock = new object();
         internal string TryGetApiVersion(ResourceType resourceType, CancellationToken cancellationToken = default)
         {
             string version;
             Dictionary<string, string> resourceVersions;
             if (!ClientOptions.ResourceApiVersions.TryGetValue(resourceType.Namespace, out resourceVersions))
             {
-                if (!_hasLoadedResourcesFromApi.TryGetValue(resourceType.Namespace, out var hasLoadedNamespace) || !hasLoadedNamespace)
-                {
-                    lock (s_getResourceVersionLock)
-                    {
-                        if (!_hasLoadedResourcesFromApi.TryGetValue(resourceType.Namespace, out hasLoadedNamespace) || !hasLoadedNamespace)
-                        {
-                            LoadResourceVersionsFromApi(resourceType.Namespace, out resourceVersions, cancellationToken);
-                        }
-                        _hasLoadedResourcesFromApi[resourceType.Namespace] = true;
-                    }
-                }
+                resourceVersions = LoadResourceVersionsFromApi(resourceType.Namespace, cancellationToken);
+                ClientOptions.ResourceApiVersions.TryAdd(resourceType.Namespace, resourceVersions);
             }
             if (!resourceVersions.TryGetValue(resourceType.Type, out version))
             {
@@ -330,15 +319,62 @@ namespace Azure.ResourceManager.Resources
             return version;
         }
 
-        private void LoadResourceVersionsFromApi(string resourceNamespace, out Dictionary<string, string> resourceVersions, CancellationToken cancellationToken = default)
+        internal async Task<string> TryGetApiVersionAsync(ResourceType resourceType, CancellationToken cancellationToken = default)
         {
-            resourceVersions = new Dictionary<string, string>();
+            string version;
+            Dictionary<string, string> resourceVersions;
+            if (!ClientOptions.ResourceApiVersions.TryGetValue(resourceType.Namespace, out resourceVersions))
+            {
+                resourceVersions = await LoadResourceVersionsFromApiAsync(resourceType.Namespace, cancellationToken).ConfigureAwait(false);
+                ClientOptions.ResourceApiVersions.TryAdd(resourceType.Namespace, resourceVersions);
+            }
+            if (!resourceVersions.TryGetValue(resourceType.Type, out version))
+            {
+                throw new InvalidOperationException($"Invalid resource type {resourceType}");
+            }
+            return version;
+        }
+
+        private Dictionary<string, string> LoadResourceVersionsFromApi(string resourceNamespace, CancellationToken cancellationToken = default)
+        {
             Provider results = Get(resourceNamespace, cancellationToken: cancellationToken);
+            return GetVersionsFromResult(results);
+        }
+
+        private async Task<Dictionary<string, string>> LoadResourceVersionsFromApiAsync(string resourceNamespace, CancellationToken cancellationToken = default)
+        {
+            Provider results = await GetAsync(resourceNamespace, cancellationToken: cancellationToken).ConfigureAwait(false);
+            return GetVersionsFromResult(results);
+        }
+
+        private static Dictionary<string, string> GetVersionsFromResult(Provider results)
+        {
+            Dictionary<string, string> resourceVersions = new Dictionary<string, string>();
             foreach (var type in results.Data.ResourceTypes)
             {
                 resourceVersions[type.ResourceType] = type.ApiVersions[0];
             }
-            ClientOptions.ResourceApiVersions.Add(resourceNamespace, resourceVersions);
+            return resourceVersions;
+        }
+
+        internal string GetApiVersionForNamespace(object nameSpace)
+        {
+            //foreach (var type in results.Data.ResourceTypes)
+            //{
+            //    string[] parts = type.ApiVersions[0].Split('-');
+            //    DateTime current = new DateTime(
+            //        Convert.ToInt32(parts[0], CultureInfo.InvariantCulture.NumberFormat),
+            //        Convert.ToInt32(parts[1], CultureInfo.InvariantCulture.NumberFormat),
+            //        Convert.ToInt32(parts[2], CultureInfo.InvariantCulture.NumberFormat));
+            //    maxVersion = current > maxVersion ? current : maxVersion;
+            //}
+            //string month = maxVersion.Month < 10 ? "0" : string.Empty;
+            //month += maxVersion.Month;
+            //string day = maxVersion.Day < 10 ? "0" : string.Empty;
+            //day += maxVersion.Day;
+            //version = $"{maxVersion.Year}-{month}-{day}";
+            //_apiForNamespaceCache[nameSpace] = version;
+            throw NotImplementedException();
         }
     }
 }

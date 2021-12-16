@@ -68,27 +68,26 @@ namespace Azure.ResourceManager.Tests
         }
 
         [RecordedTest]
-        [SyncOnly]
-        public void GetUsedResourceApiVersion()
+        public async Task GetUsedResourceApiVersion()
         {
             ProviderCounterPolicy policy = new ProviderCounterPolicy();
             ArmClientOptions options = new ArmClientOptions();
             options.AddPolicy(policy, HttpPipelinePosition.PerCall);
             var client = GetArmClient(options);
-            var version = client.GetResourceApiVersion(new ResourceType("Microsoft.Compute/virtualMachines"));
+            var subscription = await client.GetDefaultSubscriptionAsync();
+            var version = await subscription.GetProviders().TryGetApiVersionAsync(new ResourceType("Microsoft.Compute/virtualMachines"));
             Assert.NotNull(version);
             Assert.AreEqual(1, policy.GetCount("Microsoft.Compute"));
             Assert.AreEqual(0, policy.GetCount("Microsoft.Network"));
 
-            version = client.GetResourceApiVersion(new ResourceType("Microsoft.Compute/availabilitySets"));
+            version = await subscription.GetProviders().TryGetApiVersionAsync(new ResourceType("Microsoft.Compute/availabilitySets"));
             Assert.NotNull(version);
             Assert.AreEqual(1, policy.GetCount("Microsoft.Compute"));
             Assert.AreEqual(0, policy.GetCount("Microsoft.Network"));
         }
 
         [RecordedTest]
-        [SyncOnly]
-        public void GetUsedResourceApiVersionWithOverride()
+        public async Task GetUsedResourceApiVersionWithOverride()
         {
             ProviderCounterPolicy policy = new ProviderCounterPolicy();
             ArmClientOptions options = new ArmClientOptions();
@@ -99,7 +98,8 @@ namespace Azure.ResourceManager.Tests
             options.ResourceApiVersionOverrides.Add(computeResourceType, expectedVersion);
 
             var client = GetArmClient(options);
-            var version = client.GetResourceApiVersion(computeResourceType);
+            var subscription = await client.GetDefaultSubscriptionAsync();
+            var version = await subscription.GetProviders().TryGetApiVersionAsync(computeResourceType);
             Assert.AreEqual(expectedVersion, version);
             Assert.AreEqual(0, policy.GetCount("Microsoft.Compute"));
             Assert.AreEqual(0, policy.GetCount("Microsoft.Network"));
@@ -109,35 +109,31 @@ namespace Azure.ResourceManager.Tests
             options.AddPolicy(policy, HttpPipelinePosition.PerCall);
 
             client = GetArmClient(options);
-            version = client.GetResourceApiVersion(computeResourceType);
+            subscription = await client.GetDefaultSubscriptionAsync();
+            version = await subscription.GetProviders().TryGetApiVersionAsync(computeResourceType);
             Assert.AreNotEqual(expectedVersion, version);
             Assert.AreEqual(1, policy.GetCount("Microsoft.Compute"));
             Assert.AreEqual(0, policy.GetCount("Microsoft.Network"));
         }
 
         [RecordedTest]
-        [SyncOnly]
-        public void GetUsedResourceApiVersionWithRpDefault()
-        {
-            string expectedVersion = FakeResourceApiVersions.Default;
-            var fakeResourceType = new ResourceType("Microsoft.fakedService/fakedApi");
-
-            var version = Client.GetResourceApiVersion(fakeResourceType);
-            Assert.AreEqual(expectedVersion, version);
-        }
-
-        [RecordedTest]
-        [SyncOnly]
         public void GetUsedResourceApiVersionInvalidResource()
         {
-            Assert.Throws<InvalidOperationException>(() => { Client.GetResourceApiVersion(new ResourceType("Microsoft.Compute/fakeStuff")); });
+            Assert.ThrowsAsync<InvalidOperationException>(async () =>
+            {
+                var subscription = await Client.GetDefaultSubscriptionAsync();
+                await subscription.GetProviders().TryGetApiVersionAsync(new ResourceType("Microsoft.Compute/fakeStuff"));
+            });
         }
 
         [RecordedTest]
-        [SyncOnly]
         public void GetUsedResourceApiVersionInvalidNamespace()
         {
-            Assert.Throws<RequestFailedException>(() => { Client.GetResourceApiVersion(new ResourceType("Microsoft.Fake/fakeStuff")); });
+            Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                var subscription = await Client.GetDefaultSubscriptionAsync();
+                await subscription.GetProviders().TryGetApiVersionAsync(new ResourceType("Microsoft.Fake/fakeStuff"));
+            });
         }
 
         [RecordedTest]

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _providerCollection = new ProviderCollection(this, Id.Parent.Parent);
+            _providerCollection = new ProviderCollection(this, Id.GetSubscriptionResourceIdentifier());
         }
 
         /// <summary>
@@ -56,6 +56,7 @@ namespace Azure.ResourceManager.Resources
             HasData = true;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _providerCollection = new ProviderCollection(this, Id.GetSubscriptionResourceIdentifier());
         }
 
         /// <inheritdoc/>
@@ -415,7 +416,7 @@ namespace Azure.ResourceManager.Resources
 
         private async Task<string> GetApiVersionAsync(CancellationToken cancellationToken)
         {
-            string version = await ClientOptions.ApiVersions.TryGetApiVersionAsync(Id.ResourceType, cancellationToken).ConfigureAwait(false);
+            string version = await _providerCollection.TryGetApiVersionAsync(Id.ResourceType, cancellationToken).ConfigureAwait(false);
             if (version is null)
             {
                 throw new InvalidOperationException($"An invalid resouce id was given {Id}");

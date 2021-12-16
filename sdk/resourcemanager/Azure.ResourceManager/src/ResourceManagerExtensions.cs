@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Core
 {
@@ -138,6 +139,20 @@ namespace Azure.ResourceManager.Core
                 throw new ArgumentNullException(parameterName);
             if (segment.Contains("/"))
                 throw new ArgumentOutOfRangeException(parameterName, $"{parameterName} must be a single path segment");
+        }
+
+        internal static ResourceIdentifier GetSubscriptionResourceIdentifier(this ResourceIdentifier id)
+        {
+            if (id.ResourceType == Subscription.ResourceType)
+                return id;
+
+            ResourceIdentifier parent = id.Parent;
+            while (parent != null && parent.ResourceType != Subscription.ResourceType)
+            {
+                parent = parent.Parent;
+            }
+
+            return parent?.ResourceType == Subscription.ResourceType ? parent : null;
         }
     }
 }

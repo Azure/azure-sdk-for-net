@@ -26,7 +26,6 @@ namespace Azure.ResourceManager
         /// </summary>
         internal const string DefaultUri = "https://management.azure.com";
         private Tenant _tenant;
-        private Dictionary<string, bool> _hasLoadedResourcesFromApi = new Dictionary<string, bool>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ArmClient"/> class for mocking.
@@ -116,7 +115,6 @@ namespace Azure.ResourceManager
             _tenant = new Tenant(ClientOptions, Credential, BaseUri, Pipeline);
             _defaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId) ? null :
                 new Subscription(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), ResourceIdentifier.Root.AppendChildResource(Subscription.ResourceType.Type, defaultSubscriptionId));
-            ClientOptions.ApiVersions.SetProviderClient(this);
         }
 
         private Subscription _defaultSubscription;
@@ -140,53 +138,6 @@ namespace Azure.ResourceManager
         /// Gets the HTTP pipeline.
         /// </summary>
         protected virtual HttpPipeline Pipeline { get; private set; }
-
-        private static readonly object s_getResourceVersionLock = new object();
-        /// <summary>
-        /// Gets the version this client will use for the resourceType.
-        /// </summary>
-        /// <param name="resourceType"> The resource type to check. </param>
-        /// <exception cref="InvalidOperationException"> Throws if the resource type is not recognized. </exception>
-        public virtual string GetResourceApiVersion(ResourceType resourceType)
-        {
-            string version;
-            Dictionary<string, string> resourceVersions;
-            if (!ClientOptions.ResourceApiVersions.TryGetValue(resourceType.Namespace, out resourceVersions))
-            {
-                if (!_hasLoadedResourcesFromApi.TryGetValue(resourceType.Namespace, out var hasLoadedNamespace) || !hasLoadedNamespace)
-                {
-                    lock (s_getResourceVersionLock)
-                    {
-                        if (!_hasLoadedResourcesFromApi.TryGetValue(resourceType.Namespace, out hasLoadedNamespace) || !hasLoadedNamespace)
-                        {
-                            LoadResourceVersionsFromApi(resourceType.Namespace, out resourceVersions);
-                        }
-                        _hasLoadedResourcesFromApi[resourceType.Namespace] = true;
-                    }
-                }
-            }
-            if (!resourceVersions.TryGetValue(resourceType.Type, out version))
-            {
-                throw new InvalidOperationException($"Invalid resource type {resourceType}");
-            }
-            return version;
-        }
-
-        private void LoadResourceVersionsFromApi(string resourceNamespace, out Dictionary<string, string> resourceVersions)
-        {
-            resourceVersions = new Dictionary<string, string>();
-            Provider results = GetDefaultSubscription().GetProviders().Get(resourceNamespace);
-            foreach (var type in results.Data.ResourceTypes)
-            {
-                resourceVersions[type.ResourceType] = type.ApiVersions[0];
-            }
-            ClientOptions.ResourceApiVersions.Add(resourceNamespace, resourceVersions);
-        }
-
-        private void LoadResourceVersionsFromRp()
-        {
-            throw new NotImplementedException();
-        }
 
         /// <summary>
         /// Gets the Azure subscriptions.
@@ -408,16 +359,6 @@ namespace Azure.ResourceManager
             }
 
             return new GenericResource(GetDefaultSubscription(), id);
-        }
-
-        /// <summary>
-        /// Gets the RestApi definition for a given Azure namespace.
-        /// </summary>
-        /// <param name="azureNamespace"> The namespace to get the rest API for. </param>
-        /// <returns> A collection representing the rest apis for the namespace. </returns>
-        public virtual RestApiCollection GetRestApis(string azureNamespace)
-        {
-            return new RestApiCollection(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), azureNamespace);
         }
 
         /// <summary> Gets all resource providers for a subscription. </summary>
