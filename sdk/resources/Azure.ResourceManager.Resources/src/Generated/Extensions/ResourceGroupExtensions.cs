@@ -10,6 +10,16 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class to add extension methods to ResourceGroup. </summary>
     public static partial class ResourceGroupExtensions
     {
+        #region Deployment
+        /// <summary> Gets an object representing a DeploymentCollection along with the instance operations that can be performed on it. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> Returns a <see cref="DeploymentCollection" /> object. </returns>
+        public static DeploymentCollection GetDeployments(this ResourceGroup resourceGroup)
+        {
+            return new DeploymentCollection(resourceGroup);
+        }
+        #endregion
+
         #region Application
         /// <summary> Gets an object representing a ApplicationCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
