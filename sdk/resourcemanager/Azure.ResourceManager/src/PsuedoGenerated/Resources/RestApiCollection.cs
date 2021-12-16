@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceIdentifier.RootResourceIdentifier.ResourceType;
+        protected override ResourceType ValidResourceType => ResourceIdentifier.Root.ResourceType;
 
         /// <summary> Gets a list of operations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

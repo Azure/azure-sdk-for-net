@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The operation to delete a virtual machine. </summary>
-        /// <param name="forceDeletion"> Optional parameter to force delete virtual machines.(Feature in Preview). </param>
+        /// <param name="forceDeletion"> Optional parameter to force delete virtual machines. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<VirtualMachineDeleteOperation> DeleteAsync(bool? forceDeletion = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The operation to delete a virtual machine. </summary>
-        /// <param name="forceDeletion"> Optional parameter to force delete virtual machines.(Feature in Preview). </param>
+        /// <param name="forceDeletion"> Optional parameter to force delete virtual machines. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual VirtualMachineDeleteOperation Delete(bool? forceDeletion = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)

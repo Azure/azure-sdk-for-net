@@ -19,25 +19,25 @@ namespace Microsoft.Azure.Management.StreamAnalytics
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("StreamAnalytics", "Clusters", "2020-03-01-preview"),
-                new Tuple<string, string, string>("StreamAnalytics", "Functions", "2017-04-01-preview"),
-                new Tuple<string, string, string>("StreamAnalytics", "Inputs", "2017-04-01-preview"),
-                new Tuple<string, string, string>("StreamAnalytics", "Operations", "2017-04-01-preview"),
-                new Tuple<string, string, string>("StreamAnalytics", "Outputs", "2017-04-01-preview"),
-                new Tuple<string, string, string>("StreamAnalytics", "PrivateEndpoints", "2020-03-01-preview"),
-                new Tuple<string, string, string>("StreamAnalytics", "StreamingJobs", "2017-04-01-preview"),
-                new Tuple<string, string, string>("StreamAnalytics", "Subscriptions", "2017-04-01-preview"),
-                new Tuple<string, string, string>("StreamAnalytics", "Transformations", "2017-04-01-preview"),
+                new Tuple<string, string, string>("StreamAnalytics", "Clusters", "2020-03-01"),
+                new Tuple<string, string, string>("StreamAnalytics", "Functions", "2020-03-01"),
+                new Tuple<string, string, string>("StreamAnalytics", "Inputs", "2020-03-01"),
+                new Tuple<string, string, string>("StreamAnalytics", "Operations", "2020-03-01"),
+                new Tuple<string, string, string>("StreamAnalytics", "Outputs", "2020-03-01"),
+                new Tuple<string, string, string>("StreamAnalytics", "PrivateEndpoints", "2020-03-01"),
+                new Tuple<string, string, string>("StreamAnalytics", "StreamingJobs", "2020-03-01"),
+                new Tuple<string, string, string>("StreamAnalytics", "Subscriptions", "2020-03-01"),
+                new Tuple<string, string, string>("StreamAnalytics", "Transformations", "2020-03-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "v2";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/streamanalytics/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\Users\\shangsu\\azure\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/streamanalytics/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\ZeshiLuo\\azure-sdk-for-net-1\\sdk";
       public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "5325e1398eb73e5de8c8a251909763b9e4803150";
+      public static readonly String GithubBranchName = "main";
+      public static readonly String GithubCommidId = "fe0ddc1279ffbfc3b971ba46d4c62ed597b571ae";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

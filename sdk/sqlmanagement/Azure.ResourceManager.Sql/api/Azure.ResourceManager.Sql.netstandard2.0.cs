@@ -302,7 +302,10 @@ namespace Azure.ResourceManager.Sql
         protected DataMaskingPolicy() { }
         public virtual Azure.ResourceManager.Sql.DataMaskingPolicyData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
+        public Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        public virtual Azure.ResourceManager.Sql.Models.DataMaskingPolicyCreateOrUpdateOperation CreateOrUpdate(Azure.ResourceManager.Sql.DataMaskingPolicyData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Sql.Models.DataMaskingPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(Azure.ResourceManager.Sql.DataMaskingPolicyData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.Models.DataMaskingRule> CreateOrUpdateDataMaskingRule(string dataMaskingRuleName, Azure.ResourceManager.Sql.Models.DataMaskingRule parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.Models.DataMaskingRule>> CreateOrUpdateDataMaskingRuleAsync(string dataMaskingRuleName, Azure.ResourceManager.Sql.Models.DataMaskingRule parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.DataMaskingPolicy> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -311,19 +314,6 @@ namespace Azure.ResourceManager.Sql
         public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.DataMaskingRule> GetDataMaskingRules(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.DataMaskingRule> GetDataMaskingRulesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class DataMaskingPolicyCollection : Azure.ResourceManager.Core.ArmCollection
-    {
-        protected DataMaskingPolicyCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.Models.DataMaskingPolicyCreateOrUpdateOperation CreateOrUpdate(Azure.ResourceManager.Sql.DataMaskingPolicyData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Sql.Models.DataMaskingPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(Azure.ResourceManager.Sql.DataMaskingPolicyData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.DataMaskingPolicy> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.DataMaskingPolicy>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.DataMaskingPolicy> GetIfExists(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.DataMaskingPolicy>> GetIfExistsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DataMaskingPolicyData : Azure.ResourceManager.Models.Resource
     {
@@ -3646,7 +3636,7 @@ namespace Azure.ResourceManager.Sql
         public Azure.ResourceManager.Sql.DatabaseSecurityAlertPolicyCollection GetDatabaseSecurityAlertPolicies() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.DatabaseUsage> GetDatabaseUsages(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.DatabaseUsage> GetDatabaseUsagesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public Azure.ResourceManager.Sql.DataMaskingPolicyCollection GetDataMaskingPolicies() { throw null; }
+        public Azure.ResourceManager.Sql.DataMaskingPolicy GetDataMaskingPolicy() { throw null; }
         public Azure.ResourceManager.Sql.DataWarehouseUserActivitiesCollection GetDataWarehouseUserActivities() { throw null; }
         public Azure.ResourceManager.Sql.ExtendedDatabaseBlobAuditingPolicyCollection GetExtendedDatabaseBlobAuditingPolicies() { throw null; }
         public Azure.ResourceManager.Sql.GeoBackupPolicyCollection GetGeoBackupPolicies() { throw null; }

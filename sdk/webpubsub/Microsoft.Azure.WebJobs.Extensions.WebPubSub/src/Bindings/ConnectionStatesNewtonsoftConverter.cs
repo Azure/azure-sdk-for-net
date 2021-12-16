@@ -19,6 +19,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             var jDict = JToken.Load(reader).ToObject<Dictionary<string, JToken>>();
             foreach (var item in jDict)
             {
+                // Pairing with WriteJson of always write RawValue
                 dict.Add(item.Key, BinaryData.FromString(JsonConvert.SerializeObject(item.Value)));
             }
 
@@ -33,6 +34,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 foreach (KeyValuePair<string, BinaryData> pair in value)
                 {
                     writer.WritePropertyName(pair.Key);
+                    // Pairing with ReadJson of always stringify value.
                     writer.WriteRawValue(pair.Value.ToString());
                 }
             }

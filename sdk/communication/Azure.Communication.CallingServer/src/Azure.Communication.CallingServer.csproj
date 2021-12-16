@@ -37,8 +37,8 @@
     <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="../../../core/Azure.Core/src/Azure.Core.csproj" />
     <PackageReference Include="Azure.Communication.Common" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
-
 </Project>

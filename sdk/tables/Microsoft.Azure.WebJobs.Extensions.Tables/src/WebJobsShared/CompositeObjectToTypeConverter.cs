@@ -1,7 +1,9 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 using System;
 using System.Collections.Generic;
+
 namespace Microsoft.Azure.WebJobs.Host.Converters
 {
     /// <summary>
@@ -11,18 +13,16 @@ namespace Microsoft.Azure.WebJobs.Host.Converters
     internal class CompositeObjectToTypeConverter<T> : IObjectToTypeConverter<T>
     {
         private readonly IEnumerable<IObjectToTypeConverter<T>> _converters;
+
         /// <summary>
         /// Create a new instance.
         /// </summary>
         /// <param name="converters">The set of converters to encapsulate.</param>
         public CompositeObjectToTypeConverter(IEnumerable<IObjectToTypeConverter<T>> converters)
         {
-            if (converters == null)
-            {
-                throw new ArgumentNullException(nameof(converters));
-            }
-            _converters = converters;
+            _converters = converters ?? throw new ArgumentNullException(nameof(converters));
         }
+
         /// <summary>
         /// Create a new instance.
         /// </summary>
@@ -31,6 +31,7 @@ namespace Microsoft.Azure.WebJobs.Host.Converters
             : this((IEnumerable<IObjectToTypeConverter<T>>)converters)
         {
         }
+
         /// <summary>
         /// Try to perform a conversion by attempting each inner converter in order
         /// until one succeeds, or all fail.
@@ -49,6 +50,7 @@ namespace Microsoft.Azure.WebJobs.Host.Converters
                     return true;
                 }
             }
+
             output = default(T);
             return false;
         }

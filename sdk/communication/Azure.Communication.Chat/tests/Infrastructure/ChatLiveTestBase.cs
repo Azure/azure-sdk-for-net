@@ -8,7 +8,7 @@ namespace Azure.Communication.Chat.Tests
 {
     public class ChatLiveTestBase : RecordedTestBase<ChatTestEnvironment>
     {
-        public ChatLiveTestBase(bool isAsync) : base(isAsync, useLegacyTransport: true)
+        public ChatLiveTestBase(bool isAsync) : base(isAsync)
             => Sanitizer = new ChatRecordedTestSanitizer();
 
         /// <summary>

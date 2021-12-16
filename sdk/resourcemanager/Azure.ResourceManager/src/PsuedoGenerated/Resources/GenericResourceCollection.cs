@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <inheritdoc/>
-        protected override ResourceType ValidResourceType => ResourceIdentifier.RootResourceIdentifier.ResourceType;
+        protected override ResourceType ValidResourceType => ResourceIdentifier.Root.ResourceType;
 
         /// <inheritdoc/>
         protected override void ValidateResourceType(ResourceIdentifier identifier)
@@ -50,11 +50,9 @@ namespace Azure.ResourceManager.Resources
         {
             get
             {
-                string subscription;
-                if (!Id.TryGetSubscriptionId(out subscription))
-                {
+                string subscription = Id.SubscriptionId;
+                if (subscription == null)
                     subscription = Guid.Empty.ToString();
-                }
 
                 return new ResourcesRestOperations(
                     Diagnostics,
@@ -80,7 +78,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var apiVersion = GetApiVersion(resourceId, cancellationToken);
+                var apiVersion = GetApiVersion(new ResourceIdentifier(resourceId), cancellationToken);
                 var result = RestClient.GetById(resourceId, apiVersion, cancellationToken);
                 if (result.Value == null)
                     throw Diagnostics.CreateRequestFailedException(result.GetRawResponse());
@@ -107,7 +105,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var apiVersion = await GetApiVersionAsync(resourceId, cancellationToken).ConfigureAwait(false);
+                var apiVersion = await GetApiVersionAsync(new ResourceIdentifier(resourceId), cancellationToken).ConfigureAwait(false);
                 var response = await RestClient.GetByIdAsync(resourceId, apiVersion, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await Diagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
@@ -316,7 +314,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var apiVersion = GetApiVersion(resourceId, cancellationToken);
+                var apiVersion = GetApiVersion(new ResourceIdentifier(resourceId), cancellationToken);
                 var originalResponse = RestClient.CreateOrUpdateById(resourceId, apiVersion, parameters, cancellationToken);
                 var operation = new ResourceCreateOrUpdateByIdOperation(this, Diagnostics, Pipeline, RestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters).Request, originalResponse);
                 if (waitForCompletion)
@@ -351,7 +349,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var apiVersion = await GetApiVersionAsync(resourceId, cancellationToken).ConfigureAwait(false);
+                var apiVersion = await GetApiVersionAsync(new ResourceIdentifier(resourceId), cancellationToken).ConfigureAwait(false);
                 var originalResponse = await RestClient.CreateOrUpdateByIdAsync(resourceId, apiVersion, parameters, cancellationToken).ConfigureAwait(false);
                 var operation = new ResourceCreateOrUpdateByIdOperation(this, Diagnostics, Pipeline, RestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters).Request, originalResponse);
                 if (waitForCompletion)
@@ -399,7 +397,7 @@ namespace Azure.ResourceManager.Resources
 
             try
             {
-                var apiVersion = GetApiVersion(resourceId, cancellationToken);
+                var apiVersion = GetApiVersion(new ResourceIdentifier(resourceId), cancellationToken);
                 var response = RestClient.GetById(resourceId, apiVersion, cancellationToken);
                 return response.Value == null
                    ? Response.FromValue<GenericResource>(null, response.GetRawResponse())
@@ -426,7 +424,7 @@ namespace Azure.ResourceManager.Resources
 
             try
             {
-                var apiVersion = await GetApiVersionAsync(resourceId, cancellationToken).ConfigureAwait(false);
+                var apiVersion = await GetApiVersionAsync(new ResourceIdentifier(resourceId), cancellationToken).ConfigureAwait(false);
                 var response = await RestClient.GetByIdAsync(resourceId, apiVersion, cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                    ? Response.FromValue<GenericResource>(null, response.GetRawResponse())

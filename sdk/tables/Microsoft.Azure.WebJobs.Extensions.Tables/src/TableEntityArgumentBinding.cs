@@ -1,29 +1,33 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 using System;
 using System.Threading.Tasks;
+using Azure;
+using Azure.Data.Tables;
+using Azure.Data.Tables.Models;
 using Microsoft.Azure.WebJobs.Host.Bindings;
-using Microsoft.Azure.Cosmos.Table;
-namespace Microsoft.Azure.WebJobs.Host.Tables
+
+namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
     internal class TableEntityArgumentBinding<TElement> : IArgumentBinding<TableEntityContext>
-        where TElement : ITableEntity, new()
+        where TElement :class, ITableEntity, new()
     {
-        public Type ValueType
-        {
-            get { return typeof(TElement); }
-        }
+        public Type ValueType => typeof(TElement);
+
         public async Task<IValueProvider> BindAsync(TableEntityContext value, ValueBindingContext context)
         {
             var table = value.Table;
-            var retrieve = table.CreateRetrieveOperation<TElement>(value.PartitionKey, value.RowKey);
-            TableResult result = await table.ExecuteAsync(retrieve, context.CancellationToken).ConfigureAwait(false);
-            TElement entity = (TElement)result.Result;
-            if (entity == null)
+            try
+            {
+                var result = await table.GetEntityAsync<TElement>(value.PartitionKey, value.RowKey, cancellationToken: context.CancellationToken).ConfigureAwait(false);
+                return new TableEntityValueBinder(value, result.Value, typeof(TElement));
+            }
+            catch (RequestFailedException e) when
+                (e.Status == 404 && (e.ErrorCode == TableErrorCode.TableNotFound || e.ErrorCode == TableErrorCode.ResourceNotFound))
             {
                 return new NullEntityValueProvider<TElement>(value);
             }
-            return new TableEntityValueBinder(value, entity, typeof(TElement));
         }
     }
 }

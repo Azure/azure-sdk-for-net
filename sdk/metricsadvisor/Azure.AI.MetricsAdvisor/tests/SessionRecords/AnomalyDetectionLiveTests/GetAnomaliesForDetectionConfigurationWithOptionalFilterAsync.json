@@ -18,8 +18,8 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "startTime": "2021-10-01T00:00:00Z",
-        "endTime": "2021-10-31T00:00:00Z",
+        "startTime": "2021-10-01T00:00:00.0000000Z",
+        "endTime": "2021-10-31T00:00:00.0000000Z",
         "filter": {
           "dimensionFilter": [
             {
@@ -54,7 +54,7 @@
       "ResponseBody": {
         "value": [
           {
-            "timestamp": "2021-10-30T00:00:00Z",
+            "timestamp": "2021-10-30T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Handmade"
@@ -66,7 +66,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Handmade"
@@ -78,7 +78,7 @@
             }
           },
           {
-            "timestamp": "2021-10-28T00:00:00Z",
+            "timestamp": "2021-10-28T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Handmade"
@@ -90,7 +90,7 @@
             }
           },
           {
-            "timestamp": "2021-10-27T00:00:00Z",
+            "timestamp": "2021-10-27T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Handmade"
@@ -102,7 +102,7 @@
             }
           },
           {
-            "timestamp": "2021-10-26T00:00:00Z",
+            "timestamp": "2021-10-26T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Handmade"
@@ -114,7 +114,7 @@
             }
           },
           {
-            "timestamp": "2021-10-25T00:00:00Z",
+            "timestamp": "2021-10-25T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Handmade"
@@ -126,7 +126,7 @@
             }
           },
           {
-            "timestamp": "2021-10-24T00:00:00Z",
+            "timestamp": "2021-10-24T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Handmade"
@@ -138,7 +138,7 @@
             }
           },
           {
-            "timestamp": "2021-10-23T00:00:00Z",
+            "timestamp": "2021-10-23T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Handmade"
@@ -150,7 +150,7 @@
             }
           },
           {
-            "timestamp": "2021-10-22T00:00:00Z",
+            "timestamp": "2021-10-22T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Handmade"
@@ -162,7 +162,7 @@
             }
           },
           {
-            "timestamp": "2021-10-20T00:00:00Z",
+            "timestamp": "2021-10-20T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Handmade"
@@ -174,7 +174,7 @@
             }
           },
           {
-            "timestamp": "2021-10-19T00:00:00Z",
+            "timestamp": "2021-10-19T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Handmade"
@@ -186,7 +186,7 @@
             }
           },
           {
-            "timestamp": "2021-10-04T00:00:00Z",
+            "timestamp": "2021-10-04T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Handmade"

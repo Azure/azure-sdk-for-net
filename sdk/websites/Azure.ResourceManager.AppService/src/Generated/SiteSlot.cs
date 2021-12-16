@@ -3757,7 +3757,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotResourceHealthMetadata" /> object. </returns>
         public SiteSlotResourceHealthMetadata GetSiteSlotResourceHealthMetadata()
         {
-            return new SiteSlotResourceHealthMetadata(this, Id + "/resourceHealthMetadata/default");
+            return new SiteSlotResourceHealthMetadata(this, new ResourceIdentifier(Id.ToString() + "/resourceHealthMetadata/default"));
         }
         #endregion
 
@@ -3777,7 +3777,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotBasicPublishingCredentialsPolicyFtp" /> object. </returns>
         public SiteSlotBasicPublishingCredentialsPolicyFtp GetSiteSlotBasicPublishingCredentialsPolicyFtp()
         {
-            return new SiteSlotBasicPublishingCredentialsPolicyFtp(this, Id + "/basicPublishingCredentialsPolicies/ftp");
+            return new SiteSlotBasicPublishingCredentialsPolicyFtp(this, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/ftp"));
         }
         #endregion
 
@@ -3787,7 +3787,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotBasicPublishingCredentialsPolicyScm" /> object. </returns>
         public SiteSlotBasicPublishingCredentialsPolicyScm GetSiteSlotBasicPublishingCredentialsPolicyScm()
         {
-            return new SiteSlotBasicPublishingCredentialsPolicyScm(this, Id + "/basicPublishingCredentialsPolicies/scm");
+            return new SiteSlotBasicPublishingCredentialsPolicyScm(this, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/scm"));
         }
         #endregion
 
@@ -3817,7 +3817,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotConfigLogs" /> object. </returns>
         public SiteSlotConfigLogs GetSiteSlotConfigLogs()
         {
-            return new SiteSlotConfigLogs(this, Id + "/config/logs");
+            return new SiteSlotConfigLogs(this, new ResourceIdentifier(Id.ToString() + "/config/logs"));
         }
         #endregion
 
@@ -3827,7 +3827,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotConfigWeb" /> object. </returns>
         public SiteSlotConfigWeb GetSiteSlotConfigWeb()
         {
-            return new SiteSlotConfigWeb(this, Id + "/config/web");
+            return new SiteSlotConfigWeb(this, new ResourceIdentifier(Id.ToString() + "/config/web"));
         }
         #endregion
 
@@ -3863,11 +3863,11 @@ namespace Azure.ResourceManager.AppService
 
         #region SiteSlotExtension
 
-        /// <summary> Gets a collection of SiteSlotExtensions in the SiteSlot. </summary>
-        /// <returns> An object representing collection of SiteSlotExtensions and their operations over a SiteSlot. </returns>
-        public SiteSlotExtensionCollection GetSiteSlotExtensions()
+        /// <summary> Gets an object representing a SiteSlotExtension along with the instance operations that can be performed on it in the SiteSlot. </summary>
+        /// <returns> Returns a <see cref="SiteSlotExtension" /> object. </returns>
+        public SiteSlotExtension GetSiteSlotExtension()
         {
-            return new SiteSlotExtensionCollection(this);
+            return new SiteSlotExtension(this, new ResourceIdentifier(Id.ToString() + "/extensions/MSDeploy"));
         }
         #endregion
 
@@ -3927,7 +3927,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotNetworkConfig" /> object. </returns>
         public SiteSlotNetworkConfig GetSiteSlotNetworkConfig()
         {
-            return new SiteSlotNetworkConfig(this, Id + "/networkConfig/virtualNetwork");
+            return new SiteSlotNetworkConfig(this, new ResourceIdentifier(Id.ToString() + "/networkConfig/virtualNetwork"));
         }
         #endregion
 
@@ -3943,11 +3943,11 @@ namespace Azure.ResourceManager.AppService
 
         #region SiteSlotPrivateAccess
 
-        /// <summary> Gets a collection of SiteSlotPrivateAccesses in the SiteSlot. </summary>
-        /// <returns> An object representing collection of SiteSlotPrivateAccesses and their operations over a SiteSlot. </returns>
-        public SiteSlotPrivateAccessCollection GetSiteSlotPrivateAccesses()
+        /// <summary> Gets an object representing a SiteSlotPrivateAccess along with the instance operations that can be performed on it in the SiteSlot. </summary>
+        /// <returns> Returns a <see cref="SiteSlotPrivateAccess" /> object. </returns>
+        public SiteSlotPrivateAccess GetSiteSlotPrivateAccess()
         {
-            return new SiteSlotPrivateAccessCollection(this);
+            return new SiteSlotPrivateAccess(this, new ResourceIdentifier(Id.ToString() + "/privateAccess/virtualNetworks"));
         }
         #endregion
 
@@ -3973,11 +3973,11 @@ namespace Azure.ResourceManager.AppService
 
         #region MigrateMySqlStatus
 
-        /// <summary> Gets a collection of MigrateMySqlStatuses in the SiteSlot. </summary>
-        /// <returns> An object representing collection of MigrateMySqlStatuses and their operations over a SiteSlot. </returns>
-        public MigrateMySqlStatusCollection GetMigrateMySqlStatuses()
+        /// <summary> Gets an object representing a MigrateMySqlStatus along with the instance operations that can be performed on it in the SiteSlot. </summary>
+        /// <returns> Returns a <see cref="MigrateMySqlStatus" /> object. </returns>
+        public MigrateMySqlStatus GetMigrateMySqlStatus()
         {
-            return new MigrateMySqlStatusCollection(this);
+            return new MigrateMySqlStatus(this, new ResourceIdentifier(Id.ToString() + "/migratemysql/status"));
         }
         #endregion
 
@@ -3993,11 +3993,11 @@ namespace Azure.ResourceManager.AppService
 
         #region SiteSlotSourcecontrol
 
-        /// <summary> Gets a collection of SiteSlotSourcecontrols in the SiteSlot. </summary>
-        /// <returns> An object representing collection of SiteSlotSourcecontrols and their operations over a SiteSlot. </returns>
-        public SiteSlotSourcecontrolCollection GetSiteSlotSourcecontrols()
+        /// <summary> Gets an object representing a SiteSlotSourcecontrol along with the instance operations that can be performed on it in the SiteSlot. </summary>
+        /// <returns> Returns a <see cref="SiteSlotSourcecontrol" /> object. </returns>
+        public SiteSlotSourcecontrol GetSiteSlotSourcecontrol()
         {
-            return new SiteSlotSourcecontrolCollection(this);
+            return new SiteSlotSourcecontrol(this, new ResourceIdentifier(Id.ToString() + "/sourcecontrols/web"));
         }
         #endregion
 

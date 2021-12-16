@@ -1,0 +1,35 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://pakrymtables3prim.table.cosmos.azure.com/$batch",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "771",
+        "Content-Type": "multipart/mixed; boundary=batch_6c7059e5-0fb9-4e28-b030-0fe0a5024de7",
+        "DataServiceVersion": "3.0",
+        "User-Agent": "azsdk-net-Data.Tables/12.4.0-alpha.20211215.1 (.NET 6.0.0-rtm.21522.10; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "7148999d61c77a0032ad88f820628f55",
+        "x-ms-date": "Wed, 15 Dec 2021 18:56:31 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-02-02"
+      },
+      "RequestBody": "LS1iYXRjaF82YzcwNTllNS0wZmI5LTRlMjgtYjAzMC0wZmUwYTUwMjRkZTcNCkNvbnRlbnQtVHlwZTogbXVsdGlwYXJ0L21peGVkOyBib3VuZGFyeT1jaGFuZ2VzZXRfNjdjNTg3NjMtYmM1ZS00M2M0LTk2ZTgtOWM5OTZhYjNlYWU5DQoNCi0tY2hhbmdlc2V0XzY3YzU4NzYzLWJjNWUtNDNjNC05NmU4LTljOTk2YWIzZWFlOQ0KQ29udGVudC1UeXBlOiBhcHBsaWNhdGlvbi9odHRwDQpDb250ZW50LVRyYW5zZmVyLUVuY29kaW5nOiBiaW5hcnkNCg0KUE9TVCBodHRwczovL3Bha3J5bXRhYmxlczNwcmltLnRhYmxlLmNvc21vcy5henVyZS5jb20vdGVzdHRhYmxlOGdKcWwwOTA/JGZvcm1hdD1hcHBsaWNhdGlvbiUyRmpzb24lM0JvZGF0YSUzRG1pbmltYWxtZXRhZGF0YSBIVFRQLzEuMQ0KSG9zdDogcGFrcnltdGFibGVzM3ByaW0udGFibGUuY29zbW9zLmF6dXJlLmNvbQ0KeC1tcy12ZXJzaW9uOiAyMDE5LTAyLTAyDQpEYXRhU2VydmljZVZlcnNpb246IDMuMA0KUHJlZmVyOiByZXR1cm4tbm8tY29udGVudA0KQWNjZXB0OiBhcHBsaWNhdGlvbi9qc29uO29kYXRhPW1pbmltYWxtZXRhZGF0YQ0KQ29udGVudC1UeXBlOiBhcHBsaWNhdGlvbi9qc29uO29kYXRhPW5vbWV0YWRhdGENCg0KeyJQYXJ0aXRpb25LZXkiOiJQSyIsIlJvd0tleSI6IlJLIiwiUHJvcGVydHkiOiJhYmMifQ0KLS1jaGFuZ2VzZXRfNjdjNTg3NjMtYmM1ZS00M2M0LTk2ZTgtOWM5OTZhYjNlYWU5LS0NCg0KLS1iYXRjaF82YzcwNTllNS0wZmI5LTRlMjgtYjAzMC0wZmUwYTUwMjRkZTctLQ0K",
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Content-Type": "multipart/mixed; boundary=batchresponse_aaeeeb63-24c2-4c33-b6ec-8229324a06de",
+        "Date": "Wed, 15 Dec 2021 18:56:31 GMT",
+        "Transfer-Encoding": "chunked",
+        "x-ms-request-id": "98154e7e-dcc3-4745-8801-632087948068"
+      },
+      "ResponseBody": "LS1iYXRjaHJlc3BvbnNlX2FhZWVlYjYzLTI0YzItNGMzMy1iNmVjLTgyMjkzMjRhMDZkZQ0KQ29udGVudC1UeXBlOiBtdWx0aXBhcnQvbWl4ZWQ7IGJvdW5kYXJ5PWNoYW5nZXNldHJlc3BvbnNlXzQ1YzljODIwLWZlZTQtNDBmMS04MTZjLTIyY2IxY2Q4YWU3YQ0KDQotLWNoYW5nZXNldHJlc3BvbnNlXzQ1YzljODIwLWZlZTQtNDBmMS04MTZjLTIyY2IxY2Q4YWU3YQpDb250ZW50LVR5cGU6IGFwcGxpY2F0aW9uL2h0dHAKQ29udGVudC1UcmFuc2Zlci1FbmNvZGluZzogYmluYXJ5CgpIVFRQLzEuMSAyMDQgTm8gQ29udGVudA0KRVRhZzogVy8iZGF0ZXRpbWUnMjAyMS0xMi0xNVQxOCUzQTU2JTNBMzEuOTQzMzczNlonIg0KUHJlZmVyZW5jZS1BcHBsaWVkOiByZXR1cm4tbm8tY29udGVudA0KTG9jYXRpb246IGh0dHBzOi8vcGFrcnltdGFibGVzM3ByaW0udGFibGUuY29zbW9zLmF6dXJlLmNvbS90ZXN0dGFibGU4Z0pxbDA5MChQYXJ0aXRpb25LZXk9J1BLJyxSb3dLZXk9J1JLJykNCkNvbnRlbnQtSUQ6IDENCg0KDQotLWNoYW5nZXNldHJlc3BvbnNlXzQ1YzljODIwLWZlZTQtNDBmMS04MTZjLTIyY2IxY2Q4YWU3YS0tCi0tYmF0Y2hyZXNwb25zZV9hYWVlZWI2My0yNGMyLTRjMzMtYjZlYy04MjI5MzI0YTA2ZGUtLQ0K"
+    }
+  ],
+  "Variables": {
+    "COSMOS_TABLES_ENDPOINT_SUFFIX": "cosmos.azure.com",
+    "RandomSeed": "299726648",
+    "TABLES_COSMOS_ACCOUNT_NAME": "pakrymtables3prim",
+    "TABLES_PRIMARY_COSMOS_ACCOUNT_KEY": "Kg=="
+  }
+}

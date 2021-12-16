@@ -4263,7 +4263,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteResourceHealthMetadata" /> object. </returns>
         public SiteResourceHealthMetadata GetSiteResourceHealthMetadata()
         {
-            return new SiteResourceHealthMetadata(this, Id + "/resourceHealthMetadata/default");
+            return new SiteResourceHealthMetadata(this, new ResourceIdentifier(Id.ToString() + "/resourceHealthMetadata/default"));
         }
         #endregion
 
@@ -4293,7 +4293,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="BasicPublishingCredentialsPolicyFtp" /> object. </returns>
         public BasicPublishingCredentialsPolicyFtp GetBasicPublishingCredentialsPolicyFtp()
         {
-            return new BasicPublishingCredentialsPolicyFtp(this, Id + "/basicPublishingCredentialsPolicies/ftp");
+            return new BasicPublishingCredentialsPolicyFtp(this, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/ftp"));
         }
         #endregion
 
@@ -4303,7 +4303,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteBasicPublishingCredentialsPolicyScm" /> object. </returns>
         public SiteBasicPublishingCredentialsPolicyScm GetSiteBasicPublishingCredentialsPolicyScm()
         {
-            return new SiteBasicPublishingCredentialsPolicyScm(this, Id + "/basicPublishingCredentialsPolicies/scm");
+            return new SiteBasicPublishingCredentialsPolicyScm(this, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/scm"));
         }
         #endregion
 
@@ -4333,7 +4333,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteConfigLogs" /> object. </returns>
         public SiteConfigLogs GetSiteConfigLogs()
         {
-            return new SiteConfigLogs(this, Id + "/config/logs");
+            return new SiteConfigLogs(this, new ResourceIdentifier(Id.ToString() + "/config/logs"));
         }
         #endregion
 
@@ -4343,7 +4343,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SlotConfigNamesResource" /> object. </returns>
         public SlotConfigNamesResource GetSlotConfigNamesResource()
         {
-            return new SlotConfigNamesResource(this, Id + "/config/slotConfigNames");
+            return new SlotConfigNamesResource(this, new ResourceIdentifier(Id.ToString() + "/config/slotConfigNames"));
         }
         #endregion
 
@@ -4353,7 +4353,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteConfigWeb" /> object. </returns>
         public SiteConfigWeb GetSiteConfigWeb()
         {
-            return new SiteConfigWeb(this, Id + "/config/web");
+            return new SiteConfigWeb(this, new ResourceIdentifier(Id.ToString() + "/config/web"));
         }
         #endregion
 
@@ -4389,11 +4389,11 @@ namespace Azure.ResourceManager.AppService
 
         #region SiteExtension
 
-        /// <summary> Gets a collection of SiteExtensions in the WebSite. </summary>
-        /// <returns> An object representing collection of SiteExtensions and their operations over a WebSite. </returns>
-        public SiteExtensionCollection GetSiteExtensions()
+        /// <summary> Gets an object representing a SiteExtension along with the instance operations that can be performed on it in the WebSite. </summary>
+        /// <returns> Returns a <see cref="SiteExtension" /> object. </returns>
+        public SiteExtension GetSiteExtension()
         {
-            return new SiteExtensionCollection(this);
+            return new SiteExtension(this, new ResourceIdentifier(Id.ToString() + "/extensions/MSDeploy"));
         }
         #endregion
 
@@ -4449,11 +4449,11 @@ namespace Azure.ResourceManager.AppService
 
         #region SiteNetworkConfig
 
-        /// <summary> Gets a collection of SiteNetworkConfigs in the WebSite. </summary>
-        /// <returns> An object representing collection of SiteNetworkConfigs and their operations over a WebSite. </returns>
-        public SiteNetworkConfigCollection GetSiteNetworkConfigs()
+        /// <summary> Gets an object representing a SiteNetworkConfig along with the instance operations that can be performed on it in the WebSite. </summary>
+        /// <returns> Returns a <see cref="SiteNetworkConfig" /> object. </returns>
+        public SiteNetworkConfig GetSiteNetworkConfig()
         {
-            return new SiteNetworkConfigCollection(this);
+            return new SiteNetworkConfig(this, new ResourceIdentifier(Id.ToString() + "/networkConfig/virtualNetwork"));
         }
         #endregion
 
@@ -4473,7 +4473,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SitePrivateAccess" /> object. </returns>
         public SitePrivateAccess GetSitePrivateAccess()
         {
-            return new SitePrivateAccess(this, Id + "/privateAccess/virtualNetworks");
+            return new SitePrivateAccess(this, new ResourceIdentifier(Id.ToString() + "/privateAccess/virtualNetworks"));
         }
         #endregion
 
@@ -4503,7 +4503,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSourceControl" /> object. </returns>
         public SiteSourceControl GetSiteSourceControl()
         {
-            return new SiteSourceControl(this, Id + "/sourcecontrols/web");
+            return new SiteSourceControl(this, new ResourceIdentifier(Id.ToString() + "/sourcecontrols/web"));
         }
         #endregion
 

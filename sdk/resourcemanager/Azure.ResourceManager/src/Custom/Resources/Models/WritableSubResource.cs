@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of <see cref="WritableSubResource"/>. </summary>
         /// <param name="id"> ARM resource Id. </param>
         [SerializationConstructor]
-        protected internal WritableSubResource(string id)
+        protected internal WritableSubResource(ResourceIdentifier id)
         {
             Id = id;
         }

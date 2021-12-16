@@ -142,11 +142,8 @@ namespace Microsoft.Azure.Management.DataBox
         /// <param name='location'>
         /// The location of the resource
         /// </param>
-        /// <param name='scheduleAvailabilityRequest'>
-        /// Request body to get the availability for scheduling orders.
-        /// </param>
-        /// <param name='transportAvailabilityRequest'>
-        /// Request body to get the transport availability for given sku.
+        /// <param name='regionConfigurationRequest'>
+        /// Request body to get the configuration for the region.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -163,7 +160,7 @@ namespace Microsoft.Azure.Management.DataBox
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RegionConfigurationResponse>> RegionConfigurationWithHttpMessagesAsync(string location, ScheduleAvailabilityRequest scheduleAvailabilityRequest = default(ScheduleAvailabilityRequest), TransportAvailabilityRequest transportAvailabilityRequest = default(TransportAvailabilityRequest), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RegionConfigurationResponse>> RegionConfigurationWithHttpMessagesAsync(string location, RegionConfigurationRequest regionConfigurationRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// This API provides configuration details specific to given
         /// region/location at Resource group level.
@@ -174,11 +171,9 @@ namespace Microsoft.Azure.Management.DataBox
         /// <param name='location'>
         /// The location of the resource
         /// </param>
-        /// <param name='scheduleAvailabilityRequest'>
-        /// Request body to get the availability for scheduling orders.
-        /// </param>
-        /// <param name='transportAvailabilityRequest'>
-        /// Request body to get the transport availability for given sku.
+        /// <param name='regionConfigurationRequest'>
+        /// Request body to get the configuration for the region at resource
+        /// group level.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -195,7 +190,7 @@ namespace Microsoft.Azure.Management.DataBox
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RegionConfigurationResponse>> RegionConfigurationByResourceGroupWithHttpMessagesAsync(string resourceGroupName, string location, ScheduleAvailabilityRequest scheduleAvailabilityRequest = default(ScheduleAvailabilityRequest), TransportAvailabilityRequest transportAvailabilityRequest = default(TransportAvailabilityRequest), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RegionConfigurationResponse>> RegionConfigurationByResourceGroupWithHttpMessagesAsync(string resourceGroupName, string location, RegionConfigurationRequest regionConfigurationRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// This method provides the list of available skus for the given
         /// subscription, resource group and location.

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="properties"> Properties of the previewed feature. </param>
         /// <param name="id"> The resource ID of the feature. </param>
         /// <param name="type"> The resource type of the feature. </param>
-        internal FeatureData(string name, FeatureProperties properties, string id, string type)
+        internal FeatureData(string name, FeatureProperties properties, ResourceIdentifier id, string type)
             :base(id, name, type)
         {
             Properties = properties;

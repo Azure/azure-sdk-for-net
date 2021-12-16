@@ -1,59 +1,17 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 using System;
 using System.Globalization;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+
 namespace Microsoft.Azure.WebJobs.Host
 {
     internal static class TypeUtility
     {
-        internal static string GetFriendlyName(Type type)
-        {
-            if (TypeUtility.IsNullable(type))
-            {
-                return string.Format(CultureInfo.InvariantCulture, "Nullable<{0}>", type.GetGenericArguments()[0].Name);
-            }
-            else
-            {
-                return type.Name;
-            }
-        }
-        internal static bool IsNullable(Type type)
-        {
-            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
-        }
-        internal static bool IsJObject(Type type)
-        {
-            return type == typeof(JObject);
-        }
-        // Task<T> --> T
-        // Task --> void
-        // T --> T
-        internal static Type UnwrapTaskType(Type type)
-        {
-            if (type == typeof(Task))
-            {
-                return typeof(void);
-            }
-            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Task<>))
-            {
-                return type.GetGenericArguments()[0];
-            }
-            return type;
-        }
-        /// <summary>
-        /// Walk from the parameter up to the containing type, looking for an instance
-        /// of the specified attribute type, returning it if found.
-        /// </summary>
-        /// <param name="parameter">The parameter to check.</param>
-        internal static T GetHierarchicalAttributeOrNull<T>(ParameterInfo parameter) where T : Attribute
-        {
-            return (T)GetHierarchicalAttributeOrNull(parameter, typeof(T));
-        }
         /// <summary>
         /// Walk from the parameter up to the containing type, looking for an instance
         /// of the specified attribute type, returning it if found.
@@ -66,27 +24,22 @@ namespace Microsoft.Azure.WebJobs.Host
             {
                 return null;
             }
+
             var attribute = parameter.GetCustomAttribute(attributeType);
             if (attribute != null)
             {
                 return attribute;
             }
+
             var method = parameter.Member as MethodInfo;
             if (method == null)
             {
                 return null;
             }
+
             return GetHierarchicalAttributeOrNull(method, attributeType);
         }
-        /// <summary>
-         /// Walk from the method up to the containing type, looking for an instance
-         /// of the specified attribute type, returning it if found.
-         /// </summary>
-         /// <param name="method">The method to check.</param>
-        internal static T GetHierarchicalAttributeOrNull<T>(MethodInfo method) where T : Attribute
-        {
-            return (T)GetHierarchicalAttributeOrNull(method, typeof(T));
-        }
+
         /// <summary>
         /// Walk from the method up to the containing type, looking for an instance
         /// of the specified attribute type, returning it if found.
@@ -100,13 +53,16 @@ namespace Microsoft.Azure.WebJobs.Host
             {
                 return attribute;
             }
+
             attribute = method.DeclaringType.GetCustomAttribute(type);
             if (attribute != null)
             {
                 return attribute;
             }
+
             return null;
         }
+
         internal static TAttribute GetResolvedAttribute<TAttribute>(ParameterInfo parameter) where TAttribute : Attribute
         {
             var attribute = parameter.GetCustomAttribute<TAttribute>();
@@ -125,14 +81,17 @@ namespace Microsoft.Azure.WebJobs.Host
                     }
                 }
             }
+
             return attribute;
         }
+
         public static bool IsAsync(MethodInfo methodInfo)
         {
             if (methodInfo == null)
             {
                 throw new ArgumentNullException(nameof(methodInfo));
             }
+
             var stateMachineAttribute = methodInfo.GetCustomAttribute<AsyncStateMachineAttribute>();
             if (stateMachineAttribute != null)
             {
@@ -142,28 +101,8 @@ namespace Microsoft.Azure.WebJobs.Host
                     return stateMachineType.GetCustomAttribute<CompilerGeneratedAttribute>() != null;
                 }
             }
+
             return false;
-        }
-        public static bool IsAsyncVoid(MethodInfo methodInfo)
-        {
-            return IsAsync(methodInfo) && (methodInfo.ReturnType == typeof(void));
-        }
-        public static bool TryGetReturnType(MethodInfo methodInfo, out Type type)
-        {
-            Type returnType = methodInfo.ReturnType;
-            if (returnType == typeof(void) || returnType == typeof(Task))
-            {
-                type = null;
-            }
-            else if (typeof(Task).IsAssignableFrom(methodInfo.ReturnType))
-            {
-                type = returnType.GetGenericArguments()[0];
-            }
-            else
-            {
-                type = returnType;
-            }
-            return type != null;
         }
     }
 }

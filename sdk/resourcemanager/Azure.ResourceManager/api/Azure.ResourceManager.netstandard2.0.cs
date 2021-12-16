@@ -69,19 +69,18 @@ namespace Azure.ResourceManager
     public static partial class ResourceGroupExtensions
     {
     }
-    public partial class ResourceIdentifier : System.IComparable<Azure.ResourceManager.ResourceIdentifier>, System.IEquatable<Azure.ResourceManager.ResourceIdentifier>
+    public sealed partial class ResourceIdentifier : System.IComparable<Azure.ResourceManager.ResourceIdentifier>, System.IEquatable<Azure.ResourceManager.ResourceIdentifier>
     {
-        public static readonly Azure.ResourceManager.ResourceIdentifier RootResourceIdentifier;
+        public static readonly Azure.ResourceManager.ResourceIdentifier Root;
         public ResourceIdentifier(string resourceId) { }
-        public string Location { get { throw null; } protected set { } }
-        public virtual string Name { get { throw null; } }
-        public virtual Azure.ResourceManager.ResourceIdentifier Parent { get { throw null; } }
-        public string Provider { get { throw null; } protected set { } }
-        public string ResourceGroupName { get { throw null; } protected set { } }
-        public virtual Azure.ResourceManager.ResourceType ResourceType { get { throw null; } }
-        public string SubscriptionId { get { throw null; } protected set { } }
+        public Azure.ResourceManager.Resources.Models.Location Location { get { throw null; } }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.ResourceIdentifier Parent { get { throw null; } }
+        public string Provider { get { throw null; } }
+        public string ResourceGroupName { get { throw null; } }
+        public Azure.ResourceManager.ResourceType ResourceType { get { throw null; } }
+        public string SubscriptionId { get { throw null; } }
         public int CompareTo(Azure.ResourceManager.ResourceIdentifier other) { throw null; }
-        public static Azure.ResourceManager.ResourceIdentifier Create(string resourceId) { throw null; }
         public bool Equals(Azure.ResourceManager.ResourceIdentifier other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -91,15 +90,10 @@ namespace Azure.ResourceManager
         public static bool operator >(Azure.ResourceManager.ResourceIdentifier left, Azure.ResourceManager.ResourceIdentifier right) { throw null; }
         public static bool operator >=(Azure.ResourceManager.ResourceIdentifier left, Azure.ResourceManager.ResourceIdentifier right) { throw null; }
         public static implicit operator string (Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResourceIdentifier (string other) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ResourceIdentifier id1, Azure.ResourceManager.ResourceIdentifier id2) { throw null; }
         public static bool operator <(Azure.ResourceManager.ResourceIdentifier left, Azure.ResourceManager.ResourceIdentifier right) { throw null; }
         public static bool operator <=(Azure.ResourceManager.ResourceIdentifier left, Azure.ResourceManager.ResourceIdentifier right) { throw null; }
         public override string ToString() { throw null; }
-        public virtual bool TryGetLocation(out Azure.ResourceManager.Resources.Models.Location location) { throw null; }
-        public virtual bool TryGetParent(out Azure.ResourceManager.ResourceIdentifier resourceId) { throw null; }
-        public virtual bool TryGetResourceGroupName(out string resourceGroupName) { throw null; }
-        public virtual bool TryGetSubscriptionId(out string subscriptionId) { throw null; }
     }
     public partial class ResourceNameFilter : Azure.ResourceManager.GenericResourceFilter, System.IEquatable<Azure.ResourceManager.ResourceNameFilter>, System.IEquatable<string>
     {
@@ -132,7 +126,7 @@ namespace Azure.ResourceManager
     {
         public ResourceType(string resourceIdOrType) { }
         public string Namespace { get { throw null; } }
-        public static Azure.ResourceManager.ResourceType RootResourceType { get { throw null; } }
+        public static Azure.ResourceManager.ResourceType Root { get { throw null; } }
         public string Type { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Types { get { throw null; } }
         public int CompareTo(Azure.ResourceManager.ResourceType other) { throw null; }
@@ -696,7 +690,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class GenericResourceData : Azure.ResourceManager.Models.TrackedResource
     {
-        public GenericResourceData(string location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        public GenericResourceData(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
         public System.DateTimeOffset? ChangedTime { get { throw null; } }
         public System.DateTimeOffset? CreatedTime { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ResourceIdentity Identity { get { throw null; } set { } }
@@ -705,7 +699,7 @@ namespace Azure.ResourceManager.Resources
         public Azure.ResourceManager.Models.Plan Plan { get { throw null; } set { } }
         public object Properties { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Models.Sku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.Sku Sku { get { throw null; } set { } }
     }
     public partial class PredefinedTag : Azure.ResourceManager.Core.ArmResource
     {
@@ -1433,6 +1427,16 @@ namespace Azure.ResourceManager.Resources.Models
         public string Provider { get { throw null; } }
         public string Resource { get { throw null; } }
     }
+    public partial class Sku
+    {
+        public Sku() { }
+        public int? Capacity { get { throw null; } set { } }
+        public string Family { get { throw null; } set { } }
+        public string Model { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public string Size { get { throw null; } set { } }
+        public string Tier { get { throw null; } set { } }
+    }
     public enum SpendingLimit
     {
         On = 0,
@@ -1442,7 +1446,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class SubResource
     {
         public SubResource() { }
-        protected internal SubResource(string id) { }
+        protected internal SubResource(Azure.ResourceManager.ResourceIdentifier id) { }
         public virtual Azure.ResourceManager.ResourceIdentifier Id { get { throw null; } }
     }
     public partial class SubscriptionPolicies
@@ -1550,7 +1554,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class WritableSubResource
     {
         public WritableSubResource() { }
-        protected internal WritableSubResource(string id) { }
+        protected internal WritableSubResource(Azure.ResourceManager.ResourceIdentifier id) { }
         public virtual Azure.ResourceManager.ResourceIdentifier Id { get { throw null; } set { } }
     }
 }
