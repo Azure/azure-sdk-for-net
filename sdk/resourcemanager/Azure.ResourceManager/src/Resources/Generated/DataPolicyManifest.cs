@@ -83,6 +83,9 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        /// RequestPath: /providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}
+        /// ContextualPath: /providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}
+        /// OperationId: DataPolicyManifests_GetByPolicyMode
         /// <summary> This operation retrieves the data policy manifest with the given policy mode. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DataPolicyManifest>> GetAsync(CancellationToken cancellationToken = default)
@@ -103,6 +106,9 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        /// RequestPath: /providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}
+        /// ContextualPath: /providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}
+        /// OperationId: DataPolicyManifests_GetByPolicyMode
         /// <summary> This operation retrieves the data policy manifest with the given policy mode. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DataPolicyManifest> Get(CancellationToken cancellationToken = default)

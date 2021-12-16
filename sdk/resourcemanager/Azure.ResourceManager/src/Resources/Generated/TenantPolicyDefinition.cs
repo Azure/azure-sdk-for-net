@@ -83,6 +83,9 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        /// RequestPath: /providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}
+        /// ContextualPath: /providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}
+        /// OperationId: PolicyDefinitions_GetBuiltIn
         /// <summary> This operation retrieves the built-in policy definition with the given name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<TenantPolicyDefinition>> GetAsync(CancellationToken cancellationToken = default)
@@ -103,6 +106,9 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        /// RequestPath: /providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}
+        /// ContextualPath: /providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}
+        /// OperationId: PolicyDefinitions_GetBuiltIn
         /// <summary> This operation retrieves the built-in policy definition with the given name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TenantPolicyDefinition> Get(CancellationToken cancellationToken = default)

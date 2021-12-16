@@ -9,6 +9,8 @@ clear-output-folder: true
 modelerfour:
   lenient-model-deduplication: true
 skip-csproj: true
+mgmt-debug:
+  show-request-path: true
 batch:
   - tag: package-common-type
   - tag: package-resources
@@ -100,17 +102,24 @@ model-namespace: false
 public-clients: false
 head-as-boolean: false
 payload-flattening-threshold: 2
+list-exception:
+  - /{linkId}
+request-path-to-resource-data:
+  # model of this has id, type and name, but its type has the type of `object` instead of `string`
+  /{linkId}: ResourceLink
+request-path-to-parent:
+  /{scope}/providers/Microsoft.Resources/links: /{linkId}
+request-path-to-resource-type:
+  /{linkId}: Microsoft.Resources/links
 request-path-to-scope-resource-types:
   /{scope}/providers/Microsoft.Authorization/locks/{lockName}:
     - subscriptions
     - resourceGroups
     - "*"
-#   /{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}: subscriptions;resourceGroups;managementGroups;tenant;*
-#   /{scope}/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}: subscriptions;resourceGroups;managementGroups;tenant;*
-# request-path-to-parent:
-#   /{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}: 
 operation-groups-to-omit:
   Deployments;DeploymentOperations;AuthorizationOperations
+override-operation-name:
+  ResourceLinks_ListAtSourceScope: GetAll
 directive:
   # These methods can be replaced by using other methods in the same operation group, remove for Preview.
   - remove-operation: PolicyAssignments_DeleteById
@@ -128,7 +137,7 @@ directive:
   - remove-operation: ManagementLocks_ListAtResourceGroupLevel
   - remove-operation: ManagementLocks_ListAtResourceLevel
   - remove-operation: ManagementLocks_ListAtSubscriptionLevel
-#   - remove-operation: ResourceLinks_ListAtSubscription
+#   - remove-operation: ResourceLinks_ListAtSubscription # The filter values are different, so keep this operation.
   - from: policyAssignments.json
     where: $.definitions.Identity.properties.type["x-ms-enum"]
     transform: $["name"] = "PolicyAssignmentIdentityType"

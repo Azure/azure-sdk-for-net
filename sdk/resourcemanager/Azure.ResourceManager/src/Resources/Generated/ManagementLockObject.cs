@@ -83,6 +83,9 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
+        /// ContextualPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
+        /// OperationId: ManagementLocks_GetByScope
         /// <summary> Get a management lock by scope. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ManagementLockObject>> GetAsync(CancellationToken cancellationToken = default)
@@ -103,6 +106,9 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
+        /// ContextualPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
+        /// OperationId: ManagementLocks_GetByScope
         /// <summary> Get a management lock by scope. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagementLockObject> Get(CancellationToken cancellationToken = default)
@@ -139,6 +145,9 @@ namespace Azure.ResourceManager.Resources
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
+        /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
+        /// ContextualPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
+        /// OperationId: ManagementLocks_DeleteByScope
         /// <summary> Delete a management lock by scope. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -161,6 +170,9 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
+        /// ContextualPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
+        /// OperationId: ManagementLocks_DeleteByScope
         /// <summary> Delete a management lock by scope. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

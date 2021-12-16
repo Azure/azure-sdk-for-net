@@ -51,6 +51,9 @@ namespace Azure.ResourceManager.Resources
 
         // Collection level operations.
 
+        /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
+        /// ContextualPath: /{scope}
+        /// OperationId: ManagementLocks_CreateOrUpdateByScope
         /// <summary> Create or update a management lock by scope. </summary>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="parameters"> Create or update management lock parameters. </param>
@@ -85,6 +88,9 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
+        /// ContextualPath: /{scope}
+        /// OperationId: ManagementLocks_CreateOrUpdateByScope
         /// <summary> Create or update a management lock by scope. </summary>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="parameters"> Create or update management lock parameters. </param>
@@ -119,6 +125,9 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
+        /// ContextualPath: /{scope}
+        /// OperationId: ManagementLocks_GetByScope
         /// <summary> Get a management lock by scope. </summary>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -146,6 +155,9 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
+        /// ContextualPath: /{scope}
+        /// OperationId: ManagementLocks_GetByScope
         /// <summary> Get a management lock by scope. </summary>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -277,6 +289,9 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks
+        /// ContextualPath: /{scope}
+        /// OperationId: ManagementLocks_ListByScope
         /// <summary> Gets all the management locks for a scope. </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -316,6 +331,9 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks
+        /// ContextualPath: /{scope}
+        /// OperationId: ManagementLocks_ListByScope
         /// <summary> Gets all the management locks for a scope. </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

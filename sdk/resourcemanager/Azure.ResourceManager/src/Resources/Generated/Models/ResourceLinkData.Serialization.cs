@@ -7,10 +7,11 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
-    public partial class ResourceLink : IUtf8JsonSerializable
+    public partial class ResourceLinkData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteEndObject();
         }
 
-        internal static ResourceLink DeserializeResourceLink(JsonElement element)
+        internal static ResourceLinkData DeserializeResourceLinkData(JsonElement element)
         {
             Optional<string> id = default;
             Optional<string> name = default;
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ResourceLink(id.Value, name.Value, type.Value, properties.Value);
+            return new ResourceLinkData(id.Value, name.Value, type.Value, properties.Value);
         }
     }
 }

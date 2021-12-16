@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Resources
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new ResourceLink()
+            var model = new ResourceLinkData()
             {
                 Properties = properties
             };
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="properties"> Properties for resource link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
-        public async Task<Response<ResourceLink>> CreateOrUpdateAsync(string linkId, ResourceLinkProperties properties = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceLinkData>> CreateOrUpdateAsync(string linkId, ResourceLinkProperties properties = null, CancellationToken cancellationToken = default)
         {
             if (linkId == null)
             {
@@ -141,9 +141,9 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                 case 201:
                     {
-                        ResourceLink value = default;
+                        ResourceLinkData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ResourceLink.DeserializeResourceLink(document.RootElement);
+                        value = ResourceLinkData.DeserializeResourceLinkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="properties"> Properties for resource link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
-        public Response<ResourceLink> CreateOrUpdate(string linkId, ResourceLinkProperties properties = null, CancellationToken cancellationToken = default)
+        public Response<ResourceLinkData> CreateOrUpdate(string linkId, ResourceLinkProperties properties = null, CancellationToken cancellationToken = default)
         {
             if (linkId == null)
             {
@@ -170,9 +170,9 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                 case 201:
                     {
-                        ResourceLink value = default;
+                        ResourceLinkData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ResourceLink.DeserializeResourceLink(document.RootElement);
+                        value = ResourceLinkData.DeserializeResourceLinkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="linkId"> The fully qualified Id of the resource link. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
-        public async Task<Response<ResourceLink>> GetAsync(string linkId, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceLinkData>> GetAsync(string linkId, CancellationToken cancellationToken = default)
         {
             if (linkId == null)
             {
@@ -213,11 +213,13 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ResourceLink value = default;
+                        ResourceLinkData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ResourceLink.DeserializeResourceLink(document.RootElement);
+                        value = ResourceLinkData.DeserializeResourceLinkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((ResourceLinkData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -227,7 +229,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="linkId"> The fully qualified Id of the resource link. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
-        public Response<ResourceLink> Get(string linkId, CancellationToken cancellationToken = default)
+        public Response<ResourceLinkData> Get(string linkId, CancellationToken cancellationToken = default)
         {
             if (linkId == null)
             {
@@ -240,11 +242,13 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ResourceLink value = default;
+                        ResourceLinkData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ResourceLink.DeserializeResourceLink(document.RootElement);
+                        value = ResourceLinkData.DeserializeResourceLinkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((ResourceLinkData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
