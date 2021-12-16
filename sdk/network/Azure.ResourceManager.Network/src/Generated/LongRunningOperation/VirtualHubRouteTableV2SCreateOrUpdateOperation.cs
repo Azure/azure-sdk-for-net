@@ -18,20 +18,20 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Creates a VirtualHubRouteTableV2 resource if it doesn&apos;t exist else updates the existing VirtualHubRouteTableV2. </summary>
-    public partial class VirtualHubRouteTableV2CreateOrUpdateOperation : Operation<VirtualHubRouteTableV2>, IOperationSource<VirtualHubRouteTableV2>
+    public partial class VirtualHubRouteTableV2SCreateOrUpdateOperation : Operation<VirtualHubRouteTableV2>, IOperationSource<VirtualHubRouteTableV2>
     {
         private readonly OperationInternals<VirtualHubRouteTableV2> _operation;
 
         private readonly ArmResource _operationBase;
 
-        /// <summary> Initializes a new instance of VirtualHubRouteTableV2CreateOrUpdateOperation for mocking. </summary>
-        protected VirtualHubRouteTableV2CreateOrUpdateOperation()
+        /// <summary> Initializes a new instance of VirtualHubRouteTableV2SCreateOrUpdateOperation for mocking. </summary>
+        protected VirtualHubRouteTableV2SCreateOrUpdateOperation()
         {
         }
 
-        internal VirtualHubRouteTableV2CreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualHubRouteTableV2SCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<VirtualHubRouteTableV2>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualHubRouteTableV2CreateOrUpdateOperation");
+            _operation = new OperationInternals<VirtualHubRouteTableV2>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualHubRouteTableV2SCreateOrUpdateOperation");
             _operationBase = operationsBase;
         }
 

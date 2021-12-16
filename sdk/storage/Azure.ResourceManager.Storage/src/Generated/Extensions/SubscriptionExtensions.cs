@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage
             return new UsagesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
 
-        /// <summary> Lists the SkuInformations for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the SkuInformation for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Storage
             );
         }
 
-        /// <summary> Lists the SkuInformations for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the SkuInformation for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Storage
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Lists the DeletedAccountDatas for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the DeletedAccountData for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Storage
             );
         }
 
-        /// <summary> Lists the DeletedAccountDatas for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the DeletedAccountData for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
