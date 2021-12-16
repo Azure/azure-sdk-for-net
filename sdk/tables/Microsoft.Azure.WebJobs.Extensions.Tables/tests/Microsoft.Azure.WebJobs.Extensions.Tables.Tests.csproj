@@ -18,5 +18,12 @@
     <ProjectReference Include="..\src\Microsoft.Azure.WebJobs.Extensions.Tables.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="TableEntityValueBinderTests.cs" />
+    <Compile Remove="EntityPropertyToTConverterFactoryTests.cs" />
+    <Compile Remove="TToEntityPropertyConverterFactoryTests.cs" />
+    
+    <Compile Include="..\..\Azure.Data.Tables\tests\TablesTestEnvironment.cs" />
+  </ItemGroup>
 
 </Project>

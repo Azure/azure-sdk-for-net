@@ -6,42 +6,84 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core.TestFramework;
-using Microsoft.Azure.Cosmos.Table;
+using Azure.Core.TestFramework.Models;
+using Azure.Data.Tables;
+using Azure.Data.Tables.Tests;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 {
-    public class TablesLiveTestBase : LiveTestBase<TablesTestEnvironment>
+    [AsyncOnly]
+    [ClientTestFixture(null, new object[]{ true, false })]
+    public class TablesLiveTestBase : RecordedTestBase<TablesTestEnvironment>
     {
+        private readonly bool _createTable;
         protected const string TableNameExpression = "%Table%";
         protected const string PartitionKey = "PK";
         protected const string RowKey = "RK";
         private readonly Random _random = new();
         protected string TableName;
-        private protected StorageAccount Account;
-        protected CloudTable CloudTable;
+        protected TableServiceClient ServiceClient;
+        protected TableClient TableClient;
 
-        [SetUp]
-        public async Task SetUp()
+        protected bool UseCosmos { get; }
+
+        protected TablesLiveTestBase(bool isAsync, bool useCosmos, bool createTable = true): base(isAsync: isAsync)
         {
-            TableName = "testtable" + _random.Next();
+            UseCosmos = useCosmos;
+            _createTable = createTable;
+            // https://github.com/Azure/azure-sdk-tools/issues/2448
+            Sanitizer.BodyRegexSanitizers.Add(new BodyRegexSanitizer("(batch|changeset)_[\\w\\d-]+", "multipart_boundary"));
+        }
 
-            Account = StorageAccount.NewFromConnectionString(TestEnvironment.StorageConnectionString);
-            var tableClient = Account.CreateCloudTableClient();
-            CloudTable = tableClient.GetTableReference(TableName);
-            await CloudTable.CreateAsync();
+        public override async Task StartTestRecordingAsync()
+        {
+            await base.StartTestRecordingAsync();
+
+            TableName = GetRandomTableName();
+
+            ServiceClient = InstrumentClient(
+                new TableServiceClient(
+                    UseCosmos ? TestEnvironment.CosmosConnectionString : TestEnvironment.StorageConnectionString,
+                    InstrumentClientOptions(new TableClientOptions())));
+
+            TableClient = ServiceClient.GetTableClient(TableName);
+            if (_createTable)
+            {
+                await TableClient.CreateAsync();
+            }
         }
 
         [TearDown]
         public async Task TearDown()
         {
-            await CloudTable.DeleteIfExistsAsync();
+            try
+            {
+                await TableClient.DeleteAsync();
+            }
+            catch
+            { }
+        }
+
+        protected void DefaultConfigure(HostBuilder hostBuilder)
+        {
+            hostBuilder.ConfigureAppConfiguration(builder =>
+            {
+                builder.AddInMemoryCollection(new Dictionary<string, string>()
+                {
+                    {"Table", TableName},
+                    {"AzureWebJobsStorage", UseCosmos ? TestEnvironment.CosmosConnectionString : TestEnvironment.StorageConnectionString}
+                });
+            });
         }
 
         protected async Task<T> CallAsync<T>(string methodName = null, object arguments = null, Action<HostBuilder> configure = null)
@@ -69,23 +111,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             var hostBuilder = new HostBuilder();
             hostBuilder.ConfigureDefaultTestHost(builder =>
+            {
+                if (instance != null)
                 {
-                    if (instance != null)
+                    builder.Services.AddSingleton<IJobActivator>(new FakeActivator(instance));
+                    if (Mode != RecordedTestMode.Live)
                     {
-                        builder.Services.AddSingleton<IJobActivator>(new FakeActivator(instance));
+                        builder.Services.AddSingleton<TablesAccountProvider, InstrumentedTableClientProvider>();
+                        builder.Services.AddSingleton<RecordedTestBase>(this);
                     }
-                    builder.AddAzureTables();
-                }, programType)
-                .ConfigureAppConfiguration(builder =>
-                {
-                    builder.AddInMemoryCollection(new Dictionary<string, string>()
-                    {
-                        {"Table", TableName},
-                        {"AzureWebJobsStorage", TestEnvironment.StorageConnectionString}
-                    });
-                });
+                }
 
-            configure?.Invoke(hostBuilder);
+                builder.AddAzureTables();
+            }, programType);
+
+            (configure ?? DefaultConfigure).Invoke(hostBuilder);
             var host = hostBuilder
                 .Build();
             var jobHost = host.Services.GetService<IJobHost>() as JobHost;
@@ -106,6 +146,43 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             public T CreateInstance<T>()
             {
                 return (T)_instances[typeof(T)];
+            }
+        }
+
+        protected Task<bool> TableExistsAsync(string name)
+        {
+            return TableExistsAsync(ServiceClient.GetTableClient(name));
+        }
+        protected static async Task<bool> TableExistsAsync(TableClient client)
+        {
+            try
+            {
+                await client.QueryAsync<TableEntity>().ToEnumerableAsync();
+                return true;
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return false;
+            }
+        }
+
+        protected string GetRandomTableName()
+        {
+            return Recording.GenerateAlphaNumericId("testtable");
+        }
+
+        private class InstrumentedTableClientProvider : TablesAccountProvider
+        {
+            private readonly RecordedTestBase _recording;
+
+            public InstrumentedTableClientProvider(RecordedTestBase recording, IConfiguration configuration, AzureComponentFactory componentFactory, AzureEventSourceLogForwarder logForwarder, ILogger<TableServiceClient> logger) : base(configuration, componentFactory, logForwarder, logger)
+            {
+                _recording = recording;
+            }
+
+            protected override TableClientOptions CreateClientOptions(IConfiguration configuration)
+            {
+                return _recording.InstrumentClientOptions(base.CreateClientOptions(configuration));
             }
         }
     }

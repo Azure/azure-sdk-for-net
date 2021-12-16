@@ -17,12 +17,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
         protected const string TempDataFeedDimensionNameA = "dimensionA";
         protected const string TempDataFeedDimensionNameB = "dimensionB";
 
-        public MetricsAdvisorLiveTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode, useLegacyTransport: true)
+        public MetricsAdvisorLiveTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
             Sanitizer = new MetricsAdvisorRecordedTestSanitizer();
         }
 
-        public MetricsAdvisorLiveTestBase(bool isAsync) : base(isAsync, useLegacyTransport: true)
+        public MetricsAdvisorLiveTestBase(bool isAsync) : base(isAsync)
         {
             Sanitizer = new MetricsAdvisorRecordedTestSanitizer();
         }
@@ -40,9 +40,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
         protected int SkipSamples => 1;
 
-        protected DateTimeOffset SamplingStartTime => DateTimeOffset.Parse("2021-10-01T00:00:00Z");
+        protected DateTimeOffset SamplingStartTime => DateTimeOffset.Parse("2021-10-01T00:00:00.0000000Z");
 
-        protected DateTimeOffset SamplingEndTime => DateTimeOffset.Parse("2021-10-31T00:00:00Z");
+        protected DateTimeOffset SamplingEndTime => DateTimeOffset.Parse("2021-10-31T00:00:00.0000000Z");
 
         public MetricsAdvisorAdministrationClient GetMetricsAdvisorAdministrationClient(bool useTokenCredential = false)
         {

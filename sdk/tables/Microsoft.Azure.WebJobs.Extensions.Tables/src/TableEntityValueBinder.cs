@@ -2,14 +2,12 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Protocols;
-using Microsoft.Azure.Cosmos.Table;
+using Azure.Data.Tables;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
@@ -18,21 +16,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
         private readonly TableEntityContext _entityContext;
         private readonly ITableEntity _value;
         private readonly Type _valueType;
-        private readonly IDictionary<string, EntityProperty> _originalProperties;
+        // TODO: Change detection
+        //private readonly IDictionary<string, EntityProperty> _originalProperties;
 
         public TableEntityValueBinder(TableEntityContext entityContext, ITableEntity entity, Type valueType)
         {
             _entityContext = entityContext;
             _value = entity;
             _valueType = valueType;
-            _originalProperties = DeepClone(entity.WriteEntity(null));
+            // TODO: Change detection
+            //_originalProperties = DeepClone(entity.WriteEntity(null));
         }
 
         public Type Type => _valueType;
 
         public IWatcher Watcher => this;
 
-        public bool HasChanged => HasChanges(_originalProperties, _value.WriteEntity(operationContext: null));
+        public static bool HasChanged => true; // TODO: HasChanges(_originalProperties, _value.WriteEntity(operationContext: null));
 
         public Task<object> GetValueAsync()
         {
@@ -51,8 +51,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             if (HasChanged)
             {
                 var table = _entityContext.Table;
-                var operation = table.CreateReplaceOperation(_value);
-                return table.ExecuteAsync(operation, cancellationToken);
+                return table.UpdateEntityAsync(_value, _value.ETag, cancellationToken: cancellationToken);
             }
 
             return Task.FromResult(0);
@@ -68,10 +67,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             return HasChanged ? new TableParameterLog { EntitiesWritten = 1 } : null;
         }
 
-        internal static bool HasChanges(IDictionary<string, EntityProperty> originalProperties,
-            IDictionary<string, EntityProperty> currentProperties)
+        internal static bool HasChanges(TableEntity originalProperties,
+            TableEntity currentProperties)
         {
-            if (originalProperties.Keys.Count != currentProperties.Keys.Count)
+            if (originalProperties.Count != currentProperties.Count)
             {
                 return true;
             }
@@ -83,8 +82,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 
             foreach (string key in currentProperties.Keys)
             {
-                EntityProperty originalValue = originalProperties[key];
-                EntityProperty newValue = currentProperties[key];
+                object originalValue = originalProperties[key];
+                object newValue = currentProperties[key];
                 if (originalValue == null)
                 {
                     if (newValue != null)
@@ -106,60 +105,60 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             return false;
         }
 
-        internal static IDictionary<string, EntityProperty> DeepClone(IDictionary<string, EntityProperty> value)
-        {
-            if (value == null)
-            {
-                return null;
-            }
-
-            IDictionary<string, EntityProperty> clone = new Dictionary<string, EntityProperty>();
-            foreach (KeyValuePair<string, EntityProperty> item in value)
-            {
-                clone.Add(item.Key, DeepClone(item.Value));
-            }
-
-            return clone;
-        }
-
-        internal static EntityProperty DeepClone(EntityProperty property)
-        {
-            EdmType propertyType = property.PropertyType;
-            switch (propertyType)
-            {
-                case EdmType.Binary:
-                    byte[] existingBytes = property.BinaryValue;
-                    byte[] clonedBytes;
-                    if (existingBytes == null)
-                    {
-                        clonedBytes = null;
-                    }
-                    else
-                    {
-                        clonedBytes = new byte[existingBytes.LongLength];
-                        Array.Copy(existingBytes, clonedBytes, existingBytes.LongLength);
-                    }
-
-                    return new EntityProperty(clonedBytes);
-                case EdmType.Boolean:
-                    return new EntityProperty(property.BooleanValue);
-                case EdmType.DateTime:
-                    return new EntityProperty(property.DateTime);
-                case EdmType.Double:
-                    return new EntityProperty(property.DoubleValue);
-                case EdmType.Guid:
-                    return new EntityProperty(property.GuidValue);
-                case EdmType.Int32:
-                    return new EntityProperty(property.Int32Value);
-                case EdmType.Int64:
-                    return new EntityProperty(property.Int64Value);
-                case EdmType.String:
-                    return new EntityProperty(property.StringValue);
-                default:
-                    string message = String.Format(CultureInfo.CurrentCulture, "Unknown PropertyType {0}.",
-                        propertyType);
-                    throw new NotSupportedException(message);
-            }
-        }
+        // internal static IDictionary<string, EntityProperty> DeepClone(IDictionary<string, EntityProperty> value)
+        // {
+        //     if (value == null)
+        //     {
+        //         return null;
+        //     }
+        //
+        //     IDictionary<string, EntityProperty> clone = new Dictionary<string, EntityProperty>();
+        //     foreach (KeyValuePair<string, EntityProperty> item in value)
+        //     {
+        //         clone.Add(item.Key, DeepClone(item.Value));
+        //     }
+        //
+        //     return clone;
+        // }
+        //
+        // internal static EntityProperty DeepClone(EntityProperty property)
+        // {
+        //     EdmType propertyType = property.PropertyType;
+        //     switch (propertyType)
+        //     {
+        //         case EdmType.Binary:
+        //             byte[] existingBytes = property.BinaryValue;
+        //             byte[] clonedBytes;
+        //             if (existingBytes == null)
+        //             {
+        //                 clonedBytes = null;
+        //             }
+        //             else
+        //             {
+        //                 clonedBytes = new byte[existingBytes.LongLength];
+        //                 Array.Copy(existingBytes, clonedBytes, existingBytes.LongLength);
+        //             }
+        //
+        //             return new EntityProperty(clonedBytes);
+        //         case EdmType.Boolean:
+        //             return new EntityProperty(property.BooleanValue);
+        //         case EdmType.DateTime:
+        //             return new EntityProperty(property.DateTime);
+        //         case EdmType.Double:
+        //             return new EntityProperty(property.DoubleValue);
+        //         case EdmType.Guid:
+        //             return new EntityProperty(property.GuidValue);
+        //         case EdmType.Int32:
+        //             return new EntityProperty(property.Int32Value);
+        //         case EdmType.Int64:
+        //             return new EntityProperty(property.Int64Value);
+        //         case EdmType.String:
+        //             return new EntityProperty(property.StringValue);
+        //         default:
+        //             string message = String.Format(CultureInfo.CurrentCulture, "Unknown PropertyType {0}.",
+        //                 propertyType);
+        //             throw new NotSupportedException(message);
+        //     }
+        // }
     }
 }

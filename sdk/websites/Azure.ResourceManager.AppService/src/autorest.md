@@ -175,91 +175,33 @@ directive:
           }
           }
   - from: swagger-document
-    where: $.paths["/providers/Microsoft.Web/functionAppStacks"].get.parameters
+    where: $.paths["/providers/Microsoft.Web/functionAppStacks"].get.parameters[?(@.name=='stackOsType')]
     transform: >
-      $[1]={
-            "name": "stackOsType",
-            "in": "query",
-            "description": "Stack OS Type",
-            "type": "string",
-            "enum": [
-              "Windows",
-              "Linux",
-              "All"
-            ],
-            "x-ms-enum": {
-            "name": "StackOsType",
-            "modelAsString": true
-          }
-          }
+      $["x-ms-enum"]={
+        "name": "StackOsType",
+        "modelAsString": true
+      }
   - from: swagger-document
-    where: $.paths["/providers/Microsoft.Web/webAppStacks"].get.parameters
+    where: $.paths["/providers/Microsoft.Web/webAppStacks"].get.parameters[?(@.name=='stackOsType')]
     transform: >
-      $[1]={
-            "name": "stackOsType",
-            "in": "query",
-            "description": "Stack OS Type",
-            "type": "string",
-            "enum": [
-              "Windows",
-              "Linux",
-              "All"
-            ],
-            "x-ms-enum": {
-            "name": "StackOsType",
-            "modelAsString": true
-          }
-          }
+      $["x-ms-enum"]={
+        "name": "StackOsType",
+        "modelAsString": true
+      }
   - from: swagger-document
-    where: $.paths["/providers/Microsoft.Web/locations/{location}/functionAppStacks"].get.parameters
+    where: $.paths["/providers/Microsoft.Web/locations/{location}/functionAppStacks"].get.parameters[?(@.name=='stackOsType')]
     transform: >
-      $[0]={
-            "name": "location",
-            "in": "path",
-            "description": "Function App stack location.",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "stackOsType",
-            "in": "query",
-            "description": "Stack OS Type",
-            "type": "string",
-            "enum": [
-              "Windows",
-              "Linux",
-              "All"
-            ],
-            "x-ms-enum": {
-            "name": "StackOsType",
-            "modelAsString": true
-          }
-          }
+      $["x-ms-enum"]={
+        "name": "StackOsType",
+        "modelAsString": true
+      }
   - from: swagger-document
-    where: $.paths["/providers/Microsoft.Web/locations/{location}/webAppStacks"].get.parameters
+    where: $.paths["/providers/Microsoft.Web/locations/{location}/webAppStacks"].get.parameters[?(@.name=='stackOsType')]
     transform: >
-      $[0]={
-            "name": "location",
-            "in": "path",
-            "description": "Web App stack location.",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "stackOsType",
-            "in": "query",
-            "description": "Stack OS Type",
-            "type": "string",
-            "enum": [
-              "Windows",
-              "Linux",
-              "All"
-            ],
-            "x-ms-enum": {
-            "name": "StackOsType",
-            "modelAsString": true
-          }
-          }
+      $["x-ms-enum"]={
+        "name": "StackOsType",
+        "modelAsString": true
+      }
   - from: swagger-document
     where: $.definitions.AppServiceCertificateOrder.properties.properties.properties.appServiceCertificateNotRenewableReasons.items
     transform: >

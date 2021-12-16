@@ -2,9 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.Azure.Cosmos.Table;
+using Azure;
+using Azure.Core.TestFramework;
+using Azure.Data.Tables;
 using Microsoft.Azure.WebJobs.Host;
 using NUnit.Framework;
 
@@ -12,44 +13,42 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 {
     public class TableEntityLiveTests: TablesLiveTestBase
     {
-        [Test]
-        public async Task TableEntity_IfBoundToExistingDynamicTableEntity_Binds()
+        public TableEntityLiveTests(bool isAsync, bool useCosmos) : base(isAsync, useCosmos)
+        {
+        }
+
+        [RecordedTest]
+        public async Task TableEntity_IfBoundToExistingTableEntity_Binds()
         {
             // Arrange
             const string expectedKey = "abc";
             const int expectedValue = 123;
 
-            Dictionary<string, EntityProperty> properties = new Dictionary<string, EntityProperty>
+            await TableClient.AddEntityAsync(new TableEntity(PartitionKey, RowKey)
             {
-                { expectedKey, new EntityProperty(expectedValue) }
-            };
-            CloudTable.Insert(new DynamicTableEntity(PartitionKey, RowKey, etag: null, properties: properties));
+                { expectedKey, (expectedValue) }
+            });
             // Act
-            var function = await CallAsync<BindToDynamicTableEntityProgram>();
+            var function = await CallAsync<BindToTableEntityProgram>();
             var result = function.Entity;
 
             // Assert
             Assert.NotNull(result);
             Assert.AreEqual(PartitionKey, result.PartitionKey);
             Assert.AreEqual(RowKey, result.RowKey);
-            Assert.NotNull(result.Properties);
-            Assert.True(result.Properties.ContainsKey(expectedKey));
-            EntityProperty property = result.Properties[expectedKey];
-            Assert.NotNull(property);
-            Assert.AreEqual(EdmType.Int32, property.PropertyType);
-            Assert.AreEqual(expectedValue, property.Int32Value);
+            Assert.AreEqual(expectedValue, result[expectedKey]);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableEntity_IfBoundToExistingPoco_Binds()
         {
             // Arrange
             const string expectedValue = "abc";
-            Dictionary<string, EntityProperty> properties = new Dictionary<string, EntityProperty>
+
+            await TableClient.AddEntityAsync(new TableEntity(PartitionKey, RowKey)
             {
-                { "Value", new EntityProperty(expectedValue) }
-            };
-            CloudTable.Insert(new DynamicTableEntity(PartitionKey, RowKey, etag: null, properties: properties));
+                { "Value", (expectedValue) }
+            });
 
             // Act
             var function = await CallAsync<BindToPocoProgram>(arguments: new
@@ -62,18 +61,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             Assert.AreEqual(expectedValue, result.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableEntity_IfUpdatesPoco_Persists()
         {
             // Arrange
             const string originalValue = "abc";
             const string expectedValue = "def";
 
-            Dictionary<string, EntityProperty> originalProperties = new Dictionary<string, EntityProperty>
+            await TableClient.AddEntityAsync(new TableEntity(PartitionKey, RowKey)
             {
-                { "Value", new EntityProperty(originalValue) }
-            };
-            CloudTable.Insert(new DynamicTableEntity(PartitionKey, RowKey, etag: null, properties: originalProperties));
+                { "Value", (originalValue) }
+            });
 
             // Act
             await CallAsync<UpdatePocoProgram>(arguments: new
@@ -82,27 +80,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             });
 
             // Assert
-            DynamicTableEntity entity = CloudTable.Retrieve<DynamicTableEntity>(PartitionKey, RowKey);
+            TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
             Assert.NotNull(entity);
-            IDictionary<string, EntityProperty> properties = entity.Properties;
-            Assert.NotNull(properties);
-            Assert.True(properties.ContainsKey("Value"));
-            EntityProperty property = properties["Value"];
-            Assert.NotNull(property);
-            Assert.AreEqual(EdmType.String, property.PropertyType);
-            Assert.AreEqual(expectedValue, property.StringValue);
+            Assert.AreEqual(expectedValue, entity["Value"]);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableEntity_IfBoundToExistingPoco_BindsUsingNativeTableTypes()
         {
             // Arrange
             byte[] expectedValue = new byte[] { 0x12, 0x34 };
-            Dictionary<string, EntityProperty> properties = new Dictionary<string, EntityProperty>
+
+            await TableClient.AddEntityAsync(new TableEntity(PartitionKey, RowKey)
             {
-                { "Value", new EntityProperty(expectedValue) }
-            };
-            CloudTable.Insert(new DynamicTableEntity(PartitionKey, RowKey, etag: null, properties: properties));
+                { "Value", (expectedValue) }
+            });
             // Act
             var function = await CallAsync<BindToPocoWithByteArrayValueProgram>();
             var result = function.Entity;
@@ -112,18 +104,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             Assert.AreEqual(expectedValue, result.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableEntity_IfUpdatesPoco_PersistsUsingNativeTableTypes()
         {
             // Arrange
             byte[] originalValue = new byte[] { 0x12, 0x34 };
             byte[] expectedValue = new byte[] { 0x56, 0x78 };
 
-            Dictionary<string, EntityProperty> originalProperties = new Dictionary<string, EntityProperty>
+            await TableClient.AddEntityAsync(new TableEntity(PartitionKey, RowKey)
             {
-                { "Value", new EntityProperty(originalValue) }
-            };
-            CloudTable.Insert(new DynamicTableEntity(PartitionKey, RowKey, etag: null, properties: originalProperties));
+                { "Value", (originalValue) }
+            });
 
             // Act
             await CallAsync<UpdatePocoWithByteArrayValueProgram>(arguments: new
@@ -132,22 +123,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             });
 
             // Assert
-            DynamicTableEntity entity = CloudTable.Retrieve<DynamicTableEntity>(PartitionKey, RowKey);
+            TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
             Assert.NotNull(entity);
-            IDictionary<string, EntityProperty> properties = entity.Properties;
-            Assert.NotNull(properties);
-            Assert.True(properties.ContainsKey("Value"));
-            EntityProperty property = properties["Value"];
-            Assert.NotNull(property);
-            Assert.AreEqual(EdmType.Binary, property.PropertyType);
-            Assert.AreEqual(expectedValue, property.BinaryValue);
+            Assert.AreEqual(expectedValue, entity["Value"]);
         }
 
-        [Test]
-        public void TableEntity_IfUpdatesPartitionKey_Throws()
+        [RecordedTest]
+        public async Task TableEntity_IfUpdatesPartitionKey_Throws()
         {
             // Arrange
-            CloudTable.Insert(new DynamicTableEntity(PartitionKey, RowKey));
+            await TableClient.AddEntityAsync(new TableEntity(PartitionKey, RowKey));
 
             // Act
             var functionException = Assert.CatchAsync<FunctionInvocationException>(async () => await CallAsync<UpdatePocoPartitionKeyProgram>());
@@ -164,11 +149,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 innerException.Message);
         }
 
-        [Test]
-        public void TableEntity_IfUpdatesRowKey_Throws()
+        [RecordedTest]
+        public async Task TableEntity_IfUpdatesRowKey_Throws()
         {
             // Arrange
-            CloudTable.Insert(new DynamicTableEntity(PartitionKey, RowKey));
+            await TableClient.AddEntityAsync(new TableEntity(PartitionKey, RowKey));
 
             // Act
             var functionException = Assert.CatchAsync<FunctionInvocationException>(async () => await CallAsync<UpdatePocoRowKeyProgram>());
@@ -184,15 +169,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             Assert.AreEqual("When binding to a table entity, the row key must not be changed.", innerException.Message);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableEntity_IfBoundUsingRouteParameters_Binds()
         {
             // Arrange
-            Dictionary<string, EntityProperty> originalProperties = new Dictionary<string, EntityProperty>
+
+            await TableClient.AddEntityAsync(new TableEntity(PartitionKey, RowKey)
             {
-                { "Value", new EntityProperty(123) }
-            };
-            CloudTable.Insert(new DynamicTableEntity(PartitionKey, RowKey, etag: null, properties: originalProperties));
+                { "Value", (123) }
+            });
 
             // Act
             await CallAsync<BindUsingRouteParametersProgram>(arguments: new
@@ -203,26 +188,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             });
 
             // Assert
-            DynamicTableEntity entity = CloudTable.Retrieve<DynamicTableEntity>(PartitionKey, RowKey);
+            TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
             Assert.NotNull(entity);
-            IDictionary<string, EntityProperty> properties = entity.Properties;
-            Assert.NotNull(properties);
-            Assert.True(properties.ContainsKey("Value"));
-            EntityProperty property = properties["Value"];
-            Assert.NotNull(property);
-            Assert.AreEqual(EdmType.Int32, property.PropertyType);
-            Assert.True(property.Int32Value.HasValue);
-            Assert.AreEqual(456, property.Int32Value.Value);
+            Assert.AreEqual(456, entity["Value"]);
         }
 
-        private class BindToDynamicTableEntityProgram
+        private class BindToTableEntityProgram
         {
-            public void Run([Table(TableNameExpression, PartitionKey, RowKey)] DynamicTableEntity entity)
+            public void Run([Table(TableNameExpression, PartitionKey, RowKey)] TableEntity entity)
             {
                 Entity = entity;
             }
 
-            public DynamicTableEntity Entity { get; set; }
+            public TableEntity Entity { get; set; }
         }
 
         private class BindToPocoProgram
@@ -308,9 +286,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             public string RowKey { get; set; }
         }
 
-        private class SdkTableEntity : TableEntity
+        private class SdkTableEntity : ITableEntity
         {
             public int Value { get; set; }
+            public string PartitionKey { get; set; }
+            public string RowKey { get; set; }
+            public DateTimeOffset? Timestamp { get; set; }
+            public ETag ETag { get; set; }
         }
     }
 }

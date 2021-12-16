@@ -4,19 +4,19 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Data.Tables;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Protocols;
-using Microsoft.Azure.Cosmos.Table;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
     internal class PocoEntityCollectorBinder<T> : IValueBinder, IWatchable
     {
-        private readonly CloudTable _table;
+        private readonly TableClient _table;
         private readonly PocoEntityWriter<T> _value;
         private readonly Type _valueType;
 
-        public PocoEntityCollectorBinder(CloudTable table, PocoEntityWriter<T> value, Type valueType)
+        public PocoEntityCollectorBinder(TableClient table, PocoEntityWriter<T> value, Type valueType)
         {
             if (value != null && !valueType.IsAssignableFrom(value.GetType()))
             {

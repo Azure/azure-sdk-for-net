@@ -12,6 +12,7 @@ namespace Azure.Search.Documents.Tests
     public class ManualRetryDelayTests
     {
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/23038")]
         public async Task AddsDelay()
         {
             Stopwatch watch = new Stopwatch();

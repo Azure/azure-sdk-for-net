@@ -517,7 +517,7 @@
     "CustomDefaultMatcher": {
       "type": "object",
       "properties": {
-        "nonDefaultHeaderExclusions" : {
+        "excludedHeaders" : {
           "type": "string"
         },
         "compareBodies" : {
@@ -525,7 +525,7 @@
         }
       },
       "required": [
-        "nonDefaultHeaderExclusions",
+        "excludedHeaders",
         "compareBodies"
       ]
     },

@@ -4,8 +4,8 @@
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
+using Azure.Data.Tables;
 using Microsoft.Azure.WebJobs.Host.Bindings;
-using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Azure.WebJobs.Host;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
@@ -14,9 +14,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
     {
         private readonly ITableEntityArgumentBindingProvider _entityBindingProvider;
         private readonly INameResolver _nameResolver;
-        private readonly StorageAccountProvider _accountProvider;
+        private readonly TablesAccountProvider _accountProvider;
 
-        public TableAttributeBindingProvider(INameResolver nameResolver, StorageAccountProvider accountProvider)
+        public TableAttributeBindingProvider(INameResolver nameResolver, TablesAccountProvider accountProvider)
         {
             _nameResolver = nameResolver;
             _accountProvider = accountProvider ?? throw new ArgumentNullException(nameof(accountProvider));
@@ -37,9 +37,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 
             string tableName = Resolve(tableAttribute.TableName);
             var account = _accountProvider.Get(tableAttribute.Connection, _nameResolver);
-            // requires storage account with table support
-            // account.AssertTypeOneOf(StorageAccountType.GeneralPurpose); $$$
-            CloudTableClient client = account.CreateCloudTableClient();
             bool bindsToEntireTable = tableAttribute.RowKey == null;
             IBinding binding;
             if (bindsToEntireTable)
@@ -60,7 +57,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                     throw new InvalidOperationException("Can't bind Table entity to type '" + parameter.ParameterType + "'.");
                 }
 
-                binding = new TableEntityBinding(parameter.Name, argumentBinding, client, path);
+                binding = new TableEntityBinding(parameter.Name, argumentBinding, account, path);
             }
 
             return binding;
