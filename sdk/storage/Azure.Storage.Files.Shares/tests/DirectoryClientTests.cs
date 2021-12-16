@@ -1269,7 +1269,6 @@ namespace Azure.Storage.Files.Shares.Tests
                 options: options);
 
             // Assert
-            // Assert
             Response<ShareDirectoryProperties> response = await destDirectory.GetPropertiesAsync();
             AssertDictionaryEquality(metadata, response.Value.Metadata);
         }
