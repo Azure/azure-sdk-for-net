@@ -38,7 +38,7 @@ namespace Azure.Security.ConfidentialLedger
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
             _pipeline = HttpPipelineBuilder.Build(
                 actualOptions,
-                new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() },
+                Array.Empty<HttpPipelinePolicy>(),
                 new HttpPipelinePolicy[] { authPolicy },
                 new ResponseClassifier(),
                 transportOptions);

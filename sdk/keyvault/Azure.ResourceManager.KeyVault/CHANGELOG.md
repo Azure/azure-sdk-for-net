@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.5 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.4 (2021-12-07)
+
+### Breaking Changes
+
+- Unified the identification rule of detecting resources, therefore some resources might become non-resources, and vice versa.
+
+### Bugs Fixed
+
+- Fixed problematic internal parameter invocation from the context `Id` property to the corresponding `RestOperations`.
 
 ## 1.0.0-beta.3 (2021-10-28)
 
@@ -74,7 +84,7 @@ Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync("myRgName");
 
 VaultCollection vaultCollection = resourceGroup.GetVaults();
-VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Location.WestUS2, new VaultProperties(Guid.NewGuid(), new Sku(SkuFamily.A, SkuName.Standard)));
+VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Location.WestUS2, new VaultProperties(Guid.NewGuid(), new Models.Sku(SkuFamily.A, SkuName.Standard)));
 
 VaultCreateOrUpdateOperation lro = await vaultCollection.CreateOrUpdateAsync("myVaultName", parameters);
 Vault vault = lro.Value;
@@ -92,6 +102,6 @@ VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Loc
 
 After upgrade:
 ```C# Snippet:Changelog_CreateModel
-VaultProperties properties = new VaultProperties(Guid.NewGuid(), new Sku(SkuFamily.A, SkuName.Standard));
+VaultProperties properties = new VaultProperties(Guid.NewGuid(), new Models.Sku(SkuFamily.A, SkuName.Standard));
 VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Location.WestUS2, properties);
 ```

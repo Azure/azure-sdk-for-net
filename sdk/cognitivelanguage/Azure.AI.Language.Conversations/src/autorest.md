@@ -8,14 +8,14 @@ title: Conversations
 license-header: MICROSOFT_MIT_NO_VERSION
 
 batch:
-- input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/543d3523dffc91719d28b5b8814f20418fd592c2/specification/cognitiveservices/data-plane/Language/preview/2021-11-01-preview/analyzeconversations.json
+- input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/12a84f56d521c132e3851c7c3ca2648a44daffea/specification/cognitiveservices/data-plane/Language/preview/2021-11-01-preview/analyzeconversations.json
   clear-output-folder: true
   model-namespace: false
 
 # TODO: Uncomment when we ship authoring support and remove ./ConversationsClientOptions.cs.
 # - input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/33138867cd88a4a8689feb591a98dda26d96a63e/specification/cognitiveservices/data-plane/Language/preview/2021-07-15-preview/analyzeconversations-authoring.json
 #   add-credentials: true
-#   low-level-client: true
+#   data-plane: true
 
 modelerfour:
   lenient-model-deduplication: true

@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of SyncMemberListResult. </summary>
         internal SyncMemberListResult()
         {
-            Value = new ChangeTrackingList<SyncMember>();
+            Value = new ChangeTrackingList<SyncMemberData>();
         }
 
         /// <summary> Initializes a new instance of SyncMemberListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal SyncMemberListResult(IReadOnlyList<SyncMember> value, string nextLink)
+        internal SyncMemberListResult(IReadOnlyList<SyncMemberData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<SyncMember> Value { get; }
+        public IReadOnlyList<SyncMemberData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

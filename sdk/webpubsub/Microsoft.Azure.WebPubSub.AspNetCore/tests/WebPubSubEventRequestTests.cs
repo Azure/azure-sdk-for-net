@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -24,30 +25,30 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         [Test]
         public void TestUpdateConnectionState()
         {
-            var exist = new Dictionary<string, object>
+            var exist = new Dictionary<string, BinaryData>
             {
-                { "aaa", "aaa" },
-                { "bbb", "bbb" }
+                { "aaa", BinaryData.FromObjectAsJson("aaa") },
+                { "bbb", BinaryData.FromObjectAsJson("bbb") }
             };
-            var connectionContext = new WebPubSubConnectionContext(eventType: WebPubSubEventType.System, null, null, null, states: exist);
+            var connectionContext = new WebPubSubConnectionContext(eventType: WebPubSubEventType.System, null, null, null, connectionStates: exist);
 
             var response = new ConnectEventResponse
             {
                 UserId = "aaa"
             };
-            response.SetState("test", "ddd");
-            response.SetState("bbb", "bbb1");
-            var updated = connectionContext.UpdateStates(response.States);
+            response.SetState("test", BinaryData.FromObjectAsJson("ddd"));
+            response.SetState("bbb", BinaryData.FromObjectAsJson("bbb1"));
+            var updated = connectionContext.UpdateStates(response.ConnectionStates);
 
             // new
-            Assert.AreEqual("ddd", updated["test"]);
+            Assert.AreEqual("ddd", updated["test"].ToObjectFromJson<string>());
             // no change
-            Assert.AreEqual("aaa", updated["aaa"]);
+            Assert.AreEqual("aaa", updated["aaa"].ToObjectFromJson<string>());
             // update
-            Assert.AreEqual("bbb1", updated["bbb"]);
+            Assert.AreEqual("bbb1", updated["bbb"].ToObjectFromJson<string>());
 
             response.ClearStates();
-            updated = connectionContext.UpdateStates(response.States);
+            updated = connectionContext.UpdateStates(response.ConnectionStates);
 
             // After clear is null.
             Assert.IsNull(updated);
@@ -56,39 +57,19 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         [Test]
         public void TestEncodeAndDecodeState()
         {
-            var customizeClass = new StateTestClass();
-            var state = new Dictionary<string, object>
+            var state = new Dictionary<string, BinaryData>
             {
-                { "string", "aaa" },
-                { "int", 123 },
-                { "customized", customizeClass }
+                { "aaa", BinaryData.FromObjectAsJson("aaa") },
+                { "bbb", BinaryData.FromObjectAsJson("bbb") }
             };
 
             var encoded = state.EncodeConnectionStates();
 
             var decoded = encoded.DecodeConnectionStates();
 
-            Assert.NotNull(decoded);
-            Assert.AreEqual(3, decoded.Count);
-
-            // put to connectionContext for validation.
-            var connectionContext = new WebPubSubConnectionContext(eventType: WebPubSubEventType.System, null, null, null, states: decoded);
-
-            JsonElement element;
-            Assert.True(connectionContext.States["string"] is JsonElement);
-            element = (JsonElement)connectionContext.States["string"];
-            Assert.AreEqual("aaa", JsonSerializer.Deserialize<string>(element.GetRawText()));
-
-            Assert.True(connectionContext.States["int"] is JsonElement);
-            element = (JsonElement)connectionContext.States["int"];
-            Assert.AreEqual(123, JsonSerializer.Deserialize<int>(element.GetRawText()));
-
-            Assert.True(connectionContext.States["customized"] is JsonElement);
-            element = (JsonElement)connectionContext.States["customized"];
-            var resultClass = JsonSerializer.Deserialize<StateTestClass>(element.GetRawText());
-            Assert.AreEqual(customizeClass.Timestamp, resultClass.Timestamp);
-            Assert.AreEqual(customizeClass.Title, resultClass.Title);
-            Assert.AreEqual(customizeClass.Version, resultClass.Version);
+            CollectionAssert.AreEquivalent(
+                state.Values.Select(d => d.ToObjectFromJson<string>()),
+                decoded.Values.Select(d => d.ToObjectFromJson<string>()));
         }
 
         [Test]
@@ -226,7 +207,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 null, null, "0f9c97a2f0bf4706afe87a14e0797b11",
                 signature: "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561",
                 origin: TestUri.Host);
-            var options = new ValidationOptions($"Endpoint={TestUri};AccessKey={accessKey};Version=1.0;");
+            var options = new WebPubSubValidationOptions($"Endpoint={TestUri};AccessKey={accessKey};Version=1.0;");
             var result = connectionContext.IsValidSignature(options);
             Assert.AreEqual(valid, result);
         }
@@ -263,7 +244,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 null, null, "0f9c97a2f0bf4706afe87a14e0797b11",
                 signature: "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561",
                 origin: TestUri.Host);
-            var options = new ValidationOptions($"Endpoint={TestUri};Version=1.0;");
+            var options = new WebPubSubValidationOptions($"Endpoint={TestUri};Version=1.0;");
             var result = connectionContext.IsValidSignature(options);
             Assert.True(result);
         }
@@ -275,7 +256,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 WebPubSubEventType.System,
                 null, null, "0f9c97a2f0bf4706afe87a14e0797b11",
                 origin: TestUri.Host);
-            var options = new ValidationOptions($"Endpoint={TestUri};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;");
+            var options = new WebPubSubValidationOptions($"Endpoint={TestUri};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;");
             var result = connectionContext.IsValidSignature(options);
             Assert.False(result);
         }
@@ -303,7 +284,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         [TestCase("http://localhost", false)]
         public void TestAbuseProtectionCompare(string requestHost, bool expected)
         {
-            var options = new ValidationOptions($"Endpoint=https://my-host.com;AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;");
+            var options = new WebPubSubValidationOptions($"Endpoint=https://my-host.com;AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;");
 
             var result = false;
             if (options.ContainsHost(requestHost))
@@ -378,29 +359,6 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             return type == WebPubSubEventType.User ?
                 $"{Constants.Headers.CloudEvents.TypeUserPrefix}{eventName}" :
                 $"{Constants.Headers.CloudEvents.TypeSystemPrefix}{eventName}";
-        }
-
-        private sealed class StateTestClass
-        {
-            public DateTime Timestamp { get; set; }
-
-            public string Title { get; set; }
-
-            public int Version { get; set; }
-
-            public StateTestClass()
-            {
-                Timestamp = DateTime.Parse("2021-11-10");
-                Title = "GA";
-                Version = 1;
-            }
-
-            public StateTestClass(DateTime timestamp, string title, int version)
-            {
-                Timestamp = timestamp;
-                Title = title;
-                Version = version;
-            }
         }
     }
 }

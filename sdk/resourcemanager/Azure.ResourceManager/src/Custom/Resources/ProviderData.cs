@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceTypes"> The collection of provider resource types. </param>
         /// <param name="providerAuthorizationConsentState"> The provider authorization consent state. </param>
         [SerializationConstructor]
-        internal ProviderData(string id, string @namespace, string registrationState, string registrationPolicy, IReadOnlyList<ProviderResourceType> resourceTypes, ProviderAuthorizationConsentState? providerAuthorizationConsentState) : base(id)
+        internal ProviderData(ResourceIdentifier id, string @namespace, string registrationState, string registrationPolicy, IReadOnlyList<ProviderResourceType> resourceTypes, ProviderAuthorizationConsentState? providerAuthorizationConsentState) : base(id)
         {
             Namespace = @namespace;
             RegistrationState = registrationState;

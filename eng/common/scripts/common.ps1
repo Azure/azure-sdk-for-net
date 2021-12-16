@@ -45,3 +45,4 @@ $GetDocsMsDevLanguageSpecificPackageInfoFn = "Get-${Language}-DocsMsDevLanguageS
 $GetGithubIoDocIndexFn = "Get-${Language}-GithubIoDocIndex"
 $FindArtifactForApiReviewFn = "Find-${Language}-Artifacts-For-Apireview"
 $TestProxyTrustCertFn = "Import-Dev-Cert-${Language}"
+$ValidateDocsMsPackagesFn = "Validate-${Language}-DocMsPackages"

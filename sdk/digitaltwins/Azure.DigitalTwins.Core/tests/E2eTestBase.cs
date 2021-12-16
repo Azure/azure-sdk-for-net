@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -22,7 +23,7 @@ namespace Azure.DigitalTwins.Core.Tests
         protected static readonly int MaxIdLength = 27;
 
         public E2eTestBase(bool isAsync)
-         : base(isAsync, TestSettings.Instance.TestMode)
+         : base(isAsync, TestSettings.Instance.TestMode, useLegacyTransport: true)
         {
             Sanitizer = new TestUrlSanitizer();
         }
@@ -38,7 +39,7 @@ namespace Azure.DigitalTwins.Core.Tests
         {
             if (options == null)
             {
-                options = new DigitalTwinsClientOptions();
+                options = new DigitalTwinsClientOptions(){ Retry = { Delay = TimeSpan.Zero, Mode = RetryMode.Fixed}};
             }
 
             return InstrumentClient(

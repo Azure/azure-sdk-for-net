@@ -35,12 +35,15 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// resource.</param>
         /// <param name="name">The name of the resource</param>
         /// <param name="type">The type of the resource.</param>
-        public MoveResource(string id = default(string), string name = default(string), string type = default(string), MoveResourceProperties properties = default(MoveResourceProperties))
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource.</param>
+        public MoveResource(string id = default(string), string name = default(string), string type = default(string), MoveResourceProperties properties = default(MoveResourceProperties), SystemData systemData = default(SystemData))
         {
             Id = id;
             Name = name;
             Type = type;
             Properties = properties;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -71,6 +74,13 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public MoveResourceProperties Properties { get; set; }
+
+        /// <summary>
+        /// Gets metadata pertaining to creation and last modification of the
+        /// resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

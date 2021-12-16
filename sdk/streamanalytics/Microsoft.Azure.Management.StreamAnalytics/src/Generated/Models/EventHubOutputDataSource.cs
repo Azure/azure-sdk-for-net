@@ -50,6 +50,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// PUT (CreateOrReplace) requests.</param>
         /// <param name="partitionKey">The key/column that is used to determine
         /// to which partition to send event data.</param>
+        /// <param name="propertyColumns">The properties associated with this
+        /// Event Hub output.</param>
         public EventHubOutputDataSource(string serviceBusNamespace = default(string), string sharedAccessPolicyName = default(string), string sharedAccessPolicyKey = default(string), string authenticationMode = default(string), string eventHubName = default(string), string partitionKey = default(string), IList<string> propertyColumns = default(IList<string>))
         {
             ServiceBusNamespace = serviceBusNamespace;
@@ -112,6 +114,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         public string PartitionKey { get; set; }
 
         /// <summary>
+        /// Gets or sets the properties associated with this Event Hub output.
         /// </summary>
         [JsonProperty(PropertyName = "properties.propertyColumns")]
         public IList<string> PropertyColumns { get; set; }

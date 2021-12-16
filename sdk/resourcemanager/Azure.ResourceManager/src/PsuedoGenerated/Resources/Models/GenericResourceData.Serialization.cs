@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.Resources
             Optional<object> properties = default;
             Optional<string> kind = default;
             Optional<string> managedBy = default;
-            Optional<Sku> sku = default;
+            Optional<Models.Sku> sku = default;
             Optional<ResourceIdentity> identity = default;
-            Optional<string> id = default;
+            ResourceIdentifier id = default;
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> location = default;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Resources
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Sku.DeserializeSku(property.Value);
+                    sku = Models.Sku.DeserializeSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new GenericResourceData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), plan.Value, properties.Value, kind.Value, managedBy.Value, sku.Value, identity.Value, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), provisioningState.Value);
+            return new GenericResourceData(id, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), plan.Value, properties.Value, kind.Value, managedBy.Value, sku.Value, identity.Value, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), provisioningState.Value);
         }
     }
 }

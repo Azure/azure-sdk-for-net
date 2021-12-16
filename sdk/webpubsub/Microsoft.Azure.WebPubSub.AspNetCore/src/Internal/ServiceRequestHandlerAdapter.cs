@@ -100,7 +100,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                             // default as null is allowed.
                             if (response != null)
                             {
-                                SetConnectionState(ref context, connectEventRequest.ConnectionContext, response.States);
+                                SetConnectionState(ref context, connectEventRequest.ConnectionContext, response.ConnectionStates);
                                 await context.Response.WriteAsync(JsonSerializer.Serialize(response)).ConfigureAwait(false);
                             }
                             break;
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                             // default as null is allowed.
                             if (response != null)
                             {
-                                SetConnectionState(ref context, messageRequest.ConnectionContext, response.States);
+                                SetConnectionState(ref context, messageRequest.ConnectionContext, response.ConnectionStates);
                             }
                             if (response.Data != null)
                             {
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             }
         }
 
-        private static void SetConnectionState(ref HttpContext context, WebPubSubConnectionContext connectionContext, IReadOnlyDictionary<string, object> newStates)
+        private static void SetConnectionState(ref HttpContext context, WebPubSubConnectionContext connectionContext, IReadOnlyDictionary<string, BinaryData> newStates)
         {
             var updatedStates = connectionContext.UpdateStates(newStates);
             if (updatedStates != null)

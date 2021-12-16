@@ -28,8 +28,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         {
             var provider = new ServiceCollection()
                 .AddLogging()
-                .AddWebPubSub(x => x.ServiceEndpoint = new($"Endpoint={TestEndpoint};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;"))
-                .Services
+                .AddWebPubSub(x => x.ValidationOptions.Add($"Endpoint={TestEndpoint};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;"))
                 .BuildServiceProvider();
             _adaptor = provider.GetRequiredService<ServiceRequestHandlerAdapter>();
         }
@@ -93,9 +92,9 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         public async Task TestStateChanges()
         {
             _adaptor.RegisterHub<TestHub>();
-            var initState = new Dictionary<string, object>
+            var initState = new Dictionary<string, BinaryData>
             {
-                { "counter", 2 }
+                { "counter", BinaryData.FromObjectAsJson(2) }
             };
             var context = PrepareHttpContext(httpMethod: HttpMethods.Post, type: WebPubSubEventType.User, eventName: "message", body: "1", connectionState: initState);
 
@@ -106,7 +105,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             Assert.NotNull(states);
             var updated = states[0].DecodeConnectionStates();
             Assert.AreEqual(1, updated.Count);
-            Assert.AreEqual("10", updated["counter"].ToString());
+            Assert.AreEqual(10, updated["counter"].ToObjectFromJson<int>());
 
             // 2 to add a new state.
             context = PrepareHttpContext(httpMethod: HttpMethods.Post, type: WebPubSubEventType.User, eventName: "message", body: "2", connectionState: initState);
@@ -117,7 +116,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             Assert.NotNull(states);
             updated = states[0].DecodeConnectionStates();
             Assert.AreEqual(2, updated.Count);
-            Assert.AreEqual("new", updated["new"].ToString());
+            Assert.AreEqual("new", updated["new"].ToObjectFromJson<string>());
 
             // 3 to clear states
             context = PrepareHttpContext(httpMethod: HttpMethods.Post, type: WebPubSubEventType.User, eventName: "message", body: "3", connectionState: initState);
@@ -134,7 +133,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             Assert.NotNull(states);
             updated = states[0].DecodeConnectionStates();
             Assert.AreEqual(2, updated.Count);
-            Assert.AreEqual("new1", updated["new1"].ToString());
+            Assert.AreEqual("new1", updated["new1"].ToObjectFromJson<string>());
         }
 
         [Test]
@@ -207,7 +206,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             string userId = "testuser",
             string body = null,
             string contentType = Constants.ContentTypes.PlainTextContentType,
-            Dictionary<string, object> connectionState = null)
+            Dictionary<string, BinaryData> connectionState = null)
         {
             var context = new DefaultHttpContext();
             var services = new ServiceCollection();

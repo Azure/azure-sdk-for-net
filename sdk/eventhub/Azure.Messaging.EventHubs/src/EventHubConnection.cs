@@ -36,6 +36,12 @@ namespace Azure.Messaging.EventHubs
         private static EventHubsTransportType DefaultCredentialTransportType { get; } = new EventHubConnectionOptions().TransportType;
 
         /// <summary>
+        ///   The default retry policy to use when no explicit retry policy is specified.
+        /// </summary>
+        ///
+        private static EventHubsRetryPolicy DefaultRetryPolicy { get; } = new BasicRetryPolicy(new EventHubsRetryOptions());
+
+        /// <summary>
         ///   The fully qualified Event Hubs namespace that the connection is associated with.  This is likely
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
         /// </summary>
@@ -189,7 +195,7 @@ namespace Azure.Messaging.EventHubs
             Options = connectionOptions;
 
 #pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
-            InnerClient = CreateTransportClient(fullyQualifiedNamespace, eventHubName, tokenCredentials, connectionOptions);
+            InnerClient = CreateTransportClient(fullyQualifiedNamespace, eventHubName, DefaultRetryPolicy.CalculateTryTimeout(0), tokenCredentials, connectionOptions);
 #pragma warning restore CA2214 // Do not call overridable methods in constructors.
         }
 
@@ -259,7 +265,7 @@ namespace Azure.Messaging.EventHubs
             Options = connectionOptions;
 
 #pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
-            InnerClient = CreateTransportClient(fullyQualifiedNamespace, eventHubName, tokenCredential, connectionOptions);
+            InnerClient = CreateTransportClient(fullyQualifiedNamespace, eventHubName, DefaultRetryPolicy.CalculateTryTimeout(0), tokenCredential, connectionOptions);
 #pragma warning restore CA2214 // Do not call overridable methods in constructors.
         }
 
@@ -466,6 +472,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of a specific Event Hub.</param>
+        /// <param name="operationTimeout">The amount of time to allow for an AMQP operation using the link to complete before attempting to cancel it.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.</param>
         /// <param name="options">The set of options to use for the client.</param>
         ///
@@ -482,6 +489,7 @@ namespace Azure.Messaging.EventHubs
         [SuppressMessage("Usage", "CA2208:Instantiate argument exceptions correctly", Justification = "`TransportType` is a reasonable name.  It's the property on the options argument which is invalid.")]
         internal virtual TransportClient CreateTransportClient(string fullyQualifiedNamespace,
                                                                string eventHubName,
+                                                               TimeSpan operationTimeout,
                                                                EventHubTokenCredential credential,
                                                                EventHubConnectionOptions options)
         {
@@ -489,7 +497,7 @@ namespace Azure.Messaging.EventHubs
             {
                 case EventHubsTransportType.AmqpTcp:
                 case EventHubsTransportType.AmqpWebSockets:
-                    return new AmqpClient(fullyQualifiedNamespace, eventHubName, credential, options);
+                    return new AmqpClient(fullyQualifiedNamespace, eventHubName, operationTimeout, credential, options);
 
                 default:
                     throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.InvalidTransportType, options.TransportType.ToString()), nameof(options.TransportType));

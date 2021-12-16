@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="displayName"> The subscription name. </param>
         /// <param name="tags"> The tags attached to the subscription. </param>
         /// <param name="resourceType"> The subscription resource type. </param>
-        internal SubscriptionData(string id,
+        internal SubscriptionData(ResourceIdentifier id,
             string displayName,
             IDictionary<string, string> tags,
             string resourceType = "Microsoft.Resources/subscriptions") : base(id, displayName, resourceType, tags, null)
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="authorizationSource"> The authorization source of the request. Valid values are one or more combinations of Legacy, RoleBased, Bypassed, Direct and Management. For example, &apos;Legacy, RoleBased&apos;. </param>
         /// <param name="managedByTenants"> An array containing the tenants managing the subscription. </param>
         /// <param name="tags"> The tags attached to the subscription. </param>
-        internal SubscriptionData(string id,
+        internal SubscriptionData(ResourceIdentifier id,
             string displayName,
             string subscriptionId,
             string tenantId,

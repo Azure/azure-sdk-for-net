@@ -17,20 +17,25 @@ namespace Azure.ResourceManager.Sql.Models
         internal PrivateLinkResourceProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
+            RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkResourceProperties. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
-        internal PrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers)
+        /// <param name="requiredZoneNames"> The private link resource required zone names. </param>
+        internal PrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
+            RequiredZoneNames = requiredZoneNames;
         }
 
         /// <summary> The private link resource group id. </summary>
         public string GroupId { get; }
         /// <summary> The private link resource required member names. </summary>
         public IReadOnlyList<string> RequiredMembers { get; }
+        /// <summary> The private link resource required zone names. </summary>
+        public IReadOnlyList<string> RequiredZoneNames { get; }
     }
 }

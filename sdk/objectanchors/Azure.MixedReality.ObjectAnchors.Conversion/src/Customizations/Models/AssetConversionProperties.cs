@@ -46,19 +46,19 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         }
 
         /// <summary>
-        /// The status of the AOA asset conversion job
+        /// The status of the AOA asset conversion job.
         /// </summary>
         [CodeGenMember("JobStatus")]
         public AssetConversionStatus? ConversionStatus { get; internal set; }
 
         /// <summary>
-        /// The configuration of the AOA asset conversion job
+        /// The configuration of the AOA asset conversion job.
         /// </summary>
         [CodeGenMember("IngestionConfiguration")]
         public AssetConversionConfiguration ConversionConfiguration { get; internal set; }
 
         /// <summary>
-        /// The error code of the AOA asset conversion job
+        /// The error code of the AOA asset conversion job.
         /// </summary>
         public ConversionErrorCode ErrorCode { get; }
 

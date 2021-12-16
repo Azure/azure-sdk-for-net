@@ -30,7 +30,7 @@
             "metricName": "cost"
           }
         ],
-        "dataStartFrom": "2020-08-01T00:00:00Z"
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -81,7 +81,7 @@
           }
         ],
         "dimension": [],
-        "dataStartFrom": "2020-08-01T00:00:00Z",
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z",
         "dataSourceType": "AzureDataLakeStorageGen2",
         "timestampColumn": "",
         "startOffsetInSeconds": 0,
@@ -102,7 +102,7 @@
         "viewers": [],
         "creator": "foo@contoso.com",
         "status": "Active",
-        "createdTime": "2021-07-06T07:59:00Z",
+        "createdTime": "2021-07-06T07:59:00.0000000Z",
         "isAdmin": true,
         "actionLinkTemplate": "",
         "dataSourceParameter": {
@@ -139,7 +139,7 @@
         "dataFeedName": "dataFeedKeFpIWFJ",
         "dataFeedDescription": "",
         "timestampColumn": "",
-        "dataStartFrom": "2020-08-01T00:00:00Z",
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z",
         "startOffsetInSeconds": 0,
         "maxConcurrency": -1,
         "minRetryIntervalInSeconds": -1,
@@ -182,7 +182,7 @@
           }
         ],
         "dimension": [],
-        "dataStartFrom": "2020-08-01T00:00:00Z",
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z",
         "dataSourceType": "AzureDataLakeStorageGen2",
         "timestampColumn": "",
         "startOffsetInSeconds": 0,
@@ -203,7 +203,7 @@
         "viewers": [],
         "creator": "foo@contoso.com",
         "status": "Active",
-        "createdTime": "2021-07-06T07:59:00Z",
+        "createdTime": "2021-07-06T07:59:00.0000000Z",
         "isAdmin": true,
         "actionLinkTemplate": "",
         "dataSourceParameter": {
