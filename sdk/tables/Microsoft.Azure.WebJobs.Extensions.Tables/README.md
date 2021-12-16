@@ -69,7 +69,7 @@ To use connection strings authentication assign connection string value directly
 
 `<ConnectionName>__endpoint` = `https://...table.core.windows.net`
 
-If not credential information is provided the [`DefaultAzureCredential`][identity_dac] is used.
+If no credential information is provided the [`DefaultAzureCredential`][identity_dac] is used.
 
 When using user-assigned manageed identity the `clientId` and `credential` settings need to be provided:
 
