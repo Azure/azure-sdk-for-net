@@ -17,13 +17,7 @@ mgmt-debug:
 modelerfour:
   lenient-model-deduplication: true
 directive:
-  - from: swagger-document
-    where: $.definitions.Origin
-    transform: >
-      $['x-ms-enum'] = {
-          "name": "OperationOrigin",
-          "modelAsString": true
-      }
+  - remove-operation: ListOperations
   - rename-model:
       from: Configuration
       to: ProductConfiguration
@@ -39,9 +33,6 @@ directive:
   - rename-model:
       from: Link
       to: ProductLink
-  - rename-model:
-      from: Operation
-      to: EdgeOrderOperation
   - rename-model:
       from: Preferences
       to: OrderItemPreferences
