@@ -13,6 +13,7 @@ Familiarity with the `Microsoft.Azure.OperationalInsights` v1.1.0 package is ass
     - [The client](#the-client)
     - [Client constructors and authentication](#client-constructors-and-authentication)
     - [Send a single query request](#send-a-single-query-request)
+    - [Retrieve results from a table](#retrieve-results-from-a-table)
 - [Additional samples](#additional-samples)
 
 ## Migration benefits
@@ -100,6 +101,43 @@ Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
 	workspaceId,
 	"AzureActivity | top 10 by TimeGenerated",
 	new QueryTimeRange(TimeSpan.FromDays(1)));
+```
+
+### Retrieve results from a table
+
+In `Microsoft.Azure.OperationalInsights` v1.1.0:
+
+```csharp
+var client = new OperationalInsightsDataClient(credentials);
+var tables = client.Query("AzureActivity | top 10 by TimeGenerated").Tables;
+foreach (var table in tables)
+{
+    var rows = table.Rows;
+    foreach (var row in rows)
+    {
+        foreach (var element in row)
+        {
+            Console.WriteLine(element);
+        }
+    }
+}
+```
+
+In `Azure.Monitor.Query` v1.0.x:
+
+```csharp
+var results = await client.QueryWorkspaceAsync(
+	workspaceId,
+	"AzureActivity | top 10 by TimeGenerated",
+	new QueryTimeRange(TimeSpan.FromDays(1)));
+LogsTable resultTable = results.Value.Table;
+IReadOnlyList<LogsTableRow> rows = resultTable.Rows;
+foreach (LogsTableRow row in rows)
+{
+    Console.WriteLine(row.GetString(0)); // Access a particular element with index
+    Console.WriteLine(row.GetTimeSpan(1)); 
+    Console.WriteLine(row.ToString());
+}
 ```
 
 ## Additional samples
