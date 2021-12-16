@@ -9,7 +9,7 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Azure ConnectedVmware management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-Install-Package Azure.ResourceManager.ConnectedVmware -Version 1.0.0-preview.1 
+Install-Package Azure.ResourceManager.ConnectedVmware -Version 1.0.0-beta.1 
 ```
 
 ### Prerequisites
