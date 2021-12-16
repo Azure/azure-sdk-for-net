@@ -22,23 +22,24 @@ namespace Azure.Identity.Tests
 
         private static readonly Lazy<Action> s_clearAuthorityEndpointResolutionManager = new Lazy<Action>(() =>
         {
-            var assembly = typeof(PublicClientApplication).Assembly;
-            Type authorityEndpointResolutionManagerType = assembly.GetType("Microsoft.Identity.Client.Instance.AuthorityResolutionManager", true);
-            Type iServiceBundleType = assembly.GetType("Microsoft.Identity.Client.Internal.IServiceBundle", true);
-            Type booleanType = typeof(bool);
-
-            ConstructorInfo[] constructors = authorityEndpointResolutionManagerType.GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-            foreach (ConstructorInfo constructor in constructors)
-            {
-                var parameters = constructor.GetParameters();
-                if (parameters.Length == 1 && parameters[0].ParameterType == booleanType)
-                {
-                    NewExpression callConstructor = Expression.New(constructor, Expression.Constant(true, booleanType));
-                    return Expression.Lambda<Action>(callConstructor).Compile();
-                }
-            }
-
-            throw new InvalidOperationException("Constructor wasn't found");
+            return () => { };
+            // var assembly = typeof(PublicClientApplication).Assembly;
+            // Type authorityEndpointResolutionManagerType = assembly.GetType("Microsoft.Identity.Client.Instance.AuthorityResolutionManager", true);
+            // Type iServiceBundleType = assembly.GetType("Microsoft.Identity.Client.Internal.IServiceBundle", true);
+            // Type booleanType = typeof(bool);
+            //
+            // ConstructorInfo[] constructors = authorityEndpointResolutionManagerType.GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            // foreach (ConstructorInfo constructor in constructors)
+            // {
+            //     var parameters = constructor.GetParameters();
+            //     if (parameters.Length == 1 && parameters[0].ParameterType == booleanType)
+            //     {
+            //         NewExpression callConstructor = Expression.New(constructor, Expression.Constant(true, booleanType));
+            //         return Expression.Lambda<Action>(callConstructor).Compile();
+            //     }
+            // }
+            //
+            // throw new InvalidOperationException("Constructor wasn't found");
         });
 
         public static void ClearStaticMetadataProviderCache() => s_clearStaticMetadataProvider.Value();
