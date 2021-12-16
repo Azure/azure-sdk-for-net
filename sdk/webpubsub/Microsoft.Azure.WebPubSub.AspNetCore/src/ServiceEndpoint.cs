@@ -33,6 +33,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// <param name="clientOptions">The <see cref="WebPubSubServiceClientOptions"/> to use when invoke service.</param>
         public ServiceEndpoint(string connectionString, WebPubSubServiceClientOptions clientOptions = null)
         {
+            CredentialKind = CredentialKind.ConnectionString;
             if (connectionString == null)
             {
                 return;
@@ -51,6 +52,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// <param name="clientOptions">The <see cref="WebPubSubServiceClientOptions"/> to use when invoke service.</param>
         public ServiceEndpoint(Uri endpoint, TokenCredential credential, WebPubSubServiceClientOptions clientOptions = null)
         {
+            CredentialKind = CredentialKind.TokenCredential;
             Endpoint = endpoint;
             TokenCredential = credential;
             ClientOptions = clientOptions ?? new WebPubSubServiceClientOptions();
@@ -65,11 +67,14 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// <param name="clientOptions">The <see cref="WebPubSubServiceClientOptions"/> to use when invoke service.</param>
         public ServiceEndpoint(Uri endpoint, AzureKeyCredential credential, WebPubSubServiceClientOptions clientOptions = null)
         {
+            CredentialKind = CredentialKind.AzureKeyCredential;
             Endpoint = endpoint;
             AzureKeyCredential = credential;
             ClientOptions = clientOptions ?? new WebPubSubServiceClientOptions();
             _validationOptions.Add(endpoint);
         }
+
+        internal CredentialKind CredentialKind { get; }
 
         internal ValidationOptions GetValidationOptions() => _validationOptions;
 

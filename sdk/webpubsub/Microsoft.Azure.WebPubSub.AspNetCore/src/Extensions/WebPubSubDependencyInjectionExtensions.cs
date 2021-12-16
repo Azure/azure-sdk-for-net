@@ -17,7 +17,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="services">The <see cref="IServiceCollection"/>.</param>
         /// <param name="configure">A callback to configure the <see cref="WebPubSubOptions"/>.</param>
         /// <returns>The same instance of the <see cref="IServiceCollection"/>.</returns>
-        public static IWebPubSubServerBuilder AddWebPubSub(this IServiceCollection services, Action<WebPubSubOptions> configure = null)
+        public static IWebPubSubServerBuilder AddWebPubSub(this IServiceCollection services, Action<WebPubSubOptions> configure)
         {
             if (services == null)
             {

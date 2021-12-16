@@ -22,20 +22,13 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 throw new ArgumentException($"Not able to create the WebPubSubServiceClient without a valid WebPubSubOptions.ServiceEndpoint. Please configure the ServiceEndpoint when DI the WebPubSub.");
             }
 
-            if (!string.IsNullOrEmpty(_options.ServiceEndpoint.ConnectionString))
+            switch (_options.ServiceEndpoint.CredentialKind)
             {
-                return new WebPubSubServiceClient<THub>(_options.ServiceEndpoint.ConnectionString, _options.ServiceEndpoint.ClientOptions);
+                case CredentialKind.ConnectionString: return new WebPubSubServiceClient<THub>(_options.ServiceEndpoint.ConnectionString, _options.ServiceEndpoint.ClientOptions);
+                case CredentialKind.AzureKeyCredential: return new WebPubSubServiceClient<THub>(_options.ServiceEndpoint.Endpoint, _options.ServiceEndpoint.AzureKeyCredential, _options.ServiceEndpoint.ClientOptions);
+                case CredentialKind.TokenCredential: return new WebPubSubServiceClient<THub>(_options.ServiceEndpoint.Endpoint, _options.ServiceEndpoint.TokenCredential, _options.ServiceEndpoint.ClientOptions);
+                default: throw new ArgumentException("Not supported method to inject `WebPubSubServiceClient`.");
             }
-            if (_options.ServiceEndpoint.AzureKeyCredential != null)
-            {
-                return new WebPubSubServiceClient<THub>(_options.ServiceEndpoint.Endpoint, _options.ServiceEndpoint.AzureKeyCredential, _options.ServiceEndpoint.ClientOptions);
-            }
-            if (_options.ServiceEndpoint.TokenCredential != null)
-            {
-                return new WebPubSubServiceClient<THub>(_options.ServiceEndpoint.Endpoint, _options.ServiceEndpoint.TokenCredential, _options.ServiceEndpoint.ClientOptions);
-            }
-
-            return null;
         }
     }
 }
