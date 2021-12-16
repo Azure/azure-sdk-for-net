@@ -6,7 +6,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 arm-core: true
 clear-output-folder: true
-use: $(this-folder)/../../../../../autorest.csharp/artifacts/bin/AutoRest.CSharp/Debug/netcoreapp3.1/
 modelerfour:
   lenient-model-deduplication: true
 skip-csproj: true
