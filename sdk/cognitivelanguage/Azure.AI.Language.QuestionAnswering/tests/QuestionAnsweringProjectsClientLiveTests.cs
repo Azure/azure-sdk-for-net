@@ -62,7 +62,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             Operation<BinaryData> updateSourcesOperation = await Client.UpdateSourcesAsync(testProjectName, updateSourcesRequestContent);
             await updateSourcesOperation.WaitForCompletionAsync();
 
-            string testDeploymentName = "deploymentName";
+            string testDeploymentName = "production";
             Operation<BinaryData> deploymentOperation = await Client.DeployProjectAsync(testProjectName, testDeploymentName);
             Response<BinaryData> deploymentOperationResult = await deploymentOperation.WaitForCompletionAsync();
             AsyncPageable<BinaryData> deployments = Client.GetDeploymentsAsync(testProjectName);
@@ -176,7 +176,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             // Synonyms can be retrieved as follows
             AsyncPageable<BinaryData> synonyms = Client.GetSynonymsAsync(testProjectName);
 
-            Assert.AreEqual(200, updateSynonymsResponse.Status);
+            Assert.AreEqual(204, updateSynonymsResponse.Status);
             Assert.That((await synonyms.ToEnumerableAsync()).Any(synonym => synonym.ToString().Contains("qnamaker")));
             Assert.That((await synonyms.ToEnumerableAsync()).Any(synonym => synonym.ToString().Contains("qna")));
 
@@ -261,7 +261,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
             Response addFeedbackResponse = await Client.AddFeedbackAsync(testProjectName, addFeedbackRequestContent);
 
-            Assert.AreEqual(200, addFeedbackResponse.Status);
+            Assert.AreEqual(204, addFeedbackResponse.Status);
             await DeleteProjectAsync(testProjectName);
         }
     }

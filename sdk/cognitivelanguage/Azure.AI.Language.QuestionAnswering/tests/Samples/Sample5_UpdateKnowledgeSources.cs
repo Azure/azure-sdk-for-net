@@ -145,9 +145,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             }
             #endregion
 
-            // Recieve status 204
-            // Assert.AreEqual(200, updateSynonymsResponse.Status);
-            // Assert.That(synonyms.Any(synonym => synonym.ToString().Contains("bad")));
+            Assert.AreEqual(204, updateSynonymsResponse.Status);
+            Assert.That(synonyms.Any(synonym => synonym.ToString().Contains("qnamaker")));
+            Assert.That(synonyms.Any(synonym => synonym.ToString().Contains("qna maker")));
 
             #region Snippet:QuestionAnsweringProjectsClient_AddFeedback
             RequestContent addFeedbackRequestContent = RequestContent.Create(
@@ -167,8 +167,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             Response addFeedbackResponse = Client.AddFeedback(testProjectName, addFeedbackRequestContent);
             #endregion
 
-            // Recieve status 204
-            // Assert.AreEqual(200, addFeedbackResponse.Status);
+            Assert.AreEqual(204, addFeedbackResponse.Status);
 
             DeleteProject(testProjectName);
         }
@@ -246,8 +245,8 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
             Assert.True(updateQnasOperation.HasCompleted);
             Assert.AreEqual(200, updateQnasOperation.GetRawResponse().Status);
-            Assert.That((await sources.ToEnumerableAsync()).Any(source => source.ToString().Contains(question)));
-            Assert.That((await sources.ToEnumerableAsync()).Any(source => source.ToString().Contains(answer)));
+            Assert.That((await qnas.ToEnumerableAsync()).Any(source => source.ToString().Contains(question)));
+            Assert.That((await qnas.ToEnumerableAsync()).Any(source => source.ToString().Contains(answer)));
 
             #region Snippet:QuestionAnsweringProjectsClient_UpdateSynonymsAsync
             RequestContent updateSynonymsRequestContent = RequestContent.Create(
@@ -283,9 +282,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             }
             #endregion
 
-            // Recieve status 204
-            // Assert.AreEqual(200, updateSynonymsResponse.Status);
-            // Assert.That((await synonyms.ToEnumerableAsync()).Any(synonym => synonym.ToString().Contains("bad")));
+            Assert.AreEqual(204, updateSynonymsResponse.Status);
+            Assert.That((await synonyms.ToEnumerableAsync()).Any(synonym => synonym.ToString().Contains("qnamaker")));
+            Assert.That((await synonyms.ToEnumerableAsync()).Any(synonym => synonym.ToString().Contains("qna maker")));
 
             #region Snippet:QuestionAnsweringProjectsClient_AddFeedbackAsync
             RequestContent addFeedbackRequestContent = RequestContent.Create(
@@ -305,10 +304,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             Response addFeedbackResponse = await Client.AddFeedbackAsync(testProjectName, addFeedbackRequestContent);
             #endregion
 
-            // Recieve status 204
-            // Assert.AreEqual(200, addFeedbackResponse.Status);
+            Assert.AreEqual(204, addFeedbackResponse.Status);
 
-            DeleteProject(testProjectName);
+            await DeleteProjectAsync(testProjectName);
         }
     }
 }

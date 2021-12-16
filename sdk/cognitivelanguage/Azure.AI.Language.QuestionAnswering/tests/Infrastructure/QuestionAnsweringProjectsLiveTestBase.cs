@@ -68,8 +68,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         protected async Task DeleteProjectAsync(string projectName)
         {
             Operation<BinaryData> deletionOperation = await Client.DeleteProjectAsync(projectName);
-            // Insert this back when the delete LRO bug is fixed
-            // Response<BinaryData> deletionResult = await deletionOperation.WaitForCompletionAsync();
+            Response<BinaryData> deletionResult = await deletionOperation.WaitForCompletionAsync();
         }
 
         protected void DeleteProject(string projectName)
@@ -77,7 +76,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             TimeSpan pollingInterval = new TimeSpan(1000);
 
             // Insert this back when the delete LRO bug is fixed
-            /*
             Operation<BinaryData> deletionOperation = Client.DeleteProject(projectName);
             while (true)
             {
@@ -90,7 +88,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
                 Thread.Sleep(pollingInterval);
             }
-            */
         }
     }
 }
