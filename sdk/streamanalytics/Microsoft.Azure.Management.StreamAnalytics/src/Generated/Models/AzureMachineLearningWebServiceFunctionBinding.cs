@@ -20,25 +20,26 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     /// <summary>
     /// The binding to an Azure Machine Learning web service.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("Microsoft.MachineLearningServices")]
+    [Newtonsoft.Json.JsonObject("Microsoft.MachineLearning/WebService")]
     [Rest.Serialization.JsonTransformation]
-    public partial class AzureMachineLearningServiceFunctionBinding : FunctionBinding
+    public partial class AzureMachineLearningWebServiceFunctionBinding : FunctionBinding
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// AzureMachineLearningServiceFunctionBinding class.
+        /// AzureMachineLearningWebServiceFunctionBinding class.
         /// </summary>
-        public AzureMachineLearningServiceFunctionBinding()
+        public AzureMachineLearningWebServiceFunctionBinding()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// AzureMachineLearningServiceFunctionBinding class.
+        /// AzureMachineLearningWebServiceFunctionBinding class.
         /// </summary>
         /// <param name="endpoint">The Request-Response execute endpoint of the
-        /// Azure Machine Learning web service.</param>
+        /// Azure Machine Learning web service. Find out more here:
+        /// https://docs.microsoft.com/en-us/azure/machine-learning/machine-learning-consume-web-services#request-response-service-rrs</param>
         /// <param name="apiKey">The API key used to authenticate with
         /// Request-Response endpoint.</param>
         /// <param name="inputs">The inputs for the Azure Machine Learning web
@@ -48,17 +49,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// <param name="batchSize">Number between 1 and 10000 describing
         /// maximum number of rows for every Azure ML RRS execute request.
         /// Default is 1000.</param>
-        /// <param name="numberOfParallelRequests">The number of parallel
-        /// requests that will be sent per partition of your job to the machine
-        /// learning service. Default is 1.</param>
-        public AzureMachineLearningServiceFunctionBinding(string endpoint = default(string), string apiKey = default(string), IList<AzureMachineLearningServiceInputColumn> inputs = default(IList<AzureMachineLearningServiceInputColumn>), IList<AzureMachineLearningServiceOutputColumn> outputs = default(IList<AzureMachineLearningServiceOutputColumn>), int? batchSize = default(int?), int? numberOfParallelRequests = default(int?))
+        public AzureMachineLearningWebServiceFunctionBinding(string endpoint = default(string), string apiKey = default(string), AzureMachineLearningWebServiceInputs inputs = default(AzureMachineLearningWebServiceInputs), IList<AzureMachineLearningWebServiceOutputColumn> outputs = default(IList<AzureMachineLearningWebServiceOutputColumn>), int? batchSize = default(int?))
         {
             Endpoint = endpoint;
             ApiKey = apiKey;
             Inputs = inputs;
             Outputs = outputs;
             BatchSize = batchSize;
-            NumberOfParallelRequests = numberOfParallelRequests;
             CustomInit();
         }
 
@@ -69,7 +66,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
 
         /// <summary>
         /// Gets or sets the Request-Response execute endpoint of the Azure
-        /// Machine Learning web service.
+        /// Machine Learning web service. Find out more here:
+        /// https://docs.microsoft.com/en-us/azure/machine-learning/machine-learning-consume-web-services#request-response-service-rrs
         /// </summary>
         [JsonProperty(PropertyName = "properties.endpoint")]
         public string Endpoint { get; set; }
@@ -86,14 +84,14 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// endpoint.
         /// </summary>
         [JsonProperty(PropertyName = "properties.inputs")]
-        public IList<AzureMachineLearningServiceInputColumn> Inputs { get; set; }
+        public AzureMachineLearningWebServiceInputs Inputs { get; set; }
 
         /// <summary>
         /// Gets or sets a list of outputs from the Azure Machine Learning web
         /// service endpoint execution.
         /// </summary>
         [JsonProperty(PropertyName = "properties.outputs")]
-        public IList<AzureMachineLearningServiceOutputColumn> Outputs { get; set; }
+        public IList<AzureMachineLearningWebServiceOutputColumn> Outputs { get; set; }
 
         /// <summary>
         /// Gets or sets number between 1 and 10000 describing maximum number
@@ -101,14 +99,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.batchSize")]
         public int? BatchSize { get; set; }
-
-        /// <summary>
-        /// Gets or sets the number of parallel requests that will be sent per
-        /// partition of your job to the machine learning service. Default is
-        /// 1.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.numberOfParallelRequests")]
-        public int? NumberOfParallelRequests { get; set; }
 
     }
 }

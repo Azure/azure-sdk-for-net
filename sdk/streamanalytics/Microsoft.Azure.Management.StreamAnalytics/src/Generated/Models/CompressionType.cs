@@ -12,10 +12,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
 
     /// <summary>
-    /// Defines values for StreamingJobSkuName.
+    /// Defines values for CompressionType.
     /// </summary>
-    public static class StreamingJobSkuName
+    public static class CompressionType
     {
-        public const string Standard = "Standard";
+        public const string None = "None";
+        public const string GZip = "GZip";
+        public const string Deflate = "Deflate";
     }
 }

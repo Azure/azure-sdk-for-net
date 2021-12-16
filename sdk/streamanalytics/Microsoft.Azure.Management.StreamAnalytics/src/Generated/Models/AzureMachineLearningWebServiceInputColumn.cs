@@ -17,27 +17,30 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     /// Describes an input column for the Azure Machine Learning web service
     /// endpoint.
     /// </summary>
-    public partial class AzureMachineLearningServiceInputColumn
+    public partial class AzureMachineLearningWebServiceInputColumn
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// AzureMachineLearningServiceInputColumn class.
+        /// AzureMachineLearningWebServiceInputColumn class.
         /// </summary>
-        public AzureMachineLearningServiceInputColumn()
+        public AzureMachineLearningWebServiceInputColumn()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// AzureMachineLearningServiceInputColumn class.
+        /// AzureMachineLearningWebServiceInputColumn class.
         /// </summary>
         /// <param name="name">The name of the input column.</param>
         /// <param name="dataType">The (Azure Machine Learning supported) data
-        /// type of the input column.</param>
+        /// type of the input column. A list of valid  Azure Machine Learning
+        /// data types are described at
+        /// https://msdn.microsoft.com/en-us/library/azure/dn905923.aspx
+        /// .</param>
         /// <param name="mapTo">The zero based index of the function parameter
         /// this input maps to.</param>
-        public AzureMachineLearningServiceInputColumn(string name = default(string), string dataType = default(string), int? mapTo = default(int?))
+        public AzureMachineLearningWebServiceInputColumn(string name = default(string), string dataType = default(string), int? mapTo = default(int?))
         {
             Name = name;
             DataType = dataType;
@@ -58,7 +61,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
 
         /// <summary>
         /// Gets or sets the (Azure Machine Learning supported) data type of
-        /// the input column.
+        /// the input column. A list of valid  Azure Machine Learning data
+        /// types are described at
+        /// https://msdn.microsoft.com/en-us/library/azure/dn905923.aspx .
         /// </summary>
         [JsonProperty(PropertyName = "dataType")]
         public string DataType { get; set; }

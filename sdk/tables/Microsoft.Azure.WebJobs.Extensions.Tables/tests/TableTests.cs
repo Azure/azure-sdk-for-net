@@ -105,10 +105,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             var ext = new TableConverterExtensionConfigProvider();
-            await CallAsync<CustomTableBindingExtensionProgram>(configure: builder => builder.ConfigureWebJobs(builder =>
+            await CallAsync<CustomTableBindingExtensionProgram>(configure: hostBuilder =>
             {
-                builder.AddExtension(ext);
-            }));
+                DefaultConfigure(hostBuilder);
+                hostBuilder.ConfigureWebJobs(builder => { builder.AddExtension(ext); });
+            });
 
             // Assert
             Assert.AreEqual(TableName, CustomTableBinding<Poco>.Table.Name);

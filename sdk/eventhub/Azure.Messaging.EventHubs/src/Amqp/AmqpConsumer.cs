@@ -413,7 +413,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 if (ReceiveLink?.TryGetOpenedObject(out var _) == true)
                 {
-                    await ReceiveLink.CloseAsync().ConfigureAwait(false);
+                    await ReceiveLink.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                 }
 
                 ReceiveLink?.Dispose();

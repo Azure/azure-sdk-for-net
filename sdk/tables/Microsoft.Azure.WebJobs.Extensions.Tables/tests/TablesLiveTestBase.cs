@@ -23,7 +23,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
     [TestFixture(false)]
     public class TablesLiveTestBase : LiveTestBase<TablesTestEnvironment>
     {
-        private readonly bool _useCosmos;
         private readonly bool _createTable;
         protected const string TableNameExpression = "%Table%";
         protected const string PartitionKey = "PK";
@@ -33,9 +32,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         protected TableServiceClient ServiceClient;
         protected TableClient TableClient;
 
+        protected bool UseCosmos { get; }
+
         protected TablesLiveTestBase(bool useCosmos, bool createTable = true)
         {
-            _useCosmos = useCosmos;
+            UseCosmos = useCosmos;
             _createTable = createTable;
         }
 
@@ -45,7 +46,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             TableName = GetRandomTableName();
 
             ServiceClient = new TableServiceClient(
-                _useCosmos ? TestEnvironment.CosmosConnectionString : TestEnvironment.StorageConnectionString);
+                UseCosmos ? TestEnvironment.CosmosConnectionString : TestEnvironment.StorageConnectionString);
 
             TableClient = ServiceClient.GetTableClient(TableName);
             if (_createTable)
@@ -62,6 +63,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }
             catch
             { }
+        }
+
+        protected void DefaultConfigure(HostBuilder hostBuilder)
+        {
+            hostBuilder.ConfigureAppConfiguration(builder =>
+            {
+                builder.AddInMemoryCollection(new Dictionary<string, string>()
+                {
+                    {"Table", TableName},
+                    {"AzureWebJobsStorage", UseCosmos ? TestEnvironment.CosmosConnectionString : TestEnvironment.StorageConnectionString}
+                });
+            });
         }
 
         protected async Task<T> CallAsync<T>(string methodName = null, object arguments = null, Action<HostBuilder> configure = null)
@@ -89,23 +102,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             var hostBuilder = new HostBuilder();
             hostBuilder.ConfigureDefaultTestHost(builder =>
+            {
+                if (instance != null)
                 {
-                    if (instance != null)
-                    {
-                        builder.Services.AddSingleton<IJobActivator>(new FakeActivator(instance));
-                    }
-                    builder.AddAzureTables();
-                }, programType)
-                .ConfigureAppConfiguration(builder =>
-                {
-                    builder.AddInMemoryCollection(new Dictionary<string, string>()
-                    {
-                        {"Table", TableName},
-                        {"AzureWebJobsStorage", _useCosmos ? TestEnvironment.CosmosConnectionString : TestEnvironment.StorageConnectionString}
-                    });
-                });
+                    builder.Services.AddSingleton<IJobActivator>(new FakeActivator(instance));
+                }
 
-            configure?.Invoke(hostBuilder);
+                builder.AddAzureTables();
+            }, programType);
+
+            (configure ?? DefaultConfigure).Invoke(hostBuilder);
             var host = hostBuilder
                 .Build();
             var jobHost = host.Services.GetService<IJobHost>() as JobHost;
