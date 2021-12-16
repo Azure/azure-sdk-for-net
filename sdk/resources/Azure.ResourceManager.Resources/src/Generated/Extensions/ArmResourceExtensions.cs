@@ -5,20 +5,20 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Management;
+using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class to add extension methods to ManagementGroup. </summary>
-    public static partial class ManagementGroupExtensions
+    /// <summary> A class to add extension methods to ArmResource. </summary>
+    public static partial class ArmResourceExtensions
     {
         #region Deployment
         /// <summary> Gets an object representing a DeploymentCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="managementGroup"> The <see cref="ManagementGroup" /> instance the method will execute against. </param>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="DeploymentCollection" /> object. </returns>
-        public static DeploymentCollection GetDeployments(this ManagementGroup managementGroup)
+        public static DeploymentCollection GetDeployments(this ArmResource armResource)
         {
-            return new DeploymentCollection(managementGroup);
+            return new DeploymentCollection(armResource);
         }
         #endregion
     }

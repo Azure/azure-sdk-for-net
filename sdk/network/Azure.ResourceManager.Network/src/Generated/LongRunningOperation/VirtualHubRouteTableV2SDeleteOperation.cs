@@ -15,18 +15,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Deletes a VirtualHubRouteTableV2. </summary>
-    public partial class VirtualHubRouteTableV2DeleteOperation : Operation
+    public partial class VirtualHubRouteTableV2SDeleteOperation : Operation
     {
         private readonly OperationInternals _operation;
 
-        /// <summary> Initializes a new instance of VirtualHubRouteTableV2DeleteOperation for mocking. </summary>
-        protected VirtualHubRouteTableV2DeleteOperation()
+        /// <summary> Initializes a new instance of VirtualHubRouteTableV2SDeleteOperation for mocking. </summary>
+        protected VirtualHubRouteTableV2SDeleteOperation()
         {
         }
 
-        internal VirtualHubRouteTableV2DeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualHubRouteTableV2SDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualHubRouteTableV2DeleteOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualHubRouteTableV2SDeleteOperation");
         }
 
         /// <inheritdoc />
