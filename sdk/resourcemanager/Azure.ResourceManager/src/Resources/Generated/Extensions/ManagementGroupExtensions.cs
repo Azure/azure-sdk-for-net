@@ -31,25 +31,5 @@ namespace Azure.ResourceManager.Resources
             return new ManagementGroupPolicySetDefinitionCollection(managementGroup);
         }
         #endregion
-
-        #region PolicyAssignment
-        /// <summary> Gets an object representing a PolicyAssignmentCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="managementGroup"> The <see cref="ManagementGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="PolicyAssignmentCollection" /> object. </returns>
-        public static PolicyAssignmentCollection GetPolicyAssignments(this ManagementGroup managementGroup)
-        {
-            return new PolicyAssignmentCollection(managementGroup);
-        }
-        #endregion
-
-        #region PolicyExemption
-        /// <summary> Gets an object representing a PolicyExemptionCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="managementGroup"> The <see cref="ManagementGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="PolicyExemptionCollection" /> object. </returns>
-        public static PolicyExemptionCollection GetPolicyExemptions(this ManagementGroup managementGroup)
-        {
-            return new PolicyExemptionCollection(managementGroup);
-        }
-        #endregion
     }
 }

@@ -39,36 +39,6 @@ namespace Azure.ResourceManager.Resources
         }
         #endregion
 
-        #region PolicyAssignment
-        /// <summary> Gets an object representing a PolicyAssignmentCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="PolicyAssignmentCollection" /> object. </returns>
-        public static PolicyAssignmentCollection GetPolicyAssignments(this Subscription subscription)
-        {
-            return new PolicyAssignmentCollection(subscription);
-        }
-        #endregion
-
-        #region PolicyExemption
-        /// <summary> Gets an object representing a PolicyExemptionCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="PolicyExemptionCollection" /> object. </returns>
-        public static PolicyExemptionCollection GetPolicyExemptions(this Subscription subscription)
-        {
-            return new PolicyExemptionCollection(subscription);
-        }
-        #endregion
-
-        #region ManagementLockObject
-        /// <summary> Gets an object representing a ManagementLockObjectCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ManagementLockObjectCollection" /> object. </returns>
-        public static ManagementLockObjectCollection GetManagementLockObjects(this Subscription subscription)
-        {
-            return new ManagementLockObjectCollection(subscription);
-        }
-        #endregion
-
         private static ResourceLinksRestOperations GetResourceLinksRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
         {
             return new ResourceLinksRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
