@@ -168,12 +168,9 @@ namespace Microsoft.Azure.Management.Compute.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Sku");
             }
-            if (PlatformFaultDomain != null)
+            if (PlatformFaultDomain < 0)
             {
-                if (PlatformFaultDomain < 0)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "PlatformFaultDomain", 0);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "PlatformFaultDomain", 0);
             }
         }
     }

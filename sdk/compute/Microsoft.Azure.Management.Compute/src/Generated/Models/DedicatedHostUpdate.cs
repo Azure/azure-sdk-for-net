@@ -148,12 +148,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (PlatformFaultDomain != null)
+            if (PlatformFaultDomain < 0)
             {
-                if (PlatformFaultDomain < 0)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "PlatformFaultDomain", 0);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "PlatformFaultDomain", 0);
             }
         }
     }
