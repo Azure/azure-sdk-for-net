@@ -76,8 +76,9 @@ namespace AzureRedisCache.Tests
                                                 Family = SkuFamily.C,
                                                 Capacity = 0
                                             },
-                                            RedisConfiguration = new Dictionary<string, string>() {
-                                                    {"maxmemory-policy","allkeys-lru"}
+                                            RedisConfiguration = new RedisCommonPropertiesRedisConfiguration()
+                                            {
+                                                MaxmemoryPolicy = "allkeys-lru"
                                             },
                                             EnableNonSslPort = true
                                         });
@@ -90,7 +91,7 @@ namespace AzureRedisCache.Tests
                 Assert.Equal(SkuName.Basic, responseUpdate.Sku.Name);
                 Assert.Equal(SkuFamily.C, responseUpdate.Sku.Family);
                 Assert.Equal(0, responseUpdate.Sku.Capacity);
-                Assert.Equal("allkeys-lru", responseUpdate.RedisConfiguration["maxmemory-policy"]);
+                Assert.Equal("allkeys-lru", responseUpdate.RedisConfiguration.MaxmemoryPolicy);
 
                 Assert.Contains(fixture.RedisCacheName, responseUpdate.HostName);
                 Assert.Equal(6379, responseUpdate.Port);
