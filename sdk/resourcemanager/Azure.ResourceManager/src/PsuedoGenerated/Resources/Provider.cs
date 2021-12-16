@@ -28,11 +28,6 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Provider"/> class.
-        /// </summary>
-        /// <param name="clientContext"></param>
-        /// <param name="id"></param>
         internal Provider(ClientContext clientContext, ResourceIdentifier id)
             : base(clientContext, id)
         {

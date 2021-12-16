@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.Resources
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ResourcesRestOperations _restClient;
         private readonly GenericResourceData _data;
+        private readonly ProviderCollection _providerCollection;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericResource"/> class for mocking.
@@ -39,6 +40,7 @@ namespace Azure.ResourceManager.Resources
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _providerCollection = new ProviderCollection(this, Id.Parent.Parent);
         }
 
         /// <summary>
@@ -403,7 +405,7 @@ namespace Azure.ResourceManager.Resources
 
         private string GetApiVersion(CancellationToken cancellationToken)
         {
-            string version = ClientOptions.ApiVersions.TryGetApiVersion(Id.ResourceType, cancellationToken);
+            string version = _providerCollection.TryGetApiVersion(Id.ResourceType, cancellationToken);
             if (version is null)
             {
                 throw new InvalidOperationException($"An invalid resouce id was given {Id}");

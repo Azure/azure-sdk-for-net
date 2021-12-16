@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
+        internal ProviderCollection(ArmResource operations, ResourceIdentifier id)
+            : base(new ClientContext(operations.ClientOptions, operations.Credential, operations.BaseUri, operations.Pipeline), id)
+        {
+        }
+
         /// <inheritdoc/>
         protected override ResourceType ValidResourceType => Subscription.ResourceType;
 
@@ -296,6 +301,44 @@ namespace Azure.ResourceManager.Resources
         IAsyncEnumerator<Provider> IAsyncEnumerable<Provider>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
+        private Dictionary<string, bool> _hasLoadedResourcesFromApi = new Dictionary<string, bool>();
+        private static readonly object s_getResourceVersionLock = new object();
+        internal string TryGetApiVersion(ResourceType resourceType, CancellationToken cancellationToken = default)
+        {
+            string version;
+            Dictionary<string, string> resourceVersions;
+            if (!ClientOptions.ResourceApiVersions.TryGetValue(resourceType.Namespace, out resourceVersions))
+            {
+                if (!_hasLoadedResourcesFromApi.TryGetValue(resourceType.Namespace, out var hasLoadedNamespace) || !hasLoadedNamespace)
+                {
+                    lock (s_getResourceVersionLock)
+                    {
+                        if (!_hasLoadedResourcesFromApi.TryGetValue(resourceType.Namespace, out hasLoadedNamespace) || !hasLoadedNamespace)
+                        {
+                            LoadResourceVersionsFromApi(resourceType.Namespace, out resourceVersions, cancellationToken);
+                        }
+                        _hasLoadedResourcesFromApi[resourceType.Namespace] = true;
+                    }
+                }
+            }
+            if (!resourceVersions.TryGetValue(resourceType.Type, out version))
+            {
+                throw new InvalidOperationException($"Invalid resource type {resourceType}");
+            }
+            return version;
+        }
+
+        private void LoadResourceVersionsFromApi(string resourceNamespace, out Dictionary<string, string> resourceVersions, CancellationToken cancellationToken = default)
+        {
+            resourceVersions = new Dictionary<string, string>();
+            Provider results = Get(resourceNamespace, cancellationToken: cancellationToken);
+            foreach (var type in results.Data.ResourceTypes)
+            {
+                resourceVersions[type.ResourceType] = type.ApiVersions[0];
+            }
+            ClientOptions.ResourceApiVersions.Add(resourceNamespace, resourceVersions);
         }
     }
 }
