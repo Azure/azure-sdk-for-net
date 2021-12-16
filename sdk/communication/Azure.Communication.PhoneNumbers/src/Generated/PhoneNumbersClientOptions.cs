@@ -13,13 +13,15 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Client options for PhoneNumbersClient. </summary>
     public partial class PhoneNumbersClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2021_03_07;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2022_01_11_PREVIEW_2;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
             /// <summary> Service version "2021-03-07". </summary>
             V2021_03_07 = 1,
+            /// <summary> Service version "2022-01-11-preview2". </summary>
+            V2022_01_11_PREVIEW_2 = 2,
         }
 
         internal string Version { get; }
@@ -30,6 +32,7 @@ namespace Azure.Communication.PhoneNumbers
             Version = version switch
             {
                 ServiceVersion.V2021_03_07 => "2021-03-07",
+                ServiceVersion.V2022_01_11_PREVIEW_2 => "2022-01-11-preview2",
                 _ => throw new NotSupportedException()
             };
         }
