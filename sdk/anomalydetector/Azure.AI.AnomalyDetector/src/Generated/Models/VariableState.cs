@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
@@ -17,37 +15,32 @@ namespace Azure.AI.AnomalyDetector.Models
         /// <summary> Initializes a new instance of VariableState. </summary>
         internal VariableState()
         {
-            Errors = new ChangeTrackingList<ErrorResponse>();
         }
 
         /// <summary> Initializes a new instance of VariableState. </summary>
         /// <param name="variable"> Variable name. </param>
-        /// <param name="filledNARatio"> Merged NA ratio of a variable. </param>
-        /// <param name="effectiveCount"> Effective time-series points count. </param>
-        /// <param name="startTime"> Start time of a variable. </param>
-        /// <param name="endTime"> End time of a variable. </param>
-        /// <param name="errors"> Error message when parse variable. </param>
-        internal VariableState(string variable, float? filledNARatio, int? effectiveCount, DateTimeOffset? startTime, DateTimeOffset? endTime, IReadOnlyList<ErrorResponse> errors)
+        /// <param name="filledNARatio"> Proportion of NaN values filled of the variable. </param>
+        /// <param name="effectiveCount"> Number of effective points counted. </param>
+        /// <param name="startTime"> Start time of the variable. </param>
+        /// <param name="endTime"> End time of the variable. </param>
+        internal VariableState(string variable, float? filledNARatio, int? effectiveCount, DateTimeOffset? startTime, DateTimeOffset? endTime)
         {
             Variable = variable;
             FilledNARatio = filledNARatio;
             EffectiveCount = effectiveCount;
             StartTime = startTime;
             EndTime = endTime;
-            Errors = errors;
         }
 
         /// <summary> Variable name. </summary>
         public string Variable { get; }
-        /// <summary> Merged NA ratio of a variable. </summary>
+        /// <summary> Proportion of NaN values filled of the variable. </summary>
         public float? FilledNARatio { get; }
-        /// <summary> Effective time-series points count. </summary>
+        /// <summary> Number of effective points counted. </summary>
         public int? EffectiveCount { get; }
-        /// <summary> Start time of a variable. </summary>
+        /// <summary> Start time of the variable. </summary>
         public DateTimeOffset? StartTime { get; }
-        /// <summary> End time of a variable. </summary>
+        /// <summary> End time of the variable. </summary>
         public DateTimeOffset? EndTime { get; }
-        /// <summary> Error message when parse variable. </summary>
-        public IReadOnlyList<ErrorResponse> Errors { get; }
     }
 }

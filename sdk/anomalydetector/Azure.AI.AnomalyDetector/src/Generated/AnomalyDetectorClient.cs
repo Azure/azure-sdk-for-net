@@ -31,8 +31,9 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> Initializes a new instance of AnomalyDetectorClient. </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus2.api.cognitive.microsoft.com). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="apiVersion"> Anomaly Detector API version (for example, v1.0). </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public AnomalyDetectorClient(Uri endpoint, TokenCredential credential, AnomalyDetectorClientOptions options = null)
+        public AnomalyDetectorClient(Uri endpoint, TokenCredential credential, ApiVersion? apiVersion = default, AnomalyDetectorClientOptions options = null)
         {
             if (endpoint == null)
             {
@@ -42,19 +43,21 @@ namespace Azure.AI.AnomalyDetector
             {
                 throw new ArgumentNullException(nameof(credential));
             }
+            apiVersion ??= ApiVersion.V11Preview1;
 
             options ??= new AnomalyDetectorClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://cognitiveservices.azure.com/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new AnomalyDetectorRestClient(_clientDiagnostics, _pipeline, endpoint);
+            RestClient = new AnomalyDetectorRestClient(_clientDiagnostics, _pipeline, endpoint, apiVersion);
         }
 
         /// <summary> Initializes a new instance of AnomalyDetectorClient. </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus2.api.cognitive.microsoft.com). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="apiVersion"> Anomaly Detector API version (for example, v1.0). </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public AnomalyDetectorClient(Uri endpoint, AzureKeyCredential credential, AnomalyDetectorClientOptions options = null)
+        public AnomalyDetectorClient(Uri endpoint, AzureKeyCredential credential, ApiVersion? apiVersion = default, AnomalyDetectorClientOptions options = null)
         {
             if (endpoint == null)
             {
@@ -64,20 +67,22 @@ namespace Azure.AI.AnomalyDetector
             {
                 throw new ArgumentNullException(nameof(credential));
             }
+            apiVersion ??= ApiVersion.V11Preview1;
 
             options ??= new AnomalyDetectorClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "Ocp-Apim-Subscription-Key"));
-            RestClient = new AnomalyDetectorRestClient(_clientDiagnostics, _pipeline, endpoint);
+            RestClient = new AnomalyDetectorRestClient(_clientDiagnostics, _pipeline, endpoint, apiVersion);
         }
 
         /// <summary> Initializes a new instance of AnomalyDetectorClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus2.api.cognitive.microsoft.com). </param>
-        internal AnomalyDetectorClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
+        /// <param name="apiVersion"> Anomaly Detector API version (for example, v1.0). </param>
+        internal AnomalyDetectorClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, ApiVersion? apiVersion = default)
         {
-            RestClient = new AnomalyDetectorRestClient(clientDiagnostics, pipeline, endpoint);
+            RestClient = new AnomalyDetectorRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -191,15 +196,15 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Create and train a multivariate anomaly detection model. The request must include a source parameter to indicate an externally accessible Azure storage Uri (preferably a Shared Access Signature Uri). All time-series used in generate the model must be zipped into one single file. Each time-series will be in a single CSV file in which the first column is timestamp and the second column is value. </summary>
-        /// <param name="modelRequest"> Training request. </param>
+        /// <param name="body"> Training request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> TrainMultivariateModelAsync(ModelInfo modelRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> TrainMultivariateModelAsync(ModelInfo body, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("AnomalyDetectorClient.TrainMultivariateModel");
             scope.Start();
             try
             {
-                return (await RestClient.TrainMultivariateModelAsync(modelRequest, cancellationToken).ConfigureAwait(false)).GetRawResponse();
+                return (await RestClient.TrainMultivariateModelAsync(body, cancellationToken).ConfigureAwait(false)).GetRawResponse();
             }
             catch (Exception e)
             {
@@ -209,15 +214,15 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Create and train a multivariate anomaly detection model. The request must include a source parameter to indicate an externally accessible Azure storage Uri (preferably a Shared Access Signature Uri). All time-series used in generate the model must be zipped into one single file. Each time-series will be in a single CSV file in which the first column is timestamp and the second column is value. </summary>
-        /// <param name="modelRequest"> Training request. </param>
+        /// <param name="body"> Training request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response TrainMultivariateModel(ModelInfo modelRequest, CancellationToken cancellationToken = default)
+        public virtual Response TrainMultivariateModel(ModelInfo body, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("AnomalyDetectorClient.TrainMultivariateModel");
             scope.Start();
             try
             {
-                return RestClient.TrainMultivariateModel(modelRequest, cancellationToken).GetRawResponse();
+                return RestClient.TrainMultivariateModel(body, cancellationToken).GetRawResponse();
             }
             catch (Exception e)
             {
@@ -300,15 +305,15 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Submit detection multivariate anomaly task with the trained model of modelId, the input schema should be the same with the training request. Thus request will be complete asynchronously and will return a resultId for querying the detection result.The request should be a source link to indicate an externally accessible Azure storage Uri (preferably a Shared Access Signature Uri). All time-series used in generate the model must be zipped into one single file. Each time-series will be as follows: the first column is timestamp and the second column is value. </summary>
         /// <param name="modelId"> Model identifier. </param>
-        /// <param name="detectionRequest"> Detect anomaly request. </param>
+        /// <param name="body"> Detect anomaly request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DetectAnomalyAsync(Guid modelId, DetectionRequest detectionRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DetectAnomalyAsync(Guid modelId, DetectionRequest body, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("AnomalyDetectorClient.DetectAnomaly");
             scope.Start();
             try
             {
-                return (await RestClient.DetectAnomalyAsync(modelId, detectionRequest, cancellationToken).ConfigureAwait(false)).GetRawResponse();
+                return (await RestClient.DetectAnomalyAsync(modelId, body, cancellationToken).ConfigureAwait(false)).GetRawResponse();
             }
             catch (Exception e)
             {
@@ -319,15 +324,15 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Submit detection multivariate anomaly task with the trained model of modelId, the input schema should be the same with the training request. Thus request will be complete asynchronously and will return a resultId for querying the detection result.The request should be a source link to indicate an externally accessible Azure storage Uri (preferably a Shared Access Signature Uri). All time-series used in generate the model must be zipped into one single file. Each time-series will be as follows: the first column is timestamp and the second column is value. </summary>
         /// <param name="modelId"> Model identifier. </param>
-        /// <param name="detectionRequest"> Detect anomaly request. </param>
+        /// <param name="body"> Detect anomaly request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DetectAnomaly(Guid modelId, DetectionRequest detectionRequest, CancellationToken cancellationToken = default)
+        public virtual Response DetectAnomaly(Guid modelId, DetectionRequest body, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("AnomalyDetectorClient.DetectAnomaly");
             scope.Start();
             try
             {
-                return RestClient.DetectAnomaly(modelId, detectionRequest, cancellationToken).GetRawResponse();
+                return RestClient.DetectAnomaly(modelId, body, cancellationToken).GetRawResponse();
             }
             catch (Exception e)
             {
@@ -400,6 +405,44 @@ namespace Azure.AI.AnomalyDetector
             try
             {
                 return RestClient.ExportModel(modelId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Synchronized API for anomaly detection. </summary>
+        /// <param name="modelId"> Model identifier. </param>
+        /// <param name="body"> Request for last detection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<LastDetectionResult>> LastDetectAnomalyAsync(Guid modelId, LastDetectionRequest body, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("AnomalyDetectorClient.LastDetectAnomaly");
+            scope.Start();
+            try
+            {
+                return await RestClient.LastDetectAnomalyAsync(modelId, body, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Synchronized API for anomaly detection. </summary>
+        /// <param name="modelId"> Model identifier. </param>
+        /// <param name="body"> Request for last detection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<LastDetectionResult> LastDetectAnomaly(Guid modelId, LastDetectionRequest body, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("AnomalyDetectorClient.LastDetectAnomaly");
+            scope.Start();
+            try
+            {
+                return RestClient.LastDetectAnomaly(modelId, body, cancellationToken);
             }
             catch (Exception e)
             {

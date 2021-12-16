@@ -7,7 +7,7 @@
 
 namespace Azure.AI.AnomalyDetector.Models
 {
-    /// <summary> Multivariate anomaly detection status. </summary>
+    /// <summary> Status of detection results. One of CREATED, RUNNING, READY, and FAILED. </summary>
     public enum DetectionStatus
     {
         /// <summary> CREATED. </summary>

@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
-    /// <summary> The DetectRequest. </summary>
+    /// <summary> The request of entire or last anomaly detection. </summary>
     public partial class DetectRequest
     {
         /// <summary> Initializes a new instance of DetectRequest. </summary>
@@ -39,5 +39,9 @@ namespace Azure.AI.AnomalyDetector.Models
         public float? MaxAnomalyRatio { get; set; }
         /// <summary> Optional argument, advanced model parameter, between 0-99, the lower the value is, the larger the margin value will be which means less anomalies will be accepted. </summary>
         public int? Sensitivity { get; set; }
+        /// <summary> Used to specify how to deal with missing values in the input series, it&apos;s used when granularity is not &quot;none&quot;. </summary>
+        public ImputeMode? ImputeMode { get; set; }
+        /// <summary> Used to specify the value to fill, it&apos;s used when granularity is not &quot;none&quot; and imputeMode is &quot;fixed&quot;. </summary>
+        public float? ImputeFixedValue { get; set; }
     }
 }

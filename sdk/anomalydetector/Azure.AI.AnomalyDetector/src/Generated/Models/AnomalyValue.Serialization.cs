@@ -15,27 +15,12 @@ namespace Azure.AI.AnomalyDetector.Models
     {
         internal static AnomalyValue DeserializeAnomalyValue(JsonElement element)
         {
-            Optional<IReadOnlyList<AnomalyContributor>> contributors = default;
             bool isAnomaly = default;
             float severity = default;
-            Optional<float> score = default;
+            float score = default;
+            Optional<IReadOnlyList<AnomalyInterpretation>> interpretation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("contributors"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<AnomalyContributor> array = new List<AnomalyContributor>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(AnomalyContributor.DeserializeAnomalyContributor(item));
-                    }
-                    contributors = array;
-                    continue;
-                }
                 if (property.NameEquals("isAnomaly"))
                 {
                     isAnomaly = property.Value.GetBoolean();
@@ -48,16 +33,26 @@ namespace Azure.AI.AnomalyDetector.Models
                 }
                 if (property.NameEquals("score"))
                 {
+                    score = property.Value.GetSingle();
+                    continue;
+                }
+                if (property.NameEquals("interpretation"))
+                {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    score = property.Value.GetSingle();
+                    List<AnomalyInterpretation> array = new List<AnomalyInterpretation>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(AnomalyInterpretation.DeserializeAnomalyInterpretation(item));
+                    }
+                    interpretation = array;
                     continue;
                 }
             }
-            return new AnomalyValue(Optional.ToList(contributors), isAnomaly, severity, Optional.ToNullable(score));
+            return new AnomalyValue(isAnomaly, severity, score, Optional.ToList(interpretation));
         }
     }
 }

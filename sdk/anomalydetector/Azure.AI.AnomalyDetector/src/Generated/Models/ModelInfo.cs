@@ -15,9 +15,9 @@ namespace Azure.AI.AnomalyDetector.Models
     public partial class ModelInfo
     {
         /// <summary> Initializes a new instance of ModelInfo. </summary>
-        /// <param name="source"> source file link of the input variables, each variable will be a csv with two columns, the first column will be timestamp, the second column will be value.Besides these variable csv files, an extra meta.json can be included in th zip file if you would like to rename a variable.Be default, the file name of the variable will be used as the variable name. </param>
-        /// <param name="startTime"> require field, start time of data be used for generating multivariate anomaly detection model, should be data-time. </param>
-        /// <param name="endTime"> require field, end time of data be used for generating multivariate anomaly detection model, should be data-time. </param>
+        /// <param name="source"> Source link to the input variables. Each variable should be a csv file with two columns, `timestamp` and `value`. By default, the file name of the variable will be used as its variable name. </param>
+        /// <param name="startTime"> A required field, indicating the start time of training data. Should be date-time. </param>
+        /// <param name="endTime"> A required field, indicating the end time of training data. Should be date-time. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
         public ModelInfo(string source, DateTimeOffset startTime, DateTimeOffset endTime)
         {
@@ -33,15 +33,15 @@ namespace Azure.AI.AnomalyDetector.Models
         }
 
         /// <summary> Initializes a new instance of ModelInfo. </summary>
-        /// <param name="slidingWindow"> An optional field, indicates how many history points will be used to determine the anomaly score of one subsequent point. </param>
-        /// <param name="alignPolicy"> An optional field, since those multivariate need to be aligned in the same timestamp before starting the detection. </param>
-        /// <param name="source"> source file link of the input variables, each variable will be a csv with two columns, the first column will be timestamp, the second column will be value.Besides these variable csv files, an extra meta.json can be included in th zip file if you would like to rename a variable.Be default, the file name of the variable will be used as the variable name. </param>
-        /// <param name="startTime"> require field, start time of data be used for generating multivariate anomaly detection model, should be data-time. </param>
-        /// <param name="endTime"> require field, end time of data be used for generating multivariate anomaly detection model, should be data-time. </param>
-        /// <param name="displayName"> optional field, name of the model. </param>
+        /// <param name="slidingWindow"> An optional field, indicating how many previous points will be used to compute the anomaly score of the subsequent point. </param>
+        /// <param name="alignPolicy"></param>
+        /// <param name="source"> Source link to the input variables. Each variable should be a csv file with two columns, `timestamp` and `value`. By default, the file name of the variable will be used as its variable name. </param>
+        /// <param name="startTime"> A required field, indicating the start time of training data. Should be date-time. </param>
+        /// <param name="endTime"> A required field, indicating the end time of training data. Should be date-time. </param>
+        /// <param name="displayName"> An optional field. The name of the model whose maximum length is 24. </param>
         /// <param name="status"> Model training status. </param>
-        /// <param name="errors"> Error message when fails to create a model. </param>
-        /// <param name="diagnosticsInfo"> Used for deep analysis model and variables. </param>
+        /// <param name="errors"> Error messages when failed to create a model. </param>
+        /// <param name="diagnosticsInfo"></param>
         internal ModelInfo(int? slidingWindow, AlignPolicy alignPolicy, string source, DateTimeOffset startTime, DateTimeOffset endTime, string displayName, ModelStatus? status, IReadOnlyList<ErrorResponse> errors, DiagnosticsInfo diagnosticsInfo)
         {
             SlidingWindow = slidingWindow;
@@ -55,23 +55,23 @@ namespace Azure.AI.AnomalyDetector.Models
             DiagnosticsInfo = diagnosticsInfo;
         }
 
-        /// <summary> An optional field, indicates how many history points will be used to determine the anomaly score of one subsequent point. </summary>
+        /// <summary> An optional field, indicating how many previous points will be used to compute the anomaly score of the subsequent point. </summary>
         public int? SlidingWindow { get; set; }
-        /// <summary> An optional field, since those multivariate need to be aligned in the same timestamp before starting the detection. </summary>
+        /// <summary> Gets or sets the align policy. </summary>
         public AlignPolicy AlignPolicy { get; set; }
-        /// <summary> source file link of the input variables, each variable will be a csv with two columns, the first column will be timestamp, the second column will be value.Besides these variable csv files, an extra meta.json can be included in th zip file if you would like to rename a variable.Be default, the file name of the variable will be used as the variable name. </summary>
+        /// <summary> Source link to the input variables. Each variable should be a csv file with two columns, `timestamp` and `value`. By default, the file name of the variable will be used as its variable name. </summary>
         public string Source { get; set; }
-        /// <summary> require field, start time of data be used for generating multivariate anomaly detection model, should be data-time. </summary>
+        /// <summary> A required field, indicating the start time of training data. Should be date-time. </summary>
         public DateTimeOffset StartTime { get; set; }
-        /// <summary> require field, end time of data be used for generating multivariate anomaly detection model, should be data-time. </summary>
+        /// <summary> A required field, indicating the end time of training data. Should be date-time. </summary>
         public DateTimeOffset EndTime { get; set; }
-        /// <summary> optional field, name of the model. </summary>
+        /// <summary> An optional field. The name of the model whose maximum length is 24. </summary>
         public string DisplayName { get; set; }
         /// <summary> Model training status. </summary>
         public ModelStatus? Status { get; }
-        /// <summary> Error message when fails to create a model. </summary>
+        /// <summary> Error messages when failed to create a model. </summary>
         public IReadOnlyList<ErrorResponse> Errors { get; }
-        /// <summary> Used for deep analysis model and variables. </summary>
+        /// <summary> Gets the diagnostics info. </summary>
         public DiagnosticsInfo DiagnosticsInfo { get; }
     }
 }

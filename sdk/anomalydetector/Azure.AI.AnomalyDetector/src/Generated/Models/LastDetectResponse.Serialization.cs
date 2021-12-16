@@ -22,6 +22,7 @@ namespace Azure.AI.AnomalyDetector.Models
             bool isAnomaly = default;
             bool isNegativeAnomaly = default;
             bool isPositiveAnomaly = default;
+            Optional<float> severity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("period"))
@@ -64,8 +65,18 @@ namespace Azure.AI.AnomalyDetector.Models
                     isPositiveAnomaly = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("severity"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    severity = property.Value.GetSingle();
+                    continue;
+                }
             }
-            return new LastDetectResponse(period, suggestedWindow, expectedValue, upperMargin, lowerMargin, isAnomaly, isNegativeAnomaly, isPositiveAnomaly);
+            return new LastDetectResponse(period, suggestedWindow, expectedValue, upperMargin, lowerMargin, isAnomaly, isNegativeAnomaly, isPositiveAnomaly, Optional.ToNullable(severity));
         }
     }
 }

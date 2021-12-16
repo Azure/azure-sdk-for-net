@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
-    /// <summary> The ChangePointDetectRequest. </summary>
+    /// <summary> The request of change point detection. </summary>
     public partial class ChangePointDetectRequest
     {
         /// <summary> Initializes a new instance of ChangePointDetectRequest. </summary>
