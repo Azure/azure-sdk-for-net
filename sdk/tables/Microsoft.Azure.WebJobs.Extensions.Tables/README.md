@@ -9,7 +9,7 @@ This extension provides functionality for accessing Azure Tables in Azure Functi
 Install the Storage Blobs extension with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.WebJobs.Extensions.Tables
+dotnet add package Azure.WebJobs.Extensions.Tables --prerelease
 ```
 
 ### Prerequisites
@@ -91,7 +91,7 @@ When using [shared key authentication](https://docs.microsoft.com/rest/api/stora
 
 The input binding allows you to read table as input to an Azure Function. The output binding allows you to modify and delete table rows in an Azure Function.
 
-Please follow the [input binding tutorial](https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-storage-table-input?tabs=csharp) and [output binding tutorial](https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-storage-table-output?tabs=csharp) to learn about using this extension for accessing table service.
+Please follow the [input binding tutorial](https://docs.microsoft.com/azure/azure-functions/functions-bindings-storage-table-input?tabs=csharp) and [output binding tutorial](https://docs.microsoft.com/azure/azure-functions/functions-bindings-storage-table-output?tabs=csharp) to learn about using this extension for accessing table service.
 
 ## Examples
 
@@ -286,14 +286,14 @@ additional questions or comments.
 [storage_account_create_portal]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
 
 [cosmos_tables_account_docs]: https://docs.microsoft.com/azure/cosmos-db/table/introduction
-[cosmos_tables_create_ps]: https://docs.microsoft.com/en-us/azure/cosmos-db/scripts/powershell/table/create
-[cosmos_tables_create_cli]: https://docs.microsoft.com/en-us/azure/cosmos-db/scripts/cli/table/create
-[cosmos_tables_create_portal]: https://docs.microsoft.com/en-us/azure/cosmos-db/table/how-to-create-container
+[cosmos_tables_create_ps]: https://docs.microsoft.com/azure/cosmos-db/scripts/powershell/table/create
+[cosmos_tables_create_cli]: https://docs.microsoft.com/azure/cosmos-db/scripts/cli/table/create
+[cosmos_tables_create_portal]: https://docs.microsoft.com/azure/cosmos-db/table/how-to-create-container
 
 [identity_dac]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
 
 [appsettings_portal]: https://docs.microsoft.com/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=portal
-[local_settings_json]: https://docs.microsoft.com/en-us/azure/azure-functions/functions-host-json#override-hostjson-values
+[local_settings_json]: https://docs.microsoft.com/azure/azure-functions/functions-host-json#override-hostjson-values
 
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/src/RequestFailedException.cs
