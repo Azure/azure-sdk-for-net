@@ -154,24 +154,31 @@ namespace Azure.Core.TestFramework
 
             lock (_lock)
             {
-                if (_shared == null)
+                var shared = _shared;
+                if (shared == null)
                 {
-                    _shared = new TestProxy(typeof(TestProxy)
+                    shared = new TestProxy(typeof(TestProxy)
                         .Assembly
                         .GetCustomAttributes<AssemblyMetadataAttribute>()
                         .Single(a => a.Key == "TestProxyPath")
                         .Value);
 
-                    AppDomain.CurrentDomain.ProcessExit += (_, _) => _shared.Stop();
+                    AppDomain.CurrentDomain.ProcessExit += (_, _) =>
+                    {
+                        try
+                        {
+                            shared._testProxyProcess?.Kill();
+                        }
+                        catch
+                        {
+                        }
+                    };
+
+                    _shared = shared;
                 }
+
+                return shared;
             }
-
-            return _shared;
-        }
-
-        private void Stop()
-        {
-            _testProxyProcess?.Kill();
         }
 
         private static void ImportDevCertIfNeeded()
