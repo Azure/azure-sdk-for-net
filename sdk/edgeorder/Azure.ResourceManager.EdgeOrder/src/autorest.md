@@ -12,10 +12,10 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/58891380ba22c3565ca8
 tag: package-2021-12
 output-folder: Generated/
 clear-output-folder: true
+list-exception:
+  - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/locations/{location}/orders/{orderName}
 mgmt-debug:
-  suppress-list-exception: true
-modelerfour:
-  lenient-model-deduplication: true
+  show-request-path: true
 directive:
   - remove-operation: ListOperations
   - rename-model:

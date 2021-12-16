@@ -84,6 +84,9 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses/{addressName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses/{addressName}
+        /// OperationId: GetAddressByName
         /// <summary> Gets information about the specified address. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<AddressResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -104,6 +107,9 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses/{addressName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses/{addressName}
+        /// OperationId: GetAddressByName
         /// <summary> Gets information about the specified address. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AddressResource> Get(CancellationToken cancellationToken = default)
@@ -140,6 +146,9 @@ namespace Azure.ResourceManager.EdgeOrder
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses/{addressName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses/{addressName}
+        /// OperationId: DeleteAddressByName
         /// <summary> Deletes an address. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -162,6 +171,9 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses/{addressName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses/{addressName}
+        /// OperationId: DeleteAddressByName
         /// <summary> Deletes an address. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -356,6 +368,9 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses/{addressName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses/{addressName}
+        /// OperationId: UpdateAddress
         /// <summary> Updates the properties of an existing address. </summary>
         /// <param name="addressUpdateParameter"> Address update parameters from request body. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the job on the server matches this value. </param>
@@ -386,6 +401,9 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses/{addressName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses/{addressName}
+        /// OperationId: UpdateAddress
         /// <summary> Updates the properties of an existing address. </summary>
         /// <param name="addressUpdateParameter"> Address update parameters from request body. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the job on the server matches this value. </param>

@@ -27,6 +27,9 @@ namespace Azure.ResourceManager.EdgeOrder
             return new EdgeOrderManagementRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/addresses
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ListAddressesAtSubscriptionLevel
         /// <summary> Lists the AddressResources for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> $filter is supported to filter based on shipping address properties. Filter supports only equals operation. </param>
@@ -74,6 +77,9 @@ namespace Azure.ResourceManager.EdgeOrder
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/addresses
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ListAddressesAtSubscriptionLevel
         /// <summary> Lists the AddressResources for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> $filter is supported to filter based on shipping address properties. Filter supports only equals operation. </param>
@@ -149,6 +155,9 @@ namespace Azure.ResourceManager.EdgeOrder
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/listProductFamilies
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ListProductFamilies
         /// <summary> Lists the ProductFamilies for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="productFamiliesRequest"> Filters for showing the product families. </param>
@@ -203,6 +212,9 @@ namespace Azure.ResourceManager.EdgeOrder
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/listProductFamilies
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ListProductFamilies
         /// <summary> Lists the ProductFamilies for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="productFamiliesRequest"> Filters for showing the product families. </param>
@@ -257,6 +269,9 @@ namespace Azure.ResourceManager.EdgeOrder
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/listConfigurations
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ListConfigurations
         /// <summary> Lists the ProductConfigurations for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="configurationsRequest"> Filters for showing the configurations. </param>
@@ -310,6 +325,9 @@ namespace Azure.ResourceManager.EdgeOrder
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/listConfigurations
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ListConfigurations
         /// <summary> Lists the ProductConfigurations for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="configurationsRequest"> Filters for showing the configurations. </param>
@@ -363,6 +381,9 @@ namespace Azure.ResourceManager.EdgeOrder
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/productFamiliesMetadata
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ListProductFamiliesMetadata
         /// <summary> Lists the ProductFamiliesMetadataDetails for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="skipToken"> $skipToken is supported on list of product families metadata, which provides the next page in the list of product families metadata. </param>
@@ -409,6 +430,9 @@ namespace Azure.ResourceManager.EdgeOrder
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/productFamiliesMetadata
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ListProductFamiliesMetadata
         /// <summary> Lists the ProductFamiliesMetadataDetails for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="skipToken"> $skipToken is supported on list of product families metadata, which provides the next page in the list of product families metadata. </param>
@@ -455,6 +479,9 @@ namespace Azure.ResourceManager.EdgeOrder
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/orders
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ListOrderAtSubscriptionLevel
         /// <summary> Lists the OrderResourceDatas for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
@@ -501,6 +528,9 @@ namespace Azure.ResourceManager.EdgeOrder
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/orders
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ListOrderAtSubscriptionLevel
         /// <summary> Lists the OrderResourceDatas for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
@@ -575,6 +605,9 @@ namespace Azure.ResourceManager.EdgeOrder
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/orderItems
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ListOrderItemsAtSubscriptionLevel
         /// <summary> Lists the OrderItemResources for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> $filter is supported to filter based on order id. Filter supports only equals operation. </param>
@@ -623,6 +656,9 @@ namespace Azure.ResourceManager.EdgeOrder
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/orderItems
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ListOrderItemsAtSubscriptionLevel
         /// <summary> Lists the OrderItemResources for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> $filter is supported to filter based on order id. Filter supports only equals operation. </param>
