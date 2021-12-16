@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Data.Tables;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -10,13 +11,14 @@ using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 {
+    [LiveOnly]
     public class TableConnectionTests : TablesLiveTestBase
     {
-        public TableConnectionTests(bool useCosmos) : base(useCosmos, createTable: false)
+        public TableConnectionTests(bool isAsync, bool useCosmos) : base(isAsync, useCosmos, createTable: false)
         {
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CanConnectUsingTokenCredential()
         {
             if (UseCosmos)
@@ -40,7 +42,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             });
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CanConnectUsingAccountNameAndTokenCredential()
         {
             if (UseCosmos)
@@ -64,7 +66,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             });
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CanConnectUsingKeyCredential()
         {
             await CallAsync<CheckConnection>(configure: hostBuilder =>
@@ -82,7 +84,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             });
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CanConnectUsingConnectionString()
         {
             await CallAsync<CheckConnection>(configure: hostBuilder =>
