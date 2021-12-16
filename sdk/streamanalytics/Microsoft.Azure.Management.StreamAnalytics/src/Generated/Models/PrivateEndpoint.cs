@@ -10,12 +10,17 @@
 
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// Complete information about the private endpoint.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class PrivateEndpoint : ProxyResource
     {
         /// <summary>
@@ -35,16 +40,20 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// <param name="type">The type of the resource. Ex-
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
-        /// <param name="properties">The properties associated with a private
-        /// endpoint.</param>
+        /// <param name="createdDate">The date when this private endpoint was
+        /// created.</param>
+        /// <param name="manualPrivateLinkServiceConnections">A list of
+        /// connections to the remote resource. Immutable after it is
+        /// set.</param>
         /// <param name="etag">Unique opaque string (generally a GUID) that
         /// represents the metadata state of the resource (private endpoint)
         /// and changes whenever the resource is updated. Required on PUT
         /// (CreateOrUpdate) requests.</param>
-        public PrivateEndpoint(string id = default(string), string name = default(string), string type = default(string), PrivateEndpointProperties properties = default(PrivateEndpointProperties), string etag = default(string))
+        public PrivateEndpoint(string id = default(string), string name = default(string), string type = default(string), string createdDate = default(string), IList<PrivateLinkServiceConnection> manualPrivateLinkServiceConnections = default(IList<PrivateLinkServiceConnection>), string etag = default(string))
             : base(id, name, type)
         {
-            Properties = properties;
+            CreatedDate = createdDate;
+            ManualPrivateLinkServiceConnections = manualPrivateLinkServiceConnections;
             Etag = etag;
             CustomInit();
         }
@@ -55,10 +64,17 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the properties associated with a private endpoint.
+        /// Gets the date when this private endpoint was created.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public PrivateEndpointProperties Properties { get; set; }
+        [JsonProperty(PropertyName = "properties.createdDate")]
+        public string CreatedDate { get; private set; }
+
+        /// <summary>
+        /// Gets or sets a list of connections to the remote resource.
+        /// Immutable after it is set.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.manualPrivateLinkServiceConnections")]
+        public IList<PrivateLinkServiceConnection> ManualPrivateLinkServiceConnections { get; set; }
 
         /// <summary>
         /// Gets unique opaque string (generally a GUID) that represents the

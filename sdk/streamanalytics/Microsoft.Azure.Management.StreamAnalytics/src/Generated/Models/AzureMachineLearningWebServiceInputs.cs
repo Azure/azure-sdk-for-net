@@ -16,28 +16,28 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     using System.Linq;
 
     /// <summary>
-    /// The inputs for the Azure Machine Learning Studio endpoint.
+    /// The inputs for the Azure Machine Learning web service endpoint.
     /// </summary>
-    public partial class AzureMachineLearningStudioInputs
+    public partial class AzureMachineLearningWebServiceInputs
     {
         /// <summary>
-        /// Initializes a new instance of the AzureMachineLearningStudioInputs
-        /// class.
+        /// Initializes a new instance of the
+        /// AzureMachineLearningWebServiceInputs class.
         /// </summary>
-        public AzureMachineLearningStudioInputs()
+        public AzureMachineLearningWebServiceInputs()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureMachineLearningStudioInputs
-        /// class.
+        /// Initializes a new instance of the
+        /// AzureMachineLearningWebServiceInputs class.
         /// </summary>
         /// <param name="name">The name of the input. This is the name provided
         /// while authoring the endpoint.</param>
         /// <param name="columnNames">A list of input columns for the Azure
-        /// Machine Learning Studio endpoint.</param>
-        public AzureMachineLearningStudioInputs(string name = default(string), IList<AzureMachineLearningStudioInputColumn> columnNames = default(IList<AzureMachineLearningStudioInputColumn>))
+        /// Machine Learning web service endpoint.</param>
+        public AzureMachineLearningWebServiceInputs(string name = default(string), IList<AzureMachineLearningWebServiceInputColumn> columnNames = default(IList<AzureMachineLearningWebServiceInputColumn>))
         {
             Name = name;
             ColumnNames = columnNames;
@@ -58,10 +58,10 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
 
         /// <summary>
         /// Gets or sets a list of input columns for the Azure Machine Learning
-        /// Studio endpoint.
+        /// web service endpoint.
         /// </summary>
         [JsonProperty(PropertyName = "columnNames")]
-        public IList<AzureMachineLearningStudioInputColumn> ColumnNames { get; set; }
+        public IList<AzureMachineLearningWebServiceInputColumn> ColumnNames { get; set; }
 
     }
 }

@@ -36,13 +36,15 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// </summary>
         /// <param name="targetResourceName">Gets or sets the target Resource
         /// name.</param>
+        /// <param name="tags">Gets or sets the Resource tags.</param>
         /// <param name="ipConfigurations">Gets or sets the IP configurations
         /// of the NIC.</param>
         /// <param name="enableAcceleratedNetworking">Gets or sets a value
         /// indicating whether accelerated networking is enabled.</param>
-        public NetworkInterfaceResourceSettings(string targetResourceName, IList<NicIpConfigurationResourceSettings> ipConfigurations = default(IList<NicIpConfigurationResourceSettings>), bool? enableAcceleratedNetworking = default(bool?))
+        public NetworkInterfaceResourceSettings(string targetResourceName, IDictionary<string, string> tags = default(IDictionary<string, string>), IList<NicIpConfigurationResourceSettings> ipConfigurations = default(IList<NicIpConfigurationResourceSettings>), bool? enableAcceleratedNetworking = default(bool?))
             : base(targetResourceName)
         {
+            Tags = tags;
             IpConfigurations = ipConfigurations;
             EnableAcceleratedNetworking = enableAcceleratedNetworking;
             CustomInit();
@@ -52,6 +54,12 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the Resource tags.
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Gets or sets the IP configurations of the NIC.

@@ -13,22 +13,22 @@ namespace Azure.Core.TestFramework.Models
     public partial class CustomDefaultMatcher
     {
         /// <summary> Initializes a new instance of CustomDefaultMatcher. </summary>
-        /// <param name="nonDefaultHeaderExclusions"></param>
+        /// <param name="excludedHeaders"></param>
         /// <param name="compareBodies"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nonDefaultHeaderExclusions"/> is null. </exception>
-        public CustomDefaultMatcher(string nonDefaultHeaderExclusions, bool compareBodies)
+        /// <exception cref="ArgumentNullException"> <paramref name="excludedHeaders"/> is null. </exception>
+        public CustomDefaultMatcher(string excludedHeaders, bool compareBodies)
         {
-            if (nonDefaultHeaderExclusions == null)
+            if (excludedHeaders == null)
             {
-                throw new ArgumentNullException(nameof(nonDefaultHeaderExclusions));
+                throw new ArgumentNullException(nameof(excludedHeaders));
             }
 
-            NonDefaultHeaderExclusions = nonDefaultHeaderExclusions;
+            ExcludedHeaders = excludedHeaders;
             CompareBodies = compareBodies;
         }
 
-        /// <summary> Gets the non default header exclusions. </summary>
-        public string NonDefaultHeaderExclusions { get; }
+        /// <summary> Gets the excluded headers. </summary>
+        public string ExcludedHeaders { get; }
         /// <summary> Gets the compare bodies. </summary>
         public bool CompareBodies { get; }
     }

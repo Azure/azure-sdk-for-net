@@ -52,7 +52,7 @@
                 "dimensionDisplayName": "city"
               }
             ],
-            "dataStartFrom": "2020-08-21T00:00:00Z",
+            "dataStartFrom": "2020-08-21T00:00:00.0000000Z",
             "dataSourceType": "PostgreSql",
             "timestampColumn": "",
             "startOffsetInSeconds": 0,
@@ -109,7 +109,7 @@
                 "dimensionDisplayName": "city"
               }
             ],
-            "dataStartFrom": "2020-08-21T00:00:00Z",
+            "dataStartFrom": "2020-08-21T00:00:00.0000000Z",
             "dataSourceType": "AzureDataLakeStorageGen2",
             "timestampColumn": "",
             "startOffsetInSeconds": 0,
@@ -169,7 +169,7 @@
                 "dimensionDisplayName": "city"
               }
             ],
-            "dataStartFrom": "2020-08-21T00:00:00Z",
+            "dataStartFrom": "2020-08-21T00:00:00.0000000Z",
             "dataSourceType": "MySql",
             "timestampColumn": "",
             "startOffsetInSeconds": 0,
@@ -226,7 +226,7 @@
                 "dimensionDisplayName": "city"
               }
             ],
-            "dataStartFrom": "2020-08-21T00:00:00Z",
+            "dataStartFrom": "2020-08-21T00:00:00.0000000Z",
             "dataSourceType": "InfluxDB",
             "timestampColumn": "",
             "startOffsetInSeconds": 0,
@@ -286,7 +286,7 @@
                 "dimensionDisplayName": "city"
               }
             ],
-            "dataStartFrom": "2020-08-21T00:00:00Z",
+            "dataStartFrom": "2020-08-21T00:00:00.0000000Z",
             "dataSourceType": "AzureLogAnalytics",
             "timestampColumn": "",
             "startOffsetInSeconds": 0,
@@ -346,7 +346,7 @@
                 "dimensionDisplayName": "city"
               }
             ],
-            "dataStartFrom": "2020-08-21T00:00:00Z",
+            "dataStartFrom": "2020-08-21T00:00:00.0000000Z",
             "dataSourceType": "AzureLogAnalytics",
             "timestampColumn": "",
             "startOffsetInSeconds": 0,
@@ -406,7 +406,7 @@
                 "dimensionDisplayName": "city"
               }
             ],
-            "dataStartFrom": "2020-08-21T00:00:00Z",
+            "dataStartFrom": "2020-08-21T00:00:00.0000000Z",
             "dataSourceType": "MongoDB",
             "timestampColumn": "",
             "startOffsetInSeconds": 0,
@@ -464,7 +464,7 @@
                 "dimensionDisplayName": "city"
               }
             ],
-            "dataStartFrom": "2020-08-21T00:00:00Z",
+            "dataStartFrom": "2020-08-21T00:00:00.0000000Z",
             "dataSourceType": "InfluxDB",
             "timestampColumn": "",
             "startOffsetInSeconds": 0,
@@ -524,7 +524,7 @@
                 "dimensionDisplayName": "city"
               }
             ],
-            "dataStartFrom": "2020-08-21T00:00:00Z",
+            "dataStartFrom": "2020-08-21T00:00:00.0000000Z",
             "dataSourceType": "AzureDataExplorer",
             "timestampColumn": "",
             "startOffsetInSeconds": 0,
@@ -581,7 +581,7 @@
                 "dimensionDisplayName": "city"
               }
             ],
-            "dataStartFrom": "2020-08-21T00:00:00Z",
+            "dataStartFrom": "2020-08-21T00:00:00.0000000Z",
             "dataSourceType": "AzureCosmosDB",
             "timestampColumn": "",
             "startOffsetInSeconds": 0,
@@ -640,7 +640,7 @@
                 "dimensionDisplayName": "city"
               }
             ],
-            "dataStartFrom": "2020-08-21T00:00:00Z",
+            "dataStartFrom": "2020-08-21T00:00:00.0000000Z",
             "dataSourceType": "AzureBlob",
             "timestampColumn": "",
             "startOffsetInSeconds": 0,
@@ -698,7 +698,7 @@
                 "dimensionDisplayName": "city"
               }
             ],
-            "dataStartFrom": "2020-08-21T00:00:00Z",
+            "dataStartFrom": "2020-08-21T00:00:00.0000000Z",
             "dataSourceType": "SqlServer",
             "timestampColumn": "",
             "startOffsetInSeconds": 0,
@@ -755,7 +755,7 @@
                 "dimensionDisplayName": "city"
               }
             ],
-            "dataStartFrom": "2021-06-07T00:00:00Z",
+            "dataStartFrom": "2021-06-07T00:00:00.0000000Z",
             "dataSourceType": "AzureEventHubs",
             "timestampColumn": "",
             "startOffsetInSeconds": 0,
@@ -812,7 +812,7 @@
                 "dimensionDisplayName": "city"
               }
             ],
-            "dataStartFrom": "2021-06-07T00:00:00Z",
+            "dataStartFrom": "2021-06-07T00:00:00.0000000Z",
             "dataSourceType": "AzureEventHubs",
             "timestampColumn": "",
             "startOffsetInSeconds": 0,
@@ -869,7 +869,7 @@
                 "dimensionDisplayName": "city"
               }
             ],
-            "dataStartFrom": "2020-08-21T00:00:00Z",
+            "dataStartFrom": "2020-08-21T00:00:00.0000000Z",
             "dataSourceType": "AzureTable",
             "timestampColumn": "",
             "startOffsetInSeconds": 0,
@@ -927,7 +927,7 @@
                 "dimensionDisplayName": "city"
               }
             ],
-            "dataStartFrom": "2020-08-21T00:00:00Z",
+            "dataStartFrom": "2020-08-21T00:00:00.0000000Z",
             "dataSourceType": "SqlServer",
             "timestampColumn": "",
             "startOffsetInSeconds": 0,
@@ -984,7 +984,7 @@
                 "dimensionDisplayName": "city"
               }
             ],
-            "dataStartFrom": "2020-08-21T00:00:00Z",
+            "dataStartFrom": "2020-08-21T00:00:00.0000000Z",
             "dataSourceType": "SqlServer",
             "timestampColumn": "",
             "startOffsetInSeconds": 0,
@@ -1041,7 +1041,7 @@
                 "dimensionDisplayName": "city"
               }
             ],
-            "dataStartFrom": "2020-08-21T00:00:00Z",
+            "dataStartFrom": "2020-08-21T00:00:00.0000000Z",
             "dataSourceType": "AzureApplicationInsights",
             "timestampColumn": "",
             "startOffsetInSeconds": 0,
@@ -1100,7 +1100,7 @@
                 "dimensionDisplayName": "region"
               }
             ],
-            "dataStartFrom": "2021-04-01T00:00:00Z",
+            "dataStartFrom": "2021-04-01T00:00:00.0000000Z",
             "dataSourceType": "SqlServer",
             "timestampColumn": "timestamp",
             "startOffsetInSeconds": 86400,
@@ -1157,7 +1157,7 @@
                 "dimensionDisplayName": "region"
               }
             ],
-            "dataStartFrom": "2021-04-01T00:00:00Z",
+            "dataStartFrom": "2021-04-01T00:00:00.0000000Z",
             "dataSourceType": "SqlServer",
             "timestampColumn": "timestamp",
             "startOffsetInSeconds": 86400,

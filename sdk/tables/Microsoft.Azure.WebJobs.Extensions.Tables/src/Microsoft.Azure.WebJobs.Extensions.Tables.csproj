@@ -14,6 +14,7 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Azure.WebJobs" />
+        <PackageReference Include="Microsoft.Extensions.Azure" />
     </ItemGroup>
 
     <ItemGroup>
@@ -21,9 +22,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Include="..\..\Azure.Data.Tables\src\Extensions\StringTableExtensions.cs" />
+      <Compile Include="..\..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\src\Shared\StorageClientProvider.cs" />
+      <Compile Include="..\..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\src\Shared\WebJobsConfigurationExtensions.cs" />
       <Compile Include="$(AzureCoreSharedSources)TypeBinder.cs" LinkBase="Shared" />
-      <Compile Include="..\..\Azure.Data.Tables\src\TableConstants.cs" />
     </ItemGroup>
 
 </Project>

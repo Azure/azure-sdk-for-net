@@ -14,26 +14,28 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     using System.Linq;
 
     /// <summary>
-    /// The storage account where the custom code artifacts are located.
+    /// Parameters supplied to the Scale Streaming Job operation.
     /// </summary>
-    public partial class External
+    public partial class ScaleStreamingJobParameters
     {
         /// <summary>
-        /// Initializes a new instance of the External class.
+        /// Initializes a new instance of the ScaleStreamingJobParameters
+        /// class.
         /// </summary>
-        public External()
+        public ScaleStreamingJobParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the External class.
+        /// Initializes a new instance of the ScaleStreamingJobParameters
+        /// class.
         /// </summary>
-        public External(StorageAccount storageAccount = default(StorageAccount), string container = default(string), string path = default(string))
+        /// <param name="streamingUnits">Specifies the number of streaming
+        /// units that the streaming job will scale to.</param>
+        public ScaleStreamingJobParameters(int? streamingUnits = default(int?))
         {
-            StorageAccount = storageAccount;
-            Container = container;
-            Path = path;
+            StreamingUnits = streamingUnits;
             CustomInit();
         }
 
@@ -43,19 +45,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets specifies the number of streaming units that the
+        /// streaming job will scale to.
         /// </summary>
-        [JsonProperty(PropertyName = "storageAccount")]
-        public StorageAccount StorageAccount { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "container")]
-        public string Container { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "path")]
-        public string Path { get; set; }
+        [JsonProperty(PropertyName = "streamingUnits")]
+        public int? StreamingUnits { get; set; }
 
     }
 }
