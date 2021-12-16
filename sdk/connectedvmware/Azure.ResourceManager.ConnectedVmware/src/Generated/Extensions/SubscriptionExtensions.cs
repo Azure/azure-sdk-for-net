@@ -61,6 +61,9 @@ namespace Azure.ResourceManager.ConnectedVmware
             return new VirtualNetworksRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ResourcePools_List
         /// <summary> Lists the ResourcePools for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -106,6 +109,9 @@ namespace Azure.ResourceManager.ConnectedVmware
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ResourcePools_List
         /// <summary> Lists the ResourcePools for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,6 +185,9 @@ namespace Azure.ResourceManager.ConnectedVmware
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/clusters
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Clusters_List
         /// <summary> Lists the VmwareClusters for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -224,6 +233,9 @@ namespace Azure.ResourceManager.ConnectedVmware
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/clusters
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Clusters_List
         /// <summary> Lists the VmwareClusters for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -297,6 +309,9 @@ namespace Azure.ResourceManager.ConnectedVmware
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/hosts
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Hosts_List
         /// <summary> Lists the VmwareHosts for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -342,6 +357,9 @@ namespace Azure.ResourceManager.ConnectedVmware
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/hosts
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Hosts_List
         /// <summary> Lists the VmwareHosts for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -415,6 +433,9 @@ namespace Azure.ResourceManager.ConnectedVmware
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/datastores
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Datastores_List
         /// <summary> Lists the VmwareDatastores for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -460,6 +481,9 @@ namespace Azure.ResourceManager.ConnectedVmware
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/datastores
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Datastores_List
         /// <summary> Lists the VmwareDatastores for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -533,6 +557,9 @@ namespace Azure.ResourceManager.ConnectedVmware
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/vcenters
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: VCenters_List
         /// <summary> Lists the VCenters for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -578,6 +605,9 @@ namespace Azure.ResourceManager.ConnectedVmware
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/vcenters
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: VCenters_List
         /// <summary> Lists the VCenters for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -651,6 +681,9 @@ namespace Azure.ResourceManager.ConnectedVmware
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: VirtualMachines_List
         /// <summary> Lists the VirtualMachines for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -696,6 +729,9 @@ namespace Azure.ResourceManager.ConnectedVmware
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: VirtualMachines_List
         /// <summary> Lists the VirtualMachines for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -769,6 +805,9 @@ namespace Azure.ResourceManager.ConnectedVmware
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineTemplates
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: VirtualMachineTemplates_List
         /// <summary> Lists the VirtualMachineTemplates for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -814,6 +853,9 @@ namespace Azure.ResourceManager.ConnectedVmware
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineTemplates
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: VirtualMachineTemplates_List
         /// <summary> Lists the VirtualMachineTemplates for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -887,6 +929,9 @@ namespace Azure.ResourceManager.ConnectedVmware
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualNetworks
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: VirtualNetworks_List
         /// <summary> Lists the VirtualNetworks for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -932,6 +977,9 @@ namespace Azure.ResourceManager.ConnectedVmware
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualNetworks
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: VirtualNetworks_List
         /// <summary> Lists the VirtualNetworks for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -10,8 +10,7 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/58891380ba22c3565ca8
 clear-output-folder: true
 output-folder: Generated/
 mgmt-debug:
-  suppress-list-exception: true
-
+  show-request-path: true
 directive:
   - rename-model:
       from: Identity
