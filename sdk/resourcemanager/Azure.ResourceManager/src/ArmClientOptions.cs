@@ -26,7 +26,8 @@ namespace Azure.ResourceManager
         /// </summary>
         public Dictionary<ResourceType, string> ResourceApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
 
-        internal ConcurrentDictionary<string, Dictionary<string, string>> ResourceApiVersions { get; private set; } = new ConcurrentDictionary<string, Dictionary<string, string>>();
+        internal ConcurrentDictionary<string, Dictionary<string, string>> ResourceApiVersions { get; } = new ConcurrentDictionary<string, Dictionary<string, string>>();
+        internal ConcurrentDictionary<string,string> NamespaceVersions { get; } = new ConcurrentDictionary<string, string>();
 
         internal ArmClientOptions Clone()
         {

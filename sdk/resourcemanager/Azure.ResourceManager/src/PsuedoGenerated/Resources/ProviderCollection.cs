@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -357,24 +358,30 @@ namespace Azure.ResourceManager.Resources
             return resourceVersions;
         }
 
-        internal string GetApiVersionForNamespace(object nameSpace)
+        internal string GetApiVersionForNamespace(string resourceNamespace, CancellationToken cancellationToken = default)
         {
-            //foreach (var type in results.Data.ResourceTypes)
-            //{
-            //    string[] parts = type.ApiVersions[0].Split('-');
-            //    DateTime current = new DateTime(
-            //        Convert.ToInt32(parts[0], CultureInfo.InvariantCulture.NumberFormat),
-            //        Convert.ToInt32(parts[1], CultureInfo.InvariantCulture.NumberFormat),
-            //        Convert.ToInt32(parts[2], CultureInfo.InvariantCulture.NumberFormat));
-            //    maxVersion = current > maxVersion ? current : maxVersion;
-            //}
-            //string month = maxVersion.Month < 10 ? "0" : string.Empty;
-            //month += maxVersion.Month;
-            //string day = maxVersion.Day < 10 ? "0" : string.Empty;
-            //day += maxVersion.Day;
-            //version = $"{maxVersion.Year}-{month}-{day}";
-            //_apiForNamespaceCache[nameSpace] = version;
-            throw NotImplementedException();
+            string version;
+            if (!ClientOptions.NamespaceVersions.TryGetValue(resourceNamespace, out version))
+            {
+                Provider results = Get(resourceNamespace, cancellationToken: cancellationToken);
+                DateTime maxVersion = DateTime.MinValue;
+                foreach (var type in results.Data.ResourceTypes)
+                {
+                    string[] parts = type.ApiVersions[0].Split('-');
+                    DateTime current = new DateTime(
+                        Convert.ToInt32(parts[0], CultureInfo.InvariantCulture.NumberFormat),
+                        Convert.ToInt32(parts[1], CultureInfo.InvariantCulture.NumberFormat),
+                        Convert.ToInt32(parts[2], CultureInfo.InvariantCulture.NumberFormat));
+                    maxVersion = current > maxVersion ? current : maxVersion;
+                }
+                string month = maxVersion.Month < 10 ? "0" : string.Empty;
+                month += maxVersion.Month;
+                string day = maxVersion.Day < 10 ? "0" : string.Empty;
+                day += maxVersion.Day;
+                version = $"{maxVersion.Year}-{month}-{day}";
+                ClientOptions.NamespaceVersions.TryAdd(resourceNamespace, version);
+            }
+            return version;
         }
     }
 }
