@@ -36,5 +36,7 @@ namespace Azure.Storage.Files.Shares
         public DateTimeOffset? FileChangeTime => _response.Headers.TryGetValue("x-ms-file-change-time", out DateTimeOffset? value) ? value : null;
         /// <summary> The fileId of the file. </summary>
         public string FileId => _response.Headers.TryGetValue("x-ms-file-id", out string value) ? value : null;
+        /// <summary> The parent fileId of the directory. </summary>
+        public string FileParentId => _response.Headers.TryGetValue("x-ms-file-parent-id", out string value) ? value : null;
     }
 }
