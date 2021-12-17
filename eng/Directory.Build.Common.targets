@@ -206,9 +206,9 @@
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)OperationSubclientImplementation.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)OperationSubclientImplementationBase.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)OperationSubclientImplementationOfT.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationImplementation.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationImplementationBase.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationImplementationOfT.cs" LinkBase="Shared" />
   </ItemGroup>
 
   <!-- Management Client TEST Project Specific Overrides -->

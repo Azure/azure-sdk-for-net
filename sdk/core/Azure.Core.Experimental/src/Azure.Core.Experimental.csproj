@@ -23,9 +23,9 @@
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" />
     <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" />
-    <Compile Include="$(AzureCoreSharedSources)OperationSubclientImplementation.cs" />
-    <Compile Include="$(AzureCoreSharedSources)OperationSubclientImplementationBase.cs" />
-    <Compile Include="$(AzureCoreSharedSources)OperationSubclientImplementationOfT.cs" />
+    <Compile Include="$(AzureCoreSharedSources)OperationImplementation.cs" />
+    <Compile Include="$(AzureCoreSharedSources)OperationImplementationBase.cs" />
+    <Compile Include="$(AzureCoreSharedSources)OperationImplementationOfT.cs" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" />
     <Compile Include="$(AzureCoreSharedSources)NullableAttributes.cs" />
   </ItemGroup>
