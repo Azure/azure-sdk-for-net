@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Text;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core.TestFramework;
 using Azure.Data.Tables;
 using Microsoft.Azure.WebJobs.Host;
 using Newtonsoft.Json.Linq;
@@ -15,11 +16,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 {
     public class TablesLiveTests: TablesLiveTestBase
     {
-        public TablesLiveTests(bool useCosmos) : base(useCosmos)
+        public TablesLiveTests(bool isAsync, bool useCosmos) : base(isAsync, useCosmos)
         {
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Table_IfBoundToICollectorITableEntity_CanCall()
         {
             await TestTableBoundToCollectorCanCallAsync<BindTableToICollectorITableEntity>();
@@ -33,7 +34,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Table_IfBoundToICollectorTableEntity_CanCall()
         {
             await TestTableBoundToCollectorCanCallAsync<BindTableToICollectorTableEntity>();
@@ -47,7 +48,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Table_IfBoundToICollectorSdkTableEntity_CanCall()
         {
             await TestTableBoundToCollectorCanCallAsync<BindTableToICollectorSdkTableEntity>();
@@ -61,7 +62,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Table_IfBoundToIAsyncCollectorITableEntity_CanCall()
         {
             await TestTableBoundToCollectorCanCallAsync<BindTableToIAsyncCollectorITableEntity>();
@@ -75,7 +76,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Table_IfBoundToIAsyncCollectorTableEntity_CanCall()
         {
             await TestTableBoundToCollectorCanCallAsync<BindTableToIAsyncCollectorTableEntity>();
@@ -89,7 +90,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Table_IfBoundToIAsyncCollectorSdkTableEntity_CanCall()
         {
             await TestTableBoundToCollectorCanCallAsync<BindTableToIAsyncCollectorSdkTableEntity>();
@@ -143,7 +144,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableEntity_IfBoundToJArray_CanCall()
         {
             await TableClient.AddEntityAsync(CreateTableEntity(PartitionKey, RowKey + "1", "Value", "x1"));
@@ -204,7 +205,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableEntity_IfBoundToJObject_CanCall()
         {
             // Arrange
@@ -231,7 +232,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableEntity_IfBoundToSdkTableEntity_CanCall()
         {
             // Arrange
@@ -254,7 +255,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableEntity_IfBoundToPocoTableEntity_CanCall()
         {
             // Arrange
@@ -295,19 +296,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public Task TableEntity_IfBoundToPocoThatDoesntExist_Null_PocoTableEntity() =>
             CallAsync<BindTableEntityToPocoTableEntityDoesntExistProgram<PocoTableEntity>>();
 
-        [Test]
+        [RecordedTest]
         public Task TableEntity_IfBoundToPocoThatDoesntExist_Null_JObject() =>
             CallAsync<BindTableEntityToPocoTableEntityDoesntExistProgram<JObject>>();
 
-        [Test]
+        [RecordedTest]
         public Task TableEntity_IfBoundToPocoThatDoesntExist_Null_ITableEntity() =>
             CallAsync<BindTableEntityToPocoTableEntityDoesntExistProgram<ITableEntity>>();
 
-        [Test]
+        [RecordedTest]
         public Task TableEntity_IfBoundToPocoThatDoesntExist_Null_TableEntity() =>
             CallAsync<BindTableEntityToPocoTableEntityDoesntExistProgram<TableEntity>>();
 
@@ -333,7 +334,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             Pear
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableEntity_IfBoundToSdkTableEntityAndUpdatedConcurrently_Throws()
         {
             await TestBindTableEntityToConcurrentlyUpdatedValue<BindTableEntityToConcurrentlyUpdatedSdkTableEntity>();
@@ -358,7 +359,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableEntity_IfBoundToPocoTableEntityAndUpdatedConcurrently_Throws()
         {
             await TestBindTableEntityToConcurrentlyUpdatedValue<BindTableEntityToConcurrentlyUpdatedPocoTableEntity>();
