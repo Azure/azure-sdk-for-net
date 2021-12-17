@@ -207,7 +207,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 null, null, "0f9c97a2f0bf4706afe87a14e0797b11",
                 signature: "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561",
                 origin: TestUri.Host);
-            var options = new WebPubSubValidationOptions($"Endpoint={TestUri};AccessKey={accessKey};Version=1.0;");
+            var options = new ValidationOptions($"Endpoint={TestUri};AccessKey={accessKey};Version=1.0;");
             var result = connectionContext.IsValidSignature(options);
             Assert.AreEqual(valid, result);
         }
@@ -244,7 +244,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 null, null, "0f9c97a2f0bf4706afe87a14e0797b11",
                 signature: "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561",
                 origin: TestUri.Host);
-            var options = new WebPubSubValidationOptions($"Endpoint={TestUri};Version=1.0;");
+            var options = new ValidationOptions($"Endpoint={TestUri};Version=1.0;");
             var result = connectionContext.IsValidSignature(options);
             Assert.True(result);
         }
@@ -256,7 +256,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 WebPubSubEventType.System,
                 null, null, "0f9c97a2f0bf4706afe87a14e0797b11",
                 origin: TestUri.Host);
-            var options = new WebPubSubValidationOptions($"Endpoint={TestUri};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;");
+            var options = new ValidationOptions($"Endpoint={TestUri};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;");
             var result = connectionContext.IsValidSignature(options);
             Assert.False(result);
         }
@@ -284,7 +284,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         [TestCase("http://localhost", false)]
         public void TestAbuseProtectionCompare(string requestHost, bool expected)
         {
-            var options = new WebPubSubValidationOptions($"Endpoint=https://my-host.com;AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;");
+            var options = new ValidationOptions($"Endpoint=https://my-host.com;AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;");
 
             var result = false;
             if (options.ContainsHost(requestHost))
