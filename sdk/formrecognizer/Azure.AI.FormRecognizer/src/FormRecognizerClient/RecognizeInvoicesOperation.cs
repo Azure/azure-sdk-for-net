@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public class RecognizeInvoicesOperation : Operation<RecognizedFormCollection>, IOperationStatePoller<RecognizedFormCollection>
     {
-        private readonly OperationSubclientImplementation<RecognizedFormCollection> _operationSubclientImplementation;
+        private readonly OperationImplementation<RecognizedFormCollection> _operationImplementation;
 
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
         private readonly FormRecognizerRestClient _serviceClient;
@@ -35,17 +35,17 @@ namespace Azure.AI.FormRecognizer.Models
         /// <remarks>
         /// This property can be accessed only after the operation completes successfully (HasValue is true).
         /// </remarks>
-        public override RecognizedFormCollection Value => _operationSubclientImplementation.Value;
+        public override RecognizedFormCollection Value => _operationImplementation.Value;
 
         /// <summary>
         /// Returns true if the long-running operation completed.
         /// </summary>
-        public override bool HasCompleted => _operationSubclientImplementation.HasCompleted;
+        public override bool HasCompleted => _operationImplementation.HasCompleted;
 
         /// <summary>
         /// Returns true if the long-running operation completed successfully and has produced final result (accessible by Value property).
         /// </summary>
-        public override bool HasValue => _operationSubclientImplementation.HasValue;
+        public override bool HasValue => _operationImplementation.HasValue;
 
         /// <summary>
         /// The last HTTP response received from the server.
@@ -55,7 +55,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// An instance of <see cref="RecognizeInvoicesOperation"/> sends requests to a server in UpdateStatusAsync, UpdateStatus, and other methods.
         /// Responses from these requests can be accessed using GetRawResponse.
         /// </remarks>
-        public override Response GetRawResponse() => _operationSubclientImplementation.RawResponse;
+        public override Response GetRawResponse() => _operationImplementation.RawResponse;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RecognizeInvoicesOperation"/> class which
@@ -71,7 +71,7 @@ namespace Azure.AI.FormRecognizer.Models
             Id = operationId;
             _serviceClient = client.ServiceClient;
             _diagnostics = client.Diagnostics;
-            _operationSubclientImplementation = new(_diagnostics, this, rawResponse: null);
+            _operationImplementation = new(_diagnostics, this, rawResponse: null);
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Azure.AI.FormRecognizer.Models
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
-            _operationSubclientImplementation = new(_diagnostics, this, rawResponse: null);
+            _operationImplementation = new(_diagnostics, this, rawResponse: null);
 
             // TODO: Add validation here
             // https://github.com/Azure/azure-sdk-for-net/issues/10385
@@ -108,7 +108,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
         public override async ValueTask<Response<RecognizedFormCollection>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
-            await _operationSubclientImplementation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            await _operationImplementation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Periodically calls the server till the long-running operation completes.
@@ -124,7 +124,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
         public override async ValueTask<Response<RecognizedFormCollection>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
-            await _operationSubclientImplementation.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
+            await _operationImplementation.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Calls the server to get updated status of the long-running operation.
@@ -135,7 +135,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// This operation will update the value returned from GetRawResponse and might update HasCompleted, HasValue, and Value.
         /// </remarks>
         public override Response UpdateStatus(CancellationToken cancellationToken = default) =>
-            _operationSubclientImplementation.UpdateStatus(cancellationToken);
+            _operationImplementation.UpdateStatus(cancellationToken);
 
         /// <summary>
         /// Calls the server to get updated status of the long-running operation.
@@ -146,7 +146,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// This operation will update the value returned from GetRawResponse and might update HasCompleted, HasValue, and Value.
         /// </remarks>
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
-            await _operationSubclientImplementation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
+            await _operationImplementation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
 
         async ValueTask<OperationState<RecognizedFormCollection>> IOperationStatePoller<RecognizedFormCollection>.PollOperationStateAsync(bool async, CancellationToken cancellationToken)
         {
