@@ -27,6 +27,5 @@
     
     <Compile Include="..\..\Azure.Data.Tables\tests\TablesTestEnvironment.cs" LinkBase="Shared" />
     <Compile Include="..\..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\tests\shared\*.cs" LinkBase="Shared" />
-    <Compile Remove="WebJobsShared\**" />
   </ItemGroup>
 </Project>
