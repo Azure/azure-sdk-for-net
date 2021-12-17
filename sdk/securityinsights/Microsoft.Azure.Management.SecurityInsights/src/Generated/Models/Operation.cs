@@ -31,10 +31,15 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </summary>
         /// <param name="display">Properties of the operation</param>
         /// <param name="name">Name of the operation</param>
-        public Operation(OperationDisplay display = default(OperationDisplay), string name = default(string))
+        /// <param name="origin">The origin of the operation</param>
+        /// <param name="isDataAction">Indicates whether the operation is a
+        /// data action</param>
+        public Operation(OperationDisplay display = default(OperationDisplay), string name = default(string), string origin = default(string), bool? isDataAction = default(bool?))
         {
             Display = display;
             Name = name;
+            Origin = origin;
+            IsDataAction = isDataAction;
             CustomInit();
         }
 
@@ -54,6 +59,18 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the origin of the operation
+        /// </summary>
+        [JsonProperty(PropertyName = "origin")]
+        public string Origin { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether the operation is a data action
+        /// </summary>
+        [JsonProperty(PropertyName = "isDataAction")]
+        public bool? IsDataAction { get; set; }
 
     }
 }
