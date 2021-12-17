@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using Azure.Data.Tables;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests.Samples
@@ -11,7 +13,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests.Samples
     public class OutputSingle
     {
         [FunctionName("OutputSingle")]
-        public static void Run([Table("MyTable")] out TableEntity entity)
+        public static void Run(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "GET")] HttpRequest request,
+            [Table("MyTable")] out TableEntity entity)
         {
             entity = new TableEntity("<PartitionKey>", "<PartitionKey>")
             {

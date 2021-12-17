@@ -3,6 +3,9 @@
 
 using System.Threading.Tasks;
 using Azure.Data.Tables;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.Azure.WebJobs.Extensions.Http;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests.Samples
 {
@@ -10,11 +13,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests.Samples
     public class BindTableClient
     {
         [FunctionName("BindTableClient")]
-        public static async Task Run([Table("MyTable")] TableClient client)
+        public static async Task Run(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "POST")] HttpRequest request,
+            [Table("MyTable")] TableClient client)
         {
             await client.AddEntityAsync(new TableEntity("<PartitionKey>", "<PartitionKey>")
             {
-                ["Column"] = "Value"
+                ["Text"] = request.GetEncodedPathAndQuery()
             });
         }
     }

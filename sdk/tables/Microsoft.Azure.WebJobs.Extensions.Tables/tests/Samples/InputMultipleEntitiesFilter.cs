@@ -3,6 +3,8 @@
 
 using System.Collections.Generic;
 using Azure.Data.Tables;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests.Samples
@@ -12,7 +14,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests.Samples
     public class InputMultipleEntitiesFilter
     {
         [FunctionName("InputMultipleEntitiesFilter")]
-        public static void Run([Table("MyTable", "<PartitionKey>", Filter = "Text ne ''")] IEnumerable<TableEntity> entities, ILogger log)
+        public static void Run(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "GET")] HttpRequest request,
+            [Table("MyTable", "<PartitionKey>", Filter = "Text ne ''")] IEnumerable<TableEntity> entities, ILogger log)
         {
             foreach (var entity in entities)
             {

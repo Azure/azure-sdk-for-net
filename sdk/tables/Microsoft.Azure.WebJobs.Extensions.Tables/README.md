@@ -9,7 +9,7 @@ This extension provides functionality for accessing Azure Tables in Azure Functi
 Install the Storage Blobs extension with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.WebJobs.Extensions.Tables --prerelease
+dotnet add package Microsoft.Azure.WebJobs.Extensions.Tables --prerelease
 ```
 
 ### Prerequisites
@@ -95,13 +95,19 @@ Please follow the [input binding tutorial](https://docs.microsoft.com/azure/azur
 
 ## Examples
 
+Tables provides only bindings. The table binding can't trigger function by itself. It can only read or write entries to the table.
+
+In the following example we use [HTTP trigger][https://docs.microsoft.com/azure/azure-functions/functions-bindings-http-webhook-trigger?tabs=csharp] to invoke the function.
+
 ### Binding to a single entity
 
 ```C# Snippet:InputSingle
 public class InputSingle
 {
     [FunctionName("InputSingle")]
-    public static void Run([Table("MyTable", "<PartitionKey>", "<RowKey>")] TableEntity entity, ILogger log)
+    public static void Run(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "GET")] HttpRequest request,
+        [Table("MyTable", "<PartitionKey>", "<RowKey>")] TableEntity entity, ILogger log)
     {
         log.LogInformation($"PK={entity.PartitionKey}, RK={entity.RowKey}, Text={entity["Text"]}");
     }
@@ -122,7 +128,9 @@ public class MyEntity
 public class InputSingleModel
 {
     [FunctionName("InputSingleModel")]
-    public static void Run([Table("MyTable", "<PartitionKey>", "<RowKey>")] MyEntity entity, ILogger log)
+    public static void Run(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "GET")] HttpRequest request,
+        [Table("MyTable", "<PartitionKey>", "<RowKey>")] MyEntity entity, ILogger log)
     {
         log.LogInformation($"PK={entity.PartitionKey}, RK={entity.RowKey}, Text={entity.Text}");
     }
@@ -135,7 +143,9 @@ public class InputSingleModel
 public class InputMultipleEntitiesFilter
 {
     [FunctionName("InputMultipleEntitiesFilter")]
-    public static void Run([Table("MyTable", "<PartitionKey>", Filter = "Text ne ''")] IEnumerable<TableEntity> entities, ILogger log)
+    public static void Run(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "GET")] HttpRequest request,
+        [Table("MyTable", "<PartitionKey>", Filter = "Text ne ''")] IEnumerable<TableEntity> entities, ILogger log)
     {
         foreach (var entity in entities)
         {
@@ -151,7 +161,9 @@ public class InputMultipleEntitiesFilter
 public class OutputSingle
 {
     [FunctionName("OutputSingle")]
-    public static void Run([Table("MyTable")] out TableEntity entity)
+    public static void Run(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "GET")] HttpRequest request,
+        [Table("MyTable")] out TableEntity entity)
     {
         entity = new TableEntity("<PartitionKey>", "<PartitionKey>")
         {
@@ -175,7 +187,9 @@ public class MyEntity
 public class OutputSingleModel
 {
     [FunctionName("OutputSingleModel")]
-    public static void Run([Table("MyTable")] out MyEntity entity)
+    public static void Run(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "GET")] HttpRequest request,
+        [Table("MyTable")] out MyEntity entity)
     {
         entity = new MyEntity()
         {
@@ -193,7 +207,9 @@ public class OutputSingleModel
 public class OutputMultiple
 {
     [FunctionName("OutputMultiple")]
-    public static void Run([Table("MyTable")] IAsyncCollector<TableEntity> collector)
+    public static void Run(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "GET")] HttpRequest request,
+        [Table("MyTable")] IAsyncCollector<TableEntity> collector)
     {
         for (int i = 0; i < 10; i++)
         {
@@ -220,7 +236,9 @@ public class MyEntity
 public class OutputMultipleModel
 {
     [FunctionName("OutputMultipleModel")]
-    public static void Run([Table("MyTable")] IAsyncCollector<MyEntity> collector)
+    public static void Run(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "POST")] HttpRequest request,
+        [Table("MyTable")] IAsyncCollector<MyEntity> collector)
     {
         for (int i = 0; i < 10; i++)
         {
@@ -243,11 +261,13 @@ Use a TableClient method parameter to access the table by using the Azure Tables
 public class BindTableClient
 {
     [FunctionName("BindTableClient")]
-    public static async Task Run([Table("MyTable")] TableClient client)
+    public static async Task Run(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "POST")] HttpRequest request,
+        [Table("MyTable")] TableClient client)
     {
         await client.AddEntityAsync(new TableEntity("<PartitionKey>", "<PartitionKey>")
         {
-            ["Column"] = "Value"
+            ["Text"] = request.GetEncodedPathAndQuery()
         });
     }
 }

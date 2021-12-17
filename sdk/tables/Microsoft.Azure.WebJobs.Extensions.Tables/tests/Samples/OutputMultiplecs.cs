@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using Azure.Data.Tables;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Azure.WebJobs.Extensions.Http;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests.Samples
 {
@@ -9,7 +11,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests.Samples
     public class OutputMultiple
     {
         [FunctionName("OutputMultiple")]
-        public static void Run([Table("MyTable")] IAsyncCollector<TableEntity> collector)
+        public static void Run(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "POST")] HttpRequest request,
+            [Table("MyTable")] IAsyncCollector<TableEntity> collector)
         {
             for (int i = 0; i < 10; i++)
             {
