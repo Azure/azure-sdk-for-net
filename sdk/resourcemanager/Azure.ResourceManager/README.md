@@ -239,7 +239,7 @@ else
 }
 ```
 
-Another way to do this is by using `GetIfExists()` which will avoid the race condition mentioned above:
+Another way to do this is by using `GetIfExistsAsync()` which will avoid the race condition mentioned above:
 
 ```C# Snippet:Readme_TryGetRG
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
@@ -347,6 +347,6 @@ whether you need to provide a CLA and decorate the PR appropriately
 bot. You will only need to do this once across all repositories using
 our CLA.
 
-This project has adopted the Microsoft Open Source Code of Conduct. For
-more information see the Code of Conduct FAQ or contact
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For
+more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact
 <opencode@microsoft.com> with any additional questions or comments.
