@@ -71,16 +71,25 @@ namespace Azure.Core.TestFramework
                 EnvironmentVariables =
                 {
                     ["ASPNETCORE_URLS"] = $"http://{IpAddress}:0;https://{IpAddress}:0",
-                    ["Logging__LogLevel__Microsoft"] = "Information"
+                    ["Logging__LogLevel__Microsoft"] = "Information",
+                    ["ASPNETCORE_Kestrel__Certificates__Default__Path"] = Path.Combine(
+                        TestEnvironment.RepositoryRoot,
+                        "eng",
+                        "common",
+                        "testproxy",
+                        "dotnet-devcert.pfx"),
+                    ["ASPNETCORE_Kestrel__Certificates__Default__Password"] = "password"
                 }
             };
 
-            if (!TestEnvironment.GlobalIsRunningInCI)
+            _testProxyProcess = Process.Start(testProxyProcessInfo);
+
+            if (_testProxyProcess.HasExited)
             {
-                ImportDevCertIfNeeded();
+                // if the process immediately exits, surface the error
+                throw new InvalidOperationException($"Failed to start the test proxy: {_testProxyProcess.StandardError.ReadLine()}");
             }
 
-            _testProxyProcess = Process.Start(testProxyProcessInfo);
             ProcessTracker.Add(_testProxyProcess);
             _ = Task.Run(
                 () =>
@@ -172,46 +181,6 @@ namespace Azure.Core.TestFramework
                 }
 
                 return shared;
-            }
-        }
-
-        private static void ImportDevCertIfNeeded()
-        {
-            ProcessStartInfo checkCertProcessInfo = new ProcessStartInfo(
-                s_dotNetExe,
-                "dev-certs https --check --verbose")
-            {
-                UseShellExecute = false,
-                RedirectStandardOutput = true
-            };
-
-            Process checkCertProcess = Process.Start(checkCertProcessInfo);
-            string output = checkCertProcess.StandardOutput.ReadToEnd();
-            if (!output.Contains("A valid certificate was found.") &&
-                // .NET 6.0 SDK has a different output
-                !output.Contains("CN=localhost"))
-            {
-                TestContext.Progress.WriteLine("Importing certificate...");
-                checkCertProcess.WaitForExit();
-                var certPath = Path.Combine(TestEnvironment.RepositoryRoot, "eng", "common", "testproxy", "dotnet-devcert.pfx");
-                ProcessStartInfo processInfo = new ProcessStartInfo(
-                    s_dotNetExe,
-                    $"dev-certs https --clean --import {certPath} --password=\"password\"")
-                {
-                    UseShellExecute = false
-                };
-                Process.Start(processInfo).WaitForExit();
-                processInfo = new ProcessStartInfo(
-                    s_dotNetExe,
-                    $"dev-certs https --trust")
-                {
-                    UseShellExecute = false
-                };
-                Process.Start(processInfo).WaitForExit();
-            }
-            else
-            {
-                checkCertProcess.WaitForExit();
             }
         }
 

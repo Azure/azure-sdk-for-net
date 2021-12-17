@@ -29,7 +29,7 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-03-05T16:18:36.8937492-08:00",
+    "DateTimeOffsetNow": "2021-03-06T00:18:36.8937492Z",
     "EVENT_GRID_TOPIC_ENDPOINT": "https://joloveventgridtopic.westus2-1.eventgrid.azure.net/api/events",
     "EVENT_GRID_TOPIC_KEY": "Kg==",
     "RandomSeed": "1238298872"
