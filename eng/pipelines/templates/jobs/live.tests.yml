@@ -126,6 +126,7 @@ jobs:
           /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
           /p:BuildInParallel=${{ parameters.BuildInParallel }}
           /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}
+          /p:EnableSourceLink=false
           $(AdditionalTestArguments)
 
         displayName: "Build & Test (all tests for $(TestTargetFramework))"
