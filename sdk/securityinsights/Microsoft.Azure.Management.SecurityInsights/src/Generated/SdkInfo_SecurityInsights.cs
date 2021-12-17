@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
       public static readonly String GithubCommidId = "f727c69fa6aa618d706adae3fe8c1222d08d7a4d";
-        public static readonly String CodeGenerationErrors = "";
+      public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
   }
