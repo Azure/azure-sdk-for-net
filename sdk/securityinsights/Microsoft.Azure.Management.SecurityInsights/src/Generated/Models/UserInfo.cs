@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.SecurityInsights.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -30,10 +29,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// <summary>
         /// Initializes a new instance of the UserInfo class.
         /// </summary>
-        /// <param name="objectId">The object id of the user.</param>
         /// <param name="email">The email of the user.</param>
         /// <param name="name">The name of the user.</param>
-        public UserInfo(System.Guid? objectId, string email = default(string), string name = default(string))
+        /// <param name="objectId">The object id of the user.</param>
+        public UserInfo(string email = default(string), string name = default(string), System.Guid? objectId = default(System.Guid?))
         {
             Email = email;
             Name = name;
@@ -64,18 +63,5 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         [JsonProperty(PropertyName = "objectId")]
         public System.Guid? ObjectId { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (ObjectId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ObjectId");
-            }
-        }
     }
 }

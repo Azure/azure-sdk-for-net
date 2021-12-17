@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -34,6 +36,7 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// </summary>
         /// <param name="targetResourceName">Gets or sets the target Resource
         /// name.</param>
+        /// <param name="tags">Gets or sets the Resource tags.</param>
         /// <param name="domainNameLabel">Gets or sets the domain name
         /// label.</param>
         /// <param name="fqdn">Gets or sets the fully qualified domain
@@ -42,9 +45,10 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// allocation method.</param>
         /// <param name="sku">Gets or sets public IP sku.</param>
         /// <param name="zones">Gets or sets public IP zones.</param>
-        public PublicIPAddressResourceSettings(string targetResourceName, string domainNameLabel = default(string), string fqdn = default(string), string publicIpAllocationMethod = default(string), string sku = default(string), string zones = default(string))
+        public PublicIPAddressResourceSettings(string targetResourceName, IDictionary<string, string> tags = default(IDictionary<string, string>), string domainNameLabel = default(string), string fqdn = default(string), string publicIpAllocationMethod = default(string), string sku = default(string), string zones = default(string))
             : base(targetResourceName)
         {
+            Tags = tags;
             DomainNameLabel = domainNameLabel;
             Fqdn = fqdn;
             PublicIpAllocationMethod = publicIpAllocationMethod;
@@ -57,6 +61,12 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the Resource tags.
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Gets or sets the domain name label.

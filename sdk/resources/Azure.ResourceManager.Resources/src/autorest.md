@@ -29,7 +29,17 @@ request-path-to-parent:
   /providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf: /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}
   /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf: /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}
   /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}/logs: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
-
+request-path-to-scope-resource-types:
+  /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}:
+    - subscriptions
+    - resourceGroups
+    - managementGroups
+    - tenant
+  /{scope}/providers/Microsoft.Resources/deployments:
+    - subscriptions
+    - resourceGroups
+    - managementGroups
+    - tenant
 override-operation-name:
   DeploymentOperations_ListAtScope: GetDeploymentOperations
   DeploymentOperations_GetAtScope: GetDeploymentOperation

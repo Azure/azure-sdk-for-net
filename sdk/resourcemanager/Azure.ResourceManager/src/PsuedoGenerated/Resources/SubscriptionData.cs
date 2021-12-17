@@ -11,28 +11,14 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing the subscription data model.
     /// </summary>
-    public partial class SubscriptionData : TrackedResource
+    public partial class SubscriptionData
     {
-        /// <summary> Initializes a new instance of <see cref="SubscriptionData"/> class. </summary>
-        /// <param name="id"> The subscription id. </param>
-        /// <param name="displayName"> The subscription name. </param>
-        /// <param name="tags"> The tags attached to the subscription. </param>
-        /// <param name="resourceType"> The subscription resource type. </param>
-        internal SubscriptionData(ResourceIdentifier id,
-            string displayName,
-            IDictionary<string, string> tags,
-            string resourceType = "Microsoft.Resources/subscriptions") : base(id, displayName, resourceType, tags, null)
-        {
-            ManagedByTenants = new ChangeTrackingList<ManagedByTenant>();
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionData"/> class.
         /// </summary>
         /// <param name="id"> The subscription id. </param>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="displayName"> The subscription name. </param>
-        /// <param name="resourceType"> The subscription resource type. </param>
         /// <param name="tenantId"> The subscription tenant ID. </param>
         /// <param name="state"> The subscription state. Possible values are Enabled, Warned, PastDue, Disabled, and Deleted. </param>
         /// <param name="subscriptionPolicies"> The subscription policies. </param>
@@ -47,9 +33,7 @@ namespace Azure.ResourceManager.Resources
             SubscriptionPolicies subscriptionPolicies,
             string authorizationSource,
             IReadOnlyList<ManagedByTenant> managedByTenants,
-            IDictionary<string, string> tags,
-            string resourceType = "Microsoft.Resources/subscriptions")
-            : base(id, displayName, resourceType, tags, null)
+            IDictionary<string, string> tags)
         {
             SubscriptionGuid = subscriptionId;
             DisplayName = displayName;
@@ -58,6 +42,8 @@ namespace Azure.ResourceManager.Resources
             SubscriptionPolicies = subscriptionPolicies;
             AuthorizationSource = authorizationSource;
             ManagedByTenants = managedByTenants;
+            Tags = tags;
+            Id = id;
         }
 
         /// <summary>
@@ -94,5 +80,13 @@ namespace Azure.ResourceManager.Resources
         /// Gets an array containing the tenants managing the subscription.
         /// </summary>
         public IReadOnlyList<ManagedByTenant> ManagedByTenants { get; }
+
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
+
+        /// <summary>
+        /// Gets the ARM resource identifier.
+        /// </summary>
+        public virtual ResourceIdentifier Id { get; }
     }
 }
