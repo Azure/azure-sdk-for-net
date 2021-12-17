@@ -11,11 +11,14 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/ea0f7b072ad3aaff203e
 clear-output-folder: true
 skip-csproj: true
 output-folder: Generated/
+save-inputs: true
 mgmt-debug:
   suppress-list-exception: true
+use: D:/Autorest-Dev/autorest.csharp/artifacts/bin/AutoRest.CSharp/Debug/netcoreapp3.1/
+no-property-type-replacement: 
+  - PrivateEndpoint
 directive:
   - rename-operation:
       from: ApiManagementOperations_List
       to: Operations_List
-
 ```
