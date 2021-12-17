@@ -15,8 +15,8 @@ namespace Azure.Core
     /// A helper class used to build long-running operation instances. In order to use this helper:
     /// <list type="number">
     ///   <item>Make sure your LRO implements the <see cref="IOperation{T}"/> interface.</item>
-    ///   <item>Add a private <see cref="OperationInternal{T}"/> field to your LRO, and instantiate it during construction.</item>
-    ///   <item>Delegate method calls to the <see cref="OperationInternal{T}"/> implementations.</item>
+    ///   <item>Add a private <see cref="OperationSubclientImplementation{T}"/> field to your LRO, and instantiate it during construction.</item>
+    ///   <item>Delegate method calls to the <see cref="OperationSubclientImplementation{T}"/> implementations.</item>
     /// </list>
     /// Supported members:
     /// <list type="bullet">
@@ -24,19 +24,19 @@ namespace Azure.Core
     ///     <description><see cref="HasValue"/></description>
     ///   </item>
     ///   <item>
-    ///     <description><see cref="OperationInternalBase.HasCompleted"/></description>
+    ///     <description><see cref="OperationSubclientImplementationBase.HasCompleted"/></description>
     ///   </item>
     ///   <item>
     ///     <description><see cref="Value"/></description>
     ///   </item>
     ///   <item>
-    ///     <description><see cref="OperationInternalBase.RawResponse"/>, used for <see cref="Operation.GetRawResponse"/></description>
+    ///     <description><see cref="OperationSubclientImplementationBase.RawResponse"/>, used for <see cref="Operation.GetRawResponse"/></description>
     ///   </item>
     ///   <item>
-    ///     <description><see cref="OperationInternalBase.UpdateStatus"/></description>
+    ///     <description><see cref="OperationSubclientImplementationBase.UpdateStatus"/></description>
     ///   </item>
     ///   <item>
-    ///     <description><see cref="OperationInternalBase.UpdateStatusAsync(CancellationToken)"/></description>
+    ///     <description><see cref="OperationSubclientImplementationBase.UpdateStatusAsync(CancellationToken)"/></description>
     ///   </item>
     ///   <item>
     ///     <description><see cref="WaitForCompletionAsync(CancellationToken)"/></description>
@@ -48,7 +48,7 @@ namespace Azure.Core
     /// </summary>
     /// <typeparam name="T">The final result of the long-running operation. Must match the type used in <see cref="Operation{T}"/>.</typeparam>
 #pragma warning disable SA1649 // File name should match first type name
-    internal class OperationInternal<T> : OperationInternalBase
+    internal class OperationSubclientImplementation<T> : OperationSubclientImplementationBase
 #pragma warning restore SA1649
     {
         private readonly IOperation<T> _operation;
@@ -56,12 +56,12 @@ namespace Azure.Core
         private T? _value;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OperationInternal{T}"/> class.
+        /// Initializes a new instance of the <see cref="OperationSubclientImplementation{T}"/> class.
         /// </summary>
         /// <param name="clientDiagnostics">Used for diagnostic scope and exception creation. This is expected to be the instance created during the construction of your main client.</param>
         /// <param name="operation">The long-running operation making use of this class. Passing "<c>this</c>" is expected.</param>
         /// <param name="rawResponse">
-        /// The initial value of <see cref="OperationInternalBase.RawResponse"/>. Usually, long-running operation objects can be instantiated in two ways:
+        /// The initial value of <see cref="OperationSubclientImplementationBase.RawResponse"/>. Usually, long-running operation objects can be instantiated in two ways:
         /// <list type="bullet">
         ///   <item>
         ///   When calling a client's "<c>Start&lt;OperationName&gt;</c>" method, a service call is made to start the operation, and an <see cref="Operation{T}"/> instance is returned.
@@ -77,7 +77,7 @@ namespace Azure.Core
         /// parameter <paramref name="operation"/>.
         /// </param>
         /// <param name="scopeAttributes">The attributes to use during diagnostic scope creation.</param>
-        public OperationInternal(ClientDiagnostics clientDiagnostics, IOperation<T> operation, Response rawResponse, string? operationTypeName = null, IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null)
+        public OperationSubclientImplementation(ClientDiagnostics clientDiagnostics, IOperation<T> operation, Response rawResponse, string? operationTypeName = null, IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null)
             : base(clientDiagnostics, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes)
         {
             _operation = operation;
@@ -125,10 +125,10 @@ namespace Azure.Core
             }
         }
         /// <summary>
-        /// Periodically calls <see cref="OperationInternalBase.UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes. The interval
-        /// between calls is defined by the property <see cref="OperationInternalBase.DefaultPollingInterval"/>, but it can change based on information returned
+        /// Periodically calls <see cref="OperationSubclientImplementationBase.UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes. The interval
+        /// between calls is defined by the property <see cref="OperationSubclientImplementationBase.DefaultPollingInterval"/>, but it can change based on information returned
         /// from the server. After each service call, a retry-after header may be returned to communicate that there is no reason to poll
-        /// for status change until the specified time has passed. In this case, the maximum value between the <see cref="OperationInternalBase.DefaultPollingInterval"/>
+        /// for status change until the specified time has passed. In this case, the maximum value between the <see cref="OperationSubclientImplementationBase.DefaultPollingInterval"/>
         /// property and the retry-after header is chosen as the wait interval. Headers supported are: "Retry-After", "retry-after-ms",
         /// and "x-ms-retry-after-ms".
         /// <example>Usage example:
@@ -145,7 +145,7 @@ namespace Azure.Core
             await WaitForCompletionAsync(DefaultPollingInterval, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Periodically calls <see cref="OperationInternalBase.UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes. The interval
+        /// Periodically calls <see cref="OperationSubclientImplementationBase.UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes. The interval
         /// between calls is defined by the parameter <paramref name="pollingInterval"/>, but it can change based on information returned
         /// from the server. After each service call, a retry-after header may be returned to communicate that there is no reason to poll
         /// for status change until the specified time has passed. In this case, the maximum value between the <paramref name="pollingInterval"/>
@@ -169,9 +169,9 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Sets the <see cref="OperationInternal{T}"/> state immediately.
+        /// Sets the <see cref="OperationSubclientImplementation{T}"/> state immediately.
         /// </summary>
-        /// <param name="state">The <see cref="OperationState{T}"/> used to set <see cref="OperationInternalBase.HasCompleted"/> and other members.</param>
+        /// <param name="state">The <see cref="OperationState{T}"/> used to set <see cref="OperationSubclientImplementationBase.HasCompleted"/> and other members.</param>
         public void SetState(OperationState<T> state)
         {
             if (state.HasCompleted && state.HasSucceeded)
@@ -193,7 +193,7 @@ namespace Azure.Core
     }
 
     /// <summary>
-    /// An interface used by <see cref="OperationInternal{T}"/> for making service calls and updating state. It's expected that
+    /// An interface used by <see cref="OperationSubclientImplementation{T}"/> for making service calls and updating state. It's expected that
     /// your long-running operation classes implement this interface.
     /// </summary>
     /// <typeparam name="T">The final result of the long-running operation. Must match the type used in <see cref="Operation{T}"/>.</typeparam>
@@ -201,8 +201,8 @@ namespace Azure.Core
     {
         /// <summary>
         /// Calls the service and updates the state of the long-running operation. Properties directly handled by the
-        /// <see cref="OperationInternal{T}"/> class, such as <see cref="OperationInternalBase.RawResponse"/> or
-        /// <see cref="OperationInternal{T}.Value"/>, don't need to be updated. Operation-specific properties, such
+        /// <see cref="OperationSubclientImplementation{T}"/> class, such as <see cref="OperationSubclientImplementationBase.RawResponse"/> or
+        /// <see cref="OperationSubclientImplementation{T}.Value"/>, don't need to be updated. Operation-specific properties, such
         /// as "<c>CreateOn</c>" or "<c>LastModified</c>", must be manually updated by the operation implementing this
         /// method.
         /// <example>Usage example:
@@ -232,7 +232,7 @@ namespace Azure.Core
     }
 
     /// <summary>
-    /// A helper structure passed to <see cref="OperationInternal{T}"/> to indicate the current operation state. This structure must be
+    /// A helper structure passed to <see cref="OperationSubclientImplementation{T}"/> to indicate the current operation state. This structure must be
     /// instantiated by one of its static methods, depending on the operation state:
     /// <list type="bullet">
     ///   <item>Use <see cref="OperationState{T}.Success"/> when the operation has completed successfully.</item>
@@ -287,7 +287,7 @@ namespace Azure.Core
         /// <param name="rawResponse">The HTTP response obtained during the status update.</param>
         /// <param name="operationFailedException">
         /// The exception to throw from <c>UpdateStatus</c> because of the operation failure. The same exception will be thrown when
-        /// <see cref="OperationInternal{T}.Value"/> is called. If left <c>null</c>, a default exception is created based on the
+        /// <see cref="OperationSubclientImplementation{T}.Value"/> is called. If left <c>null</c>, a default exception is created based on the
         /// <paramref name="rawResponse"/> parameter.
         /// </param>
         /// <returns>A new <see cref="OperationState{T}"/> instance.</returns>

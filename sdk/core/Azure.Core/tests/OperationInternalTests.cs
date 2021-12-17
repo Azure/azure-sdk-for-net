@@ -28,7 +28,7 @@ namespace Azure.Core.Tests
 
         public OperationInternalTests(bool isOfT) { this.isOfT = isOfT; }
 
-        private OperationInternalBase CreateOperation(
+        private OperationSubclientImplementationBase CreateOperation(
             bool isOfT,
             UpdateResult result,
             Func<MockResponse> responseFactory = null,

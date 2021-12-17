@@ -12,7 +12,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Core
 {
-    internal abstract class OperationInternalBase
+    internal abstract class OperationSubclientImplementationBase
     {
         private readonly ClientDiagnostics _diagnostics;
         private readonly string _updateStatusScopeName;
@@ -21,7 +21,7 @@ namespace Azure.Core
         private const string RetryAfterMsHeaderName = "retry-after-ms";
         private const string XRetryAfterMsHeaderName = "x-ms-retry-after-ms";
 
-        protected OperationInternalBase(ClientDiagnostics clientDiagnostics, Response rawResponse, string operationTypeName, IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null)
+        protected OperationSubclientImplementationBase(ClientDiagnostics clientDiagnostics, Response rawResponse, string operationTypeName, IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null)
         {
             _diagnostics = clientDiagnostics;
             _updateStatusScopeName = $"{operationTypeName}.UpdateStatus";

@@ -16,42 +16,42 @@ namespace Azure.Core
     /// A helper class used to build long-running operation instances. In order to use this helper:
     /// <list type="number">
     ///   <item>Make sure your LRO implements the <see cref="IOperation"/> interface.</item>
-    ///   <item>Add a private <see cref="OperationInternal"/> field to your LRO, and instantiate it during construction.</item>
-    ///   <item>Delegate method calls to the <see cref="OperationInternal"/> implementations.</item>
+    ///   <item>Add a private <see cref="OperationSubclientImplementation"/> field to your LRO, and instantiate it during construction.</item>
+    ///   <item>Delegate method calls to the <see cref="OperationSubclientImplementation"/> implementations.</item>
     /// </list>
     /// Supported members:
     /// <list type="bullet">
     ///   <item>
-    ///     <description><see cref="OperationInternalBase.HasCompleted"/></description>
+    ///     <description><see cref="OperationSubclientImplementationBase.HasCompleted"/></description>
     ///   </item>
     ///   <item>
-    ///     <description><see cref="OperationInternalBase.RawResponse"/>, used for <see cref="Operation.GetRawResponse"/></description>
+    ///     <description><see cref="OperationSubclientImplementationBase.RawResponse"/>, used for <see cref="Operation.GetRawResponse"/></description>
     ///   </item>
     ///   <item>
-    ///     <description><see cref="OperationInternalBase.UpdateStatus"/></description>
+    ///     <description><see cref="OperationSubclientImplementationBase.UpdateStatus"/></description>
     ///   </item>
     ///   <item>
-    ///     <description><see cref="OperationInternalBase.UpdateStatusAsync(CancellationToken)"/></description>
+    ///     <description><see cref="OperationSubclientImplementationBase.UpdateStatusAsync(CancellationToken)"/></description>
     ///   </item>
     ///   <item>
-    ///     <description><see cref="OperationInternalBase.WaitForCompletionResponseAsync(CancellationToken)"/></description>
+    ///     <description><see cref="OperationSubclientImplementationBase.WaitForCompletionResponseAsync(CancellationToken)"/></description>
     ///   </item>
     ///   <item>
-    ///     <description><see cref="OperationInternalBase.WaitForCompletionResponseAsync(TimeSpan, CancellationToken)"/></description>
+    ///     <description><see cref="OperationSubclientImplementationBase.WaitForCompletionResponseAsync(TimeSpan, CancellationToken)"/></description>
     ///   </item>
     /// </list>
     /// </summary>
-    internal class OperationInternal : OperationInternalBase
+    internal class OperationSubclientImplementation : OperationSubclientImplementationBase
     {
         private readonly IOperation _operation;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OperationInternal"/> class.
+        /// Initializes a new instance of the <see cref="OperationSubclientImplementation"/> class.
         /// </summary>
         /// <param name="clientDiagnostics">Used for diagnostic scope and exception creation. This is expected to be the instance created during the construction of your main client.</param>
         /// <param name="operation">The long-running operation making use of this class. Passing "<c>this</c>" is expected.</param>
         /// <param name="rawResponse">
-        /// The initial value of <see cref="OperationInternalBase.RawResponse"/>. Usually, long-running operation objects can be instantiated in two ways:
+        /// The initial value of <see cref="OperationSubclientImplementationBase.RawResponse"/>. Usually, long-running operation objects can be instantiated in two ways:
         /// <list type="bullet">
         ///   <item>
         ///   When calling a client's "<c>Start&lt;OperationName&gt;</c>" method, a service call is made to start the operation, and an <see cref="Operation"/> instance is returned.
@@ -67,7 +67,7 @@ namespace Azure.Core
         /// parameter <paramref name="operation"/>.
         /// </param>
         /// <param name="scopeAttributes">The attributes to use during diagnostic scope creation.</param>
-        public OperationInternal(
+        public OperationSubclientImplementation(
             ClientDiagnostics clientDiagnostics,
             IOperation operation,
             Response rawResponse,
@@ -79,9 +79,9 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Sets the <see cref="OperationInternal"/> state immediately.
+        /// Sets the <see cref="OperationSubclientImplementation"/> state immediately.
         /// </summary>
-        /// <param name="state">The <see cref="OperationState"/> used to set <see cref="OperationInternalBase.HasCompleted"/> and other members.</param>
+        /// <param name="state">The <see cref="OperationState"/> used to set <see cref="OperationSubclientImplementationBase.HasCompleted"/> and other members.</param>
         public void SetState(OperationState state)
         {
             ApplyStateAsync(false, state.RawResponse, state.HasCompleted, state.HasSucceeded, state.OperationFailedException, throwIfFailed: false).EnsureCompleted();
@@ -95,14 +95,14 @@ namespace Azure.Core
     }
 
     /// <summary>
-    /// An interface used by <see cref="OperationInternal"/> for making service calls and updating state. It's expected that
+    /// An interface used by <see cref="OperationSubclientImplementation"/> for making service calls and updating state. It's expected that
     /// your long-running operation classes implement this interface.
     /// </summary>
     internal interface IOperation
     {
         /// <summary>
         /// Calls the service and updates the state of the long-running operation. Properties directly handled by the
-        /// <see cref="OperationInternal"/> class, such as <see cref="OperationInternalBase.RawResponse"/>
+        /// <see cref="OperationSubclientImplementation"/> class, such as <see cref="OperationSubclientImplementationBase.RawResponse"/>
         /// don't need to be updated. Operation-specific properties, such as "<c>CreateOn</c>" or "<c>LastModified</c>",
         /// must be manually updated by the operation implementing this method.
         /// <example>Usage example:
@@ -132,7 +132,7 @@ namespace Azure.Core
     }
 
     /// <summary>
-    /// A helper structure passed to <see cref="OperationInternal"/> to indicate the current operation state. This structure must be
+    /// A helper structure passed to <see cref="OperationSubclientImplementation"/> to indicate the current operation state. This structure must be
     /// instantiated by one of its static methods, depending on the operation state:
     /// <list type="bullet">
     ///   <item>Use <see cref="OperationState.Success"/> when the operation has completed successfully.</item>
