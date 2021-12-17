@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.Training
     /// <summary>
     /// Tracks the status of a long-running operation for copying a custom model into a target Form Recognizer resource.
     /// </summary>
-    public class CopyModelOperation : Operation<CustomFormModelInfo>, IOperation<CustomFormModelInfo>
+    public class CopyModelOperation : Operation<CustomFormModelInfo>, IOperationSubclientStateUpdatable<CustomFormModelInfo>
     {
         private readonly OperationSubclientImplementation<CustomFormModelInfo> _operationSubclientImplementation;
 
@@ -181,7 +181,7 @@ namespace Azure.AI.FormRecognizer.Training
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
             await _operationSubclientImplementation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
 
-        async ValueTask<OperationState<CustomFormModelInfo>> IOperation<CustomFormModelInfo>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
+        async ValueTask<OperationSubclientState<CustomFormModelInfo>> IOperationSubclientStateUpdatable<CustomFormModelInfo>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response<CopyOperationResult> response = async
                 ? await _serviceClient.GetCustomModelCopyResultAsync(new Guid(_modelId), new Guid(_resultId), cancellationToken).ConfigureAwait(false)
@@ -192,7 +192,7 @@ namespace Azure.AI.FormRecognizer.Training
 
             if (status == OperationStatus.Succeeded)
             {
-                return OperationState<CustomFormModelInfo>.Success(rawResponse,
+                return OperationSubclientState<CustomFormModelInfo>.Success(rawResponse,
                     ConvertValue(response.Value, _targetModelId, CustomFormModelStatus.Ready));
             }
             else if (status == OperationStatus.Failed)
@@ -201,10 +201,10 @@ namespace Azure.AI.FormRecognizer.Training
                     .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.CopyResult.Errors)
                     .ConfigureAwait(false);
 
-                return OperationState<CustomFormModelInfo>.Failure(rawResponse, requestFailedException);
+                return OperationSubclientState<CustomFormModelInfo>.Failure(rawResponse, requestFailedException);
             }
 
-            return OperationState<CustomFormModelInfo>.Pending(rawResponse);
+            return OperationSubclientState<CustomFormModelInfo>.Pending(rawResponse);
         }
 
         private static CustomFormModelInfo ConvertValue(CopyOperationResult result, string modelId, CustomFormModelStatus status)

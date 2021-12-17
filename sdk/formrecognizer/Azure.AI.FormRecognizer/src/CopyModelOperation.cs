@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary>
     /// Tracks the status of a long-running operation for copying a custom model into a target Form Recognizer resource.
     /// </summary>
-    public class CopyModelOperation : Operation<DocumentModel>, IOperation<DocumentModel>
+    public class CopyModelOperation : Operation<DocumentModel>, IOperationSubclientStateUpdatable<DocumentModel>
     {
         private readonly OperationSubclientImplementation<DocumentModel> _operationSubclientImplementation;
 
@@ -157,7 +157,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
             await _operationSubclientImplementation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
 
-        async ValueTask<OperationState<DocumentModel>> IOperation<DocumentModel>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
+        async ValueTask<OperationSubclientState<DocumentModel>> IOperationSubclientStateUpdatable<DocumentModel>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response<ModelOperation> response = async
                     ? await _serviceClient.GetOperationAsync(Id, cancellationToken).ConfigureAwait(false)
@@ -169,7 +169,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             if (status == DocumentOperationStatus.Succeeded)
             {
-                return OperationState<DocumentModel>.Success(rawResponse, response.Value.Result);
+                return OperationSubclientState<DocumentModel>.Success(rawResponse, response.Value.Result);
             }
             else if (status == DocumentOperationStatus.Failed)
             {
@@ -177,14 +177,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.Error)
                     .ConfigureAwait(false);
 
-                return OperationState<DocumentModel>.Failure(rawResponse, requestFailedException);
+                return OperationSubclientState<DocumentModel>.Failure(rawResponse, requestFailedException);
             }
             else if (status == DocumentOperationStatus.Canceled)
             {
-                return OperationState<DocumentModel>.Failure(rawResponse, new RequestFailedException("The operation was canceled so no value is available."));
+                return OperationSubclientState<DocumentModel>.Failure(rawResponse, new RequestFailedException("The operation was canceled so no value is available."));
             }
 
-            return OperationState<DocumentModel>.Pending(rawResponse);
+            return OperationSubclientState<DocumentModel>.Pending(rawResponse);
         }
     }
 }

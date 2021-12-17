@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.Training
     /// <summary>
     /// Tracks the status of a long-running operation for creating a custom model.
     /// </summary>
-    public class CreateCustomFormModelOperation : Operation<CustomFormModel>, IOperation<CustomFormModel>
+    public class CreateCustomFormModelOperation : Operation<CustomFormModel>, IOperationSubclientStateUpdatable<CustomFormModel>
     {
         private readonly OperationSubclientImplementation<CustomFormModel> _operationSubclientImplementation;
 
@@ -149,7 +149,7 @@ namespace Azure.AI.FormRecognizer.Training
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
             await _operationSubclientImplementation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
 
-        async ValueTask<OperationState<CustomFormModel>> IOperation<CustomFormModel>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
+        async ValueTask<OperationSubclientState<CustomFormModel>> IOperationSubclientStateUpdatable<CustomFormModel>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             // Include keys is always set to true -- the service does not have a use case for includeKeys: false.
             Response<Model> response = async
@@ -161,7 +161,7 @@ namespace Azure.AI.FormRecognizer.Training
 
             if (status == CustomFormModelStatus.Ready)
             {
-                return OperationState<CustomFormModel>.Success(rawResponse, new CustomFormModel(response.Value, _serviceVersion));
+                return OperationSubclientState<CustomFormModel>.Success(rawResponse, new CustomFormModel(response.Value, _serviceVersion));
             }
             else if (status == CustomFormModelStatus.Invalid)
             {
@@ -172,10 +172,10 @@ namespace Azure.AI.FormRecognizer.Training
                                                                       response.Value.TrainResult.Errors,
                                                                       $"Invalid model created with ID {response.Value.ModelInfo.ModelId}").ConfigureAwait(false);
 
-                return OperationState<CustomFormModel>.Failure(rawResponse, requestFailedException);
+                return OperationSubclientState<CustomFormModel>.Failure(rawResponse, requestFailedException);
             }
 
-            return OperationState<CustomFormModel>.Pending(rawResponse);
+            return OperationSubclientState<CustomFormModel>.Pending(rawResponse);
         }
     }
 }

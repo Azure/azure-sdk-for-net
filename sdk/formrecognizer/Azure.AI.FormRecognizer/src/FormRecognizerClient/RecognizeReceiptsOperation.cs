@@ -13,7 +13,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary>
     /// Tracks the status of a long-running operation for recognizing values from receipts.
     /// </summary>
-    public class RecognizeReceiptsOperation : Operation<RecognizedFormCollection>, IOperation<RecognizedFormCollection>
+    public class RecognizeReceiptsOperation : Operation<RecognizedFormCollection>, IOperationSubclientStateUpdatable<RecognizedFormCollection>
     {
         private readonly OperationSubclientImplementation<RecognizedFormCollection> _operationSubclientImplementation;
 
@@ -147,7 +147,7 @@ namespace Azure.AI.FormRecognizer.Models
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
             await _operationSubclientImplementation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
 
-        async ValueTask<OperationState<RecognizedFormCollection>> IOperation<RecognizedFormCollection>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
+        async ValueTask<OperationSubclientState<RecognizedFormCollection>> IOperationSubclientStateUpdatable<RecognizedFormCollection>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response<AnalyzeOperationResult> response = async
                 ? await _serviceClient.GetAnalyzeReceiptResultAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
@@ -158,7 +158,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (status == OperationStatus.Succeeded)
             {
-                return OperationState<RecognizedFormCollection>.Success(rawResponse,
+                return OperationSubclientState<RecognizedFormCollection>.Success(rawResponse,
                     ClientCommon.ConvertPrebuiltOutputToRecognizedForms(response.Value.AnalyzeResult));
             }
             else if (status == OperationStatus.Failed)
@@ -167,10 +167,10 @@ namespace Azure.AI.FormRecognizer.Models
                     .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.AnalyzeResult.Errors)
                     .ConfigureAwait(false);
 
-                return OperationState<RecognizedFormCollection>.Failure(rawResponse, requestFailedException);
+                return OperationSubclientState<RecognizedFormCollection>.Failure(rawResponse, requestFailedException);
             }
 
-            return OperationState<RecognizedFormCollection>.Pending(rawResponse);
+            return OperationSubclientState<RecognizedFormCollection>.Pending(rawResponse);
         }
     }
 }
