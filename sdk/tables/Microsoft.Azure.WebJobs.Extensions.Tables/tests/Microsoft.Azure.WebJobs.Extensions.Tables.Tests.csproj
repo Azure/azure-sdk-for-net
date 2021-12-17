@@ -9,6 +9,7 @@
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.Azure.WebJobs" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Http" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
   </ItemGroup>
