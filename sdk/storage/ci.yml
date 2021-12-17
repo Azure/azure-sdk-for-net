@@ -20,6 +20,7 @@ pr:
   paths:
     include:
     - sdk/storage/
+    - sdk/resourcemanager/
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
