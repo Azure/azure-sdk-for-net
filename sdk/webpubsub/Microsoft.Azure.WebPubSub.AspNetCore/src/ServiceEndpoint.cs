@@ -34,11 +34,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         public ServiceEndpoint(string connectionString, WebPubSubServiceClientOptions clientOptions = null)
         {
             CredentialKind = CredentialKind.ConnectionString;
-            if (connectionString == null)
-            {
-                return;
-            }
-            ConnectionString = connectionString;
+            ConnectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
             ClientOptions = clientOptions ?? new WebPubSubServiceClientOptions();
             (Endpoint, AccessKey) = ValidationOptions.ParseConnectionString(connectionString);
             _validationOptions.Add(connectionString);
@@ -53,8 +49,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         public ServiceEndpoint(Uri endpoint, TokenCredential credential, WebPubSubServiceClientOptions clientOptions = null)
         {
             CredentialKind = CredentialKind.TokenCredential;
-            Endpoint = endpoint;
-            TokenCredential = credential;
+            Endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
+            TokenCredential = credential ?? throw new ArgumentNullException(nameof(credential));
             ClientOptions = clientOptions ?? new WebPubSubServiceClientOptions();
             _validationOptions.Add(endpoint);
         }
@@ -68,8 +64,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         public ServiceEndpoint(Uri endpoint, AzureKeyCredential credential, WebPubSubServiceClientOptions clientOptions = null)
         {
             CredentialKind = CredentialKind.AzureKeyCredential;
-            Endpoint = endpoint;
-            AzureKeyCredential = credential;
+            Endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
+            AzureKeyCredential = credential ?? throw new ArgumentNullException(nameof(credential));
             ClientOptions = clientOptions ?? new WebPubSubServiceClientOptions();
             _validationOptions.Add(endpoint);
         }
