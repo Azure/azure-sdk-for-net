@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CosmosDB
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Lists the RestorableDatabaseAccountDatas for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the RestorableDatabaseAccountData for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.CosmosDB
             );
         }
 
-        /// <summary> Lists the RestorableDatabaseAccountDatas for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the RestorableDatabaseAccountData for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>

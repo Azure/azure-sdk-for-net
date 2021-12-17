@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// <param name="alerts">Alerts data type connection.</param>
         /// <param name="discoveryLogs">Discovery log data type
         /// connection.</param>
-        public MCASDataConnectorDataTypes(DataConnectorDataTypeCommon alerts = default(DataConnectorDataTypeCommon), DataConnectorDataTypeCommon discoveryLogs = default(DataConnectorDataTypeCommon))
+        public MCASDataConnectorDataTypes(DataConnectorDataTypeCommon alerts, DataConnectorDataTypeCommon discoveryLogs = default(DataConnectorDataTypeCommon))
             : base(alerts)
         {
             DiscoveryLogs = discoveryLogs;
@@ -51,5 +51,19 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         [JsonProperty(PropertyName = "discoveryLogs")]
         public DataConnectorDataTypeCommon DiscoveryLogs { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public override void Validate()
+        {
+            base.Validate();
+            if (DiscoveryLogs != null)
+            {
+                DiscoveryLogs.Validate();
+            }
+        }
     }
 }

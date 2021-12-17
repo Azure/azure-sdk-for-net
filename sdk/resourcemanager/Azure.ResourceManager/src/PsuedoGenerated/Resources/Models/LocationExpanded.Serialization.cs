@@ -14,10 +14,12 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static LocationExpanded DeserializeLocationExpanded(JsonElement element)
         {
-            Location loc = DeserializeLocation(element);
+            Optional<string> name = default;
+            Optional<string> displayName = default;
             Optional<LocationMetadata> metadata = default;
             Optional<string> id = default;
             Optional<string> subscriptionId = default;
+            Optional<string> regionalDisplayName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -25,9 +27,24 @@ namespace Azure.ResourceManager.Resources.Models
                     id = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("displayName"))
+                {
+                    displayName = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("subscriptionId"))
                 {
                     subscriptionId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("regionalDisplayName"))
+                {
+                    regionalDisplayName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("metadata"))
@@ -41,7 +58,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new LocationExpanded(id.Value, subscriptionId.Value, loc.Name, loc.DisplayName, loc.RegionalDisplayName, metadata.Value);
+            return new LocationExpanded(id.Value, subscriptionId.Value, name.Value, displayName.Value, regionalDisplayName.Value, metadata.Value);
         }
     }
 }

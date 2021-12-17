@@ -402,7 +402,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 if (SendLink?.TryGetOpenedObject(out var _) == true)
                 {
-                    await SendLink.CloseAsync().ConfigureAwait(false);
+                    await SendLink.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                 }
 
                 SendLink?.Dispose();

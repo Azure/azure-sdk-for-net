@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Sql
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionBackups
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: LongTermRetentionBackups_ListByResourceGroupLocation
-        /// <summary> Lists the LongTermRetentionBackupDatas for this <see cref="ResourceGroup" />. </summary>
+        /// <summary> Lists the LongTermRetentionBackupData for this <see cref="ResourceGroup" />. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionBackups
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: LongTermRetentionBackups_ListByResourceGroupLocation
-        /// <summary> Lists the LongTermRetentionBackupDatas for this <see cref="ResourceGroup" />. </summary>
+        /// <summary> Lists the LongTermRetentionBackupData for this <see cref="ResourceGroup" />. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Sql
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionBackups
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: LongTermRetentionBackups_ListByResourceGroupServer
-        /// <summary> Lists the LongTermRetentionBackupDatas for this <see cref="ResourceGroup" />. </summary>
+        /// <summary> Lists the LongTermRetentionBackupData for this <see cref="ResourceGroup" />. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Sql
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionBackups
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: LongTermRetentionBackups_ListByResourceGroupServer
-        /// <summary> Lists the LongTermRetentionBackupDatas for this <see cref="ResourceGroup" />. </summary>
+        /// <summary> Lists the LongTermRetentionBackupData for this <see cref="ResourceGroup" />. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Sql
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionManagedInstanceBackups
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: LongTermRetentionManagedInstanceBackups_ListByResourceGroupInstance
-        /// <summary> Lists the ManagedInstanceLongTermRetentionBackupDatas for this <see cref="ResourceGroup" />. </summary>
+        /// <summary> Lists the ManagedInstanceLongTermRetentionBackupData for this <see cref="ResourceGroup" />. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Sql
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionManagedInstanceBackups
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: LongTermRetentionManagedInstanceBackups_ListByResourceGroupInstance
-        /// <summary> Lists the ManagedInstanceLongTermRetentionBackupDatas for this <see cref="ResourceGroup" />. </summary>
+        /// <summary> Lists the ManagedInstanceLongTermRetentionBackupData for this <see cref="ResourceGroup" />. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.Sql
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: LongTermRetentionManagedInstanceBackups_ListByResourceGroupLocation
-        /// <summary> Lists the ManagedInstanceLongTermRetentionBackupDatas for this <see cref="ResourceGroup" />. </summary>
+        /// <summary> Lists the ManagedInstanceLongTermRetentionBackupData for this <see cref="ResourceGroup" />. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Sql
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: LongTermRetentionManagedInstanceBackups_ListByResourceGroupLocation
-        /// <summary> Lists the ManagedInstanceLongTermRetentionBackupDatas for this <see cref="ResourceGroup" />. </summary>
+        /// <summary> Lists the ManagedInstanceLongTermRetentionBackupData for this <see cref="ResourceGroup" />. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>

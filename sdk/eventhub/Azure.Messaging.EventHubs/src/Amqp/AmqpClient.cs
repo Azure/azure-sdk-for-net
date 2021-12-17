@@ -515,7 +515,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 if (ManagementLink?.TryGetOpenedObject(out var _) == true)
                 {
-                    await ManagementLink.CloseAsync().ConfigureAwait(false);
+                    await ManagementLink.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                 }
 
                 ManagementLink?.Dispose();

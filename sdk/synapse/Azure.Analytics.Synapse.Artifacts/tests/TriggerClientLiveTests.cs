@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
     /// </remarks>
     public class TriggerClientLiveTests : RecordedTestBase<SynapseTestEnvironment>
     {
-        public TriggerClientLiveTests(bool isAsync) : base(isAsync, useLegacyTransport: true)
+        public TriggerClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
