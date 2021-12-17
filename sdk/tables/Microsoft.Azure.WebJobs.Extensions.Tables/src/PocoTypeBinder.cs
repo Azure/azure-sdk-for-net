@@ -24,16 +24,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 
             switch (memberInfo.Name)
             {
-                case TableConstants.PropertyNames.ETag:
+                case nameof(TableEntity.ETag):
                     destination.ETag = new ETag((string)(object)value);
                     return;
-                case TableConstants.PropertyNames.Timestamp:
+                case nameof(TableEntity.Timestamp):
                     destination.Timestamp = (DateTimeOffset)(object)value;
                     return;
-                case TableConstants.PropertyNames.RowKey:
+                case nameof(TableEntity.RowKey):
                     destination.RowKey = (string)(object)value;
                     return;
-                case TableConstants.PropertyNames.PartitionKey:
+                case nameof(TableEntity.PartitionKey):
                     destination.PartitionKey = (string)(object)value;
                     return;
             }
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 
             var key = memberInfo.Name switch
             {
-                nameof(TableConstants.PropertyNames.ETag) => TableConstants.PropertyNames.EtagOdata,
+                nameof(TableEntity.ETag) => "odata.etag",
                 _ => memberInfo.Name
             };
 

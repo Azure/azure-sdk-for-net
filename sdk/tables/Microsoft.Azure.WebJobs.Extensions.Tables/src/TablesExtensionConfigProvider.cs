@@ -21,14 +21,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
     [Extension("AzureStorageTables", "Tables")]
     internal class TablesExtensionConfigProvider : IExtensionConfigProvider
     {
-        private readonly StorageAccountProvider _accountProvider;
+        private readonly TablesAccountProvider _accountProvider;
         private readonly INameResolver _nameResolver;
 
         // Property names on TableAttribute
         private const string RowKeyProperty = nameof(TableAttribute.RowKey);
         private const string PartitionKeyProperty = nameof(TableAttribute.PartitionKey);
 
-        public TablesExtensionConfigProvider(StorageAccountProvider accountProvider, INameResolver nameResolver)
+        public TablesExtensionConfigProvider(TablesAccountProvider accountProvider, INameResolver nameResolver)
         {
             _accountProvider = accountProvider;
             _nameResolver = nameResolver;

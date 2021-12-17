@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Data.Tables;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -10,10 +11,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 {
     public class TableCreationTests : TablesLiveTestBase
     {
-        public TableCreationTests(bool useCosmos): base(useCosmos, createTable: false)
+        public TableCreationTests(bool isAsync, bool useCosmos): base(isAsync, useCosmos, createTable: false)
         {
         }
 
+        [RecordedTest]
         [GenericTestCase(typeof(ITableEntity))]
         [GenericTestCase(typeof(TableEntity))]
         [GenericTestCase(typeof(JObject))]
@@ -35,6 +37,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }
         }
 
+        [RecordedTest]
         [GenericTestCase(typeof(ITableEntity))]
         [GenericTestCase(typeof(TableEntity))]
         [GenericTestCase(typeof(JObject))]
@@ -56,6 +59,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }
         }
 
+        [RecordedTest]
         [GenericTestCase(typeof(ITableEntity))]
         [GenericTestCase(typeof(TableEntity))]
         [GenericTestCase(typeof(JObject))]
@@ -78,6 +82,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }
         }
 
+        [RecordedTest]
         [GenericTestCase(typeof(ITableEntity))]
         [GenericTestCase(typeof(TableEntity))]
         [GenericTestCase(typeof(JObject))]
@@ -99,6 +104,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }
         }
 
+        [RecordedTest]
         [GenericTestCase(typeof(ITableEntity))]
         [GenericTestCase(typeof(TableEntity))]
         [GenericTestCase(typeof(JObject))]

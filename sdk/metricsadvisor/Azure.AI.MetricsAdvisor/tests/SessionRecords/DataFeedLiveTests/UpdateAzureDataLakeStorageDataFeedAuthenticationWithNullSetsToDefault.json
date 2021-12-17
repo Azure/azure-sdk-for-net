@@ -101,7 +101,7 @@
             "metricName": "cost"
           }
         ],
-        "dataStartFrom": "2020-08-01T00:00:00Z",
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z",
         "authenticationType": "ServicePrincipal",
         "credentialId": "a1a0ab0b-d553-4e73-9410-02cd197358e8"
       },
@@ -154,7 +154,7 @@
           }
         ],
         "dimension": [],
-        "dataStartFrom": "2020-08-01T00:00:00Z",
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z",
         "dataSourceType": "AzureDataLakeStorageGen2",
         "timestampColumn": "",
         "startOffsetInSeconds": 0,
@@ -213,7 +213,7 @@
         "dataFeedName": "dataFeedlsRP72gb",
         "dataFeedDescription": "",
         "timestampColumn": "",
-        "dataStartFrom": "2020-08-01T00:00:00Z",
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z",
         "startOffsetInSeconds": 0,
         "maxConcurrency": -1,
         "minRetryIntervalInSeconds": -1,
@@ -256,7 +256,7 @@
           }
         ],
         "dimension": [],
-        "dataStartFrom": "2020-08-01T00:00:00Z",
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z",
         "dataSourceType": "AzureDataLakeStorageGen2",
         "timestampColumn": "",
         "startOffsetInSeconds": 0,

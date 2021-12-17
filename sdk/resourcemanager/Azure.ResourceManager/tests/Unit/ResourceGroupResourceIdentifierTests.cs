@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Tests
             ResourceIdentifier id1 = new ResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg/providers/Contoso.Widgets/widgets/myWidget");
             Assert.NotNull(id1.SubscriptionId);
             Assert.AreEqual("6b085460-5f21-477e-ba44-1035046e9101", id1.SubscriptionId);
-            Assert.Null(id1.Location);
+            Assert.IsFalse(id1.Location.HasValue);
             Assert.NotNull(id1.ResourceGroupName);
             Assert.AreEqual("myRg", id1.ResourceGroupName);
             ResourceIdentifier expectedId = new ResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg");

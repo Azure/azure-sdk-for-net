@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> or <paramref name="virtualHubRouteTableV2Parameters"/> is null. </exception>
-        public virtual VirtualHubRouteTableV2CreateOrUpdateOperation CreateOrUpdate(string routeTableName, VirtualHubRouteTableV2Data virtualHubRouteTableV2Parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VirtualHubRouteTableV2SCreateOrUpdateOperation CreateOrUpdate(string routeTableName, VirtualHubRouteTableV2Data virtualHubRouteTableV2Parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (routeTableName == null)
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _virtualHubRouteTableV2sRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, virtualHubRouteTableV2Parameters, cancellationToken);
-                var operation = new VirtualHubRouteTableV2CreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _virtualHubRouteTableV2sRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, virtualHubRouteTableV2Parameters).Request, response);
+                var operation = new VirtualHubRouteTableV2SCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _virtualHubRouteTableV2sRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, virtualHubRouteTableV2Parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> or <paramref name="virtualHubRouteTableV2Parameters"/> is null. </exception>
-        public async virtual Task<VirtualHubRouteTableV2CreateOrUpdateOperation> CreateOrUpdateAsync(string routeTableName, VirtualHubRouteTableV2Data virtualHubRouteTableV2Parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualHubRouteTableV2SCreateOrUpdateOperation> CreateOrUpdateAsync(string routeTableName, VirtualHubRouteTableV2Data virtualHubRouteTableV2Parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (routeTableName == null)
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _virtualHubRouteTableV2sRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, virtualHubRouteTableV2Parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualHubRouteTableV2CreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _virtualHubRouteTableV2sRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, virtualHubRouteTableV2Parameters).Request, response);
+                var operation = new VirtualHubRouteTableV2SCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _virtualHubRouteTableV2sRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, virtualHubRouteTableV2Parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;

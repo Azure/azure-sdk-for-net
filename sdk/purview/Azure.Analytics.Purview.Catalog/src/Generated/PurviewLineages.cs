@@ -291,6 +291,7 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/lineage/", false);
             uri.AppendPath(guid, true);
+            uri.AppendQuery("direction", direction, true);
             if (depth != null)
             {
                 uri.AppendQuery("depth", depth.Value, true);
@@ -299,7 +300,6 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 uri.AppendQuery("width", width.Value, true);
             }
-            uri.AppendQuery("direction", direction, true);
             if (includeParent != null)
             {
                 uri.AppendQuery("includeParent", includeParent.Value, true);
