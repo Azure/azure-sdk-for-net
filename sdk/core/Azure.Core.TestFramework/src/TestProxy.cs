@@ -71,7 +71,7 @@ namespace Azure.Core.TestFramework
                 EnvironmentVariables =
                 {
                     ["ASPNETCORE_URLS"] = $"http://{IpAddress}:0;https://{IpAddress}:0",
-                    ["Logging__LogLevel__Microsoft"] = "Information",
+                    ["Logging__LogLevel__Microsoft.Hosting.Lifetime"] = "Information",
                     ["ASPNETCORE_Kestrel__Certificates__Default__Path"] = Path.Combine(
                         TestEnvironment.RepositoryRoot,
                         "eng",
