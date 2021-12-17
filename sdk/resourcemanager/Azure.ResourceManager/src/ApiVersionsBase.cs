@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing Azure resource API versions base.
     /// </summary>
-    public class ApiVersionsBase : IEquatable<string>, IComparable<string>
+    internal class ApiVersionsBase : IEquatable<string>, IComparable<string>
     {
         private readonly string _value;
 
