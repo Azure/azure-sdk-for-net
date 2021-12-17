@@ -170,7 +170,7 @@ namespace Azure.Core
 
             try
             {
-                return await UpdateStateAsync(async, cancellationToken).ConfigureAwait(false);
+                return await UpdateImplementationStateAsync(async, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -231,6 +231,6 @@ namespace Azure.Core
                 : pollingInterval;
         }
 
-        protected abstract ValueTask<Response> UpdateStateAsync(bool async, CancellationToken cancellationToken);
+        protected abstract ValueTask<Response> UpdateImplementationStateAsync(bool async, CancellationToken cancellationToken);
     }
 }

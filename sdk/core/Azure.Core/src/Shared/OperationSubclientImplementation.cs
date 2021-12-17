@@ -43,7 +43,7 @@ namespace Azure.Core
     /// </summary>
     internal class OperationSubclientImplementation : OperationSubclientImplementationBase
     {
-        private readonly IOperationStatePoller _operation;
+        private readonly IOperationStatePoller _operationStatePoller;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationSubclientImplementation"/> class.
@@ -75,7 +75,7 @@ namespace Azure.Core
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null)
             :base(clientDiagnostics, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes)
         {
-            _operation = operation;
+            _operationStatePoller = operation;
         }
 
         /// <summary>
@@ -87,9 +87,9 @@ namespace Azure.Core
             ApplyStateAsync(false, state.RawResponse, state.HasCompleted, state.HasSucceeded, state.OperationFailedException, throwIfFailed: false).EnsureCompleted();
         }
 
-        protected override async ValueTask<Response> UpdateStateAsync(bool async, CancellationToken cancellationToken)
+        protected override async ValueTask<Response> UpdateImplementationStateAsync(bool async, CancellationToken cancellationToken)
         {
-            OperationState state = await _operation.PollOperationStateAsync(async, cancellationToken).ConfigureAwait(false);
+            OperationState state = await _operationStatePoller.PollOperationStateAsync(async, cancellationToken).ConfigureAwait(false);
             return await ApplyStateAsync(async, state.RawResponse, state.HasCompleted, state.HasSucceeded, state.OperationFailedException).ConfigureAwait(false);
         }
     }

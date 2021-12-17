@@ -51,7 +51,7 @@ namespace Azure.Core
     internal class OperationSubclientImplementation<T> : OperationSubclientImplementationBase
 #pragma warning restore SA1649
     {
-        private readonly IOperationStatePoller<T> _operationPoller;
+        private readonly IOperationStatePoller<T> _operationStatePoller;
 
         private T? _value;
 
@@ -80,7 +80,7 @@ namespace Azure.Core
         public OperationSubclientImplementation(ClientDiagnostics clientDiagnostics, IOperationStatePoller<T> operation, Response rawResponse, string? operationTypeName = null, IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null)
             : base(clientDiagnostics, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes)
         {
-            _operationPoller = operation;
+            _operationStatePoller = operation;
             RawResponse = rawResponse;
         }
 
@@ -181,9 +181,9 @@ namespace Azure.Core
             ApplyStateAsync(false, state.RawResponse, state.HasCompleted, state.HasSucceeded, state.OperationFailedException, throwIfFailed: false).EnsureCompleted();
         }
 
-        protected override async ValueTask<Response> UpdateStateAsync(bool async, CancellationToken cancellationToken)
+        protected override async ValueTask<Response> UpdateImplementationStateAsync(bool async, CancellationToken cancellationToken)
         {
-            OperationState<T> state = await _operationPoller.PollOperationStateAsync(async, cancellationToken).ConfigureAwait(false);
+            OperationState<T> state = await _operationStatePoller.PollOperationStateAsync(async, cancellationToken).ConfigureAwait(false);
             if (state.HasCompleted && state.HasSucceeded)
             {
                 Value = state.Value!;
