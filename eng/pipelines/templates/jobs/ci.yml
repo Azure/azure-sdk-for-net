@@ -124,7 +124,14 @@ jobs:
     pool:
       name: azsdk-pool-mms-ubuntu-2004-general
       vmImage: MMSUbuntu20.04
-    steps:
+    steps:      
+      - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
+        - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+          parameters:
+              Paths:
+                - "/*"
+                - "!SessionRecords"
+
       - template: /eng/common/pipelines/templates/steps/check-spelling.yml
       - task: UsePythonVersion@0
         displayName: "Use Python 3.6"
