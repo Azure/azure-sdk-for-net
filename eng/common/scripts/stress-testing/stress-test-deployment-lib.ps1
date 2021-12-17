@@ -40,11 +40,18 @@ function Login([string]$subscription, [string]$clusterGroup, [switch]$pushImages
     $cluster = RunOrExitOnFailure az aks list -g $clusterGroup --subscription $subscription -o json
     $clusterName = ($cluster | ConvertFrom-Json).name
 
+    $kubeContext = (RunOrExitOnFailure kubectl config view -o json) | ConvertFrom-Json
+    $defaultNamespace = $kubeContext.contexts.Where({ $_.name -eq $clusterName }).context.namespace
+
     RunOrExitOnFailure az aks get-credentials `
         -n "$clusterName" `
         -g "$clusterGroup" `
         --subscription "$subscription" `
         --overwrite-existing
+
+    if ($defaultNamespace) {
+        RunOrExitOnFailure kubectl config set-context $clusterName --namespace $defaultNamespace
+    }
 
     if ($pushImages) {
         $registry = RunOrExitOnFailure az acr list -g $clusterGroup --subscription $subscription -o json

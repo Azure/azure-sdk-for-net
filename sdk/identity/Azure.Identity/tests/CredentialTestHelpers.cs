@@ -148,7 +148,6 @@ namespace Azure.Identity.Tests
             await client.AcquireTokenByUsernamePassword(new[] { testEnvironment.KeyvaultScope }, username, password.ToSecureString()).ExecuteAsync();
 
             StaticCachesUtilities.ClearStaticMetadataProviderCache();
-            StaticCachesUtilities.ClearAuthorityEndpointResolutionManagerCache();
             return retriever.RefreshToken;
         }
 

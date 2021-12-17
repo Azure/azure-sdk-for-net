@@ -158,9 +158,6 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> Location cannot be null. </exception>
         internal ResourceGroupBuilder Construct(Location location, IDictionary<string, string> tags = default, string managedBy = default)
         {
-            if (location is null)
-                throw new ArgumentNullException(nameof(location));
-
             var model = new ResourceGroupData(location);
             if (!(tags is null))
                 model.Tags.ReplaceWith(tags);
