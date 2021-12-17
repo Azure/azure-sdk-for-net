@@ -119,6 +119,18 @@
       ]
     },
     {
+      "filename": "**/sdk/connectedvmware/**/*",
+      "words": [
+        "Ctlr",
+        "Lsilogic",
+        "Lsilogicsas",
+        "Pcnet",
+        "Pmem",
+        "Pvscsi",
+        "Sesparse"
+      ]
+    },
+    {
       "filename": "**/sdk/deviceupdate/**/*.cs",
       "words": ["Fqdns"]
     },
