@@ -216,8 +216,6 @@ namespace Azure.Monitor.Query.Tests
 
             Assert.AreEqual("tester", logsTable.Name);
             Assert.AreEqual(1, logsTable.Rows.Count);
-            //Assert.AreEqual(logsTable.Rows[0].ToString(), "[\"row1\",123,43.56,false]");
-            //todo: assert each value
             Assert.AreEqual(10, logsTable.Columns.Count);
 
             Assert.AreEqual("column0", logsTable.Columns[0].Name);
@@ -263,18 +261,18 @@ namespace Azure.Monitor.Query.Tests
             Assert.AreEqual("string value", logsTable.Rows[0].GetString("column5"));
             Assert.AreEqual("string value", logsTable.Rows[0].GetString(5));
             Assert.AreEqual("string value", logsTable.Rows[0].GetObject("column5"));
-            //Assert.AreEqual(TimeSpan.FromSeconds(10), logsTable.Rows[0].GetTimeSpan("column6"));
-            //Assert.AreEqual(TimeSpan.FromSeconds(10), logsTable.Rows[0].GetTimeSpan(6));
-            //Assert.AreEqual(TimeSpan.FromSeconds(10), logsTable.Rows[0].GetObject("column6"));
-            //Assert.AreEqual(0.10101m, logsTable.Rows[0].GetDecimal("column7"));
-            //Assert.AreEqual(0.10101m, logsTable.Rows[0].GetDecimal(7));
-            //Assert.AreEqual(0.10101m, logsTable.Rows[0].GetObject("column7"));
+            Assert.AreEqual(TimeSpan.FromSeconds(10), logsTable.Rows[0].GetTimeSpan("column6"));
+            Assert.AreEqual(TimeSpan.FromSeconds(10), logsTable.Rows[0].GetTimeSpan(6));
+            Assert.AreEqual(TimeSpan.FromSeconds(10), logsTable.Rows[0].GetObject("column6"));
+            Assert.AreEqual(0.10101m, logsTable.Rows[0].GetDecimal("column7"));
+            Assert.AreEqual(0.10101m, logsTable.Rows[0].GetDecimal(7));
+            Assert.AreEqual(0.10101m, logsTable.Rows[0].GetObject("column7"));
             Assert.IsFalse(logsTable.Rows[0].GetBoolean("column8"));
             Assert.IsFalse(logsTable.Rows[0].GetBoolean(8));
             Assert.AreEqual(false, logsTable.Rows[0].GetObject("column8"));
-            //Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", logsTable.Rows[0].GetDynamic(9).ToString());
-            //Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", logsTable.Rows[0].GetDynamic("column9").ToString());
-            //Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", logsTable.Rows[0].GetObject("column9").ToString());
+            Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", logsTable.Rows[0].GetDynamic(9).ToString());
+            Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", logsTable.Rows[0].GetDynamic("column9").ToString());
+            Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", logsTable.Rows[0].GetObject("column9").ToString());
         }
     }
 }
