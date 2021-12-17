@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Compute.Tests
         protected Location DefaultLocation => Location.WestUS2;
         protected ArmClient Client { get; private set; }
         protected Subscription DefaultSubscription { get; private set; }
-        public ComputeTestBase(bool isAsync) : base(isAsync, useLegacyTransport: true)
+        public ComputeTestBase(bool isAsync) : base(isAsync)
         {
         }
 
-        public ComputeTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode, useLegacyTransport: true)
+        public ComputeTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
         }
 
