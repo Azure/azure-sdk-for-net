@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Resources
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Resources/links
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: ResourceLinks_ListAtSubscription
-        /// <summary> Lists the ResourceLinkDatas for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the ResourceLinkData for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The filter to apply on the list resource links operation. The supported filter for list resource links is targetId. For example, $filter=targetId eq {value}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Resources
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Resources/links
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: ResourceLinks_ListAtSubscription
-        /// <summary> Lists the ResourceLinkDatas for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the ResourceLinkData for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The filter to apply on the list resource links operation. The supported filter for list resource links is targetId. For example, $filter=targetId eq {value}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
