@@ -84,10 +84,10 @@ namespace Azure.Core.TestFramework
 
             _testProxyProcess = Process.Start(testProxyProcessInfo);
 
+            // if the process immediately exits, surface the error
             if (_testProxyProcess.HasExited)
             {
-                // if the process immediately exits, surface the error
-                throw new InvalidOperationException($"Failed to start the test proxy: {_testProxyProcess.StandardError.ReadLine()}");
+                throw new InvalidOperationException($"Failed to start the test proxy: {_testProxyProcess.StandardError.ReadToEnd()}");
             }
 
             ProcessTracker.Add(_testProxyProcess);
@@ -104,7 +104,7 @@ namespace Azure.Core.TestFramework
                 });
 
             int lines = 0;
-            while ((_proxyPortHttp == null || _proxyPortHttps == null) && lines++ < 50)
+            while ((_proxyPortHttp == null || _proxyPortHttps == null) && lines++ < 20)
             {
                 string outputLine = _testProxyProcess.StandardOutput.ReadLine();
                 // useful for debugging
@@ -123,7 +123,9 @@ namespace Azure.Core.TestFramework
 
             if (_proxyPortHttp == null || _proxyPortHttps == null)
             {
-                throw new InvalidOperationException("Failed to start the test proxy.");
+                throw new InvalidOperationException("Failed to start the test proxy. One or both of the ports was not populated." + Environment.NewLine +
+                                                    $"http: {_proxyPortHttp}" + Environment.NewLine +
+                                                    $"https: {_proxyPortHttps}");
             }
 
             // we need to use https when talking to test proxy admin endpoint so that we can establish the connection before any
