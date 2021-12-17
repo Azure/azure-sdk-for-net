@@ -95,7 +95,7 @@ Please follow the [input binding tutorial](https://docs.microsoft.com/azure/azur
 
 ## Examples
 
-Tables provides only bindings. The table binding can't trigger function by itself. It can only read or write entries to the table.
+Tables extensions provides only bindings. Bindings by themselves can't trigger a function. It can only read or write entries to the table.
 
 In the following example we use [HTTP trigger][https://docs.microsoft.com/azure/azure-functions/functions-bindings-http-webhook-trigger?tabs=csharp] to invoke the function.
 
@@ -208,7 +208,7 @@ public class OutputMultiple
 {
     [FunctionName("OutputMultiple")]
     public static void Run(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "GET")] HttpRequest request,
+        [HttpTrigger(AuthorizationLevel.Anonymous, "POST")] HttpRequest request,
         [Table("MyTable")] IAsyncCollector<TableEntity> collector)
     {
         for (int i = 0; i < 10; i++)
