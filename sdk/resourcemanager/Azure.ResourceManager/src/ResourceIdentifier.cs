@@ -228,7 +228,7 @@ namespace Azure.ResourceManager
         /// <summary>
         /// Gets the location if it exists otherwise null.
         /// </summary>
-        public Location Location { get; private set; }
+        public Location? Location { get; private set; }
 
         /// <summary>
         /// The name of the resource group if it exists otherwise null.
