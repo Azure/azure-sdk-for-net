@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ConnectedVmware
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
-        public virtual HybridIdentityMetadatumCreateOperation CreateOrUpdate(string metadataName, HybridIdentityMetadataData body = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual HybridIdentityMetadataCreateOperation CreateOrUpdate(string metadataName, HybridIdentityMetadataData body = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (metadataName == null)
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ConnectedVmware
             try
             {
                 var response = _hybridIdentityMetadataRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataName, body, cancellationToken);
-                var operation = new HybridIdentityMetadatumCreateOperation(Parent, response);
+                var operation = new HybridIdentityMetadataCreateOperation(Parent, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ConnectedVmware
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
-        public async virtual Task<HybridIdentityMetadatumCreateOperation> CreateOrUpdateAsync(string metadataName, HybridIdentityMetadataData body = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<HybridIdentityMetadataCreateOperation> CreateOrUpdateAsync(string metadataName, HybridIdentityMetadataData body = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (metadataName == null)
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ConnectedVmware
             try
             {
                 var response = await _hybridIdentityMetadataRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridIdentityMetadatumCreateOperation(Parent, response);
+                var operation = new HybridIdentityMetadataCreateOperation(Parent, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;

@@ -14,16 +14,16 @@ using Azure.Core;
 namespace Azure.ResourceManager.ConnectedVmware.Models
 {
     /// <summary> Implements HybridIdentityMetadata DELETE method. </summary>
-    public partial class HybridIdentityMetadatumDeleteOperation : Operation
+    public partial class HybridIdentityMetadataDeleteOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of HybridIdentityMetadatumDeleteOperation for mocking. </summary>
-        protected HybridIdentityMetadatumDeleteOperation()
+        /// <summary> Initializes a new instance of HybridIdentityMetadataDeleteOperation for mocking. </summary>
+        protected HybridIdentityMetadataDeleteOperation()
         {
         }
 
-        internal HybridIdentityMetadatumDeleteOperation(Response response)
+        internal HybridIdentityMetadataDeleteOperation(Response response)
         {
             _operation = new OperationOrResponseInternals(response);
         }

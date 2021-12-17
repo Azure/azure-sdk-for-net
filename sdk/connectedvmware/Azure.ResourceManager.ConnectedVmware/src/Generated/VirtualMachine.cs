@@ -576,9 +576,9 @@ namespace Azure.ResourceManager.ConnectedVmware
 
         #region HybridIdentityMetadata
 
-        /// <summary> Gets a collection of HybridIdentityMetadatas in the VirtualMachine. </summary>
-        /// <returns> An object representing collection of HybridIdentityMetadatas and their operations over a VirtualMachine. </returns>
-        public HybridIdentityMetadataCollection GetHybridIdentityMetadatas()
+        /// <summary> Gets a collection of HybridIdentityMetadata in the VirtualMachine. </summary>
+        /// <returns> An object representing collection of HybridIdentityMetadata and their operations over a VirtualMachine. </returns>
+        public HybridIdentityMetadataCollection GetAllHybridIdentityMetadata()
         {
             return new HybridIdentityMetadataCollection(this);
         }

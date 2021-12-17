@@ -16,16 +16,16 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.ConnectedVmware.Models
 {
     /// <summary> Create Or Update HybridIdentityMetadata. </summary>
-    public partial class HybridIdentityMetadatumCreateOperation : Operation<HybridIdentityMetadata>
+    public partial class HybridIdentityMetadataCreateOperation : Operation<HybridIdentityMetadata>
     {
         private readonly OperationOrResponseInternals<HybridIdentityMetadata> _operation;
 
-        /// <summary> Initializes a new instance of HybridIdentityMetadatumCreateOperation for mocking. </summary>
-        protected HybridIdentityMetadatumCreateOperation()
+        /// <summary> Initializes a new instance of HybridIdentityMetadataCreateOperation for mocking. </summary>
+        protected HybridIdentityMetadataCreateOperation()
         {
         }
 
-        internal HybridIdentityMetadatumCreateOperation(ArmResource operationsBase, Response<HybridIdentityMetadataData> response)
+        internal HybridIdentityMetadataCreateOperation(ArmResource operationsBase, Response<HybridIdentityMetadataData> response)
         {
             _operation = new OperationOrResponseInternals<HybridIdentityMetadata>(Response.FromValue(new HybridIdentityMetadata(operationsBase, response.Value), response.GetRawResponse()));
         }
