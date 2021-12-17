@@ -38,7 +38,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
         private readonly DiagnosticScopeFactory _diagnosticScopeFactory;
 
         // ApplicationInsights SDK listens to all Azure SDK sources that look like 'Azure.*'
-        private const string DiagnosticScopeNamespace = "Azure.WebJobs.Extensions.EventGrid";
+        private const string DiagnosticScopeNamespace = "Azure.Messaging.EventGrid";
         private const string ResourceProviderNamespace = "Microsoft.EventGrid";
 
         // for end to end testing
@@ -214,8 +214,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
         private static void AddLinkIfEventHasContext(DiagnosticScope scope, JToken evnt)
         {
             if (evnt is JObject eventObj &&
-                    eventObj.TryGetValue("traceparent", out JToken traceparent) &&
-                    traceparent.Type == JTokenType.String)
+                eventObj.TryGetValue("traceparent", out JToken traceparent) &&
+                traceparent.Type == JTokenType.String)
             {
                 string tracestateStr = null;
                 if (eventObj.TryGetValue("tracestate", out JToken tracestate) &&

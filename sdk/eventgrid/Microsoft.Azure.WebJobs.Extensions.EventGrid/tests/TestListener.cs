@@ -16,6 +16,7 @@ using Azure.Core.Tests;
 using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics;
+using Azure.Messaging;
 
 namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
 {
@@ -139,7 +140,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             var host = TestHelpers.NewHost<MyProg1>(ext);
             await host.StartAsync(); // add listener
 
-            using var testListener = new ClientDiagnosticListener("Azure.WebJobs.Extensions.EventGrid");
+            using var testListener = new ClientDiagnosticListener("Azure.Messaging.EventGrid");
             const string functionName = "TestEventGrid";
             const string traceparent = "00-0123456789abcdef0123456789abcdef-0123456789abcdef-01";
             var request = CreateSingleRequest(functionName,
@@ -165,7 +166,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             var host = TestHelpers.NewHost<MyProg1>(ext);
             await host.StartAsync(); // add listener
 
-            using var testListener = new ClientDiagnosticListener("Azure.WebJobs.Extensions.EventGrid");
+            using var testListener = new ClientDiagnosticListener("Azure.Messaging.EventGrid");
             const string functionName = "TestEventGrid";
             const string traceparent1 = "00-0123456789abcdef0123456789abcdef-0123456789abcdef-01";
             const string tracestate1 = "foo1=bar1";
@@ -217,7 +218,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             var host = TestHelpers.NewHost<MyProg4>(ext);
             await host.StartAsync(); // add listener
 
-            using var testListener = new ClientDiagnosticListener("Azure.WebJobs.Extensions.EventGrid");
+            using var testListener = new ClientDiagnosticListener("Azure.Messaging.EventGrid");
             const string functionName = "EventGridMultiple";
             const string traceparent1 = "00-0123456789abcdef0123456789abcdef-0123456789abcdef-01";
             const string tracestate1 = "foo1=bar1";
@@ -251,7 +252,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             var host = TestHelpers.NewHost<MyProg3>(ext);
             await host.StartAsync(); // add listener
 
-            using var testListener = new ClientDiagnosticListener("Azure.WebJobs.Extensions.EventGrid");
+            using var testListener = new ClientDiagnosticListener("Azure.Messaging.EventGrid");
             const string functionName = "EventGridThrowsExceptionMultiple";
             const string traceparent1 = "00-0123456789abcdef0123456789abcdef-0123456789abcdef-01";
             const string traceparent2 = "00-1123456789abcdef0123456789abcdef-1123456789abcdef-01";
