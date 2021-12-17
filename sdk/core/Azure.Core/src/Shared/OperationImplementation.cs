@@ -37,7 +37,7 @@ namespace Azure.Core
     ///     <description><see cref="OperationImplementationBase.WaitForCompletionResponseAsync(CancellationToken)"/></description>
     ///   </item>
     ///   <item>
-    ///     <description><see cref="OperationImplementationBase.PollUntilCompletedAsync(TimeSpan, CancellationToken)"/></description>
+    ///     <description><see cref="OperationImplementationBase.WaitForCompletionResponseAsync(TimeSpan, CancellationToken)"/></description>
     ///   </item>
     /// </list>
     /// </summary>

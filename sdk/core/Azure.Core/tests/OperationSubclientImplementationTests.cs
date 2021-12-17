@@ -331,7 +331,7 @@ namespace Azure.Core.Tests
 
             var operationResponse = useDefaultPollingInterval
                 ? await operationInternal.WaitForCompletionResponseAsync(CancellationToken.None)
-                : await operationInternal.PollUntilCompletedAsync(TimeSpan.Zero, CancellationToken.None);
+                : await operationInternal.WaitForCompletionResponseAsync(TimeSpan.Zero, CancellationToken.None);
 
             Assert.AreEqual(mockResponse, operationResponse);
             int callsCount = ((IMockOperationImplementation)operationInternal).UpdateStatusCallCount;
@@ -358,7 +358,7 @@ namespace Azure.Core.Tests
             }
             else
             {
-                await operationInternal.PollUntilCompletedAsync(expectedDelay, CancellationToken.None);
+                await operationInternal.WaitForCompletionResponseAsync(expectedDelay, CancellationToken.None);
             }
 
             Assert.AreEqual(expectedDelay, ((IMockOperationImplementation)operationInternal).DelaysPassedToWait.Single());
@@ -384,7 +384,7 @@ namespace Azure.Core.Tests
             }
             else
             {
-                await operationInternal.PollUntilCompletedAsync(originalDelay, CancellationToken.None);
+                await operationInternal.WaitForCompletionResponseAsync(originalDelay, CancellationToken.None);
             }
 
             // Algorithm must choose the longest delay between the two.
@@ -408,7 +408,7 @@ namespace Azure.Core.Tests
 
             var operationInternal = CreateOperation(isOfT, UpdateResult.Pending, responseWithHeaders, callsToComplete: 5);
 
-            await operationInternal.PollUntilCompletedAsync(originalDelay, CancellationToken.None);
+            await operationInternal.WaitForCompletionResponseAsync(originalDelay, CancellationToken.None);
 
             // remove the first and last items from expectedDelays, because the first is produced when the mock is constructed
             // and the last is produced on the final success call
@@ -436,7 +436,7 @@ namespace Azure.Core.Tests
             }
             else
             {
-                await operationInternal.PollUntilCompletedAsync(originalDelay, CancellationToken.None);
+                await operationInternal.WaitForCompletionResponseAsync(originalDelay, CancellationToken.None);
             }
 
             // Algorithm must choose the longest delay between the two.
@@ -461,7 +461,7 @@ namespace Azure.Core.Tests
 
             var operationInternal = CreateOperation(isOfT, UpdateResult.Pending, responseWithHeaders, callsToComplete: 5);
 
-            await operationInternal.PollUntilCompletedAsync(originalDelay, CancellationToken.None);
+            await operationInternal.WaitForCompletionResponseAsync(originalDelay, CancellationToken.None);
 
             // remove the first and last items from expectedDelays, because the first is produced when the mock is constructed
             // and the last is produced on the final success call
@@ -480,7 +480,7 @@ namespace Azure.Core.Tests
 
             _ = useDefaultPollingInterval
                 ? await operationInternal.WaitForCompletionResponseAsync(originalToken)
-                : await operationInternal.PollUntilCompletedAsync(TimeSpan.Zero, originalToken);
+                : await operationInternal.WaitForCompletionResponseAsync(TimeSpan.Zero, originalToken);
 
             Assert.AreEqual(originalToken, ((IMockOperationImplementation)operationInternal).LastTokenReceivedByUpdateStatus);
         }
@@ -498,7 +498,7 @@ namespace Azure.Core.Tests
 
             _ = useDefaultPollingInterval
                 ? Assert.ThrowsAsync<TaskCanceledException>(async () => await operationInternal.WaitForCompletionResponseAsync(cancellationToken))
-                : Assert.ThrowsAsync<TaskCanceledException>(async () => await operationInternal.PollUntilCompletedAsync(TimeSpan.Zero, cancellationToken));
+                : Assert.ThrowsAsync<TaskCanceledException>(async () => await operationInternal.WaitForCompletionResponseAsync(TimeSpan.Zero, cancellationToken));
         }
 
         private TimeSpan Max(TimeSpan t1, TimeSpan t2) => t1 > t2 ? t1 : t2;
