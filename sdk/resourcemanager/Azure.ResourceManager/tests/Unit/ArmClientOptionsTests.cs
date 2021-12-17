@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Tests
             Assert.IsFalse(ReferenceEquals(options1.Retry, options2.Retry));
             Assert.IsFalse(ReferenceEquals(options1.ResourceApiVersionOverrides, options2.ResourceApiVersionOverrides));
             Assert.IsFalse(ReferenceEquals(options1.ResourceApiVersions, options2.ResourceApiVersions));
+            Assert.IsFalse(ReferenceEquals(options1.NamespaceVersions, options2.NamespaceVersions));
         }
 
         [TestCase]
