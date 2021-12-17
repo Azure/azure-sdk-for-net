@@ -16,7 +16,7 @@ namespace Azure.AI.FormRecognizer.Training
     /// </summary>
     public class CreateCustomFormModelOperation : Operation<CustomFormModel>, IOperation<CustomFormModel>
     {
-        private readonly OperationInternal<CustomFormModel> _operationInternal;
+        private readonly OperationSubclientImplementation<CustomFormModel> _operationSubclientImplementation;
 
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
         private readonly FormRecognizerRestClient _serviceClient;
@@ -39,17 +39,17 @@ namespace Azure.AI.FormRecognizer.Training
         /// <remarks>
         /// This property can be accessed only after the operation completes successfully (HasValue is true).
         /// </remarks>
-        public override CustomFormModel Value => _operationInternal.Value;
+        public override CustomFormModel Value => _operationSubclientImplementation.Value;
 
         /// <summary>
         /// Returns true if the long-running operation completed.
         /// </summary>
-        public override bool HasCompleted => _operationInternal.HasCompleted;
+        public override bool HasCompleted => _operationSubclientImplementation.HasCompleted;
 
         /// <summary>
         /// Returns true if the long-running operation completed successfully and has produced final result (accessible by Value property).
         /// </summary>
-        public override bool HasValue => _operationInternal.HasValue;
+        public override bool HasValue => _operationSubclientImplementation.HasValue;
 
         /// <summary>
         /// The last HTTP response received from the server.
@@ -59,7 +59,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// An instance of <see cref="CreateCustomFormModelOperation"/> sends requests to a server in UpdateStatusAsync, UpdateStatus, and other methods.
         /// Responses from these requests can be accessed using GetRawResponse.
         /// </remarks>
-        public override Response GetRawResponse() => _operationInternal.RawResponse;
+        public override Response GetRawResponse() => _operationSubclientImplementation.RawResponse;
 
         /// <summary>
         /// Periodically calls the server till the long-running operation completes.
@@ -70,7 +70,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
         public override async ValueTask<Response<CustomFormModel>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
-            await _operationInternal.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            await _operationSubclientImplementation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Periodically calls the server till the long-running operation completes.
@@ -86,7 +86,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
         public override async ValueTask<Response<CustomFormModel>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
-            await _operationInternal.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
+            await _operationSubclientImplementation.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
 
         internal CreateCustomFormModelOperation(
             string location,
@@ -97,7 +97,7 @@ namespace Azure.AI.FormRecognizer.Training
             _serviceClient = allOperations;
             _diagnostics = diagnostics;
             _serviceVersion = serviceVersion;
-            _operationInternal = new(_diagnostics, this, rawResponse: null, nameof(CreateCustomFormModelOperation));
+            _operationSubclientImplementation = new(_diagnostics, this, rawResponse: null, nameof(CreateCustomFormModelOperation));
 
             Id = location.Split('/').Last();
         }
@@ -116,7 +116,7 @@ namespace Azure.AI.FormRecognizer.Training
             _diagnostics = client.Diagnostics;
             _serviceClient = client.ServiceClient;
             _serviceVersion = client.ServiceVersion;
-            _operationInternal = new(_diagnostics, this, rawResponse: null, nameof(CreateCustomFormModelOperation));
+            _operationSubclientImplementation = new(_diagnostics, this, rawResponse: null, nameof(CreateCustomFormModelOperation));
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// This operation will update the value returned from GetRawResponse and might update HasCompleted, HasValue, and Value.
         /// </remarks>
         public override Response UpdateStatus(CancellationToken cancellationToken = default) =>
-            _operationInternal.UpdateStatus(cancellationToken);
+            _operationSubclientImplementation.UpdateStatus(cancellationToken);
 
         /// <summary>
         /// Calls the server to get updated status of the long-running operation.
@@ -147,7 +147,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// This operation will update the value returned from GetRawResponse and might update HasCompleted, HasValue, and Value.
         /// </remarks>
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
-            await _operationInternal.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
+            await _operationSubclientImplementation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
 
         async ValueTask<OperationState<CustomFormModel>> IOperation<CustomFormModel>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {

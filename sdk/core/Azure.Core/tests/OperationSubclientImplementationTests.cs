@@ -14,7 +14,7 @@ namespace Azure.Core.Tests
 {
     [TestFixture(true)]
     [TestFixture(false)]
-    public class OperationInternalTests
+    public class OperationSubclientImplementationTests
     {
         private readonly bool isOfT;
         private static readonly string DiagnosticNamespace = "Azure.Core.Tests";
@@ -26,7 +26,7 @@ namespace Azure.Core.Tests
         private static MockResponse mockResponse = new(200);
         private Func<MockResponse> mockResponseFactory = () => mockResponse;
 
-        public OperationInternalTests(bool isOfT) { this.isOfT = isOfT; }
+        public OperationSubclientImplementationTests(bool isOfT) { this.isOfT = isOfT; }
 
         private OperationSubclientImplementationBase CreateOperation(
             bool isOfT,
@@ -53,7 +53,7 @@ namespace Azure.Core.Tests
                 operationTypeName,
                 callsToComplete: callsToComplete,
                 scopeAttributes: scopeAttributes);
-            var operationInternal = testOperation.MockOperationInternal;
+            var operationInternal = testOperation.MockOperationSubclientImplementation;
             return operationInternal;
         }
 
@@ -65,7 +65,7 @@ namespace Azure.Core.Tests
 
             Assert.IsNull(operationInternal.RawResponse);
             Assert.False(operationInternal.HasCompleted);
-            if (operationInternal is OperationInternal<int> oit)
+            if (operationInternal is OperationSubclientImplementation<int> oit)
             {
                 Assert.False(oit.HasValue);
                 Assert.Throws<InvalidOperationException>(() => _ = oit.Value);
@@ -80,7 +80,7 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(mockResponse, operationInternal.RawResponse);
             Assert.False(operationInternal.HasCompleted);
-            if (operationInternal is OperationInternal<int> oit)
+            if (operationInternal is OperationSubclientImplementation<int> oit)
             {
                 Assert.False(oit.HasValue);
                 Assert.Throws<InvalidOperationException>(() => _ = oit.Value);
@@ -91,17 +91,17 @@ namespace Azure.Core.Tests
         public void SetStateSucceeds()
         {
             var operationInternal = CreateOperation(isOfT, UpdateResult.Pending);
-            if (operationInternal is OperationInternal oi)
+            if (operationInternal is OperationSubclientImplementation oi)
             {
                 oi.SetState(OperationState.Success(mockResponse));
             }
-            else if (operationInternal is OperationInternal<int> oit)
+            else if (operationInternal is OperationSubclientImplementation<int> oit)
             {
                 oit.SetState(OperationState<int>.Success(mockResponse, 1));
             }
 
             Assert.IsTrue(operationInternal.HasCompleted);
-            if (operationInternal is OperationInternal<int> oit2)
+            if (operationInternal is OperationSubclientImplementation<int> oit2)
             {
                 Assert.IsTrue(oit2.HasValue);
                 Assert.AreEqual(1, oit2.Value);
@@ -112,17 +112,17 @@ namespace Azure.Core.Tests
         public void SetStateIsPending()
         {
             var operationInternal = CreateOperation(isOfT, UpdateResult.Pending);
-            if (operationInternal is OperationInternal oi)
+            if (operationInternal is OperationSubclientImplementation oi)
             {
                 oi.SetState(OperationState.Pending(mockResponse));
             }
-            else if (operationInternal is OperationInternal<int> oit)
+            else if (operationInternal is OperationSubclientImplementation<int> oit)
             {
                 oit.SetState(OperationState<int>.Pending(mockResponse));
             }
 
             Assert.IsFalse(operationInternal.HasCompleted);
-            if (operationInternal is OperationInternal<int> oit2)
+            if (operationInternal is OperationSubclientImplementation<int> oit2)
             {
                 Assert.IsFalse(oit2.HasValue);
             }
@@ -132,17 +132,17 @@ namespace Azure.Core.Tests
         public void SetStateFails()
         {
             var operationInternal = CreateOperation(isOfT, UpdateResult.Pending);
-            if (operationInternal is OperationInternal oi)
+            if (operationInternal is OperationSubclientImplementation oi)
             {
                 oi.SetState(OperationState.Failure(mockResponse));
             }
-            else if (operationInternal is OperationInternal<int> oit)
+            else if (operationInternal is OperationSubclientImplementation<int> oit)
             {
                 oit.SetState(OperationState<int>.Failure(mockResponse));
             }
 
             Assert.IsTrue(operationInternal.HasCompleted);
-            if (operationInternal is OperationInternal<int> oit2)
+            if (operationInternal is OperationSubclientImplementation<int> oit2)
             {
                 Assert.IsFalse(oit2.HasValue);
                 Assert.Throws<RequestFailedException>(() => _ = oit2.Value);
@@ -161,7 +161,7 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(mockResponse, operationInternal.RawResponse);
             Assert.False(operationInternal.HasCompleted);
-            if (operationInternal is OperationInternal<int> oit)
+            if (operationInternal is OperationSubclientImplementation<int> oit)
             {
                 Assert.False(oit.HasValue);
                 Assert.Throws<InvalidOperationException>(() => _ = oit.Value);
@@ -181,7 +181,7 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(mockResponse, operationInternal.RawResponse);
             Assert.True(operationInternal.HasCompleted);
-            if (operationInternal is OperationInternal<int> oit)
+            if (operationInternal is OperationSubclientImplementation<int> oit)
             {
                 Assert.True(oit.HasValue);
                 Assert.AreEqual(expectedValue, oit.Value);
@@ -210,7 +210,7 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(mockResponse, operationInternal.RawResponse);
             Assert.True(operationInternal.HasCompleted);
-            if (operationInternal is OperationInternal<int> oit)
+            if (operationInternal is OperationSubclientImplementation<int> oit)
             {
                 Assert.False(oit.HasValue);
                 RequestFailedException valueException = Assert.Throws<RequestFailedException>(() => _ = oit.Value);
@@ -230,7 +230,7 @@ namespace Azure.Core.Tests
 
             Assert.IsNull(operationInternal.RawResponse);
             Assert.False(operationInternal.HasCompleted);
-            if (operationInternal is OperationInternal<int> oit)
+            if (operationInternal is OperationSubclientImplementation<int> oit)
             {
                 Assert.False(oit.HasValue);
                 Assert.Throws<InvalidOperationException>(() => _ = oit.Value);
@@ -316,7 +316,7 @@ namespace Azure.Core.Tests
                 ? await operationInternal.UpdateStatusAsync(originalToken)
                 : operationInternal.UpdateStatus(originalToken);
 
-            CancellationToken passedToken = ((IMockOperationInternal)operationInternal).LastTokenReceivedByUpdateStatus;
+            CancellationToken passedToken = ((IMockOperationImplementation)operationInternal).LastTokenReceivedByUpdateStatus;
             Assert.AreEqual(originalToken, passedToken);
         }
 
@@ -334,11 +334,11 @@ namespace Azure.Core.Tests
                 : await operationInternal.WaitForCompletionResponseAsync(TimeSpan.Zero, CancellationToken.None);
 
             Assert.AreEqual(mockResponse, operationResponse);
-            int callsCount = ((IMockOperationInternal)operationInternal).UpdateStatusCallCount;
+            int callsCount = ((IMockOperationImplementation)operationInternal).UpdateStatusCallCount;
             Assert.AreEqual(expectedCalls, callsCount);
             Assert.AreEqual(mockResponse, operationInternal.RawResponse);
             Assert.True(operationInternal.HasCompleted);
-            if (operationInternal is OperationInternal<int> oit)
+            if (operationInternal is OperationSubclientImplementation<int> oit)
             {
                 Assert.True(oit.HasValue);
                 Assert.AreEqual(expectedValue, oit.Value);
@@ -361,7 +361,7 @@ namespace Azure.Core.Tests
                 await operationInternal.WaitForCompletionResponseAsync(expectedDelay, CancellationToken.None);
             }
 
-            Assert.AreEqual(expectedDelay, ((IMockOperationInternal)operationInternal).DelaysPassedToWait.Single());
+            Assert.AreEqual(expectedDelay, ((IMockOperationImplementation)operationInternal).DelaysPassedToWait.Single());
         }
 
         [Test]
@@ -388,7 +388,7 @@ namespace Azure.Core.Tests
             }
 
             // Algorithm must choose the longest delay between the two.
-            Assert.AreEqual(Max(originalDelay, serviceDelay), ((IMockOperationInternal)operationInternal).DelaysPassedToWait.Single());
+            Assert.AreEqual(Max(originalDelay, serviceDelay), ((IMockOperationImplementation)operationInternal).DelaysPassedToWait.Single());
         }
 
         [Test]
@@ -412,7 +412,7 @@ namespace Azure.Core.Tests
 
             // remove the first and last items from expectedDelays, because the first is produced when the mock is constructed
             // and the last is produced on the final success call
-            Assert.AreEqual(expectedDelays.Skip(1).Take(4), ((IMockOperationInternal)operationInternal).DelaysPassedToWait);
+            Assert.AreEqual(expectedDelays.Skip(1).Take(4), ((IMockOperationImplementation)operationInternal).DelaysPassedToWait);
         }
 
         [Test]
@@ -440,7 +440,7 @@ namespace Azure.Core.Tests
             }
 
             // Algorithm must choose the longest delay between the two.
-            Assert.AreEqual(Max(originalDelay, serviceDelay), ((IMockOperationInternal)operationInternal).DelaysPassedToWait.Single());
+            Assert.AreEqual(Max(originalDelay, serviceDelay), ((IMockOperationImplementation)operationInternal).DelaysPassedToWait.Single());
         }
 
         [Test]
@@ -465,7 +465,7 @@ namespace Azure.Core.Tests
 
             // remove the first and last items from expectedDelays, because the first is produced when the mock is constructed
             // and the last is produced on the final success call
-            Assert.AreEqual(expectedDelays.Skip(1).Take(4), ((IMockOperationInternal)operationInternal).DelaysPassedToWait);
+            Assert.AreEqual(expectedDelays.Skip(1).Take(4), ((IMockOperationImplementation)operationInternal).DelaysPassedToWait);
         }
 
         [Test]
@@ -482,7 +482,7 @@ namespace Azure.Core.Tests
                 ? await operationInternal.WaitForCompletionResponseAsync(originalToken)
                 : await operationInternal.WaitForCompletionResponseAsync(TimeSpan.Zero, originalToken);
 
-            Assert.AreEqual(originalToken, ((IMockOperationInternal)operationInternal).LastTokenReceivedByUpdateStatus);
+            Assert.AreEqual(originalToken, ((IMockOperationImplementation)operationInternal).LastTokenReceivedByUpdateStatus);
         }
 
         [Test]
@@ -512,7 +512,7 @@ namespace Azure.Core.Tests
                 IEnumerable<KeyValuePair<string, string>> scopeAttributes = null,
                 int? callsToComplete = null)
             {
-                MockOperationInternal = new MockOperationInternalOfT<int>(ClientDiagnostics, this, responseFactory, operationTypeName, scopeAttributes);
+                MockOperationInternal = new MockOperationImplementationOfT<int>(ClientDiagnostics, this, responseFactory, operationTypeName, scopeAttributes);
                 MockOperationInternal.CallsToComplete = callsToComplete;
 
                 OnUpdateState = result switch
@@ -532,7 +532,7 @@ namespace Azure.Core.Tests
                 };
             }
 
-            public MockOperationInternalOfT<int> MockOperationInternal { get; }
+            public MockOperationImplementationOfT<int> MockOperationInternal { get; }
 
             public Func<CancellationToken, OperationState<int>> OnUpdateState { get; set; }
 
@@ -544,13 +544,13 @@ namespace Azure.Core.Tests
             }
         }
 
-        private class MockOperationInternalOfT<TResult> : OperationInternal<TResult>, IMockOperationInternal
+        private class MockOperationImplementationOfT<TResult> : OperationSubclientImplementation<TResult>, IMockOperationImplementation
         {
-            public MockOperationInternalOfT(ClientDiagnostics clientDiagnostics, IOperation<TResult> operation, Response rawResponse)
+            public MockOperationImplementationOfT(ClientDiagnostics clientDiagnostics, IOperation<TResult> operation, Response rawResponse)
                 : base(clientDiagnostics, operation, rawResponse)
             { }
 
-            public MockOperationInternalOfT(
+            public MockOperationImplementationOfT(
                 ClientDiagnostics clientDiagnostics,
                 IOperation<TResult> operation,
                 Func<MockResponse> responseFactory,
@@ -582,15 +582,15 @@ namespace Azure.Core.Tests
                 IEnumerable<KeyValuePair<string, string>> scopeAttributes = null,
                 int? callsToComplete = null)
             {
-                MockOperationInternal = new MockOperationInternal(ClientDiagnostics, this, responseFactory, operationTypeName, scopeAttributes);
-                MockOperationInternal.CallsToComplete = callsToComplete;
+                MockOperationSubclientImplementation = new MockOperationSubclientImplementation(ClientDiagnostics, this, responseFactory, operationTypeName, scopeAttributes);
+                MockOperationSubclientImplementation.CallsToComplete = callsToComplete;
 
                 OnUpdateState = result switch
                 {
                     UpdateResult.Pending => _ =>
                     {
-                        return MockOperationInternal.CallsToComplete.HasValue &&
-                               MockOperationInternal.UpdateStatusCallCount >= MockOperationInternal.CallsToComplete.Value
+                        return MockOperationSubclientImplementation.CallsToComplete.HasValue &&
+                               MockOperationSubclientImplementation.UpdateStatusCallCount >= MockOperationSubclientImplementation.CallsToComplete.Value
                             ? OperationState.Success(responseFactory())
                             : OperationState.Pending(responseFactory());
                     },
@@ -602,25 +602,25 @@ namespace Azure.Core.Tests
                 };
             }
 
-            public MockOperationInternal MockOperationInternal { get; }
+            public MockOperationSubclientImplementation MockOperationSubclientImplementation { get; }
 
             public Func<CancellationToken, OperationState> OnUpdateState { get; set; }
 
             ValueTask<OperationState> IOperation.UpdateStateAsync(bool async, CancellationToken cancellationToken)
             {
-                MockOperationInternal.UpdateStatusCallCount++;
-                MockOperationInternal.LastTokenReceivedByUpdateStatus = cancellationToken;
+                MockOperationSubclientImplementation.UpdateStatusCallCount++;
+                MockOperationSubclientImplementation.LastTokenReceivedByUpdateStatus = cancellationToken;
                 return new(OnUpdateState(cancellationToken));
             }
         }
 
-        private class MockOperationInternal : OperationInternal, IMockOperationInternal
+        private class MockOperationSubclientImplementation : OperationSubclientImplementation, IMockOperationImplementation
         {
-            public MockOperationInternal(ClientDiagnostics clientDiagnostics, IOperation operation, Response rawResponse)
+            public MockOperationSubclientImplementation(ClientDiagnostics clientDiagnostics, IOperation operation, Response rawResponse)
                 : base(clientDiagnostics, operation, rawResponse)
             { }
 
-            public MockOperationInternal(
+            public MockOperationSubclientImplementation(
                 ClientDiagnostics clientDiagnostics,
                 IOperation operation,
                 Func<MockResponse> responseFactory,
@@ -643,7 +643,7 @@ namespace Azure.Core.Tests
             public int? CallsToComplete { get; set; }
         }
 
-        private interface IMockOperationInternal
+        private interface IMockOperationImplementation
         {
             List<TimeSpan> DelaysPassedToWait { get; set; }
             CancellationToken LastTokenReceivedByUpdateStatus { get; set; }
