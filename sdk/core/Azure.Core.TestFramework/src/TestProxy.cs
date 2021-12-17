@@ -84,12 +84,6 @@ namespace Azure.Core.TestFramework
 
             _testProxyProcess = Process.Start(testProxyProcessInfo);
 
-            // if the process immediately exits, surface the error
-            if (_testProxyProcess.HasExited)
-            {
-                throw new InvalidOperationException($"Failed to start the test proxy: {_testProxyProcess.StandardError.ReadToEnd()}");
-            }
-
             ProcessTracker.Add(_testProxyProcess);
             _ = Task.Run(
                 () =>
@@ -123,6 +117,8 @@ namespace Azure.Core.TestFramework
 
             if (_proxyPortHttp == null || _proxyPortHttps == null)
             {
+                CheckForErrors();
+                // if no errors, fallback to this exception
                 throw new InvalidOperationException("Failed to start the test proxy. One or both of the ports was not populated." + Environment.NewLine +
                                                     $"http: {_proxyPortHttp}" + Environment.NewLine +
                                                     $"https: {_proxyPortHttps}");
