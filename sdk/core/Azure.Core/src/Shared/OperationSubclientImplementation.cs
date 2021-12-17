@@ -15,7 +15,7 @@ namespace Azure.Core
     /// <summary>
     /// A helper class used to build long-running operation instances. In order to use this helper:
     /// <list type="number">
-    ///   <item>Make sure your LRO implements the <see cref="IOperationSubclientStateUpdatable"/> interface.</item>
+    ///   <item>Make sure your LRO implements the <see cref="IOperationStatePoller"/> interface.</item>
     ///   <item>Add a private <see cref="OperationSubclientImplementation"/> field to your LRO, and instantiate it during construction.</item>
     ///   <item>Delegate method calls to the <see cref="OperationSubclientImplementation"/> implementations.</item>
     /// </list>
@@ -43,7 +43,7 @@ namespace Azure.Core
     /// </summary>
     internal class OperationSubclientImplementation : OperationSubclientImplementationBase
     {
-        private readonly IOperationSubclientStateUpdatable _operation;
+        private readonly IOperationStatePoller _operation;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationSubclientImplementation"/> class.
@@ -69,7 +69,7 @@ namespace Azure.Core
         /// <param name="scopeAttributes">The attributes to use during diagnostic scope creation.</param>
         public OperationSubclientImplementation(
             ClientDiagnostics clientDiagnostics,
-            IOperationSubclientStateUpdatable operation,
+            IOperationStatePoller operation,
             Response rawResponse,
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null)
@@ -81,15 +81,15 @@ namespace Azure.Core
         /// <summary>
         /// Sets the <see cref="OperationSubclientImplementation"/> state immediately.
         /// </summary>
-        /// <param name="state">The <see cref="OperationSubclientState"/> used to set <see cref="OperationSubclientImplementationBase.HasCompleted"/> and other members.</param>
-        public void SetState(OperationSubclientState state)
+        /// <param name="state">The <see cref="OperationState"/> used to set <see cref="OperationSubclientImplementationBase.HasCompleted"/> and other members.</param>
+        public void SetState(OperationState state)
         {
             ApplyStateAsync(false, state.RawResponse, state.HasCompleted, state.HasSucceeded, state.OperationFailedException, throwIfFailed: false).EnsureCompleted();
         }
 
         protected override async ValueTask<Response> UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
-            OperationSubclientState state = await _operation.UpdateStateAsync(async, cancellationToken).ConfigureAwait(false);
+            OperationState state = await _operation.PollOperationStateAsync(async, cancellationToken).ConfigureAwait(false);
             return await ApplyStateAsync(async, state.RawResponse, state.HasCompleted, state.HasSucceeded, state.OperationFailedException).ConfigureAwait(false);
         }
     }
@@ -98,7 +98,7 @@ namespace Azure.Core
     /// An interface used by <see cref="OperationSubclientImplementation"/> for making service calls and updating state. It's expected that
     /// your long-running operation classes implement this interface.
     /// </summary>
-    internal interface IOperationSubclientStateUpdatable
+    internal interface IOperationStatePoller
     {
         /// <summary>
         /// Calls the service and updates the state of the long-running operation. Properties directly handled by the
@@ -120,29 +120,29 @@ namespace Azure.Core
         /// <param name="async"><c>true</c> if the call should be executed asynchronously. Otherwise, <c>false</c>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A structure indicating the current operation state. The <see cref="OperationSubclientState"/> structure must be instantiated by one of
+        /// A structure indicating the current operation state. The <see cref="OperationState"/> structure must be instantiated by one of
         /// its static methods:
         /// <list type="bullet">
-        ///   <item>Use <see cref="OperationSubclientState.Success"/> when the operation has completed successfully.</item>
-        ///   <item>Use <see cref="OperationSubclientState.Failure"/> when the operation has completed with failures.</item>
-        ///   <item>Use <see cref="OperationSubclientState.Pending"/> when the operation has not completed yet.</item>
+        ///   <item>Use <see cref="OperationState.Success"/> when the operation has completed successfully.</item>
+        ///   <item>Use <see cref="OperationState.Failure"/> when the operation has completed with failures.</item>
+        ///   <item>Use <see cref="OperationState.Pending"/> when the operation has not completed yet.</item>
         /// </list>
         /// </returns>
-        ValueTask<OperationSubclientState> UpdateStateAsync(bool async, CancellationToken cancellationToken);
+        ValueTask<OperationState> PollOperationStateAsync(bool async, CancellationToken cancellationToken);
     }
 
     /// <summary>
     /// A helper structure passed to <see cref="OperationSubclientImplementation"/> to indicate the current operation state. This structure must be
     /// instantiated by one of its static methods, depending on the operation state:
     /// <list type="bullet">
-    ///   <item>Use <see cref="OperationSubclientState.Success"/> when the operation has completed successfully.</item>
-    ///   <item>Use <see cref="OperationSubclientState.Failure"/> when the operation has completed with failures.</item>
-    ///   <item>Use <see cref="OperationSubclientState.Pending"/> when the operation has not completed yet.</item>
+    ///   <item>Use <see cref="OperationState.Success"/> when the operation has completed successfully.</item>
+    ///   <item>Use <see cref="OperationState.Failure"/> when the operation has completed with failures.</item>
+    ///   <item>Use <see cref="OperationState.Pending"/> when the operation has not completed yet.</item>
     /// </list>
     /// </summary>
-    internal readonly struct OperationSubclientState
+    internal readonly struct OperationState
     {
-        private OperationSubclientState(Response rawResponse, bool hasCompleted, bool hasSucceeded, RequestFailedException? operationFailedException)
+        private OperationState(Response rawResponse, bool hasCompleted, bool hasSucceeded, RequestFailedException? operationFailedException)
         {
             RawResponse = rawResponse;
             HasCompleted = hasCompleted;
@@ -159,44 +159,44 @@ namespace Azure.Core
         public RequestFailedException? OperationFailedException { get; }
 
         /// <summary>
-        /// Instantiates an <see cref="OperationSubclientState"/> indicating the operation has completed successfully.
+        /// Instantiates an <see cref="OperationState"/> indicating the operation has completed successfully.
         /// </summary>
         /// <param name="rawResponse">The HTTP response obtained during the status update.</param>
-        /// <returns>A new <see cref="OperationSubclientState"/> instance.</returns>
+        /// <returns>A new <see cref="OperationState"/> instance.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="rawResponse"/> is <c>null</c>.</exception>
-        public static OperationSubclientState Success(Response rawResponse)
+        public static OperationState Success(Response rawResponse)
         {
             Argument.AssertNotNull(rawResponse, nameof(rawResponse));
 
-            return new OperationSubclientState(rawResponse, true, true, default);
+            return new OperationState(rawResponse, true, true, default);
         }
 
         /// <summary>
-        /// Instantiates an <see cref="OperationSubclientState"/> indicating the operation has completed with failures.
+        /// Instantiates an <see cref="OperationState"/> indicating the operation has completed with failures.
         /// </summary>
         /// <param name="rawResponse">The HTTP response obtained during the status update.</param>
         /// <param name="operationFailedException">
         /// The exception to throw from <c>UpdateStatus</c> because of the operation failure. If left <c>null</c>,
         /// a default exception is created based on the <paramref name="rawResponse"/> parameter.
         /// </param>
-        /// <returns>A new <see cref="OperationSubclientState"/> instance.</returns>
+        /// <returns>A new <see cref="OperationState"/> instance.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="rawResponse"/> is <c>null</c>.</exception>
-        public static OperationSubclientState Failure(Response rawResponse, RequestFailedException? operationFailedException = null)
+        public static OperationState Failure(Response rawResponse, RequestFailedException? operationFailedException = null)
         {
             Argument.AssertNotNull(rawResponse, nameof(rawResponse));
-            return new OperationSubclientState(rawResponse, true, false, operationFailedException);
+            return new OperationState(rawResponse, true, false, operationFailedException);
         }
 
         /// <summary>
-        /// Instantiates an <see cref="OperationSubclientState"/> indicating the operation has not completed yet.
+        /// Instantiates an <see cref="OperationState"/> indicating the operation has not completed yet.
         /// </summary>
         /// <param name="rawResponse">The HTTP response obtained during the status update.</param>
-        /// <returns>A new <see cref="OperationSubclientState"/> instance.</returns>
+        /// <returns>A new <see cref="OperationState"/> instance.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="rawResponse"/> is <c>null</c>.</exception>
-        public static OperationSubclientState Pending(Response rawResponse)
+        public static OperationState Pending(Response rawResponse)
         {
             Argument.AssertNotNull(rawResponse, nameof(rawResponse));
-            return new OperationSubclientState(rawResponse, false, default, default);
+            return new OperationState(rawResponse, false, default, default);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary>
     /// Tracks the status of a long-running operation for analyzing documents.
     /// </summary>
-    public class AnalyzeDocumentOperation : Operation<AnalyzeResult>, IOperationSubclientStateUpdatable<AnalyzeResult>
+    public class AnalyzeDocumentOperation : Operation<AnalyzeResult>, IOperationStatePoller<AnalyzeResult>
     {
         private readonly OperationSubclientImplementation<AnalyzeResult> _operationSubclientImplementation;
 
@@ -182,7 +182,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
             await _operationSubclientImplementation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
 
-        async ValueTask<OperationSubclientState<AnalyzeResult>> IOperationSubclientStateUpdatable<AnalyzeResult>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
+        async ValueTask<OperationState<AnalyzeResult>> IOperationStatePoller<AnalyzeResult>.PollOperationStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response<AnalyzeResultOperation> response = async
                 ? await _serviceClient.GetAnalyzeDocumentResultAsync(_modelId, _resultId, cancellationToken).ConfigureAwait(false)
@@ -193,7 +193,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             if (status == AnalyzeResultOperationStatus.Succeeded)
             {
-                return OperationSubclientState<AnalyzeResult>.Success(rawResponse,
+                return OperationState<AnalyzeResult>.Success(rawResponse,
                     response.Value.AnalyzeResult);
             }
             else if (status == AnalyzeResultOperationStatus.Failed)
@@ -202,10 +202,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.Error)
                     .ConfigureAwait(false);
 
-                return OperationSubclientState<AnalyzeResult>.Failure(rawResponse, requestFailedException);
+                return OperationState<AnalyzeResult>.Failure(rawResponse, requestFailedException);
             }
 
-            return OperationSubclientState<AnalyzeResult>.Pending(rawResponse);
+            return OperationState<AnalyzeResult>.Pending(rawResponse);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Azure.Core.Tests
         {
             int expectedValue = 10;
             MockResponse mockResponse = new MockResponse(200);
-            OperationSubclientState<int> state = OperationSubclientState<int>.Success(mockResponse, expectedValue);
+            OperationState<int> state = OperationState<int>.Success(mockResponse, expectedValue);
 
             Assert.True(state.HasCompleted);
             Assert.True(state.HasSucceeded);
@@ -25,18 +25,18 @@ namespace Azure.Core.Tests
 
         [Test]
         public void SuccessThrowsIfRawResponseIsNull() =>
-            Assert.Throws<ArgumentNullException>(() => OperationSubclientState<int>.Success(null, 10));
+            Assert.Throws<ArgumentNullException>(() => OperationState<int>.Success(null, 10));
 
         [Test]
         public void SuccessThrowsIfValueIsNull() =>
-            Assert.Throws<ArgumentNullException>(() => OperationSubclientState<string>.Success(new MockResponse(200), null));
+            Assert.Throws<ArgumentNullException>(() => OperationState<string>.Success(new MockResponse(200), null));
 
         [Test]
         public void FailureProperties()
         {
             RequestFailedException expectedException = new RequestFailedException("");
             MockResponse mockResponse = new MockResponse(200);
-            OperationSubclientState<int> state = OperationSubclientState<int>.Failure(mockResponse, expectedException);
+            OperationState<int> state = OperationState<int>.Failure(mockResponse, expectedException);
 
             Assert.True(state.HasCompleted);
             Assert.False(state.HasSucceeded);
@@ -47,13 +47,13 @@ namespace Azure.Core.Tests
 
         [Test]
         public void FailureThrowsIfRawResponseIsNull() =>
-            Assert.Throws<ArgumentNullException>(() => OperationSubclientState<int>.Failure(null, new RequestFailedException("")));
+            Assert.Throws<ArgumentNullException>(() => OperationState<int>.Failure(null, new RequestFailedException("")));
 
         [Test]
         public void PendingProperties()
         {
             MockResponse mockResponse = new MockResponse(200);
-            OperationSubclientState<int> state = OperationSubclientState<int>.Pending(mockResponse);
+            OperationState<int> state = OperationState<int>.Pending(mockResponse);
 
             Assert.False(state.HasCompleted);
             Assert.False(state.HasSucceeded);
@@ -64,6 +64,6 @@ namespace Azure.Core.Tests
 
         [Test]
         public void PendingThrowsIfRawResponseIsNull() =>
-            Assert.Throws<ArgumentNullException>(() => OperationSubclientState<int>.Pending(null));
+            Assert.Throws<ArgumentNullException>(() => OperationState<int>.Pending(null));
     }
 }

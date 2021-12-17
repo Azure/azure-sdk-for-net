@@ -93,11 +93,11 @@ namespace Azure.Core.Tests
             var operationInternal = CreateOperation(isOfT, UpdateResult.Pending);
             if (operationInternal is OperationSubclientImplementation oi)
             {
-                oi.SetState(OperationSubclientState.Success(mockResponse));
+                oi.SetState(OperationState.Success(mockResponse));
             }
             else if (operationInternal is OperationSubclientImplementation<int> oit)
             {
-                oit.SetState(OperationSubclientState<int>.Success(mockResponse, 1));
+                oit.SetState(OperationState<int>.Success(mockResponse, 1));
             }
 
             Assert.IsTrue(operationInternal.HasCompleted);
@@ -114,11 +114,11 @@ namespace Azure.Core.Tests
             var operationInternal = CreateOperation(isOfT, UpdateResult.Pending);
             if (operationInternal is OperationSubclientImplementation oi)
             {
-                oi.SetState(OperationSubclientState.Pending(mockResponse));
+                oi.SetState(OperationState.Pending(mockResponse));
             }
             else if (operationInternal is OperationSubclientImplementation<int> oit)
             {
-                oit.SetState(OperationSubclientState<int>.Pending(mockResponse));
+                oit.SetState(OperationState<int>.Pending(mockResponse));
             }
 
             Assert.IsFalse(operationInternal.HasCompleted);
@@ -134,11 +134,11 @@ namespace Azure.Core.Tests
             var operationInternal = CreateOperation(isOfT, UpdateResult.Pending);
             if (operationInternal is OperationSubclientImplementation oi)
             {
-                oi.SetState(OperationSubclientState.Failure(mockResponse));
+                oi.SetState(OperationState.Failure(mockResponse));
             }
             else if (operationInternal is OperationSubclientImplementation<int> oit)
             {
-                oit.SetState(OperationSubclientState<int>.Failure(mockResponse));
+                oit.SetState(OperationState<int>.Failure(mockResponse));
             }
 
             Assert.IsTrue(operationInternal.HasCompleted);
@@ -503,7 +503,7 @@ namespace Azure.Core.Tests
 
         private TimeSpan Max(TimeSpan t1, TimeSpan t2) => t1 > t2 ? t1 : t2;
 
-        private class TestOperationOfT : IOperationSubclientStateUpdatable<int>
+        private class TestOperationOfT : IOperationStatePoller<int>
         {
             public TestOperationOfT(
                 UpdateResult result,
@@ -521,12 +521,12 @@ namespace Azure.Core.Tests
                     {
                         return MockOperationInternal.CallsToComplete.HasValue &&
                                MockOperationInternal.UpdateStatusCallCount >= MockOperationInternal.CallsToComplete.Value
-                            ? OperationSubclientState<int>.Success(responseFactory(), expectedValue)
-                            : OperationSubclientState<int>.Pending(responseFactory());
+                            ? OperationState<int>.Success(responseFactory(), expectedValue)
+                            : OperationState<int>.Pending(responseFactory());
                     },
-                    UpdateResult.Failure => _ => OperationSubclientState<int>.Failure(responseFactory()),
-                    UpdateResult.FailureCustomException => _ => OperationSubclientState<int>.Failure(responseFactory(), originalException),
-                    UpdateResult.Success => _ => OperationSubclientState<int>.Success(responseFactory(), expectedValue),
+                    UpdateResult.Failure => _ => OperationState<int>.Failure(responseFactory()),
+                    UpdateResult.FailureCustomException => _ => OperationState<int>.Failure(responseFactory(), originalException),
+                    UpdateResult.Success => _ => OperationState<int>.Success(responseFactory(), expectedValue),
                     UpdateResult.Throw => _ => throw customException,
                     _ => null
                 };
@@ -534,25 +534,25 @@ namespace Azure.Core.Tests
 
             public MockOperationImplementationOfT<int> MockOperationInternal { get; }
 
-            public Func<CancellationToken, OperationSubclientState<int>> OnUpdateState { get; set; }
+            public Func<CancellationToken, OperationState<int>> OnUpdateState { get; set; }
 
-            ValueTask<OperationSubclientState<int>> IOperationSubclientStateUpdatable<int>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
+            ValueTask<OperationState<int>> IOperationStatePoller<int>.PollOperationStateAsync(bool async, CancellationToken cancellationToken)
             {
                 MockOperationInternal.UpdateStatusCallCount++;
                 MockOperationInternal.LastTokenReceivedByUpdateStatus = cancellationToken;
-                return new ValueTask<OperationSubclientState<int>>(OnUpdateState(cancellationToken));
+                return new ValueTask<OperationState<int>>(OnUpdateState(cancellationToken));
             }
         }
 
         private class MockOperationImplementationOfT<TResult> : OperationSubclientImplementation<TResult>, IMockOperationImplementation
         {
-            public MockOperationImplementationOfT(ClientDiagnostics clientDiagnostics, IOperationSubclientStateUpdatable<TResult> operation, Response rawResponse)
+            public MockOperationImplementationOfT(ClientDiagnostics clientDiagnostics, IOperationStatePoller<TResult> operation, Response rawResponse)
                 : base(clientDiagnostics, operation, rawResponse)
             { }
 
             public MockOperationImplementationOfT(
                 ClientDiagnostics clientDiagnostics,
-                IOperationSubclientStateUpdatable<TResult> operation,
+                IOperationStatePoller<TResult> operation,
                 Func<MockResponse> responseFactory,
                 string operationTypeName,
                 IEnumerable<KeyValuePair<string, string>> scopeAttributes)
@@ -573,7 +573,7 @@ namespace Azure.Core.Tests
             public int? CallsToComplete { get; set; }
         }
 
-        private class TestOperation : IOperationSubclientStateUpdatable
+        private class TestOperation : IOperationStatePoller
         {
             public TestOperation(
                 UpdateResult result,
@@ -591,12 +591,12 @@ namespace Azure.Core.Tests
                     {
                         return MockOperationSubclientImplementation.CallsToComplete.HasValue &&
                                MockOperationSubclientImplementation.UpdateStatusCallCount >= MockOperationSubclientImplementation.CallsToComplete.Value
-                            ? OperationSubclientState.Success(responseFactory())
-                            : OperationSubclientState.Pending(responseFactory());
+                            ? OperationState.Success(responseFactory())
+                            : OperationState.Pending(responseFactory());
                     },
-                    UpdateResult.Failure => _ => OperationSubclientState.Failure(responseFactory()),
-                    UpdateResult.FailureCustomException => _ => OperationSubclientState.Failure(responseFactory(), originalException),
-                    UpdateResult.Success => _ => OperationSubclientState.Success(responseFactory()),
+                    UpdateResult.Failure => _ => OperationState.Failure(responseFactory()),
+                    UpdateResult.FailureCustomException => _ => OperationState.Failure(responseFactory(), originalException),
+                    UpdateResult.Success => _ => OperationState.Success(responseFactory()),
                     UpdateResult.Throw => _ => throw customException,
                     _ => null
                 };
@@ -604,9 +604,9 @@ namespace Azure.Core.Tests
 
             public MockOperationSubclientImplementation MockOperationSubclientImplementation { get; }
 
-            public Func<CancellationToken, OperationSubclientState> OnUpdateState { get; set; }
+            public Func<CancellationToken, OperationState> OnUpdateState { get; set; }
 
-            ValueTask<OperationSubclientState> IOperationSubclientStateUpdatable.UpdateStateAsync(bool async, CancellationToken cancellationToken)
+            ValueTask<OperationState> IOperationStatePoller.PollOperationStateAsync(bool async, CancellationToken cancellationToken)
             {
                 MockOperationSubclientImplementation.UpdateStatusCallCount++;
                 MockOperationSubclientImplementation.LastTokenReceivedByUpdateStatus = cancellationToken;
@@ -616,13 +616,13 @@ namespace Azure.Core.Tests
 
         private class MockOperationSubclientImplementation : OperationSubclientImplementation, IMockOperationImplementation
         {
-            public MockOperationSubclientImplementation(ClientDiagnostics clientDiagnostics, IOperationSubclientStateUpdatable operation, Response rawResponse)
+            public MockOperationSubclientImplementation(ClientDiagnostics clientDiagnostics, IOperationStatePoller operation, Response rawResponse)
                 : base(clientDiagnostics, operation, rawResponse)
             { }
 
             public MockOperationSubclientImplementation(
                 ClientDiagnostics clientDiagnostics,
-                IOperationSubclientStateUpdatable operation,
+                IOperationStatePoller operation,
                 Func<MockResponse> responseFactory,
                 string operationTypeName,
                 IEnumerable<KeyValuePair<string, string>> scopeAttributes)

@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// Tracks the status of a long-running operation for recognizing fields and other content from forms by using custom
     /// trained models.
     /// </summary>
-    public class RecognizeCustomFormsOperation : Operation<RecognizedFormCollection>, IOperationSubclientStateUpdatable<RecognizedFormCollection>
+    public class RecognizeCustomFormsOperation : Operation<RecognizedFormCollection>, IOperationStatePoller<RecognizedFormCollection>
     {
         private readonly OperationSubclientImplementation<RecognizedFormCollection> _operationSubclientImplementation;
 
@@ -182,7 +182,7 @@ namespace Azure.AI.FormRecognizer.Models
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
             await _operationSubclientImplementation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
 
-        async ValueTask<OperationSubclientState<RecognizedFormCollection>> IOperationSubclientStateUpdatable<RecognizedFormCollection>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
+        async ValueTask<OperationState<RecognizedFormCollection>> IOperationStatePoller<RecognizedFormCollection>.PollOperationStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response<AnalyzeOperationResult> response = async
                 ? await _serviceClient.GetAnalyzeFormResultAsync(new Guid(_modelId), new Guid(_resultId), cancellationToken).ConfigureAwait(false)
@@ -193,7 +193,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (status == OperationStatus.Succeeded)
             {
-                return OperationSubclientState<RecognizedFormCollection>.Success(rawResponse,
+                return OperationState<RecognizedFormCollection>.Success(rawResponse,
                     ConvertToRecognizedForms(response.Value.AnalyzeResult, _modelId));
             }
             else if (status == OperationStatus.Failed)
@@ -202,10 +202,10 @@ namespace Azure.AI.FormRecognizer.Models
                     .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.AnalyzeResult.Errors)
                     .ConfigureAwait(false);
 
-                return OperationSubclientState<RecognizedFormCollection>.Failure(rawResponse, requestFailedException);
+                return OperationState<RecognizedFormCollection>.Failure(rawResponse, requestFailedException);
             }
 
-            return OperationSubclientState<RecognizedFormCollection>.Pending(rawResponse);
+            return OperationState<RecognizedFormCollection>.Pending(rawResponse);
         }
 
         private static RecognizedFormCollection ConvertToRecognizedForms(V2AnalyzeResult analyzeResult, string modelId)

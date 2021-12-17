@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary>
     /// Tracks the status of a long-running operation for recognizing layout elements from forms.
     /// </summary>
-    public class RecognizeContentOperation : Operation<FormPageCollection>, IOperationSubclientStateUpdatable<FormPageCollection>
+    public class RecognizeContentOperation : Operation<FormPageCollection>, IOperationStatePoller<FormPageCollection>
     {
         private readonly OperationSubclientImplementation<FormPageCollection> _operationSubclientImplementation;
 
@@ -149,7 +149,7 @@ namespace Azure.AI.FormRecognizer.Models
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
             await _operationSubclientImplementation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
 
-        async ValueTask<OperationSubclientState<FormPageCollection>> IOperationSubclientStateUpdatable<FormPageCollection>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
+        async ValueTask<OperationState<FormPageCollection>> IOperationStatePoller<FormPageCollection>.PollOperationStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response<AnalyzeOperationResult> response = async
                 ? await _serviceClient.GetAnalyzeLayoutResultAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
@@ -160,7 +160,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (status == OperationStatus.Succeeded)
             {
-                return OperationSubclientState<FormPageCollection>.Success(rawResponse,
+                return OperationState<FormPageCollection>.Success(rawResponse,
                     ConvertValue(response.Value.AnalyzeResult.PageResults, response.Value.AnalyzeResult.ReadResults));
             }
             else if (status == OperationStatus.Failed)
@@ -169,10 +169,10 @@ namespace Azure.AI.FormRecognizer.Models
                     .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.AnalyzeResult.Errors)
                     .ConfigureAwait(false);
 
-                return OperationSubclientState<FormPageCollection>.Failure(rawResponse, requestFailedException);
+                return OperationState<FormPageCollection>.Failure(rawResponse, requestFailedException);
             }
 
-            return OperationSubclientState<FormPageCollection>.Pending(rawResponse);
+            return OperationState<FormPageCollection>.Pending(rawResponse);
         }
 
         private static FormPageCollection ConvertValue(IReadOnlyList<PageResult> pageResults, IReadOnlyList<ReadResult> readResults)
