@@ -347,6 +347,9 @@ whether you need to provide a CLA and decorate the PR appropriately
 bot. You will only need to do this once across all repositories using
 our CLA.
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For
-more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact
+This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For
+more information see the [Code of Conduct FAQ][coc_faq] or contact
 <opencode@microsoft.com> with any additional questions or comments.
+
+[coc]: https://opensource.microsoft.com/codeofconduct/
+[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
