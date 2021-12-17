@@ -42,7 +42,7 @@ namespace Microsoft.Extensions.DependencyInjection
     public static partial class WebPubSubDependencyInjectionExtensions
     {
         public static Microsoft.Azure.WebPubSub.AspNetCore.IWebPubSubServerBuilder AddWebPubSub(this Microsoft.Extensions.DependencyInjection.IServiceCollection services) { throw null; }
-        public static Microsoft.Azure.WebPubSub.AspNetCore.IWebPubSubServerBuilder AddWebPubSub(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, System.Action<Microsoft.Azure.WebPubSub.AspNetCore.WebPubSubOptions> configure = null) { throw null; }
+        public static Microsoft.Azure.WebPubSub.AspNetCore.IWebPubSubServerBuilder AddWebPubSub(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, System.Action<Microsoft.Azure.WebPubSub.AspNetCore.WebPubSubOptions> configure) { throw null; }
         public static Microsoft.Azure.WebPubSub.AspNetCore.IWebPubSubServerBuilder AddWebPubSubServiceClient<THub>(this Microsoft.Azure.WebPubSub.AspNetCore.IWebPubSubServerBuilder builder) where THub : Microsoft.Azure.WebPubSub.AspNetCore.WebPubSubHub { throw null; }
     }
 }
