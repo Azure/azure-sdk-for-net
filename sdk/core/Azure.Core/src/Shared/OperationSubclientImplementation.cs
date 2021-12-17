@@ -37,7 +37,7 @@ namespace Azure.Core
     ///     <description><see cref="OperationSubclientImplementationBase.WaitForCompletionResponseAsync(CancellationToken)"/></description>
     ///   </item>
     ///   <item>
-    ///     <description><see cref="OperationSubclientImplementationBase.WaitForCompletionResponseAsync(TimeSpan, CancellationToken)"/></description>
+    ///     <description><see cref="OperationSubclientImplementationBase.PollUntilCompletedAsync(TimeSpan, CancellationToken)"/></description>
     ///   </item>
     /// </list>
     /// </summary>
@@ -84,13 +84,13 @@ namespace Azure.Core
         /// <param name="state">The <see cref="OperationState"/> used to set <see cref="OperationSubclientImplementationBase.HasCompleted"/> and other members.</param>
         public void SetState(OperationState state)
         {
-            ApplyStateAsync(false, state.RawResponse, state.HasCompleted, state.HasSucceeded, state.OperationFailedException, throwIfFailed: false).EnsureCompleted();
+            UpdateStateAndCompleteAsync(false, state.RawResponse, state.HasCompleted, state.HasSucceeded, state.OperationFailedException, throwIfFailed: false).EnsureCompleted();
         }
 
-        protected override async ValueTask<Response> UpdateImplementationStateAsync(bool async, CancellationToken cancellationToken)
+        protected override async ValueTask<Response> PollAndUpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             OperationState state = await _operationStatePoller.PollOperationStateAsync(async, cancellationToken).ConfigureAwait(false);
-            return await ApplyStateAsync(async, state.RawResponse, state.HasCompleted, state.HasSucceeded, state.OperationFailedException).ConfigureAwait(false);
+            return await UpdateStateAndCompleteAsync(async, state.RawResponse, state.HasCompleted, state.HasSucceeded, state.OperationFailedException).ConfigureAwait(false);
         }
     }
 

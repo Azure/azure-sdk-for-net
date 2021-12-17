@@ -164,7 +164,7 @@ namespace Azure.Core
         /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
         public async ValueTask<Response<T>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
         {
-            var rawResponse = await WaitForCompletionResponseAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
+            var rawResponse = await PollUntilCompletedAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(Value, rawResponse);
         }
 
@@ -178,17 +178,17 @@ namespace Azure.Core
             {
                 Value = state.Value!;
             }
-            ApplyStateAsync(false, state.RawResponse, state.HasCompleted, state.HasSucceeded, state.OperationFailedException, throwIfFailed: false).EnsureCompleted();
+            UpdateStateAndCompleteAsync(false, state.RawResponse, state.HasCompleted, state.HasSucceeded, state.OperationFailedException, throwIfFailed: false).EnsureCompleted();
         }
 
-        protected override async ValueTask<Response> UpdateImplementationStateAsync(bool async, CancellationToken cancellationToken)
+        protected override async ValueTask<Response> PollAndUpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             OperationState<T> state = await _operationStatePoller.PollOperationStateAsync(async, cancellationToken).ConfigureAwait(false);
             if (state.HasCompleted && state.HasSucceeded)
             {
                 Value = state.Value!;
             }
-            return await ApplyStateAsync(async, state.RawResponse, state.HasCompleted, state.HasSucceeded, state.OperationFailedException).ConfigureAwait(false);
+            return await UpdateStateAndCompleteAsync(async, state.RawResponse, state.HasCompleted, state.HasSucceeded, state.OperationFailedException).ConfigureAwait(false);
         }
     }
 

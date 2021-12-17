@@ -115,7 +115,7 @@ namespace Azure.Core
         /// <returns>The last HTTP response received from the server, including the final result of the long-running operation.</returns>
         /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
         public virtual async ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken) =>
-            await WaitForCompletionResponseAsync(DefaultPollingInterval, cancellationToken).ConfigureAwait(false);
+            await PollUntilCompletedAsync(DefaultPollingInterval, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Periodically calls <see cref="UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes. The interval
@@ -135,7 +135,7 @@ namespace Azure.Core
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The last HTTP response received from the server, including the final result of the long-running operation.</returns>
         /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
-        public virtual async ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
+        public virtual async ValueTask<Response> PollUntilCompletedAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
         {
             while (true)
             {
@@ -170,7 +170,7 @@ namespace Azure.Core
 
             try
             {
-                return await UpdateImplementationStateAsync(async, cancellationToken).ConfigureAwait(false);
+                return await PollAndUpdateStateAsync(async, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -179,7 +179,7 @@ namespace Azure.Core
             }
         }
 
-        protected async ValueTask<Response> ApplyStateAsync(bool async, Response response, bool hasCompleted, bool hasSucceeded, RequestFailedException? requestFailedException, bool throwIfFailed = true)
+        protected async ValueTask<Response> UpdateStateAndCompleteAsync(bool async, Response response, bool hasCompleted, bool hasSucceeded, RequestFailedException? requestFailedException, bool throwIfFailed = true)
         {
             RawResponse = response;
 
@@ -231,6 +231,6 @@ namespace Azure.Core
                 : pollingInterval;
         }
 
-        protected abstract ValueTask<Response> UpdateImplementationStateAsync(bool async, CancellationToken cancellationToken);
+        protected abstract ValueTask<Response> PollAndUpdateStateAsync(bool async, CancellationToken cancellationToken);
     }
 }
