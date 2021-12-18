@@ -177,6 +177,7 @@ namespace Azure.Core.TestFramework
 
                     _shared = shared;
                 }
+
                 return shared;
             }
         }
