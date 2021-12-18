@@ -37,8 +37,6 @@ namespace Azure.Core.TestFramework
         private readonly Process _testProxyProcess;
         internal TestProxyRestClient Client { get; }
         private readonly StringBuilder _errorBuffer = new();
-        private static readonly object _lock = new();
-        private static TestProxy _shared;
 
         static TestProxy()
         {
@@ -154,32 +152,16 @@ namespace Azure.Core.TestFramework
 
         public static TestProxy Start()
         {
-            if (_shared != null)
-            {
-                return _shared;
-            }
+            return new TestProxy(typeof(TestProxy)
+                .Assembly
+                .GetCustomAttributes<AssemblyMetadataAttribute>()
+                .Single(a => a.Key == "TestProxyPath")
+                .Value);
+        }
 
-            lock (_lock)
-            {
-                var shared = _shared;
-                if (shared == null)
-                {
-                    shared = new TestProxy(typeof(TestProxy)
-                        .Assembly
-                        .GetCustomAttributes<AssemblyMetadataAttribute>()
-                        .Single(a => a.Key == "TestProxyPath")
-                        .Value);
-
-                    AppDomain.CurrentDomain.DomainUnload += (_, _) =>
-                    {
-                        shared._testProxyProcess?.Kill();
-                    };
-
-                    _shared = shared;
-                }
-
-                return shared;
-            }
+        public void Stop()
+        {
+            _testProxyProcess?.Kill();
         }
 
         private static bool TryParsePort(string output, string scheme, out int? port)
