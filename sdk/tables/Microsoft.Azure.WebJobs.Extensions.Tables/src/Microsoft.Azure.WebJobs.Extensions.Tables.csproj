@@ -9,11 +9,13 @@
             AZC0001;<!-- Namespace -->
             CS0618; <!-- Obsolete APIs -->
             CS1591; <!-- XML docs -->
-            </NoWarn>
+        </NoWarn>
+        <InheritDocTrimLevel>internal</InheritDocTrimLevel>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Azure.WebJobs" />
+        <PackageReference Include="Microsoft.Azure.WebJobs.Sources" PrivateAssets="All" />
         <PackageReference Include="Microsoft.Extensions.Azure" />
     </ItemGroup>
 
