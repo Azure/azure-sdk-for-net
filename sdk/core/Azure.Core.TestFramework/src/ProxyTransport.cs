@@ -103,18 +103,14 @@ namespace Azure.Core.TestFramework
             return request;
         }
 
-        private void ThrowIfMissingRecording()
+        // copied from https://github.com/Azure/azure-sdk-for-net/blob/main/common/Perf/Azure.Test.Perf/TestProxyPolicy.cs
+        private void RedirectToTestProxy(HttpMessage message)
         {
             if (_recording.MismatchException != null)
             {
                 throw _recording.MismatchException;
             }
-        }
 
-        // copied from https://github.com/Azure/azure-sdk-for-net/blob/main/common/Perf/Azure.Test.Perf/TestProxyPolicy.cs
-        private void RedirectToTestProxy(HttpMessage message)
-        {
-            ThrowIfMissingRecording();
             if (_recording.Mode == RecordedTestMode.Record)
             {
                 switch (_filter())
