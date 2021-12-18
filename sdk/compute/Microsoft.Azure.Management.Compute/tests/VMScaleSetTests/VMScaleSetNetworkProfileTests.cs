@@ -440,6 +440,8 @@ namespace Compute.Tests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+                EnsureClientsInitialized(context);
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
 
                 // Create resource group
                 string rgName = TestUtilities.GenerateName(TestPrefix) + 1;
@@ -451,10 +453,8 @@ namespace Compute.Tests
                 bool passed = false;
                 try
                 {
-                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
-                    EnsureClientsInitialized(context);
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
 
-                    ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
                     var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
                     var vnetResponse = CreateVNETWithSubnets(rgName, 2);
                     var vmssSubnet = vnetResponse.Subnets[1];
@@ -490,16 +490,13 @@ namespace Compute.Tests
                         createWithPublicIpAddress: false,
                         subnet: vmssSubnet,
                         capacity: 2);
-                    String vmssFilterMatch = $"'virtualMachineScaleSet/id' eq/subscriptions/{m_subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}";
+                    String vmssFilterMatch = $"'virtualMachineScaleSet/id' eq '/subscriptions/{m_subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}'";
                     var listResponse = m_CrpClient.VirtualMachines.ListAll(vmssFilterMatch);
-
-                    // Assert.True(listResponse.Count() == 2);
-                    // Assert.Null(listResponse.NextPageLink);
 
                     var vmss = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
                     foreach (VirtualMachine vm in listResponse)
                     {
-                        Assert.Equal(vm.VirtualMachineScaleSet.Id, vmss.Id);
+                        Assert.True(string.Equals(vm.VirtualMachineScaleSet.Id, vmss.Id, StringComparison.OrdinalIgnoreCase));
                     }
 
                     passed = true;
@@ -507,7 +504,6 @@ namespace Compute.Tests
                 }
                 finally
                 {
-                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
                     m_ResourcesClient.ResourceGroups.DeleteIfExists(rgName);
                 }
 
