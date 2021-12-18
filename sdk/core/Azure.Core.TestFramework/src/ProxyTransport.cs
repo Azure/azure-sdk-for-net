@@ -94,11 +94,6 @@ namespace Azure.Core.TestFramework
 
         public override Request CreateRequest()
         {
-            if (_recording.MismatchException != null)
-            {
-                throw _recording.MismatchException;
-            }
-
             var request = _innerTransport.CreateRequest();
             lock (_recording.Random)
             {
@@ -108,9 +103,18 @@ namespace Azure.Core.TestFramework
             return request;
         }
 
+        private void ThrowIfMissingRecording()
+        {
+            if (_recording.MismatchException != null)
+            {
+                throw _recording.MismatchException;
+            }
+        }
+
         // copied from https://github.com/Azure/azure-sdk-for-net/blob/main/common/Perf/Azure.Test.Perf/TestProxyPolicy.cs
         private void RedirectToTestProxy(HttpMessage message)
         {
+            ThrowIfMissingRecording();
             if (_recording.Mode == RecordedTestMode.Record)
             {
                 switch (_filter())
