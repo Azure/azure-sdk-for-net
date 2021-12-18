@@ -40,6 +40,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
         // ApplicationInsights SDK listens to all Azure SDK sources that look like 'Azure.*'
         private const string DiagnosticScopeNamespace = "Azure.Messaging.EventGrid";
         private const string ResourceProviderNamespace = "Microsoft.EventGrid";
+        private const string DiagnosticScopeName = "EventGrid.Process";
 
         // for end to end testing
         internal EventGridExtensionConfigProvider(
@@ -185,7 +186,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
 
         private async Task<FunctionResult> ExecuteWithTracingAsync(string functionName, TriggeredFunctionData triggerData)
         {
-            using DiagnosticScope scope = _diagnosticScopeFactory.CreateScope(functionName, DiagnosticScope.ActivityKind.Consumer);
+            using DiagnosticScope scope = _diagnosticScopeFactory.CreateScope(DiagnosticScopeName, DiagnosticScope.ActivityKind.Consumer);
             if (scope.IsEnabled)
             {
                 if (triggerData.TriggerValue is JArray evntArray)
