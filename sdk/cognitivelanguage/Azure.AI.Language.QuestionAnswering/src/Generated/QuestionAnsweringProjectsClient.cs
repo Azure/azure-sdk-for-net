@@ -54,14 +54,14 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
 
             _clientDiagnostics = new ClientDiagnostics(options);
             _keyCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
 
         /// <summary> Get the requested project metadata. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -105,7 +105,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetProjectDetailsRequest(projectName);
+                using HttpMessage message = CreateGetProjectDetailsRequest(projectName, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -117,7 +117,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
 
         /// <summary> Get the requested project metadata. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -161,7 +161,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetProjectDetailsRequest(projectName);
+                using HttpMessage message = CreateGetProjectDetailsRequest(projectName, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -174,7 +174,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <summary> Create or update a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -228,7 +228,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateProjectRequest(projectName, content);
+                using HttpMessage message = CreateCreateProjectRequest(projectName, content, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -241,7 +241,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <summary> Create or update a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -295,7 +295,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateProjectRequest(projectName, content);
+                using HttpMessage message = CreateCreateProjectRequest(projectName, content, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -307,7 +307,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
 
         /// <summary> Gets the status of a Project delete job. </summary>
         /// <param name="jobId"> Job ID. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -361,7 +361,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDeleteStatusRequest(jobId);
+                using HttpMessage message = CreateGetDeleteStatusRequest(jobId, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -373,7 +373,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
 
         /// <summary> Gets the status of a Project delete job. </summary>
         /// <param name="jobId"> Job ID. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -427,7 +427,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDeleteStatusRequest(jobId);
+                using HttpMessage message = CreateGetDeleteStatusRequest(jobId, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -440,7 +440,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <summary> Gets the status of an Export job, once job completes, returns the project metadata, and assets. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="jobId"> Job ID. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -495,7 +495,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetExportStatusRequest(projectName, jobId);
+                using HttpMessage message = CreateGetExportStatusRequest(projectName, jobId, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -508,7 +508,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <summary> Gets the status of an Export job, once job completes, returns the project metadata, and assets. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="jobId"> Job ID. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -563,7 +563,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetExportStatusRequest(projectName, jobId);
+                using HttpMessage message = CreateGetExportStatusRequest(projectName, jobId, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -576,7 +576,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <summary> Gets the status of an Import job. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="jobId"> Job ID. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -630,7 +630,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetImportStatusRequest(projectName, jobId);
+                using HttpMessage message = CreateGetImportStatusRequest(projectName, jobId, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -643,7 +643,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <summary> Gets the status of an Import job. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="jobId"> Job ID. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -697,7 +697,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetImportStatusRequest(projectName, jobId);
+                using HttpMessage message = CreateGetImportStatusRequest(projectName, jobId, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -711,7 +711,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="jobId"> Job ID. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/>, or <paramref name="jobId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -765,7 +765,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDeployStatusRequest(projectName, deploymentName, jobId);
+                using HttpMessage message = CreateGetDeployStatusRequest(projectName, deploymentName, jobId, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -779,7 +779,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="jobId"> Job ID. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/>, or <paramref name="jobId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -833,7 +833,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDeployStatusRequest(projectName, deploymentName, jobId);
+                using HttpMessage message = CreateGetDeployStatusRequest(projectName, deploymentName, jobId, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -846,7 +846,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <summary> Updates all the synonyms of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -886,7 +886,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateSynonymsRequest(projectName, content);
+                using HttpMessage message = CreateUpdateSynonymsRequest(projectName, content, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -899,7 +899,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <summary> Updates all the synonyms of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -939,7 +939,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateSynonymsRequest(projectName, content);
+                using HttpMessage message = CreateUpdateSynonymsRequest(projectName, content, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -952,7 +952,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <summary> Gets the status of update sources job. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="jobId"> Job ID. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1006,7 +1006,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetUpdateSourcesStatusRequest(projectName, jobId);
+                using HttpMessage message = CreateGetUpdateSourcesStatusRequest(projectName, jobId, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1019,7 +1019,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <summary> Gets the status of update sources job. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="jobId"> Job ID. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1073,7 +1073,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetUpdateSourcesStatusRequest(projectName, jobId);
+                using HttpMessage message = CreateGetUpdateSourcesStatusRequest(projectName, jobId, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -1086,7 +1086,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <summary> Gets the status of update QnAs job. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="jobId"> Job ID. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1140,7 +1140,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetUpdateQnasStatusRequest(projectName, jobId);
+                using HttpMessage message = CreateGetUpdateQnasStatusRequest(projectName, jobId, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1153,7 +1153,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <summary> Gets the status of update QnAs job. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="jobId"> Job ID. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1207,7 +1207,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetUpdateQnasStatusRequest(projectName, jobId);
+                using HttpMessage message = CreateGetUpdateQnasStatusRequest(projectName, jobId, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -1220,7 +1220,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <summary> Update Active Learning feedback. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -1261,7 +1261,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAddFeedbackRequest(projectName, content);
+                using HttpMessage message = CreateAddFeedbackRequest(projectName, content, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1274,7 +1274,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <summary> Update Active Learning feedback. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -1315,7 +1315,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAddFeedbackRequest(projectName, content);
+                using HttpMessage message = CreateAddFeedbackRequest(projectName, content, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -1329,7 +1329,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1379,8 +1379,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetProjectsRequest(top, skip, maxpagesize)
-                        : CreateGetProjectsNextPageRequest(nextLink, top, skip, maxpagesize);
+                        ? CreateGetProjectsRequest(top, skip, maxpagesize, context)
+                        : CreateGetProjectsNextPageRequest(nextLink, top, skip, maxpagesize, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1392,7 +1392,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1442,8 +1442,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetProjectsRequest(top, skip, maxpagesize)
-                        : CreateGetProjectsNextPageRequest(nextLink, top, skip, maxpagesize);
+                        ? CreateGetProjectsRequest(top, skip, maxpagesize, context)
+                        : CreateGetProjectsNextPageRequest(nextLink, top, skip, maxpagesize, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1456,7 +1456,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1504,8 +1504,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDeploymentsRequest(projectName, top, skip, maxpagesize)
-                        : CreateGetDeploymentsNextPageRequest(nextLink, projectName, top, skip, maxpagesize);
+                        ? CreateGetDeploymentsRequest(projectName, top, skip, maxpagesize, context)
+                        : CreateGetDeploymentsNextPageRequest(nextLink, projectName, top, skip, maxpagesize, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1518,7 +1518,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1566,8 +1566,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDeploymentsRequest(projectName, top, skip, maxpagesize)
-                        : CreateGetDeploymentsNextPageRequest(nextLink, projectName, top, skip, maxpagesize);
+                        ? CreateGetDeploymentsRequest(projectName, top, skip, maxpagesize, context)
+                        : CreateGetDeploymentsNextPageRequest(nextLink, projectName, top, skip, maxpagesize, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1580,7 +1580,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1627,8 +1627,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSynonymsRequest(projectName, top, skip, maxpagesize)
-                        : CreateGetSynonymsNextPageRequest(nextLink, projectName, top, skip, maxpagesize);
+                        ? CreateGetSynonymsRequest(projectName, top, skip, maxpagesize, context)
+                        : CreateGetSynonymsNextPageRequest(nextLink, projectName, top, skip, maxpagesize, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1641,7 +1641,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1688,8 +1688,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSynonymsRequest(projectName, top, skip, maxpagesize)
-                        : CreateGetSynonymsNextPageRequest(nextLink, projectName, top, skip, maxpagesize);
+                        ? CreateGetSynonymsRequest(projectName, top, skip, maxpagesize, context)
+                        : CreateGetSynonymsNextPageRequest(nextLink, projectName, top, skip, maxpagesize, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1702,7 +1702,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1754,8 +1754,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSourcesRequest(projectName, top, skip, maxpagesize)
-                        : CreateGetSourcesNextPageRequest(nextLink, projectName, top, skip, maxpagesize);
+                        ? CreateGetSourcesRequest(projectName, top, skip, maxpagesize, context)
+                        : CreateGetSourcesNextPageRequest(nextLink, projectName, top, skip, maxpagesize, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1768,7 +1768,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1820,8 +1820,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSourcesRequest(projectName, top, skip, maxpagesize)
-                        : CreateGetSourcesNextPageRequest(nextLink, projectName, top, skip, maxpagesize);
+                        ? CreateGetSourcesRequest(projectName, top, skip, maxpagesize, context)
+                        : CreateGetSourcesNextPageRequest(nextLink, projectName, top, skip, maxpagesize, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1835,7 +1835,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1918,8 +1918,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetQnasRequest(projectName, source, top, skip, maxpagesize)
-                        : CreateGetQnasNextPageRequest(nextLink, projectName, source, top, skip, maxpagesize);
+                        ? CreateGetQnasRequest(projectName, source, top, skip, maxpagesize, context)
+                        : CreateGetQnasNextPageRequest(nextLink, projectName, source, top, skip, maxpagesize, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1933,7 +1933,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -2016,8 +2016,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetQnasRequest(projectName, source, top, skip, maxpagesize)
-                        : CreateGetQnasNextPageRequest(nextLink, projectName, source, top, skip, maxpagesize);
+                        ? CreateGetQnasRequest(projectName, source, top, skip, maxpagesize, context)
+                        : CreateGetQnasNextPageRequest(nextLink, projectName, source, top, skip, maxpagesize, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -2026,8 +2026,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Delete the project. </summary>
+        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
@@ -2050,15 +2051,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Operation<BinaryData>> DeleteProjectAsync(string projectName, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> DeleteProjectAsync(bool waitForCompletion, string projectName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.DeleteProject");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteProjectRequest(projectName);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.DeleteProject", OperationFinalStateVia.Location, context).ConfigureAwait(false);
+                using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.DeleteProject", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2068,8 +2069,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Delete the project. </summary>
+        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
@@ -2092,15 +2094,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Operation<BinaryData> DeleteProject(string projectName, RequestContext context = null)
+        public virtual Operation<BinaryData> DeleteProject(bool waitForCompletion, string projectName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.DeleteProject");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteProjectRequest(projectName);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.DeleteProject", OperationFinalStateVia.Location, context);
+                using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.DeleteProject", OperationFinalStateVia.Location, context, waitForCompletion);
             }
             catch (Exception e)
             {
@@ -2110,10 +2112,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Export project metadata and assets. </summary>
+        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="format"> Knowledge base Import or Export format. Allowed values: &quot;json&quot; | &quot;tsv&quot; | &quot;excel&quot;. </param>
         /// <param name="assetKind"> Kind of the asset of the project. Allowed values: &quot;qnas&quot; | &quot;synonyms&quot;. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
@@ -2136,15 +2139,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Operation<BinaryData>> ExportAsync(string projectName, string format = null, string assetKind = null, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> ExportAsync(bool waitForCompletion, string projectName, string format = null, string assetKind = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.Export");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateExportRequest(projectName, format, assetKind);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.Export", OperationFinalStateVia.Location, context).ConfigureAwait(false);
+                using HttpMessage message = CreateExportRequest(projectName, format, assetKind, context);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.Export", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2154,10 +2157,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Export project metadata and assets. </summary>
+        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="format"> Knowledge base Import or Export format. Allowed values: &quot;json&quot; | &quot;tsv&quot; | &quot;excel&quot;. </param>
         /// <param name="assetKind"> Kind of the asset of the project. Allowed values: &quot;qnas&quot; | &quot;synonyms&quot;. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
@@ -2180,15 +2184,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Operation<BinaryData> Export(string projectName, string format = null, string assetKind = null, RequestContext context = null)
+        public virtual Operation<BinaryData> Export(bool waitForCompletion, string projectName, string format = null, string assetKind = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.Export");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateExportRequest(projectName, format, assetKind);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.Export", OperationFinalStateVia.Location, context);
+                using HttpMessage message = CreateExportRequest(projectName, format, assetKind, context);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.Export", OperationFinalStateVia.Location, context, waitForCompletion);
             }
             catch (Exception e)
             {
@@ -2198,11 +2202,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Import project assets. </summary>
+        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="format"> Knowledge base Import or Export format. Allowed values: &quot;json&quot; | &quot;tsv&quot; | &quot;excel&quot;. </param>
         /// <param name="assetKind"> Kind of the asset of the project. Allowed values: &quot;qnas&quot; | &quot;synonyms&quot;. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -2287,15 +2292,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Operation<BinaryData>> ImportAsync(string projectName, RequestContent content, string format = null, string assetKind = null, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> ImportAsync(bool waitForCompletion, string projectName, RequestContent content, string format = null, string assetKind = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.Import");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateImportRequest(projectName, content, format, assetKind);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.Import", OperationFinalStateVia.Location, context).ConfigureAwait(false);
+                using HttpMessage message = CreateImportRequest(projectName, content, format, assetKind, context);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.Import", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2305,11 +2310,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Import project assets. </summary>
+        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="format"> Knowledge base Import or Export format. Allowed values: &quot;json&quot; | &quot;tsv&quot; | &quot;excel&quot;. </param>
         /// <param name="assetKind"> Kind of the asset of the project. Allowed values: &quot;qnas&quot; | &quot;synonyms&quot;. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -2394,15 +2400,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Operation<BinaryData> Import(string projectName, RequestContent content, string format = null, string assetKind = null, RequestContext context = null)
+        public virtual Operation<BinaryData> Import(bool waitForCompletion, string projectName, RequestContent content, string format = null, string assetKind = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.Import");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateImportRequest(projectName, content, format, assetKind);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.Import", OperationFinalStateVia.Location, context);
+                using HttpMessage message = CreateImportRequest(projectName, content, format, assetKind, context);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.Import", OperationFinalStateVia.Location, context, waitForCompletion);
             }
             catch (Exception e)
             {
@@ -2412,9 +2418,10 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Deploy project to production. </summary>
+        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
@@ -2437,15 +2444,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Operation<BinaryData>> DeployProjectAsync(string projectName, string deploymentName, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> DeployProjectAsync(bool waitForCompletion, string projectName, string deploymentName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.DeployProject");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.DeployProject", OperationFinalStateVia.Location, context).ConfigureAwait(false);
+                using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, context);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.DeployProject", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2455,9 +2462,10 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Deploy project to production. </summary>
+        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
@@ -2480,15 +2488,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Operation<BinaryData> DeployProject(string projectName, string deploymentName, RequestContext context = null)
+        public virtual Operation<BinaryData> DeployProject(bool waitForCompletion, string projectName, string deploymentName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.DeployProject");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.DeployProject", OperationFinalStateVia.Location, context);
+                using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, context);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.DeployProject", OperationFinalStateVia.Location, context, waitForCompletion);
             }
             catch (Exception e)
             {
@@ -2498,9 +2506,10 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Updates the sources of a project. </summary>
+        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -2536,15 +2545,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Operation<BinaryData>> UpdateSourcesAsync(string projectName, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> UpdateSourcesAsync(bool waitForCompletion, string projectName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateSources");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateSourcesRequest(projectName, content);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.UpdateSources", OperationFinalStateVia.Location, context).ConfigureAwait(false);
+                using HttpMessage message = CreateUpdateSourcesRequest(projectName, content, context);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.UpdateSources", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2554,9 +2563,10 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Updates the sources of a project. </summary>
+        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -2592,15 +2602,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Operation<BinaryData> UpdateSources(string projectName, RequestContent content, RequestContext context = null)
+        public virtual Operation<BinaryData> UpdateSources(bool waitForCompletion, string projectName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateSources");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateSourcesRequest(projectName, content);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.UpdateSources", OperationFinalStateVia.Location, context);
+                using HttpMessage message = CreateUpdateSourcesRequest(projectName, content, context);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.UpdateSources", OperationFinalStateVia.Location, context, waitForCompletion);
             }
             catch (Exception e)
             {
@@ -2610,9 +2620,10 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Updates the QnAs of a project. </summary>
+        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -2670,15 +2681,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Operation<BinaryData>> UpdateQnasAsync(string projectName, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> UpdateQnasAsync(bool waitForCompletion, string projectName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateQnas");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateQnasRequest(projectName, content);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.UpdateQnas", OperationFinalStateVia.Location, context).ConfigureAwait(false);
+                using HttpMessage message = CreateUpdateQnasRequest(projectName, content, context);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.UpdateQnas", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2688,9 +2699,10 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Updates the QnAs of a project. </summary>
+        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -2748,15 +2760,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Operation<BinaryData> UpdateQnas(string projectName, RequestContent content, RequestContext context = null)
+        public virtual Operation<BinaryData> UpdateQnas(bool waitForCompletion, string projectName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateQnas");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateQnasRequest(projectName, content);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.UpdateQnas", OperationFinalStateVia.Location, context);
+                using HttpMessage message = CreateUpdateQnasRequest(projectName, content, context);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.UpdateQnas", OperationFinalStateVia.Location, context, waitForCompletion);
             }
             catch (Exception e)
             {
@@ -2765,9 +2777,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             }
         }
 
-        internal HttpMessage CreateGetProjectsRequest(int? top, int? skip, int? maxpagesize)
+        internal HttpMessage CreateGetProjectsRequest(int? top, int? skip, int? maxpagesize, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2793,9 +2805,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetProjectDetailsRequest(string projectName)
+        internal HttpMessage CreateGetProjectDetailsRequest(string projectName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2810,9 +2822,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateCreateProjectRequest(string projectName, RequestContent content)
+        internal HttpMessage CreateCreateProjectRequest(string projectName, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
@@ -2829,9 +2841,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateDeleteProjectRequest(string projectName)
+        internal HttpMessage CreateDeleteProjectRequest(string projectName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -2846,9 +2858,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetDeleteStatusRequest(string jobId)
+        internal HttpMessage CreateGetDeleteStatusRequest(string jobId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2863,9 +2875,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateExportRequest(string projectName, string format, string assetKind)
+        internal HttpMessage CreateExportRequest(string projectName, string format, string assetKind, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -2889,9 +2901,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetExportStatusRequest(string projectName, string jobId)
+        internal HttpMessage CreateGetExportStatusRequest(string projectName, string jobId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2908,9 +2920,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateImportRequest(string projectName, RequestContent content, string format, string assetKind)
+        internal HttpMessage CreateImportRequest(string projectName, RequestContent content, string format, string assetKind, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -2936,9 +2948,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetImportStatusRequest(string projectName, string jobId)
+        internal HttpMessage CreateGetImportStatusRequest(string projectName, string jobId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2955,9 +2967,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateDeployProjectRequest(string projectName, string deploymentName)
+        internal HttpMessage CreateDeployProjectRequest(string projectName, string deploymentName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -2974,9 +2986,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetDeployStatusRequest(string projectName, string deploymentName, string jobId)
+        internal HttpMessage CreateGetDeployStatusRequest(string projectName, string deploymentName, string jobId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2995,9 +3007,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetDeploymentsRequest(string projectName, int? top, int? skip, int? maxpagesize)
+        internal HttpMessage CreateGetDeploymentsRequest(string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3025,9 +3037,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetSynonymsRequest(string projectName, int? top, int? skip, int? maxpagesize)
+        internal HttpMessage CreateGetSynonymsRequest(string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3055,9 +3067,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateUpdateSynonymsRequest(string projectName, RequestContent content)
+        internal HttpMessage CreateUpdateSynonymsRequest(string projectName, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -3075,9 +3087,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetSourcesRequest(string projectName, int? top, int? skip, int? maxpagesize)
+        internal HttpMessage CreateGetSourcesRequest(string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3105,9 +3117,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateUpdateSourcesRequest(string projectName, RequestContent content)
+        internal HttpMessage CreateUpdateSourcesRequest(string projectName, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
@@ -3125,9 +3137,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetUpdateSourcesStatusRequest(string projectName, string jobId)
+        internal HttpMessage CreateGetUpdateSourcesStatusRequest(string projectName, string jobId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3144,9 +3156,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetQnasRequest(string projectName, string source, int? top, int? skip, int? maxpagesize)
+        internal HttpMessage CreateGetQnasRequest(string projectName, string source, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3178,9 +3190,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateUpdateQnasRequest(string projectName, RequestContent content)
+        internal HttpMessage CreateUpdateQnasRequest(string projectName, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
@@ -3198,9 +3210,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetUpdateQnasStatusRequest(string projectName, string jobId)
+        internal HttpMessage CreateGetUpdateQnasStatusRequest(string projectName, string jobId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3217,9 +3229,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateAddFeedbackRequest(string projectName, RequestContent content)
+        internal HttpMessage CreateAddFeedbackRequest(string projectName, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -3237,9 +3249,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetProjectsNextPageRequest(string nextLink, int? top, int? skip, int? maxpagesize)
+        internal HttpMessage CreateGetProjectsNextPageRequest(string nextLink, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3252,9 +3264,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetDeploymentsNextPageRequest(string nextLink, string projectName, int? top, int? skip, int? maxpagesize)
+        internal HttpMessage CreateGetDeploymentsNextPageRequest(string nextLink, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3267,9 +3279,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetSynonymsNextPageRequest(string nextLink, string projectName, int? top, int? skip, int? maxpagesize)
+        internal HttpMessage CreateGetSynonymsNextPageRequest(string nextLink, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3282,9 +3294,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetSourcesNextPageRequest(string nextLink, string projectName, int? top, int? skip, int? maxpagesize)
+        internal HttpMessage CreateGetSourcesNextPageRequest(string nextLink, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3297,9 +3309,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetQnasNextPageRequest(string nextLink, string projectName, string source, int? top, int? skip, int? maxpagesize)
+        internal HttpMessage CreateGetQnasNextPageRequest(string nextLink, string projectName, string source, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
