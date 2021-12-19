@@ -25,22 +25,8 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
             #region Snippet:QuestionAnsweringProjectsClient_ExportProject
             string exportFormat = "json"; // can also be tsv or excel
-            Operation<BinaryData> exportOperation = client.Export(exportedProjectName, exportFormat);
-
-            // Wait for operation completion
-            TimeSpan pollingInterval = new TimeSpan(1000);
-
-            while (true)
-            {
-                exportOperation.UpdateStatus();
-                if (exportOperation.HasCompleted)
-                {
-                    Console.WriteLine($"Export operation value: \n{exportOperation.Value}");
-                    break;
-                }
-
-                Thread.Sleep(pollingInterval);
-            }
+            bool waitForCompletion = true;
+            Operation<BinaryData> exportOperation = client.Export(waitForCompletion, exportedProjectName, exportFormat);
 
             // retrieve export operation response, and extract url of exported file
             JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.Value);
@@ -72,20 +58,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 }
             });
 
-            Operation<BinaryData> importOperation = client.Import(importedProjectName, importRequestContent, importFormat);
+            Operation<BinaryData> importOperation = client.Import(waitForCompletion, importedProjectName, importRequestContent, importFormat);
 
-            // Wait for completion with manual polling.
-            while (true)
-            {
-                importOperation.UpdateStatus();
-                if (importOperation.HasCompleted)
-                {
-                    Console.WriteLine($"Import operation value: \n{importOperation.Value}");
-                    break;
-                }
-
-                Thread.Sleep(pollingInterval);
-            }
+            Console.WriteLine($"Operation status: {importOperation.GetRawResponse().Status}");
             #endregion
 
             Assert.True(importOperation.HasCompleted);
@@ -112,10 +87,8 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
             #region Snippet:QuestionAnsweringProjectsClient_ExportProjectAsync
             string exportFormat = "json"; // can also be tsv or excel
-            Operation<BinaryData> exportOperation = await client.ExportAsync(exportedProjectName, exportFormat);
-
-            // Wait for operation completion
-            await exportOperation.WaitForCompletionAsync();
+            bool waitForCompletion = true;
+            Operation<BinaryData> exportOperation = await client.ExportAsync(waitForCompletion, exportedProjectName, exportFormat);
 
             // retrieve export operation response, and extract url of exported file
             JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.Value);
@@ -147,10 +120,8 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 }
             });
 
-            Operation<BinaryData> importOperation = await client.ImportAsync(importedProjectName, importRequestContent, importFormat);
-
-            // Wait for completion with manual polling
-            await importOperation.WaitForCompletionAsync();
+            Operation<BinaryData> importOperation = await client.ImportAsync(waitForCompletion, importedProjectName, importRequestContent, importFormat);
+            Console.WriteLine($"Operation status: {importOperation.GetRawResponse().Status}");
             #endregion
 
             Assert.True(importOperation.HasCompleted);

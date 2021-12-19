@@ -116,8 +116,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync("{ProjectName}", updateSourcesRequestContent);
-            Response<BinaryData> updateSourcesOperationResult = await updateSourcesOperation.WaitForCompletionAsync();
+            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(true, "{ProjectName}", updateSourcesRequestContent);
             #endregion Snippet:Language_QnA_Maker_Snippets_MigrationGuide_UpdateKnowledgeSource
 
             #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_UpdateQnas
@@ -136,18 +135,15 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-            Operation<BinaryData> updateQnasOperation = await client.UpdateQnasAsync("{ProjectName}", updateQnasRequestContent);
-            Response<BinaryData> updateQnasResult = await updateQnasOperation.WaitForCompletionAsync();
+            Operation<BinaryData> updateQnasOperation = await client.UpdateQnasAsync(true, "{ProjectName}", updateQnasRequestContent);
             #endregion Snippet:Language_QnA_Maker_Snippets_MigrationGuide_UpdateQnas
 
             #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_ExportProject
-            Operation<BinaryData> exportOperation = client.Export("{ProjectName}", "{ExportFormat}");
-            Response<BinaryData> exportResult = await exportOperation.WaitForCompletionAsync();
+            Operation<BinaryData> exportOperation = client.Export(true, "{ProjectName}", "{ExportFormat}");
             #endregion Snippet:Language_QnA_Maker_Snippets_MigrationGuide_ExportProject
 
             #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_DeleteProject
-            Operation<BinaryData> deletionOperation = await client.DeleteProjectAsync("{ProjectName}");
-            Response<BinaryData> deleteResult = await deletionOperation.WaitForCompletionAsync();
+            Operation<BinaryData> deletionOperation = await client.DeleteProjectAsync(true, "{ProjectName}");
             #endregion Snippet:Language_QnA_Maker_Snippets_MigrationGuide_DeleteProject
         }
 

@@ -26,6 +26,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             #region QuestionAnsweringProjectsClient_UpdateSources
             // Set request content parameters for updating our new project's sources
             string sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
+            bool waitForCompletion = true;
             RequestContent updateSourcesRequestContent = RequestContent.Create(
                 new[] {
                     new {
@@ -42,22 +43,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-            Operation<BinaryData> updateSourcesOperation = client.UpdateSources(testProjectName, updateSourcesRequestContent);
-
-            // Wait for operation completion
-            TimeSpan pollingInterval = new TimeSpan(1000);
-
-            while (true)
-            {
-                updateSourcesOperation.UpdateStatus();
-                if (updateSourcesOperation.HasCompleted)
-                {
-                    Console.WriteLine($"Update Sources operation value: \n{updateSourcesOperation.Value}");
-                    break;
-                }
-
-                Thread.Sleep(pollingInterval);
-            }
+            Operation<BinaryData> updateSourcesOperation = client.UpdateSources(waitForCompletion, testProjectName, updateSourcesRequestContent);
 
             // Knowledge Sources can be retrieved as follows
             Pageable<BinaryData> sources = client.GetSources(testProjectName);
@@ -89,21 +75,16 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-            Operation<BinaryData> updateQnasOperation = Client.UpdateQnas(testProjectName, updateQnasRequestContent);
+            Operation<BinaryData> updateQnasOperation = Client.UpdateQnas(waitForCompletion, testProjectName, updateQnasRequestContent);
 
-            while (true)
-            {
-                updateQnasOperation.UpdateStatus();
-                if (updateQnasOperation.HasCompleted)
-                {
-                    Console.WriteLine($"Update Qnas operation value: \n{updateQnasOperation.Value}");
-                    break;
-                }
-
-                Thread.Sleep(pollingInterval);
-            }
-
+            // QnAs can be retrieved as follows
             Pageable<BinaryData> qnas = Client.GetQnas(testProjectName);
+
+            Console.WriteLine("Qnas: ");
+            foreach (var qna in qnas)
+            {
+                Console.WriteLine(qna);
+            }
             #endregion
 
             Assert.True(updateQnasOperation.HasCompleted);
@@ -183,6 +164,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             #region QuestionAnsweringProjectsClient_UpdateSourcesAsync
             // Set request content parameters for updating our new project's sources
             string sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
+            bool waitForCompletion = true;
             RequestContent updateSourcesRequestContent = RequestContent.Create(
                 new[] {
                     new {
@@ -199,7 +181,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(testProjectName, updateSourcesRequestContent);
+            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(waitForCompletion, testProjectName, updateSourcesRequestContent);
 
             // Wait for operation completion
             Response<BinaryData> updateSourcesOperationResult = await updateSourcesOperation.WaitForCompletionAsync();
@@ -236,11 +218,17 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-            Operation<BinaryData> updateQnasOperation = await Client.UpdateQnasAsync(testProjectName, updateQnasRequestContent);
+            Operation<BinaryData> updateQnasOperation = await Client.UpdateQnasAsync(waitForCompletion, testProjectName, updateQnasRequestContent);
             await updateQnasOperation.WaitForCompletionAsync();
 
+            // QnAs can be retrieved as follows
             AsyncPageable<BinaryData> qnas = Client.GetQnasAsync(testProjectName);
 
+            Console.WriteLine("Qnas: ");
+            await foreach (var qna in qnas)
+            {
+                Console.WriteLine(qna);
+            }
             #endregion
 
             Assert.True(updateQnasOperation.HasCompleted);
