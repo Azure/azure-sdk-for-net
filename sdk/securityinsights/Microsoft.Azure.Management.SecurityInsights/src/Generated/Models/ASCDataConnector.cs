@@ -33,16 +33,21 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// <summary>
         /// Initializes a new instance of the ASCDataConnector class.
         /// </summary>
-        /// <param name="id">Azure resource Id</param>
-        /// <param name="name">Azure resource name</param>
-        /// <param name="type">Azure resource type</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="etag">Etag of the azure resource</param>
         /// <param name="dataTypes">The available data types for the
         /// connector.</param>
         /// <param name="subscriptionId">The subscription id to connect to, and
         /// get the data from.</param>
-        public ASCDataConnector(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), AlertsDataTypeOfDataConnector dataTypes = default(AlertsDataTypeOfDataConnector), string subscriptionId = default(string))
-            : base(id, name, type, etag)
+        public ASCDataConnector(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string etag = default(string), AlertsDataTypeOfDataConnector dataTypes = default(AlertsDataTypeOfDataConnector), string subscriptionId = default(string))
+            : base(id, name, type, systemData, etag)
         {
             DataTypes = dataTypes;
             SubscriptionId = subscriptionId;
@@ -67,5 +72,18 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         [JsonProperty(PropertyName = "properties.subscriptionId")]
         public string SubscriptionId { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (DataTypes != null)
+            {
+                DataTypes.Validate();
+            }
+        }
     }
 }

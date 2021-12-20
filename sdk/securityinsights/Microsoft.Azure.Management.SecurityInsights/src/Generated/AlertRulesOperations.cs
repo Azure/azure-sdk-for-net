@@ -54,8 +54,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// Gets all alert rules.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The name is
-        /// case insensitive.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
         /// The name of the workspace.
@@ -83,15 +82,26 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// </return>
         public async Task<AzureOperationResponse<IPage<AlertRule>>> ListWithHttpMessagesAsync(string resourceGroupName, string workspaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             if (Client.SubscriptionId != null)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Client.SubscriptionId, "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$"))
+                if (Client.SubscriptionId.Length < 1)
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
                 }
             }
             if (resourceGroupName == null)
@@ -107,10 +117,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
                 if (resourceGroupName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
             if (workspaceName == null)
@@ -280,8 +286,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// Gets the alert rule.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The name is
-        /// case insensitive.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
         /// The name of the workspace.
@@ -312,15 +317,26 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// </return>
         public async Task<AzureOperationResponse<AlertRule>> GetWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string ruleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             if (Client.SubscriptionId != null)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Client.SubscriptionId, "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$"))
+                if (Client.SubscriptionId.Length < 1)
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
                 }
             }
             if (resourceGroupName == null)
@@ -336,10 +352,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
                 if (resourceGroupName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
             if (workspaceName == null)
@@ -515,8 +527,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// Creates or updates the alert rule.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The name is
-        /// case insensitive.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
         /// The name of the workspace.
@@ -550,15 +561,26 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// </return>
         public async Task<AzureOperationResponse<AlertRule>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string ruleId, AlertRule alertRule, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             if (Client.SubscriptionId != null)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Client.SubscriptionId, "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$"))
+                if (Client.SubscriptionId.Length < 1)
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
                 }
             }
             if (resourceGroupName == null)
@@ -574,10 +596,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
                 if (resourceGroupName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
             if (workspaceName == null)
@@ -782,8 +800,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// Delete the alert rule.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The name is
-        /// case insensitive.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
         /// The name of the workspace.
@@ -811,15 +828,26 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// </return>
         public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string ruleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             if (Client.SubscriptionId != null)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Client.SubscriptionId, "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$"))
+                if (Client.SubscriptionId.Length < 1)
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
                 }
             }
             if (resourceGroupName == null)
@@ -835,10 +863,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
                 if (resourceGroupName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
             if (workspaceName == null)
