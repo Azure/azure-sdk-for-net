@@ -48,13 +48,27 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => Subscription.ResourceType;
 
-        private RestOperations RestClient => _restClient ??= new RestOperations(
-            _nameSpace,
-            _providerCollection.GetApiVersionForNamespace(_nameSpace),
-            _clientDiagnostics,
-            Pipeline,
-            ClientOptions,
-            BaseUri);
+        private RestOperations GetRestClient(CancellationToken cancellationToken = default)
+        {
+            return _restClient ??= new RestOperations(
+                _nameSpace,
+                _providerCollection.GetApiVersionForNamespace(_nameSpace, cancellationToken),
+                _clientDiagnostics,
+                Pipeline,
+                ClientOptions,
+                BaseUri);
+        }
+
+        private async Task<RestOperations> GetRestClientAsync(CancellationToken cancellationToken = default)
+        {
+            return _restClient ??= new RestOperations(
+                _nameSpace,
+                await _providerCollection.GetApiVersionForNamespaceAsync(_nameSpace, cancellationToken).ConfigureAwait(false),
+                _clientDiagnostics,
+                Pipeline,
+                ClientOptions,
+                BaseUri);
+        }
 
         /// <summary> Gets a list of operations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -67,7 +81,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = RestClient.List(cancellationToken: cancellationToken);
+                    var response = GetRestClient().List(cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -90,7 +104,8 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = await RestClient.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var restClient = await GetRestClientAsync().ConfigureAwait(false);
+                    var response = await restClient.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)

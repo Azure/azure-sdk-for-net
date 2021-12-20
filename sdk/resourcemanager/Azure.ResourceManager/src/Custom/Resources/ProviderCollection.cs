@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Resources
             return version;
         }
 
-        internal async Task<string> TryGetApiVersionAsync(ResourceType resourceType, CancellationToken cancellationToken = default)
+        internal async ValueTask<string> TryGetApiVersionAsync(ResourceType resourceType, CancellationToken cancellationToken = default)
         {
             string version;
             Dictionary<string, string> resourceVersions;
@@ -76,17 +76,34 @@ namespace Azure.ResourceManager.Resources
             if (!ClientOptions.NamespaceVersions.TryGetValue(resourceNamespace, out version))
             {
                 Provider results = Get(resourceNamespace, cancellationToken: cancellationToken);
-                DateTime maxVersion = DateTime.MinValue;
-                foreach (var type in results.Data.ResourceTypes)
-                {
-                    string strVersion = GetDateFromVersion(type.ApiVersions[0]);
-                    DateTime current = DateTime.Parse(strVersion, CultureInfo.InvariantCulture);
-                    maxVersion = current > maxVersion ? current : maxVersion;
-                }
-                version = maxVersion.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+                version = GetMaxVersion(results);
                 ClientOptions.NamespaceVersions.TryAdd(resourceNamespace, version);
             }
             return version;
+        }
+
+        internal async ValueTask<string> GetApiVersionForNamespaceAsync(string resourceNamespace, CancellationToken cancellationToken = default)
+        {
+            string version;
+            if (!ClientOptions.NamespaceVersions.TryGetValue(resourceNamespace, out version))
+            {
+                Provider results = await GetAsync(resourceNamespace, cancellationToken: cancellationToken).ConfigureAwait(false);
+                version = GetMaxVersion(results);
+                ClientOptions.NamespaceVersions.TryAdd(resourceNamespace, version);
+            }
+            return version;
+        }
+
+        private static string GetMaxVersion(Provider results)
+        {
+            DateTime maxVersion = DateTime.MinValue;
+            foreach (var type in results.Data.ResourceTypes)
+            {
+                string strVersion = GetDateFromVersion(type.ApiVersions[0]);
+                DateTime current = DateTime.Parse(strVersion, CultureInfo.InvariantCulture);
+                maxVersion = current > maxVersion ? current : maxVersion;
+            }
+            return maxVersion.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
         }
 
         private static string GetDateFromVersion(string version)
