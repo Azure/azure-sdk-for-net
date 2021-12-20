@@ -820,6 +820,25 @@ namespace Azure.ResourceManager.Resources
         public string ManagedBy { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ResourceGroupProperties Properties { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResourceGroupVersion : System.IEquatable<Azure.ResourceManager.Resources.ResourceGroupVersion>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public static Azure.ResourceManager.Resources.ResourceGroupVersion Default { get { throw null; } }
+        public static Azure.ResourceManager.Resources.ResourceGroupVersion V2019_10_01 { get { throw null; } }
+        public static Azure.ResourceManager.Resources.ResourceGroupVersion V2021_01_01 { get { throw null; } }
+        public static Azure.ResourceManager.Resources.ResourceGroupVersion V2021_04_01 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Resources.ResourceGroupVersion other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Resources.ResourceGroupVersion left, Azure.ResourceManager.Resources.ResourceGroupVersion right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.ResourceGroupVersion (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Resources.ResourceGroupVersion left, Azure.ResourceManager.Resources.ResourceGroupVersion right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class RestApiCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.Models.RestApi>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.RestApi>, System.Collections.IEnumerable
     {
         protected RestApiCollection() { }
