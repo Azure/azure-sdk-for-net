@@ -279,8 +279,8 @@ namespace AzureRedisCache.Tests.InMemoryTests
                                                                                     Family = SkuFamily.C,
                                                                                     Capacity = 1
                                                                                 },
-                                                                                RedisConfiguration = new Dictionary<string, string>() {
-                                                                                    {"maxmemory-policy","allkeys-lru"}
+                                                                                RedisConfiguration = new RedisCommonPropertiesRedisConfiguration(){
+                                                                                    MaxmemoryPolicy = "allkeys-lru"
                                                                                 },
                                                                                 MinimumTlsVersion = TlsVersion.OneFullStopTwo,
                                                                                 ReplicasPerMaster = 2
@@ -296,7 +296,7 @@ namespace AzureRedisCache.Tests.InMemoryTests
             Assert.Equal(SkuFamily.C, response.Sku.Family);
             Assert.Equal(1, response.Sku.Capacity);
             Assert.Equal("2.8", response.RedisVersion);
-            Assert.Equal("allkeys-lru", response.RedisConfiguration["maxmemory-policy"]);
+            Assert.Equal("allkeys-lru", response.RedisConfiguration.MaxmemoryPolicy);
 
             Assert.Equal("hydraradiscache.cache.icbbvt.windows-int.net", response.HostName);
             Assert.Equal(6379, response.Port);

@@ -6,7 +6,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Redis</PackageId>
     <Description>Provides redis cache management capabilities for Microsoft Azure.</Description>
-    <Version>7.0.0</Version>
+    <Version>8.0.0</Version>
     <AssemblyName>Microsoft.Azure.Management.Redis</AssemblyName>
     <PackageTags>Microsoft Azure Redis Cache management;Redis Management;</PackageTags>
     <PackageReleaseNotes>Added support for specifying ports to RedisRebootParameters to enable rebooting cache instances based on their exposed port information.</PackageReleaseNotes>
