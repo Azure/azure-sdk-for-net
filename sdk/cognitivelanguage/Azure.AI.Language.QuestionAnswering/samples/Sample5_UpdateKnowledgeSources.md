@@ -22,6 +22,7 @@ To add a new knowledge source to your project, you can set up a `RequestContent`
 ```C# Snippet:QuestionAnsweringProjectsClient_UpdateSources
 // Set request content parameters for updating our new project's sources
 string sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
+bool waitForCompletion = true;
 RequestContent updateSourcesRequestContent = RequestContent.Create(
     new[] {
         new {
@@ -38,22 +39,7 @@ RequestContent updateSourcesRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateSourcesOperation = client.UpdateSources(newProjectName, updateSourcesRequestContent);
-
-// Wait for operation completion
-TimeSpan pollingInterval = new TimeSpan(1000);
-
-while (true)
-{
-    updateSourcesOperation.UpdateStatus();
-    if (updateSourcesOperation.HasCompleted)
-    {
-        Console.WriteLine($"Update Sources operation value: \n{updateSourcesOperation.Value}");
-        break;
-    }
-
-    Thread.Sleep(pollingInterval);
-}
+Operation<BinaryData> updateSourcesOperation = client.UpdateSources(waitForCompletion, newProjectName, updateSourcesRequestContent);
 
 // Knowledge Sources can be retrieved as follows
 Pageable<BinaryData> sources = client.GetSources(newProjectName);
@@ -86,21 +72,16 @@ RequestContent updateQnasRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateQnasOperation = Client.UpdateQnas(testProjectName, updateQnasRequestContent);
+Operation<BinaryData> updateQnasOperation = Client.UpdateQnas(waitForCompletion, testProjectName, updateQnasRequestContent);
 
-while (true)
-{
-    updateQnasOperation.UpdateStatus();
-    if (updateQnasOperation.HasCompleted)
-    {
-        Console.WriteLine($"Update Qnas operation value: \n{updateQnasOperation.Value}");
-        break;
-    }
-
-    Thread.Sleep(pollingInterval);
-}
-
+// QnAs can be retrieved as follows
 Pageable<BinaryData> qnas = Client.GetQnas(testProjectName);
+
+Console.WriteLine("Qnas: ");
+foreach (var qna in qnas)
+{
+    Console.WriteLine(qna);
+}
 ```
 
 ### Updating synonyms
@@ -168,6 +149,7 @@ Response addFeedbackResponse = Client.AddFeedback(testProjectName, addFeedbackRe
 ```C# Snippet:QuestionAnsweringProjectsClient_UpdateSourcesAsync
 // Set request content parameters for updating our new project's sources
 string sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
+bool waitForCompletion = true;
 RequestContent updateSourcesRequestContent = RequestContent.Create(
     new[] {
         new {
@@ -184,12 +166,9 @@ RequestContent updateSourcesRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(newProjectName, updateSourcesRequestContent);
+Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(waitForCompletion, newProjectName, updateSourcesRequestContent);
 
-// Wait for operation completion
-Response<BinaryData> updateSourcesOperationResult = await updateSourcesOperation.WaitForCompletionAsync();
-
-Console.WriteLine($"Update Sources operation result: \n{updateSourcesOperationResult}");
+Console.WriteLine($"Update Sources operation result: \n{updateSourcesOperation.Value}");
 
 // Knowledge Sources can be retrieved as follows
 AsyncPageable<BinaryData> sources = client.GetSourcesAsync(newProjectName);
@@ -220,10 +199,17 @@ RequestContent updateQnasRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateQnasOperation = await Client.UpdateQnasAsync(testProjectName, updateQnasRequestContent);
+Operation<BinaryData> updateQnasOperation = await Client.UpdateQnasAsync(waitForCompletion, testProjectName, updateQnasRequestContent);
 await updateQnasOperation.WaitForCompletionAsync();
 
+// QnAs can be retrieved as follows
 AsyncPageable<BinaryData> qnas = Client.GetQnasAsync(testProjectName);
+
+Console.WriteLine("Qnas: ");
+await foreach (var qna in qnas)
+{
+    Console.WriteLine(qna);
+}
 ```
 
 ### Updating synonyms

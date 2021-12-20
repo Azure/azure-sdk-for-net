@@ -208,8 +208,7 @@ RequestContent updateSourcesRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync("{ProjectName}", updateSourcesRequestContent);
-Response<BinaryData> updateSourcesOperationResult = await updateSourcesOperation.WaitForCompletionAsync();
+Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(true, "{ProjectName}", updateSourcesRequestContent);
 ```
 
 You can also update a project's questions and answers directly as follows:
@@ -230,8 +229,7 @@ RequestContent updateQnasRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateQnasOperation = await client.UpdateQnasAsync("{ProjectName}", updateQnasRequestContent);
-Response<BinaryData> updateQnasResult = await updateQnasOperation.WaitForCompletionAsync();
+Operation<BinaryData> updateQnasOperation = await client.UpdateQnasAsync(true, "{ProjectName}", updateQnasRequestContent);
 ```
 
 #### Exporting knowledge base
@@ -245,8 +243,7 @@ QnADocumentsDTO kbdata = await client.Knowledgebase.DownloadAsync("{KnowledgeBas
 Now you can export your Question Answering project:
 
 ```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_ExportProject
-Operation<BinaryData> exportOperation = client.Export("{ProjectName}", "{ExportFormat}");
-Response<BinaryData> exportResult = await exportOperation.WaitForCompletionAsync();
+Operation<BinaryData> exportOperation = client.Export(true, "{ProjectName}", "{ExportFormat}");
 ```
 
 #### Deleting knowledge base
@@ -260,6 +257,5 @@ await client.Knowledgebase.DeleteAsync("{KnowledgeBaseID}");
 Now in `Azure.AI.Language.QuestionAnswering.Projects`, you can delete a project using the `DeleteProjectAsync` method:
 
 ```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_DeleteProject
-Operation<BinaryData> deletionOperation = await client.DeleteProjectAsync("{ProjectName}");
-Response<BinaryData> deleteResult = await deletionOperation.WaitForCompletionAsync();
+Operation<BinaryData> deletionOperation = await client.DeleteProjectAsync(true, "{ProjectName}");
 ```

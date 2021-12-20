@@ -177,12 +177,9 @@ Your projects can be deployed using the `DeployProjectAsync` or the synchronous 
 ```C# Snippet:QuestionAnsweringProjectsClient_DeployProjectAsync
 // Set deployment name and start operation
 string newDeploymentName = "production";
-Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(newProjectName, newDeploymentName);
+Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(waitForCompletion, newProjectName, newDeploymentName);
 
-// Wait for operation completion
-Response<BinaryData> deploymentOperationResult = await deploymentOperation.WaitForCompletionAsync();
-
-Console.WriteLine($"Update Sources operation result: \n{deploymentOperationResult}");
+Console.WriteLine($"Update Sources operation result: \n{deploymentOperation.Value}");
 
 // Deployments can be retrieved as follows
 AsyncPageable<BinaryData> deployments = client.GetDeploymentsAsync(newProjectName);
@@ -200,6 +197,7 @@ One way to add content to your project is to add a knowledge source. The followi
 ```C# Snippet:QuestionAnsweringProjectsClient_UpdateSourcesAsync
 // Set request content parameters for updating our new project's sources
 string sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
+bool waitForCompletion = true;
 RequestContent updateSourcesRequestContent = RequestContent.Create(
     new[] {
         new {
@@ -216,12 +214,9 @@ RequestContent updateSourcesRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(newProjectName, updateSourcesRequestContent);
+Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(waitForCompletion, newProjectName, updateSourcesRequestContent);
 
-// Wait for operation completion
-Response<BinaryData> updateSourcesOperationResult = await updateSourcesOperation.WaitForCompletionAsync();
-
-Console.WriteLine($"Update Sources operation result: \n{updateSourcesOperationResult}");
+Console.WriteLine($"Update Sources operation result: \n{updateSourcesOperation.Value}");
 
 // Knowledge Sources can be retrieved as follows
 AsyncPageable<BinaryData> sources = client.GetSourcesAsync(newProjectName);

@@ -54,6 +54,7 @@ The following snippet shows how to add a new knowledge base source to your proje
 ```C# Snippet:QuestionAnsweringProjectsClient_UpdateSources
 // Set request content parameters for updating our new project's sources
 string sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
+bool waitForCompletion = true;
 RequestContent updateSourcesRequestContent = RequestContent.Create(
     new[] {
         new {
@@ -70,22 +71,7 @@ RequestContent updateSourcesRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateSourcesOperation = client.UpdateSources(newProjectName, updateSourcesRequestContent);
-
-// Wait for operation completion
-TimeSpan pollingInterval = new TimeSpan(1000);
-
-while (true)
-{
-    updateSourcesOperation.UpdateStatus();
-    if (updateSourcesOperation.HasCompleted)
-    {
-        Console.WriteLine($"Update Sources operation value: \n{updateSourcesOperation.Value}");
-        break;
-    }
-
-    Thread.Sleep(pollingInterval);
-}
+Operation<BinaryData> updateSourcesOperation = client.UpdateSources(waitForCompletion, newProjectName, updateSourcesRequestContent);
 
 // Knowledge Sources can be retrieved as follows
 Pageable<BinaryData> sources = client.GetSources(newProjectName);
@@ -101,20 +87,7 @@ foreach (BinaryData source in sources)
 ```C# Snippet:QuestionAnsweringProjectsClient_DeployProject
 // Set deployment name and start operation
 string newDeploymentName = "production";
-Operation<BinaryData> deploymentOperation = client.DeployProject(newProjectName, newDeploymentName);
-
-// Wait for completion with manual polling.
-while (true)
-{
-    deploymentOperation.UpdateStatus();
-    if (deploymentOperation.HasCompleted)
-    {
-        Console.WriteLine($"Deployment operation value: \n{deploymentOperation.Value}");
-        break;
-    }
-
-    Thread.Sleep(pollingInterval);
-}
+Operation<BinaryData> deploymentOperation = client.DeployProject(waitForCompletion, newProjectName, newDeploymentName);
 
 // Deployments can be retrieved as follows
 Pageable<BinaryData> deployments = client.GetDeployments(newProjectName);
@@ -162,6 +135,7 @@ await foreach (BinaryData project in projects)
 ```C# Snippet:QuestionAnsweringProjectsClient_UpdateSourcesAsync
 // Set request content parameters for updating our new project's sources
 string sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
+bool waitForCompletion = true;
 RequestContent updateSourcesRequestContent = RequestContent.Create(
     new[] {
         new {
@@ -178,12 +152,9 @@ RequestContent updateSourcesRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(newProjectName, updateSourcesRequestContent);
+Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(waitForCompletion, newProjectName, updateSourcesRequestContent);
 
-// Wait for operation completion
-Response<BinaryData> updateSourcesOperationResult = await updateSourcesOperation.WaitForCompletionAsync();
-
-Console.WriteLine($"Update Sources operation result: \n{updateSourcesOperationResult}");
+Console.WriteLine($"Update Sources operation result: \n{updateSourcesOperation.Value}");
 
 // Knowledge Sources can be retrieved as follows
 AsyncPageable<BinaryData> sources = client.GetSourcesAsync(newProjectName);
@@ -199,12 +170,9 @@ await foreach (BinaryData source in sources)
 ```C# Snippet:QuestionAnsweringProjectsClient_DeployProjectAsync
 // Set deployment name and start operation
 string newDeploymentName = "production";
-Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(newProjectName, newDeploymentName);
+Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(waitForCompletion, newProjectName, newDeploymentName);
 
-// Wait for operation completion
-Response<BinaryData> deploymentOperationResult = await deploymentOperation.WaitForCompletionAsync();
-
-Console.WriteLine($"Update Sources operation result: \n{deploymentOperationResult}");
+Console.WriteLine($"Update Sources operation result: \n{deploymentOperation.Value}");
 
 // Deployments can be retrieved as follows
 AsyncPageable<BinaryData> deployments = client.GetDeploymentsAsync(newProjectName);
