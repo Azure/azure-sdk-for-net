@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.Resources
             _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
+        /// <summary>
+        /// The resource type for tags.
+        /// </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Resources/tags";
+
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => Id.ResourceType;
 

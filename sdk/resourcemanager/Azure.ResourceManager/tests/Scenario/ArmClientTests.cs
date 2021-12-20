@@ -104,7 +104,8 @@ namespace Azure.ResourceManager.Tests
             ResourceGroupVersionTracker tracker1 = new ResourceGroupVersionTracker();
             ResourceGroupVersionTracker tracker2 = new ResourceGroupVersionTracker();
             ArmClientOptions options1 = new ArmClientOptions();
-            options1.ResourceApiVersionOverrides.Add(ResourceGroup.ResourceType, ResourceGroupVersion.V2021_01_01.ToString());
+            string versionOverride = "2021-01-01";
+            options1.ResourceApiVersionOverrides.Add(ResourceGroup.ResourceType, versionOverride);
             ArmClientOptions options2 = new ArmClientOptions();
             options1.AddPolicy(tracker1, HttpPipelinePosition.PerCall);
             options2.AddPolicy(tracker2, HttpPipelinePosition.PerCall);
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Tests
             _ = await subscription1.GetResourceGroups().CreateOrUpdateAsync(Recording.GenerateAssetName("testRg-"), new ResourceGroupData(Location.WestUS));
             _ = await subscription2.GetResourceGroups().CreateOrUpdateAsync(Recording.GenerateAssetName("testRg-"), new ResourceGroupData(Location.WestUS));
 
-            Assert.AreEqual(ResourceGroupVersion.V2021_01_01.ToString(), tracker1.VersionUsed);
+            Assert.AreEqual(versionOverride, tracker1.VersionUsed);
             Assert.AreEqual(ResourceGroupVersion.Default.ToString(), tracker2.VersionUsed);
         }
 

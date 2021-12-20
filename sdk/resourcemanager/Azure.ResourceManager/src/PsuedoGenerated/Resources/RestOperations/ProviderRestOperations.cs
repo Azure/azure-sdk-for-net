@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.Resources
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
         private readonly string _userAgent;
+        private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of ProviderRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public ProviderRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null)
+        public ProviderRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions options, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
             {
@@ -45,6 +46,7 @@ namespace Azure.ResourceManager.Resources
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
+            _apiVersion = options.ResourceApiVersionOverrides.TryGetValue(Provider.ResourceType, out var version) ? version : ProviderVersion.Default.ToString();
         }
 
         internal Azure.Core.HttpMessage CreateUnregisterRequest(string resourceProviderNamespace)
@@ -59,7 +61,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/providers/", false);
             uri.AppendPath(resourceProviderNamespace, true);
             uri.AppendPath("/unregister", false);
-            uri.AppendQuery("api-version", "2019-10-01", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -132,7 +134,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/providers/", false);
             uri.AppendPath(resourceProviderNamespace, true);
             uri.AppendPath("/register", false);
-            uri.AppendQuery("api-version", "2019-10-01", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -211,7 +213,7 @@ namespace Azure.ResourceManager.Resources
             {
                 uri.AppendQuery("$expand", expand, true);
             }
-            uri.AppendQuery("api-version", "2019-10-01", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -277,7 +279,7 @@ namespace Azure.ResourceManager.Resources
             {
                 uri.AppendQuery("$expand", expand, true);
             }
-            uri.AppendQuery("api-version", "2019-10-01", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);

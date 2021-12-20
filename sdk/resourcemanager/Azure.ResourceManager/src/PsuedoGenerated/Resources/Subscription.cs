@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources
         private readonly SubscriptionData _data;
 
         /// <summary>
-        /// The resource type for subscription
+        /// The resource type for subscription.
         /// </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Resources/subscriptions";
 

@@ -59,6 +59,11 @@ namespace Azure.ResourceManager.Resources
             _providerCollection = new ProviderCollection(this, Id.GetSubscriptionResourceIdentifier());
         }
 
+        /// <summary>
+        /// The resource type for resources.
+        /// </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Resources/resources";
+
         /// <inheritdoc/>
         protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
 
