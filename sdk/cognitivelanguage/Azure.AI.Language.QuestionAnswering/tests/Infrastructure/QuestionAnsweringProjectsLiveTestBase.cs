@@ -13,7 +13,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
     public partial class QuestionAnsweringProjectsLiveTestBase : QuestionAnsweringTestBase<QuestionAnsweringProjectsClient>
     {
         public QuestionAnsweringProjectsLiveTestBase(bool isAsync, QuestionAnsweringClientOptions.ServiceVersion serviceVersion)
-            : base(isAsync, serviceVersion, RecordedTestMode.Live /* RecordedTestMode.Record /* to record */)
+            : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to record */)
         {
         }
 
