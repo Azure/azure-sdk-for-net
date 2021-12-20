@@ -110,8 +110,6 @@ namespace Azure.ResourceManager
 
             ClientOptions = options.Clone();
 
-            //LoadResourceVersionsFromRp();
-
             _tenant = new Tenant(ClientOptions, Credential, BaseUri, Pipeline);
             _defaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId) ? null :
                 new Subscription(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), ResourceIdentifier.Root.AppendChildResource(Subscription.ResourceType.Type, defaultSubscriptionId));

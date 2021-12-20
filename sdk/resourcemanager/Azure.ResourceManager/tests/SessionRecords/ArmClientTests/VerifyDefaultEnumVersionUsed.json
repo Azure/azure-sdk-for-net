@@ -6,12 +6,12 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-1326945d473996dadf5aef7729d218c5-fb965dd5a8504469-00",
+        "traceparent": "00-56b859631cee133e26b646b2b9c406c5-1fcd02fc2cc672bd-00",
         "User-Agent": [
           "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
           "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
         ],
-        "x-ms-client-request-id": "f210d41c6b9fb77f81698429246bf2a2",
+        "x-ms-client-request-id": "f0204b5911b3337ad3c4b1b767bde2aa",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -20,15 +20,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "468",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 20 Dec 2021 19:40:29 GMT",
+        "Date": "Mon, 20 Dec 2021 18:43:56 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "068d0c0d-046a-4302-b354-17c727c8aa2f",
-        "x-ms-ratelimit-remaining-subscription-reads": "11995",
-        "x-ms-request-id": "068d0c0d-046a-4302-b354-17c727c8aa2f",
-        "x-ms-routing-request-id": "WESTUS2:20211220T194029Z:068d0c0d-046a-4302-b354-17c727c8aa2f"
+        "x-ms-correlation-request-id": "d068d70d-9b2c-41ae-86d1-87e71a7245f2",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "d068d70d-9b2c-41ae-86d1-87e71a7245f2",
+        "x-ms-routing-request-id": "WESTUS2:20211220T184357Z:d068d70d-9b2c-41ae-86d1-87e71a7245f2"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -50,45 +50,51 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/te%23st?api-version=2021-04-01",
-      "RequestMethod": "GET",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRg-3703?api-version=2021-04-01",
+      "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
+        "Content-Length": "21",
+        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
           "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
         ],
-        "x-ms-client-request-id": "08413fd3275bcfb81906c685cd6ff9fa",
+        "x-ms-client-request-id": "164b226ad7e5c845818103a71ca2d57e",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": null,
-      "StatusCode": 400,
+      "RequestBody": {
+        "location": "westus"
+      },
+      "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "194",
+        "Content-Length": "219",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 20 Dec 2021 19:40:29 GMT",
+        "Date": "Mon, 20 Dec 2021 18:43:57 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "d5ca2e4c-f6bc-46a1-a671-5cbc72a800e8",
-        "x-ms-failure-cause": "gateway",
-        "x-ms-ratelimit-remaining-subscription-reads": "11994",
-        "x-ms-request-id": "d5ca2e4c-f6bc-46a1-a671-5cbc72a800e8",
-        "x-ms-routing-request-id": "WESTUS2:20211220T194029Z:d5ca2e4c-f6bc-46a1-a671-5cbc72a800e8"
+        "x-ms-correlation-request-id": "354e17c5-1cb9-47c2-8230-56467370dab5",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "354e17c5-1cb9-47c2-8230-56467370dab5",
+        "x-ms-routing-request-id": "WESTUS2:20211220T184357Z:354e17c5-1cb9-47c2-8230-56467370dab5"
       },
       "ResponseBody": {
-        "error": {
-          "code": "InvalidResourceGroup",
-          "message": "The provided resource group name \u0027te#st\u0027 has these invalid characters: \u0027#\u0027. The name can only be a letter, digit, \u0027-\u0027, \u0027.\u0027, \u0027(\u0027, \u0027)\u0027 or \u0027_\u0027."
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRg-3703",
+        "name": "testRg-3703",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "westus",
+        "properties": {
+          "provisioningState": "Succeeded"
         }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "1156167633",
+    "RandomSeed": "1241704544",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }

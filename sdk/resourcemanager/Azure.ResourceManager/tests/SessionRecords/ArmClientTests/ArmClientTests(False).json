@@ -6,8 +6,11 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-885461c01825204da2a939ad34bb9b7c-1a80d0df42eda542-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20211014.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-2fb01e811454ec868c6a3dfb3ee9383a-2ecf93fb466bd10a-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
+          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
+        ],
         "x-ms-client-request-id": "785a471570cce65e71623a1a452721a3",
         "x-ms-return-client-request-id": "true"
       },
@@ -17,15 +20,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "468",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 14 Oct 2021 03:07:59 GMT",
+        "Date": "Mon, 20 Dec 2021 18:47:54 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "d92c8123-0a04-4747-a5f8-436a2a41d127",
-        "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "d92c8123-0a04-4747-a5f8-436a2a41d127",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20211014T030800Z:d92c8123-0a04-4747-a5f8-436a2a41d127"
+        "x-ms-correlation-request-id": "1d2821b9-18ca-44df-a5e8-b066681e9665",
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "1d2821b9-18ca-44df-a5e8-b066681e9665",
+        "x-ms-routing-request-id": "WESTUS2:20211220T184754Z:1d2821b9-18ca-44df-a5e8-b066681e9665"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -47,15 +50,17 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRg-4351?api-version=2019-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRg-4351?api-version=2021-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "29",
         "Content-Type": "application/json",
-        "traceparent": "00-11e3a9bb3ee13349b0de725ae10e1e12-998593aa6ef4f44b-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20211014.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "User-Agent": [
+          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
+          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
+        ],
         "x-ms-client-request-id": "7f043350e1a08916b2e6d331bf887312",
         "x-ms-return-client-request-id": "true"
       },
@@ -67,15 +72,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "227",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 14 Oct 2021 03:08:02 GMT",
+        "Date": "Mon, 20 Dec 2021 18:47:54 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "20ce0fa1-db4f-45f2-84ba-984fb78cddfe",
-        "x-ms-ratelimit-remaining-subscription-writes": "1199",
-        "x-ms-request-id": "20ce0fa1-db4f-45f2-84ba-984fb78cddfe",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20211014T030803Z:20ce0fa1-db4f-45f2-84ba-984fb78cddfe"
+        "x-ms-correlation-request-id": "c64d3650-b404-42f8-84af-753368b20f2f",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "c64d3650-b404-42f8-84af-753368b20f2f",
+        "x-ms-routing-request-id": "WESTUS2:20211220T184755Z:c64d3650-b404-42f8-84af-753368b20f2f"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRg-4351",

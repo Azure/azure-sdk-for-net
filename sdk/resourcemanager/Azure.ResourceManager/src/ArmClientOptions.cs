@@ -38,6 +38,11 @@ namespace Azure.ResourceManager
             //copy overrrides
             CopyApiVersions(copy, ResourceApiVersionOverrides);
 
+            foreach (var keyValuePair in ResourceApiVersionOverrides)
+            {
+                copy.ResourceApiVersionOverrides.Add(keyValuePair.Key, keyValuePair.Value);
+            }
+
             return copy;
         }
 

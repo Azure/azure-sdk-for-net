@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Resources
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
         private readonly string _userAgent;
+        private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of ResourceGroupsRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public ResourceGroupsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null)
+        public ResourceGroupsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions options, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
             {
@@ -44,6 +45,7 @@ namespace Azure.ResourceManager.Resources
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
+            _apiVersion = options.ResourceApiVersionOverrides.TryGetValue(ResourceGroup.ResourceType, out var version) ? version : ResourceGroupVersion.Default.ToString();
         }
 
         internal HttpMessage CreateCheckExistenceRequest(string resourceGroupName)
@@ -57,7 +59,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourcegroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendQuery("api-version", "2019-10-01", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -135,7 +137,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourcegroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendQuery("api-version", "2019-10-01", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -223,7 +225,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourcegroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendQuery("api-version", "2019-10-01", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -287,7 +289,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourcegroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendQuery("api-version", "2019-10-01", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -367,7 +369,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourcegroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendQuery("api-version", "2019-10-01", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -455,7 +457,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/resourcegroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/exportTemplate", false);
-            uri.AppendQuery("api-version", "2019-10-01", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -540,7 +542,7 @@ namespace Azure.ResourceManager.Resources
             {
                 uri.AppendQuery("$top", top.Value, true);
             }
-            uri.AppendQuery("api-version", "2019-10-01", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);

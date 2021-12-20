@@ -10,6 +10,7 @@ using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Castle.DynamicProxy;
 using NUnit.Framework;
 
@@ -49,6 +50,23 @@ namespace Azure.ResourceManager.Tests
             }
         }
 
+        class ResourceGroupVersionTracker : HttpPipelineSynchronousPolicy
+        {
+            //"https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute?api-version=2019-10-01"
+            private Regex _resourceGroupPattern = new Regex(@"/resourcegroups/.*\?api-version=(\d\d\d\d-\d\d-\d\d)");
+
+            public string VersionUsed { get; private set; }
+
+            public override void OnSendingRequest(HttpMessage message)
+            {
+                var match = _resourceGroupPattern.Match(message.Request.Uri.ToString());
+                if (match.Success)
+                {
+                    VersionUsed = match.Groups[1].Value;
+                }
+            }
+        }
+
         private string _rgName;
         private readonly string _location = "southcentralus";
 
@@ -65,6 +83,40 @@ namespace Azure.ResourceManager.Tests
             var op = InstrumentOperation(subscription.GetResourceGroups().Construct(_location).CreateOrUpdate(_rgName, waitForCompletion: false));
             op.WaitForCompletion();
             await StopSessionRecordingAsync();
+        }
+
+        [RecordedTest]
+        public async Task VerifyDefaultEnumVersionUsed()
+        {
+            ResourceGroupVersionTracker tracker = new ResourceGroupVersionTracker();
+            ArmClientOptions options = new ArmClientOptions();
+            options.AddPolicy(tracker, HttpPipelinePosition.PerCall);
+            var client = GetArmClient(options);
+            var subscription = await client.GetDefaultSubscriptionAsync();
+            _ = await subscription.GetResourceGroups().CreateOrUpdateAsync(Recording.GenerateAssetName("testRg-"), new ResourceGroupData(Location.WestUS));
+
+            Assert.AreEqual(ResourceGroupVersion.Default.ToString(), tracker.VersionUsed);
+        }
+
+        [RecordedTest]
+        public async Task VerifyOverrideEnumVersionUsed()
+        {
+            ResourceGroupVersionTracker tracker1 = new ResourceGroupVersionTracker();
+            ResourceGroupVersionTracker tracker2 = new ResourceGroupVersionTracker();
+            ArmClientOptions options1 = new ArmClientOptions();
+            options1.ResourceApiVersionOverrides.Add(ResourceGroup.ResourceType, ResourceGroupVersion.V2021_01_01.ToString());
+            ArmClientOptions options2 = new ArmClientOptions();
+            options1.AddPolicy(tracker1, HttpPipelinePosition.PerCall);
+            options2.AddPolicy(tracker2, HttpPipelinePosition.PerCall);
+            var client1 = GetArmClient(options1);
+            var client2 = GetArmClient(options2);
+            var subscription1 = await client1.GetDefaultSubscriptionAsync();
+            var subscription2 = await client2.GetDefaultSubscriptionAsync();
+            _ = await subscription1.GetResourceGroups().CreateOrUpdateAsync(Recording.GenerateAssetName("testRg-"), new ResourceGroupData(Location.WestUS));
+            _ = await subscription2.GetResourceGroups().CreateOrUpdateAsync(Recording.GenerateAssetName("testRg-"), new ResourceGroupData(Location.WestUS));
+
+            Assert.AreEqual(ResourceGroupVersion.V2021_01_01.ToString(), tracker1.VersionUsed);
+            Assert.AreEqual(ResourceGroupVersion.Default.ToString(), tracker2.VersionUsed);
         }
 
         [RecordedTest]
