@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Tests
         protected ArmClient Client { get; private set; }
 
         protected ResourceManagerTestBase(bool isAsync, RecordedTestMode mode)
-        : base(isAsync, mode, useLegacyTransport: true)
+        : base(isAsync, mode)
         {
         }
 
         protected ResourceManagerTestBase(bool isAsync)
-            : base(isAsync, useLegacyTransport: true)
+            : base(isAsync)
         {
         }
 
