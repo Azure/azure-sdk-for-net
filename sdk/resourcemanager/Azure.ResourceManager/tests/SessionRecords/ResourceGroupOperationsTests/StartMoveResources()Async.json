@@ -6,11 +6,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-75aeed72eabb37f4af978cc3f00bafdf-1b42cec3e34076e0-00",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
-        ],
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "e7f08a352bd75ae5cd47185ebc1fda2e",
         "x-ms-return-client-request-id": "true"
       },
@@ -20,15 +16,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "468",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 20 Dec 2021 20:05:00 GMT",
+        "Date": "Fri, 20 Aug 2021 20:28:21 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "97f2335e-5112-4303-a792-4435ca1417f9",
-        "x-ms-ratelimit-remaining-subscription-reads": "11986",
-        "x-ms-request-id": "97f2335e-5112-4303-a792-4435ca1417f9",
-        "x-ms-routing-request-id": "WESTUS2:20211220T200500Z:97f2335e-5112-4303-a792-4435ca1417f9"
+        "x-ms-correlation-request-id": "dcbe7ff5-dddb-4d2e-aa0d-0786881d9572",
+        "x-ms-ratelimit-remaining-subscription-reads": "11876",
+        "x-ms-request-id": "dcbe7ff5-dddb-4d2e-aa0d-0786881d9572",
+        "x-ms-routing-request-id": "WESTUS2:20210820T202822Z:dcbe7ff5-dddb-4d2e-aa0d-0786881d9572"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -50,17 +46,15 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testrg8421?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testrg8421?api-version=2019-10-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "22",
         "Content-Type": "application/json",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
-        ],
+        "traceparent": "00-139ae6d33819b74c8ed2753622bdcc7e-eb050d3787ddac4d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "aaaeb8e720ca6f2980ec7b8fe6f9d0de",
         "x-ms-return-client-request-id": "true"
       },
@@ -72,15 +66,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "218",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 20 Dec 2021 20:05:00 GMT",
+        "Date": "Fri, 20 Aug 2021 20:28:21 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "26641810-dfe7-44c8-9000-5d6831a7eb52",
-        "x-ms-ratelimit-remaining-subscription-writes": "1198",
-        "x-ms-request-id": "26641810-dfe7-44c8-9000-5d6831a7eb52",
-        "x-ms-routing-request-id": "WESTUS2:20211220T200501Z:26641810-dfe7-44c8-9000-5d6831a7eb52"
+        "x-ms-correlation-request-id": "865fe655-9c0e-49e9-b2f7-03677e66354e",
+        "x-ms-ratelimit-remaining-subscription-writes": "1191",
+        "x-ms-request-id": "865fe655-9c0e-49e9-b2f7-03677e66354e",
+        "x-ms-routing-request-id": "WESTUS2:20210820T202822Z:865fe655-9c0e-49e9-b2f7-03677e66354e"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg8421",
@@ -93,17 +87,15 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testrg7572?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testrg7572?api-version=2019-10-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "22",
         "Content-Type": "application/json",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
-        ],
+        "traceparent": "00-1b341bbdbfab4743b8e6271eac9a4b31-6156b8f9106de547-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "11fcd58594063f9ac2066dd416b6c43c",
         "x-ms-return-client-request-id": "true"
       },
@@ -115,15 +107,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "218",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 20 Dec 2021 20:05:00 GMT",
+        "Date": "Fri, 20 Aug 2021 20:28:21 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "c86c592a-a09d-4cbd-958b-960859b0c660",
-        "x-ms-ratelimit-remaining-subscription-writes": "1197",
-        "x-ms-request-id": "c86c592a-a09d-4cbd-958b-960859b0c660",
-        "x-ms-routing-request-id": "WESTUS2:20211220T200501Z:c86c592a-a09d-4cbd-958b-960859b0c660"
+        "x-ms-correlation-request-id": "6dc2dc6b-9e4c-43d1-9330-f13660804a5f",
+        "x-ms-ratelimit-remaining-subscription-writes": "1190",
+        "x-ms-request-id": "6dc2dc6b-9e4c-43d1-9330-f13660804a5f",
+        "x-ms-routing-request-id": "WESTUS2:20210820T202822Z:6dc2dc6b-9e4c-43d1-9330-f13660804a5f"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg7572",
@@ -141,10 +133,8 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
-        ],
+        "traceparent": "00-02737ba1dd72ae44a58c107d6ac4efc3-7291c69616c2bd49-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "3c738ae86a6a78c7573f69cbe64d487f",
         "x-ms-return-client-request-id": "true"
       },
@@ -152,17 +142,17 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "65029",
+        "Content-Length": "54810",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 20 Dec 2021 20:05:00 GMT",
+        "Date": "Fri, 20 Aug 2021 20:28:21 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "0b13e608-00d2-49c2-bab2-25d7157c8a43",
-        "x-ms-ratelimit-remaining-subscription-reads": "11985",
-        "x-ms-request-id": "0b13e608-00d2-49c2-bab2-25d7157c8a43",
-        "x-ms-routing-request-id": "WESTUS2:20211220T200501Z:0b13e608-00d2-49c2-bab2-25d7157c8a43"
+        "x-ms-correlation-request-id": "7d0f772f-b2f3-4e7e-83df-8e255be10ddd",
+        "x-ms-ratelimit-remaining-subscription-reads": "11875",
+        "x-ms-request-id": "7d0f772f-b2f3-4e7e-83df-8e255be10ddd",
+        "x-ms-routing-request-id": "WESTUS2:20210820T202822Z:7d0f772f-b2f3-4e7e-83df-8e255be10ddd"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute",
@@ -235,6 +225,7 @@
               "UK South",
               "UK West",
               "Korea Central",
+              "Korea South",
               "France Central",
               "South Africa North",
               "UAE North",
@@ -242,12 +233,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-11-01",
               "2021-07-01",
               "2021-04-01",
               "2021-03-01",
@@ -267,7 +255,7 @@
               "2015-06-15",
               "2015-05-01-preview"
             ],
-            "defaultApiVersion": "2021-07-01",
+            "defaultApiVersion": "2020-06-01",
             "apiProfiles": [
               {
                 "profileVersion": "2017-03-09-profile",
@@ -313,6 +301,7 @@
               "UK South",
               "UK West",
               "Korea Central",
+              "Korea South",
               "France Central",
               "South Africa North",
               "UAE North",
@@ -320,12 +309,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-11-01",
               "2021-07-01",
               "2021-04-01",
               "2021-03-01",
@@ -345,7 +331,7 @@
               "2015-06-15",
               "2015-05-01-preview"
             ],
-            "defaultApiVersion": "2021-07-01",
+            "defaultApiVersion": "2020-06-01",
             "apiProfiles": [
               {
                 "profileVersion": "2017-03-09-profile",
@@ -362,31 +348,7 @@
             ],
             "zoneMappings": [
               {
-                "location": "Australia East",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Brazil South",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Canada Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Central India",
+                "location": "East US 2",
                 "zones": [
                   "2",
                   "1",
@@ -402,23 +364,7 @@
                 ]
               },
               {
-                "location": "East Asia",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "East US",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "East US 2",
+                "location": "West Europe",
                 "zones": [
                   "2",
                   "1",
@@ -434,95 +380,7 @@
                 ]
               },
               {
-                "location": "Germany West Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Japan East",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Korea Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "North Central US",
-                "zones": []
-              },
-              {
-                "location": "North Europe",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Norway East",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "South Africa North",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "South Central US",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
                 "location": "Southeast Asia",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Sweden Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Switzerland North",
-                "zones": []
-              },
-              {
-                "location": "UK South",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "West Europe",
                 "zones": [
                   "2",
                   "1",
@@ -538,12 +396,108 @@
                 ]
               },
               {
+                "location": "North Europe",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "East US",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "UK South",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Japan East",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Australia East",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "South Africa North",
+                "zones": []
+              },
+              {
+                "location": "South Central US",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Canada Central",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Germany West Central",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Brazil South",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Central India",
+                "zones": []
+              },
+              {
+                "location": "Korea Central",
+                "zones": []
+              },
+              {
                 "location": "West US 3",
                 "zones": [
                   "2",
                   "1",
                   "3"
                 ]
+              },
+              {
+                "location": "Norway East",
+                "zones": []
+              },
+              {
+                "location": "East Asia",
+                "zones": []
+              },
+              {
+                "location": "Switzerland North",
+                "zones": []
               }
             ],
             "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SystemAssignedResourceIdentity, SupportsTags, SupportsLocation"
@@ -577,6 +531,7 @@
               "UK South",
               "UK West",
               "Korea Central",
+              "Korea South",
               "France Central",
               "South Africa North",
               "UAE North",
@@ -584,12 +539,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-11-01",
               "2021-07-01",
               "2021-04-01",
               "2021-03-01",
@@ -609,7 +561,7 @@
               "2015-06-15",
               "2015-05-01-preview"
             ],
-            "defaultApiVersion": "2021-07-01",
+            "defaultApiVersion": "2020-06-01",
             "apiProfiles": [
               {
                 "profileVersion": "2017-03-09-profile",
@@ -655,6 +607,7 @@
               "UK South",
               "UK West",
               "Korea Central",
+              "Korea South",
               "France Central",
               "South Africa North",
               "UAE North",
@@ -662,12 +615,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-11-01",
               "2021-07-01",
               "2021-04-01",
               "2021-03-01",
@@ -688,7 +638,7 @@
               "2015-06-15",
               "2015-05-01-preview"
             ],
-            "defaultApiVersion": "2021-07-01",
+            "defaultApiVersion": "2020-06-01",
             "apiProfiles": [
               {
                 "profileVersion": "2017-03-09-profile",
@@ -705,31 +655,7 @@
             ],
             "zoneMappings": [
               {
-                "location": "Australia East",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Brazil South",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Canada Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Central India",
+                "location": "East US 2",
                 "zones": [
                   "2",
                   "1",
@@ -745,23 +671,7 @@
                 ]
               },
               {
-                "location": "East Asia",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "East US",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "East US 2",
+                "location": "West Europe",
                 "zones": [
                   "2",
                   "1",
@@ -777,95 +687,7 @@
                 ]
               },
               {
-                "location": "Germany West Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Japan East",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Korea Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "North Central US",
-                "zones": []
-              },
-              {
-                "location": "North Europe",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Norway East",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "South Africa North",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "South Central US",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
                 "location": "Southeast Asia",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Sweden Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Switzerland North",
-                "zones": []
-              },
-              {
-                "location": "UK South",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "West Europe",
                 "zones": [
                   "2",
                   "1",
@@ -881,12 +703,108 @@
                 ]
               },
               {
+                "location": "North Europe",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "East US",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "UK South",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Japan East",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Australia East",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "South Africa North",
+                "zones": []
+              },
+              {
+                "location": "South Central US",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Canada Central",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Germany West Central",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Brazil South",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Central India",
+                "zones": []
+              },
+              {
+                "location": "Korea Central",
+                "zones": []
+              },
+              {
                 "location": "West US 3",
                 "zones": [
                   "2",
                   "1",
                   "3"
                 ]
+              },
+              {
+                "location": "Norway East",
+                "zones": []
+              },
+              {
+                "location": "East Asia",
+                "zones": []
+              },
+              {
+                "location": "Switzerland North",
+                "zones": []
               }
             ],
             "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SystemAssignedResourceIdentity, SupportsTags, SupportsLocation"
@@ -920,6 +838,7 @@
               "UK South",
               "UK West",
               "Korea Central",
+              "Korea South",
               "France Central",
               "South Africa North",
               "UAE North",
@@ -927,12 +846,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-11-01",
               "2021-07-01",
               "2021-04-01",
               "2021-03-01",
@@ -999,6 +915,7 @@
               "UK South",
               "UK West",
               "Korea Central",
+              "Korea South",
               "France Central",
               "South Africa North",
               "UAE North",
@@ -1006,12 +923,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-11-01",
               "2021-07-01",
               "2021-04-01",
               "2021-03-01",
@@ -1032,7 +946,7 @@
               "2015-06-15",
               "2015-05-01-preview"
             ],
-            "defaultApiVersion": "2021-07-01",
+            "defaultApiVersion": "2020-06-01",
             "apiProfiles": [
               {
                 "profileVersion": "2017-03-09-profile",
@@ -1078,6 +992,7 @@
               "UK South",
               "UK West",
               "Korea Central",
+              "Korea South",
               "France Central",
               "South Africa North",
               "UAE North",
@@ -1085,12 +1000,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-11-01",
               "2021-07-01",
               "2021-04-01",
               "2021-03-01",
@@ -1156,6 +1068,7 @@
               "UK South",
               "UK West",
               "Korea Central",
+              "Korea South",
               "France Central",
               "South Africa North",
               "UAE North",
@@ -1163,12 +1076,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-11-01",
               "2021-07-01",
               "2021-04-01",
               "2021-03-01",
@@ -1236,6 +1146,7 @@
               "UK South",
               "UK West",
               "Korea Central",
+              "Korea South",
               "France Central",
               "South Africa North",
               "UAE North",
@@ -1243,12 +1154,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-11-01",
               "2021-07-01",
               "2021-04-01",
               "2021-03-01",
@@ -1316,6 +1224,7 @@
               "UK South",
               "UK West",
               "Korea Central",
+              "Korea South",
               "France Central",
               "South Africa North",
               "UAE North",
@@ -1323,12 +1232,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-11-01",
               "2021-07-01",
               "2021-04-01",
               "2021-03-01",
@@ -1359,7 +1265,6 @@
             "resourceType": "locations",
             "locations": [],
             "apiVersions": [
-              "2021-11-01",
               "2021-07-01",
               "2021-04-01",
               "2021-03-01",
@@ -1410,6 +1315,7 @@
               "UK South",
               "UK West",
               "Korea Central",
+              "Korea South",
               "France Central",
               "South Africa North",
               "UAE North",
@@ -1417,12 +1323,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-11-01",
               "2021-07-01",
               "2021-04-01",
               "2021-03-01",
@@ -1488,6 +1391,7 @@
               "UK South",
               "UK West",
               "Korea Central",
+              "Korea South",
               "France Central",
               "South Africa North",
               "UAE North",
@@ -1495,12 +1399,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-11-01",
               "2021-07-01",
               "2021-04-01",
               "2021-03-01",
@@ -1565,6 +1466,7 @@
               "UK South",
               "UK West",
               "Korea Central",
+              "Korea South",
               "France Central",
               "South Africa North",
               "UAE North",
@@ -1572,12 +1474,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-11-01",
               "2021-07-01",
               "2021-04-01",
               "2021-03-01",
@@ -1633,6 +1532,7 @@
               "UK South",
               "UK West",
               "Korea Central",
+              "Korea South",
               "France Central",
               "South Africa North",
               "UAE North",
@@ -1640,12 +1540,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-11-01",
               "2021-07-01",
               "2021-04-01",
               "2021-03-01",
@@ -1710,6 +1607,7 @@
               "UK South",
               "UK West",
               "Korea Central",
+              "Korea South",
               "France Central",
               "South Africa North",
               "UAE North",
@@ -1717,12 +1615,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-11-01",
               "2021-07-01",
               "2021-04-01",
               "2021-03-01",
@@ -1738,7 +1633,7 @@
               "2017-03-30",
               "2016-08-30"
             ],
-            "defaultApiVersion": "2021-07-01",
+            "defaultApiVersion": "2020-06-01",
             "apiProfiles": [
               {
                 "profileVersion": "2018-03-01-hybrid",
@@ -1780,6 +1675,7 @@
               "UK South",
               "UK West",
               "Korea Central",
+              "Korea South",
               "France Central",
               "South Africa North",
               "UAE North",
@@ -1787,12 +1683,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-11-01",
               "2021-07-01",
               "2021-04-01",
               "2021-03-01",
@@ -1808,7 +1701,7 @@
               "2017-03-30",
               "2016-08-30"
             ],
-            "defaultApiVersion": "2021-07-01",
+            "defaultApiVersion": "2020-06-01",
             "apiProfiles": [
               {
                 "profileVersion": "2018-03-01-hybrid",
@@ -1850,6 +1743,7 @@
               "UK South",
               "UK West",
               "Korea Central",
+              "Korea South",
               "France Central",
               "South Africa North",
               "UAE North",
@@ -1857,12 +1751,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-11-01",
               "2021-07-01",
               "2021-04-01",
               "2021-03-01",
@@ -1928,6 +1819,7 @@
               "UK South",
               "UK West",
               "Korea Central",
+              "Korea South",
               "France Central",
               "South Africa North",
               "UAE North",
@@ -1935,12 +1827,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-11-01",
               "2021-07-01",
               "2021-04-01",
               "2021-03-01",
@@ -1962,62 +1851,9 @@
             "capabilities": "None"
           },
           {
-            "resourceType": "virtualMachines/runCommands",
-            "locations": [
-              "East US",
-              "East US 2",
-              "West US",
-              "Central US",
-              "North Central US",
-              "South Central US",
-              "North Europe",
-              "West Europe",
-              "East Asia",
-              "Southeast Asia",
-              "Japan East",
-              "Japan West",
-              "Australia East",
-              "Australia Southeast",
-              "Australia Central",
-              "Brazil South",
-              "South India",
-              "Central India",
-              "West India",
-              "Canada Central",
-              "Canada East",
-              "West US 2",
-              "West Central US",
-              "UK South",
-              "UK West",
-              "Korea Central",
-              "France Central",
-              "South Africa North",
-              "UAE North",
-              "Switzerland North",
-              "Germany West Central",
-              "Norway East",
-              "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
-            ],
-            "apiVersions": [
-              "2021-11-01",
-              "2021-07-01",
-              "2021-04-01",
-              "2021-03-01",
-              "2020-12-01",
-              "2020-06-01",
-              "2019-12-01"
-            ],
-            "defaultApiVersion": "2021-07-01",
-            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
-          },
-          {
             "resourceType": "locations/edgeZones",
             "locations": [],
             "apiVersions": [
-              "2021-11-01",
               "2021-07-01",
               "2021-04-01",
               "2021-03-01",
@@ -2054,6 +1890,7 @@
               "UK South",
               "UK West",
               "Korea Central",
+              "Korea South",
               "France Central",
               "South Africa North",
               "UAE North",
@@ -2061,12 +1898,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-11-01",
               "2021-07-01",
               "2021-04-01",
               "2021-03-01",
@@ -2101,6 +1935,7 @@
               "Australia East",
               "Australia Southeast",
               "Korea Central",
+              "Korea South",
               "West India",
               "France Central",
               "South Africa North",
@@ -2110,12 +1945,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-11-01",
               "2021-07-01",
               "2021-04-01",
               "2021-03-01",
@@ -2130,7 +1962,7 @@
               "2017-12-01",
               "2017-03-30"
             ],
-            "defaultApiVersion": "2021-07-01",
+            "defaultApiVersion": "2020-06-01",
             "capabilities": "SupportsTags, SupportsLocation"
           },
           {
@@ -2160,6 +1992,7 @@
               "Australia East",
               "Australia Southeast",
               "Korea Central",
+              "Korea South",
               "West India",
               "France Central",
               "South Africa North",
@@ -2169,12 +2002,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-11-01",
               "2021-07-01",
               "2021-04-01",
               "2021-03-01",
@@ -2220,6 +2050,7 @@
               "UK South",
               "UK West",
               "Korea Central",
+              "Korea South",
               "France Central",
               "South Africa North",
               "UAE North",
@@ -2227,12 +2058,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-11-01",
               "2021-07-01",
               "2021-04-01",
               "2021-03-01",
@@ -2245,7 +2073,7 @@
               "2018-06-01",
               "2018-04-01"
             ],
-            "defaultApiVersion": "2021-07-01",
+            "defaultApiVersion": "2020-06-01",
             "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
           },
           {
@@ -2277,6 +2105,7 @@
               "UK South",
               "UK West",
               "Korea Central",
+              "Korea South",
               "France Central",
               "South Africa North",
               "UAE North",
@@ -2284,12 +2113,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-11-01",
               "2021-07-01",
               "2021-04-01",
               "2021-03-01",
@@ -2297,481 +2123,7 @@
               "2020-06-01",
               "2019-12-01"
             ],
-            "defaultApiVersion": "2021-07-01",
-            "capabilities": "SupportsTags, SupportsLocation"
-          },
-          {
-            "resourceType": "capacityReservationGroups",
-            "locations": [
-              "East US",
-              "East US 2",
-              "West US",
-              "Central US",
-              "North Central US",
-              "South Central US",
-              "North Europe",
-              "West Europe",
-              "East Asia",
-              "Southeast Asia",
-              "Japan East",
-              "Japan West",
-              "Australia East",
-              "Australia Southeast",
-              "Australia Central",
-              "Brazil South",
-              "South India",
-              "Central India",
-              "West India",
-              "Canada Central",
-              "Canada East",
-              "West US 2",
-              "West Central US",
-              "UK South",
-              "UK West",
-              "Korea Central",
-              "France Central",
-              "South Africa North",
-              "UAE North",
-              "Switzerland North",
-              "Germany West Central",
-              "Norway East",
-              "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
-            ],
-            "apiVersions": [
-              "2021-11-01",
-              "2021-07-01",
-              "2021-04-01",
-              "2021-03-01",
-              "2020-12-01",
-              "2020-06-01"
-            ],
-            "defaultApiVersion": "2021-07-01",
-            "zoneMappings": [
-              {
-                "location": "Australia East",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Brazil South",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Canada Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Central India",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Central US",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "East Asia",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "East US",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "East US 2",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "France Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Germany West Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Japan East",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Korea Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "North Central US",
-                "zones": []
-              },
-              {
-                "location": "North Europe",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Norway East",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "South Africa North",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "South Central US",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Southeast Asia",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Sweden Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Switzerland North",
-                "zones": []
-              },
-              {
-                "location": "UK South",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "West Europe",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "West US 2",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "West US 3",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              }
-            ],
-            "capabilities": "SupportsTags, SupportsLocation"
-          },
-          {
-            "resourceType": "capacityReservationGroups/capacityReservations",
-            "locations": [
-              "East US",
-              "East US 2",
-              "West US",
-              "Central US",
-              "North Central US",
-              "South Central US",
-              "North Europe",
-              "West Europe",
-              "East Asia",
-              "Southeast Asia",
-              "Japan East",
-              "Japan West",
-              "Australia East",
-              "Australia Southeast",
-              "Australia Central",
-              "Brazil South",
-              "South India",
-              "Central India",
-              "West India",
-              "Canada Central",
-              "Canada East",
-              "West US 2",
-              "West Central US",
-              "UK South",
-              "UK West",
-              "Korea Central",
-              "France Central",
-              "South Africa North",
-              "UAE North",
-              "Switzerland North",
-              "Germany West Central",
-              "Norway East",
-              "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
-            ],
-            "apiVersions": [
-              "2021-11-01",
-              "2021-07-01",
-              "2021-04-01",
-              "2021-03-01",
-              "2020-12-01",
-              "2020-06-01"
-            ],
-            "defaultApiVersion": "2021-07-01",
-            "zoneMappings": [
-              {
-                "location": "Australia East",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Brazil South",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Canada Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Central India",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Central US",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "East Asia",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "East US",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "East US 2",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "France Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Germany West Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Japan East",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Korea Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "North Central US",
-                "zones": []
-              },
-              {
-                "location": "North Europe",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Norway East",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "South Africa North",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "South Central US",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Southeast Asia",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Sweden Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Switzerland North",
-                "zones": []
-              },
-              {
-                "location": "UK South",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "West Europe",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "West US 2",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "West US 3",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              }
-            ],
+            "defaultApiVersion": "2020-06-01",
             "capabilities": "SupportsTags, SupportsLocation"
           },
           {
@@ -2803,6 +2155,7 @@
               "UK South",
               "UK West",
               "Korea Central",
+              "Korea South",
               "France Central",
               "South Africa North",
               "UAE North",
@@ -2810,9 +2163,7 @@
               "Germany West Central",
               "Norway East",
               "West US 3",
-              "Jio India West",
-              "Sweden Central",
-              "Korea South"
+              "Jio India West"
             ],
             "apiVersions": [
               "2014-04-01"
@@ -2848,6 +2199,7 @@
               "UK South",
               "UK West",
               "Korea Central",
+              "Korea South",
               "France Central",
               "South Africa North",
               "UAE North",
@@ -2855,19 +2207,16 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-11-01",
               "2021-07-01",
               "2021-04-01",
               "2021-03-01",
               "2020-12-01",
               "2020-06-01"
             ],
-            "defaultApiVersion": "2021-07-01",
+            "defaultApiVersion": "2020-06-01",
             "capabilities": "None"
           },
           {
@@ -2899,6 +2248,7 @@
               "UK South",
               "UK West",
               "Korea Central",
+              "Korea South",
               "France Central",
               "South Africa North",
               "UAE North",
@@ -2906,66 +2256,16 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-11-01",
               "2021-07-01",
               "2021-04-01",
               "2021-03-01",
               "2020-12-01",
               "2020-06-01"
             ],
-            "defaultApiVersion": "2021-07-01",
-            "capabilities": "None"
-          },
-          {
-            "resourceType": "locations/recommendations",
-            "locations": [
-              "East US",
-              "East US 2",
-              "West US",
-              "Central US",
-              "North Central US",
-              "South Central US",
-              "North Europe",
-              "West Europe",
-              "East Asia",
-              "Southeast Asia",
-              "Japan East",
-              "Japan West",
-              "Australia East",
-              "Australia Southeast",
-              "Australia Central",
-              "Brazil South",
-              "South India",
-              "Central India",
-              "West India",
-              "Canada Central",
-              "Canada East",
-              "West US 2",
-              "West Central US",
-              "UK South",
-              "UK West",
-              "Korea Central",
-              "France Central",
-              "South Africa North",
-              "UAE North",
-              "Switzerland North",
-              "Germany West Central",
-              "Norway East",
-              "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
-            ],
-            "apiVersions": [
-              "2021-11-01",
-              "2021-07-01"
-            ],
-            "defaultApiVersion": "2021-07-01",
+            "defaultApiVersion": "2020-06-01",
             "capabilities": "None"
           },
           {
@@ -2997,6 +2297,7 @@
               "UK South",
               "UK West",
               "Korea Central",
+              "Korea South",
               "France Central",
               "South Africa North",
               "UAE North",
@@ -3004,12 +2305,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-11-01",
               "2021-07-01",
               "2021-04-01",
               "2021-03-01",
@@ -3065,6 +2363,7 @@
               "East Asia",
               "Australia East",
               "Japan East",
+              "Korea South",
               "West US 2",
               "Canada East",
               "UK South",
@@ -3075,8 +2374,7 @@
               "Korea Central",
               "France Central",
               "Central US",
-              "Australia Central",
-              "Korea South"
+              "Australia Central"
             ],
             "apiVersions": [
               "2017-10-15-preview"
@@ -3103,6 +2401,7 @@
               "East Asia",
               "Australia East",
               "Japan East",
+              "Korea South",
               "West US 2",
               "Canada East",
               "UK South",
@@ -3113,8 +2412,7 @@
               "Korea Central",
               "France Central",
               "Central US",
-              "Australia Central",
-              "Korea South"
+              "Australia Central"
             ],
             "apiVersions": [
               "2017-10-15-preview"
@@ -3141,6 +2439,7 @@
               "East Asia",
               "Australia East",
               "Japan East",
+              "Korea South",
               "West US 2",
               "Canada East",
               "UK South",
@@ -3151,8 +2450,7 @@
               "Korea Central",
               "France Central",
               "Central US",
-              "Australia Central",
-              "Korea South"
+              "Australia Central"
             ],
             "apiVersions": [
               "2017-10-15-preview"
@@ -3178,6 +2476,7 @@
               "East Asia",
               "Australia East",
               "Japan East",
+              "Korea South",
               "West US 2",
               "Canada East",
               "UK South",
@@ -3195,12 +2494,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-10-01",
               "2021-07-01",
               "2021-03-01",
               "2020-09-30",
@@ -3231,6 +2527,7 @@
               "East Asia",
               "Australia East",
               "Japan East",
+              "Korea South",
               "West US 2",
               "Canada East",
               "UK South",
@@ -3248,12 +2545,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-10-01",
               "2021-07-01",
               "2021-03-01",
               "2020-09-30",
@@ -3284,6 +2578,7 @@
               "East Asia",
               "Australia East",
               "Japan East",
+              "Korea South",
               "West US 2",
               "Canada East",
               "UK South",
@@ -3301,12 +2596,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-10-01",
               "2021-07-01",
               "2021-03-01",
               "2020-09-30",
@@ -3337,6 +2629,7 @@
               "East Asia",
               "Australia East",
               "Japan East",
+              "Korea South",
               "West US 2",
               "Canada East",
               "UK South",
@@ -3354,12 +2647,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-10-01",
               "2021-07-01",
               "2021-03-01",
               "2020-09-30",
@@ -3390,6 +2680,7 @@
               "East Asia",
               "Australia East",
               "Japan East",
+              "Korea South",
               "West US 2",
               "Canada East",
               "UK South",
@@ -3407,12 +2698,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-10-01",
               "2021-07-01",
               "2021-03-01",
               "2020-09-30",
@@ -3423,110 +2711,6 @@
             ],
             "defaultApiVersion": "2018-06-01",
             "capabilities": "None"
-          },
-          {
-            "resourceType": "galleries/applications",
-            "locations": [
-              "West Central US",
-              "South Central US",
-              "East US 2",
-              "Southeast Asia",
-              "West Europe",
-              "West US",
-              "East US",
-              "Canada Central",
-              "North Europe",
-              "North Central US",
-              "Brazil South",
-              "UK West",
-              "West India",
-              "East Asia",
-              "Australia East",
-              "Japan East",
-              "West US 2",
-              "Canada East",
-              "UK South",
-              "Central India",
-              "South India",
-              "Australia Southeast",
-              "Japan West",
-              "Korea Central",
-              "France Central",
-              "Central US",
-              "Australia Central",
-              "South Africa North",
-              "UAE North",
-              "Switzerland North",
-              "Germany West Central",
-              "Norway East",
-              "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
-            ],
-            "apiVersions": [
-              "2021-10-01",
-              "2021-07-01",
-              "2021-03-01",
-              "2020-09-30",
-              "2019-12-01",
-              "2019-07-01",
-              "2019-03-01"
-            ],
-            "defaultApiVersion": "2019-03-01",
-            "capabilities": "SupportsTags, SupportsLocation"
-          },
-          {
-            "resourceType": "galleries/applications/versions",
-            "locations": [
-              "West Central US",
-              "South Central US",
-              "East US 2",
-              "Southeast Asia",
-              "West Europe",
-              "West US",
-              "East US",
-              "Canada Central",
-              "North Europe",
-              "North Central US",
-              "Brazil South",
-              "UK West",
-              "West India",
-              "East Asia",
-              "Australia East",
-              "Japan East",
-              "West US 2",
-              "Canada East",
-              "UK South",
-              "Central India",
-              "South India",
-              "Australia Southeast",
-              "Japan West",
-              "Korea Central",
-              "France Central",
-              "Central US",
-              "Australia Central",
-              "South Africa North",
-              "UAE North",
-              "Switzerland North",
-              "Germany West Central",
-              "Norway East",
-              "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
-            ],
-            "apiVersions": [
-              "2021-10-01",
-              "2021-07-01",
-              "2021-03-01",
-              "2020-09-30",
-              "2019-12-01",
-              "2019-07-01",
-              "2019-03-01"
-            ],
-            "defaultApiVersion": "2019-03-01",
-            "capabilities": "SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "disks",
@@ -3555,6 +2739,7 @@
               "Australia East",
               "Australia Southeast",
               "Korea Central",
+              "Korea South",
               "West India",
               "France Central",
               "South Africa North",
@@ -3564,12 +2749,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-08-01",
               "2021-04-01",
               "2020-12-01",
               "2020-09-30",
@@ -3584,7 +2766,7 @@
               "2017-03-30",
               "2016-04-30-preview"
             ],
-            "defaultApiVersion": "2021-08-01",
+            "defaultApiVersion": "2020-06-30",
             "apiProfiles": [
               {
                 "profileVersion": "2018-03-01-hybrid",
@@ -3597,31 +2779,7 @@
             ],
             "zoneMappings": [
               {
-                "location": "Australia East",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Brazil South",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Canada Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Central India",
+                "location": "East US 2",
                 "zones": [
                   "2",
                   "1",
@@ -3637,23 +2795,7 @@
                 ]
               },
               {
-                "location": "East Asia",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "East US",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "East US 2",
+                "location": "West Europe",
                 "zones": [
                   "2",
                   "1",
@@ -3669,95 +2811,7 @@
                 ]
               },
               {
-                "location": "Germany West Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Japan East",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Korea Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "North Central US",
-                "zones": []
-              },
-              {
-                "location": "North Europe",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Norway East",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "South Africa North",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "South Central US",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
                 "location": "Southeast Asia",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Sweden Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Switzerland North",
-                "zones": []
-              },
-              {
-                "location": "UK South",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "West Europe",
                 "zones": [
                   "2",
                   "1",
@@ -3773,12 +2827,108 @@
                 ]
               },
               {
+                "location": "North Europe",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "East US",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "UK South",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Japan East",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Australia East",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "South Africa North",
+                "zones": []
+              },
+              {
+                "location": "South Central US",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Canada Central",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Germany West Central",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Brazil South",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Central India",
+                "zones": []
+              },
+              {
+                "location": "Korea Central",
+                "zones": []
+              },
+              {
                 "location": "West US 3",
                 "zones": [
                   "2",
                   "1",
                   "3"
                 ]
+              },
+              {
+                "location": "Norway East",
+                "zones": []
+              },
+              {
+                "location": "East Asia",
+                "zones": []
+              },
+              {
+                "location": "Switzerland North",
+                "zones": []
               }
             ],
             "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
@@ -3810,6 +2960,7 @@
               "Australia East",
               "Australia Southeast",
               "Korea Central",
+              "Korea South",
               "West India",
               "France Central",
               "South Africa North",
@@ -3819,12 +2970,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-08-01",
               "2021-04-01",
               "2020-12-01",
               "2020-09-30",
@@ -3839,7 +2987,7 @@
               "2017-03-30",
               "2016-04-30-preview"
             ],
-            "defaultApiVersion": "2021-08-01",
+            "defaultApiVersion": "2020-06-30",
             "apiProfiles": [
               {
                 "profileVersion": "2018-03-01-hybrid",
@@ -3879,6 +3027,7 @@
               "Australia East",
               "Australia Southeast",
               "Korea Central",
+              "Korea South",
               "West India",
               "France Central",
               "South Africa North",
@@ -3888,12 +3037,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-08-01",
               "2021-04-01",
               "2020-12-01",
               "2020-09-30",
@@ -3947,6 +3093,7 @@
               "Australia East",
               "Australia Southeast",
               "Korea Central",
+              "Korea South",
               "West India",
               "France Central",
               "South Africa North",
@@ -3956,12 +3103,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-08-01",
               "2021-04-01",
               "2020-12-01",
               "2020-09-30",
@@ -3970,7 +3114,7 @@
               "2019-11-01",
               "2019-07-01"
             ],
-            "defaultApiVersion": "2021-08-01",
+            "defaultApiVersion": "2020-06-30",
             "capabilities": "SystemAssignedResourceIdentity, SupportsTags, SupportsLocation"
           },
           {
@@ -4000,6 +3144,7 @@
               "Australia East",
               "Australia Southeast",
               "Korea Central",
+              "Korea South",
               "West India",
               "France Central",
               "South Africa North",
@@ -4009,69 +3154,17 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-08-01",
               "2021-04-01",
               "2020-12-01",
               "2020-09-30",
               "2020-06-30",
               "2020-05-01"
             ],
-            "defaultApiVersion": "2021-08-01",
+            "defaultApiVersion": "2020-06-30",
             "capabilities": "SupportsTags, SupportsLocation"
-          },
-          {
-            "resourceType": "restorePointCollections/restorePoints/diskRestorePoints",
-            "locations": [
-              "Southeast Asia",
-              "East US 2",
-              "Central US",
-              "West Europe",
-              "East US",
-              "North Central US",
-              "South Central US",
-              "West US",
-              "North Europe",
-              "East Asia",
-              "Brazil South",
-              "West US 2",
-              "West Central US",
-              "UK West",
-              "UK South",
-              "Japan East",
-              "Japan West",
-              "Canada Central",
-              "Canada East",
-              "Central India",
-              "South India",
-              "Australia East",
-              "Australia Southeast",
-              "Korea Central",
-              "West India",
-              "France Central",
-              "South Africa North",
-              "UAE North",
-              "Australia Central",
-              "Switzerland North",
-              "Germany West Central",
-              "Norway East",
-              "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
-            ],
-            "apiVersions": [
-              "2021-08-01",
-              "2021-04-01",
-              "2020-12-01",
-              "2020-09-30"
-            ],
-            "defaultApiVersion": "2021-08-01",
-            "capabilities": "None"
           },
           {
             "resourceType": "cloudServices",
@@ -4100,6 +3193,7 @@
               "Australia East",
               "Australia Southeast",
               "Korea Central",
+              "Korea South",
               "West India",
               "France Central",
               "South Africa North",
@@ -4109,9 +3203,7 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
               "2021-03-01",
@@ -4120,31 +3212,7 @@
             "defaultApiVersion": "2021-03-01",
             "zoneMappings": [
               {
-                "location": "Australia East",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Brazil South",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Canada Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Central India",
+                "location": "East US 2",
                 "zones": [
                   "2",
                   "1",
@@ -4160,23 +3228,7 @@
                 ]
               },
               {
-                "location": "East Asia",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "East US",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "East US 2",
+                "location": "West Europe",
                 "zones": [
                   "2",
                   "1",
@@ -4192,95 +3244,7 @@
                 ]
               },
               {
-                "location": "Germany West Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Japan East",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Korea Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "North Central US",
-                "zones": []
-              },
-              {
-                "location": "North Europe",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Norway East",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "South Africa North",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "South Central US",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
                 "location": "Southeast Asia",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Sweden Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Switzerland North",
-                "zones": []
-              },
-              {
-                "location": "UK South",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "West Europe",
                 "zones": [
                   "2",
                   "1",
@@ -4296,12 +3260,108 @@
                 ]
               },
               {
+                "location": "North Europe",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "East US",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "UK South",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Japan East",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Australia East",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "South Africa North",
+                "zones": []
+              },
+              {
+                "location": "South Central US",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Canada Central",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Germany West Central",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Brazil South",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Central India",
+                "zones": []
+              },
+              {
+                "location": "Korea Central",
+                "zones": []
+              },
+              {
                 "location": "West US 3",
                 "zones": [
                   "2",
                   "1",
                   "3"
                 ]
+              },
+              {
+                "location": "Norway East",
+                "zones": []
+              },
+              {
+                "location": "East Asia",
+                "zones": []
+              },
+              {
+                "location": "Switzerland North",
+                "zones": []
               }
             ],
             "capabilities": "SupportsTags, SupportsLocation"
@@ -4333,6 +3393,7 @@
               "Australia East",
               "Australia Southeast",
               "Korea Central",
+              "Korea South",
               "West India",
               "France Central",
               "South Africa North",
@@ -4342,9 +3403,7 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
               "2021-03-01",
@@ -4380,6 +3439,7 @@
               "Australia East",
               "Australia Southeast",
               "Korea Central",
+              "Korea South",
               "West India",
               "France Central",
               "South Africa North",
@@ -4389,9 +3449,7 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
               "2021-03-01",
@@ -4427,6 +3485,7 @@
               "Australia East",
               "Australia Southeast",
               "Korea Central",
+              "Korea South",
               "West India",
               "France Central",
               "South Africa North",
@@ -4436,9 +3495,7 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
               "2021-03-01",
@@ -4473,6 +3530,7 @@
               "Australia East",
               "Australia Southeast",
               "Korea Central",
+              "Korea South",
               "West India",
               "France Central",
               "South Africa North",
@@ -4482,9 +3540,7 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
               "2021-03-01"
@@ -4519,6 +3575,7 @@
               "Australia East",
               "Australia Southeast",
               "Korea Central",
+              "Korea South",
               "West India",
               "France Central",
               "South Africa North",
@@ -4528,9 +3585,7 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
               "2021-03-01"
@@ -4565,6 +3620,7 @@
               "Australia East",
               "Australia Southeast",
               "Korea Central",
+              "Korea South",
               "West India",
               "France Central",
               "South Africa North",
@@ -4574,9 +3630,7 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
               "2021-03-01",
@@ -4611,6 +3665,7 @@
               "Australia East",
               "Australia Southeast",
               "Korea Central",
+              "Korea South",
               "West India",
               "France Central",
               "South Africa North",
@@ -4620,9 +3675,7 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
               "2021-03-01",
@@ -4657,6 +3710,7 @@
               "Australia East",
               "Australia Southeast",
               "Korea Central",
+              "Korea South",
               "West India",
               "France Central",
               "South Africa North",
@@ -4666,9 +3720,7 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
               "2021-03-01",
@@ -4703,6 +3755,7 @@
               "Australia East",
               "Australia Southeast",
               "Korea Central",
+              "Korea South",
               "West India",
               "France Central",
               "South Africa North",
@@ -4712,12 +3765,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-11-01",
               "2021-07-01",
               "2021-04-01",
               "2021-03-01",
@@ -4734,7 +3784,7 @@
               "2016-08-30",
               "2016-04-30-preview"
             ],
-            "defaultApiVersion": "2021-07-01",
+            "defaultApiVersion": "2020-06-01",
             "apiProfiles": [
               {
                 "profileVersion": "2018-03-01-hybrid",
@@ -4776,6 +3826,7 @@
               "UK South",
               "UK West",
               "Korea Central",
+              "Korea South",
               "France Central",
               "South Africa North",
               "UAE North",
@@ -4783,12 +3834,9 @@
               "Germany West Central",
               "Norway East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-11-01",
               "2021-07-01",
               "2021-04-01",
               "2021-03-01",
@@ -4831,6 +3879,7 @@
               "Central India",
               "South India",
               "Australia Southeast",
+              "Korea South",
               "West India",
               "South Africa North",
               "UAE North",
@@ -4840,12 +3889,9 @@
               "Norway East",
               "Australia East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-11-01",
               "2021-07-01",
               "2021-04-01",
               "2021-03-01",
@@ -4856,34 +3902,10 @@
               "2019-03-01",
               "2018-10-01"
             ],
-            "defaultApiVersion": "2021-07-01",
+            "defaultApiVersion": "2020-06-01",
             "zoneMappings": [
               {
-                "location": "Australia East",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Brazil South",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Canada Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Central India",
+                "location": "East US 2",
                 "zones": [
                   "2",
                   "1",
@@ -4899,23 +3921,7 @@
                 ]
               },
               {
-                "location": "East Asia",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "East US",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "East US 2",
+                "location": "West Europe",
                 "zones": [
                   "2",
                   "1",
@@ -4931,95 +3937,7 @@
                 ]
               },
               {
-                "location": "Germany West Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Japan East",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Korea Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "North Central US",
-                "zones": []
-              },
-              {
-                "location": "North Europe",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Norway East",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "South Africa North",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "South Central US",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
                 "location": "Southeast Asia",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Sweden Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Switzerland North",
-                "zones": []
-              },
-              {
-                "location": "UK South",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "West Europe",
                 "zones": [
                   "2",
                   "1",
@@ -5035,12 +3953,108 @@
                 ]
               },
               {
+                "location": "North Europe",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "East US",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "UK South",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Japan East",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Australia East",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "South Africa North",
+                "zones": []
+              },
+              {
+                "location": "South Central US",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Canada Central",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Germany West Central",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Brazil South",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Central India",
+                "zones": []
+              },
+              {
+                "location": "Korea Central",
+                "zones": []
+              },
+              {
                 "location": "West US 3",
                 "zones": [
                   "2",
                   "1",
                   "3"
                 ]
+              },
+              {
+                "location": "Norway East",
+                "zones": []
+              },
+              {
+                "location": "East Asia",
+                "zones": []
+              },
+              {
+                "location": "Switzerland North",
+                "zones": []
               }
             ],
             "capabilities": "SupportsTags, SupportsLocation"
@@ -5072,6 +4086,7 @@
               "Central India",
               "South India",
               "Australia Southeast",
+              "Korea South",
               "West India",
               "South Africa North",
               "UAE North",
@@ -5081,12 +4096,9 @@
               "Norway East",
               "Australia East",
               "Jio India West",
-              "West US 3",
-              "Sweden Central",
-              "Korea South"
+              "West US 3"
             ],
             "apiVersions": [
-              "2021-11-01",
               "2021-07-01",
               "2021-04-01",
               "2021-03-01",
@@ -5097,34 +4109,10 @@
               "2019-03-01",
               "2018-10-01"
             ],
-            "defaultApiVersion": "2021-07-01",
+            "defaultApiVersion": "2020-06-01",
             "zoneMappings": [
               {
-                "location": "Australia East",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Brazil South",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Canada Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Central India",
+                "location": "East US 2",
                 "zones": [
                   "2",
                   "1",
@@ -5140,23 +4128,7 @@
                 ]
               },
               {
-                "location": "East Asia",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "East US",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "East US 2",
+                "location": "West Europe",
                 "zones": [
                   "2",
                   "1",
@@ -5172,95 +4144,7 @@
                 ]
               },
               {
-                "location": "Germany West Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Japan East",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Korea Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "North Central US",
-                "zones": []
-              },
-              {
-                "location": "North Europe",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Norway East",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "South Africa North",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "South Central US",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
                 "location": "Southeast Asia",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Sweden Central",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "Switzerland North",
-                "zones": []
-              },
-              {
-                "location": "UK South",
-                "zones": [
-                  "2",
-                  "1",
-                  "3"
-                ]
-              },
-              {
-                "location": "West Europe",
                 "zones": [
                   "2",
                   "1",
@@ -5276,12 +4160,108 @@
                 ]
               },
               {
+                "location": "North Europe",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "East US",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "UK South",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Japan East",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Australia East",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "South Africa North",
+                "zones": []
+              },
+              {
+                "location": "South Central US",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Canada Central",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Germany West Central",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Brazil South",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "Central India",
+                "zones": []
+              },
+              {
+                "location": "Korea Central",
+                "zones": []
+              },
+              {
                 "location": "West US 3",
                 "zones": [
                   "2",
                   "1",
                   "3"
                 ]
+              },
+              {
+                "location": "Norway East",
+                "zones": []
+              },
+              {
+                "location": "East Asia",
+                "zones": []
+              },
+              {
+                "location": "Switzerland North",
+                "zones": []
               }
             ],
             "capabilities": "SupportsTags, SupportsLocation"
@@ -5292,17 +4272,15 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg8421/providers/Microsoft.Compute/availabilitySets/test-aset460?api-version=2021-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg8421/providers/Microsoft.Compute/availabilitySets/test-aset460?api-version=2021-07-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "121",
         "Content-Type": "application/json",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
-        ],
+        "traceparent": "00-02737ba1dd72ae44a58c107d6ac4efc3-7bd13dd34a66664b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "31059992e01613246a071abb9a6935b6",
         "x-ms-return-client-request-id": "true"
       },
@@ -5321,7 +4299,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "391",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 20 Dec 2021 20:05:00 GMT",
+        "Date": "Fri, 20 Aug 2021 20:28:21 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -5331,11 +4309,11 @@
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "31059992e01613246a071abb9a6935b6",
-        "x-ms-correlation-request-id": "0bc0f266-c8f3-4d64-80fe-9d2f8ca70a96",
-        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/PutVM3Min;239,Microsoft.Compute/PutVM30Min;1137",
-        "x-ms-ratelimit-remaining-subscription-writes": "1196",
-        "x-ms-request-id": "f7c28770-34e9-4c64-9211-8ec6a24691c1",
-        "x-ms-routing-request-id": "WESTUS2:20211220T200501Z:0bc0f266-c8f3-4d64-80fe-9d2f8ca70a96"
+        "x-ms-correlation-request-id": "a0fd43bb-f9bb-4a55-a7fa-c374b0186371",
+        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/PutVM3Min;239,Microsoft.Compute/PutVM30Min;1138",
+        "x-ms-ratelimit-remaining-subscription-writes": "1189",
+        "x-ms-request-id": "4db88cbf-224a-43f4-9fd6-838a59e80d79",
+        "x-ms-routing-request-id": "WESTUS2:20210820T202822Z:a0fd43bb-f9bb-4a55-a7fa-c374b0186371"
       },
       "ResponseBody": [
         "{\r\n",
@@ -5359,10 +4337,8 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
-        ],
+        "traceparent": "00-18063acee6dfef4fb59a9df7313713cc-640eb658f35aa945-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "1c8355250bbf07296560d2624f0bdded",
         "x-ms-return-client-request-id": "true"
       },
@@ -5372,15 +4348,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "268",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 20 Dec 2021 20:05:00 GMT",
+        "Date": "Fri, 20 Aug 2021 20:28:21 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "c1b03d94-16d0-4bbd-b313-5871b58517bc",
-        "x-ms-ratelimit-remaining-subscription-reads": "11984",
-        "x-ms-request-id": "c1b03d94-16d0-4bbd-b313-5871b58517bc",
-        "x-ms-routing-request-id": "WESTUS2:20211220T200501Z:c1b03d94-16d0-4bbd-b313-5871b58517bc"
+        "x-ms-correlation-request-id": "09a24261-b14c-4eb6-bb34-b9b602425fec",
+        "x-ms-ratelimit-remaining-subscription-reads": "11874",
+        "x-ms-request-id": "09a24261-b14c-4eb6-bb34-b9b602425fec",
+        "x-ms-routing-request-id": "WESTUS2:20210820T202822Z:09a24261-b14c-4eb6-bb34-b9b602425fec"
       },
       "ResponseBody": {
         "value": [
@@ -5402,10 +4378,8 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
-        ],
+        "traceparent": "00-5043f09e804ccd46bbd9f5ac1c4022df-810df530bc56e246-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "3f78b309023da5147e9afc7d30cfe3f6",
         "x-ms-return-client-request-id": "true"
       },
@@ -5415,15 +4389,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "12",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 20 Dec 2021 20:05:00 GMT",
+        "Date": "Fri, 20 Aug 2021 20:28:22 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "68dc81fa-d7e9-4df8-b747-665cb11f3c98",
-        "x-ms-ratelimit-remaining-subscription-reads": "11983",
-        "x-ms-request-id": "68dc81fa-d7e9-4df8-b747-665cb11f3c98",
-        "x-ms-routing-request-id": "WESTUS2:20211220T200501Z:68dc81fa-d7e9-4df8-b747-665cb11f3c98"
+        "x-ms-correlation-request-id": "8ef11148-58bb-423f-80a4-4c6a0ae55d49",
+        "x-ms-ratelimit-remaining-subscription-reads": "11873",
+        "x-ms-request-id": "8ef11148-58bb-423f-80a4-4c6a0ae55d49",
+        "x-ms-routing-request-id": "WESTUS2:20210820T202822Z:8ef11148-58bb-423f-80a4-4c6a0ae55d49"
       },
       "ResponseBody": {
         "value": []
@@ -5437,10 +4411,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "255",
         "Content-Type": "application/json",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
-        ],
+        "traceparent": "00-5579171a8e04a246aae39ee03d03a522-ad5ce2b4502cff48-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "4595622b19e547f67d08e00a1ab71b29",
         "x-ms-return-client-request-id": "true"
       },
@@ -5454,17 +4426,17 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Mon, 20 Dec 2021 20:05:01 GMT",
+        "Date": "Fri, 20 Aug 2021 20:28:22 GMT",
         "Expires": "-1",
         "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLVRFU1RSRzg0MjEtV0VTVFVTMi1NT1ZFIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2019-10-01",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "f86bc4dc-3f2e-41c6-99bf-eb1f498bb237",
+        "x-ms-correlation-request-id": "bbe8c4eb-a372-48fe-a55c-d5a48e7502e5",
         "x-ms-ratelimit-remaining-subscription-writes": "1199",
-        "x-ms-request-id": "f86bc4dc-3f2e-41c6-99bf-eb1f498bb237",
-        "x-ms-routing-request-id": "WESTUS2:20211220T200502Z:f86bc4dc-3f2e-41c6-99bf-eb1f498bb237"
+        "x-ms-request-id": "bbe8c4eb-a372-48fe-a55c-d5a48e7502e5",
+        "x-ms-routing-request-id": "WESTUS2:20210820T202823Z:bbe8c4eb-a372-48fe-a55c-d5a48e7502e5"
       },
       "ResponseBody": []
     },
@@ -5473,10 +4445,7 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
-        ],
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "ec37dc7d9776f008bc31c23421098bc6",
         "x-ms-return-client-request-id": "true"
       },
@@ -5485,17 +4454,17 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Mon, 20 Dec 2021 20:05:01 GMT",
+        "Date": "Fri, 20 Aug 2021 20:28:22 GMT",
         "Expires": "-1",
         "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLVRFU1RSRzg0MjEtV0VTVFVTMi1NT1ZFIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2019-10-01",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "69225c02-5680-47f5-83b7-b4bc7939e303",
-        "x-ms-ratelimit-remaining-subscription-reads": "11982",
-        "x-ms-request-id": "69225c02-5680-47f5-83b7-b4bc7939e303",
-        "x-ms-routing-request-id": "WESTUS2:20211220T200502Z:69225c02-5680-47f5-83b7-b4bc7939e303"
+        "x-ms-correlation-request-id": "3efcae12-e210-4adf-93b3-a969797eb175",
+        "x-ms-ratelimit-remaining-subscription-reads": "11872",
+        "x-ms-request-id": "3efcae12-e210-4adf-93b3-a969797eb175",
+        "x-ms-routing-request-id": "WESTUS2:20210820T202823Z:3efcae12-e210-4adf-93b3-a969797eb175"
       },
       "ResponseBody": []
     },
@@ -5504,10 +4473,7 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
-        ],
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "6fc1d27e66858efae77104077bd038d1",
         "x-ms-return-client-request-id": "true"
       },
@@ -5516,17 +4482,17 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Mon, 20 Dec 2021 20:05:16 GMT",
+        "Date": "Fri, 20 Aug 2021 20:28:22 GMT",
         "Expires": "-1",
         "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLVRFU1RSRzg0MjEtV0VTVFVTMi1NT1ZFIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2019-10-01",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "58809b8e-b906-4431-97f6-6aa9ad9df435",
-        "x-ms-ratelimit-remaining-subscription-reads": "11981",
-        "x-ms-request-id": "58809b8e-b906-4431-97f6-6aa9ad9df435",
-        "x-ms-routing-request-id": "WESTUS2:20211220T200517Z:58809b8e-b906-4431-97f6-6aa9ad9df435"
+        "x-ms-correlation-request-id": "624a985d-8197-4f0a-8348-11d73447b0f9",
+        "x-ms-ratelimit-remaining-subscription-reads": "11871",
+        "x-ms-request-id": "624a985d-8197-4f0a-8348-11d73447b0f9",
+        "x-ms-routing-request-id": "WESTUS2:20210820T202823Z:624a985d-8197-4f0a-8348-11d73447b0f9"
       },
       "ResponseBody": []
     },
@@ -5535,10 +4501,7 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
-        ],
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "3e8d4a312e8024b3b95abfcada460136",
         "x-ms-return-client-request-id": "true"
       },
@@ -5547,17 +4510,17 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Mon, 20 Dec 2021 20:05:31 GMT",
+        "Date": "Fri, 20 Aug 2021 20:28:22 GMT",
         "Expires": "-1",
         "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLVRFU1RSRzg0MjEtV0VTVFVTMi1NT1ZFIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2019-10-01",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "8cb0ab05-6b4f-4551-8d51-8737c75f6e43",
-        "x-ms-ratelimit-remaining-subscription-reads": "11980",
-        "x-ms-request-id": "8cb0ab05-6b4f-4551-8d51-8737c75f6e43",
-        "x-ms-routing-request-id": "WESTUS2:20211220T200532Z:8cb0ab05-6b4f-4551-8d51-8737c75f6e43"
+        "x-ms-correlation-request-id": "56c6d450-225f-4e62-ba9b-e77a95026753",
+        "x-ms-ratelimit-remaining-subscription-reads": "11870",
+        "x-ms-request-id": "56c6d450-225f-4e62-ba9b-e77a95026753",
+        "x-ms-routing-request-id": "WESTUS2:20210820T202823Z:56c6d450-225f-4e62-ba9b-e77a95026753"
       },
       "ResponseBody": []
     },
@@ -5566,10 +4529,7 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
-        ],
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "3ca6d65267ea1610e1a80504920075ec",
         "x-ms-return-client-request-id": "true"
       },
@@ -5578,17 +4538,17 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Mon, 20 Dec 2021 20:05:47 GMT",
+        "Date": "Fri, 20 Aug 2021 20:28:22 GMT",
         "Expires": "-1",
         "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLVRFU1RSRzg0MjEtV0VTVFVTMi1NT1ZFIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2019-10-01",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "599db9a1-615b-44e3-b047-7fc682f4461f",
-        "x-ms-ratelimit-remaining-subscription-reads": "11979",
-        "x-ms-request-id": "599db9a1-615b-44e3-b047-7fc682f4461f",
-        "x-ms-routing-request-id": "WESTUS2:20211220T200547Z:599db9a1-615b-44e3-b047-7fc682f4461f"
+        "x-ms-correlation-request-id": "50ceea35-5512-43af-96d5-19944b021678",
+        "x-ms-ratelimit-remaining-subscription-reads": "11869",
+        "x-ms-request-id": "50ceea35-5512-43af-96d5-19944b021678",
+        "x-ms-routing-request-id": "WESTUS2:20210820T202823Z:50ceea35-5512-43af-96d5-19944b021678"
       },
       "ResponseBody": []
     },
@@ -5597,10 +4557,7 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
-        ],
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "d702f0f84c7c50461e9cb62ba62fb4a0",
         "x-ms-return-client-request-id": "true"
       },
@@ -5609,17 +4566,17 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Mon, 20 Dec 2021 20:06:02 GMT",
+        "Date": "Fri, 20 Aug 2021 20:28:22 GMT",
         "Expires": "-1",
         "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLVRFU1RSRzg0MjEtV0VTVFVTMi1NT1ZFIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2019-10-01",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "507aae7b-8d02-4b58-93de-a4b7d38e26c7",
-        "x-ms-ratelimit-remaining-subscription-reads": "11978",
-        "x-ms-request-id": "507aae7b-8d02-4b58-93de-a4b7d38e26c7",
-        "x-ms-routing-request-id": "WESTUS2:20211220T200602Z:507aae7b-8d02-4b58-93de-a4b7d38e26c7"
+        "x-ms-correlation-request-id": "4278607b-cf3f-40d2-af72-62579c7f454c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11868",
+        "x-ms-request-id": "4278607b-cf3f-40d2-af72-62579c7f454c",
+        "x-ms-routing-request-id": "WESTUS2:20210820T202823Z:4278607b-cf3f-40d2-af72-62579c7f454c"
       },
       "ResponseBody": []
     },
@@ -5628,10 +4585,7 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
-        ],
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "a4b5ce6ffb29cae73a765cd729af91b8",
         "x-ms-return-client-request-id": "true"
       },
@@ -5640,17 +4594,17 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Mon, 20 Dec 2021 20:06:17 GMT",
+        "Date": "Fri, 20 Aug 2021 20:28:22 GMT",
         "Expires": "-1",
         "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLVRFU1RSRzg0MjEtV0VTVFVTMi1NT1ZFIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2019-10-01",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "1b261878-9c90-4e1c-9a87-022d4622769c",
-        "x-ms-ratelimit-remaining-subscription-reads": "11977",
-        "x-ms-request-id": "1b261878-9c90-4e1c-9a87-022d4622769c",
-        "x-ms-routing-request-id": "WESTUS2:20211220T200617Z:1b261878-9c90-4e1c-9a87-022d4622769c"
+        "x-ms-correlation-request-id": "79e419a4-a654-4fc6-99a3-e223b10877f8",
+        "x-ms-ratelimit-remaining-subscription-reads": "11867",
+        "x-ms-request-id": "79e419a4-a654-4fc6-99a3-e223b10877f8",
+        "x-ms-routing-request-id": "WESTUS2:20210820T202823Z:79e419a4-a654-4fc6-99a3-e223b10877f8"
       },
       "ResponseBody": []
     },
@@ -5659,11 +4613,8 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "ead2d3e42a4405ba90561d4eb1e570b2",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "c9d74aef5923b2219a96f553e859d44c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -5671,17 +4622,17 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Mon, 20 Dec 2021 20:06:32 GMT",
+        "Date": "Fri, 20 Aug 2021 20:32:54 GMT",
         "Expires": "-1",
         "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLVRFU1RSRzg0MjEtV0VTVFVTMi1NT1ZFIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2019-10-01",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "f00b5502-ca7c-45de-916f-2dc218ad544b",
-        "x-ms-ratelimit-remaining-subscription-reads": "11976",
-        "x-ms-request-id": "f00b5502-ca7c-45de-916f-2dc218ad544b",
-        "x-ms-routing-request-id": "WESTUS2:20211220T200632Z:f00b5502-ca7c-45de-916f-2dc218ad544b"
+        "x-ms-correlation-request-id": "3e59ff0d-7b51-4fda-884e-b10f89e831ea",
+        "x-ms-ratelimit-remaining-subscription-reads": "2071",
+        "x-ms-request-id": "3e59ff0d-7b51-4fda-884e-b10f89e831ea",
+        "x-ms-routing-request-id": "WESTUS2:20210820T203255Z:3e59ff0d-7b51-4fda-884e-b10f89e831ea"
       },
       "ResponseBody": []
     },
@@ -5690,11 +4641,8 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "c49465f4d04bfcc209389c05f06e276f",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "578303aea47844640e3282670fcea7c6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -5702,17 +4650,17 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Mon, 20 Dec 2021 20:06:46 GMT",
+        "Date": "Fri, 20 Aug 2021 20:32:54 GMT",
         "Expires": "-1",
         "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLVRFU1RSRzg0MjEtV0VTVFVTMi1NT1ZFIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2019-10-01",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "041506cb-0ebb-434b-ab63-322ba37654cf",
-        "x-ms-ratelimit-remaining-subscription-reads": "11975",
-        "x-ms-request-id": "041506cb-0ebb-434b-ab63-322ba37654cf",
-        "x-ms-routing-request-id": "WESTUS2:20211220T200647Z:041506cb-0ebb-434b-ab63-322ba37654cf"
+        "x-ms-correlation-request-id": "4777e658-5a39-4440-b84c-ec34e3fb420c",
+        "x-ms-ratelimit-remaining-subscription-reads": "2070",
+        "x-ms-request-id": "4777e658-5a39-4440-b84c-ec34e3fb420c",
+        "x-ms-routing-request-id": "WESTUS2:20210820T203255Z:4777e658-5a39-4440-b84c-ec34e3fb420c"
       },
       "ResponseBody": []
     },
@@ -5721,11 +4669,8 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "d246fd0aca5c455b13af14d3dd981855",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "f40ad46147a1ef544bbe07554fc44172",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -5733,17 +4678,17 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Mon, 20 Dec 2021 20:07:01 GMT",
+        "Date": "Fri, 20 Aug 2021 20:32:54 GMT",
         "Expires": "-1",
         "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLVRFU1RSRzg0MjEtV0VTVFVTMi1NT1ZFIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2019-10-01",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "49c75eb8-fb04-4dd9-a6cd-1cc7ec3241fb",
-        "x-ms-ratelimit-remaining-subscription-reads": "11974",
-        "x-ms-request-id": "49c75eb8-fb04-4dd9-a6cd-1cc7ec3241fb",
-        "x-ms-routing-request-id": "WESTUS2:20211220T200702Z:49c75eb8-fb04-4dd9-a6cd-1cc7ec3241fb"
+        "x-ms-correlation-request-id": "b03198bd-8100-49f5-8196-f1cedb5e994f",
+        "x-ms-ratelimit-remaining-subscription-reads": "2069",
+        "x-ms-request-id": "b03198bd-8100-49f5-8196-f1cedb5e994f",
+        "x-ms-routing-request-id": "WESTUS2:20210820T203255Z:b03198bd-8100-49f5-8196-f1cedb5e994f"
       },
       "ResponseBody": []
     },
@@ -5752,11 +4697,8 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "c3e3a905cc1b146d11d5e00c8eb41521",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "1d2dd42613914ad2e692bbf1d6b9a3cc",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -5764,17 +4706,17 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Mon, 20 Dec 2021 20:07:16 GMT",
+        "Date": "Fri, 20 Aug 2021 20:32:54 GMT",
         "Expires": "-1",
         "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLVRFU1RSRzg0MjEtV0VTVFVTMi1NT1ZFIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2019-10-01",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "19190b30-3ca1-4f5f-a70e-6a8e823a1596",
-        "x-ms-ratelimit-remaining-subscription-reads": "11973",
-        "x-ms-request-id": "19190b30-3ca1-4f5f-a70e-6a8e823a1596",
-        "x-ms-routing-request-id": "WESTUS2:20211220T200717Z:19190b30-3ca1-4f5f-a70e-6a8e823a1596"
+        "x-ms-correlation-request-id": "1ba59044-2c96-438e-bd31-3895b4acb4c3",
+        "x-ms-ratelimit-remaining-subscription-reads": "2068",
+        "x-ms-request-id": "1ba59044-2c96-438e-bd31-3895b4acb4c3",
+        "x-ms-routing-request-id": "WESTUS2:20210820T203255Z:1ba59044-2c96-438e-bd31-3895b4acb4c3"
       },
       "ResponseBody": []
     },
@@ -5783,11 +4725,8 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "b443ae2f9e9f2a55094eb19cbcee1e70",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "13f22eefdf4e67aaae930cb99d0ef449",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -5795,17 +4734,17 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Mon, 20 Dec 2021 20:07:31 GMT",
+        "Date": "Fri, 20 Aug 2021 20:32:54 GMT",
         "Expires": "-1",
         "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLVRFU1RSRzg0MjEtV0VTVFVTMi1NT1ZFIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2019-10-01",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "a82e04c7-2bc0-4a1e-92fe-8b733387e202",
-        "x-ms-ratelimit-remaining-subscription-reads": "11972",
-        "x-ms-request-id": "a82e04c7-2bc0-4a1e-92fe-8b733387e202",
-        "x-ms-routing-request-id": "WESTUS2:20211220T200732Z:a82e04c7-2bc0-4a1e-92fe-8b733387e202"
+        "x-ms-correlation-request-id": "b017c558-8395-4447-9ee2-9a0d447c0cf0",
+        "x-ms-ratelimit-remaining-subscription-reads": "2067",
+        "x-ms-request-id": "b017c558-8395-4447-9ee2-9a0d447c0cf0",
+        "x-ms-routing-request-id": "WESTUS2:20210820T203255Z:b017c558-8395-4447-9ee2-9a0d447c0cf0"
       },
       "ResponseBody": []
     },
@@ -5814,11 +4753,8 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "46ff471f638b3d539032c087e94fb65e",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "3a410ff189a14d3401c00e0e8b631891",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -5826,17 +4762,17 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Mon, 20 Dec 2021 20:07:46 GMT",
+        "Date": "Fri, 20 Aug 2021 20:32:54 GMT",
         "Expires": "-1",
         "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLVRFU1RSRzg0MjEtV0VTVFVTMi1NT1ZFIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2019-10-01",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "ab940b65-ee09-4091-9035-0347b5826243",
-        "x-ms-ratelimit-remaining-subscription-reads": "11971",
-        "x-ms-request-id": "ab940b65-ee09-4091-9035-0347b5826243",
-        "x-ms-routing-request-id": "WESTUS2:20211220T200747Z:ab940b65-ee09-4091-9035-0347b5826243"
+        "x-ms-correlation-request-id": "70ed124b-0f60-4690-969e-697abe571fab",
+        "x-ms-ratelimit-remaining-subscription-reads": "2066",
+        "x-ms-request-id": "70ed124b-0f60-4690-969e-697abe571fab",
+        "x-ms-routing-request-id": "WESTUS2:20210820T203255Z:70ed124b-0f60-4690-969e-697abe571fab"
       },
       "ResponseBody": []
     },
@@ -5845,11 +4781,8 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "2fa3f299645567b654b9bacc1bd05723",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "20653b1a2dd246242ac56efd0718add7",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -5857,17 +4790,17 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Mon, 20 Dec 2021 20:08:01 GMT",
+        "Date": "Fri, 20 Aug 2021 20:32:54 GMT",
         "Expires": "-1",
         "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLVRFU1RSRzg0MjEtV0VTVFVTMi1NT1ZFIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2019-10-01",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "29495d00-98aa-4bee-bcb0-4ece7ae1fcff",
-        "x-ms-ratelimit-remaining-subscription-reads": "11970",
-        "x-ms-request-id": "29495d00-98aa-4bee-bcb0-4ece7ae1fcff",
-        "x-ms-routing-request-id": "WESTUS2:20211220T200802Z:29495d00-98aa-4bee-bcb0-4ece7ae1fcff"
+        "x-ms-correlation-request-id": "da1b076c-64bf-4624-819b-323b1fbd04c1",
+        "x-ms-ratelimit-remaining-subscription-reads": "2065",
+        "x-ms-request-id": "da1b076c-64bf-4624-819b-323b1fbd04c1",
+        "x-ms-routing-request-id": "WESTUS2:20210820T203255Z:da1b076c-64bf-4624-819b-323b1fbd04c1"
       },
       "ResponseBody": []
     },
@@ -5876,181 +4809,23 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "46ec70b7cfb4cc965b05246cdece40b9",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 202,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "0",
-        "Date": "Mon, 20 Dec 2021 20:08:16 GMT",
-        "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLVRFU1RSRzg0MjEtV0VTVFVTMi1NT1ZFIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2019-10-01",
-        "Pragma": "no-cache",
-        "Retry-After": "15",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "532ef60e-d56d-49ff-923b-776cd66e9a1f",
-        "x-ms-ratelimit-remaining-subscription-reads": "11969",
-        "x-ms-request-id": "532ef60e-d56d-49ff-923b-776cd66e9a1f",
-        "x-ms-routing-request-id": "WESTUS2:20211220T200817Z:532ef60e-d56d-49ff-923b-776cd66e9a1f"
-      },
-      "ResponseBody": []
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLVRFU1RSRzg0MjEtV0VTVFVTMi1NT1ZFIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2019-10-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "c9025298ef4bbb1a9198f2d1a88622bf",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 202,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "0",
-        "Date": "Mon, 20 Dec 2021 20:08:32 GMT",
-        "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLVRFU1RSRzg0MjEtV0VTVFVTMi1NT1ZFIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2019-10-01",
-        "Pragma": "no-cache",
-        "Retry-After": "15",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "052de9db-e4a2-4e66-b01c-fa36967df7e1",
-        "x-ms-ratelimit-remaining-subscription-reads": "11968",
-        "x-ms-request-id": "052de9db-e4a2-4e66-b01c-fa36967df7e1",
-        "x-ms-routing-request-id": "WESTUS2:20211220T200832Z:052de9db-e4a2-4e66-b01c-fa36967df7e1"
-      },
-      "ResponseBody": []
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLVRFU1RSRzg0MjEtV0VTVFVTMi1NT1ZFIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2019-10-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "78d09dda7063caaa5bd6d3503f498985",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 202,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "0",
-        "Date": "Mon, 20 Dec 2021 20:08:47 GMT",
-        "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLVRFU1RSRzg0MjEtV0VTVFVTMi1NT1ZFIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2019-10-01",
-        "Pragma": "no-cache",
-        "Retry-After": "15",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "a64a8062-9c6e-4e6b-be17-5658f947956c",
-        "x-ms-ratelimit-remaining-subscription-reads": "11967",
-        "x-ms-request-id": "a64a8062-9c6e-4e6b-be17-5658f947956c",
-        "x-ms-routing-request-id": "WESTUS2:20211220T200847Z:a64a8062-9c6e-4e6b-be17-5658f947956c"
-      },
-      "ResponseBody": []
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLVRFU1RSRzg0MjEtV0VTVFVTMi1NT1ZFIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2019-10-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "c93400788ecec7d75630b41cdcc524d4",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 202,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "0",
-        "Date": "Mon, 20 Dec 2021 20:09:02 GMT",
-        "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLVRFU1RSRzg0MjEtV0VTVFVTMi1NT1ZFIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2019-10-01",
-        "Pragma": "no-cache",
-        "Retry-After": "15",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "4fae1372-e468-4dfa-9c5e-c2de5383cdf6",
-        "x-ms-ratelimit-remaining-subscription-reads": "11966",
-        "x-ms-request-id": "4fae1372-e468-4dfa-9c5e-c2de5383cdf6",
-        "x-ms-routing-request-id": "WESTUS2:20211220T200902Z:4fae1372-e468-4dfa-9c5e-c2de5383cdf6"
-      },
-      "ResponseBody": []
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLVRFU1RSRzg0MjEtV0VTVFVTMi1NT1ZFIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2019-10-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "409264e3c8fe2756a7386d741bca7c48",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 202,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "0",
-        "Date": "Mon, 20 Dec 2021 20:09:17 GMT",
-        "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLVRFU1RSRzg0MjEtV0VTVFVTMi1NT1ZFIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2019-10-01",
-        "Pragma": "no-cache",
-        "Retry-After": "15",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "e6a76f63-160c-4909-b22b-b9d944ddd4c3",
-        "x-ms-ratelimit-remaining-subscription-reads": "11965",
-        "x-ms-request-id": "e6a76f63-160c-4909-b22b-b9d944ddd4c3",
-        "x-ms-routing-request-id": "WESTUS2:20211220T200917Z:e6a76f63-160c-4909-b22b-b9d944ddd4c3"
-      },
-      "ResponseBody": []
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLVRFU1RSRzg0MjEtV0VTVFVTMi1NT1ZFIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2019-10-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "a7596c0f58524cf1c5082232bb8eed96",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "c600719e6977662af9a4128ed09bdb4b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Date": "Mon, 20 Dec 2021 20:09:32 GMT",
+        "Date": "Fri, 20 Aug 2021 20:32:54 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "db769db3-66a5-4293-9744-04fbc84ad8ac",
-        "x-ms-ratelimit-remaining-subscription-reads": "11964",
-        "x-ms-request-id": "db769db3-66a5-4293-9744-04fbc84ad8ac",
-        "x-ms-routing-request-id": "WESTUS2:20211220T200932Z:db769db3-66a5-4293-9744-04fbc84ad8ac"
+        "x-ms-correlation-request-id": "543999ea-396c-42bd-9bd7-6ddb270b5b6f",
+        "x-ms-ratelimit-remaining-subscription-reads": "2064",
+        "x-ms-request-id": "543999ea-396c-42bd-9bd7-6ddb270b5b6f",
+        "x-ms-routing-request-id": "WESTUS2:20210820T203255Z:543999ea-396c-42bd-9bd7-6ddb270b5b6f"
       },
       "ResponseBody": []
     },
@@ -6060,11 +4835,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "da6dffb248b6b087aa0c21952063ab8b",
+        "traceparent": "00-dc5e229fe24cdc479edb518c76a5a70d-29a1d379c193994b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "619f7a7ad4a8c377ebfb10db1b3745e9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -6073,15 +4846,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "12",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 20 Dec 2021 20:09:32 GMT",
+        "Date": "Fri, 20 Aug 2021 20:32:55 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "39fc83ae-e6ba-4ec6-bae1-ede8e4b0ef63",
-        "x-ms-ratelimit-remaining-subscription-reads": "11963",
-        "x-ms-request-id": "39fc83ae-e6ba-4ec6-bae1-ede8e4b0ef63",
-        "x-ms-routing-request-id": "WESTUS2:20211220T200932Z:39fc83ae-e6ba-4ec6-bae1-ede8e4b0ef63"
+        "x-ms-correlation-request-id": "d403a151-ab4d-4664-83d7-88d9f4152b6e",
+        "x-ms-ratelimit-remaining-subscription-reads": "2063",
+        "x-ms-request-id": "d403a151-ab4d-4664-83d7-88d9f4152b6e",
+        "x-ms-routing-request-id": "WESTUS2:20210820T203255Z:d403a151-ab4d-4664-83d7-88d9f4152b6e"
       },
       "ResponseBody": {
         "value": []
@@ -6093,11 +4866,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "700c6cb47c6b8a8173467bf5a5246c19",
+        "traceparent": "00-5c42c41c3158e34c8fa2bc0169659830-c70a0a1cd7a0bb47-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "1a7037125263b11a10ff262d1b95758e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -6106,15 +4877,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "268",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 20 Dec 2021 20:09:32 GMT",
+        "Date": "Fri, 20 Aug 2021 20:32:55 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "b74fe314-6dc3-47be-8bb2-5e8db05c6a3f",
-        "x-ms-ratelimit-remaining-subscription-reads": "11962",
-        "x-ms-request-id": "b74fe314-6dc3-47be-8bb2-5e8db05c6a3f",
-        "x-ms-routing-request-id": "WESTUS2:20211220T200932Z:b74fe314-6dc3-47be-8bb2-5e8db05c6a3f"
+        "x-ms-correlation-request-id": "a0fa567f-698c-4670-b420-c9e9145ac2a0",
+        "x-ms-ratelimit-remaining-subscription-reads": "2062",
+        "x-ms-request-id": "a0fa567f-698c-4670-b420-c9e9145ac2a0",
+        "x-ms-routing-request-id": "WESTUS2:20210820T203255Z:a0fa567f-698c-4670-b420-c9e9145ac2a0"
       },
       "ResponseBody": {
         "value": [

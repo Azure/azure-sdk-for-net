@@ -6,11 +6,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-f212e9b4c3e61bf8227d9999bbe1e504-009450421163604e-00",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
-        ],
+        "User-Agent": "azsdk-net-ResourceManager.Resources/1.0.0-preview.2 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "9e4e254988129916e75b69193e262222",
         "x-ms-return-client-request-id": "true"
       },
@@ -18,29 +14,25 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "468",
+        "Content-Length": "397",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 20 Dec 2021 19:40:28 GMT",
+        "Date": "Tue, 13 Apr 2021 02:29:47 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "6a57684c-404b-4b72-bd51-01451ab13f83",
-        "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "6a57684c-404b-4b72-bd51-01451ab13f83",
-        "x-ms-routing-request-id": "WESTUS2:20211220T194029Z:6a57684c-404b-4b72-bd51-01451ab13f83"
+        "x-ms-correlation-request-id": "fbc33e7d-bbfc-4938-ac61-6cf89143a3c2",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "fbc33e7d-bbfc-4938-ac61-6cf89143a3c2",
+        "x-ms-routing-request-id": "WESTUS2:20210413T022947Z:fbc33e7d-bbfc-4938-ac61-6cf89143a3c2"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
-        "tags": {
-          "tagKey1": "tagValue1",
-          "tagKey2": "tagValue2"
-        },
         "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
         "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "displayName": "Azure SDK sandbox",
         "state": "Enabled",
         "subscriptionPolicies": {
           "locationPlacementId": "Internal_2014-09-01",
@@ -50,16 +42,13 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/te%25st?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/te%25st?api-version=2019-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-5919d61f2c0e3f5c46fdb9961bbe0e53-faa5a4d8b132874a-00",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20211220.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.22000)"
-        ],
+        "traceparent": "00-f94b11b5128e5047b62c3533e2dfd11c-2ee467d265092940-00",
+        "User-Agent": "azsdk-net-ResourceManager.Resources/1.0.0-preview.2 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "f2c4d407e8fe5e2d3638079ce6743b71",
         "x-ms-return-client-request-id": "true"
       },
@@ -69,27 +58,26 @@
         "Cache-Control": "no-cache",
         "Content-Length": "277",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 20 Dec 2021 19:40:28 GMT",
+        "Date": "Tue, 13 Apr 2021 02:29:47 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "0a8e4461-aaa0-43a6-aa2a-1f7da97f8010",
+        "x-ms-correlation-request-id": "fdbf8746-fd29-4fbd-9d75-e3aa87086ab9",
         "x-ms-failure-cause": "gateway",
-        "x-ms-request-id": "0a8e4461-aaa0-43a6-aa2a-1f7da97f8010",
-        "x-ms-routing-request-id": "WESTUS2:20211220T194029Z:0a8e4461-aaa0-43a6-aa2a-1f7da97f8010"
+        "x-ms-request-id": "fdbf8746-fd29-4fbd-9d75-e3aa87086ab9",
+        "x-ms-routing-request-id": "WESTUS2:20210413T022947Z:fdbf8746-fd29-4fbd-9d75-e3aa87086ab9"
       },
       "ResponseBody": {
         "error": {
           "code": "InvalidDoubleEncodedRequestUri",
-          "message": "The request URI \u0027https://management.azure.com:443/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/te%25st?api-version=2021-04-01\u0027 is not valid, because it contains double encoding sequence \u0027%25\u0027."
+          "message": "The request URI \u0027https://management.azure.com:443/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/te%25st?api-version=2019-10-01\u0027 is not valid, because it contains double encoding sequence \u0027%25\u0027."
         }
       }
     }
   ],
   "Variables": {
     "RandomSeed": "1831767419",
-    "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }
