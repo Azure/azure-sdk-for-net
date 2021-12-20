@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
@@ -9,18 +9,18 @@
   <ItemGroup>
     <PackageReference Include="Mono.Posix" VersionOverride="7.0.0-alpha8.21302.6" />
     <PackageReference Include="System.IO.FileSystem.AccessControl" VersionOverride="5.0.0" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Storage.DataMovement.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(AzureStorageSharedTestSources)\**\*.cs" LinkBase="Shared" />
+    <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteFixture.cs" />
+    <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteNUnitFixture.cs" />
     <None Include="$(AzureStorageSharedTestSources)\*.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SessionRecords\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
-    <ProjectReference Include="..\..\..\Azure.Storage.Common\tests\Azure.Storage.Common.Tests.csproj" />
-    <ProjectReference Include="..\..\src\Azure.Storage.DataMovement.csproj" />
   </ItemGroup>
 </Project>

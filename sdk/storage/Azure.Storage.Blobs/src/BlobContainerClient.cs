@@ -388,6 +388,36 @@ namespace Azure.Storage.Blobs
         /// class.
         /// </summary>
         /// <param name="containerUri">
+        /// A <see cref="Uri"/> referencing the blob container that includes the
+        /// name of the account and the name of the container.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net/{container_name}".
+        /// </param>
+        /// <param name="clientConfiguration">
+        /// <see cref="BlobClientConfiguration"/>.
+        /// </param>
+        /// <param name="clientOptions">
+        /// See <see cref="BlobClientOptions"/>.
+        /// </param>
+        internal BlobContainerClient(
+            Uri containerUri,
+            BlobClientConfiguration clientConfiguration,
+            BlobClientOptions clientOptions)
+        {
+            _uri = containerUri;
+            _clientConfiguration = clientConfiguration;
+            _authenticationPolicy = StorageClientOptions.GetAuthenticationPolicy(_clientConfiguration.SharedKeyCredential);
+            _clientSideEncryption = clientOptions?._clientSideEncryptionOptions.Clone();
+            _containerRestClient = BuildContainerRestClient(containerUri);
+
+            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
+            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_clientConfiguration.CustomerProvidedKey, _clientConfiguration.EncryptionScope);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobContainerClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="containerUri">
         /// A <see cref="Uri"/> referencing the block blob that includes the
         /// name of the account, the name of the container, and the name of
         /// the blob.

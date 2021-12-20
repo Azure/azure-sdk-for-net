@@ -183,3 +183,8 @@ indent_size = 2
 end_of_line = lf
 [*.{cmd, bat}]
 end_of_line = crlf
+
+# TODO: remove supression
+dotnet_diagnostic.VSTHRD200.severity = none
+dotnet_diagnostic.VSTHRD103.severity = none
+dotnet_diagnostic.VSTHRD002.severity = none

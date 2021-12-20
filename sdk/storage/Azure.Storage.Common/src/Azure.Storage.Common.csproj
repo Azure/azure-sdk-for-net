@@ -34,8 +34,6 @@
     <Compile Include="Shared\Constants.cs" />
     <Compile Include="Shared\Errors.cs" />
     <Compile Include="Shared\GeoRedundantReadPolicy.cs" />
-    <Compile Include="Shared\PathScanner.cs" />
-    <Compile Include="Shared\PathScannerFactory.cs" />
     <Compile Include="Shared\SasExtensions.cs" />
     <Compile Include="Shared\SasQueryParametersInternals.cs" />
     <Compile Include="Shared\SharedAccessSignatureCredentials.cs" />

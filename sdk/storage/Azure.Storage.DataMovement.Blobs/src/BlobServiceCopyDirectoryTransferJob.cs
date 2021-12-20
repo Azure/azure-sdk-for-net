@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement.Models;
+using Azure.Storage.DataMovement.Blobs.Models;
 
-namespace Azure.Storage.DataMovement
+namespace Azure.Storage.DataMovement.Blobs
 {
     /// <summary>
     /// TODO; descriptions and comments for this entire class
@@ -27,11 +28,11 @@ namespace Azure.Storage.DataMovement
         public readonly ServiceCopyMethod _copyMethod;
 
         /// <summary>
-        /// The <see cref="StorageTransferOptions"/>.
+        /// The <see cref="BlobDirectoryCopyFromUriOptions"/>.
         /// </summary>
         internal BlobDirectoryCopyFromUriOptions _copyFromUriOptions;
         /// <summary>
-        /// Gets the <see cref="StorageTransferOptions"/>.
+        /// Gets the <see cref="BlobDirectoryCopyFromUriOptions"/>.
         /// </summary>
         public BlobDirectoryCopyFromUriOptions CopyFromUriOptions => _copyFromUriOptions;
 
@@ -45,17 +46,20 @@ namespace Azure.Storage.DataMovement
         ///
         /// TODO; better descriptions and update parameter descriptions
         /// </summary>
+        /// <param name="jobId"></param>
         /// <param name="sourceDirectoryUri"></param>
         /// <param name="destinationClient"></param>
         /// <param name="copyMethod"></param>
         /// <param name="copyFromUriOptions"></param>
         /// <param name="cancellationToken"></param>
         public BlobServiceCopyDirectoryTransferJob(
+            string jobId,
             Uri sourceDirectoryUri,
             BlobVirtualDirectoryClient destinationClient,
             ServiceCopyMethod copyMethod,
             BlobDirectoryCopyFromUriOptions copyFromUriOptions,
             CancellationToken cancellationToken)
+            : base(jobId)
         {
             _sourceDirectoryUri = sourceDirectoryUri;
             _destinationBlobClient = destinationClient;
@@ -71,7 +75,8 @@ namespace Azure.Storage.DataMovement
         public override Task StartTransferTaskAsync()
         {
             // TODO: implement download the blob and store it and upload to the destination.
-            return destinationBlobClient.StartCopyFromUriAsync(SourceDirectoryUri, CopyFromUriOptions, CancellationToken);
+            return Task.CompletedTask;
+            //return destinationBlobClient.StartCopyFromUriAsync(SourceDirectoryUri, CopyFromUriOptions, CancellationToken);
         }
     }
 }

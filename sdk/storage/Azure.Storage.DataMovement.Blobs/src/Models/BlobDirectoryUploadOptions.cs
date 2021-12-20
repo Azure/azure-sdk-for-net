@@ -6,7 +6,7 @@ using Azure.Storage.Blobs.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
-namespace Azure.Storage.DataMovement.Blobs
+namespace Azure.Storage.DataMovement.Blobs.Models
 {
     /// <summary>
     /// Optional parameters for uploading to a Blob Virtual Directory.

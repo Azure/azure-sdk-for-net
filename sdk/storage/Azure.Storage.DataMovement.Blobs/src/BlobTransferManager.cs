@@ -96,6 +96,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         /// <param name="sourceLocalPath"></param>
         /// <param name="destinationClient"></param>
+        /// <param name="overwrite"></param>
         /// <param name="options"></param>
         /// <param name="token"></param>
         /// <returns></returns>
@@ -103,6 +104,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public string ScheduleUploadDirectory(
             string sourceLocalPath,
             BlobVirtualDirectoryClient destinationClient,
+            bool overwrite = false,
             BlobDirectoryUploadOptions options = default,
             CancellationToken token = default)
         {
@@ -110,7 +112,7 @@ namespace Azure.Storage.DataMovement.Blobs
             // or we can go and check at the start of the job, to prevent
             // having to check the existence of the path twice.
             string jobId = Guid.NewGuid().ToString();
-            BlobUploadDirectoryTransferJob transferJob = new BlobUploadDirectoryTransferJob(jobId, sourceLocalPath, destinationClient, options, token);
+            BlobUploadDirectoryTransferJob transferJob = new BlobUploadDirectoryTransferJob(jobId, sourceLocalPath, overwrite, destinationClient, options, token);
             ToScanQueue.Enqueue(transferJob);
 
             // TODO; remove stub
@@ -143,6 +145,18 @@ namespace Azure.Storage.DataMovement.Blobs
 
             // TODO; remove stub
             return jobId;
+        }
+
+        /// <summary>
+        /// Returns storage job information if provided jobId
+        /// </summary>
+        /// <param name="jobId"></param>
+        /// <returns></returns>
+        public override StorageTransferJob GetJob(string jobId)
+        {
+            //TODO: change to transfer blob transfer job, or create Storage transfer job to be more generic informaiton
+            // this will be more clear in teh champion scenario
+            return new StorageTransferJob(string.IsNullOrEmpty(jobId) ? Guid.NewGuid().ToString() : jobId);
         }
     }
 }

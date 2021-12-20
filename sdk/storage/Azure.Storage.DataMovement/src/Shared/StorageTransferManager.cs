@@ -81,6 +81,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="options">Directory path where transfer state is kept.</param>
         public StorageTransferManager(StorageTransferManagerOptions options = default)
         {
+            _scheduler = new TransferItemScheduler();
             _toScanQueue = new AsyncQueue<StorageTransferJob>();
             _jobsToProcess = new AsyncQueue<StorageTransferJob>();
             _options = options;
@@ -101,8 +102,10 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="jobId"></param>
         /// <returns></returns>
-       public virtual StorageTransferJob GetJob(string jobId)
-       =>new StorageTransferJob(Guid.NewGuid().ToString());
+        public virtual StorageTransferJob GetJob(string jobId)
+        {
+            return new StorageTransferJob(string.IsNullOrEmpty(jobId) ? Guid.NewGuid().ToString() : jobId);
+        }
 
         /// <summary>
         /// Pauses transfers that are currently being processed.

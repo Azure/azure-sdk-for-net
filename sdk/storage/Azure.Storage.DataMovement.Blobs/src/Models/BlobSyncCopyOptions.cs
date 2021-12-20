@@ -4,7 +4,7 @@
 using System;
 using Azure.Storage.Blobs.Models;
 
-namespace Azure.Storage.DataMovement.Models
+namespace Azure.Storage.DataMovement.BLob.Models
 {
     /// <summary>
     /// Blob Sync Copy Options.

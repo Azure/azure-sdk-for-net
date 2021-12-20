@@ -14,7 +14,7 @@
       Microsoft Azure Storage quickstarts and tutorials - https://docs.microsoft.com/en-us/azure/storage/
       Microsoft Azure Storage REST API Reference - https://docs.microsoft.com/en-us/rest/api/storageservices/
     </Description>
-    <RootNamespace>Azure.Storage</RootNamespace>
+    <RootNamespace>Azure.Storage.DataMovement.Blobs</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Threading" VersionOverride="16.10.56" />
@@ -23,6 +23,15 @@
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.DataMovement\src\Azure.Storage.DataMovement.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="SharedCore" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\*.cs" LinkBase="Shared" />
@@ -66,5 +75,9 @@
     <Compile Include="$(AzureStorageSharedSources)LazyLoadingReadOnlyStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)WindowStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageWriteStream.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)TaskThrottler.cs" LinkBase="Shared" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SharedCore\" />
   </ItemGroup>
 </Project>

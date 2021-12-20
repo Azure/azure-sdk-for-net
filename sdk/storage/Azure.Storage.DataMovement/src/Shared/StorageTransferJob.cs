@@ -12,9 +12,8 @@ namespace Azure.Storage.DataMovement
     /// Stores the information of the Transfer Job.
     /// TODO: better description
     /// </summary>
-    public abstract class StorageTransferJob
+    public class StorageTransferJob
     {
-
         /// <summary>
         /// Job Id in form of a Guid
         /// </summary>

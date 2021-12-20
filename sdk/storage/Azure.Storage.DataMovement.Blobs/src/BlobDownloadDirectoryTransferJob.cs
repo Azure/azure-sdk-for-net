@@ -85,7 +85,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public override Task StartTransferTaskAsync()
         {
             // Do only blockblob upload for now for now
-            return _sourceBlobClient.DownloadAsync(DestinationLocalPath, options: Options.TransferOptions, cancellationToken: CancellationToken);
+            return _sourceBlobClient.DownloadAsync(DestinationLocalPath, options: Options, cancellationToken: CancellationToken);
         }
     }
 }

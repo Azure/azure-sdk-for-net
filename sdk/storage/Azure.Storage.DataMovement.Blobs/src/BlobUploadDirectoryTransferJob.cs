@@ -64,8 +64,8 @@ namespace Azure.Storage.DataMovement.Blobs
         public BlobUploadDirectoryTransferJob(
             string jobId,
             string sourceLocalPath,
-            BlobVirtualDirectoryClient destinationClient,
             bool overwrite,
+            BlobVirtualDirectoryClient destinationClient,
             BlobDirectoryUploadOptions uploadOptions,
             CancellationToken cancellationToken)
             : base(jobId)
