@@ -639,6 +639,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class GenericResource : Azure.ResourceManager.Core.ArmResource
     {
+        public static readonly Azure.ResourceManager.ResourceType ResourceType;
         protected GenericResource() { }
         public virtual Azure.ResourceManager.Resources.GenericResourceData Data { get { throw null; } }
         public bool HasData { get { throw null; } }
@@ -820,25 +821,6 @@ namespace Azure.ResourceManager.Resources
         public string ManagedBy { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ResourceGroupProperties Properties { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResourceGroupVersion : System.IEquatable<Azure.ResourceManager.Resources.ResourceGroupVersion>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public static Azure.ResourceManager.Resources.ResourceGroupVersion Default { get { throw null; } }
-        public static Azure.ResourceManager.Resources.ResourceGroupVersion V2019_10_01 { get { throw null; } }
-        public static Azure.ResourceManager.Resources.ResourceGroupVersion V2021_01_01 { get { throw null; } }
-        public static Azure.ResourceManager.Resources.ResourceGroupVersion V2021_04_01 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Resources.ResourceGroupVersion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Resources.ResourceGroupVersion left, Azure.ResourceManager.Resources.ResourceGroupVersion right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Resources.ResourceGroupVersion (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Resources.ResourceGroupVersion left, Azure.ResourceManager.Resources.ResourceGroupVersion right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class RestApiCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.Models.RestApi>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.RestApi>, System.Collections.IEnumerable
     {
         protected RestApiCollection() { }
@@ -902,6 +884,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class TagResource : Azure.ResourceManager.Core.ArmResource
     {
+        public static readonly Azure.ResourceManager.ResourceType ResourceType;
         protected TagResource() { }
         public virtual Azure.ResourceManager.Resources.TagResourceData Data { get { throw null; } }
         public bool HasData { get { throw null; } }
@@ -1062,6 +1045,40 @@ namespace Azure.ResourceManager.Resources.Models
         public string State { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FeatureVersion : System.IEquatable<Azure.ResourceManager.Resources.Models.FeatureVersion>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public static Azure.ResourceManager.Resources.Models.FeatureVersion Default { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.FeatureVersion V2015_12_01 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Resources.Models.FeatureVersion other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Resources.Models.FeatureVersion left, Azure.ResourceManager.Resources.Models.FeatureVersion right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.Models.FeatureVersion (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Resources.Models.FeatureVersion left, Azure.ResourceManager.Resources.Models.FeatureVersion right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct GenericResourceVersion : System.IEquatable<Azure.ResourceManager.Resources.Models.GenericResourceVersion>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public static Azure.ResourceManager.Resources.Models.GenericResourceVersion Default { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.GenericResourceVersion V2019_10_01 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Resources.Models.GenericResourceVersion other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Resources.Models.GenericResourceVersion left, Azure.ResourceManager.Resources.Models.GenericResourceVersion right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.Models.GenericResourceVersion (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Resources.Models.GenericResourceVersion left, Azure.ResourceManager.Resources.Models.GenericResourceVersion right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct Location : System.IEquatable<Azure.ResourceManager.Resources.Models.Location>
     {
         private readonly object _dummy;
@@ -1147,6 +1164,23 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal ManagedByTenant() { }
         public string TenantId { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ManagementGroupVersion : System.IEquatable<Azure.ResourceManager.Resources.Models.ManagementGroupVersion>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public static Azure.ResourceManager.Resources.Models.ManagementGroupVersion Default { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.ManagementGroupVersion V2021_04_01 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Resources.Models.ManagementGroupVersion other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Resources.Models.ManagementGroupVersion left, Azure.ResourceManager.Resources.Models.ManagementGroupVersion right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.Models.ManagementGroupVersion (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Resources.Models.ManagementGroupVersion left, Azure.ResourceManager.Resources.Models.ManagementGroupVersion right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class PairedRegion
     {
@@ -1237,6 +1271,23 @@ namespace Azure.ResourceManager.Resources.Models
         public System.Collections.Generic.IReadOnlyList<string> Locations { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Properties { get { throw null; } }
         public string ResourceType { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ProviderVersion : System.IEquatable<Azure.ResourceManager.Resources.Models.ProviderVersion>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public static Azure.ResourceManager.Resources.Models.ProviderVersion Default { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.ProviderVersion V2019_10_01 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Resources.Models.ProviderVersion other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Resources.Models.ProviderVersion left, Azure.ResourceManager.Resources.Models.ProviderVersion right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.Models.ProviderVersion (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Resources.Models.ProviderVersion left, Azure.ResourceManager.Resources.Models.ProviderVersion right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RegionCategory : System.IEquatable<Azure.ResourceManager.Resources.Models.RegionCategory>
@@ -1365,6 +1416,23 @@ namespace Azure.ResourceManager.Resources.Models
         public ResourceGroupProperties() { }
         public string ProvisioningState { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResourceGroupVersion : System.IEquatable<Azure.ResourceManager.Resources.Models.ResourceGroupVersion>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public static Azure.ResourceManager.Resources.Models.ResourceGroupVersion Default { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.ResourceGroupVersion V2019_10_01 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Resources.Models.ResourceGroupVersion other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Resources.Models.ResourceGroupVersion left, Azure.ResourceManager.Resources.Models.ResourceGroupVersion right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.Models.ResourceGroupVersion (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Resources.Models.ResourceGroupVersion left, Azure.ResourceManager.Resources.Models.ResourceGroupVersion right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ResourceIdentity : System.IEquatable<Azure.ResourceManager.Resources.Models.ResourceIdentity>
     {
         public ResourceIdentity() { }
@@ -1477,6 +1545,23 @@ namespace Azure.ResourceManager.Resources.Models
         Disabled = 3,
         Deleted = 4,
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SubscriptionVersion : System.IEquatable<Azure.ResourceManager.Resources.Models.SubscriptionVersion>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public static Azure.ResourceManager.Resources.Models.SubscriptionVersion Default { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.SubscriptionVersion V2019_11_01 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Resources.Models.SubscriptionVersion other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Resources.Models.SubscriptionVersion left, Azure.ResourceManager.Resources.Models.SubscriptionVersion right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.Models.SubscriptionVersion (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Resources.Models.SubscriptionVersion left, Azure.ResourceManager.Resources.Models.SubscriptionVersion right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public sealed partial class SystemAssignedIdentity : System.IEquatable<Azure.ResourceManager.Resources.Models.SystemAssignedIdentity>
     {
         public SystemAssignedIdentity() { }
@@ -1545,11 +1630,45 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.TagPatchResourceOperation left, Azure.ResourceManager.Resources.Models.TagPatchResourceOperation right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TagResourceVersion : System.IEquatable<Azure.ResourceManager.Resources.Models.TagResourceVersion>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public static Azure.ResourceManager.Resources.Models.TagResourceVersion Default { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.TagResourceVersion V2019_10_01 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Resources.Models.TagResourceVersion other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Resources.Models.TagResourceVersion left, Azure.ResourceManager.Resources.Models.TagResourceVersion right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.Models.TagResourceVersion (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Resources.Models.TagResourceVersion left, Azure.ResourceManager.Resources.Models.TagResourceVersion right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public enum TenantCategory
     {
         Home = 0,
         ProjectedBy = 1,
         ManagedBy = 2,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TenantVersion : System.IEquatable<Azure.ResourceManager.Resources.Models.TenantVersion>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public static Azure.ResourceManager.Resources.Models.TenantVersion Default { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.TenantVersion V2019_11_01 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Resources.Models.TenantVersion other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Resources.Models.TenantVersion left, Azure.ResourceManager.Resources.Models.TenantVersion right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.Models.TenantVersion (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Resources.Models.TenantVersion left, Azure.ResourceManager.Resources.Models.TenantVersion right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public sealed partial class UserAssignedIdentity : System.IEquatable<Azure.ResourceManager.Resources.Models.UserAssignedIdentity>
     {
