@@ -14,12 +14,14 @@ namespace Azure.ResourceManager.Resources
         private readonly string _value;
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
-        /// <summary> Version 2021-05-01. </summary>
+        /// <summary> Version 2021-04-01. </summary>
         public static ResourceGroupVersion V2021_04_01 { get; } = new ResourceGroupVersion("2021-04-01");
-        /// <summary> Version 2021-05-01. </summary>
+        /// <summary> Version 2021-01-01. </summary>
         public static ResourceGroupVersion V2021_01_01 { get; }  = new ResourceGroupVersion("2021-01-01");
+        /// <summary> Version 2019-10-01. </summary>
+        public static ResourceGroupVersion V2019_10_01 { get; } = new ResourceGroupVersion("2019-10-01");
         /// <summary> Default version. </summary>
-        public static ResourceGroupVersion Default { get; }  = V2021_04_01;
+        public static ResourceGroupVersion Default { get; }  = V2019_10_01;
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
         /// <summary>
