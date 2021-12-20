@@ -1,35 +1,32 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://smstestapp.communication.azure.com/phoneNumbers/Sanitized/capabilities?api-version=2021-03-07",
+      "RequestUri": "https://smstestapp.communication.azure.com/phoneNumbers/Sanitized/capabilities?api-version=2022-01-11-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "2",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-30ca79e82a3d7740956ed47ae178fed0-c0d8299516093f44-00",
-        "User-Agent": [
-          "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20210622.1",
-          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "f7310ea1d3d58740c842d3b96c5809a7",
+        "traceparent": "00-9bb2c0530a327c4c829ea702b69ce10f-3e79c8dd203c6e4b-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.0.2-alpha.20211217.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "a80469628f5044e1c3be91ca58c43496",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 22 Jun 2021 22:04:05 GMT",
+        "x-ms-date": "Mon, 20 Dec 2021 21:00:04 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {},
       "StatusCode": 400,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-03-07",
+        "api-supported-versions": "2021-03-07, 2022-01-11-preview",
         "Content-Type": "application/json",
-        "Date": "Tue, 22 Jun 2021 22:04:04 GMT",
-        "MS-CV": "AzYIX32BAUmURpe0EewnZQ.0",
+        "Date": "Mon, 20 Dec 2021 21:00:04 GMT",
+        "MS-CV": "M7Eia3upPU6UVC0QwkSmhg.0",
         "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0VV7SYAAAAADzHyuWC9YbQIv6u4T5p6y8WVZSMzBFREdFMDMxOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "01O7AYQAAAACUBEqbrxEDT41v6R/Erl35TEFYMzExMDAwMTA4MDE3ADlmYzdiNTE5LWE4Y2MtNGY4OS05MzVlLWM5MTQ4YWUwOWU4MQ==",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "60ms"
+        "X-Processing-Time": "18ms"
       },
       "ResponseBody": {
         "error": {
@@ -42,6 +39,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "1051100956"
+    "RandomSeed": "843361761"
   }
 }

@@ -32,7 +32,7 @@ namespace Azure.Communication.PhoneNumbers
             Version = version switch
             {
                 ServiceVersion.V2021_03_07 => "2021-03-07",
-                ServiceVersion.V2022_01_11_PREVIEW_2 => "2022-01-11-preview2",
+                ServiceVersion.V2022_01_11_PREVIEW_2 => "2022-01-11-preview",
                 _ => throw new NotSupportedException()
             };
         }
