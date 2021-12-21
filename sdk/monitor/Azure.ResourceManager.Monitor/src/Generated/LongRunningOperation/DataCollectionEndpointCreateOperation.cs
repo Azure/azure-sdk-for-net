@@ -16,25 +16,25 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Creates or updates a data collection endpoint. </summary>
-    public partial class DataCollectionEndpointCreateOperation : Operation<DataCollectionEndpointResource>
+    public partial class DataCollectionEndpointCreateOperation : Operation<DataCollectionEndpoint>
     {
-        private readonly OperationOrResponseInternals<DataCollectionEndpointResource> _operation;
+        private readonly OperationOrResponseInternals<DataCollectionEndpoint> _operation;
 
         /// <summary> Initializes a new instance of DataCollectionEndpointCreateOperation for mocking. </summary>
         protected DataCollectionEndpointCreateOperation()
         {
         }
 
-        internal DataCollectionEndpointCreateOperation(ArmResource operationsBase, Response<DataCollectionEndpointResourceData> response)
+        internal DataCollectionEndpointCreateOperation(ArmResource operationsBase, Response<DataCollectionEndpointData> response)
         {
-            _operation = new OperationOrResponseInternals<DataCollectionEndpointResource>(Azure.Response.FromValue(new DataCollectionEndpointResource(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<DataCollectionEndpoint>(Azure.Response.FromValue(new DataCollectionEndpoint(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override DataCollectionEndpointResource Value => _operation.Value;
+        public override DataCollectionEndpoint Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public override ValueTask<Azure.Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<DataCollectionEndpointResource>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<DataCollectionEndpoint>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<DataCollectionEndpointResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<DataCollectionEndpoint>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static LogProfileCollection DeserializeLogProfileCollection(JsonElement element)
         {
-            IReadOnlyList<LogProfileResourceData> value = default;
+            IReadOnlyList<LogProfileData> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<LogProfileResourceData> array = new List<LogProfileResourceData>();
+                    List<LogProfileData> array = new List<LogProfileData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogProfileResourceData.DeserializeLogProfileResourceData(item));
+                        array.Add(LogProfileData.DeserializeLogProfileData(item));
                     }
                     value = array;
                     continue;

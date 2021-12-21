@@ -13,7 +13,7 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class VMInsightsOnboardingStatusData : IUtf8JsonSerializable
+    public partial class VmInsightsOnboardingStatusData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteEndObject();
         }
 
-        internal static VMInsightsOnboardingStatusData DeserializeVMInsightsOnboardingStatusData(JsonElement element)
+        internal static VmInsightsOnboardingStatusData DeserializeVmInsightsOnboardingStatusData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new VMInsightsOnboardingStatusData(id, name, type, resourceId.Value, Optional.ToNullable(onboardingStatus), Optional.ToNullable(dataStatus), Optional.ToList(data));
+            return new VmInsightsOnboardingStatusData(id, name, type, resourceId.Value, Optional.ToNullable(onboardingStatus), Optional.ToNullable(dataStatus), Optional.ToList(data));
         }
     }
 }

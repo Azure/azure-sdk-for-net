@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of DataCollectionRuleAssociationProxyOnlyResourceListResult. </summary>
         /// <param name="value"> A list of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal DataCollectionRuleAssociationProxyOnlyResourceListResult(IEnumerable<DataCollectionRuleAssociationProxyOnlyResourceData> value)
+        internal DataCollectionRuleAssociationProxyOnlyResourceListResult(IEnumerable<DataCollectionRuleAssociationData> value)
         {
             if (value == null)
             {
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of DataCollectionRuleAssociationProxyOnlyResourceListResult. </summary>
         /// <param name="value"> A list of resources. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal DataCollectionRuleAssociationProxyOnlyResourceListResult(IReadOnlyList<DataCollectionRuleAssociationProxyOnlyResourceData> value, string nextLink)
+        internal DataCollectionRuleAssociationProxyOnlyResourceListResult(IReadOnlyList<DataCollectionRuleAssociationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of resources. </summary>
-        public IReadOnlyList<DataCollectionRuleAssociationProxyOnlyResourceData> Value { get; }
+        public IReadOnlyList<DataCollectionRuleAssociationData> Value { get; }
         /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
     }

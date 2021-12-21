@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of AutoscaleSettingResourceCollection. </summary>
         /// <param name="value"> the values for the autoscale setting resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AutoscaleSettingResourceCollection(IEnumerable<AutoscaleSettingResourceData> value)
+        internal AutoscaleSettingResourceCollection(IEnumerable<AutoscaleSettingData> value)
         {
             if (value == null)
             {
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of AutoscaleSettingResourceCollection. </summary>
         /// <param name="value"> the values for the autoscale setting resources. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
-        internal AutoscaleSettingResourceCollection(IReadOnlyList<AutoscaleSettingResourceData> value, string nextLink)
+        internal AutoscaleSettingResourceCollection(IReadOnlyList<AutoscaleSettingData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> the values for the autoscale setting resources. </summary>
-        public IReadOnlyList<AutoscaleSettingResourceData> Value { get; }
+        public IReadOnlyList<AutoscaleSettingData> Value { get; }
         /// <summary> URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string ruleName, AlertRuleResourceData parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string ruleName, AlertRuleData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="parameters"> The parameters of the rule to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ruleName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<AlertRuleResourceData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string ruleName, AlertRuleResourceData parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<AlertRuleData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string ruleName, AlertRuleData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                 case 201:
                     {
-                        AlertRuleResourceData value = default;
+                        AlertRuleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AlertRuleResourceData.DeserializeAlertRuleResourceData(document.RootElement);
+                        value = AlertRuleData.DeserializeAlertRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="parameters"> The parameters of the rule to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ruleName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<AlertRuleResourceData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string ruleName, AlertRuleResourceData parameters, CancellationToken cancellationToken = default)
+        public Response<AlertRuleData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string ruleName, AlertRuleData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -137,9 +137,9 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                 case 201:
                     {
-                        AlertRuleResourceData value = default;
+                        AlertRuleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AlertRuleResourceData.DeserializeAlertRuleResourceData(document.RootElement);
+                        value = AlertRuleData.DeserializeAlertRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="ruleName"/> is null. </exception>
-        public async Task<Response<AlertRuleResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string ruleName, CancellationToken cancellationToken = default)
+        public async Task<Response<AlertRuleData>> GetAsync(string subscriptionId, string resourceGroupName, string ruleName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -280,13 +280,13 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        AlertRuleResourceData value = default;
+                        AlertRuleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AlertRuleResourceData.DeserializeAlertRuleResourceData(document.RootElement);
+                        value = AlertRuleData.DeserializeAlertRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AlertRuleResourceData)null, message.Response);
+                    return Response.FromValue((AlertRuleData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="ruleName"/> is null. </exception>
-        public Response<AlertRuleResourceData> Get(string subscriptionId, string resourceGroupName, string ruleName, CancellationToken cancellationToken = default)
+        public Response<AlertRuleData> Get(string subscriptionId, string resourceGroupName, string ruleName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -319,13 +319,13 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        AlertRuleResourceData value = default;
+                        AlertRuleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AlertRuleResourceData.DeserializeAlertRuleResourceData(document.RootElement);
+                        value = AlertRuleData.DeserializeAlertRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AlertRuleResourceData)null, message.Response);
+                    return Response.FromValue((AlertRuleData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="alertRulesResource"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ruleName"/>, or <paramref name="alertRulesResource"/> is null. </exception>
-        public async Task<Response<AlertRuleResourceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string ruleName, AlertRuleResourcePatch alertRulesResource, CancellationToken cancellationToken = default)
+        public async Task<Response<AlertRuleData>> UpdateAsync(string subscriptionId, string resourceGroupName, string ruleName, AlertRuleResourcePatch alertRulesResource, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -388,9 +388,9 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                 case 201:
                     {
-                        AlertRuleResourceData value = default;
+                        AlertRuleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AlertRuleResourceData.DeserializeAlertRuleResourceData(document.RootElement);
+                        value = AlertRuleData.DeserializeAlertRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="alertRulesResource"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ruleName"/>, or <paramref name="alertRulesResource"/> is null. </exception>
-        public Response<AlertRuleResourceData> Update(string subscriptionId, string resourceGroupName, string ruleName, AlertRuleResourcePatch alertRulesResource, CancellationToken cancellationToken = default)
+        public Response<AlertRuleData> Update(string subscriptionId, string resourceGroupName, string ruleName, AlertRuleResourcePatch alertRulesResource, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -431,9 +431,9 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                 case 201:
                     {
-                        AlertRuleResourceData value = default;
+                        AlertRuleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AlertRuleResourceData.DeserializeAlertRuleResourceData(document.RootElement);
+                        value = AlertRuleData.DeserializeAlertRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<Models.AlertRuleResourceCollection>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<AlertRuleResourceCollection>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -482,9 +482,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        Models.AlertRuleResourceCollection value = default;
+                        AlertRuleResourceCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.AlertRuleResourceCollection.DeserializeAlertRuleResourceCollection(document.RootElement);
+                        value = AlertRuleResourceCollection.DeserializeAlertRuleResourceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<Models.AlertRuleResourceCollection> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<AlertRuleResourceCollection> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -514,9 +514,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        Models.AlertRuleResourceCollection value = default;
+                        AlertRuleResourceCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.AlertRuleResourceCollection.DeserializeAlertRuleResourceCollection(document.RootElement);
+                        value = AlertRuleResourceCollection.DeserializeAlertRuleResourceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public async Task<Response<Models.AlertRuleResourceCollection>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<AlertRuleResourceCollection>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -558,9 +558,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        Models.AlertRuleResourceCollection value = default;
+                        AlertRuleResourceCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.AlertRuleResourceCollection.DeserializeAlertRuleResourceCollection(document.RootElement);
+                        value = AlertRuleResourceCollection.DeserializeAlertRuleResourceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public Response<Models.AlertRuleResourceCollection> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<AlertRuleResourceCollection> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -585,9 +585,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        Models.AlertRuleResourceCollection value = default;
+                        AlertRuleResourceCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.AlertRuleResourceCollection.DeserializeAlertRuleResourceCollection(document.RootElement);
+                        value = AlertRuleResourceCollection.DeserializeAlertRuleResourceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

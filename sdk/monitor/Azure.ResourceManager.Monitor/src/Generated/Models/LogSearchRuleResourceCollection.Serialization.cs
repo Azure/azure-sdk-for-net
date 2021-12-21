@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static LogSearchRuleResourceCollection DeserializeLogSearchRuleResourceCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<LogSearchRuleResourceData>> value = default;
+            Optional<IReadOnlyList<LogSearchRuleData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LogSearchRuleResourceData> array = new List<LogSearchRuleResourceData>();
+                    List<LogSearchRuleData> array = new List<LogSearchRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogSearchRuleResourceData.DeserializeLogSearchRuleResourceData(item));
+                        array.Add(LogSearchRuleData.DeserializeLogSearchRuleData(item));
                     }
                     value = array;
                     continue;

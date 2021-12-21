@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static AlertRuleResourceCollection DeserializeAlertRuleResourceCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<AlertRuleResourceData>> value = default;
+            Optional<IReadOnlyList<AlertRuleData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AlertRuleResourceData> array = new List<AlertRuleResourceData>();
+                    List<AlertRuleData> array = new List<AlertRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AlertRuleResourceData.DeserializeAlertRuleResourceData(item));
+                        array.Add(AlertRuleData.DeserializeAlertRuleData(item));
                     }
                     value = array;
                     continue;

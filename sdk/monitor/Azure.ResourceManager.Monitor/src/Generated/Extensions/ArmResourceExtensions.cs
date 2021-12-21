@@ -13,43 +13,43 @@ namespace Azure.ResourceManager.Monitor
     /// <summary> A class to add extension methods to ArmResource. </summary>
     public static partial class ArmResourceExtensions
     {
-        #region DiagnosticSettingsResource
-        /// <summary> Gets an object representing a DiagnosticSettingsResourceCollection along with the instance operations that can be performed on it. </summary>
+        #region DiagnosticSettings
+        /// <summary> Gets an object representing a DiagnosticSettingsCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DiagnosticSettingsResourceCollection" /> object. </returns>
-        public static DiagnosticSettingsResourceCollection GetDiagnosticSettingsResources(this ArmResource armResource)
+        /// <returns> Returns a <see cref="DiagnosticSettingsCollection" /> object. </returns>
+        public static DiagnosticSettingsCollection GetDiagnosticSettings(this ArmResource armResource)
         {
-            return new DiagnosticSettingsResourceCollection(armResource);
+            return new DiagnosticSettingsCollection(armResource);
         }
         #endregion
 
-        #region DiagnosticSettingsCategoryResource
-        /// <summary> Gets an object representing a DiagnosticSettingsCategoryResourceCollection along with the instance operations that can be performed on it. </summary>
+        #region DiagnosticSettingsCategory
+        /// <summary> Gets an object representing a DiagnosticSettingsCategoryCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DiagnosticSettingsCategoryResourceCollection" /> object. </returns>
-        public static DiagnosticSettingsCategoryResourceCollection GetDiagnosticSettingsCategoryResources(this ArmResource armResource)
+        /// <returns> Returns a <see cref="DiagnosticSettingsCategoryCollection" /> object. </returns>
+        public static DiagnosticSettingsCategoryCollection GetDiagnosticSettingsCategories(this ArmResource armResource)
         {
-            return new DiagnosticSettingsCategoryResourceCollection(armResource);
+            return new DiagnosticSettingsCategoryCollection(armResource);
         }
         #endregion
 
-        #region VMInsightsOnboardingStatus
-        /// <summary> Gets an object representing a VMInsightsOnboardingStatus along with the instance operations that can be performed on it. </summary>
+        #region VmInsightsOnboardingStatus
+        /// <summary> Gets an object representing a VmInsightsOnboardingStatus along with the instance operations that can be performed on it. </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VMInsightsOnboardingStatus" /> object. </returns>
-        public static VMInsightsOnboardingStatus GetVMInsightsOnboardingStatus(this ArmResource armResource)
+        /// <returns> Returns a <see cref="VmInsightsOnboardingStatus" /> object. </returns>
+        public static VmInsightsOnboardingStatus GetVmInsightsOnboardingStatus(this ArmResource armResource)
         {
-            return new VMInsightsOnboardingStatus(armResource, new ResourceIdentifier(armResource.Id + "/providers/Microsoft.Insights/vmInsightsOnboardingStatuses/default"));
+            return new VmInsightsOnboardingStatus(armResource, new ResourceIdentifier(armResource.Id + "/providers/Microsoft.Insights/vmInsightsOnboardingStatuses/default"));
         }
         #endregion
 
-        #region DataCollectionRuleAssociationProxyOnlyResource
-        /// <summary> Gets an object representing a DataCollectionRuleAssociationProxyOnlyResourceCollection along with the instance operations that can be performed on it. </summary>
+        #region DataCollectionRuleAssociation
+        /// <summary> Gets an object representing a DataCollectionRuleAssociationCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DataCollectionRuleAssociationProxyOnlyResourceCollection" /> object. </returns>
-        public static DataCollectionRuleAssociationProxyOnlyResourceCollection GetDataCollectionRuleAssociationProxyOnlyResources(this ArmResource armResource)
+        /// <returns> Returns a <see cref="DataCollectionRuleAssociationCollection" /> object. </returns>
+        public static DataCollectionRuleAssociationCollection GetDataCollectionRuleAssociations(this ArmResource armResource)
         {
-            return new DataCollectionRuleAssociationProxyOnlyResourceCollection(armResource);
+            return new DataCollectionRuleAssociationCollection(armResource);
         }
         #endregion
     }

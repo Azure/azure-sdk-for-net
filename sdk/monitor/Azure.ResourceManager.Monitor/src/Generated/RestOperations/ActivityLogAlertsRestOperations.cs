@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string activityLogAlertName, ActivityLogAlertResourceData activityLogAlert)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string activityLogAlertName, ActivityLogAlertData activityLogAlert)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="activityLogAlert"> The activity log alert to create or use for the update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="activityLogAlertName"/>, or <paramref name="activityLogAlert"/> is null. </exception>
-        public async Task<Response<ActivityLogAlertResourceData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string activityLogAlertName, ActivityLogAlertResourceData activityLogAlert, CancellationToken cancellationToken = default)
+        public async Task<Response<ActivityLogAlertData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string activityLogAlertName, ActivityLogAlertData activityLogAlert, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                 case 201:
                     {
-                        ActivityLogAlertResourceData value = default;
+                        ActivityLogAlertData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ActivityLogAlertResourceData.DeserializeActivityLogAlertResourceData(document.RootElement);
+                        value = ActivityLogAlertData.DeserializeActivityLogAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="activityLogAlert"> The activity log alert to create or use for the update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="activityLogAlertName"/>, or <paramref name="activityLogAlert"/> is null. </exception>
-        public Response<ActivityLogAlertResourceData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string activityLogAlertName, ActivityLogAlertResourceData activityLogAlert, CancellationToken cancellationToken = default)
+        public Response<ActivityLogAlertData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string activityLogAlertName, ActivityLogAlertData activityLogAlert, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -137,9 +137,9 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                 case 201:
                     {
-                        ActivityLogAlertResourceData value = default;
+                        ActivityLogAlertData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ActivityLogAlertResourceData.DeserializeActivityLogAlertResourceData(document.RootElement);
+                        value = ActivityLogAlertData.DeserializeActivityLogAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="activityLogAlertName"> The name of the activity log alert. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="activityLogAlertName"/> is null. </exception>
-        public async Task<Response<ActivityLogAlertResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string activityLogAlertName, CancellationToken cancellationToken = default)
+        public async Task<Response<ActivityLogAlertData>> GetAsync(string subscriptionId, string resourceGroupName, string activityLogAlertName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -194,13 +194,13 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        ActivityLogAlertResourceData value = default;
+                        ActivityLogAlertData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ActivityLogAlertResourceData.DeserializeActivityLogAlertResourceData(document.RootElement);
+                        value = ActivityLogAlertData.DeserializeActivityLogAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ActivityLogAlertResourceData)null, message.Response);
+                    return Response.FromValue((ActivityLogAlertData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="activityLogAlertName"> The name of the activity log alert. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="activityLogAlertName"/> is null. </exception>
-        public Response<ActivityLogAlertResourceData> Get(string subscriptionId, string resourceGroupName, string activityLogAlertName, CancellationToken cancellationToken = default)
+        public Response<ActivityLogAlertData> Get(string subscriptionId, string resourceGroupName, string activityLogAlertName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -233,13 +233,13 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        ActivityLogAlertResourceData value = default;
+                        ActivityLogAlertData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ActivityLogAlertResourceData.DeserializeActivityLogAlertResourceData(document.RootElement);
+                        value = ActivityLogAlertData.DeserializeActivityLogAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ActivityLogAlertResourceData)null, message.Response);
+                    return Response.FromValue((ActivityLogAlertData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="activityLogAlertPatch"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="activityLogAlertName"/>, or <paramref name="activityLogAlertPatch"/> is null. </exception>
-        public async Task<Response<ActivityLogAlertResourceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string activityLogAlertName, ActivityLogAlertPatchBody activityLogAlertPatch, CancellationToken cancellationToken = default)
+        public async Task<Response<ActivityLogAlertData>> UpdateAsync(string subscriptionId, string resourceGroupName, string activityLogAlertName, ActivityLogAlertPatchBody activityLogAlertPatch, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -387,9 +387,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        ActivityLogAlertResourceData value = default;
+                        ActivityLogAlertData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ActivityLogAlertResourceData.DeserializeActivityLogAlertResourceData(document.RootElement);
+                        value = ActivityLogAlertData.DeserializeActivityLogAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="activityLogAlertPatch"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="activityLogAlertName"/>, or <paramref name="activityLogAlertPatch"/> is null. </exception>
-        public Response<ActivityLogAlertResourceData> Update(string subscriptionId, string resourceGroupName, string activityLogAlertName, ActivityLogAlertPatchBody activityLogAlertPatch, CancellationToken cancellationToken = default)
+        public Response<ActivityLogAlertData> Update(string subscriptionId, string resourceGroupName, string activityLogAlertName, ActivityLogAlertPatchBody activityLogAlertPatch, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -429,9 +429,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        ActivityLogAlertResourceData value = default;
+                        ActivityLogAlertData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ActivityLogAlertResourceData.DeserializeActivityLogAlertResourceData(document.RootElement);
+                        value = ActivityLogAlertData.DeserializeActivityLogAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

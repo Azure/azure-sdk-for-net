@@ -16,25 +16,25 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Create a new activity log alert or update an existing one. </summary>
-    public partial class ActivityLogAlertCreateOrUpdateOperation : Operation<ActivityLogAlertResource>
+    public partial class ActivityLogAlertCreateOrUpdateOperation : Operation<ActivityLogAlert>
     {
-        private readonly OperationOrResponseInternals<ActivityLogAlertResource> _operation;
+        private readonly OperationOrResponseInternals<ActivityLogAlert> _operation;
 
         /// <summary> Initializes a new instance of ActivityLogAlertCreateOrUpdateOperation for mocking. </summary>
         protected ActivityLogAlertCreateOrUpdateOperation()
         {
         }
 
-        internal ActivityLogAlertCreateOrUpdateOperation(ArmResource operationsBase, Response<ActivityLogAlertResourceData> response)
+        internal ActivityLogAlertCreateOrUpdateOperation(ArmResource operationsBase, Response<ActivityLogAlertData> response)
         {
-            _operation = new OperationOrResponseInternals<ActivityLogAlertResource>(Azure.Response.FromValue(new ActivityLogAlertResource(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<ActivityLogAlert>(Azure.Response.FromValue(new ActivityLogAlert(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override ActivityLogAlertResource Value => _operation.Value;
+        public override ActivityLogAlert Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public override ValueTask<Azure.Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<ActivityLogAlertResource>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<ActivityLogAlert>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<ActivityLogAlertResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<ActivityLogAlert>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

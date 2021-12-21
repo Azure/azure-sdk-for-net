@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static ActionGroupList DeserializeActionGroupList(JsonElement element)
         {
-            Optional<IReadOnlyList<ActionGroupResourceData>> value = default;
+            Optional<IReadOnlyList<ActionGroupData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ActionGroupResourceData> array = new List<ActionGroupResourceData>();
+                    List<ActionGroupData> array = new List<ActionGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActionGroupResourceData.DeserializeActionGroupResourceData(item));
+                        array.Add(ActionGroupData.DeserializeActionGroupData(item));
                     }
                     value = array;
                     continue;

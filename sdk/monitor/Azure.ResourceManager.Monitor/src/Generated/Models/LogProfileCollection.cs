@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of LogProfileCollection. </summary>
         /// <param name="value"> the values of the log profiles. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal LogProfileCollection(IEnumerable<LogProfileResourceData> value)
+        internal LogProfileCollection(IEnumerable<LogProfileData> value)
         {
             if (value == null)
             {
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of LogProfileCollection. </summary>
         /// <param name="value"> the values of the log profiles. </param>
-        internal LogProfileCollection(IReadOnlyList<LogProfileResourceData> value)
+        internal LogProfileCollection(IReadOnlyList<LogProfileData> value)
         {
             Value = value;
         }
 
         /// <summary> the values of the log profiles. </summary>
-        public IReadOnlyList<LogProfileResourceData> Value { get; }
+        public IReadOnlyList<LogProfileData> Value { get; }
     }
 }

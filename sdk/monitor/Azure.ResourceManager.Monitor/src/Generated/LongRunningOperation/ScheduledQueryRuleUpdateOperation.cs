@@ -16,25 +16,25 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Update log search Rule. </summary>
-    public partial class ScheduledQueryRuleUpdateOperation : Operation<LogSearchRuleResource>
+    public partial class ScheduledQueryRuleUpdateOperation : Operation<LogSearchRule>
     {
-        private readonly OperationOrResponseInternals<LogSearchRuleResource> _operation;
+        private readonly OperationOrResponseInternals<LogSearchRule> _operation;
 
         /// <summary> Initializes a new instance of ScheduledQueryRuleUpdateOperation for mocking. </summary>
         protected ScheduledQueryRuleUpdateOperation()
         {
         }
 
-        internal ScheduledQueryRuleUpdateOperation(ArmResource operationsBase, Response<LogSearchRuleResourceData> response)
+        internal ScheduledQueryRuleUpdateOperation(ArmResource operationsBase, Response<LogSearchRuleData> response)
         {
-            _operation = new OperationOrResponseInternals<LogSearchRuleResource>(Azure.Response.FromValue(new LogSearchRuleResource(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<LogSearchRule>(Azure.Response.FromValue(new LogSearchRule(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override LogSearchRuleResource Value => _operation.Value;
+        public override LogSearchRule Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public override ValueTask<Azure.Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<LogSearchRuleResource>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<LogSearchRule>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<LogSearchRuleResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<LogSearchRule>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

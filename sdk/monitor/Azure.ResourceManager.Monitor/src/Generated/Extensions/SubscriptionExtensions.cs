@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Monitor
     /// <summary> A class to add extension methods to Subscription. </summary>
     public static partial class SubscriptionExtensions
     {
-        #region LogProfileResource
-        /// <summary> Gets an object representing a LogProfileResourceCollection along with the instance operations that can be performed on it. </summary>
+        #region LogProfile
+        /// <summary> Gets an object representing a LogProfileCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="LogProfileResourceCollection" /> object. </returns>
-        public static LogProfileResourceCollection GetLogProfileResources(this Subscription subscription)
+        /// <returns> Returns a <see cref="LogProfileCollection" /> object. </returns>
+        public static LogProfileCollection GetLogProfiles(this Subscription subscription)
         {
-            return new LogProfileResourceCollection(subscription);
+            return new LogProfileCollection(subscription);
         }
         #endregion
 
@@ -85,24 +85,24 @@ namespace Azure.ResourceManager.Monitor
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/autoscalesettings
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: AutoscaleSettings_ListBySubscription
-        /// <summary> Lists the AutoscaleSettingResources for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the AutoscaleSettings for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AutoscaleSettingResource> GetAutoscaleSettingsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<AutoscaleSetting> GetAutoscaleSettingsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetAutoscaleSettingsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                async Task<Page<AutoscaleSettingResource>> FirstPageFunc(int? pageSizeHint)
+                async Task<Page<AutoscaleSetting>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAutoscaleSettings");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListBySubscriptionAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new AutoscaleSettingResource(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new AutoscaleSetting(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.Monitor
                         throw;
                     }
                 }
-                async Task<Page<AutoscaleSettingResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+                async Task<Page<AutoscaleSetting>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAutoscaleSettings");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListBySubscriptionNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new AutoscaleSettingResource(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new AutoscaleSetting(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -133,24 +133,24 @@ namespace Azure.ResourceManager.Monitor
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/autoscalesettings
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: AutoscaleSettings_ListBySubscription
-        /// <summary> Lists the AutoscaleSettingResources for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the AutoscaleSettings for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AutoscaleSettingResource> GetAutoscaleSettings(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<AutoscaleSetting> GetAutoscaleSettings(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetAutoscaleSettingsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                Page<AutoscaleSettingResource> FirstPageFunc(int? pageSizeHint)
+                Page<AutoscaleSetting> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAutoscaleSettings");
                     scope.Start();
                     try
                     {
                         var response = restOperations.ListBySubscription(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new AutoscaleSettingResource(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new AutoscaleSetting(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.Monitor
                         throw;
                     }
                 }
-                Page<AutoscaleSettingResource> NextPageFunc(string nextLink, int? pageSizeHint)
+                Page<AutoscaleSetting> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAutoscaleSettings");
                     scope.Start();
                     try
                     {
                         var response = restOperations.ListBySubscriptionNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new AutoscaleSettingResource(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new AutoscaleSetting(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -178,30 +178,30 @@ namespace Azure.ResourceManager.Monitor
             );
         }
 
-        /// <summary> Filters the list of AutoscaleSettingResources for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of AutoscaleSettings for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetAutoscaleSettingResourceByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetAutoscaleSettingByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(AutoscaleSettingResource.ResourceType);
+            ResourceFilterCollection filters = new(AutoscaleSetting.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContextAsync(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Filters the list of AutoscaleSettingResources for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of AutoscaleSettings for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetAutoscaleSettingResourceByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetAutoscaleSettingByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(AutoscaleSettingResource.ResourceType);
+            ResourceFilterCollection filters = new(AutoscaleSetting.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
@@ -209,24 +209,24 @@ namespace Azure.ResourceManager.Monitor
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/alertrules
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: AlertRules_ListBySubscription
-        /// <summary> Lists the AlertRuleResources for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the AlertRules for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AlertRuleResource> GetAlertRulesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<AlertRule> GetAlertRulesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetAlertRulesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                async Task<Page<AlertRuleResource>> FirstPageFunc(int? pageSizeHint)
+                async Task<Page<AlertRule>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAlertRules");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListBySubscriptionAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new AlertRuleResource(subscription, value)), null, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new AlertRule(subscription, value)), null, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -242,24 +242,24 @@ namespace Azure.ResourceManager.Monitor
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/alertrules
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: AlertRules_ListBySubscription
-        /// <summary> Lists the AlertRuleResources for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the AlertRules for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AlertRuleResource> GetAlertRules(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<AlertRule> GetAlertRules(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetAlertRulesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                Page<AlertRuleResource> FirstPageFunc(int? pageSizeHint)
+                Page<AlertRule> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAlertRules");
                     scope.Start();
                     try
                     {
                         var response = restOperations.ListBySubscription(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new AlertRuleResource(subscription, value)), null, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new AlertRule(subscription, value)), null, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -272,30 +272,30 @@ namespace Azure.ResourceManager.Monitor
             );
         }
 
-        /// <summary> Filters the list of AlertRuleResources for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of AlertRules for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetAlertRuleResourceByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetAlertRuleByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(AlertRuleResource.ResourceType);
+            ResourceFilterCollection filters = new(AlertRule.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContextAsync(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Filters the list of AlertRuleResources for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of AlertRules for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetAlertRuleResourceByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetAlertRuleByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(AlertRuleResource.ResourceType);
+            ResourceFilterCollection filters = new(AlertRule.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
@@ -451,24 +451,24 @@ namespace Azure.ResourceManager.Monitor
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/actionGroups
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: ActionGroups_ListBySubscriptionId
-        /// <summary> Lists the ActionGroupResources for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the ActionGroups for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ActionGroupResource> GetActionGroupsBySubscriptionIdAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ActionGroup> GetActionGroupsBySubscriptionIdAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetActionGroupsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                async Task<Page<ActionGroupResource>> FirstPageFunc(int? pageSizeHint)
+                async Task<Page<ActionGroup>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetActionGroupsBySubscriptionId");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListBySubscriptionIdAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ActionGroupResource(subscription, value)), null, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new ActionGroup(subscription, value)), null, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -484,24 +484,24 @@ namespace Azure.ResourceManager.Monitor
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/actionGroups
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: ActionGroups_ListBySubscriptionId
-        /// <summary> Lists the ActionGroupResources for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the ActionGroups for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ActionGroupResource> GetActionGroupsBySubscriptionId(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<ActionGroup> GetActionGroupsBySubscriptionId(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetActionGroupsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                Page<ActionGroupResource> FirstPageFunc(int? pageSizeHint)
+                Page<ActionGroup> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetActionGroupsBySubscriptionId");
                     scope.Start();
                     try
                     {
                         var response = restOperations.ListBySubscriptionId(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ActionGroupResource(subscription, value)), null, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new ActionGroup(subscription, value)), null, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -514,30 +514,30 @@ namespace Azure.ResourceManager.Monitor
             );
         }
 
-        /// <summary> Filters the list of ActionGroupResources for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of ActionGroups for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetActionGroupResourceByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetActionGroupByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(ActionGroupResource.ResourceType);
+            ResourceFilterCollection filters = new(ActionGroup.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContextAsync(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Filters the list of ActionGroupResources for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of ActionGroups for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetActionGroupResourceByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetActionGroupByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(ActionGroupResource.ResourceType);
+            ResourceFilterCollection filters = new(ActionGroup.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
@@ -657,24 +657,24 @@ namespace Azure.ResourceManager.Monitor
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/metricAlerts
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: MetricAlerts_ListBySubscription
-        /// <summary> Lists the MetricAlertResources for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the MetricAlerts for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MetricAlertResource> GetMetricAlertsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<MetricAlert> GetMetricAlertsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetMetricAlertsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                async Task<Page<MetricAlertResource>> FirstPageFunc(int? pageSizeHint)
+                async Task<Page<MetricAlert>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetMetricAlerts");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListBySubscriptionAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new MetricAlertResource(subscription, value)), null, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new MetricAlert(subscription, value)), null, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -690,24 +690,24 @@ namespace Azure.ResourceManager.Monitor
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/metricAlerts
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: MetricAlerts_ListBySubscription
-        /// <summary> Lists the MetricAlertResources for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the MetricAlerts for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MetricAlertResource> GetMetricAlerts(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<MetricAlert> GetMetricAlerts(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetMetricAlertsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                Page<MetricAlertResource> FirstPageFunc(int? pageSizeHint)
+                Page<MetricAlert> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetMetricAlerts");
                     scope.Start();
                     try
                     {
                         var response = restOperations.ListBySubscription(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new MetricAlertResource(subscription, value)), null, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new MetricAlert(subscription, value)), null, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -720,30 +720,30 @@ namespace Azure.ResourceManager.Monitor
             );
         }
 
-        /// <summary> Filters the list of MetricAlertResources for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of MetricAlerts for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetMetricAlertResourceByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetMetricAlertByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(MetricAlertResource.ResourceType);
+            ResourceFilterCollection filters = new(MetricAlert.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContextAsync(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Filters the list of MetricAlertResources for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of MetricAlerts for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetMetricAlertResourceByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetMetricAlertByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(MetricAlertResource.ResourceType);
+            ResourceFilterCollection filters = new(MetricAlert.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
@@ -751,25 +751,25 @@ namespace Azure.ResourceManager.Monitor
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/scheduledQueryRules
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: ScheduledQueryRules_ListBySubscription
-        /// <summary> Lists the LogSearchRuleResources for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the LogSearchRules for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://msdn.microsoft.com/en-us/library/azure/dn931934.aspx. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<LogSearchRuleResource> GetScheduledQueryRulesAsync(this Subscription subscription, string filter = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<LogSearchRule> GetScheduledQueryRulesAsync(this Subscription subscription, string filter = null, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetScheduledQueryRulesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                async Task<Page<LogSearchRuleResource>> FirstPageFunc(int? pageSizeHint)
+                async Task<Page<LogSearchRule>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetScheduledQueryRules");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListBySubscriptionAsync(subscription.Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new LogSearchRuleResource(subscription, value)), null, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new LogSearchRule(subscription, value)), null, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -785,25 +785,25 @@ namespace Azure.ResourceManager.Monitor
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/scheduledQueryRules
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: ScheduledQueryRules_ListBySubscription
-        /// <summary> Lists the LogSearchRuleResources for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the LogSearchRules for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://msdn.microsoft.com/en-us/library/azure/dn931934.aspx. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<LogSearchRuleResource> GetScheduledQueryRules(this Subscription subscription, string filter = null, CancellationToken cancellationToken = default)
+        public static Pageable<LogSearchRule> GetScheduledQueryRules(this Subscription subscription, string filter = null, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetScheduledQueryRulesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                Page<LogSearchRuleResource> FirstPageFunc(int? pageSizeHint)
+                Page<LogSearchRule> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetScheduledQueryRules");
                     scope.Start();
                     try
                     {
                         var response = restOperations.ListBySubscription(subscription.Id.SubscriptionId, filter, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new LogSearchRuleResource(subscription, value)), null, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new LogSearchRule(subscription, value)), null, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -816,30 +816,30 @@ namespace Azure.ResourceManager.Monitor
             );
         }
 
-        /// <summary> Filters the list of LogSearchRuleResources for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of LogSearchRules for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetLogSearchRuleResourceByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetLogSearchRuleByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(LogSearchRuleResource.ResourceType);
+            ResourceFilterCollection filters = new(LogSearchRule.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContextAsync(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Filters the list of LogSearchRuleResources for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of LogSearchRules for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetLogSearchRuleResourceByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetLogSearchRuleByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(LogSearchRuleResource.ResourceType);
+            ResourceFilterCollection filters = new(LogSearchRule.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
@@ -847,24 +847,24 @@ namespace Azure.ResourceManager.Monitor
         /// RequestPath: /subscriptions/{subscriptionId}/providers/microsoft.insights/privateLinkScopes
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: PrivateLinkScopes_List
-        /// <summary> Lists the AzureMonitorPrivateLinkScopes for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the PrivateLinkScopes for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AzureMonitorPrivateLinkScope> GetPrivateLinkScopesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<PrivateLinkScope> GetPrivateLinkScopesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetPrivateLinkScopesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                async Task<Page<AzureMonitorPrivateLinkScope>> FirstPageFunc(int? pageSizeHint)
+                async Task<Page<PrivateLinkScope>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetPrivateLinkScopes");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new AzureMonitorPrivateLinkScope(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkScope(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -872,14 +872,14 @@ namespace Azure.ResourceManager.Monitor
                         throw;
                     }
                 }
-                async Task<Page<AzureMonitorPrivateLinkScope>> NextPageFunc(string nextLink, int? pageSizeHint)
+                async Task<Page<PrivateLinkScope>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetPrivateLinkScopes");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new AzureMonitorPrivateLinkScope(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkScope(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -895,24 +895,24 @@ namespace Azure.ResourceManager.Monitor
         /// RequestPath: /subscriptions/{subscriptionId}/providers/microsoft.insights/privateLinkScopes
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: PrivateLinkScopes_List
-        /// <summary> Lists the AzureMonitorPrivateLinkScopes for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the PrivateLinkScopes for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AzureMonitorPrivateLinkScope> GetPrivateLinkScopes(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<PrivateLinkScope> GetPrivateLinkScopes(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetPrivateLinkScopesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                Page<AzureMonitorPrivateLinkScope> FirstPageFunc(int? pageSizeHint)
+                Page<PrivateLinkScope> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetPrivateLinkScopes");
                     scope.Start();
                     try
                     {
                         var response = restOperations.List(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new AzureMonitorPrivateLinkScope(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkScope(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -920,14 +920,14 @@ namespace Azure.ResourceManager.Monitor
                         throw;
                     }
                 }
-                Page<AzureMonitorPrivateLinkScope> NextPageFunc(string nextLink, int? pageSizeHint)
+                Page<PrivateLinkScope> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetPrivateLinkScopes");
                     scope.Start();
                     try
                     {
                         var response = restOperations.ListNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new AzureMonitorPrivateLinkScope(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkScope(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -940,30 +940,30 @@ namespace Azure.ResourceManager.Monitor
             );
         }
 
-        /// <summary> Filters the list of AzureMonitorPrivateLinkScopes for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of PrivateLinkScopes for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetAzureMonitorPrivateLinkScopeByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetPrivateLinkScopeByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(AzureMonitorPrivateLinkScope.ResourceType);
+            ResourceFilterCollection filters = new(PrivateLinkScope.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContextAsync(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Filters the list of AzureMonitorPrivateLinkScopes for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of PrivateLinkScopes for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetAzureMonitorPrivateLinkScopeByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetPrivateLinkScopeByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(AzureMonitorPrivateLinkScope.ResourceType);
+            ResourceFilterCollection filters = new(PrivateLinkScope.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
@@ -971,24 +971,24 @@ namespace Azure.ResourceManager.Monitor
         /// RequestPath: /subscriptions/{subscriptionId}/providers/microsoft.insights/activityLogAlerts
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: ActivityLogAlerts_ListBySubscriptionId
-        /// <summary> Lists the ActivityLogAlertResources for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the ActivityLogAlerts for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ActivityLogAlertResource> GetActivityLogAlertsBySubscriptionIdAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ActivityLogAlert> GetActivityLogAlertsBySubscriptionIdAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetActivityLogAlertsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                async Task<Page<ActivityLogAlertResource>> FirstPageFunc(int? pageSizeHint)
+                async Task<Page<ActivityLogAlert>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetActivityLogAlertsBySubscriptionId");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListBySubscriptionIdAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ActivityLogAlertResource(subscription, value)), null, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new ActivityLogAlert(subscription, value)), null, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1004,24 +1004,24 @@ namespace Azure.ResourceManager.Monitor
         /// RequestPath: /subscriptions/{subscriptionId}/providers/microsoft.insights/activityLogAlerts
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: ActivityLogAlerts_ListBySubscriptionId
-        /// <summary> Lists the ActivityLogAlertResources for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the ActivityLogAlerts for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ActivityLogAlertResource> GetActivityLogAlertsBySubscriptionId(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<ActivityLogAlert> GetActivityLogAlertsBySubscriptionId(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetActivityLogAlertsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                Page<ActivityLogAlertResource> FirstPageFunc(int? pageSizeHint)
+                Page<ActivityLogAlert> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetActivityLogAlertsBySubscriptionId");
                     scope.Start();
                     try
                     {
                         var response = restOperations.ListBySubscriptionId(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ActivityLogAlertResource(subscription, value)), null, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new ActivityLogAlert(subscription, value)), null, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1034,30 +1034,30 @@ namespace Azure.ResourceManager.Monitor
             );
         }
 
-        /// <summary> Filters the list of ActivityLogAlertResources for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of ActivityLogAlerts for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetActivityLogAlertResourceByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetActivityLogAlertByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(ActivityLogAlertResource.ResourceType);
+            ResourceFilterCollection filters = new(ActivityLogAlert.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContextAsync(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Filters the list of ActivityLogAlertResources for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of ActivityLogAlerts for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetActivityLogAlertResourceByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetActivityLogAlertByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(ActivityLogAlertResource.ResourceType);
+            ResourceFilterCollection filters = new(ActivityLogAlert.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
@@ -1065,24 +1065,24 @@ namespace Azure.ResourceManager.Monitor
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/dataCollectionEndpoints
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: DataCollectionEndpoints_ListBySubscription
-        /// <summary> Lists the DataCollectionEndpointResources for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the DataCollectionEndpoints for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DataCollectionEndpointResource> GetDataCollectionEndpointsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DataCollectionEndpoint> GetDataCollectionEndpointsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetDataCollectionEndpointsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                async Task<Page<DataCollectionEndpointResource>> FirstPageFunc(int? pageSizeHint)
+                async Task<Page<DataCollectionEndpoint>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDataCollectionEndpoints");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListBySubscriptionAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new DataCollectionEndpointResource(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new DataCollectionEndpoint(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1090,14 +1090,14 @@ namespace Azure.ResourceManager.Monitor
                         throw;
                     }
                 }
-                async Task<Page<DataCollectionEndpointResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+                async Task<Page<DataCollectionEndpoint>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDataCollectionEndpoints");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListBySubscriptionNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new DataCollectionEndpointResource(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new DataCollectionEndpoint(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1113,24 +1113,24 @@ namespace Azure.ResourceManager.Monitor
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/dataCollectionEndpoints
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: DataCollectionEndpoints_ListBySubscription
-        /// <summary> Lists the DataCollectionEndpointResources for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the DataCollectionEndpoints for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DataCollectionEndpointResource> GetDataCollectionEndpoints(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<DataCollectionEndpoint> GetDataCollectionEndpoints(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetDataCollectionEndpointsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                Page<DataCollectionEndpointResource> FirstPageFunc(int? pageSizeHint)
+                Page<DataCollectionEndpoint> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDataCollectionEndpoints");
                     scope.Start();
                     try
                     {
                         var response = restOperations.ListBySubscription(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new DataCollectionEndpointResource(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new DataCollectionEndpoint(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1138,14 +1138,14 @@ namespace Azure.ResourceManager.Monitor
                         throw;
                     }
                 }
-                Page<DataCollectionEndpointResource> NextPageFunc(string nextLink, int? pageSizeHint)
+                Page<DataCollectionEndpoint> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDataCollectionEndpoints");
                     scope.Start();
                     try
                     {
                         var response = restOperations.ListBySubscriptionNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new DataCollectionEndpointResource(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new DataCollectionEndpoint(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1158,30 +1158,30 @@ namespace Azure.ResourceManager.Monitor
             );
         }
 
-        /// <summary> Filters the list of DataCollectionEndpointResources for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of DataCollectionEndpoints for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetDataCollectionEndpointResourceByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetDataCollectionEndpointByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(DataCollectionEndpointResource.ResourceType);
+            ResourceFilterCollection filters = new(DataCollectionEndpoint.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContextAsync(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Filters the list of DataCollectionEndpointResources for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of DataCollectionEndpoints for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetDataCollectionEndpointResourceByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetDataCollectionEndpointByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(DataCollectionEndpointResource.ResourceType);
+            ResourceFilterCollection filters = new(DataCollectionEndpoint.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
@@ -1189,24 +1189,24 @@ namespace Azure.ResourceManager.Monitor
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/dataCollectionRules
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: DataCollectionRules_ListBySubscription
-        /// <summary> Lists the DataCollectionRuleResources for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the DataCollectionRules for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DataCollectionRuleResource> GetDataCollectionRulesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DataCollectionRule> GetDataCollectionRulesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetDataCollectionRulesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                async Task<Page<DataCollectionRuleResource>> FirstPageFunc(int? pageSizeHint)
+                async Task<Page<DataCollectionRule>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDataCollectionRules");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListBySubscriptionAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRuleResource(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRule(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1214,14 +1214,14 @@ namespace Azure.ResourceManager.Monitor
                         throw;
                     }
                 }
-                async Task<Page<DataCollectionRuleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+                async Task<Page<DataCollectionRule>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDataCollectionRules");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListBySubscriptionNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRuleResource(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRule(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1237,24 +1237,24 @@ namespace Azure.ResourceManager.Monitor
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/dataCollectionRules
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: DataCollectionRules_ListBySubscription
-        /// <summary> Lists the DataCollectionRuleResources for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the DataCollectionRules for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DataCollectionRuleResource> GetDataCollectionRules(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<DataCollectionRule> GetDataCollectionRules(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetDataCollectionRulesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                Page<DataCollectionRuleResource> FirstPageFunc(int? pageSizeHint)
+                Page<DataCollectionRule> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDataCollectionRules");
                     scope.Start();
                     try
                     {
                         var response = restOperations.ListBySubscription(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRuleResource(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRule(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1262,14 +1262,14 @@ namespace Azure.ResourceManager.Monitor
                         throw;
                     }
                 }
-                Page<DataCollectionRuleResource> NextPageFunc(string nextLink, int? pageSizeHint)
+                Page<DataCollectionRule> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDataCollectionRules");
                     scope.Start();
                     try
                     {
                         var response = restOperations.ListBySubscriptionNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRuleResource(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRule(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1282,30 +1282,30 @@ namespace Azure.ResourceManager.Monitor
             );
         }
 
-        /// <summary> Filters the list of DataCollectionRuleResources for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of DataCollectionRules for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetDataCollectionRuleResourceByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetDataCollectionRuleByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(DataCollectionRuleResource.ResourceType);
+            ResourceFilterCollection filters = new(DataCollectionRule.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContextAsync(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Filters the list of DataCollectionRuleResources for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of DataCollectionRules for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetDataCollectionRuleResourceByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetDataCollectionRuleByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(DataCollectionRuleResource.ResourceType);
+            ResourceFilterCollection filters = new(DataCollectionRule.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }

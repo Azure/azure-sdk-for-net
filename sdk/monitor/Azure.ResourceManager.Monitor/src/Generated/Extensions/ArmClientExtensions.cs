@@ -12,124 +12,124 @@ namespace Azure.ResourceManager.Monitor
     /// <summary> A class to add extension methods to ArmClient. </summary>
     public static partial class ArmClientExtensions
     {
-        #region AutoscaleSettingResource
-        /// <summary> Gets an object representing a AutoscaleSettingResource along with the instance operations that can be performed on it but with no data. </summary>
+        #region AutoscaleSetting
+        /// <summary> Gets an object representing a AutoscaleSetting along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutoscaleSettingResource" /> object. </returns>
-        public static AutoscaleSettingResource GetAutoscaleSettingResource(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AutoscaleSetting" /> object. </returns>
+        public static AutoscaleSetting GetAutoscaleSetting(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AutoscaleSettingResource(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AutoscaleSetting(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region AlertRuleResource
-        /// <summary> Gets an object representing a AlertRuleResource along with the instance operations that can be performed on it but with no data. </summary>
+        #region AlertRule
+        /// <summary> Gets an object representing a AlertRule along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AlertRuleResource" /> object. </returns>
-        public static AlertRuleResource GetAlertRuleResource(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AlertRule" /> object. </returns>
+        public static AlertRule GetAlertRule(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AlertRuleResource(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AlertRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region LogProfileResource
-        /// <summary> Gets an object representing a LogProfileResource along with the instance operations that can be performed on it but with no data. </summary>
+        #region LogProfile
+        /// <summary> Gets an object representing a LogProfile along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LogProfileResource" /> object. </returns>
-        public static LogProfileResource GetLogProfileResource(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LogProfile" /> object. </returns>
+        public static LogProfile GetLogProfile(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new LogProfileResource(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new LogProfile(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region DiagnosticSettingsResource
-        /// <summary> Gets an object representing a DiagnosticSettingsResource along with the instance operations that can be performed on it but with no data. </summary>
+        #region DiagnosticSettings
+        /// <summary> Gets an object representing a DiagnosticSettings along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiagnosticSettingsResource" /> object. </returns>
-        public static DiagnosticSettingsResource GetDiagnosticSettingsResource(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DiagnosticSettings" /> object. </returns>
+        public static DiagnosticSettings GetDiagnosticSettings(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DiagnosticSettingsResource(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DiagnosticSettings(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region DiagnosticSettingsCategoryResource
-        /// <summary> Gets an object representing a DiagnosticSettingsCategoryResource along with the instance operations that can be performed on it but with no data. </summary>
+        #region DiagnosticSettingsCategory
+        /// <summary> Gets an object representing a DiagnosticSettingsCategory along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiagnosticSettingsCategoryResource" /> object. </returns>
-        public static DiagnosticSettingsCategoryResource GetDiagnosticSettingsCategoryResource(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DiagnosticSettingsCategory" /> object. </returns>
+        public static DiagnosticSettingsCategory GetDiagnosticSettingsCategory(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DiagnosticSettingsCategoryResource(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DiagnosticSettingsCategory(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region ActionGroupResource
-        /// <summary> Gets an object representing a ActionGroupResource along with the instance operations that can be performed on it but with no data. </summary>
+        #region ActionGroup
+        /// <summary> Gets an object representing a ActionGroup along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ActionGroupResource" /> object. </returns>
-        public static ActionGroupResource GetActionGroupResource(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ActionGroup" /> object. </returns>
+        public static ActionGroup GetActionGroup(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ActionGroupResource(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ActionGroup(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region MetricAlertResource
-        /// <summary> Gets an object representing a MetricAlertResource along with the instance operations that can be performed on it but with no data. </summary>
+        #region MetricAlert
+        /// <summary> Gets an object representing a MetricAlert along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MetricAlertResource" /> object. </returns>
-        public static MetricAlertResource GetMetricAlertResource(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MetricAlert" /> object. </returns>
+        public static MetricAlert GetMetricAlert(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new MetricAlertResource(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new MetricAlert(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region LogSearchRuleResource
-        /// <summary> Gets an object representing a LogSearchRuleResource along with the instance operations that can be performed on it but with no data. </summary>
+        #region LogSearchRule
+        /// <summary> Gets an object representing a LogSearchRule along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LogSearchRuleResource" /> object. </returns>
-        public static LogSearchRuleResource GetLogSearchRuleResource(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LogSearchRule" /> object. </returns>
+        public static LogSearchRule GetLogSearchRule(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new LogSearchRuleResource(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new LogSearchRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region VMInsightsOnboardingStatus
-        /// <summary> Gets an object representing a VMInsightsOnboardingStatus along with the instance operations that can be performed on it but with no data. </summary>
+        #region VmInsightsOnboardingStatus
+        /// <summary> Gets an object representing a VmInsightsOnboardingStatus along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VMInsightsOnboardingStatus" /> object. </returns>
-        public static VMInsightsOnboardingStatus GetVMInsightsOnboardingStatus(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VmInsightsOnboardingStatus" /> object. </returns>
+        public static VmInsightsOnboardingStatus GetVmInsightsOnboardingStatus(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VMInsightsOnboardingStatus(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VmInsightsOnboardingStatus(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region AzureMonitorPrivateLinkScope
-        /// <summary> Gets an object representing a AzureMonitorPrivateLinkScope along with the instance operations that can be performed on it but with no data. </summary>
+        #region PrivateLinkScope
+        /// <summary> Gets an object representing a PrivateLinkScope along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AzureMonitorPrivateLinkScope" /> object. </returns>
-        public static AzureMonitorPrivateLinkScope GetAzureMonitorPrivateLinkScope(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PrivateLinkScope" /> object. </returns>
+        public static PrivateLinkScope GetPrivateLinkScope(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AzureMonitorPrivateLinkScope(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateLinkScope(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region PrivateLinkResource
-        /// <summary> Gets an object representing a PrivateLinkResource along with the instance operations that can be performed on it but with no data. </summary>
+        #region PrivateLink
+        /// <summary> Gets an object representing a PrivateLink along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateLinkResource" /> object. </returns>
-        public static PrivateLinkResource GetPrivateLinkResource(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PrivateLink" /> object. </returns>
+        public static PrivateLink GetPrivateLink(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateLinkResource(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateLink(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -144,58 +144,58 @@ namespace Azure.ResourceManager.Monitor
         }
         #endregion
 
-        #region ScopedResource
-        /// <summary> Gets an object representing a ScopedResource along with the instance operations that can be performed on it but with no data. </summary>
+        #region ScopedPrivateLink
+        /// <summary> Gets an object representing a ScopedPrivateLink along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScopedResource" /> object. </returns>
-        public static ScopedResource GetScopedResource(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ScopedPrivateLink" /> object. </returns>
+        public static ScopedPrivateLink GetScopedPrivateLink(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ScopedResource(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ScopedPrivateLink(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region ActivityLogAlertResource
-        /// <summary> Gets an object representing a ActivityLogAlertResource along with the instance operations that can be performed on it but with no data. </summary>
+        #region ActivityLogAlert
+        /// <summary> Gets an object representing a ActivityLogAlert along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ActivityLogAlertResource" /> object. </returns>
-        public static ActivityLogAlertResource GetActivityLogAlertResource(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ActivityLogAlert" /> object. </returns>
+        public static ActivityLogAlert GetActivityLogAlert(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ActivityLogAlertResource(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ActivityLogAlert(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region DataCollectionEndpointResource
-        /// <summary> Gets an object representing a DataCollectionEndpointResource along with the instance operations that can be performed on it but with no data. </summary>
+        #region DataCollectionEndpoint
+        /// <summary> Gets an object representing a DataCollectionEndpoint along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataCollectionEndpointResource" /> object. </returns>
-        public static DataCollectionEndpointResource GetDataCollectionEndpointResource(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataCollectionEndpoint" /> object. </returns>
+        public static DataCollectionEndpoint GetDataCollectionEndpoint(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DataCollectionEndpointResource(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DataCollectionEndpoint(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region DataCollectionRuleAssociationProxyOnlyResource
-        /// <summary> Gets an object representing a DataCollectionRuleAssociationProxyOnlyResource along with the instance operations that can be performed on it but with no data. </summary>
+        #region DataCollectionRuleAssociation
+        /// <summary> Gets an object representing a DataCollectionRuleAssociation along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataCollectionRuleAssociationProxyOnlyResource" /> object. </returns>
-        public static DataCollectionRuleAssociationProxyOnlyResource GetDataCollectionRuleAssociationProxyOnlyResource(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataCollectionRuleAssociation" /> object. </returns>
+        public static DataCollectionRuleAssociation GetDataCollectionRuleAssociation(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DataCollectionRuleAssociationProxyOnlyResource(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DataCollectionRuleAssociation(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region DataCollectionRuleResource
-        /// <summary> Gets an object representing a DataCollectionRuleResource along with the instance operations that can be performed on it but with no data. </summary>
+        #region DataCollectionRule
+        /// <summary> Gets an object representing a DataCollectionRule along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataCollectionRuleResource" /> object. </returns>
-        public static DataCollectionRuleResource GetDataCollectionRuleResource(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataCollectionRule" /> object. </returns>
+        public static DataCollectionRule GetDataCollectionRule(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DataCollectionRuleResource(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DataCollectionRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
     }

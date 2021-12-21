@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="logProfileName"> The name of the log profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="logProfileName"/> is null. </exception>
-        public async Task<Response<LogProfileResourceData>> GetAsync(string subscriptionId, string logProfileName, CancellationToken cancellationToken = default)
+        public async Task<Response<LogProfileData>> GetAsync(string subscriptionId, string logProfileName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -148,13 +148,13 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        LogProfileResourceData value = default;
+                        LogProfileData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LogProfileResourceData.DeserializeLogProfileResourceData(document.RootElement);
+                        value = LogProfileData.DeserializeLogProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((LogProfileResourceData)null, message.Response);
+                    return Response.FromValue((LogProfileData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="logProfileName"> The name of the log profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="logProfileName"/> is null. </exception>
-        public Response<LogProfileResourceData> Get(string subscriptionId, string logProfileName, CancellationToken cancellationToken = default)
+        public Response<LogProfileData> Get(string subscriptionId, string logProfileName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -182,19 +182,19 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        LogProfileResourceData value = default;
+                        LogProfileData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LogProfileResourceData.DeserializeLogProfileResourceData(document.RootElement);
+                        value = LogProfileData.DeserializeLogProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((LogProfileResourceData)null, message.Response);
+                    return Response.FromValue((LogProfileData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string logProfileName, LogProfileResourceData parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string logProfileName, LogProfileData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="parameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="logProfileName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<LogProfileResourceData>> CreateOrUpdateAsync(string subscriptionId, string logProfileName, LogProfileResourceData parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<LogProfileData>> CreateOrUpdateAsync(string subscriptionId, string logProfileName, LogProfileData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -243,9 +243,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        LogProfileResourceData value = default;
+                        LogProfileData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LogProfileResourceData.DeserializeLogProfileResourceData(document.RootElement);
+                        value = LogProfileData.DeserializeLogProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="parameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="logProfileName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<LogProfileResourceData> CreateOrUpdate(string subscriptionId, string logProfileName, LogProfileResourceData parameters, CancellationToken cancellationToken = default)
+        public Response<LogProfileData> CreateOrUpdate(string subscriptionId, string logProfileName, LogProfileData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -280,9 +280,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        LogProfileResourceData value = default;
+                        LogProfileData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LogProfileResourceData.DeserializeLogProfileResourceData(document.RootElement);
+                        value = LogProfileData.DeserializeLogProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="logProfilesResource"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="logProfileName"/>, or <paramref name="logProfilesResource"/> is null. </exception>
-        public async Task<Response<LogProfileResourceData>> UpdateAsync(string subscriptionId, string logProfileName, LogProfileResourcePatch logProfilesResource, CancellationToken cancellationToken = default)
+        public async Task<Response<LogProfileData>> UpdateAsync(string subscriptionId, string logProfileName, LogProfileResourcePatch logProfilesResource, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -339,9 +339,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        LogProfileResourceData value = default;
+                        LogProfileData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LogProfileResourceData.DeserializeLogProfileResourceData(document.RootElement);
+                        value = LogProfileData.DeserializeLogProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="logProfilesResource"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="logProfileName"/>, or <paramref name="logProfilesResource"/> is null. </exception>
-        public Response<LogProfileResourceData> Update(string subscriptionId, string logProfileName, LogProfileResourcePatch logProfilesResource, CancellationToken cancellationToken = default)
+        public Response<LogProfileData> Update(string subscriptionId, string logProfileName, LogProfileResourcePatch logProfilesResource, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -376,9 +376,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        LogProfileResourceData value = default;
+                        LogProfileData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LogProfileResourceData.DeserializeLogProfileResourceData(document.RootElement);
+                        value = LogProfileData.DeserializeLogProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public async Task<Response<LogProfileCollection>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<Models.LogProfileCollection>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -420,9 +420,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        LogProfileCollection value = default;
+                        Models.LogProfileCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LogProfileCollection.DeserializeLogProfileCollection(document.RootElement);
+                        value = Models.LogProfileCollection.DeserializeLogProfileCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public Response<LogProfileCollection> List(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<Models.LogProfileCollection> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -447,9 +447,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        LogProfileCollection value = default;
+                        Models.LogProfileCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LogProfileCollection.DeserializeLogProfileCollection(document.RootElement);
+                        value = Models.LogProfileCollection.DeserializeLogProfileCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

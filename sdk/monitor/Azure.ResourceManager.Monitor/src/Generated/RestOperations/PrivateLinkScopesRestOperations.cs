@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="scopeName"> The name of the Azure Monitor PrivateLinkScope resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="scopeName"/> is null. </exception>
-        public async Task<Response<AzureMonitorPrivateLinkScopeData>> GetAsync(string subscriptionId, string resourceGroupName, string scopeName, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateLinkScopeData>> GetAsync(string subscriptionId, string resourceGroupName, string scopeName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -325,13 +325,13 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        AzureMonitorPrivateLinkScopeData value = default;
+                        PrivateLinkScopeData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AzureMonitorPrivateLinkScopeData.DeserializeAzureMonitorPrivateLinkScopeData(document.RootElement);
+                        value = PrivateLinkScopeData.DeserializePrivateLinkScopeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AzureMonitorPrivateLinkScopeData)null, message.Response);
+                    return Response.FromValue((PrivateLinkScopeData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="scopeName"> The name of the Azure Monitor PrivateLinkScope resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="scopeName"/> is null. </exception>
-        public Response<AzureMonitorPrivateLinkScopeData> Get(string subscriptionId, string resourceGroupName, string scopeName, CancellationToken cancellationToken = default)
+        public Response<PrivateLinkScopeData> Get(string subscriptionId, string resourceGroupName, string scopeName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -364,19 +364,19 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        AzureMonitorPrivateLinkScopeData value = default;
+                        PrivateLinkScopeData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AzureMonitorPrivateLinkScopeData.DeserializeAzureMonitorPrivateLinkScopeData(document.RootElement);
+                        value = PrivateLinkScopeData.DeserializePrivateLinkScopeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AzureMonitorPrivateLinkScopeData)null, message.Response);
+                    return Response.FromValue((PrivateLinkScopeData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string scopeName, AzureMonitorPrivateLinkScopeData azureMonitorPrivateLinkScopePayload)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string scopeName, PrivateLinkScopeData azureMonitorPrivateLinkScopePayload)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="azureMonitorPrivateLinkScopePayload"> Properties that need to be specified to create or update a Azure Monitor PrivateLinkScope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scopeName"/>, or <paramref name="azureMonitorPrivateLinkScopePayload"/> is null. </exception>
-        public async Task<Response<AzureMonitorPrivateLinkScopeData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string scopeName, AzureMonitorPrivateLinkScopeData azureMonitorPrivateLinkScopePayload, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateLinkScopeData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string scopeName, PrivateLinkScopeData azureMonitorPrivateLinkScopePayload, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -433,9 +433,9 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                 case 201:
                     {
-                        AzureMonitorPrivateLinkScopeData value = default;
+                        PrivateLinkScopeData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AzureMonitorPrivateLinkScopeData.DeserializeAzureMonitorPrivateLinkScopeData(document.RootElement);
+                        value = PrivateLinkScopeData.DeserializePrivateLinkScopeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="azureMonitorPrivateLinkScopePayload"> Properties that need to be specified to create or update a Azure Monitor PrivateLinkScope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scopeName"/>, or <paramref name="azureMonitorPrivateLinkScopePayload"/> is null. </exception>
-        public Response<AzureMonitorPrivateLinkScopeData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string scopeName, AzureMonitorPrivateLinkScopeData azureMonitorPrivateLinkScopePayload, CancellationToken cancellationToken = default)
+        public Response<PrivateLinkScopeData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string scopeName, PrivateLinkScopeData azureMonitorPrivateLinkScopePayload, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -476,9 +476,9 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                 case 201:
                     {
-                        AzureMonitorPrivateLinkScopeData value = default;
+                        PrivateLinkScopeData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AzureMonitorPrivateLinkScopeData.DeserializeAzureMonitorPrivateLinkScopeData(document.RootElement);
+                        value = PrivateLinkScopeData.DeserializePrivateLinkScopeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="privateLinkScopeTags"> Updated tag information to set into the PrivateLinkScope instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scopeName"/>, or <paramref name="privateLinkScopeTags"/> is null. </exception>
-        public async Task<Response<AzureMonitorPrivateLinkScopeData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string scopeName, TagsResource privateLinkScopeTags, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateLinkScopeData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string scopeName, TagsResource privateLinkScopeTags, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -542,9 +542,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        AzureMonitorPrivateLinkScopeData value = default;
+                        PrivateLinkScopeData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AzureMonitorPrivateLinkScopeData.DeserializeAzureMonitorPrivateLinkScopeData(document.RootElement);
+                        value = PrivateLinkScopeData.DeserializePrivateLinkScopeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="privateLinkScopeTags"> Updated tag information to set into the PrivateLinkScope instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scopeName"/>, or <paramref name="privateLinkScopeTags"/> is null. </exception>
-        public Response<AzureMonitorPrivateLinkScopeData> UpdateTags(string subscriptionId, string resourceGroupName, string scopeName, TagsResource privateLinkScopeTags, CancellationToken cancellationToken = default)
+        public Response<PrivateLinkScopeData> UpdateTags(string subscriptionId, string resourceGroupName, string scopeName, TagsResource privateLinkScopeTags, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -584,9 +584,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        AzureMonitorPrivateLinkScopeData value = default;
+                        PrivateLinkScopeData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AzureMonitorPrivateLinkScopeData.DeserializeAzureMonitorPrivateLinkScopeData(document.RootElement);
+                        value = PrivateLinkScopeData.DeserializePrivateLinkScopeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

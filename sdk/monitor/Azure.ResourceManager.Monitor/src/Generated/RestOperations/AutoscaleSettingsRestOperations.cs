@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<Models.AutoscaleSettingResourceCollection>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<AutoscaleSettingResourceCollection>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        Models.AutoscaleSettingResourceCollection value = default;
+                        AutoscaleSettingResourceCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.AutoscaleSettingResourceCollection.DeserializeAutoscaleSettingResourceCollection(document.RootElement);
+                        value = AutoscaleSettingResourceCollection.DeserializeAutoscaleSettingResourceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<Models.AutoscaleSettingResourceCollection> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<AutoscaleSettingResourceCollection> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -110,9 +110,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        Models.AutoscaleSettingResourceCollection value = default;
+                        AutoscaleSettingResourceCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.AutoscaleSettingResourceCollection.DeserializeAutoscaleSettingResourceCollection(document.RootElement);
+                        value = AutoscaleSettingResourceCollection.DeserializeAutoscaleSettingResourceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string autoscaleSettingName, AutoscaleSettingResourceData parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string autoscaleSettingName, AutoscaleSettingData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="parameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="autoscaleSettingName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<AutoscaleSettingResourceData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string autoscaleSettingName, AutoscaleSettingResourceData parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<AutoscaleSettingData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string autoscaleSettingName, AutoscaleSettingData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -177,9 +177,9 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                 case 201:
                     {
-                        AutoscaleSettingResourceData value = default;
+                        AutoscaleSettingData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AutoscaleSettingResourceData.DeserializeAutoscaleSettingResourceData(document.RootElement);
+                        value = AutoscaleSettingData.DeserializeAutoscaleSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="parameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="autoscaleSettingName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<AutoscaleSettingResourceData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string autoscaleSettingName, AutoscaleSettingResourceData parameters, CancellationToken cancellationToken = default)
+        public Response<AutoscaleSettingData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string autoscaleSettingName, AutoscaleSettingData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -220,9 +220,9 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                 case 201:
                     {
-                        AutoscaleSettingResourceData value = default;
+                        AutoscaleSettingData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AutoscaleSettingResourceData.DeserializeAutoscaleSettingResourceData(document.RootElement);
+                        value = AutoscaleSettingData.DeserializeAutoscaleSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="autoscaleSettingName"/> is null. </exception>
-        public async Task<Response<AutoscaleSettingResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string autoscaleSettingName, CancellationToken cancellationToken = default)
+        public async Task<Response<AutoscaleSettingData>> GetAsync(string subscriptionId, string resourceGroupName, string autoscaleSettingName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -363,13 +363,13 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        AutoscaleSettingResourceData value = default;
+                        AutoscaleSettingData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AutoscaleSettingResourceData.DeserializeAutoscaleSettingResourceData(document.RootElement);
+                        value = AutoscaleSettingData.DeserializeAutoscaleSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AutoscaleSettingResourceData)null, message.Response);
+                    return Response.FromValue((AutoscaleSettingData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="autoscaleSettingName"/> is null. </exception>
-        public Response<AutoscaleSettingResourceData> Get(string subscriptionId, string resourceGroupName, string autoscaleSettingName, CancellationToken cancellationToken = default)
+        public Response<AutoscaleSettingData> Get(string subscriptionId, string resourceGroupName, string autoscaleSettingName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -402,13 +402,13 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        AutoscaleSettingResourceData value = default;
+                        AutoscaleSettingData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AutoscaleSettingResourceData.DeserializeAutoscaleSettingResourceData(document.RootElement);
+                        value = AutoscaleSettingData.DeserializeAutoscaleSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AutoscaleSettingResourceData)null, message.Response);
+                    return Response.FromValue((AutoscaleSettingData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="autoscaleSettingResource"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="autoscaleSettingName"/>, or <paramref name="autoscaleSettingResource"/> is null. </exception>
-        public async Task<Response<AutoscaleSettingResourceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string autoscaleSettingName, AutoscaleSettingResourcePatch autoscaleSettingResource, CancellationToken cancellationToken = default)
+        public async Task<Response<AutoscaleSettingData>> UpdateAsync(string subscriptionId, string resourceGroupName, string autoscaleSettingName, AutoscaleSettingResourcePatch autoscaleSettingResource, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -470,9 +470,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        AutoscaleSettingResourceData value = default;
+                        AutoscaleSettingData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AutoscaleSettingResourceData.DeserializeAutoscaleSettingResourceData(document.RootElement);
+                        value = AutoscaleSettingData.DeserializeAutoscaleSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="autoscaleSettingResource"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="autoscaleSettingName"/>, or <paramref name="autoscaleSettingResource"/> is null. </exception>
-        public Response<AutoscaleSettingResourceData> Update(string subscriptionId, string resourceGroupName, string autoscaleSettingName, AutoscaleSettingResourcePatch autoscaleSettingResource, CancellationToken cancellationToken = default)
+        public Response<AutoscaleSettingData> Update(string subscriptionId, string resourceGroupName, string autoscaleSettingName, AutoscaleSettingResourcePatch autoscaleSettingResource, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -512,9 +512,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        AutoscaleSettingResourceData value = default;
+                        AutoscaleSettingData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AutoscaleSettingResourceData.DeserializeAutoscaleSettingResourceData(document.RootElement);
+                        value = AutoscaleSettingData.DeserializeAutoscaleSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public async Task<Response<Models.AutoscaleSettingResourceCollection>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<AutoscaleSettingResourceCollection>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -556,9 +556,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        Models.AutoscaleSettingResourceCollection value = default;
+                        AutoscaleSettingResourceCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.AutoscaleSettingResourceCollection.DeserializeAutoscaleSettingResourceCollection(document.RootElement);
+                        value = AutoscaleSettingResourceCollection.DeserializeAutoscaleSettingResourceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public Response<Models.AutoscaleSettingResourceCollection> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<AutoscaleSettingResourceCollection> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -583,9 +583,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        Models.AutoscaleSettingResourceCollection value = default;
+                        AutoscaleSettingResourceCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.AutoscaleSettingResourceCollection.DeserializeAutoscaleSettingResourceCollection(document.RootElement);
+                        value = AutoscaleSettingResourceCollection.DeserializeAutoscaleSettingResourceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<Models.AutoscaleSettingResourceCollection>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<AutoscaleSettingResourceCollection>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -634,9 +634,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        Models.AutoscaleSettingResourceCollection value = default;
+                        AutoscaleSettingResourceCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.AutoscaleSettingResourceCollection.DeserializeAutoscaleSettingResourceCollection(document.RootElement);
+                        value = AutoscaleSettingResourceCollection.DeserializeAutoscaleSettingResourceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<Models.AutoscaleSettingResourceCollection> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<AutoscaleSettingResourceCollection> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -671,9 +671,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        Models.AutoscaleSettingResourceCollection value = default;
+                        AutoscaleSettingResourceCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.AutoscaleSettingResourceCollection.DeserializeAutoscaleSettingResourceCollection(document.RootElement);
+                        value = AutoscaleSettingResourceCollection.DeserializeAutoscaleSettingResourceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
-        public async Task<Response<Models.AutoscaleSettingResourceCollection>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<AutoscaleSettingResourceCollection>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -717,9 +717,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        Models.AutoscaleSettingResourceCollection value = default;
+                        AutoscaleSettingResourceCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.AutoscaleSettingResourceCollection.DeserializeAutoscaleSettingResourceCollection(document.RootElement);
+                        value = AutoscaleSettingResourceCollection.DeserializeAutoscaleSettingResourceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -732,7 +732,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
-        public Response<Models.AutoscaleSettingResourceCollection> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<AutoscaleSettingResourceCollection> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -749,9 +749,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        Models.AutoscaleSettingResourceCollection value = default;
+                        AutoscaleSettingResourceCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.AutoscaleSettingResourceCollection.DeserializeAutoscaleSettingResourceCollection(document.RootElement);
+                        value = AutoscaleSettingResourceCollection.DeserializeAutoscaleSettingResourceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

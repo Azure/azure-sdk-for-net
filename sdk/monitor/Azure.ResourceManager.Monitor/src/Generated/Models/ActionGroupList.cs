@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of ActionGroupList. </summary>
         internal ActionGroupList()
         {
-            Value = new ChangeTrackingList<ActionGroupResourceData>();
+            Value = new ChangeTrackingList<ActionGroupData>();
         }
 
         /// <summary> Initializes a new instance of ActionGroupList. </summary>
         /// <param name="value"> The list of action groups. </param>
         /// <param name="nextLink"> Provides the link to retrieve the next set of elements. </param>
-        internal ActionGroupList(IReadOnlyList<ActionGroupResourceData> value, string nextLink)
+        internal ActionGroupList(IReadOnlyList<ActionGroupData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of action groups. </summary>
-        public IReadOnlyList<ActionGroupResourceData> Value { get; }
+        public IReadOnlyList<ActionGroupData> Value { get; }
         /// <summary> Provides the link to retrieve the next set of elements. </summary>
         public string NextLink { get; }
     }

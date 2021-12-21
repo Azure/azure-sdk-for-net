@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.Monitor.Tests
 {
-    public class monitorManagementTestEnvironment : TestEnvironment
+    public class MonitorManagementTestEnvironment : TestEnvironment
     {
     }
 }

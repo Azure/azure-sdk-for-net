@@ -16,25 +16,25 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Creates or updates an autoscale setting. </summary>
-    public partial class AutoscaleSettingCreateOrUpdateOperation : Operation<AutoscaleSettingResource>
+    public partial class AutoscaleSettingCreateOrUpdateOperation : Operation<AutoscaleSetting>
     {
-        private readonly OperationOrResponseInternals<AutoscaleSettingResource> _operation;
+        private readonly OperationOrResponseInternals<AutoscaleSetting> _operation;
 
         /// <summary> Initializes a new instance of AutoscaleSettingCreateOrUpdateOperation for mocking. </summary>
         protected AutoscaleSettingCreateOrUpdateOperation()
         {
         }
 
-        internal AutoscaleSettingCreateOrUpdateOperation(ArmResource operationsBase, Response<AutoscaleSettingResourceData> response)
+        internal AutoscaleSettingCreateOrUpdateOperation(ArmResource operationsBase, Response<AutoscaleSettingData> response)
         {
-            _operation = new OperationOrResponseInternals<AutoscaleSettingResource>(Azure.Response.FromValue(new AutoscaleSettingResource(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<AutoscaleSetting>(Azure.Response.FromValue(new AutoscaleSetting(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override AutoscaleSettingResource Value => _operation.Value;
+        public override AutoscaleSetting Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public override ValueTask<Azure.Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<AutoscaleSettingResource>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<AutoscaleSetting>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<AutoscaleSettingResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<AutoscaleSetting>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

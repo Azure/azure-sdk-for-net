@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static DataCollectionRuleResourceListResult DeserializeDataCollectionRuleResourceListResult(JsonElement element)
         {
-            IReadOnlyList<DataCollectionRuleResourceData> value = default;
+            IReadOnlyList<DataCollectionRuleData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<DataCollectionRuleResourceData> array = new List<DataCollectionRuleResourceData>();
+                    List<DataCollectionRuleData> array = new List<DataCollectionRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataCollectionRuleResourceData.DeserializeDataCollectionRuleResourceData(item));
+                        array.Add(DataCollectionRuleData.DeserializeDataCollectionRuleData(item));
                     }
                     value = array;
                     continue;

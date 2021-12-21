@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of DataCollectionRuleResourceListResult. </summary>
         /// <param name="value"> A list of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal DataCollectionRuleResourceListResult(IEnumerable<DataCollectionRuleResourceData> value)
+        internal DataCollectionRuleResourceListResult(IEnumerable<DataCollectionRuleData> value)
         {
             if (value == null)
             {
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of DataCollectionRuleResourceListResult. </summary>
         /// <param name="value"> A list of resources. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal DataCollectionRuleResourceListResult(IReadOnlyList<DataCollectionRuleResourceData> value, string nextLink)
+        internal DataCollectionRuleResourceListResult(IReadOnlyList<DataCollectionRuleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of resources. </summary>
-        public IReadOnlyList<DataCollectionRuleResourceData> Value { get; }
+        public IReadOnlyList<DataCollectionRuleData> Value { get; }
         /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
     }

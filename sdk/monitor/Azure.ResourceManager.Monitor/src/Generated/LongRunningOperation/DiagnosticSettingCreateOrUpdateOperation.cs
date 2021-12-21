@@ -16,25 +16,25 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Creates or updates diagnostic settings for the specified resource. </summary>
-    public partial class DiagnosticSettingCreateOrUpdateOperation : Operation<DiagnosticSettingsResource>
+    public partial class DiagnosticSettingCreateOrUpdateOperation : Operation<DiagnosticSettings>
     {
-        private readonly OperationOrResponseInternals<DiagnosticSettingsResource> _operation;
+        private readonly OperationOrResponseInternals<DiagnosticSettings> _operation;
 
         /// <summary> Initializes a new instance of DiagnosticSettingCreateOrUpdateOperation for mocking. </summary>
         protected DiagnosticSettingCreateOrUpdateOperation()
         {
         }
 
-        internal DiagnosticSettingCreateOrUpdateOperation(ArmResource operationsBase, Response<DiagnosticSettingsResourceData> response)
+        internal DiagnosticSettingCreateOrUpdateOperation(ArmResource operationsBase, Response<DiagnosticSettingsData> response)
         {
-            _operation = new OperationOrResponseInternals<DiagnosticSettingsResource>(Azure.Response.FromValue(new DiagnosticSettingsResource(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<DiagnosticSettings>(Azure.Response.FromValue(new DiagnosticSettings(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override DiagnosticSettingsResource Value => _operation.Value;
+        public override DiagnosticSettings Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public override ValueTask<Azure.Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<DiagnosticSettingsResource>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<DiagnosticSettings>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<DiagnosticSettingsResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<DiagnosticSettings>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

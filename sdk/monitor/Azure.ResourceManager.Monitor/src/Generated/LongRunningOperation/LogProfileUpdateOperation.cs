@@ -16,25 +16,25 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Updates an existing LogProfilesResource. To update other fields use the CreateOrUpdate method. </summary>
-    public partial class LogProfileUpdateOperation : Operation<LogProfileResource>
+    public partial class LogProfileUpdateOperation : Operation<LogProfile>
     {
-        private readonly OperationOrResponseInternals<LogProfileResource> _operation;
+        private readonly OperationOrResponseInternals<LogProfile> _operation;
 
         /// <summary> Initializes a new instance of LogProfileUpdateOperation for mocking. </summary>
         protected LogProfileUpdateOperation()
         {
         }
 
-        internal LogProfileUpdateOperation(ArmResource operationsBase, Response<LogProfileResourceData> response)
+        internal LogProfileUpdateOperation(ArmResource operationsBase, Response<LogProfileData> response)
         {
-            _operation = new OperationOrResponseInternals<LogProfileResource>(Azure.Response.FromValue(new LogProfileResource(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<LogProfile>(Azure.Response.FromValue(new LogProfile(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override LogProfileResource Value => _operation.Value;
+        public override LogProfile Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public override ValueTask<Azure.Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<LogProfileResource>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<LogProfile>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<LogProfileResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<LogProfile>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

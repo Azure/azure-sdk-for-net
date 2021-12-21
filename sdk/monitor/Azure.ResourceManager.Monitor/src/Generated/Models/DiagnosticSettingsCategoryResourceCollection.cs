@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of DiagnosticSettingsCategoryResourceCollection. </summary>
         internal DiagnosticSettingsCategoryResourceCollection()
         {
-            Value = new ChangeTrackingList<DiagnosticSettingsCategoryResourceData>();
+            Value = new ChangeTrackingList<DiagnosticSettingsCategoryData>();
         }
 
         /// <summary> Initializes a new instance of DiagnosticSettingsCategoryResourceCollection. </summary>
         /// <param name="value"> The collection of diagnostic settings category resources. </param>
-        internal DiagnosticSettingsCategoryResourceCollection(IReadOnlyList<DiagnosticSettingsCategoryResourceData> value)
+        internal DiagnosticSettingsCategoryResourceCollection(IReadOnlyList<DiagnosticSettingsCategoryData> value)
         {
             Value = value;
         }
 
         /// <summary> The collection of diagnostic settings category resources. </summary>
-        public IReadOnlyList<DiagnosticSettingsCategoryResourceData> Value { get; }
+        public IReadOnlyList<DiagnosticSettingsCategoryData> Value { get; }
     }
 }

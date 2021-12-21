@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string actionGroupName, ActionGroupResourceData actionGroup)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string actionGroupName, ActionGroupData actionGroup)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="actionGroup"> The action group to create or use for the update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="actionGroupName"/>, or <paramref name="actionGroup"/> is null. </exception>
-        public async Task<Response<ActionGroupResourceData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string actionGroupName, ActionGroupResourceData actionGroup, CancellationToken cancellationToken = default)
+        public async Task<Response<ActionGroupData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string actionGroupName, ActionGroupData actionGroup, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                 case 201:
                     {
-                        ActionGroupResourceData value = default;
+                        ActionGroupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ActionGroupResourceData.DeserializeActionGroupResourceData(document.RootElement);
+                        value = ActionGroupData.DeserializeActionGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="actionGroup"> The action group to create or use for the update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="actionGroupName"/>, or <paramref name="actionGroup"/> is null. </exception>
-        public Response<ActionGroupResourceData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string actionGroupName, ActionGroupResourceData actionGroup, CancellationToken cancellationToken = default)
+        public Response<ActionGroupData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string actionGroupName, ActionGroupData actionGroup, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -137,9 +137,9 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                 case 201:
                     {
-                        ActionGroupResourceData value = default;
+                        ActionGroupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ActionGroupResourceData.DeserializeActionGroupResourceData(document.RootElement);
+                        value = ActionGroupData.DeserializeActionGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="actionGroupName"> The name of the action group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="actionGroupName"/> is null. </exception>
-        public async Task<Response<ActionGroupResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string actionGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<ActionGroupData>> GetAsync(string subscriptionId, string resourceGroupName, string actionGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -194,13 +194,13 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        ActionGroupResourceData value = default;
+                        ActionGroupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ActionGroupResourceData.DeserializeActionGroupResourceData(document.RootElement);
+                        value = ActionGroupData.DeserializeActionGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ActionGroupResourceData)null, message.Response);
+                    return Response.FromValue((ActionGroupData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="actionGroupName"> The name of the action group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="actionGroupName"/> is null. </exception>
-        public Response<ActionGroupResourceData> Get(string subscriptionId, string resourceGroupName, string actionGroupName, CancellationToken cancellationToken = default)
+        public Response<ActionGroupData> Get(string subscriptionId, string resourceGroupName, string actionGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -233,13 +233,13 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        ActionGroupResourceData value = default;
+                        ActionGroupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ActionGroupResourceData.DeserializeActionGroupResourceData(document.RootElement);
+                        value = ActionGroupData.DeserializeActionGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ActionGroupResourceData)null, message.Response);
+                    return Response.FromValue((ActionGroupData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="actionGroupPatch"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="actionGroupName"/>, or <paramref name="actionGroupPatch"/> is null. </exception>
-        public async Task<Response<ActionGroupResourceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string actionGroupName, ActionGroupPatchBody actionGroupPatch, CancellationToken cancellationToken = default)
+        public async Task<Response<ActionGroupData>> UpdateAsync(string subscriptionId, string resourceGroupName, string actionGroupName, ActionGroupPatchBody actionGroupPatch, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -387,9 +387,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        ActionGroupResourceData value = default;
+                        ActionGroupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ActionGroupResourceData.DeserializeActionGroupResourceData(document.RootElement);
+                        value = ActionGroupData.DeserializeActionGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="actionGroupPatch"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="actionGroupName"/>, or <paramref name="actionGroupPatch"/> is null. </exception>
-        public Response<ActionGroupResourceData> Update(string subscriptionId, string resourceGroupName, string actionGroupName, ActionGroupPatchBody actionGroupPatch, CancellationToken cancellationToken = default)
+        public Response<ActionGroupData> Update(string subscriptionId, string resourceGroupName, string actionGroupName, ActionGroupPatchBody actionGroupPatch, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -429,9 +429,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        ActionGroupResourceData value = default;
+                        ActionGroupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ActionGroupResourceData.DeserializeActionGroupResourceData(document.RootElement);
+                        value = ActionGroupData.DeserializeActionGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

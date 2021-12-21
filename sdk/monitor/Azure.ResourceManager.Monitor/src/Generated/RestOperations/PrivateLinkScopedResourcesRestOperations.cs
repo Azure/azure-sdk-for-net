@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="name"> The name of the scoped resource object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scopeName"/>, or <paramref name="name"/> is null. </exception>
-        public async Task<Response<ScopedResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string scopeName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<ScopedPrivateLinkData>> GetAsync(string subscriptionId, string resourceGroupName, string scopeName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -91,13 +91,13 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        ScopedResourceData value = default;
+                        ScopedPrivateLinkData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ScopedResourceData.DeserializeScopedResourceData(document.RootElement);
+                        value = ScopedPrivateLinkData.DeserializeScopedPrivateLinkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ScopedResourceData)null, message.Response);
+                    return Response.FromValue((ScopedPrivateLinkData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="name"> The name of the scoped resource object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scopeName"/>, or <paramref name="name"/> is null. </exception>
-        public Response<ScopedResourceData> Get(string subscriptionId, string resourceGroupName, string scopeName, string name, CancellationToken cancellationToken = default)
+        public Response<ScopedPrivateLinkData> Get(string subscriptionId, string resourceGroupName, string scopeName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -135,19 +135,19 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        ScopedResourceData value = default;
+                        ScopedPrivateLinkData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ScopedResourceData.DeserializeScopedResourceData(document.RootElement);
+                        value = ScopedPrivateLinkData.DeserializeScopedPrivateLinkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ScopedResourceData)null, message.Response);
+                    return Response.FromValue((ScopedPrivateLinkData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string scopeName, string name, ScopedResourceData parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string scopeName, string name, ScopedPrivateLinkData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -178,10 +178,10 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scopeName"> The name of the Azure Monitor PrivateLinkScope resource. </param>
         /// <param name="name"> The name of the scoped resource object. </param>
-        /// <param name="parameters"> The ScopedResource to use. </param>
+        /// <param name="parameters"> The ScopedPrivateLink to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scopeName"/>, <paramref name="name"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string scopeName, string name, ScopedResourceData parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string scopeName, string name, ScopedPrivateLinkData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -222,10 +222,10 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scopeName"> The name of the Azure Monitor PrivateLinkScope resource. </param>
         /// <param name="name"> The name of the scoped resource object. </param>
-        /// <param name="parameters"> The ScopedResource to use. </param>
+        /// <param name="parameters"> The ScopedPrivateLink to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scopeName"/>, <paramref name="name"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string scopeName, string name, ScopedResourceData parameters, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string scopeName, string name, ScopedPrivateLinkData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {

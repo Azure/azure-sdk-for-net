@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static ActivityLogAlertList DeserializeActivityLogAlertList(JsonElement element)
         {
-            Optional<IReadOnlyList<ActivityLogAlertResourceData>> value = default;
+            Optional<IReadOnlyList<ActivityLogAlertData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ActivityLogAlertResourceData> array = new List<ActivityLogAlertResourceData>();
+                    List<ActivityLogAlertData> array = new List<ActivityLogAlertData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActivityLogAlertResourceData.DeserializeActivityLogAlertResourceData(item));
+                        array.Add(ActivityLogAlertData.DeserializeActivityLogAlertData(item));
                     }
                     value = array;
                     continue;

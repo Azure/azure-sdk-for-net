@@ -16,25 +16,25 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Update an metric alert definition. </summary>
-    public partial class MetricAlertUpdateOperation : Operation<MetricAlertResource>
+    public partial class MetricAlertUpdateOperation : Operation<MetricAlert>
     {
-        private readonly OperationOrResponseInternals<MetricAlertResource> _operation;
+        private readonly OperationOrResponseInternals<MetricAlert> _operation;
 
         /// <summary> Initializes a new instance of MetricAlertUpdateOperation for mocking. </summary>
         protected MetricAlertUpdateOperation()
         {
         }
 
-        internal MetricAlertUpdateOperation(ArmResource operationsBase, Response<MetricAlertResourceData> response)
+        internal MetricAlertUpdateOperation(ArmResource operationsBase, Response<MetricAlertData> response)
         {
-            _operation = new OperationOrResponseInternals<MetricAlertResource>(Azure.Response.FromValue(new MetricAlertResource(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<MetricAlert>(Azure.Response.FromValue(new MetricAlert(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override MetricAlertResource Value => _operation.Value;
+        public override MetricAlert Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public override ValueTask<Azure.Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<MetricAlertResource>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<MetricAlert>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<MetricAlertResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<MetricAlert>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

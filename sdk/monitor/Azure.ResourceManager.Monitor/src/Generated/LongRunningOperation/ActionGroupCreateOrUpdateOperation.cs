@@ -16,25 +16,25 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Create a new action group or update an existing one. </summary>
-    public partial class ActionGroupCreateOrUpdateOperation : Operation<ActionGroupResource>
+    public partial class ActionGroupCreateOrUpdateOperation : Operation<ActionGroup>
     {
-        private readonly OperationOrResponseInternals<ActionGroupResource> _operation;
+        private readonly OperationOrResponseInternals<ActionGroup> _operation;
 
         /// <summary> Initializes a new instance of ActionGroupCreateOrUpdateOperation for mocking. </summary>
         protected ActionGroupCreateOrUpdateOperation()
         {
         }
 
-        internal ActionGroupCreateOrUpdateOperation(ArmResource operationsBase, Response<ActionGroupResourceData> response)
+        internal ActionGroupCreateOrUpdateOperation(ArmResource operationsBase, Response<ActionGroupData> response)
         {
-            _operation = new OperationOrResponseInternals<ActionGroupResource>(Azure.Response.FromValue(new ActionGroupResource(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<ActionGroup>(Azure.Response.FromValue(new ActionGroup(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override ActionGroupResource Value => _operation.Value;
+        public override ActionGroup Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public override ValueTask<Azure.Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<ActionGroupResource>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<ActionGroup>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<ActionGroupResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<ActionGroup>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

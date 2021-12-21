@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static DiagnosticSettingsResourceCollection DeserializeDiagnosticSettingsResourceCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<DiagnosticSettingsResourceData>> value = default;
+            Optional<IReadOnlyList<DiagnosticSettingsData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DiagnosticSettingsResourceData> array = new List<DiagnosticSettingsResourceData>();
+                    List<DiagnosticSettingsData> array = new List<DiagnosticSettingsData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiagnosticSettingsResourceData.DeserializeDiagnosticSettingsResourceData(item));
+                        array.Add(DiagnosticSettingsData.DeserializeDiagnosticSettingsData(item));
                     }
                     value = array;
                     continue;

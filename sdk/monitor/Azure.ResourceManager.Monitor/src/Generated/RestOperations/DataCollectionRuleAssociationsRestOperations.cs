@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="associationName"> The name of the association. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="associationName"/> is null. </exception>
-        public async Task<Response<DataCollectionRuleAssociationProxyOnlyResourceData>> GetAsync(string resourceUri, string associationName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataCollectionRuleAssociationData>> GetAsync(string resourceUri, string associationName, CancellationToken cancellationToken = default)
         {
             if (resourceUri == null)
             {
@@ -243,13 +243,13 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        DataCollectionRuleAssociationProxyOnlyResourceData value = default;
+                        DataCollectionRuleAssociationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DataCollectionRuleAssociationProxyOnlyResourceData.DeserializeDataCollectionRuleAssociationProxyOnlyResourceData(document.RootElement);
+                        value = DataCollectionRuleAssociationData.DeserializeDataCollectionRuleAssociationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DataCollectionRuleAssociationProxyOnlyResourceData)null, message.Response);
+                    return Response.FromValue((DataCollectionRuleAssociationData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="associationName"> The name of the association. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="associationName"/> is null. </exception>
-        public Response<DataCollectionRuleAssociationProxyOnlyResourceData> Get(string resourceUri, string associationName, CancellationToken cancellationToken = default)
+        public Response<DataCollectionRuleAssociationData> Get(string resourceUri, string associationName, CancellationToken cancellationToken = default)
         {
             if (resourceUri == null)
             {
@@ -277,19 +277,19 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        DataCollectionRuleAssociationProxyOnlyResourceData value = default;
+                        DataCollectionRuleAssociationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DataCollectionRuleAssociationProxyOnlyResourceData.DeserializeDataCollectionRuleAssociationProxyOnlyResourceData(document.RootElement);
+                        value = DataCollectionRuleAssociationData.DeserializeDataCollectionRuleAssociationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DataCollectionRuleAssociationProxyOnlyResourceData)null, message.Response);
+                    return Response.FromValue((DataCollectionRuleAssociationData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string resourceUri, string associationName, DataCollectionRuleAssociationProxyOnlyResourceData body)
+        internal HttpMessage CreateCreateRequest(string resourceUri, string associationName, DataCollectionRuleAssociationData body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="body"> The payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="associationName"/> is null. </exception>
-        public async Task<Response<DataCollectionRuleAssociationProxyOnlyResourceData>> CreateAsync(string resourceUri, string associationName, DataCollectionRuleAssociationProxyOnlyResourceData body = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataCollectionRuleAssociationData>> CreateAsync(string resourceUri, string associationName, DataCollectionRuleAssociationData body = null, CancellationToken cancellationToken = default)
         {
             if (resourceUri == null)
             {
@@ -338,9 +338,9 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                 case 201:
                     {
-                        DataCollectionRuleAssociationProxyOnlyResourceData value = default;
+                        DataCollectionRuleAssociationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DataCollectionRuleAssociationProxyOnlyResourceData.DeserializeDataCollectionRuleAssociationProxyOnlyResourceData(document.RootElement);
+                        value = DataCollectionRuleAssociationData.DeserializeDataCollectionRuleAssociationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="body"> The payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="associationName"/> is null. </exception>
-        public Response<DataCollectionRuleAssociationProxyOnlyResourceData> Create(string resourceUri, string associationName, DataCollectionRuleAssociationProxyOnlyResourceData body = null, CancellationToken cancellationToken = default)
+        public Response<DataCollectionRuleAssociationData> Create(string resourceUri, string associationName, DataCollectionRuleAssociationData body = null, CancellationToken cancellationToken = default)
         {
             if (resourceUri == null)
             {
@@ -372,9 +372,9 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                 case 201:
                     {
-                        DataCollectionRuleAssociationProxyOnlyResourceData value = default;
+                        DataCollectionRuleAssociationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DataCollectionRuleAssociationProxyOnlyResourceData.DeserializeDataCollectionRuleAssociationProxyOnlyResourceData(document.RootElement);
+                        value = DataCollectionRuleAssociationData.DeserializeDataCollectionRuleAssociationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

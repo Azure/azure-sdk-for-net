@@ -20,93 +20,93 @@ namespace Azure.ResourceManager.Monitor
     /// <summary> A class to add extension methods to ResourceGroup. </summary>
     public static partial class ResourceGroupExtensions
     {
-        #region AutoscaleSettingResource
-        /// <summary> Gets an object representing a AutoscaleSettingResourceCollection along with the instance operations that can be performed on it. </summary>
+        #region AutoscaleSetting
+        /// <summary> Gets an object representing a AutoscaleSettingCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="AutoscaleSettingResourceCollection" /> object. </returns>
-        public static AutoscaleSettingResourceCollection GetAutoscaleSettingResources(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="AutoscaleSettingCollection" /> object. </returns>
+        public static AutoscaleSettingCollection GetAutoscaleSettings(this ResourceGroup resourceGroup)
         {
-            return new AutoscaleSettingResourceCollection(resourceGroup);
+            return new AutoscaleSettingCollection(resourceGroup);
         }
         #endregion
 
-        #region AlertRuleResource
-        /// <summary> Gets an object representing a AlertRuleResourceCollection along with the instance operations that can be performed on it. </summary>
+        #region AlertRule
+        /// <summary> Gets an object representing a AlertRuleCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="AlertRuleResourceCollection" /> object. </returns>
-        public static AlertRuleResourceCollection GetAlertRuleResources(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="AlertRuleCollection" /> object. </returns>
+        public static AlertRuleCollection GetAlertRules(this ResourceGroup resourceGroup)
         {
-            return new AlertRuleResourceCollection(resourceGroup);
+            return new AlertRuleCollection(resourceGroup);
         }
         #endregion
 
-        #region ActionGroupResource
-        /// <summary> Gets an object representing a ActionGroupResourceCollection along with the instance operations that can be performed on it. </summary>
+        #region ActionGroup
+        /// <summary> Gets an object representing a ActionGroupCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ActionGroupResourceCollection" /> object. </returns>
-        public static ActionGroupResourceCollection GetActionGroupResources(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="ActionGroupCollection" /> object. </returns>
+        public static ActionGroupCollection GetActionGroups(this ResourceGroup resourceGroup)
         {
-            return new ActionGroupResourceCollection(resourceGroup);
+            return new ActionGroupCollection(resourceGroup);
         }
         #endregion
 
-        #region MetricAlertResource
-        /// <summary> Gets an object representing a MetricAlertResourceCollection along with the instance operations that can be performed on it. </summary>
+        #region MetricAlert
+        /// <summary> Gets an object representing a MetricAlertCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="MetricAlertResourceCollection" /> object. </returns>
-        public static MetricAlertResourceCollection GetMetricAlertResources(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="MetricAlertCollection" /> object. </returns>
+        public static MetricAlertCollection GetMetricAlerts(this ResourceGroup resourceGroup)
         {
-            return new MetricAlertResourceCollection(resourceGroup);
+            return new MetricAlertCollection(resourceGroup);
         }
         #endregion
 
-        #region LogSearchRuleResource
-        /// <summary> Gets an object representing a LogSearchRuleResourceCollection along with the instance operations that can be performed on it. </summary>
+        #region LogSearchRule
+        /// <summary> Gets an object representing a LogSearchRuleCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="LogSearchRuleResourceCollection" /> object. </returns>
-        public static LogSearchRuleResourceCollection GetLogSearchRuleResources(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="LogSearchRuleCollection" /> object. </returns>
+        public static LogSearchRuleCollection GetLogSearchRules(this ResourceGroup resourceGroup)
         {
-            return new LogSearchRuleResourceCollection(resourceGroup);
+            return new LogSearchRuleCollection(resourceGroup);
         }
         #endregion
 
-        #region AzureMonitorPrivateLinkScope
-        /// <summary> Gets an object representing a AzureMonitorPrivateLinkScopeCollection along with the instance operations that can be performed on it. </summary>
+        #region PrivateLinkScope
+        /// <summary> Gets an object representing a PrivateLinkScopeCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="AzureMonitorPrivateLinkScopeCollection" /> object. </returns>
-        public static AzureMonitorPrivateLinkScopeCollection GetAzureMonitorPrivateLinkScopes(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="PrivateLinkScopeCollection" /> object. </returns>
+        public static PrivateLinkScopeCollection GetPrivateLinkScopes(this ResourceGroup resourceGroup)
         {
-            return new AzureMonitorPrivateLinkScopeCollection(resourceGroup);
+            return new PrivateLinkScopeCollection(resourceGroup);
         }
         #endregion
 
-        #region ActivityLogAlertResource
-        /// <summary> Gets an object representing a ActivityLogAlertResourceCollection along with the instance operations that can be performed on it. </summary>
+        #region ActivityLogAlert
+        /// <summary> Gets an object representing a ActivityLogAlertCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ActivityLogAlertResourceCollection" /> object. </returns>
-        public static ActivityLogAlertResourceCollection GetActivityLogAlertResources(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="ActivityLogAlertCollection" /> object. </returns>
+        public static ActivityLogAlertCollection GetActivityLogAlerts(this ResourceGroup resourceGroup)
         {
-            return new ActivityLogAlertResourceCollection(resourceGroup);
+            return new ActivityLogAlertCollection(resourceGroup);
         }
         #endregion
 
-        #region DataCollectionEndpointResource
-        /// <summary> Gets an object representing a DataCollectionEndpointResourceCollection along with the instance operations that can be performed on it. </summary>
+        #region DataCollectionEndpoint
+        /// <summary> Gets an object representing a DataCollectionEndpointCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DataCollectionEndpointResourceCollection" /> object. </returns>
-        public static DataCollectionEndpointResourceCollection GetDataCollectionEndpointResources(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="DataCollectionEndpointCollection" /> object. </returns>
+        public static DataCollectionEndpointCollection GetDataCollectionEndpoints(this ResourceGroup resourceGroup)
         {
-            return new DataCollectionEndpointResourceCollection(resourceGroup);
+            return new DataCollectionEndpointCollection(resourceGroup);
         }
         #endregion
 
-        #region DataCollectionRuleResource
-        /// <summary> Gets an object representing a DataCollectionRuleResourceCollection along with the instance operations that can be performed on it. </summary>
+        #region DataCollectionRule
+        /// <summary> Gets an object representing a DataCollectionRuleCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DataCollectionRuleResourceCollection" /> object. </returns>
-        public static DataCollectionRuleResourceCollection GetDataCollectionRuleResources(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="DataCollectionRuleCollection" /> object. </returns>
+        public static DataCollectionRuleCollection GetDataCollectionRules(this ResourceGroup resourceGroup)
         {
-            return new DataCollectionRuleResourceCollection(resourceGroup);
+            return new DataCollectionRuleCollection(resourceGroup);
         }
         #endregion
 

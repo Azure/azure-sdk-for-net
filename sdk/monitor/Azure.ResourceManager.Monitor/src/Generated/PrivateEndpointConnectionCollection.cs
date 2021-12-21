@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => AzureMonitorPrivateLinkScope.ResourceType;
+        protected override ResourceType ValidResourceType => PrivateLinkScope.ResourceType;
 
         // Collection level operations.
 

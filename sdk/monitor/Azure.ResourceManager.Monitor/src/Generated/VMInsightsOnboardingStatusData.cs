@@ -13,16 +13,16 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    /// <summary> A class representing the VMInsightsOnboardingStatus data model. </summary>
-    public partial class VMInsightsOnboardingStatusData : Resource
+    /// <summary> A class representing the VmInsightsOnboardingStatus data model. </summary>
+    public partial class VmInsightsOnboardingStatusData : Resource
     {
-        /// <summary> Initializes a new instance of VMInsightsOnboardingStatusData. </summary>
-        public VMInsightsOnboardingStatusData()
+        /// <summary> Initializes a new instance of VmInsightsOnboardingStatusData. </summary>
+        public VmInsightsOnboardingStatusData()
         {
             Data = new ChangeTrackingList<DataContainer>();
         }
 
-        /// <summary> Initializes a new instance of VMInsightsOnboardingStatusData. </summary>
+        /// <summary> Initializes a new instance of VmInsightsOnboardingStatusData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="onboardingStatus"> The onboarding status for the resource. Note that, a higher level scope, e.g., resource group or subscription, is considered onboarded if at least one resource under it is onboarded. </param>
         /// <param name="dataStatus"> The status of VM Insights data from the resource. When reported as `present` the data array will contain information about the data containers to which data for the specified resource is being routed. </param>
         /// <param name="data"> Containers that currently store VM Insights data for the specified resource. </param>
-        internal VMInsightsOnboardingStatusData(ResourceIdentifier id, string name, ResourceType type, string resourceId, OnboardingStatus? onboardingStatus, DataStatus? dataStatus, IList<DataContainer> data) : base(id, name, type)
+        internal VmInsightsOnboardingStatusData(ResourceIdentifier id, string name, ResourceType type, string resourceId, OnboardingStatus? onboardingStatus, DataStatus? dataStatus, IList<DataContainer> data) : base(id, name, type)
         {
             ResourceId = resourceId;
             OnboardingStatus = onboardingStatus;

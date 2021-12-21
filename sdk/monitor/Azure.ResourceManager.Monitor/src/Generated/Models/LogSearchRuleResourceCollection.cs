@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of LogSearchRuleResourceCollection. </summary>
         internal LogSearchRuleResourceCollection()
         {
-            Value = new ChangeTrackingList<LogSearchRuleResourceData>();
+            Value = new ChangeTrackingList<LogSearchRuleData>();
         }
 
         /// <summary> Initializes a new instance of LogSearchRuleResourceCollection. </summary>
         /// <param name="value"> The values for the Log Search Rule resources. </param>
-        internal LogSearchRuleResourceCollection(IReadOnlyList<LogSearchRuleResourceData> value)
+        internal LogSearchRuleResourceCollection(IReadOnlyList<LogSearchRuleData> value)
         {
             Value = value;
         }
 
         /// <summary> The values for the Log Search Rule resources. </summary>
-        public IReadOnlyList<LogSearchRuleResourceData> Value { get; }
+        public IReadOnlyList<LogSearchRuleData> Value { get; }
     }
 }

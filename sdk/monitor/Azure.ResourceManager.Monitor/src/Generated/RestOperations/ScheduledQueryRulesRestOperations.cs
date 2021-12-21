@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string ruleName, LogSearchRuleResourceData parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string ruleName, LogSearchRuleData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="parameters"> The parameters of the rule to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ruleName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<LogSearchRuleResourceData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string ruleName, LogSearchRuleResourceData parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<LogSearchRuleData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string ruleName, LogSearchRuleData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                 case 201:
                     {
-                        LogSearchRuleResourceData value = default;
+                        LogSearchRuleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LogSearchRuleResourceData.DeserializeLogSearchRuleResourceData(document.RootElement);
+                        value = LogSearchRuleData.DeserializeLogSearchRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="parameters"> The parameters of the rule to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ruleName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<LogSearchRuleResourceData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string ruleName, LogSearchRuleResourceData parameters, CancellationToken cancellationToken = default)
+        public Response<LogSearchRuleData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string ruleName, LogSearchRuleData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -137,9 +137,9 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                 case 201:
                     {
-                        LogSearchRuleResourceData value = default;
+                        LogSearchRuleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LogSearchRuleResourceData.DeserializeLogSearchRuleResourceData(document.RootElement);
+                        value = LogSearchRuleData.DeserializeLogSearchRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="ruleName"/> is null. </exception>
-        public async Task<Response<LogSearchRuleResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string ruleName, CancellationToken cancellationToken = default)
+        public async Task<Response<LogSearchRuleData>> GetAsync(string subscriptionId, string resourceGroupName, string ruleName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -194,13 +194,13 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        LogSearchRuleResourceData value = default;
+                        LogSearchRuleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LogSearchRuleResourceData.DeserializeLogSearchRuleResourceData(document.RootElement);
+                        value = LogSearchRuleData.DeserializeLogSearchRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((LogSearchRuleResourceData)null, message.Response);
+                    return Response.FromValue((LogSearchRuleData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="ruleName"/> is null. </exception>
-        public Response<LogSearchRuleResourceData> Get(string subscriptionId, string resourceGroupName, string ruleName, CancellationToken cancellationToken = default)
+        public Response<LogSearchRuleData> Get(string subscriptionId, string resourceGroupName, string ruleName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -233,13 +233,13 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        LogSearchRuleResourceData value = default;
+                        LogSearchRuleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LogSearchRuleResourceData.DeserializeLogSearchRuleResourceData(document.RootElement);
+                        value = LogSearchRuleData.DeserializeLogSearchRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((LogSearchRuleResourceData)null, message.Response);
+                    return Response.FromValue((LogSearchRuleData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="parameters"> The parameters of the rule to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ruleName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<LogSearchRuleResourceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string ruleName, LogSearchRuleResourcePatch parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<LogSearchRuleData>> UpdateAsync(string subscriptionId, string resourceGroupName, string ruleName, LogSearchRuleResourcePatch parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -301,9 +301,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        LogSearchRuleResourceData value = default;
+                        LogSearchRuleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LogSearchRuleResourceData.DeserializeLogSearchRuleResourceData(document.RootElement);
+                        value = LogSearchRuleData.DeserializeLogSearchRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="parameters"> The parameters of the rule to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ruleName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<LogSearchRuleResourceData> Update(string subscriptionId, string resourceGroupName, string ruleName, LogSearchRuleResourcePatch parameters, CancellationToken cancellationToken = default)
+        public Response<LogSearchRuleData> Update(string subscriptionId, string resourceGroupName, string ruleName, LogSearchRuleResourcePatch parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -343,9 +343,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        LogSearchRuleResourceData value = default;
+                        LogSearchRuleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LogSearchRuleResourceData.DeserializeLogSearchRuleResourceData(document.RootElement);
+                        value = LogSearchRuleData.DeserializeLogSearchRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://msdn.microsoft.com/en-us/library/azure/dn931934.aspx. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public async Task<Response<Models.LogSearchRuleResourceCollection>> ListBySubscriptionAsync(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<LogSearchRuleResourceCollection>> ListBySubscriptionAsync(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -478,9 +478,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        Models.LogSearchRuleResourceCollection value = default;
+                        LogSearchRuleResourceCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.LogSearchRuleResourceCollection.DeserializeLogSearchRuleResourceCollection(document.RootElement);
+                        value = LogSearchRuleResourceCollection.DeserializeLogSearchRuleResourceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://msdn.microsoft.com/en-us/library/azure/dn931934.aspx. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public Response<Models.LogSearchRuleResourceCollection> ListBySubscription(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
+        public Response<LogSearchRuleResourceCollection> ListBySubscription(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -506,9 +506,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        Models.LogSearchRuleResourceCollection value = default;
+                        LogSearchRuleResourceCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.LogSearchRuleResourceCollection.DeserializeLogSearchRuleResourceCollection(document.RootElement);
+                        value = LogSearchRuleResourceCollection.DeserializeLogSearchRuleResourceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://msdn.microsoft.com/en-us/library/azure/dn931934.aspx. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<Models.LogSearchRuleResourceCollection>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<LogSearchRuleResourceCollection>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -562,9 +562,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        Models.LogSearchRuleResourceCollection value = default;
+                        LogSearchRuleResourceCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.LogSearchRuleResourceCollection.DeserializeLogSearchRuleResourceCollection(document.RootElement);
+                        value = LogSearchRuleResourceCollection.DeserializeLogSearchRuleResourceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://msdn.microsoft.com/en-us/library/azure/dn931934.aspx. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<Models.LogSearchRuleResourceCollection> ListByResourceGroup(string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
+        public Response<LogSearchRuleResourceCollection> ListByResourceGroup(string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -595,9 +595,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        Models.LogSearchRuleResourceCollection value = default;
+                        LogSearchRuleResourceCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.LogSearchRuleResourceCollection.DeserializeLogSearchRuleResourceCollection(document.RootElement);
+                        value = LogSearchRuleResourceCollection.DeserializeLogSearchRuleResourceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

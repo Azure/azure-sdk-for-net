@@ -16,25 +16,25 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Creates or updates an association. </summary>
-    public partial class DataCollectionRuleAssociationCreateOperation : Operation<DataCollectionRuleAssociationProxyOnlyResource>
+    public partial class DataCollectionRuleAssociationCreateOperation : Operation<DataCollectionRuleAssociation>
     {
-        private readonly OperationOrResponseInternals<DataCollectionRuleAssociationProxyOnlyResource> _operation;
+        private readonly OperationOrResponseInternals<DataCollectionRuleAssociation> _operation;
 
         /// <summary> Initializes a new instance of DataCollectionRuleAssociationCreateOperation for mocking. </summary>
         protected DataCollectionRuleAssociationCreateOperation()
         {
         }
 
-        internal DataCollectionRuleAssociationCreateOperation(ArmResource operationsBase, Response<DataCollectionRuleAssociationProxyOnlyResourceData> response)
+        internal DataCollectionRuleAssociationCreateOperation(ArmResource operationsBase, Response<DataCollectionRuleAssociationData> response)
         {
-            _operation = new OperationOrResponseInternals<DataCollectionRuleAssociationProxyOnlyResource>(Azure.Response.FromValue(new DataCollectionRuleAssociationProxyOnlyResource(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<DataCollectionRuleAssociation>(Azure.Response.FromValue(new DataCollectionRuleAssociation(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override DataCollectionRuleAssociationProxyOnlyResource Value => _operation.Value;
+        public override DataCollectionRuleAssociation Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public override ValueTask<Azure.Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<DataCollectionRuleAssociationProxyOnlyResource>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<DataCollectionRuleAssociation>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<DataCollectionRuleAssociationProxyOnlyResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<DataCollectionRuleAssociation>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

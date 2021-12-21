@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of MetricAlertResourceCollection. </summary>
         internal MetricAlertResourceCollection()
         {
-            Value = new ChangeTrackingList<MetricAlertResourceData>();
+            Value = new ChangeTrackingList<MetricAlertData>();
         }
 
         /// <summary> Initializes a new instance of MetricAlertResourceCollection. </summary>
         /// <param name="value"> the values for the alert rule resources. </param>
-        internal MetricAlertResourceCollection(IReadOnlyList<MetricAlertResourceData> value)
+        internal MetricAlertResourceCollection(IReadOnlyList<MetricAlertData> value)
         {
             Value = value;
         }
 
         /// <summary> the values for the alert rule resources. </summary>
-        public IReadOnlyList<MetricAlertResourceData> Value { get; }
+        public IReadOnlyList<MetricAlertData> Value { get; }
     }
 }

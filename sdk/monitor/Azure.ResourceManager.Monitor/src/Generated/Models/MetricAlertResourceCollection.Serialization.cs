@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static MetricAlertResourceCollection DeserializeMetricAlertResourceCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<MetricAlertResourceData>> value = default;
+            Optional<IReadOnlyList<MetricAlertData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MetricAlertResourceData> array = new List<MetricAlertResourceData>();
+                    List<MetricAlertData> array = new List<MetricAlertData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricAlertResourceData.DeserializeMetricAlertResourceData(item));
+                        array.Add(MetricAlertData.DeserializeMetricAlertData(item));
                     }
                     value = array;
                     continue;

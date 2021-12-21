@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static AutoscaleSettingResourceCollection DeserializeAutoscaleSettingResourceCollection(JsonElement element)
         {
-            IReadOnlyList<AutoscaleSettingResourceData> value = default;
+            IReadOnlyList<AutoscaleSettingData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<AutoscaleSettingResourceData> array = new List<AutoscaleSettingResourceData>();
+                    List<AutoscaleSettingData> array = new List<AutoscaleSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutoscaleSettingResourceData.DeserializeAutoscaleSettingResourceData(item));
+                        array.Add(AutoscaleSettingData.DeserializeAutoscaleSettingData(item));
                     }
                     value = array;
                     continue;

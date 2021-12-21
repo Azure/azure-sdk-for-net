@@ -16,25 +16,25 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Updates part of a data collection rule. </summary>
-    public partial class DataCollectionRuleUpdateOperation : Operation<DataCollectionRuleResource>
+    public partial class DataCollectionRuleUpdateOperation : Operation<DataCollectionRule>
     {
-        private readonly OperationOrResponseInternals<DataCollectionRuleResource> _operation;
+        private readonly OperationOrResponseInternals<DataCollectionRule> _operation;
 
         /// <summary> Initializes a new instance of DataCollectionRuleUpdateOperation for mocking. </summary>
         protected DataCollectionRuleUpdateOperation()
         {
         }
 
-        internal DataCollectionRuleUpdateOperation(ArmResource operationsBase, Response<DataCollectionRuleResourceData> response)
+        internal DataCollectionRuleUpdateOperation(ArmResource operationsBase, Response<DataCollectionRuleData> response)
         {
-            _operation = new OperationOrResponseInternals<DataCollectionRuleResource>(Azure.Response.FromValue(new DataCollectionRuleResource(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<DataCollectionRule>(Azure.Response.FromValue(new DataCollectionRule(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override DataCollectionRuleResource Value => _operation.Value;
+        public override DataCollectionRule Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public override ValueTask<Azure.Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<DataCollectionRuleResource>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<DataCollectionRule>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<DataCollectionRuleResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<DataCollectionRule>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

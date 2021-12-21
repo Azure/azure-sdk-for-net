@@ -16,25 +16,25 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Updates an existing PrivateLinkScope&apos;s tags. To update other fields use the CreateOrUpdate method. </summary>
-    public partial class PrivateLinkScopeUpdateTagsOperation : Operation<AzureMonitorPrivateLinkScope>
+    public partial class PrivateLinkScopeUpdateTagsOperation : Operation<PrivateLinkScope>
     {
-        private readonly OperationOrResponseInternals<AzureMonitorPrivateLinkScope> _operation;
+        private readonly OperationOrResponseInternals<PrivateLinkScope> _operation;
 
         /// <summary> Initializes a new instance of PrivateLinkScopeUpdateTagsOperation for mocking. </summary>
         protected PrivateLinkScopeUpdateTagsOperation()
         {
         }
 
-        internal PrivateLinkScopeUpdateTagsOperation(ArmResource operationsBase, Response<AzureMonitorPrivateLinkScopeData> response)
+        internal PrivateLinkScopeUpdateTagsOperation(ArmResource operationsBase, Response<PrivateLinkScopeData> response)
         {
-            _operation = new OperationOrResponseInternals<AzureMonitorPrivateLinkScope>(Azure.Response.FromValue(new AzureMonitorPrivateLinkScope(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<PrivateLinkScope>(Azure.Response.FromValue(new PrivateLinkScope(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override AzureMonitorPrivateLinkScope Value => _operation.Value;
+        public override PrivateLinkScope Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public override ValueTask<Azure.Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<AzureMonitorPrivateLinkScope>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<PrivateLinkScope>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<AzureMonitorPrivateLinkScope>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<PrivateLinkScope>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

@@ -18,9 +18,9 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Approve or reject a private endpoint connection with a given name. </summary>
-    public partial class PrivateLinkScopedResourceCreateOrUpdateOperation : Operation<ScopedResource>, IOperationSource<ScopedResource>
+    public partial class PrivateLinkScopedResourceCreateOrUpdateOperation : Operation<ScopedPrivateLink>, IOperationSource<ScopedPrivateLink>
     {
-        private readonly OperationInternals<ScopedResource> _operation;
+        private readonly OperationInternals<ScopedPrivateLink> _operation;
 
         private readonly ArmResource _operationBase;
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal PrivateLinkScopedResourceCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Azure.Response response)
         {
-            _operation = new OperationInternals<ScopedResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PrivateLinkScopedResourceCreateOrUpdateOperation");
+            _operation = new OperationInternals<ScopedPrivateLink>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PrivateLinkScopedResourceCreateOrUpdateOperation");
             _operationBase = operationsBase;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override ScopedResource Value => _operation.Value;
+        public override ScopedPrivateLink Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.Monitor.Models
         public override ValueTask<Azure.Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<ScopedResource>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<ScopedPrivateLink>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<ScopedResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<ScopedPrivateLink>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        ScopedResource IOperationSource<ScopedResource>.CreateResult(Azure.Response response, CancellationToken cancellationToken)
+        ScopedPrivateLink IOperationSource<ScopedPrivateLink>.CreateResult(Azure.Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ScopedResource(_operationBase, ScopedResourceData.DeserializeScopedResourceData(document.RootElement));
+            return new ScopedPrivateLink(_operationBase, ScopedPrivateLinkData.DeserializeScopedPrivateLinkData(document.RootElement));
         }
 
-        async ValueTask<ScopedResource> IOperationSource<ScopedResource>.CreateResultAsync(Azure.Response response, CancellationToken cancellationToken)
+        async ValueTask<ScopedPrivateLink> IOperationSource<ScopedPrivateLink>.CreateResultAsync(Azure.Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ScopedResource(_operationBase, ScopedResourceData.DeserializeScopedResourceData(document.RootElement));
+            return new ScopedPrivateLink(_operationBase, ScopedPrivateLinkData.DeserializeScopedPrivateLinkData(document.RootElement));
         }
     }
 }

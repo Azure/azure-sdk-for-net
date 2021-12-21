@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="dataCollectionEndpointName"> The name of the data collection endpoint. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="dataCollectionEndpointName"/> is null. </exception>
-        public async Task<Response<DataCollectionEndpointResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string dataCollectionEndpointName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataCollectionEndpointData>> GetAsync(string subscriptionId, string resourceGroupName, string dataCollectionEndpointName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -238,13 +238,13 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        DataCollectionEndpointResourceData value = default;
+                        DataCollectionEndpointData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DataCollectionEndpointResourceData.DeserializeDataCollectionEndpointResourceData(document.RootElement);
+                        value = DataCollectionEndpointData.DeserializeDataCollectionEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DataCollectionEndpointResourceData)null, message.Response);
+                    return Response.FromValue((DataCollectionEndpointData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="dataCollectionEndpointName"> The name of the data collection endpoint. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="dataCollectionEndpointName"/> is null. </exception>
-        public Response<DataCollectionEndpointResourceData> Get(string subscriptionId, string resourceGroupName, string dataCollectionEndpointName, CancellationToken cancellationToken = default)
+        public Response<DataCollectionEndpointData> Get(string subscriptionId, string resourceGroupName, string dataCollectionEndpointName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -277,19 +277,19 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        DataCollectionEndpointResourceData value = default;
+                        DataCollectionEndpointData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DataCollectionEndpointResourceData.DeserializeDataCollectionEndpointResourceData(document.RootElement);
+                        value = DataCollectionEndpointData.DeserializeDataCollectionEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DataCollectionEndpointResourceData)null, message.Response);
+                    return Response.FromValue((DataCollectionEndpointData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string dataCollectionEndpointName, DataCollectionEndpointResourceData body)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string dataCollectionEndpointName, DataCollectionEndpointData body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="body"> The payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="dataCollectionEndpointName"/> is null. </exception>
-        public async Task<Response<DataCollectionEndpointResourceData>> CreateAsync(string subscriptionId, string resourceGroupName, string dataCollectionEndpointName, DataCollectionEndpointResourceData body = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataCollectionEndpointData>> CreateAsync(string subscriptionId, string resourceGroupName, string dataCollectionEndpointName, DataCollectionEndpointData body = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -345,9 +345,9 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                 case 201:
                     {
-                        DataCollectionEndpointResourceData value = default;
+                        DataCollectionEndpointData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DataCollectionEndpointResourceData.DeserializeDataCollectionEndpointResourceData(document.RootElement);
+                        value = DataCollectionEndpointData.DeserializeDataCollectionEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="body"> The payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="dataCollectionEndpointName"/> is null. </exception>
-        public Response<DataCollectionEndpointResourceData> Create(string subscriptionId, string resourceGroupName, string dataCollectionEndpointName, DataCollectionEndpointResourceData body = null, CancellationToken cancellationToken = default)
+        public Response<DataCollectionEndpointData> Create(string subscriptionId, string resourceGroupName, string dataCollectionEndpointName, DataCollectionEndpointData body = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -384,9 +384,9 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                 case 201:
                     {
-                        DataCollectionEndpointResourceData value = default;
+                        DataCollectionEndpointData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DataCollectionEndpointResourceData.DeserializeDataCollectionEndpointResourceData(document.RootElement);
+                        value = DataCollectionEndpointData.DeserializeDataCollectionEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="body"> The payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="dataCollectionEndpointName"/> is null. </exception>
-        public async Task<Response<DataCollectionEndpointResourceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string dataCollectionEndpointName, ResourceForUpdate body = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataCollectionEndpointData>> UpdateAsync(string subscriptionId, string resourceGroupName, string dataCollectionEndpointName, ResourceForUpdate body = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -449,9 +449,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        DataCollectionEndpointResourceData value = default;
+                        DataCollectionEndpointData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DataCollectionEndpointResourceData.DeserializeDataCollectionEndpointResourceData(document.RootElement);
+                        value = DataCollectionEndpointData.DeserializeDataCollectionEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="body"> The payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="dataCollectionEndpointName"/> is null. </exception>
-        public Response<DataCollectionEndpointResourceData> Update(string subscriptionId, string resourceGroupName, string dataCollectionEndpointName, ResourceForUpdate body = null, CancellationToken cancellationToken = default)
+        public Response<DataCollectionEndpointData> Update(string subscriptionId, string resourceGroupName, string dataCollectionEndpointName, ResourceForUpdate body = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -487,9 +487,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        DataCollectionEndpointResourceData value = default;
+                        DataCollectionEndpointData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DataCollectionEndpointResourceData.DeserializeDataCollectionEndpointResourceData(document.RootElement);
+                        value = DataCollectionEndpointData.DeserializeDataCollectionEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
