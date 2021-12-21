@@ -21,7 +21,7 @@ batch:
 These settings apply only when `--tag=package-common-type` is specified on the command line.
 
 ``` yaml $(tag) == 'package-common-type'
-output-folder: $(this-folder)/Generated
+output-folder: $(this-folder)/Common/Generated
 namespace: Azure.ResourceManager
 input-file:
 # temporarily using a local file to work around an autorest bug that loses extensions during deduplication of schemas: https://github.com/Azure/autorest/issues/4267
