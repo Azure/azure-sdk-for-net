@@ -1111,158 +1111,6 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
-        /// <summary> Add a user to the target group. </summary>
-        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="userId"> Target user Id. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="userId"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   code: string,
-        ///   message: string,
-        ///   target: string,
-        ///   details: [ErrorDetail],
-        ///   inner: {
-        ///     code: string,
-        ///     inner: InnerError
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> AddUserToGroupAsync(string group, string userId, RequestContext context = null)
-#pragma warning restore AZC0002
-        {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.AddUserToGroup");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateAddUserToGroupRequest(group, userId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Add a user to the target group. </summary>
-        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="userId"> Target user Id. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="userId"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   code: string,
-        ///   message: string,
-        ///   target: string,
-        ///   details: [ErrorDetail],
-        ///   inner: {
-        ///     code: string,
-        ///     inner: InnerError
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
-        public virtual Response AddUserToGroup(string group, string userId, RequestContext context = null)
-#pragma warning restore AZC0002
-        {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.AddUserToGroup");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateAddUserToGroupRequest(group, userId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Remove a user from the target group. </summary>
-        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="userId"> Target user Id. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="userId"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   code: string,
-        ///   message: string,
-        ///   target: string,
-        ///   details: [ErrorDetail],
-        ///   inner: {
-        ///     code: string,
-        ///     inner: InnerError
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> RemoveUserFromGroupAsync(string group, string userId, RequestContext context = null)
-#pragma warning restore AZC0002
-        {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromGroup");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateRemoveUserFromGroupRequest(group, userId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Remove a user from the target group. </summary>
-        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="userId"> Target user Id. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="userId"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   code: string,
-        ///   message: string,
-        ///   target: string,
-        ///   details: [ErrorDetail],
-        ///   inner: {
-        ///     code: string,
-        ///     inner: InnerError
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
-        public virtual Response RemoveUserFromGroup(string group, string userId, RequestContext context = null)
-#pragma warning restore AZC0002
-        {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromGroup");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateRemoveUserFromGroupRequest(group, userId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Remove a user from all groups. </summary>
         /// <param name="userId"> Target user Id. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
@@ -1999,7 +1847,7 @@ namespace Azure.Messaging.WebPubSub
             return message;
         }
 
-        internal HttpMessage CreateAddUserToGroupRequest(string group, string userId, RequestContext context)
+        internal HttpMessage CreateAddUserToGroupRequest(string userId, string group, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context);
             var request = message.Request;
@@ -2019,7 +1867,7 @@ namespace Azure.Messaging.WebPubSub
             return message;
         }
 
-        internal HttpMessage CreateRemoveUserFromGroupRequest(string group, string userId, RequestContext context)
+        internal HttpMessage CreateRemoveUserFromGroupRequest(string userId, string group, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context);
             var request = message.Request;

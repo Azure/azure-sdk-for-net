@@ -18,8 +18,8 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "startTime": "2021-10-01T00:00:00Z",
-        "endTime": "2021-10-31T00:00:00Z"
+        "startTime": "2021-10-01T00:00:00.0000000Z",
+        "endTime": "2021-10-31T00:00:00.0000000Z"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
@@ -35,7 +35,7 @@
       "ResponseBody": {
         "value": [
           {
-            "timestamp": "2021-10-30T00:00:00Z",
+            "timestamp": "2021-10-30T00:00:00.0000000Z",
             "dimension": {
               "region": "Cairo",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -47,7 +47,7 @@
             }
           },
           {
-            "timestamp": "2021-10-30T00:00:00Z",
+            "timestamp": "2021-10-30T00:00:00.0000000Z",
             "dimension": {
               "region": "__SUM__",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -59,7 +59,7 @@
             }
           },
           {
-            "timestamp": "2021-10-30T00:00:00Z",
+            "timestamp": "2021-10-30T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "Electronics (Accessories)"
@@ -71,7 +71,7 @@
             }
           },
           {
-            "timestamp": "2021-10-30T00:00:00Z",
+            "timestamp": "2021-10-30T00:00:00.0000000Z",
             "dimension": {
               "region": "Seoul",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -83,7 +83,7 @@
             }
           },
           {
-            "timestamp": "2021-10-30T00:00:00Z",
+            "timestamp": "2021-10-30T00:00:00.0000000Z",
             "dimension": {
               "region": "Cairo",
               "category": "Electronics (Accessories)"
@@ -95,7 +95,7 @@
             }
           },
           {
-            "timestamp": "2021-10-30T00:00:00Z",
+            "timestamp": "2021-10-30T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -107,7 +107,7 @@
             }
           },
           {
-            "timestamp": "2021-10-30T00:00:00Z",
+            "timestamp": "2021-10-30T00:00:00.0000000Z",
             "dimension": {
               "region": "Karachi",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -119,7 +119,7 @@
             }
           },
           {
-            "timestamp": "2021-10-30T00:00:00Z",
+            "timestamp": "2021-10-30T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Electronics (Consumer)"
@@ -131,7 +131,7 @@
             }
           },
           {
-            "timestamp": "2021-10-30T00:00:00Z",
+            "timestamp": "2021-10-30T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -143,7 +143,7 @@
             }
           },
           {
-            "timestamp": "2021-10-30T00:00:00Z",
+            "timestamp": "2021-10-30T00:00:00.0000000Z",
             "dimension": {
               "region": "Karachi",
               "category": "Electronics (Consumer)"
@@ -155,7 +155,7 @@
             }
           },
           {
-            "timestamp": "2021-10-30T00:00:00Z",
+            "timestamp": "2021-10-30T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Handmade"
@@ -167,7 +167,7 @@
             }
           },
           {
-            "timestamp": "2021-10-30T00:00:00Z",
+            "timestamp": "2021-10-30T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -179,7 +179,7 @@
             }
           },
           {
-            "timestamp": "2021-10-30T00:00:00Z",
+            "timestamp": "2021-10-30T00:00:00.0000000Z",
             "dimension": {
               "region": "Cairo",
               "category": "Electronics (Consumer)"
@@ -191,7 +191,7 @@
             }
           },
           {
-            "timestamp": "2021-10-30T00:00:00Z",
+            "timestamp": "2021-10-30T00:00:00.0000000Z",
             "dimension": {
               "region": "Miami",
               "category": "Electronics (Consumer)"
@@ -203,7 +203,7 @@
             }
           },
           {
-            "timestamp": "2021-10-30T00:00:00Z",
+            "timestamp": "2021-10-30T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Home \u0026 Garden"
@@ -215,7 +215,7 @@
             }
           },
           {
-            "timestamp": "2021-10-30T00:00:00Z",
+            "timestamp": "2021-10-30T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "Electronics (Consumer)"
@@ -227,7 +227,7 @@
             }
           },
           {
-            "timestamp": "2021-10-30T00:00:00Z",
+            "timestamp": "2021-10-30T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -239,7 +239,7 @@
             }
           },
           {
-            "timestamp": "2021-10-30T00:00:00Z",
+            "timestamp": "2021-10-30T00:00:00.0000000Z",
             "dimension": {
               "region": "__SUM__",
               "category": "Home \u0026 Garden"
@@ -251,7 +251,7 @@
             }
           },
           {
-            "timestamp": "2021-10-30T00:00:00Z",
+            "timestamp": "2021-10-30T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "__SUM__"
@@ -263,7 +263,7 @@
             }
           },
           {
-            "timestamp": "2021-10-30T00:00:00Z",
+            "timestamp": "2021-10-30T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -275,7 +275,7 @@
             }
           },
           {
-            "timestamp": "2021-10-30T00:00:00Z",
+            "timestamp": "2021-10-30T00:00:00.0000000Z",
             "dimension": {
               "region": "New York",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -287,7 +287,7 @@
             }
           },
           {
-            "timestamp": "2021-10-30T00:00:00Z",
+            "timestamp": "2021-10-30T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Electronics (Accessories)"
@@ -299,7 +299,7 @@
             }
           },
           {
-            "timestamp": "2021-10-30T00:00:00Z",
+            "timestamp": "2021-10-30T00:00:00.0000000Z",
             "dimension": {
               "region": "Karachi",
               "category": "Home \u0026 Garden"
@@ -311,7 +311,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Cairo",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -323,7 +323,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "__SUM__",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -335,7 +335,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Seoul",
               "category": "Office Products"
@@ -347,7 +347,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Miami",
               "category": "__SUM__"
@@ -359,7 +359,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Miami",
               "category": "Handmade"
@@ -371,7 +371,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Miami",
               "category": "Home \u0026 Garden"
@@ -383,7 +383,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Miami",
               "category": "Office Products"
@@ -395,7 +395,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "Electronics (Accessories)"
@@ -407,7 +407,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Seoul",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -419,7 +419,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Cairo",
               "category": "Handmade"
@@ -431,7 +431,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Cairo",
               "category": "Electronics (Accessories)"
@@ -443,7 +443,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "__SUM__",
               "category": "Handmade"
@@ -455,7 +455,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -467,7 +467,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "Handmade"
@@ -479,7 +479,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Cairo",
               "category": "Grocery \u0026 Gourmet Food"
@@ -491,7 +491,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Karachi",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -503,7 +503,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Seoul",
               "category": "Handmade"
@@ -515,7 +515,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Miami",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -527,7 +527,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "__SUM__"
@@ -539,7 +539,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Office Products"
@@ -551,7 +551,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Electronics (Consumer)"
@@ -563,7 +563,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "__SUM__",
               "category": "__SUM__"
@@ -575,7 +575,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -587,7 +587,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Karachi",
               "category": "Electronics (Consumer)"
@@ -599,7 +599,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "New York",
               "category": "Office Products"
@@ -611,7 +611,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "New York",
               "category": "__SUM__"
@@ -623,7 +623,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Cairo",
               "category": "__SUM__"
@@ -635,7 +635,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Handmade"
@@ -647,7 +647,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "New York",
               "category": "Electronics (Consumer)"
@@ -659,7 +659,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Seoul",
               "category": "Electronics (Consumer)"
@@ -671,7 +671,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -683,7 +683,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Cairo",
               "category": "Electronics (Consumer)"
@@ -695,7 +695,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "Office Products"
@@ -707,7 +707,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Miami",
               "category": "Electronics (Consumer)"
@@ -719,7 +719,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Home \u0026 Garden"
@@ -731,7 +731,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Office Products"
@@ -743,7 +743,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Seoul",
               "category": "Home \u0026 Garden"
@@ -755,7 +755,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "Handmade"
@@ -767,7 +767,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Seoul",
               "category": "__SUM__"
@@ -779,7 +779,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "Electronics (Consumer)"
@@ -791,7 +791,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "New York",
               "category": "Home \u0026 Garden"
@@ -803,7 +803,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Grocery \u0026 Gourmet Food"
@@ -815,7 +815,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "Electronics (Consumer)"
@@ -827,7 +827,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Cairo",
               "category": "Office Products"
@@ -839,7 +839,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Karachi",
               "category": "__SUM__"
@@ -851,7 +851,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -863,7 +863,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "__SUM__",
               "category": "Electronics (Consumer)"
@@ -875,7 +875,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "Office Products"
@@ -887,7 +887,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "__SUM__",
               "category": "Home \u0026 Garden"
@@ -899,7 +899,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "__SUM__",
               "category": "Office Products"
@@ -911,7 +911,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "__SUM__",
               "category": "Grocery \u0026 Gourmet Food"
@@ -923,7 +923,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "__SUM__"
@@ -935,7 +935,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Karachi",
               "category": "Office Products"
@@ -947,7 +947,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Electronics (Consumer)"
@@ -959,7 +959,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "Grocery \u0026 Gourmet Food"
@@ -971,7 +971,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Cairo",
               "category": "Home \u0026 Garden"
@@ -983,7 +983,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Miami",
               "category": "Electronics (Accessories)"
@@ -995,7 +995,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Karachi",
               "category": "Handmade"
@@ -1007,7 +1007,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Handmade"
@@ -1019,7 +1019,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "__SUM__"
@@ -1031,7 +1031,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Office Products"
@@ -1043,7 +1043,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "__SUM__"
@@ -1055,7 +1055,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Home \u0026 Garden"
@@ -1067,7 +1067,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -1079,7 +1079,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "New York",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -1091,7 +1091,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Grocery \u0026 Gourmet Food"
@@ -1103,7 +1103,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "New York",
               "category": "Handmade"
@@ -1115,7 +1115,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "Home \u0026 Garden"
@@ -1127,7 +1127,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Handmade"
@@ -1139,7 +1139,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "Home \u0026 Garden"
@@ -1151,7 +1151,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Electronics (Accessories)"
@@ -1163,7 +1163,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Karachi",
               "category": "Home \u0026 Garden"
@@ -1175,7 +1175,7 @@
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2021-10-29T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "__SUM__"
@@ -1187,7 +1187,7 @@
             }
           },
           {
-            "timestamp": "2021-10-28T00:00:00Z",
+            "timestamp": "2021-10-28T00:00:00.0000000Z",
             "dimension": {
               "region": "Miami",
               "category": "__SUM__"
@@ -1199,7 +1199,7 @@
             }
           },
           {
-            "timestamp": "2021-10-28T00:00:00Z",
+            "timestamp": "2021-10-28T00:00:00.0000000Z",
             "dimension": {
               "region": "Miami",
               "category": "Handmade"
@@ -1211,7 +1211,7 @@
             }
           },
           {
-            "timestamp": "2021-10-28T00:00:00Z",
+            "timestamp": "2021-10-28T00:00:00.0000000Z",
             "dimension": {
               "region": "Miami",
               "category": "Home \u0026 Garden"
@@ -1223,7 +1223,7 @@
             }
           },
           {
-            "timestamp": "2021-10-28T00:00:00Z",
+            "timestamp": "2021-10-28T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "Electronics (Accessories)"
@@ -1235,7 +1235,7 @@
             }
           },
           {
-            "timestamp": "2021-10-28T00:00:00Z",
+            "timestamp": "2021-10-28T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Home \u0026 Garden"
@@ -1247,7 +1247,7 @@
             }
           },
           {
-            "timestamp": "2021-10-28T00:00:00Z",
+            "timestamp": "2021-10-28T00:00:00.0000000Z",
             "dimension": {
               "region": "__SUM__",
               "category": "Handmade"
@@ -1259,7 +1259,7 @@
             }
           },
           {
-            "timestamp": "2021-10-28T00:00:00Z",
+            "timestamp": "2021-10-28T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "Handmade"
@@ -1271,7 +1271,7 @@
             }
           },
           {
-            "timestamp": "2021-10-28T00:00:00Z",
+            "timestamp": "2021-10-28T00:00:00.0000000Z",
             "dimension": {
               "region": "Miami",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -1283,7 +1283,7 @@
             }
           },
           {
-            "timestamp": "2021-10-28T00:00:00Z",
+            "timestamp": "2021-10-28T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "__SUM__"
@@ -1295,7 +1295,7 @@
             }
           },
           {
-            "timestamp": "2021-10-28T00:00:00Z",
+            "timestamp": "2021-10-28T00:00:00.0000000Z",
             "dimension": {
               "region": "__SUM__",
               "category": "__SUM__"
@@ -1307,7 +1307,7 @@
             }
           },
           {
-            "timestamp": "2021-10-28T00:00:00Z",
+            "timestamp": "2021-10-28T00:00:00.0000000Z",
             "dimension": {
               "region": "New York",
               "category": "__SUM__"
@@ -1319,7 +1319,7 @@
             }
           },
           {
-            "timestamp": "2021-10-28T00:00:00Z",
+            "timestamp": "2021-10-28T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Handmade"
@@ -1331,7 +1331,7 @@
             }
           },
           {
-            "timestamp": "2021-10-28T00:00:00Z",
+            "timestamp": "2021-10-28T00:00:00.0000000Z",
             "dimension": {
               "region": "Cairo",
               "category": "Electronics (Consumer)"
@@ -1343,7 +1343,7 @@
             }
           },
           {
-            "timestamp": "2021-10-28T00:00:00Z",
+            "timestamp": "2021-10-28T00:00:00.0000000Z",
             "dimension": {
               "region": "New York",
               "category": "Home \u0026 Garden"
@@ -1355,7 +1355,7 @@
             }
           },
           {
-            "timestamp": "2021-10-28T00:00:00Z",
+            "timestamp": "2021-10-28T00:00:00.0000000Z",
             "dimension": {
               "region": "Karachi",
               "category": "__SUM__"
@@ -1367,7 +1367,7 @@
             }
           },
           {
-            "timestamp": "2021-10-28T00:00:00Z",
+            "timestamp": "2021-10-28T00:00:00.0000000Z",
             "dimension": {
               "region": "__SUM__",
               "category": "Home \u0026 Garden"
@@ -1379,7 +1379,7 @@
             }
           },
           {
-            "timestamp": "2021-10-28T00:00:00Z",
+            "timestamp": "2021-10-28T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "__SUM__"
@@ -1391,7 +1391,7 @@
             }
           },
           {
-            "timestamp": "2021-10-28T00:00:00Z",
+            "timestamp": "2021-10-28T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Handmade"
@@ -1403,7 +1403,7 @@
             }
           },
           {
-            "timestamp": "2021-10-28T00:00:00Z",
+            "timestamp": "2021-10-28T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "__SUM__"
@@ -1415,7 +1415,7 @@
             }
           },
           {
-            "timestamp": "2021-10-28T00:00:00Z",
+            "timestamp": "2021-10-28T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Home \u0026 Garden"
@@ -1427,7 +1427,7 @@
             }
           },
           {
-            "timestamp": "2021-10-28T00:00:00Z",
+            "timestamp": "2021-10-28T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Grocery \u0026 Gourmet Food"
@@ -1439,7 +1439,7 @@
             }
           },
           {
-            "timestamp": "2021-10-28T00:00:00Z",
+            "timestamp": "2021-10-28T00:00:00.0000000Z",
             "dimension": {
               "region": "New York",
               "category": "Handmade"
@@ -1451,7 +1451,7 @@
             }
           },
           {
-            "timestamp": "2021-10-28T00:00:00Z",
+            "timestamp": "2021-10-28T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "Home \u0026 Garden"
@@ -1463,7 +1463,7 @@
             }
           },
           {
-            "timestamp": "2021-10-28T00:00:00Z",
+            "timestamp": "2021-10-28T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Handmade"
@@ -1475,7 +1475,7 @@
             }
           },
           {
-            "timestamp": "2021-10-28T00:00:00Z",
+            "timestamp": "2021-10-28T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Electronics (Accessories)"
@@ -1487,7 +1487,7 @@
             }
           },
           {
-            "timestamp": "2021-10-28T00:00:00Z",
+            "timestamp": "2021-10-28T00:00:00.0000000Z",
             "dimension": {
               "region": "Karachi",
               "category": "Home \u0026 Garden"
@@ -1499,7 +1499,7 @@
             }
           },
           {
-            "timestamp": "2021-10-28T00:00:00Z",
+            "timestamp": "2021-10-28T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "__SUM__"
@@ -1511,7 +1511,7 @@
             }
           },
           {
-            "timestamp": "2021-10-27T00:00:00Z",
+            "timestamp": "2021-10-27T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "Handmade"
@@ -1523,7 +1523,7 @@
             }
           },
           {
-            "timestamp": "2021-10-27T00:00:00Z",
+            "timestamp": "2021-10-27T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "__SUM__"
@@ -1535,7 +1535,7 @@
             }
           },
           {
-            "timestamp": "2021-10-27T00:00:00Z",
+            "timestamp": "2021-10-27T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Handmade"
@@ -1547,7 +1547,7 @@
             }
           },
           {
-            "timestamp": "2021-10-27T00:00:00Z",
+            "timestamp": "2021-10-27T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "__SUM__"
@@ -1559,7 +1559,7 @@
             }
           },
           {
-            "timestamp": "2021-10-27T00:00:00Z",
+            "timestamp": "2021-10-27T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Handmade"
@@ -1571,7 +1571,7 @@
             }
           },
           {
-            "timestamp": "2021-10-27T00:00:00Z",
+            "timestamp": "2021-10-27T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "__SUM__"
@@ -1583,7 +1583,7 @@
             }
           },
           {
-            "timestamp": "2021-10-27T00:00:00Z",
+            "timestamp": "2021-10-27T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "Home \u0026 Garden"
@@ -1595,7 +1595,7 @@
             }
           },
           {
-            "timestamp": "2021-10-27T00:00:00Z",
+            "timestamp": "2021-10-27T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Handmade"
@@ -1607,7 +1607,7 @@
             }
           },
           {
-            "timestamp": "2021-10-27T00:00:00Z",
+            "timestamp": "2021-10-27T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Electronics (Accessories)"
@@ -1619,7 +1619,7 @@
             }
           },
           {
-            "timestamp": "2021-10-27T00:00:00Z",
+            "timestamp": "2021-10-27T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "__SUM__"
@@ -1631,7 +1631,7 @@
             }
           },
           {
-            "timestamp": "2021-10-26T00:00:00Z",
+            "timestamp": "2021-10-26T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Handmade"
@@ -1643,7 +1643,7 @@
             }
           },
           {
-            "timestamp": "2021-10-26T00:00:00Z",
+            "timestamp": "2021-10-26T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "__SUM__"
@@ -1655,7 +1655,7 @@
             }
           },
           {
-            "timestamp": "2021-10-26T00:00:00Z",
+            "timestamp": "2021-10-26T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "__SUM__"
@@ -1667,7 +1667,7 @@
             }
           },
           {
-            "timestamp": "2021-10-25T00:00:00Z",
+            "timestamp": "2021-10-25T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -1679,7 +1679,7 @@
             }
           },
           {
-            "timestamp": "2021-10-25T00:00:00Z",
+            "timestamp": "2021-10-25T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Handmade"
@@ -1691,7 +1691,7 @@
             }
           },
           {
-            "timestamp": "2021-10-25T00:00:00Z",
+            "timestamp": "2021-10-25T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Home \u0026 Garden"
@@ -1703,7 +1703,7 @@
             }
           },
           {
-            "timestamp": "2021-10-25T00:00:00Z",
+            "timestamp": "2021-10-25T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "__SUM__"
@@ -1715,7 +1715,7 @@
             }
           },
           {
-            "timestamp": "2021-10-24T00:00:00Z",
+            "timestamp": "2021-10-24T00:00:00.0000000Z",
             "dimension": {
               "region": "Cairo",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -1727,7 +1727,7 @@
             }
           },
           {
-            "timestamp": "2021-10-24T00:00:00Z",
+            "timestamp": "2021-10-24T00:00:00.0000000Z",
             "dimension": {
               "region": "__SUM__",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -1739,7 +1739,7 @@
             }
           },
           {
-            "timestamp": "2021-10-24T00:00:00Z",
+            "timestamp": "2021-10-24T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -1751,7 +1751,7 @@
             }
           },
           {
-            "timestamp": "2021-10-24T00:00:00Z",
+            "timestamp": "2021-10-24T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Handmade"
@@ -1763,7 +1763,7 @@
             }
           },
           {
-            "timestamp": "2021-10-24T00:00:00Z",
+            "timestamp": "2021-10-24T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -1775,7 +1775,7 @@
             }
           },
           {
-            "timestamp": "2021-10-24T00:00:00Z",
+            "timestamp": "2021-10-24T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "__SUM__"
@@ -1787,7 +1787,7 @@
             }
           },
           {
-            "timestamp": "2021-10-24T00:00:00Z",
+            "timestamp": "2021-10-24T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Handmade"
@@ -1799,7 +1799,7 @@
             }
           },
           {
-            "timestamp": "2021-10-23T00:00:00Z",
+            "timestamp": "2021-10-23T00:00:00.0000000Z",
             "dimension": {
               "region": "Cairo",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -1811,7 +1811,7 @@
             }
           },
           {
-            "timestamp": "2021-10-23T00:00:00Z",
+            "timestamp": "2021-10-23T00:00:00.0000000Z",
             "dimension": {
               "region": "__SUM__",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -1823,7 +1823,7 @@
             }
           },
           {
-            "timestamp": "2021-10-23T00:00:00Z",
+            "timestamp": "2021-10-23T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -1835,7 +1835,7 @@
             }
           },
           {
-            "timestamp": "2021-10-23T00:00:00Z",
+            "timestamp": "2021-10-23T00:00:00.0000000Z",
             "dimension": {
               "region": "Karachi",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -1847,7 +1847,7 @@
             }
           },
           {
-            "timestamp": "2021-10-23T00:00:00Z",
+            "timestamp": "2021-10-23T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -1859,7 +1859,7 @@
             }
           },
           {
-            "timestamp": "2021-10-23T00:00:00Z",
+            "timestamp": "2021-10-23T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Handmade"
@@ -1871,7 +1871,7 @@
             }
           },
           {
-            "timestamp": "2021-10-23T00:00:00Z",
+            "timestamp": "2021-10-23T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -1883,7 +1883,7 @@
             }
           },
           {
-            "timestamp": "2021-10-23T00:00:00Z",
+            "timestamp": "2021-10-23T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -1895,7 +1895,7 @@
             }
           },
           {
-            "timestamp": "2021-10-23T00:00:00Z",
+            "timestamp": "2021-10-23T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "__SUM__"
@@ -1907,7 +1907,7 @@
             }
           },
           {
-            "timestamp": "2021-10-23T00:00:00Z",
+            "timestamp": "2021-10-23T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "__SUM__"
@@ -1919,7 +1919,7 @@
             }
           },
           {
-            "timestamp": "2021-10-23T00:00:00Z",
+            "timestamp": "2021-10-23T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -1931,7 +1931,7 @@
             }
           },
           {
-            "timestamp": "2021-10-23T00:00:00Z",
+            "timestamp": "2021-10-23T00:00:00.0000000Z",
             "dimension": {
               "region": "New York",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -1943,7 +1943,7 @@
             }
           },
           {
-            "timestamp": "2021-10-23T00:00:00Z",
+            "timestamp": "2021-10-23T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Handmade"
@@ -1955,7 +1955,7 @@
             }
           },
           {
-            "timestamp": "2021-10-22T00:00:00Z",
+            "timestamp": "2021-10-22T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Handmade"
@@ -1967,7 +1967,7 @@
             }
           },
           {
-            "timestamp": "2021-10-22T00:00:00Z",
+            "timestamp": "2021-10-22T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "Handmade"
@@ -1979,7 +1979,7 @@
             }
           },
           {
-            "timestamp": "2021-10-22T00:00:00Z",
+            "timestamp": "2021-10-22T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "Electronics (Consumer)"
@@ -1991,7 +1991,7 @@
             }
           },
           {
-            "timestamp": "2021-10-22T00:00:00Z",
+            "timestamp": "2021-10-22T00:00:00.0000000Z",
             "dimension": {
               "region": "Karachi",
               "category": "Office Products"
@@ -2003,7 +2003,7 @@
             }
           },
           {
-            "timestamp": "2021-10-22T00:00:00Z",
+            "timestamp": "2021-10-22T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "Grocery \u0026 Gourmet Food"
@@ -2015,7 +2015,7 @@
             }
           },
           {
-            "timestamp": "2021-10-22T00:00:00Z",
+            "timestamp": "2021-10-22T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Grocery \u0026 Gourmet Food"
@@ -2027,7 +2027,7 @@
             }
           },
           {
-            "timestamp": "2021-10-21T00:00:00Z",
+            "timestamp": "2021-10-21T00:00:00.0000000Z",
             "dimension": {
               "region": "Miami",
               "category": "__SUM__"
@@ -2039,7 +2039,7 @@
             }
           },
           {
-            "timestamp": "2021-10-21T00:00:00Z",
+            "timestamp": "2021-10-21T00:00:00.0000000Z",
             "dimension": {
               "region": "Miami",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -2051,7 +2051,7 @@
             }
           },
           {
-            "timestamp": "2021-10-21T00:00:00Z",
+            "timestamp": "2021-10-21T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Home \u0026 Garden"
@@ -2063,7 +2063,7 @@
             }
           },
           {
-            "timestamp": "2021-10-21T00:00:00Z",
+            "timestamp": "2021-10-21T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "Handmade"
@@ -2075,7 +2075,7 @@
             }
           },
           {
-            "timestamp": "2021-10-21T00:00:00Z",
+            "timestamp": "2021-10-21T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "Electronics (Consumer)"
@@ -2087,7 +2087,7 @@
             }
           },
           {
-            "timestamp": "2021-10-21T00:00:00Z",
+            "timestamp": "2021-10-21T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "__SUM__"
@@ -2099,7 +2099,7 @@
             }
           },
           {
-            "timestamp": "2021-10-21T00:00:00Z",
+            "timestamp": "2021-10-21T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Grocery \u0026 Gourmet Food"
@@ -2111,7 +2111,7 @@
             }
           },
           {
-            "timestamp": "2021-10-21T00:00:00Z",
+            "timestamp": "2021-10-21T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Handmade"
@@ -2123,7 +2123,7 @@
             }
           },
           {
-            "timestamp": "2021-10-20T00:00:00Z",
+            "timestamp": "2021-10-20T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Handmade"
@@ -2135,7 +2135,7 @@
             }
           },
           {
-            "timestamp": "2021-10-20T00:00:00Z",
+            "timestamp": "2021-10-20T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "Handmade"
@@ -2147,7 +2147,7 @@
             }
           },
           {
-            "timestamp": "2021-10-20T00:00:00Z",
+            "timestamp": "2021-10-20T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "__SUM__"
@@ -2159,7 +2159,7 @@
             }
           },
           {
-            "timestamp": "2021-10-20T00:00:00Z",
+            "timestamp": "2021-10-20T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "__SUM__"
@@ -2171,7 +2171,7 @@
             }
           },
           {
-            "timestamp": "2021-10-20T00:00:00Z",
+            "timestamp": "2021-10-20T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Handmade"
@@ -2183,7 +2183,7 @@
             }
           },
           {
-            "timestamp": "2021-10-19T00:00:00Z",
+            "timestamp": "2021-10-19T00:00:00.0000000Z",
             "dimension": {
               "region": "New York",
               "category": "__SUM__"
@@ -2195,7 +2195,7 @@
             }
           },
           {
-            "timestamp": "2021-10-19T00:00:00Z",
+            "timestamp": "2021-10-19T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Handmade"
@@ -2207,7 +2207,7 @@
             }
           },
           {
-            "timestamp": "2021-10-19T00:00:00Z",
+            "timestamp": "2021-10-19T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "Handmade"
@@ -2219,7 +2219,7 @@
             }
           },
           {
-            "timestamp": "2021-10-18T00:00:00Z",
+            "timestamp": "2021-10-18T00:00:00.0000000Z",
             "dimension": {
               "region": "Seoul",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -2231,7 +2231,7 @@
             }
           },
           {
-            "timestamp": "2021-10-18T00:00:00Z",
+            "timestamp": "2021-10-18T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -2243,7 +2243,7 @@
             }
           },
           {
-            "timestamp": "2021-10-18T00:00:00Z",
+            "timestamp": "2021-10-18T00:00:00.0000000Z",
             "dimension": {
               "region": "Karachi",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -2255,7 +2255,7 @@
             }
           },
           {
-            "timestamp": "2021-10-18T00:00:00Z",
+            "timestamp": "2021-10-18T00:00:00.0000000Z",
             "dimension": {
               "region": "Seoul",
               "category": "Handmade"
@@ -2267,7 +2267,7 @@
             }
           },
           {
-            "timestamp": "2021-10-18T00:00:00Z",
+            "timestamp": "2021-10-18T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Office Products"
@@ -2279,7 +2279,7 @@
             }
           },
           {
-            "timestamp": "2021-10-18T00:00:00Z",
+            "timestamp": "2021-10-18T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -2291,7 +2291,7 @@
             }
           },
           {
-            "timestamp": "2021-10-18T00:00:00Z",
+            "timestamp": "2021-10-18T00:00:00.0000000Z",
             "dimension": {
               "region": "Seoul",
               "category": "Grocery \u0026 Gourmet Food"
@@ -2303,7 +2303,7 @@
             }
           },
           {
-            "timestamp": "2021-10-18T00:00:00Z",
+            "timestamp": "2021-10-18T00:00:00.0000000Z",
             "dimension": {
               "region": "Seoul",
               "category": "__SUM__"
@@ -2315,7 +2315,7 @@
             }
           },
           {
-            "timestamp": "2021-10-18T00:00:00Z",
+            "timestamp": "2021-10-18T00:00:00.0000000Z",
             "dimension": {
               "region": "__SUM__",
               "category": "Office Products"
@@ -2327,7 +2327,7 @@
             }
           },
           {
-            "timestamp": "2021-10-18T00:00:00Z",
+            "timestamp": "2021-10-18T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Handmade"
@@ -2339,7 +2339,7 @@
             }
           },
           {
-            "timestamp": "2021-10-18T00:00:00Z",
+            "timestamp": "2021-10-18T00:00:00.0000000Z",
             "dimension": {
               "region": "New York",
               "category": "Grocery \u0026 Gourmet Food"
@@ -2351,7 +2351,7 @@
             }
           },
           {
-            "timestamp": "2021-10-18T00:00:00Z",
+            "timestamp": "2021-10-18T00:00:00.0000000Z",
             "dimension": {
               "region": "Miami",
               "category": "Grocery \u0026 Gourmet Food"
@@ -2363,7 +2363,7 @@
             }
           },
           {
-            "timestamp": "2021-10-18T00:00:00Z",
+            "timestamp": "2021-10-18T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -2375,7 +2375,7 @@
             }
           },
           {
-            "timestamp": "2021-10-18T00:00:00Z",
+            "timestamp": "2021-10-18T00:00:00.0000000Z",
             "dimension": {
               "region": "New York",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -2387,7 +2387,7 @@
             }
           },
           {
-            "timestamp": "2021-10-18T00:00:00Z",
+            "timestamp": "2021-10-18T00:00:00.0000000Z",
             "dimension": {
               "region": "New York",
               "category": "Handmade"
@@ -2399,7 +2399,7 @@
             }
           },
           {
-            "timestamp": "2021-10-17T00:00:00Z",
+            "timestamp": "2021-10-17T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Home \u0026 Garden"
@@ -2411,7 +2411,7 @@
             }
           },
           {
-            "timestamp": "2021-10-17T00:00:00Z",
+            "timestamp": "2021-10-17T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Office Products"
@@ -2423,7 +2423,7 @@
             }
           },
           {
-            "timestamp": "2021-10-17T00:00:00Z",
+            "timestamp": "2021-10-17T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "Office Products"
@@ -2435,7 +2435,7 @@
             }
           },
           {
-            "timestamp": "2021-10-16T00:00:00Z",
+            "timestamp": "2021-10-16T00:00:00.0000000Z",
             "dimension": {
               "region": "Seoul",
               "category": "Handmade"
@@ -2447,7 +2447,7 @@
             }
           },
           {
-            "timestamp": "2021-10-16T00:00:00Z",
+            "timestamp": "2021-10-16T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Office Products"
@@ -2459,7 +2459,7 @@
             }
           },
           {
-            "timestamp": "2021-10-16T00:00:00Z",
+            "timestamp": "2021-10-16T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -2471,7 +2471,7 @@
             }
           },
           {
-            "timestamp": "2021-10-16T00:00:00Z",
+            "timestamp": "2021-10-16T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "Office Products"
@@ -2483,7 +2483,7 @@
             }
           },
           {
-            "timestamp": "2021-10-16T00:00:00Z",
+            "timestamp": "2021-10-16T00:00:00.0000000Z",
             "dimension": {
               "region": "Seoul",
               "category": "Grocery \u0026 Gourmet Food"
@@ -2495,7 +2495,7 @@
             }
           },
           {
-            "timestamp": "2021-10-16T00:00:00Z",
+            "timestamp": "2021-10-16T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "Grocery \u0026 Gourmet Food"
@@ -2507,7 +2507,7 @@
             }
           },
           {
-            "timestamp": "2021-10-16T00:00:00Z",
+            "timestamp": "2021-10-16T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Handmade"
@@ -2519,7 +2519,7 @@
             }
           },
           {
-            "timestamp": "2021-10-15T00:00:00Z",
+            "timestamp": "2021-10-15T00:00:00.0000000Z",
             "dimension": {
               "region": "Miami",
               "category": "Office Products"
@@ -2531,7 +2531,7 @@
             }
           },
           {
-            "timestamp": "2021-10-15T00:00:00Z",
+            "timestamp": "2021-10-15T00:00:00.0000000Z",
             "dimension": {
               "region": "Cairo",
               "category": "Electronics (Consumer)"
@@ -2543,7 +2543,7 @@
             }
           },
           {
-            "timestamp": "2021-10-15T00:00:00Z",
+            "timestamp": "2021-10-15T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "Office Products"
@@ -2555,7 +2555,7 @@
             }
           },
           {
-            "timestamp": "2021-10-15T00:00:00Z",
+            "timestamp": "2021-10-15T00:00:00.0000000Z",
             "dimension": {
               "region": "Seoul",
               "category": "Grocery \u0026 Gourmet Food"
@@ -2567,7 +2567,7 @@
             }
           },
           {
-            "timestamp": "2021-10-15T00:00:00Z",
+            "timestamp": "2021-10-15T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Office Products"
@@ -2579,7 +2579,7 @@
             }
           },
           {
-            "timestamp": "2021-10-15T00:00:00Z",
+            "timestamp": "2021-10-15T00:00:00.0000000Z",
             "dimension": {
               "region": "New York",
               "category": "Grocery \u0026 Gourmet Food"
@@ -2591,7 +2591,7 @@
             }
           },
           {
-            "timestamp": "2021-10-15T00:00:00Z",
+            "timestamp": "2021-10-15T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Grocery \u0026 Gourmet Food"
@@ -2603,7 +2603,7 @@
             }
           },
           {
-            "timestamp": "2021-10-14T00:00:00Z",
+            "timestamp": "2021-10-14T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -2615,7 +2615,7 @@
             }
           },
           {
-            "timestamp": "2021-10-14T00:00:00Z",
+            "timestamp": "2021-10-14T00:00:00.0000000Z",
             "dimension": {
               "region": "Karachi",
               "category": "__SUM__"
@@ -2627,7 +2627,7 @@
             }
           },
           {
-            "timestamp": "2021-10-14T00:00:00Z",
+            "timestamp": "2021-10-14T00:00:00.0000000Z",
             "dimension": {
               "region": "Karachi",
               "category": "Home \u0026 Garden"
@@ -2639,7 +2639,7 @@
             }
           },
           {
-            "timestamp": "2021-10-13T00:00:00Z",
+            "timestamp": "2021-10-13T00:00:00.0000000Z",
             "dimension": {
               "region": "__SUM__",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -2651,7 +2651,7 @@
             }
           },
           {
-            "timestamp": "2021-10-13T00:00:00Z",
+            "timestamp": "2021-10-13T00:00:00.0000000Z",
             "dimension": {
               "region": "Seoul",
               "category": "Office Products"
@@ -2663,7 +2663,7 @@
             }
           },
           {
-            "timestamp": "2021-10-13T00:00:00Z",
+            "timestamp": "2021-10-13T00:00:00.0000000Z",
             "dimension": {
               "region": "Seoul",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -2675,7 +2675,7 @@
             }
           },
           {
-            "timestamp": "2021-10-13T00:00:00Z",
+            "timestamp": "2021-10-13T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "Handmade"
@@ -2687,7 +2687,7 @@
             }
           },
           {
-            "timestamp": "2021-10-13T00:00:00Z",
+            "timestamp": "2021-10-13T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Electronics (Consumer)"
@@ -2699,7 +2699,7 @@
             }
           },
           {
-            "timestamp": "2021-10-13T00:00:00Z",
+            "timestamp": "2021-10-13T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Office Products"
@@ -2711,7 +2711,7 @@
             }
           },
           {
-            "timestamp": "2021-10-13T00:00:00Z",
+            "timestamp": "2021-10-13T00:00:00.0000000Z",
             "dimension": {
               "region": "New York",
               "category": "Office Products"
@@ -2723,7 +2723,7 @@
             }
           },
           {
-            "timestamp": "2021-10-13T00:00:00Z",
+            "timestamp": "2021-10-13T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -2735,7 +2735,7 @@
             }
           },
           {
-            "timestamp": "2021-10-13T00:00:00Z",
+            "timestamp": "2021-10-13T00:00:00.0000000Z",
             "dimension": {
               "region": "Seoul",
               "category": "Grocery \u0026 Gourmet Food"
@@ -2747,7 +2747,7 @@
             }
           },
           {
-            "timestamp": "2021-10-13T00:00:00Z",
+            "timestamp": "2021-10-13T00:00:00.0000000Z",
             "dimension": {
               "region": "Seoul",
               "category": "Home \u0026 Garden"
@@ -2759,7 +2759,7 @@
             }
           },
           {
-            "timestamp": "2021-10-13T00:00:00Z",
+            "timestamp": "2021-10-13T00:00:00.0000000Z",
             "dimension": {
               "region": "Seoul",
               "category": "__SUM__"
@@ -2771,7 +2771,7 @@
             }
           },
           {
-            "timestamp": "2021-10-13T00:00:00Z",
+            "timestamp": "2021-10-13T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "Office Products"
@@ -2783,7 +2783,7 @@
             }
           },
           {
-            "timestamp": "2021-10-13T00:00:00Z",
+            "timestamp": "2021-10-13T00:00:00.0000000Z",
             "dimension": {
               "region": "__SUM__",
               "category": "Office Products"
@@ -2795,7 +2795,7 @@
             }
           },
           {
-            "timestamp": "2021-10-13T00:00:00Z",
+            "timestamp": "2021-10-13T00:00:00.0000000Z",
             "dimension": {
               "region": "__SUM__",
               "category": "Grocery \u0026 Gourmet Food"
@@ -2807,7 +2807,7 @@
             }
           },
           {
-            "timestamp": "2021-10-13T00:00:00Z",
+            "timestamp": "2021-10-13T00:00:00.0000000Z",
             "dimension": {
               "region": "Karachi",
               "category": "Office Products"
@@ -2819,7 +2819,7 @@
             }
           },
           {
-            "timestamp": "2021-10-13T00:00:00Z",
+            "timestamp": "2021-10-13T00:00:00.0000000Z",
             "dimension": {
               "region": "Karachi",
               "category": "Handmade"
@@ -2831,7 +2831,7 @@
             }
           },
           {
-            "timestamp": "2021-10-13T00:00:00Z",
+            "timestamp": "2021-10-13T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Handmade"
@@ -2843,7 +2843,7 @@
             }
           },
           {
-            "timestamp": "2021-10-13T00:00:00Z",
+            "timestamp": "2021-10-13T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Office Products"
@@ -2855,7 +2855,7 @@
             }
           },
           {
-            "timestamp": "2021-10-13T00:00:00Z",
+            "timestamp": "2021-10-13T00:00:00.0000000Z",
             "dimension": {
               "region": "Miami",
               "category": "Grocery \u0026 Gourmet Food"
@@ -2867,7 +2867,7 @@
             }
           },
           {
-            "timestamp": "2021-10-13T00:00:00Z",
+            "timestamp": "2021-10-13T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -2879,7 +2879,7 @@
             }
           },
           {
-            "timestamp": "2021-10-13T00:00:00Z",
+            "timestamp": "2021-10-13T00:00:00.0000000Z",
             "dimension": {
               "region": "New York",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -2891,7 +2891,7 @@
             }
           },
           {
-            "timestamp": "2021-10-13T00:00:00Z",
+            "timestamp": "2021-10-13T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Grocery \u0026 Gourmet Food"
@@ -2903,7 +2903,7 @@
             }
           },
           {
-            "timestamp": "2021-10-13T00:00:00Z",
+            "timestamp": "2021-10-13T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Handmade"
@@ -2915,7 +2915,7 @@
             }
           },
           {
-            "timestamp": "2021-10-12T00:00:00Z",
+            "timestamp": "2021-10-12T00:00:00.0000000Z",
             "dimension": {
               "region": "Cairo",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -2927,7 +2927,7 @@
             }
           },
           {
-            "timestamp": "2021-10-12T00:00:00Z",
+            "timestamp": "2021-10-12T00:00:00.0000000Z",
             "dimension": {
               "region": "__SUM__",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -2939,7 +2939,7 @@
             }
           },
           {
-            "timestamp": "2021-10-12T00:00:00Z",
+            "timestamp": "2021-10-12T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Home \u0026 Garden"
@@ -2951,7 +2951,7 @@
             }
           },
           {
-            "timestamp": "2021-10-12T00:00:00Z",
+            "timestamp": "2021-10-12T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -2963,7 +2963,7 @@
             }
           },
           {
-            "timestamp": "2021-10-12T00:00:00Z",
+            "timestamp": "2021-10-12T00:00:00.0000000Z",
             "dimension": {
               "region": "Karachi",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -2975,7 +2975,7 @@
             }
           },
           {
-            "timestamp": "2021-10-12T00:00:00Z",
+            "timestamp": "2021-10-12T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Electronics (Consumer)"
@@ -2987,7 +2987,7 @@
             }
           },
           {
-            "timestamp": "2021-10-12T00:00:00Z",
+            "timestamp": "2021-10-12T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -2999,7 +2999,7 @@
             }
           },
           {
-            "timestamp": "2021-10-12T00:00:00Z",
+            "timestamp": "2021-10-12T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "Electronics (Consumer)"
@@ -3011,7 +3011,7 @@
             }
           },
           {
-            "timestamp": "2021-10-12T00:00:00Z",
+            "timestamp": "2021-10-12T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -3023,7 +3023,7 @@
             }
           },
           {
-            "timestamp": "2021-10-12T00:00:00Z",
+            "timestamp": "2021-10-12T00:00:00.0000000Z",
             "dimension": {
               "region": "Karachi",
               "category": "Office Products"
@@ -3035,7 +3035,7 @@
             }
           },
           {
-            "timestamp": "2021-10-12T00:00:00Z",
+            "timestamp": "2021-10-12T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Handmade"
@@ -3047,7 +3047,7 @@
             }
           },
           {
-            "timestamp": "2021-10-12T00:00:00Z",
+            "timestamp": "2021-10-12T00:00:00.0000000Z",
             "dimension": {
               "region": "Karachi",
               "category": "Grocery \u0026 Gourmet Food"
@@ -3059,7 +3059,7 @@
             }
           },
           {
-            "timestamp": "2021-10-11T00:00:00Z",
+            "timestamp": "2021-10-11T00:00:00.0000000Z",
             "dimension": {
               "region": "Cairo",
               "category": "Electronics (Consumer)"
@@ -3071,7 +3071,7 @@
             }
           },
           {
-            "timestamp": "2021-10-10T00:00:00Z",
+            "timestamp": "2021-10-10T00:00:00.0000000Z",
             "dimension": {
               "region": "Karachi",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -3083,7 +3083,7 @@
             }
           },
           {
-            "timestamp": "2021-10-10T00:00:00Z",
+            "timestamp": "2021-10-10T00:00:00.0000000Z",
             "dimension": {
               "region": "Seoul",
               "category": "Handmade"
@@ -3095,7 +3095,7 @@
             }
           },
           {
-            "timestamp": "2021-10-10T00:00:00Z",
+            "timestamp": "2021-10-10T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Office Products"
@@ -3107,7 +3107,7 @@
             }
           },
           {
-            "timestamp": "2021-10-10T00:00:00Z",
+            "timestamp": "2021-10-10T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "Electronics (Consumer)"
@@ -3119,7 +3119,7 @@
             }
           },
           {
-            "timestamp": "2021-10-10T00:00:00Z",
+            "timestamp": "2021-10-10T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "Grocery \u0026 Gourmet Food"
@@ -3131,7 +3131,7 @@
             }
           },
           {
-            "timestamp": "2021-10-09T00:00:00Z",
+            "timestamp": "2021-10-09T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -3143,7 +3143,7 @@
             }
           },
           {
-            "timestamp": "2021-10-08T00:00:00Z",
+            "timestamp": "2021-10-08T00:00:00.0000000Z",
             "dimension": {
               "region": "Miami",
               "category": "__SUM__"
@@ -3155,7 +3155,7 @@
             }
           },
           {
-            "timestamp": "2021-10-08T00:00:00Z",
+            "timestamp": "2021-10-08T00:00:00.0000000Z",
             "dimension": {
               "region": "Miami",
               "category": "Handmade"
@@ -3167,7 +3167,7 @@
             }
           },
           {
-            "timestamp": "2021-10-08T00:00:00Z",
+            "timestamp": "2021-10-08T00:00:00.0000000Z",
             "dimension": {
               "region": "Miami",
               "category": "Home \u0026 Garden"
@@ -3179,7 +3179,7 @@
             }
           },
           {
-            "timestamp": "2021-10-08T00:00:00Z",
+            "timestamp": "2021-10-08T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Home \u0026 Garden"
@@ -3191,7 +3191,7 @@
             }
           },
           {
-            "timestamp": "2021-10-08T00:00:00Z",
+            "timestamp": "2021-10-08T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "Handmade"
@@ -3203,7 +3203,7 @@
             }
           },
           {
-            "timestamp": "2021-10-08T00:00:00Z",
+            "timestamp": "2021-10-08T00:00:00.0000000Z",
             "dimension": {
               "region": "Miami",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -3215,7 +3215,7 @@
             }
           },
           {
-            "timestamp": "2021-10-08T00:00:00Z",
+            "timestamp": "2021-10-08T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "__SUM__"
@@ -3227,7 +3227,7 @@
             }
           },
           {
-            "timestamp": "2021-10-08T00:00:00Z",
+            "timestamp": "2021-10-08T00:00:00.0000000Z",
             "dimension": {
               "region": "__SUM__",
               "category": "__SUM__"
@@ -3239,7 +3239,7 @@
             }
           },
           {
-            "timestamp": "2021-10-08T00:00:00Z",
+            "timestamp": "2021-10-08T00:00:00.0000000Z",
             "dimension": {
               "region": "New York",
               "category": "__SUM__"
@@ -3251,7 +3251,7 @@
             }
           },
           {
-            "timestamp": "2021-10-08T00:00:00Z",
+            "timestamp": "2021-10-08T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Home \u0026 Garden"
@@ -3263,7 +3263,7 @@
             }
           },
           {
-            "timestamp": "2021-10-08T00:00:00Z",
+            "timestamp": "2021-10-08T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "Handmade"
@@ -3275,7 +3275,7 @@
             }
           },
           {
-            "timestamp": "2021-10-08T00:00:00Z",
+            "timestamp": "2021-10-08T00:00:00.0000000Z",
             "dimension": {
               "region": "__SUM__",
               "category": "Home \u0026 Garden"
@@ -3287,7 +3287,7 @@
             }
           },
           {
-            "timestamp": "2021-10-08T00:00:00Z",
+            "timestamp": "2021-10-08T00:00:00.0000000Z",
             "dimension": {
               "region": "Cairo",
               "category": "Home \u0026 Garden"
@@ -3299,7 +3299,7 @@
             }
           },
           {
-            "timestamp": "2021-10-08T00:00:00Z",
+            "timestamp": "2021-10-08T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Handmade"
@@ -3311,7 +3311,7 @@
             }
           },
           {
-            "timestamp": "2021-10-08T00:00:00Z",
+            "timestamp": "2021-10-08T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "__SUM__"
@@ -3323,7 +3323,7 @@
             }
           },
           {
-            "timestamp": "2021-10-08T00:00:00Z",
+            "timestamp": "2021-10-08T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "__SUM__"
@@ -3335,7 +3335,7 @@
             }
           },
           {
-            "timestamp": "2021-10-08T00:00:00Z",
+            "timestamp": "2021-10-08T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "Home \u0026 Garden"
@@ -3347,7 +3347,7 @@
             }
           },
           {
-            "timestamp": "2021-10-08T00:00:00Z",
+            "timestamp": "2021-10-08T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "Home \u0026 Garden"
@@ -3359,7 +3359,7 @@
             }
           },
           {
-            "timestamp": "2021-10-08T00:00:00Z",
+            "timestamp": "2021-10-08T00:00:00.0000000Z",
             "dimension": {
               "region": "Karachi",
               "category": "Home \u0026 Garden"
@@ -3371,7 +3371,7 @@
             }
           },
           {
-            "timestamp": "2021-10-08T00:00:00Z",
+            "timestamp": "2021-10-08T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "__SUM__"
@@ -3383,7 +3383,7 @@
             }
           },
           {
-            "timestamp": "2021-10-07T00:00:00Z",
+            "timestamp": "2021-10-07T00:00:00.0000000Z",
             "dimension": {
               "region": "Cairo",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -3395,7 +3395,7 @@
             }
           },
           {
-            "timestamp": "2021-10-07T00:00:00Z",
+            "timestamp": "2021-10-07T00:00:00.0000000Z",
             "dimension": {
               "region": "Seoul",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -3407,7 +3407,7 @@
             }
           },
           {
-            "timestamp": "2021-10-07T00:00:00Z",
+            "timestamp": "2021-10-07T00:00:00.0000000Z",
             "dimension": {
               "region": "Karachi",
               "category": "Electronics (Consumer)"
@@ -3419,7 +3419,7 @@
             }
           },
           {
-            "timestamp": "2021-10-07T00:00:00Z",
+            "timestamp": "2021-10-07T00:00:00.0000000Z",
             "dimension": {
               "region": "New York",
               "category": "__SUM__"
@@ -3431,7 +3431,7 @@
             }
           },
           {
-            "timestamp": "2021-10-07T00:00:00Z",
+            "timestamp": "2021-10-07T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -3443,7 +3443,7 @@
             }
           },
           {
-            "timestamp": "2021-10-07T00:00:00Z",
+            "timestamp": "2021-10-07T00:00:00.0000000Z",
             "dimension": {
               "region": "__SUM__",
               "category": "Electronics (Consumer)"
@@ -3455,7 +3455,7 @@
             }
           },
           {
-            "timestamp": "2021-10-07T00:00:00Z",
+            "timestamp": "2021-10-07T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -3467,7 +3467,7 @@
             }
           },
           {
-            "timestamp": "2021-10-07T00:00:00Z",
+            "timestamp": "2021-10-07T00:00:00.0000000Z",
             "dimension": {
               "region": "New York",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -3479,7 +3479,7 @@
             }
           },
           {
-            "timestamp": "2021-10-06T00:00:00Z",
+            "timestamp": "2021-10-06T00:00:00.0000000Z",
             "dimension": {
               "region": "Seoul",
               "category": "Office Products"
@@ -3491,7 +3491,7 @@
             }
           },
           {
-            "timestamp": "2021-10-06T00:00:00Z",
+            "timestamp": "2021-10-06T00:00:00.0000000Z",
             "dimension": {
               "region": "Seoul",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -3503,7 +3503,7 @@
             }
           },
           {
-            "timestamp": "2021-10-06T00:00:00Z",
+            "timestamp": "2021-10-06T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Home \u0026 Garden"
@@ -3515,7 +3515,7 @@
             }
           },
           {
-            "timestamp": "2021-10-06T00:00:00Z",
+            "timestamp": "2021-10-06T00:00:00.0000000Z",
             "dimension": {
               "region": "__SUM__",
               "category": "Handmade"
@@ -3527,7 +3527,7 @@
             }
           },
           {
-            "timestamp": "2021-10-06T00:00:00Z",
+            "timestamp": "2021-10-06T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "Handmade"
@@ -3539,7 +3539,7 @@
             }
           },
           {
-            "timestamp": "2021-10-06T00:00:00Z",
+            "timestamp": "2021-10-06T00:00:00.0000000Z",
             "dimension": {
               "region": "Cairo",
               "category": "Grocery \u0026 Gourmet Food"
@@ -3551,7 +3551,7 @@
             }
           },
           {
-            "timestamp": "2021-10-06T00:00:00Z",
+            "timestamp": "2021-10-06T00:00:00.0000000Z",
             "dimension": {
               "region": "Seoul",
               "category": "Handmade"
@@ -3563,7 +3563,7 @@
             }
           },
           {
-            "timestamp": "2021-10-06T00:00:00Z",
+            "timestamp": "2021-10-06T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "__SUM__"
@@ -3575,7 +3575,7 @@
             }
           },
           {
-            "timestamp": "2021-10-06T00:00:00Z",
+            "timestamp": "2021-10-06T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Electronics (Consumer)"
@@ -3587,7 +3587,7 @@
             }
           },
           {
-            "timestamp": "2021-10-06T00:00:00Z",
+            "timestamp": "2021-10-06T00:00:00.0000000Z",
             "dimension": {
               "region": "Karachi",
               "category": "Electronics (Consumer)"
@@ -3599,7 +3599,7 @@
             }
           },
           {
-            "timestamp": "2021-10-06T00:00:00Z",
+            "timestamp": "2021-10-06T00:00:00.0000000Z",
             "dimension": {
               "region": "New York",
               "category": "__SUM__"
@@ -3611,7 +3611,7 @@
             }
           },
           {
-            "timestamp": "2021-10-06T00:00:00Z",
+            "timestamp": "2021-10-06T00:00:00.0000000Z",
             "dimension": {
               "region": "Seoul",
               "category": "Grocery \u0026 Gourmet Food"
@@ -3623,7 +3623,7 @@
             }
           },
           {
-            "timestamp": "2021-10-06T00:00:00Z",
+            "timestamp": "2021-10-06T00:00:00.0000000Z",
             "dimension": {
               "region": "Seoul",
               "category": "Home \u0026 Garden"
@@ -3635,7 +3635,7 @@
             }
           },
           {
-            "timestamp": "2021-10-06T00:00:00Z",
+            "timestamp": "2021-10-06T00:00:00.0000000Z",
             "dimension": {
               "region": "Seoul",
               "category": "__SUM__"
@@ -3647,7 +3647,7 @@
             }
           },
           {
-            "timestamp": "2021-10-06T00:00:00Z",
+            "timestamp": "2021-10-06T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Grocery \u0026 Gourmet Food"
@@ -3659,7 +3659,7 @@
             }
           },
           {
-            "timestamp": "2021-10-06T00:00:00Z",
+            "timestamp": "2021-10-06T00:00:00.0000000Z",
             "dimension": {
               "region": "__SUM__",
               "category": "Electronics (Consumer)"
@@ -3671,7 +3671,7 @@
             }
           },
           {
-            "timestamp": "2021-10-06T00:00:00Z",
+            "timestamp": "2021-10-06T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "Office Products"
@@ -3683,7 +3683,7 @@
             }
           },
           {
-            "timestamp": "2021-10-06T00:00:00Z",
+            "timestamp": "2021-10-06T00:00:00.0000000Z",
             "dimension": {
               "region": "__SUM__",
               "category": "Grocery \u0026 Gourmet Food"
@@ -3695,7 +3695,7 @@
             }
           },
           {
-            "timestamp": "2021-10-06T00:00:00Z",
+            "timestamp": "2021-10-06T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "Grocery \u0026 Gourmet Food"
@@ -3707,7 +3707,7 @@
             }
           },
           {
-            "timestamp": "2021-10-06T00:00:00Z",
+            "timestamp": "2021-10-06T00:00:00.0000000Z",
             "dimension": {
               "region": "Karachi",
               "category": "Handmade"
@@ -3719,7 +3719,7 @@
             }
           },
           {
-            "timestamp": "2021-10-06T00:00:00Z",
+            "timestamp": "2021-10-06T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Handmade"
@@ -3731,7 +3731,7 @@
             }
           },
           {
-            "timestamp": "2021-10-06T00:00:00Z",
+            "timestamp": "2021-10-06T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Office Products"
@@ -3743,7 +3743,7 @@
             }
           },
           {
-            "timestamp": "2021-10-06T00:00:00Z",
+            "timestamp": "2021-10-06T00:00:00.0000000Z",
             "dimension": {
               "region": "New York",
               "category": "Handmade"
@@ -3755,7 +3755,7 @@
             }
           },
           {
-            "timestamp": "2021-10-06T00:00:00Z",
+            "timestamp": "2021-10-06T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Handmade"
@@ -3767,7 +3767,7 @@
             }
           },
           {
-            "timestamp": "2021-10-06T00:00:00Z",
+            "timestamp": "2021-10-06T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "__SUM__"
@@ -3779,7 +3779,7 @@
             }
           },
           {
-            "timestamp": "2021-10-05T00:00:00Z",
+            "timestamp": "2021-10-05T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Electronics (Consumer)"
@@ -3791,7 +3791,7 @@
             }
           },
           {
-            "timestamp": "2021-10-05T00:00:00Z",
+            "timestamp": "2021-10-05T00:00:00.0000000Z",
             "dimension": {
               "region": "Cairo",
               "category": "Electronics (Consumer)"
@@ -3803,7 +3803,7 @@
             }
           },
           {
-            "timestamp": "2021-10-05T00:00:00Z",
+            "timestamp": "2021-10-05T00:00:00.0000000Z",
             "dimension": {
               "region": "Miami",
               "category": "Electronics (Consumer)"
@@ -3815,7 +3815,7 @@
             }
           },
           {
-            "timestamp": "2021-10-05T00:00:00Z",
+            "timestamp": "2021-10-05T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "Electronics (Consumer)"
@@ -3827,7 +3827,7 @@
             }
           },
           {
-            "timestamp": "2021-10-05T00:00:00Z",
+            "timestamp": "2021-10-05T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Electronics (Consumer)"
@@ -3839,7 +3839,7 @@
             }
           },
           {
-            "timestamp": "2021-10-04T00:00:00Z",
+            "timestamp": "2021-10-04T00:00:00.0000000Z",
             "dimension": {
               "region": "Cairo",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -3851,7 +3851,7 @@
             }
           },
           {
-            "timestamp": "2021-10-04T00:00:00Z",
+            "timestamp": "2021-10-04T00:00:00.0000000Z",
             "dimension": {
               "region": "__SUM__",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -3863,7 +3863,7 @@
             }
           },
           {
-            "timestamp": "2021-10-04T00:00:00Z",
+            "timestamp": "2021-10-04T00:00:00.0000000Z",
             "dimension": {
               "region": "Seoul",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -3875,7 +3875,7 @@
             }
           },
           {
-            "timestamp": "2021-10-04T00:00:00Z",
+            "timestamp": "2021-10-04T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Home \u0026 Garden"
@@ -3887,7 +3887,7 @@
             }
           },
           {
-            "timestamp": "2021-10-04T00:00:00Z",
+            "timestamp": "2021-10-04T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -3899,7 +3899,7 @@
             }
           },
           {
-            "timestamp": "2021-10-04T00:00:00Z",
+            "timestamp": "2021-10-04T00:00:00.0000000Z",
             "dimension": {
               "region": "Karachi",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -3911,7 +3911,7 @@
             }
           },
           {
-            "timestamp": "2021-10-04T00:00:00Z",
+            "timestamp": "2021-10-04T00:00:00.0000000Z",
             "dimension": {
               "region": "Seoul",
               "category": "Handmade"
@@ -3923,7 +3923,7 @@
             }
           },
           {
-            "timestamp": "2021-10-04T00:00:00Z",
+            "timestamp": "2021-10-04T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "__SUM__"
@@ -3935,7 +3935,7 @@
             }
           },
           {
-            "timestamp": "2021-10-04T00:00:00Z",
+            "timestamp": "2021-10-04T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Electronics (Consumer)"
@@ -3947,7 +3947,7 @@
             }
           },
           {
-            "timestamp": "2021-10-04T00:00:00Z",
+            "timestamp": "2021-10-04T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -3959,7 +3959,7 @@
             }
           },
           {
-            "timestamp": "2021-10-04T00:00:00Z",
+            "timestamp": "2021-10-04T00:00:00.0000000Z",
             "dimension": {
               "region": "New York",
               "category": "Office Products"
@@ -3971,7 +3971,7 @@
             }
           },
           {
-            "timestamp": "2021-10-04T00:00:00Z",
+            "timestamp": "2021-10-04T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Handmade"
@@ -3983,7 +3983,7 @@
             }
           },
           {
-            "timestamp": "2021-10-04T00:00:00Z",
+            "timestamp": "2021-10-04T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -3995,7 +3995,7 @@
             }
           },
           {
-            "timestamp": "2021-10-04T00:00:00Z",
+            "timestamp": "2021-10-04T00:00:00.0000000Z",
             "dimension": {
               "region": "Miami",
               "category": "Electronics (Consumer)"
@@ -4007,7 +4007,7 @@
             }
           },
           {
-            "timestamp": "2021-10-04T00:00:00Z",
+            "timestamp": "2021-10-04T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "Electronics (Consumer)"
@@ -4019,7 +4019,7 @@
             }
           },
           {
-            "timestamp": "2021-10-04T00:00:00Z",
+            "timestamp": "2021-10-04T00:00:00.0000000Z",
             "dimension": {
               "region": "New York",
               "category": "Home \u0026 Garden"
@@ -4031,7 +4031,7 @@
             }
           },
           {
-            "timestamp": "2021-10-04T00:00:00Z",
+            "timestamp": "2021-10-04T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -4043,7 +4043,7 @@
             }
           },
           {
-            "timestamp": "2021-10-04T00:00:00Z",
+            "timestamp": "2021-10-04T00:00:00.0000000Z",
             "dimension": {
               "region": "__SUM__",
               "category": "Office Products"
@@ -4055,7 +4055,7 @@
             }
           },
           {
-            "timestamp": "2021-10-04T00:00:00Z",
+            "timestamp": "2021-10-04T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "__SUM__"
@@ -4067,7 +4067,7 @@
             }
           },
           {
-            "timestamp": "2021-10-04T00:00:00Z",
+            "timestamp": "2021-10-04T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Electronics (Consumer)"
@@ -4079,7 +4079,7 @@
             }
           },
           {
-            "timestamp": "2021-10-04T00:00:00Z",
+            "timestamp": "2021-10-04T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "Grocery \u0026 Gourmet Food"
@@ -4091,7 +4091,7 @@
             }
           },
           {
-            "timestamp": "2021-10-04T00:00:00Z",
+            "timestamp": "2021-10-04T00:00:00.0000000Z",
             "dimension": {
               "region": "Karachi",
               "category": "Handmade"
@@ -4103,7 +4103,7 @@
             }
           },
           {
-            "timestamp": "2021-10-04T00:00:00Z",
+            "timestamp": "2021-10-04T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Handmade"
@@ -4115,7 +4115,7 @@
             }
           },
           {
-            "timestamp": "2021-10-04T00:00:00Z",
+            "timestamp": "2021-10-04T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "__SUM__"
@@ -4127,7 +4127,7 @@
             }
           },
           {
-            "timestamp": "2021-10-04T00:00:00Z",
+            "timestamp": "2021-10-04T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -4139,7 +4139,7 @@
             }
           },
           {
-            "timestamp": "2021-10-04T00:00:00Z",
+            "timestamp": "2021-10-04T00:00:00.0000000Z",
             "dimension": {
               "region": "New York",
               "category": "Shoes Handbags \u0026 Sunglasses"
@@ -4151,7 +4151,7 @@
             }
           },
           {
-            "timestamp": "2021-10-04T00:00:00Z",
+            "timestamp": "2021-10-04T00:00:00.0000000Z",
             "dimension": {
               "region": "New York",
               "category": "Handmade"
@@ -4163,7 +4163,7 @@
             }
           },
           {
-            "timestamp": "2021-10-04T00:00:00Z",
+            "timestamp": "2021-10-04T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "Home \u0026 Garden"
@@ -4175,7 +4175,7 @@
             }
           },
           {
-            "timestamp": "2021-10-03T00:00:00Z",
+            "timestamp": "2021-10-03T00:00:00.0000000Z",
             "dimension": {
               "region": "Seoul",
               "category": "Handmade"
@@ -4187,7 +4187,7 @@
             }
           },
           {
-            "timestamp": "2021-10-03T00:00:00Z",
+            "timestamp": "2021-10-03T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Office Products"
@@ -4199,7 +4199,7 @@
             }
           },
           {
-            "timestamp": "2021-10-03T00:00:00Z",
+            "timestamp": "2021-10-03T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Electronics (Consumer)"
@@ -4211,7 +4211,7 @@
             }
           },
           {
-            "timestamp": "2021-10-03T00:00:00Z",
+            "timestamp": "2021-10-03T00:00:00.0000000Z",
             "dimension": {
               "region": "New York",
               "category": "Office Products"
@@ -4223,7 +4223,7 @@
             }
           },
           {
-            "timestamp": "2021-10-03T00:00:00Z",
+            "timestamp": "2021-10-03T00:00:00.0000000Z",
             "dimension": {
               "region": "Miami",
               "category": "Electronics (Consumer)"
@@ -4235,7 +4235,7 @@
             }
           },
           {
-            "timestamp": "2021-10-03T00:00:00Z",
+            "timestamp": "2021-10-03T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Office Products"
@@ -4247,7 +4247,7 @@
             }
           },
           {
-            "timestamp": "2021-10-03T00:00:00Z",
+            "timestamp": "2021-10-03T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "Electronics (Consumer)"
@@ -4259,7 +4259,7 @@
             }
           },
           {
-            "timestamp": "2021-10-03T00:00:00Z",
+            "timestamp": "2021-10-03T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Electronics (Consumer)"
@@ -4271,7 +4271,7 @@
             }
           },
           {
-            "timestamp": "2021-10-03T00:00:00Z",
+            "timestamp": "2021-10-03T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Grocery \u0026 Gourmet Food"
@@ -4283,7 +4283,7 @@
             }
           },
           {
-            "timestamp": "2021-10-02T00:00:00Z",
+            "timestamp": "2021-10-02T00:00:00.0000000Z",
             "dimension": {
               "region": "Seoul",
               "category": "Handmade"
@@ -4295,7 +4295,7 @@
             }
           },
           {
-            "timestamp": "2021-10-02T00:00:00Z",
+            "timestamp": "2021-10-02T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Office Products"
@@ -4307,7 +4307,7 @@
             }
           },
           {
-            "timestamp": "2021-10-02T00:00:00Z",
+            "timestamp": "2021-10-02T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Electronics (Consumer)"
@@ -4319,7 +4319,7 @@
             }
           },
           {
-            "timestamp": "2021-10-02T00:00:00Z",
+            "timestamp": "2021-10-02T00:00:00.0000000Z",
             "dimension": {
               "region": "New York",
               "category": "Office Products"
@@ -4331,7 +4331,7 @@
             }
           },
           {
-            "timestamp": "2021-10-02T00:00:00Z",
+            "timestamp": "2021-10-02T00:00:00.0000000Z",
             "dimension": {
               "region": "New York",
               "category": "__SUM__"
@@ -4343,7 +4343,7 @@
             }
           },
           {
-            "timestamp": "2021-10-02T00:00:00Z",
+            "timestamp": "2021-10-02T00:00:00.0000000Z",
             "dimension": {
               "region": "Miami",
               "category": "Electronics (Consumer)"
@@ -4355,7 +4355,7 @@
             }
           },
           {
-            "timestamp": "2021-10-02T00:00:00Z",
+            "timestamp": "2021-10-02T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Office Products"
@@ -4367,7 +4367,7 @@
             }
           },
           {
-            "timestamp": "2021-10-02T00:00:00Z",
+            "timestamp": "2021-10-02T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "Electronics (Consumer)"
@@ -4379,7 +4379,7 @@
             }
           },
           {
-            "timestamp": "2021-10-02T00:00:00Z",
+            "timestamp": "2021-10-02T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "Electronics (Accessories)"
@@ -4391,7 +4391,7 @@
             }
           },
           {
-            "timestamp": "2021-10-02T00:00:00Z",
+            "timestamp": "2021-10-02T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Electronics (Consumer)"
@@ -4403,7 +4403,7 @@
             }
           },
           {
-            "timestamp": "2021-10-02T00:00:00Z",
+            "timestamp": "2021-10-02T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Office Products"
@@ -4415,7 +4415,7 @@
             }
           },
           {
-            "timestamp": "2021-10-02T00:00:00Z",
+            "timestamp": "2021-10-02T00:00:00.0000000Z",
             "dimension": {
               "region": "Delhi",
               "category": "Grocery \u0026 Gourmet Food"
@@ -4427,7 +4427,7 @@
             }
           },
           {
-            "timestamp": "2021-10-01T00:00:00Z",
+            "timestamp": "2021-10-01T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "Handmade"
@@ -4439,7 +4439,7 @@
             }
           },
           {
-            "timestamp": "2021-10-01T00:00:00Z",
+            "timestamp": "2021-10-01T00:00:00.0000000Z",
             "dimension": {
               "region": "Tianjin",
               "category": "Electronics (Consumer)"
@@ -4451,7 +4451,7 @@
             }
           },
           {
-            "timestamp": "2021-10-01T00:00:00Z",
+            "timestamp": "2021-10-01T00:00:00.0000000Z",
             "dimension": {
               "region": "Miami",
               "category": "Electronics (Consumer)"
@@ -4463,7 +4463,7 @@
             }
           },
           {
-            "timestamp": "2021-10-01T00:00:00Z",
+            "timestamp": "2021-10-01T00:00:00.0000000Z",
             "dimension": {
               "region": "Seoul",
               "category": "__SUM__"
@@ -4475,7 +4475,7 @@
             }
           },
           {
-            "timestamp": "2021-10-01T00:00:00Z",
+            "timestamp": "2021-10-01T00:00:00.0000000Z",
             "dimension": {
               "region": "Mumbai",
               "category": "Electronics (Consumer)"
@@ -4487,7 +4487,7 @@
             }
           },
           {
-            "timestamp": "2021-10-01T00:00:00Z",
+            "timestamp": "2021-10-01T00:00:00.0000000Z",
             "dimension": {
               "region": "Beijing",
               "category": "Electronics (Consumer)"
@@ -4499,7 +4499,7 @@
             }
           },
           {
-            "timestamp": "2021-10-01T00:00:00Z",
+            "timestamp": "2021-10-01T00:00:00.0000000Z",
             "dimension": {
               "region": "Istanbul",
               "category": "Grocery \u0026 Gourmet Food"

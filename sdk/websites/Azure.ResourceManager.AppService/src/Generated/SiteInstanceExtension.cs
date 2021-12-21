@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.AppService
         {
             HasData = true;
             _data = resource;
+            Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
@@ -47,6 +48,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SiteInstanceExtension(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
+            Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
@@ -83,6 +85,9 @@ namespace Azure.ResourceManager.AppService
                 return _data;
             }
         }
+
+        /// <summary> Gets the parent resource of this resource. </summary>
+        public ArmResource Parent { get; }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/extensions/MSDeploy
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/extensions/MSDeploy
@@ -144,6 +149,70 @@ namespace Azure.ResourceManager.AppService
         public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/extensions/MSDeploy
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/extensions/MSDeploy
+        /// OperationId: WebApps_CreateInstanceMSDeployOperation
+        /// <summary> Description for Invoke the MSDeploy web app extension. </summary>
+        /// <param name="msDeploy"> Details of MSDeploy operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="msDeploy"/> is null. </exception>
+        public async virtual Task<WebAppCreateInstanceMSDeployOperationOperation> CreateOrUpdateAsync(MsDeploy msDeploy, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (msDeploy == null)
+            {
+                throw new ArgumentNullException(nameof(msDeploy));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SiteInstanceExtension.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _webAppsRestClient.CreateInstanceMSDeployOperationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy, cancellationToken).ConfigureAwait(false);
+                var operation = new WebAppCreateInstanceMSDeployOperationOperation(this, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateCreateInstanceMSDeployOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/extensions/MSDeploy
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/extensions/MSDeploy
+        /// OperationId: WebApps_CreateInstanceMSDeployOperation
+        /// <summary> Description for Invoke the MSDeploy web app extension. </summary>
+        /// <param name="msDeploy"> Details of MSDeploy operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="msDeploy"/> is null. </exception>
+        public virtual WebAppCreateInstanceMSDeployOperationOperation CreateOrUpdate(MsDeploy msDeploy, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (msDeploy == null)
+            {
+                throw new ArgumentNullException(nameof(msDeploy));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SiteInstanceExtension.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _webAppsRestClient.CreateInstanceMSDeployOperation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy, cancellationToken);
+                var operation = new WebAppCreateInstanceMSDeployOperationOperation(this, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateCreateInstanceMSDeployOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/extensions/MSDeploy/log

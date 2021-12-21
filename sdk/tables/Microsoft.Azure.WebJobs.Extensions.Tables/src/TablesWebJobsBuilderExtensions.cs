@@ -3,6 +3,7 @@
 
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Tables;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Microsoft.Extensions.Hosting
@@ -11,7 +12,8 @@ namespace Microsoft.Extensions.Hosting
     {
         public static IWebJobsBuilder AddAzureTables(this IWebJobsBuilder builder)
         {
-            builder.Services.TryAddSingleton<StorageAccountProvider>();
+            builder.Services.AddAzureClientsCore();
+            builder.Services.TryAddSingleton<TablesAccountProvider>();
             builder.AddExtension<TablesExtensionConfigProvider>();
             return builder;
         }

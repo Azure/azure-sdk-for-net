@@ -19,7 +19,7 @@ namespace Microsoft.Azure.WebJobs
     /// When only the table name is provided, the attribute binds to a table, and the method parameter type can be one
     /// of the following:
     /// <list type="bullet">
-    /// <item><description>CloudTable</description></item>
+    /// <item><description>TableClient</description></item>
     /// <item><description><see cref="IQueryable{T}"/> (where T implements ITableEntity)</description></item>
     /// </list>
     /// When the table name, partition key, and row key are provided, the attribute binds to a table entity, and the

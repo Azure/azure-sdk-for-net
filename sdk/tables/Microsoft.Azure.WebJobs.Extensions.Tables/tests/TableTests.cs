@@ -2,15 +2,13 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using Azure.Data.Tables;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Config;
-using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Azure.Storage.Queue;
-using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Azure.WebJobs.Host.Indexers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -22,7 +20,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
     {
         private const string PropertyName = "Property";
 
-        [Test]
+        public TableTests(bool isAsync, bool useCosmos) : base(isAsync, useCosmos)
+        {
+        }
+
+        [RecordedTest]
         public async Task Table_IndexingFails()
         {
             async Task AssertIndexingError<TProgram>(string methodName, string expectedErrorMessage)
@@ -60,7 +62,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Table_SingleOut_Supported()
         {
             await CallAsync<BindToSingleOutProgram>();
@@ -81,7 +83,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         // TableName can have {  } pairs.
-        [Test]
+        [RecordedTest]
         public async Task Table_ResolvedName()
         {
             await CallAsync<BindToICollectorITableEntityResolvedTableProgram>(arguments: new { t1 = TableName });
@@ -91,23 +93,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         private class CustomTableBindingConverter<T>
-            : IConverter<CloudTable, CustomTableBinding<T>>
+            : IConverter<TableClient, CustomTableBinding<T>>
         {
-            public CustomTableBinding<T> Convert(CloudTable input)
+            public CustomTableBinding<T> Convert(TableClient input)
             {
                 return new CustomTableBinding<T>(input);
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Table_IfBoundToCustomTableBindingExtension_BindsCorrectly()
         {
             // Arrange
             var ext = new TableConverterExtensionConfigProvider();
-            await CallAsync<CustomTableBindingExtensionProgram>(configure: builder => builder.ConfigureWebJobs(builder =>
+            await CallAsync<CustomTableBindingExtensionProgram>(configure: hostBuilder =>
             {
-                builder.AddExtension(ext);
-            }));
+                DefaultConfigure(hostBuilder);
+                hostBuilder.ConfigureWebJobs(builder => { builder.AddExtension(ext); });
+            });
 
             // Assert
             Assert.AreEqual(TableName, CustomTableBinding<Poco>.Table.Name);
@@ -115,47 +118,31 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             Assert.True(CustomTableBinding<Poco>.DeleteInvoked);
         }
 
-        // Add a rule for binding CloudTable --> CustomTableBinding<TEntity>
+        // Add a rule for binding TableClient --> CustomTableBinding<TEntity>
         internal class TableConverterExtensionConfigProvider : IExtensionConfigProvider
         {
             public void Initialize(ExtensionConfigContext context)
             {
-                context.AddBindingRule<TableAttribute>().AddOpenConverter<CloudTable, CustomTableBinding<OpenType>>(
+                context.AddBindingRule<TableAttribute>().AddOpenConverter<TableClient, CustomTableBinding<OpenType>>(
                     typeof(CustomTableBindingConverter<>));
             }
         }
 
-        [Test]
-        public async Task Table_IfBoundToCloudTable_BindsAndCreatesTable()
-        {
-            // Act
-            CloudTable result = (await CallAsync<BindToCloudTableProgram>()).Table;
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.AreEqual(TableName, result.Name);
-
-            CloudTableClient client = Account.CreateCloudTableClient();
-            CloudTable table = client.GetTableReference(TableName);
-            Assert.True(await table.ExistsAsync().ConfigureAwait(false));
-        }
-
-        [Test]
+        [RecordedTest]
         public async Task Table_IfBoundToICollectorJObject_AddInsertsEntity()
         {
             // Act
             await CallAsync<BindToICollectorJObjectProgram>();
 
             // Assert
-            DynamicTableEntity entity = CloudTable.Retrieve<DynamicTableEntity>(PartitionKey, RowKey);
+            TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
             Assert.NotNull(entity);
-            Assert.NotNull(entity.Properties);
-            AssertPropertyValue(entity, "ValueStr", "abcdef");
-            AssertPropertyValue(entity, "ValueNum", 123);
+            Assert.AreEqual("abcdef", entity["ValueStr"]);
+            Assert.AreEqual(123, entity["ValueNum"]);
         }
 
         // Partition and RowKey values are in the attribute
-        [Test]
+        [RecordedTest]
         public async Task Table_IfBoundToICollectorJObject__WithAttrKeys_AddInsertsEntity()
         {
             // Act
@@ -165,7 +152,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             await AssertStringPropertyAsync("ValueStr", "abcdef").ConfigureAwait(false);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Table_IfBoundToICollectorITableEntity_AddInsertsEntity()
         {
             // Act
@@ -178,7 +165,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             await AssertStringPropertyAsync(PropertyName, "abc").ConfigureAwait(false);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Table_IfBoundToICollectorPoco_AddInsertsEntity()
         {
             // Act
@@ -190,7 +177,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             await AssertStringPropertyAsync(PropertyName, "abc").ConfigureAwait(false);
         }
 
-        [Test]
+        [RecordedTest]
+        // This test creates a payload that has newline characters that don't match cross-plat
+        [LiveOnly(alwaysRunLocally: true)]
         public async Task Table_IfBoundToICollectorPoco_AddInsertsUsingNativeTableTypes()
         {
             // Arrange
@@ -201,13 +190,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 BooleanProperty = true,
                 NullableBooleanProperty = null,
                 ByteArrayProperty = new byte[] { 0x12, 0x34 },
-                DateTimeProperty = DateTime.UtcNow,
+                DateTimeProperty = DateTime.SpecifyKind(Recording.UtcNow.DateTime, DateTimeKind.Utc),
                 NullableDateTimeProperty = null,
                 DateTimeOffsetProperty = DateTimeOffset.MaxValue,
                 NullableDateTimeOffsetProperty = null,
-                DoubleProperty = 3.14,
+                DoubleProperty = 1.2,
                 NullableDoubleProperty = null,
-                GuidProperty = Guid.NewGuid(),
+                GuidProperty = Recording.Random.NewGuid(),
                 NullableGuidProperty = null,
                 Int32Property = 123,
                 NullableInt32Property = null,
@@ -229,96 +218,58 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             });
 
             // Assert
-            DynamicTableEntity entity = CloudTable.Retrieve<DynamicTableEntity>(PartitionKey, RowKey);
+            TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
             Assert.AreEqual(expected.PartitionKey, entity.PartitionKey);
             Assert.AreEqual(expected.RowKey, entity.RowKey);
-            IDictionary<string, EntityProperty> properties = entity.Properties;
-            AssertNullablePropertyEqual(expected.BooleanProperty, EdmType.Boolean, properties, "BooleanProperty",
-                (p) => p.BooleanValue);
-            AssertPropertyNull(properties, "NullableBooleanProperty");
-            AssertPropertyEqual(expected.ByteArrayProperty, EdmType.Binary, properties, "ByteArrayProperty",
-                (p) => p.BinaryValue);
-            AssertNullablePropertyEqual(expected.DateTimeProperty, EdmType.DateTime, properties, "DateTimeProperty",
-                (p) => p.DateTime);
-            AssertPropertyNull(properties, "NullableDateTimeProperty");
-            AssertNullablePropertyEqual(expected.DateTimeOffsetProperty, EdmType.DateTime, properties,
-                "DateTimeOffsetProperty", (p) => p.DateTime);
-            AssertPropertyNull(properties, "NullableDateTimeOffsetProperty");
-            AssertNullablePropertyEqual(expected.DoubleProperty, EdmType.Double, properties, "DoubleProperty",
-                (p) => p.DoubleValue);
-            AssertPropertyNull(properties, "NullableDoubleProperty");
-            AssertNullablePropertyEqual(expected.GuidProperty, EdmType.Guid, properties, "GuidProperty",
-                (p) => p.GuidValue);
-            AssertPropertyNull(properties, "NullableGuidProperty");
-            AssertNullablePropertyEqual(expected.Int32Property, EdmType.Int32, properties, "Int32Property",
-                (p) => p.Int32Value);
-            AssertPropertyNull(properties, "NullableInt32Property");
-            AssertNullablePropertyEqual(expected.Int64Property, EdmType.Int64, properties, "Int64Property",
-                (p) => p.Int64Value);
-            AssertPropertyNull(properties, "NullableInt64Property");
-            AssertPropertyEqual(expected.StringProperty, EdmType.String, properties, "StringProperty",
-                (p) => p.StringValue);
-            AssertPropertyEqual(JsonConvert.SerializeObject(expected.PocoProperty, Formatting.Indented), EdmType.String,
-                properties, "PocoProperty", (p) => p.StringValue);
+            AssertNullablePropertyEqual(expected.BooleanProperty, entity, "BooleanProperty");
+            AssertPropertyNull(entity, "NullableBooleanProperty");
+            AssertPropertyEqual(expected.ByteArrayProperty, entity, "ByteArrayProperty");
+            // TODO: behavior change. DateTime was the default type before
+            AssertNullablePropertyEqual(new DateTimeOffset(expected.DateTimeProperty), entity, "DateTimeProperty");
+            AssertPropertyNull(entity, "NullableDateTimeProperty");
+            AssertNullablePropertyEqual(expected.DateTimeOffsetProperty, entity,
+                "DateTimeOffsetProperty");
+            AssertPropertyNull(entity, "NullableDateTimeOffsetProperty");
+            AssertNullablePropertyEqual(expected.DoubleProperty, entity, "DoubleProperty");
+            AssertPropertyNull(entity, "NullableDoubleProperty");
+            AssertNullablePropertyEqual(expected.GuidProperty, entity, "GuidProperty");
+            AssertPropertyNull(entity, "NullableGuidProperty");
+            AssertNullablePropertyEqual(expected.Int32Property, entity, "Int32Property");
+            AssertPropertyNull(entity, "NullableInt32Property");
+            AssertNullablePropertyEqual(expected.Int64Property, entity, "Int64Property");
+            AssertPropertyNull(entity, "NullableInt64Property");
+            AssertPropertyEqual(expected.StringProperty, entity, "StringProperty");
+            AssertPropertyEqual(JsonConvert.SerializeObject(expected.PocoProperty, Formatting.Indented),
+                entity, "PocoProperty");
         }
 
         private static void AssertNullablePropertyEqual<T>(T expected,
-            EdmType expectedType,
-            IDictionary<string, EntityProperty> properties,
-            string propertyName,
-            Func<EntityProperty, Nullable<T>> actualAccessor)
+            TableEntity entity,
+            string propertyName)
             where T : struct
         {
-            Assert.NotNull(properties);
-            Assert.True(properties.ContainsKey(propertyName));
-            EntityProperty property = properties[propertyName];
-            Assert.AreEqual(expectedType, property.PropertyType);
-            Nullable<T> actualValue = actualAccessor.Invoke(property);
-            Assert.True(actualValue.HasValue);
-            Assert.AreEqual(expected, actualValue.Value);
-        }
-
-        private static void AssertPropertyValue(DynamicTableEntity entity, string propertyName, object expectedValue)
-        {
-            Assert.True(entity.Properties.ContainsKey(propertyName));
-            EntityProperty property = entity.Properties[propertyName];
-            Assert.NotNull(property);
-            if (expectedValue is string)
-            {
-                Assert.AreEqual(EdmType.String, property.PropertyType);
-                Assert.AreEqual(expectedValue, property.StringValue);
-            }
-            else if (expectedValue is int)
-            {
-                Assert.AreEqual(EdmType.Int32, property.PropertyType);
-                Assert.AreEqual(expectedValue, property.Int32Value);
-            }
-            else
-            {
-                Assert.False(true, "test bug: unsupported property type: " + expectedValue.GetType().FullName);
-            }
-        }
-
-        private static void AssertPropertyEqual<T>(T expected,
-            EdmType expectedType,
-            IDictionary<string, EntityProperty> properties,
-            string propertyName,
-            Func<EntityProperty, T> actualAccessor)
-            where T : class
-        {
-            Assert.NotNull(properties);
-            Assert.True(properties.ContainsKey(propertyName));
-            EntityProperty property = properties[propertyName];
-            Assert.AreEqual(expectedType, property.PropertyType);
-            T actualValue = actualAccessor.Invoke(property);
+            Assert.NotNull(entity);
+            Assert.True(entity.ContainsKey(propertyName));
+            var actualValue = (T)entity[propertyName];
             Assert.AreEqual(expected, actualValue);
         }
 
-        private static void AssertPropertyNull(IDictionary<string, EntityProperty> properties,
+        private static void AssertPropertyEqual<T>(T expected,
+            TableEntity entity,
+            string propertyName)
+            where T : class
+        {
+            Assert.NotNull(entity);
+            Assert.True(entity.ContainsKey(propertyName));
+            var actualValue = entity[propertyName];
+            Assert.AreEqual(expected, actualValue);
+        }
+
+        private static void AssertPropertyNull(TableEntity entity,
             string propertyName)
         {
-            Assert.NotNull(properties);
-            Assert.False(properties.ContainsKey(propertyName));
+            Assert.NotNull(entity);
+            Assert.False(entity.ContainsKey(propertyName));
         }
 
         // Assert the given table has the given entity with PropertyName=ExpectedValue
@@ -331,27 +282,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Assert
             tableName ??= TableName;
-            CloudTableClient client = Account.CreateCloudTableClient();
-            CloudTable table = client.GetTableReference(tableName);
-            Assert.True(await table.ExistsAsync().ConfigureAwait(false));
-            DynamicTableEntity entity = table.Retrieve<DynamicTableEntity>(partitionKey, rowKey);
-            Assert.NotNull(entity);
-            Assert.NotNull(entity.Properties);
-            Assert.True(entity.Properties.ContainsKey(propertyName));
-            EntityProperty property = entity.Properties[propertyName];
-            Assert.NotNull(property);
-            Assert.AreEqual(EdmType.String, property.PropertyType);
-            Assert.AreEqual(expectedValue, property.StringValue);
+            TableClient table = ServiceClient.GetTableClient(tableName);
+            Assert.True(await TableExistsAsync(table).ConfigureAwait(false));
+            TableEntity entity = await table.GetEntityAsync<TableEntity>(partitionKey, rowKey);
+            Assert.AreEqual(expectedValue, entity[propertyName]);
         }
 
-        private class BindToCloudTableProgram
+        private class BindToTableClientProgram
         {
-            public void Run([Table(TableNameExpression)] CloudTable table)
+            public void Run([Table(TableNameExpression)] TableClient table)
             {
                 Table = table;
             }
 
-            public CloudTable Table { get; set; }
+            public TableClient Table { get; set; }
         }
 
         private class BindToICollectorJObjectProgram
@@ -391,11 +335,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             public static void Run(
                 [Table(TableNameExpression)] ICollector<ITableEntity> table, string newValue)
             {
-                Dictionary<string, EntityProperty> properties = new Dictionary<string, EntityProperty>
+                table.Add(new TableEntity(PartitionKey, RowKey)
                 {
-                    { PropertyName, new EntityProperty(newValue) }
-                };
-                table.Add(new DynamicTableEntity(PartitionKey, RowKey, etag: null, properties: properties));
+                    { PropertyName, (newValue) }
+                });
             }
         }
 
@@ -517,15 +460,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
         private class Poco
         {
-            public string PartitionKey { get; set; }
             public string RowKey { get; set; }
+            public string PartitionKey { get; set; }
             public string Property { get; set; }
         }
 
         private class PocoWithAllTypes
         {
-            public string PartitionKey { get; set; }
             public string RowKey { get; set; }
+            public string PartitionKey { get; set; }
             public bool BooleanProperty { get; set; }
             public bool? NullableBooleanProperty { get; set; }
             public byte[] ByteArrayProperty { get; set; }
@@ -554,9 +497,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             public static bool AddInvoked;
             public static bool DeleteInvoked;
-            public static CloudTable Table;
+            public static TableClient Table;
 
-            public CustomTableBinding(CloudTable table)
+            public CustomTableBinding(TableClient table)
             {
                 // this custom binding has the table, so can perform whatever storage
                 // operations it needs to

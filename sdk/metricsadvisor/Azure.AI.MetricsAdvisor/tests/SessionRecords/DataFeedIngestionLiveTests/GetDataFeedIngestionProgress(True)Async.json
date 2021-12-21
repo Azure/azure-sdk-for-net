@@ -24,8 +24,8 @@
         "x-request-id": "637462a6-b635-4f46-a6a4-c66fdbc0dfda"
       },
       "ResponseBody": {
-        "latestSuccessTimestamp": "2021-01-18T00:00:00Z",
-        "latestActiveTimestamp": "2021-01-18T00:00:00Z"
+        "latestSuccessTimestamp": "2021-01-18T00:00:00.0000000Z",
+        "latestActiveTimestamp": "2021-01-18T00:00:00.0000000Z"
       }
     }
   ],

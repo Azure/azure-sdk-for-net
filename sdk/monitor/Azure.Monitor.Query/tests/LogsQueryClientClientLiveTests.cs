@@ -754,7 +754,7 @@ namespace Azure.Monitor.Query.Tests
             public BinaryData Dynamic { get; set; }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ValidateNanAndInfResultsDoubleAsync()
         {
             var client = CreateClient();

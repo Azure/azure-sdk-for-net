@@ -1248,6 +1248,33 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task RenameAsync_Metadata()
+        {
+            // Arrange
+            await using DisposingShare test = await SharesClientBuilder.GetTestShareAsync();
+            string destDirectoryName = GetNewDirectoryName();
+            ShareDirectoryClient sourceDirectory = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName()));
+            await sourceDirectory.CreateAsync();
+
+            IDictionary<string, string> metadata = BuildMetadata();
+
+            ShareFileRenameOptions options = new ShareFileRenameOptions
+            {
+                Metadata = metadata
+            };
+
+            // Act
+            ShareDirectoryClient destDirectory = await sourceDirectory.RenameAsync(
+                destinationPath: destDirectoryName,
+                options: options);
+
+            // Assert
+            Response<ShareDirectoryProperties> response = await destDirectory.GetPropertiesAsync();
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task RenameAsync_DifferentDirectory()
         {
             // Arrange

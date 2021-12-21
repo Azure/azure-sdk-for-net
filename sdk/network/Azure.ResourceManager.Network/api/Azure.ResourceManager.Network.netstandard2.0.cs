@@ -3796,8 +3796,8 @@ namespace Azure.ResourceManager.Network
         public virtual Azure.ResourceManager.Network.VirtualHubRouteTableV2Data Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.ResourceManager.Network.Models.VirtualHubRouteTableV2DeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Network.Models.VirtualHubRouteTableV2DeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Network.Models.VirtualHubRouteTableV2SDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Network.Models.VirtualHubRouteTableV2SDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.VirtualHubRouteTableV2> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VirtualHubRouteTableV2>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3809,8 +3809,8 @@ namespace Azure.ResourceManager.Network
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<bool> CheckIfExists(string routeTableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string routeTableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Network.Models.VirtualHubRouteTableV2CreateOrUpdateOperation CreateOrUpdate(string routeTableName, Azure.ResourceManager.Network.VirtualHubRouteTableV2Data virtualHubRouteTableV2Parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Network.Models.VirtualHubRouteTableV2CreateOrUpdateOperation> CreateOrUpdateAsync(string routeTableName, Azure.ResourceManager.Network.VirtualHubRouteTableV2Data virtualHubRouteTableV2Parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Network.Models.VirtualHubRouteTableV2SCreateOrUpdateOperation CreateOrUpdate(string routeTableName, Azure.ResourceManager.Network.VirtualHubRouteTableV2Data virtualHubRouteTableV2Parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Network.Models.VirtualHubRouteTableV2SCreateOrUpdateOperation> CreateOrUpdateAsync(string routeTableName, Azure.ResourceManager.Network.VirtualHubRouteTableV2Data virtualHubRouteTableV2Parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.VirtualHubRouteTableV2> Get(string routeTableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Network.VirtualHubRouteTableV2> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.VirtualHubRouteTableV2> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -11937,9 +11937,9 @@ namespace Azure.ResourceManager.Network.Models
         public VirtualHubRouteTable() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.VirtualHubRoute> Routes { get { throw null; } }
     }
-    public partial class VirtualHubRouteTableV2CreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.VirtualHubRouteTableV2>
+    public partial class VirtualHubRouteTableV2SCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.VirtualHubRouteTableV2>
     {
-        protected VirtualHubRouteTableV2CreateOrUpdateOperation() { }
+        protected VirtualHubRouteTableV2SCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -11950,9 +11950,9 @@ namespace Azure.ResourceManager.Network.Models
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.Network.VirtualHubRouteTableV2>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.Network.VirtualHubRouteTableV2>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class VirtualHubRouteTableV2DeleteOperation : Azure.Operation
+    public partial class VirtualHubRouteTableV2SDeleteOperation : Azure.Operation
     {
-        protected VirtualHubRouteTableV2DeleteOperation() { }
+        protected VirtualHubRouteTableV2SDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override string Id { get { throw null; } }
         public override Azure.Response GetRawResponse() { throw null; }

@@ -3,8 +3,9 @@
 
 using System;
 using System.Reflection;
+using Azure;
 using Microsoft.Azure.WebJobs.Host.Bindings;
-using Microsoft.Azure.Cosmos.Table;
+using Azure.Data.Tables;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
@@ -46,12 +47,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
         }
 
-        private class SimpleTableEntity : TableEntity
+        private class SimpleTableEntity : ITableEntity
         {
+            public string PartitionKey { get; set; }
+            public string RowKey { get; set; }
+            public DateTimeOffset? Timestamp { get; set; }
+            public ETag ETag { get; set; }
         }
 
-        private class GenericClass<TArgument> : TableEntity
+        private class GenericClass<TArgument> : ITableEntity
         {
+            public string PartitionKey { get; set; }
+            public string RowKey { get; set; }
+            public DateTimeOffset? Timestamp { get; set; }
+            public ETag ETag { get; set; }
         }
     }
 }

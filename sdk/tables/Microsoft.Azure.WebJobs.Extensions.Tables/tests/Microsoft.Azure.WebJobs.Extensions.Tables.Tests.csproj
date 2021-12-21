@@ -9,6 +9,8 @@
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.Azure.WebJobs" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Http" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
   </ItemGroup>
@@ -18,5 +20,12 @@
     <ProjectReference Include="..\src\Microsoft.Azure.WebJobs.Extensions.Tables.csproj" />
   </ItemGroup>
 
-
+  <ItemGroup>
+    <Compile Remove="TableEntityValueBinderTests.cs" />
+    <Compile Remove="EntityPropertyToTConverterFactoryTests.cs" />
+    <Compile Remove="TToEntityPropertyConverterFactoryTests.cs" />
+    
+    <Compile Include="..\..\Azure.Data.Tables\tests\TablesTestEnvironment.cs" LinkBase="Shared" />
+    <Compile Include="..\..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\tests\shared\*.cs" LinkBase="Shared" />
+  </ItemGroup>
 </Project>

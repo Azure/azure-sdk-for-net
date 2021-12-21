@@ -7,7 +7,9 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Cosmos.Table;
+using Azure;
+using Azure.Data.Tables;
+using Azure.Data.Tables.Models;
 using Microsoft.Azure.WebJobs.Description;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Config;
@@ -19,14 +21,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
     [Extension("AzureStorageTables", "Tables")]
     internal class TablesExtensionConfigProvider : IExtensionConfigProvider
     {
-        private readonly StorageAccountProvider _accountProvider;
+        private readonly TablesAccountProvider _accountProvider;
         private readonly INameResolver _nameResolver;
 
         // Property names on TableAttribute
         private const string RowKeyProperty = nameof(TableAttribute.RowKey);
         private const string PartitionKeyProperty = nameof(TableAttribute.PartitionKey);
 
-        public TablesExtensionConfigProvider(StorageAccountProvider accountProvider, INameResolver nameResolver)
+        public TablesExtensionConfigProvider(TablesAccountProvider accountProvider, INameResolver nameResolver)
         {
             _accountProvider = accountProvider;
             _nameResolver = nameResolver;
@@ -52,7 +54,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 
             binding.WhenIsNull(RowKeyProperty)
                 .SetPostResolveHook(ToParameterDescriptorForCollector)
-                .BindToInput<CloudTable>(builder);
+                .BindToInput<TableClient>(builder);
 
             binding.BindToCollector<ITableEntity>(BuildFromTableAttribute);
 
@@ -63,17 +65,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
         }
 
         // Get the storage table from the attribute.
-        private CloudTable GetTable(TableAttribute attribute)
+        private TableClient GetTable(TableAttribute attribute)
         {
             var account = _accountProvider.Get(attribute.Connection);
-            var tableClient = account.CreateCloudTableClient();
-            return tableClient.GetTableReference(attribute.TableName);
+            return account.GetTableClient(attribute.TableName);
         }
 
         private ParameterDescriptor ToParameterDescriptorForCollector(TableAttribute attribute, ParameterInfo parameter, INameResolver nameResolver)
         {
             var account = _accountProvider.Get(attribute.Connection, nameResolver);
-            string accountName = account.Name;
+            string accountName = account.AccountName;
 
             return new TableParameterDescriptor
             {
@@ -104,54 +105,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 
         public ITableEntity JObjectToTableEntityConverterFunc(JObject source, TableAttribute attribute)
         {
-            var result = CreateTableEntityFromJObject(attribute.PartitionKey, attribute.RowKey, source);
-            return result;
+            if (source == null)
+            {
+                return null;
+            }
+            return CreateTableEntityFromJObject(attribute.PartitionKey, attribute.RowKey, source);
         }
 
-        private static JObject ConvertEntityToJObject(DynamicTableEntity tableEntity)
+        private static JObject ConvertEntityToJObject(TableEntity tableEntity)
         {
             JObject jsonObject = new JObject();
-            foreach (var entityProperty in tableEntity.Properties)
+            foreach (var entityProperty in tableEntity)
             {
-                JValue value = null;
-                switch (entityProperty.Value.PropertyType)
-                {
-                    case EdmType.String:
-                        value = new JValue(entityProperty.Value.StringValue);
-                        break;
-                    case EdmType.Int32:
-                        value = new JValue(entityProperty.Value.Int32Value);
-                        break;
-                    case EdmType.Int64:
-                        value = new JValue(entityProperty.Value.Int64Value);
-                        break;
-                    case EdmType.DateTime:
-                        value = new JValue(entityProperty.Value.DateTime);
-                        break;
-                    case EdmType.Boolean:
-                        value = new JValue(entityProperty.Value.BooleanValue);
-                        break;
-                    case EdmType.Guid:
-                        value = new JValue(entityProperty.Value.GuidValue);
-                        break;
-                    case EdmType.Double:
-                        value = new JValue(entityProperty.Value.DoubleValue);
-                        break;
-                    case EdmType.Binary:
-                        value = new JValue(entityProperty.Value.BinaryValue);
-                        break;
-                }
+                JToken value = JToken.FromObject(entityProperty.Value);
 
                 jsonObject.Add(entityProperty.Key, value);
             }
-
-            jsonObject.Add("PartitionKey", tableEntity.PartitionKey);
-            jsonObject.Add("RowKey", tableEntity.RowKey);
-
             return jsonObject;
         }
 
-        private static DynamicTableEntity CreateTableEntityFromJObject(string partitionKey, string rowKey, JObject entity)
+        private static TableEntity CreateTableEntityFromJObject(string partitionKey, string rowKey, JObject entity)
         {
             // any key values specified on the entity override any values
             // specified in the binding
@@ -169,38 +142,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 entity.Remove(keyProperty.Name);
             }
 
-            DynamicTableEntity tableEntity = new DynamicTableEntity(partitionKey, rowKey);
+            TableEntity tableEntity = new TableEntity(partitionKey, rowKey);
             foreach (JProperty property in entity.Properties())
             {
-                EntityProperty entityProperty = CreateEntityPropertyFromJProperty(property);
-                tableEntity.Properties.Add(property.Name, entityProperty);
+                // TODO: validation?
+                tableEntity[property.Name] = ((JValue)property.Value).Value;
             }
 
             return tableEntity;
         }
 
-        private static EntityProperty CreateEntityPropertyFromJProperty(JProperty property)
-        {
-            switch (property.Value.Type)
-            {
-                case JTokenType.String:
-                    return EntityProperty.GeneratePropertyForString((string)property.Value);
-                case JTokenType.Integer:
-                    return EntityProperty.GeneratePropertyForInt((int)property.Value);
-                case JTokenType.Boolean:
-                    return EntityProperty.GeneratePropertyForBool((bool)property.Value);
-                case JTokenType.Guid:
-                    return EntityProperty.GeneratePropertyForGuid((Guid)property.Value);
-                case JTokenType.Float:
-                    return EntityProperty.GeneratePropertyForDouble((double)property.Value);
-                default:
-                    return EntityProperty.CreateEntityPropertyFromObject((object)property.Value);
-            }
-        }
-
-        // Provide some common builder rules. 
+        // Provide some common builder rules.
         private class JObjectBuilder :
-            IAsyncConverter<TableAttribute, CloudTable>,
+            IAsyncConverter<TableAttribute, TableClient>,
             IAsyncConverter<TableAttribute, JObject>,
             IAsyncConverter<TableAttribute, JArray>
         {
@@ -211,7 +165,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 _bindingProvider = bindingProvider;
             }
 
-            async Task<CloudTable> IAsyncConverter<TableAttribute, CloudTable>.ConvertAsync(TableAttribute attribute, CancellationToken cancellation)
+            async Task<TableClient> IAsyncConverter<TableAttribute, TableClient>.ConvertAsync(TableAttribute attribute, CancellationToken cancellation)
             {
                 var table = _bindingProvider.GetTable(attribute);
                 await table.CreateIfNotExistsAsync(CancellationToken.None).ConfigureAwait(false);
@@ -223,16 +177,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             {
                 var table = _bindingProvider.GetTable(attribute);
 
-                var retrieve = table.CreateRetrieveOperation<DynamicTableEntity>(attribute.PartitionKey, attribute.RowKey);
-                TableResult result = await table.ExecuteAsync(retrieve, CancellationToken.None).ConfigureAwait(false);
-                DynamicTableEntity entity = (DynamicTableEntity)result.Result;
-                if (entity == null)
+                try
+                {
+                    var result = await table.GetEntityAsync<TableEntity>(
+                        attribute.PartitionKey,
+                        attribute.RowKey,
+                        cancellationToken: CancellationToken.None).ConfigureAwait(false);
+                    return ConvertEntityToJObject(result);
+                }
+                catch (RequestFailedException e) when
+                    (e.Status == 404 && (e.ErrorCode == TableErrorCode.TableNotFound || e.ErrorCode == TableErrorCode.ResourceNotFound))
                 {
                     return null;
-                }
-                else
-                {
-                    return ConvertEntityToJObject(entity);
                 }
             }
 
@@ -242,54 +198,43 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             {
                 var table = _bindingProvider.GetTable(attribute);
 
-                string finalQuery = attribute.Filter;
+                string filter = attribute.Filter;
                 if (!string.IsNullOrEmpty(attribute.PartitionKey))
                 {
-                    var partitionKeyPredicate = TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, attribute.PartitionKey);
+                    var partitionKeyPredicate = TableClient.CreateQueryFilter($"PartitionKey eq {attribute.PartitionKey}");
                     if (!string.IsNullOrEmpty(attribute.Filter))
                     {
-                        finalQuery = TableQuery.CombineFilters(attribute.Filter, TableOperators.And, partitionKeyPredicate);
+                        filter = $"{partitionKeyPredicate} and {attribute.Filter}";
                     }
                     else
                     {
-                        finalQuery = partitionKeyPredicate;
+                        filter = partitionKeyPredicate;
                     }
                 }
 
-                TableQuery tableQuery = new TableQuery
-                {
-                    FilterString = finalQuery
-                };
+                int? maxPerPage = null;
                 if (attribute.Take > 0)
                 {
-                    tableQuery.TakeCount = attribute.Take;
+                    maxPerPage = attribute.Take;
                 }
 
                 int countRemaining = attribute.Take;
 
                 JArray entityArray = new JArray();
-                TableContinuationToken token = null;
+                var entities = table.QueryAsync<TableEntity>(
+                    filter: filter,
+                    maxPerPage: maxPerPage,
+                    cancellationToken: cancellation).ConfigureAwait(false);
 
-                do
+                await foreach (var entity in entities)
                 {
-                    var segment = await table.ExecuteQuerySegmentedAsync(tableQuery, token, cancellation).ConfigureAwait(false);
-                    var entities = segment.Results;
-
-                    token = segment.ContinuationToken;
-
-                    foreach (var entity in entities)
+                    countRemaining--;
+                    entityArray.Add(ConvertEntityToJObject(entity));
+                    if (countRemaining == 0)
                     {
-                        countRemaining--;
-                        entityArray.Add(ConvertEntityToJObject(entity));
-
-                        if (countRemaining == 0)
-                        {
-                            token = null;
-                            break;
-                        }
+                        break;
                     }
-                } while (token != null);
-
+                }
                 return entityArray;
             }
         }
@@ -298,15 +243,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
         private class ObjectToITableEntityConverter<TElement>
             : IConverter<TElement, ITableEntity>
         {
-            private static readonly IConverter<TElement, ITableEntity> Converter = PocoToTableEntityConverter<TElement>.Create();
+            private static readonly IConverter<TElement, TableEntity> Converter = new PocoToTableEntityConverter<TElement>();
 
             public ObjectToITableEntityConverter()
             {
-                // JObject case should have been claimed by another converter. 
+                // JObject case should have been claimed by another converter.
                 // So we can statically enforce an ITableEntity compatible contract
                 var t = typeof(TElement);
-                TableClient.VerifyContainsProperty(t, "RowKey");
-                TableClient.VerifyContainsProperty(t, "PartitionKey");
+                TableClientHelpers.VerifyContainsProperty(t, "RowKey");
+                TableClientHelpers.VerifyContainsProperty(t, "PartitionKey");
             }
 
             public ITableEntity Convert(TElement item)

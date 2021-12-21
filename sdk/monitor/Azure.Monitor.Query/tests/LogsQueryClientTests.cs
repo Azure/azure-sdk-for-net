@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -191,6 +192,87 @@ namespace Azure.Monitor.Query.Tests
             Assert.AreEqual(result.GetVisualization().ToString(), "42");
             Assert.AreEqual("PartialError", result.Error.Code);
             Assert.AreEqual("There were some errors when processing your query.", result.Error.Message);
+        }
+
+        [Test]
+        public void ValidateMonitorModelFactoryTableCreation()
+        {
+            LogsTableColumn logsTableColumn0 = MonitorQueryModelFactory.LogsTableColumn("column0", LogsColumnType.Datetime);
+            LogsTableColumn logsTableColumn1 = MonitorQueryModelFactory.LogsTableColumn("column1", LogsColumnType.Guid);
+            LogsTableColumn logsTableColumn2 = MonitorQueryModelFactory.LogsTableColumn("column2", LogsColumnType.Int);
+            LogsTableColumn logsTableColumn3 = MonitorQueryModelFactory.LogsTableColumn("column3", LogsColumnType.Long);
+            LogsTableColumn logsTableColumn4 = MonitorQueryModelFactory.LogsTableColumn("column4", LogsColumnType.Real);
+            LogsTableColumn logsTableColumn5 = MonitorQueryModelFactory.LogsTableColumn("column5", LogsColumnType.String);
+            LogsTableColumn logsTableColumn6 = MonitorQueryModelFactory.LogsTableColumn("column6", LogsColumnType.Timespan);
+            LogsTableColumn logsTableColumn7 = MonitorQueryModelFactory.LogsTableColumn("column7", LogsColumnType.Decimal);
+            LogsTableColumn logsTableColumn8 = MonitorQueryModelFactory.LogsTableColumn("column8", LogsColumnType.Bool);
+            LogsTableColumn logsTableColumn9 = MonitorQueryModelFactory.LogsTableColumn("column9", LogsColumnType.Dynamic);
+            LogsTableColumn[] logsTableColumns = new LogsTableColumn[] { logsTableColumn0, logsTableColumn1, logsTableColumn2, logsTableColumn3, logsTableColumn4, logsTableColumn5, logsTableColumn6, logsTableColumn7, logsTableColumn8, logsTableColumn9};
+            Object[] rowValues = new Object[] { "2015-12-31T23:59:59.9Z", "74be27de-1e4e-49d9-b579-fe0b331d3642", 12345, 1234567890123, 12345.6789, "string value", "00:00:10", "0.10101", false, "{\u0022a\u0022:123,\u0022b\u0022:\u0022hello\u0022,\u0022c\u0022:[1,2,3],\u0022d\u0022:{}}" };
+
+            LogsTableRow logsTableRow = MonitorQueryModelFactory.LogsTableRow(logsTableColumns, rowValues);
+            LogsTableRow[] rowArray = new LogsTableRow[] { logsTableRow };
+            LogsTable logsTable = MonitorQueryModelFactory.LogsTable("tester", logsTableColumns.AsEnumerable(), rowArray.AsEnumerable());
+
+            Assert.AreEqual("tester", logsTable.Name);
+            Assert.AreEqual(1, logsTable.Rows.Count);
+            Assert.AreEqual(10, logsTable.Columns.Count);
+
+            Assert.AreEqual("column0", logsTable.Columns[0].Name);
+            Assert.AreEqual("datetime", logsTable.Columns[0].Type.ToString());
+            Assert.AreEqual("column1", logsTable.Columns[1].Name);
+            Assert.AreEqual("guid", logsTable.Columns[1].Type.ToString());
+            Assert.AreEqual("column2", logsTable.Columns[2].Name);
+            Assert.AreEqual("int", logsTable.Columns[2].Type.ToString());
+            Assert.AreEqual("column3", logsTable.Columns[3].Name);
+            Assert.AreEqual("long", logsTable.Columns[3].Type.ToString());
+            Assert.AreEqual("column4", logsTable.Columns[4].Name);
+            Assert.AreEqual("real", logsTable.Columns[4].Type.ToString());
+            Assert.AreEqual("column5", logsTable.Columns[5].Name);
+            Assert.AreEqual("string", logsTable.Columns[5].Type.ToString());
+            Assert.AreEqual("column6", logsTable.Columns[6].Name);
+            Assert.AreEqual("timespan", logsTable.Columns[6].Type.ToString());
+            Assert.AreEqual("column7", logsTable.Columns[7].Name);
+            Assert.AreEqual("decimal", logsTable.Columns[7].Type.ToString());
+            Assert.AreEqual("column8", logsTable.Columns[8].Name);
+            Assert.AreEqual("bool", logsTable.Columns[8].Type.ToString());
+            Assert.AreEqual("column9", logsTable.Columns[9].Name);
+            Assert.AreEqual("dynamic", logsTable.Columns[9].Type.ToString());
+
+            var expectedDate = DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00");
+
+            Assert.AreEqual(expectedDate, logsTable.Rows[0].GetDateTimeOffset(0));
+            Assert.AreEqual(expectedDate, logsTable.Rows[0].GetObject("column0"));
+            Assert.AreEqual(false, logsTable.Rows[0].GetBoolean("column8"));
+            Assert.AreEqual(false, logsTable.Rows[0].GetBoolean(8));
+            Assert.AreEqual(false, logsTable.Rows[0].GetObject("column8"));
+            Assert.AreEqual(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642"), logsTable.Rows[0].GetGuid("column1"));
+            Assert.AreEqual(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642"), logsTable.Rows[0].GetGuid(1));
+            Assert.AreEqual(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642"), logsTable.Rows[0].GetObject("column1"));
+            Assert.AreEqual(12345, logsTable.Rows[0].GetInt32("column2"));
+            Assert.AreEqual(12345, logsTable.Rows[0].GetInt32(2));
+            Assert.AreEqual(12345, logsTable.Rows[0].GetObject("column2"));
+            Assert.AreEqual(1234567890123, logsTable.Rows[0].GetInt64("column3"));
+            Assert.AreEqual(1234567890123, logsTable.Rows[0].GetInt64(3));
+            Assert.AreEqual(1234567890123, logsTable.Rows[0].GetObject("column3"));
+            Assert.AreEqual(12345.6789d, logsTable.Rows[0].GetDouble("column4"));
+            Assert.AreEqual(12345.6789d, logsTable.Rows[0].GetDouble(4));
+            Assert.AreEqual(12345.6789d, logsTable.Rows[0].GetObject("column4"));
+            Assert.AreEqual("string value", logsTable.Rows[0].GetString("column5"));
+            Assert.AreEqual("string value", logsTable.Rows[0].GetString(5));
+            Assert.AreEqual("string value", logsTable.Rows[0].GetObject("column5"));
+            Assert.AreEqual(TimeSpan.FromSeconds(10), logsTable.Rows[0].GetTimeSpan("column6"));
+            Assert.AreEqual(TimeSpan.FromSeconds(10), logsTable.Rows[0].GetTimeSpan(6));
+            Assert.AreEqual(TimeSpan.FromSeconds(10), logsTable.Rows[0].GetObject("column6"));
+            Assert.AreEqual(0.10101m, logsTable.Rows[0].GetDecimal("column7"));
+            Assert.AreEqual(0.10101m, logsTable.Rows[0].GetDecimal(7));
+            Assert.AreEqual(0.10101m, logsTable.Rows[0].GetObject("column7"));
+            Assert.IsFalse(logsTable.Rows[0].GetBoolean("column8"));
+            Assert.IsFalse(logsTable.Rows[0].GetBoolean(8));
+            Assert.AreEqual(false, logsTable.Rows[0].GetObject("column8"));
+            Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", logsTable.Rows[0].GetDynamic(9).ToString());
+            Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", logsTable.Rows[0].GetDynamic("column9").ToString());
+            Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", logsTable.Rows[0].GetObject("column9").ToString());
         }
     }
 }
