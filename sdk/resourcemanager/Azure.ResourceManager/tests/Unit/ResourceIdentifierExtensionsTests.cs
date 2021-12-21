@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Tests.Unit
         [TestCase("/providers/Microsoft.Management/managementGroups/group0/providers/Microsoft.Authorization/policyAssignments/assignment", "policyAssignments/assignment")]
         public void SubstringAfterProviderNamespaceTest(string resourceId, string expected)
         {
-            ResourceIdentifier id = resourceId;
+            ResourceIdentifier id = new ResourceIdentifier(resourceId);
             string result = id.SubstringAfterProviderNamespace();
             Assert.AreEqual(expected, result);
         }

@@ -37,7 +37,7 @@ Now that we have the resource group created, we can manage the cdn origin group 
 ```C# Snippet:Managing_OriginGroups_CreateAnOriginGroup
 // Create a new cdn profile
 string profileName = "myProfile";
-var input1 = new ProfileData(Location.WestUS, new Sku { Name = SkuName.StandardMicrosoft });
+var input1 = new ProfileData(Location.WestUS, new Models.Sku { Name = SkuName.StandardMicrosoft });
 ProfileCreateOperation lro1 = await resourceGroup.GetProfiles().CreateOrUpdateAsync(profileName, input1);
 Profile profile = lro1.Value;
 // Get the cdn endpoint collection from the specific profile and create an endpoint
@@ -62,7 +62,7 @@ string originGroupName = "myOriginGroup";
 var input3 = new CdnOriginGroupData();
 input3.Origins.Add(new WritableSubResource
 {
-    Id = $"{endpoint.Id}/origins/myOrigin"
+    Id = new ResourceIdentifier($"{endpoint.Id}/origins/myOrigin")
 });
 CdnOriginGroupCreateOperation lro3 = await endpoint.GetCdnOriginGroups().CreateOrUpdateAsync(originGroupName, input3);
 CdnOriginGroup originGroup = lro3.Value;

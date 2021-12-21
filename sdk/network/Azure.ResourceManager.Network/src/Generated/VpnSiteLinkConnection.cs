@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "VpnSiteLinkConnection"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal VpnSiteLinkConnection(ArmResource options, VpnSiteLinkConnectionData resource) : base(options, resource.Id)
+        internal VpnSiteLinkConnection(ArmResource options, VpnSiteLinkConnectionData resource) : base(options, new ResourceIdentifier(resource.Id))
         {
             HasData = true;
             _data = resource;

@@ -327,9 +327,9 @@ namespace Azure.Core.TestFramework
 
         public HttpPipelineTransport CreateTransport(HttpPipelineTransport currentTransport)
         {
-            if (!_useLegacyTransport)
+            if (!_useLegacyTransport && Mode != RecordedTestMode.Live)
             {
-                return new ProxyTransport(_proxy, currentTransport, this);
+                return new ProxyTransport(_proxy, currentTransport, this, () => _disableRecording.Value);
             }
             return Mode switch
             {

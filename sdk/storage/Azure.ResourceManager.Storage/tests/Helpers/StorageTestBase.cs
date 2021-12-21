@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
         };
         protected ArmClient Client { get; private set; }
         protected Subscription DefaultSubscription { get; private set; }
-        protected StorageTestBase(bool isAsync) : base(isAsync, useLegacyTransport: true)
+        protected StorageTestBase(bool isAsync) : base(isAsync)
         {
         }
 
-        public StorageTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode, useLegacyTransport: true)
+        public StorageTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
         }
 

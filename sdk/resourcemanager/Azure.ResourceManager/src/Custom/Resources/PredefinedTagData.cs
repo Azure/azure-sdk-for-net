@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="tagName"> The tag name. </param>
         /// <param name="count"> The total number of resources that use the resource tag. When a tag is initially created and has no associated resources, the value is 0. </param>
         /// <param name="values"> The list of tag values. </param>
-        internal PredefinedTagData(string id, string tagName, PredefinedTagCount count, IReadOnlyList<PredefinedTagValue> values) : base(id)
+        internal PredefinedTagData(ResourceIdentifier id, string tagName, PredefinedTagCount count, IReadOnlyList<PredefinedTagValue> values) : base(id)
         {
             TagName = tagName;
             Count = count;

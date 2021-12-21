@@ -37,6 +37,8 @@ namespace Azure.Core.TestFramework
         private readonly Process _testProxyProcess;
         internal TestProxyRestClient Client { get; }
         private readonly StringBuilder _errorBuffer = new();
+        private static readonly object _lock = new();
+        private static TestProxy _shared;
 
         static TestProxy()
         {
@@ -69,16 +71,19 @@ namespace Azure.Core.TestFramework
                 EnvironmentVariables =
                 {
                     ["ASPNETCORE_URLS"] = $"http://{IpAddress}:0;https://{IpAddress}:0",
-                    ["Logging__LogLevel__Microsoft"] = "Information"
+                    ["Logging__LogLevel__Microsoft.Hosting.Lifetime"] = "Information",
+                    ["ASPNETCORE_Kestrel__Certificates__Default__Path"] = Path.Combine(
+                        TestEnvironment.RepositoryRoot,
+                        "eng",
+                        "common",
+                        "testproxy",
+                        "dotnet-devcert.pfx"),
+                    ["ASPNETCORE_Kestrel__Certificates__Default__Password"] = "password"
                 }
             };
 
-            if (!TestEnvironment.GlobalIsRunningInCI)
-            {
-                ImportDevCertIfNeeded();
-            }
-
             _testProxyProcess = Process.Start(testProxyProcessInfo);
+
             ProcessTracker.Add(_testProxyProcess);
             _ = Task.Run(
                 () =>
@@ -112,7 +117,11 @@ namespace Azure.Core.TestFramework
 
             if (_proxyPortHttp == null || _proxyPortHttps == null)
             {
-                throw new InvalidOperationException("Failed to start the test proxy.");
+                CheckForErrors();
+                // if no errors, fallback to this exception
+                throw new InvalidOperationException("Failed to start the test proxy. One or both of the ports was not populated." + Environment.NewLine +
+                                                    $"http: {_proxyPortHttp}" + Environment.NewLine +
+                                                    $"https: {_proxyPortHttps}");
             }
 
             // we need to use https when talking to test proxy admin endpoint so that we can establish the connection before any
@@ -145,55 +154,31 @@ namespace Azure.Core.TestFramework
 
         public static TestProxy Start()
         {
-            return new TestProxy(typeof(TestProxy)
-                .Assembly
-                .GetCustomAttributes<AssemblyMetadataAttribute>()
-                .Single(a => a.Key == "TestProxyPath")
-                .Value);
-        }
-
-        public void Stop()
-        {
-            _testProxyProcess?.Kill();
-        }
-
-        private static void ImportDevCertIfNeeded()
-        {
-            ProcessStartInfo checkCertProcessInfo = new ProcessStartInfo(
-                s_dotNetExe,
-                "dev-certs https --check --verbose")
+            if (_shared != null)
             {
-                UseShellExecute = false,
-                RedirectStandardOutput = true
-            };
-
-            Process checkCertProcess = Process.Start(checkCertProcessInfo);
-            string output = checkCertProcess.StandardOutput.ReadToEnd();
-            if (!output.Contains("A valid certificate was found.") &&
-                // .NET 6.0 SDK has a different output
-                !output.Contains("CN=localhost"))
-            {
-                TestContext.Progress.WriteLine("Importing certificate...");
-                checkCertProcess.WaitForExit();
-                var certPath = Path.Combine(TestEnvironment.RepositoryRoot, "eng", "common", "testproxy", "dotnet-devcert.pfx");
-                ProcessStartInfo processInfo = new ProcessStartInfo(
-                    s_dotNetExe,
-                    $"dev-certs https --clean --import {certPath} --password=\"password\"")
-                {
-                    UseShellExecute = false
-                };
-                Process.Start(processInfo).WaitForExit();
-                processInfo = new ProcessStartInfo(
-                    s_dotNetExe,
-                    $"dev-certs https --trust")
-                {
-                    UseShellExecute = false
-                };
-                Process.Start(processInfo).WaitForExit();
+                return _shared;
             }
-            else
+
+            lock (_lock)
             {
-                checkCertProcess.WaitForExit();
+                var shared = _shared;
+                if (shared == null)
+                {
+                    shared = new TestProxy(typeof(TestProxy)
+                        .Assembly
+                        .GetCustomAttributes<AssemblyMetadataAttribute>()
+                        .Single(a => a.Key == "TestProxyPath")
+                        .Value);
+
+                    AppDomain.CurrentDomain.DomainUnload += (_, _) =>
+                    {
+                        shared._testProxyProcess?.Kill();
+                    };
+
+                    _shared = shared;
+                }
+
+                return shared;
             }
         }
 

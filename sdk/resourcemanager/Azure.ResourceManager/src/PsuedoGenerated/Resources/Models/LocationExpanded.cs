@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary>
     /// Represents an Azure geography region where supported resource providers live.
     /// </summary>
-    public partial class LocationExpanded : Location
+    public partial class LocationExpanded
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="LocationExpanded"/> class.
@@ -29,13 +29,21 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="id"></param>
         /// <param name="subscriptionId"></param>
         internal LocationExpanded(string id, string subscriptionId, string name, string displayName, string regionalDisplayName, LocationMetadata metadata)
-            : base(name, displayName, regionalDisplayName)
         {
             Metadata = metadata;
             Id = id;
-            ResourceIdentifier subId = id;
+            ResourceIdentifier subId = new ResourceIdentifier(id);
             SubscriptionId = subscriptionId ?? subId.SubscriptionId;
+            RegionalDisplayName = regionalDisplayName;
+            Name = name;
+            DisplayName = displayName;
         }
+
+        /// <summary> Gets a location name consisting of only lowercase characters without white spaces or any separation character between words, e.g. "westus". </summary>
+        public string Name { get; private set; }
+
+        /// <summary> Gets a location display name consisting of titlecase words or alphanumeric characters separated by whitespaces, e.g. "West US". </summary>
+        public string DisplayName { get; private set; }
 
         /// <summary> Metadata of the location, such as lat/long, paired region, and others. </summary>
         public LocationMetadata Metadata { get; }
@@ -45,5 +53,8 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> SubscriptionId the Location is under. </summary>
         public string SubscriptionId { get; }
+
+        /// <summary> The display name of the location and its region. </summary>
+        public string RegionalDisplayName { get; }
     }
 }

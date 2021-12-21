@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> Returns a <see cref="NetworkRuleSet" /> object. </returns>
         public NetworkRuleSet GetNetworkRuleSet()
         {
-            return new NetworkRuleSet(this, Id + "/networkRuleSets/default");
+            return new NetworkRuleSet(this, new ResourceIdentifier(Id.ToString() + "/networkRuleSets/default"));
         }
         #endregion
 

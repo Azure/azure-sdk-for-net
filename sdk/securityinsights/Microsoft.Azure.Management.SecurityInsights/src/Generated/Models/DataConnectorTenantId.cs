@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.SecurityInsights.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -31,7 +32,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </summary>
         /// <param name="tenantId">The tenant id to connect to, and get the
         /// data from.</param>
-        public DataConnectorTenantId(string tenantId = default(string))
+        public DataConnectorTenantId(string tenantId)
         {
             TenantId = tenantId;
             CustomInit();
@@ -48,5 +49,18 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         [JsonProperty(PropertyName = "tenantId")]
         public string TenantId { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (TenantId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "TenantId");
+            }
+        }
     }
 }

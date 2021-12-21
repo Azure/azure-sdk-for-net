@@ -1,0 +1,41 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://pakrymtables3prim.table.cosmos.azure.com/testtable7x3Xe407(PartitionKey=\u0027PK\u0027,RowKey=\u0027RK\u0027)?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json; odata=minimalmetadata",
+        "Authorization": "Sanitized",
+        "DataServiceVersion": "3.0",
+        "User-Agent": "azsdk-net-Data.Tables/12.4.0-alpha.20211215.1 (.NET 6.0.0-rtm.21522.10; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "6cb9ae4a4526bd511552f23f493c76da",
+        "x-ms-date": "Wed, 15 Dec 2021 18:55:52 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-02-02"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; odata=minimalmetadata",
+        "Date": "Wed, 15 Dec 2021 18:55:51 GMT",
+        "ETag": "W/\u0022datetime\u00272021-12-15T18%3A55%3A52.5850120Z\u0027\u0022",
+        "Transfer-Encoding": "chunked",
+        "x-ms-request-id": "2f35f27d-1adb-48a4-916b-0f460fc08ae1"
+      },
+      "ResponseBody": {
+        "odata.metadata": "https://pakrymtables3prim.table.cosmos.azure.com/testtable7x3Xe407/$metadata#testtable7x3Xe407/@Element",
+        "odata.etag": "W/\u0022datetime\u00272021-12-15T18%3A55%3A52.5850120Z\u0027\u0022",
+        "PartitionKey": "PK",
+        "RowKey": "RK",
+        "Value": "Foo",
+        "Timestamp": "2021-12-15T18:55:52.5850120Z"
+      }
+    }
+  ],
+  "Variables": {
+    "COSMOS_TABLES_ENDPOINT_SUFFIX": "cosmos.azure.com",
+    "RandomSeed": "795535375",
+    "TABLES_COSMOS_ACCOUNT_NAME": "pakrymtables3prim",
+    "TABLES_PRIMARY_COSMOS_ACCOUNT_KEY": "Kg=="
+  }
+}

@@ -6,6 +6,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Security;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 
@@ -21,7 +22,9 @@ namespace Azure.Core.TestFramework
         private static readonly RemoteCertificateValidationCallback ServerCertificateCustomValidationCallback =
             (_, certificate, _, _) => certificate.Issuer == TestProxy.DevCertIssuer;
 
-        public ProxyTransport(TestProxy proxy, HttpPipelineTransport transport, TestRecording recording)
+        private readonly Func<EntryRecordModel> _filter;
+
+        public ProxyTransport(TestProxy proxy, HttpPipelineTransport transport, TestRecording recording, Func<EntryRecordModel> filter)
         {
             if (transport is HttpClientTransport)
             {
@@ -39,6 +42,7 @@ namespace Azure.Core.TestFramework
             }
             _recording = recording;
             _proxy = proxy;
+            _filter = filter;
         }
 
         public override void Process(HttpMessage message)
@@ -59,17 +63,18 @@ namespace Azure.Core.TestFramework
         {
             if (message.Response.Headers.Contains("x-request-mismatch"))
             {
-                var streamreader = new StreamReader(message.Response.ContentStream);
+                var streamReader = new StreamReader(message.Response.ContentStream);
                 string response;
                 if (async)
                 {
-                    response = await streamreader.ReadToEndAsync();
+                    response = await streamReader.ReadToEndAsync();
                 }
                 else
                 {
-                    response = streamreader.ReadToEnd();
+                    response = streamReader.ReadToEnd();
                 }
-                throw new TestRecordingMismatchException(response);
+                using var doc = JsonDocument.Parse(response);
+                throw new TestRecordingMismatchException(doc.RootElement.GetProperty("Message").GetString());
             }
 
             // revert the original URI - this is important for tests that rely on aspects of the URI in the pipeline
@@ -106,6 +111,27 @@ namespace Azure.Core.TestFramework
         // copied from https://github.com/Azure/azure-sdk-for-net/blob/main/common/Perf/Azure.Test.Perf/TestProxyPolicy.cs
         private void RedirectToTestProxy(HttpMessage message)
         {
+            if (_recording.Mode == RecordedTestMode.Record)
+            {
+                switch (_filter())
+                {
+                    case EntryRecordModel.Record:
+                        break;
+                    case EntryRecordModel.RecordWithoutRequestBody:
+                        message.Request.Content = null;
+                        break;
+                    case EntryRecordModel.DoNotRecord:
+                        return;
+                }
+            }
+            else if (_recording.Mode == RecordedTestMode.Playback)
+            {
+                if (_filter() == EntryRecordModel.RecordWithoutRequestBody)
+                {
+                    message.Request.Content = null;
+                }
+            }
+
             var request = message.Request;
             request.Headers.SetValue("x-recording-id", _recording.RecordingId);
             request.Headers.SetValue("x-recording-mode", _recording.Mode.ToString().ToLower());

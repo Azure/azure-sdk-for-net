@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="clientContext"></param>
         internal ArmCollection(ClientContext clientContext)
-            : base(clientContext, ResourceIdentifier.RootResourceIdentifier)
+            : base(clientContext, ResourceIdentifier.Root)
         {
         }
 

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Resources
     {
         internal static ProviderData DeserializeProvider(JsonElement element)
         {
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> @namespace = default;
             Optional<string> registrationState = default;
             Optional<string> registrationPolicy = default;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Resources
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("namespace"))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new ProviderData(id, @namespace.Value, registrationState.Value, registrationPolicy.Value, Optional.ToList(resourceTypes), Optional.ToNullable(providerAuthorizationConsentState));
+            return new ProviderData(id.Value, @namespace.Value, registrationState.Value, registrationPolicy.Value, Optional.ToList(resourceTypes), Optional.ToNullable(providerAuthorizationConsentState));
         }
 
         internal partial class ProviderDataConverter : JsonConverter<ProviderData>

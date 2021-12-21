@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace SecurityInsights.Tests.Helpers
+namespace Microsoft.Azure.Management.SecurityInsights.Tests.Helpers
 {
     public class RecordedDelegatingHandler : DelegatingHandler
     {
