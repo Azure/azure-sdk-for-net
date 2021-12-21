@@ -112,14 +112,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             {
                 value = (T)(object) source.GetInt64(key);
             }
-            else if (typeof(T) == typeof(ulong))
-            {
-                value = (T)(object) source.GetInt64(key);
-            }
-            else if (typeof(T) == typeof(ulong?))
-            {
-                value = (T)(object) source.GetInt64(key);
-            }
             else if (typeof(T) == typeof(double))
             {
                 value = (T) Convert.ChangeType(propertyValue, typeof(double), CultureInfo.InvariantCulture);

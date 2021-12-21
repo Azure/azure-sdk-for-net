@@ -1,0 +1,126 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://pakrymtables3prim.table.core.windows.net/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json;odata=minimalmetadata",
+        "Authorization": "Sanitized",
+        "Content-Length": "33",
+        "Content-Type": "application/json;odata=nometadata",
+        "DataServiceVersion": "3.0",
+        "traceparent": "00-789939021897824b8f5ffac51a718be5-80f843f93f70df45-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.4.0-alpha.20211221.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "0bd8f2bcfed13c08f742061314db0fb8",
+        "x-ms-date": "Tue, 21 Dec 2021 23:26:01 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-02-02"
+      },
+      "RequestBody": {
+        "TableName": "testtable1B8SUptA"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Type": "application/json; odata=minimalmetadata; streaming=true; charset=utf-8",
+        "Date": "Tue, 21 Dec 2021 23:26:00 GMT",
+        "Location": "https://pakrymtables3prim.table.core.windows.net/Tables(\u0027testtable1B8SUptA\u0027)",
+        "Server": [
+          "Windows-Azure-Table/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "0bd8f2bcfed13c08f742061314db0fb8",
+        "x-ms-request-id": "c6234a36-5002-0044-66c2-f627a4000000",
+        "x-ms-version": "2019-02-02"
+      },
+      "ResponseBody": {
+        "odata.metadata": "https://pakrymtables3prim.table.core.windows.net/$metadata#Tables/@Element",
+        "TableName": "testtable1B8SUptA"
+      }
+    },
+    {
+      "RequestUri": "https://pakrymtables3prim.table.core.windows.net/testtable1B8SUptA(PartitionKey=\u0027PK\u0027,RowKey=\u0027RK\u0027)?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json;odata=minimalmetadata",
+        "Authorization": "Sanitized",
+        "DataServiceVersion": "3.0",
+        "User-Agent": "azsdk-net-Data.Tables/12.4.0-alpha.20211221.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "a89a3275f26ec60b32ecd5da6f8fbccc",
+        "x-ms-date": "Tue, 21 Dec 2021 23:26:03 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-02-02"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Type": "application/json; odata=minimalmetadata; streaming=true; charset=utf-8",
+        "Date": "Tue, 21 Dec 2021 23:26:02 GMT",
+        "ETag": "W/\u0022datetime\u00272021-12-21T23%3A26%3A03.1148572Z\u0027\u0022",
+        "Server": [
+          "Windows-Azure-Table/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "a89a3275f26ec60b32ecd5da6f8fbccc",
+        "x-ms-request-id": "c6234a45-5002-0044-6ec2-f627a4000000",
+        "x-ms-version": "2019-02-02"
+      },
+      "ResponseBody": {
+        "odata.metadata": "https://pakrymtables3prim.table.core.windows.net/$metadata#testtable1B8SUptA/@Element",
+        "odata.etag": "W/\u0022datetime\u00272021-12-21T23%3A26%3A03.1148572Z\u0027\u0022",
+        "PartitionKey": "PK",
+        "RowKey": "RK",
+        "Timestamp": "2021-12-21T23:26:03.1148572Z",
+        "GuidTypeProperty@odata.type": "Edm.Guid",
+        "GuidTypeProperty": "00000000-0000-0000-0000-000000000000",
+        "Int64TypeProperty@odata.type": "Edm.Int64",
+        "Int64TypeProperty": "0",
+        "UInt64TypeProperty": "0",
+        "DoubleTypeProperty": 0.0,
+        "IntTypeProperty": 0,
+        "NullableUInt64TypeProperty": "null"
+      }
+    },
+    {
+      "RequestUri": "https://pakrymtables3prim.table.core.windows.net/Tables(\u0027testtable1B8SUptA\u0027)",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-3e684919db58824384ee9bb8a6239546-3498ebb769578c4b-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.4.0-alpha.20211221.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "52abd2c1920a20324ebcd94bbf9c19c2",
+        "x-ms-date": "Tue, 21 Dec 2021 23:26:03 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-02-02"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Tue, 21 Dec 2021 23:26:02 GMT",
+        "Server": [
+          "Windows-Azure-Table/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "52abd2c1920a20324ebcd94bbf9c19c2",
+        "x-ms-request-id": "c6234a49-5002-0044-70c2-f627a4000000",
+        "x-ms-version": "2019-02-02"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1496569607",
+    "STORAGE_ENDPOINT_SUFFIX": "core.windows.net",
+    "TABLES_PRIMARY_STORAGE_ACCOUNT_KEY": "Kg==",
+    "TABLES_STORAGE_ACCOUNT_NAME": "pakrymtables3prim"
+  }
+}
