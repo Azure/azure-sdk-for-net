@@ -19,7 +19,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         public const string Csv = "Csv";
         public const string Avro = "Avro";
         public const string Json = "Json";
-        public const string CustomClr = "CustomClr";
         public const string Parquet = "Parquet";
     }
 }

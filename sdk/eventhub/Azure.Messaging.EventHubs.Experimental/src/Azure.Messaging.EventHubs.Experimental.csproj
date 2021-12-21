@@ -12,14 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- TEMP: Use a project reference to Event Hubs to allow for use of the internals -->
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs\src\Azure.Messaging.EventHubs.csproj" />
-    <!-- END TEMP -->
-
-    <!-- TEMP: Restore when project reference no longer needed
     <PackageReference Include="Azure.Messaging.EventHubs" />
-    -->
-
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
     <PackageReference Include="System.Reflection.TypeExtensions" />

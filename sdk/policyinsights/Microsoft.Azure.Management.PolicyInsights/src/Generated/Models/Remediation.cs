@@ -53,10 +53,27 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// which resources to remediate.</param>
         /// <param name="deploymentStatus">The deployment status summary for
         /// all deployments created by the remediation.</param>
+        /// <param name="statusMessage">The remediation status message.
+        /// Provides additional details regarding the state of the
+        /// remediation.</param>
+        /// <param name="correlationId">The remediation correlation Id. Can be
+        /// used to find events related to the remediation in the activity
+        /// log.</param>
+        /// <param name="resourceCount">Determines the max number of resources
+        /// that can be remediated by the remediation job. If not provided, the
+        /// default resource count is used.</param>
+        /// <param name="parallelDeployments">Determines how many resources to
+        /// remediate at any given time. Can be used to increase or reduce the
+        /// pace of the remediation. If not provided, the default parallel
+        /// deployments value is used.</param>
+        /// <param name="failureThreshold">The remediation failure threshold
+        /// settings</param>
         /// <param name="id">The ID of the remediation.</param>
         /// <param name="type">The type of the remediation.</param>
         /// <param name="name">The name of the remediation.</param>
-        public Remediation(string policyAssignmentId = default(string), string policyDefinitionReferenceId = default(string), string resourceDiscoveryMode = default(string), string provisioningState = default(string), System.DateTime? createdOn = default(System.DateTime?), System.DateTime? lastUpdatedOn = default(System.DateTime?), RemediationFilters filters = default(RemediationFilters), RemediationDeploymentSummary deploymentStatus = default(RemediationDeploymentSummary), string id = default(string), string type = default(string), string name = default(string))
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
+        public Remediation(string policyAssignmentId = default(string), string policyDefinitionReferenceId = default(string), string resourceDiscoveryMode = default(string), string provisioningState = default(string), System.DateTime? createdOn = default(System.DateTime?), System.DateTime? lastUpdatedOn = default(System.DateTime?), RemediationFilters filters = default(RemediationFilters), RemediationDeploymentSummary deploymentStatus = default(RemediationDeploymentSummary), string statusMessage = default(string), string correlationId = default(string), int? resourceCount = default(int?), int? parallelDeployments = default(int?), RemediationPropertiesFailureThreshold failureThreshold = default(RemediationPropertiesFailureThreshold), string id = default(string), string type = default(string), string name = default(string), SystemData systemData = default(SystemData))
         {
             PolicyAssignmentId = policyAssignmentId;
             PolicyDefinitionReferenceId = policyDefinitionReferenceId;
@@ -66,9 +83,15 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
             LastUpdatedOn = lastUpdatedOn;
             Filters = filters;
             DeploymentStatus = deploymentStatus;
+            StatusMessage = statusMessage;
+            CorrelationId = correlationId;
+            ResourceCount = resourceCount;
+            ParallelDeployments = parallelDeployments;
+            FailureThreshold = failureThreshold;
             Id = id;
             Type = type;
             Name = name;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -133,6 +156,43 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         public RemediationDeploymentSummary DeploymentStatus { get; private set; }
 
         /// <summary>
+        /// Gets the remediation status message. Provides additional details
+        /// regarding the state of the remediation.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.statusMessage")]
+        public string StatusMessage { get; private set; }
+
+        /// <summary>
+        /// Gets the remediation correlation Id. Can be used to find events
+        /// related to the remediation in the activity log.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.correlationId")]
+        public string CorrelationId { get; private set; }
+
+        /// <summary>
+        /// Gets or sets determines the max number of resources that can be
+        /// remediated by the remediation job. If not provided, the default
+        /// resource count is used.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.resourceCount")]
+        public int? ResourceCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets determines how many resources to remediate at any
+        /// given time. Can be used to increase or reduce the pace of the
+        /// remediation. If not provided, the default parallel deployments
+        /// value is used.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.parallelDeployments")]
+        public int? ParallelDeployments { get; set; }
+
+        /// <summary>
+        /// Gets or sets the remediation failure threshold settings
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.failureThreshold")]
+        public RemediationPropertiesFailureThreshold FailureThreshold { get; set; }
+
+        /// <summary>
         /// Gets the ID of the remediation.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
@@ -149,6 +209,13 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets azure Resource Manager metadata containing createdBy and
+        /// modifiedBy information.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

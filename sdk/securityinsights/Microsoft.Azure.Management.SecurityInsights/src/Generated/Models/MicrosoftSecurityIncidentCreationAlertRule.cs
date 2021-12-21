@@ -41,14 +41,20 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// cases will be generated. Possible values include: 'Microsoft Cloud
         /// App Security', 'Azure Security Center', 'Azure Advanced Threat
         /// Protection', 'Azure Active Directory Identity Protection', 'Azure
-        /// Security Center for IoT'</param>
+        /// Security Center for IoT', 'Office 365 Advanced Threat Protection',
+        /// 'Microsoft Defender Advanced Threat Protection'</param>
         /// <param name="displayName">The display name for alerts created by
         /// this alert rule.</param>
         /// <param name="enabled">Determines whether this alert rule is enabled
         /// or disabled.</param>
-        /// <param name="id">Azure resource Id</param>
-        /// <param name="name">Azure resource name</param>
-        /// <param name="type">Azure resource type</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="etag">Etag of the azure resource</param>
         /// <param name="displayNamesFilter">the alerts' displayNames on which
         /// the cases will be generated</param>
@@ -62,8 +68,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// rule.</param>
         /// <param name="lastModifiedUtc">The last time that this alert has
         /// been modified.</param>
-        public MicrosoftSecurityIncidentCreationAlertRule(string productFilter, string displayName, bool enabled, string id = default(string), string name = default(string), string type = default(string), string etag = default(string), IList<string> displayNamesFilter = default(IList<string>), IList<string> displayNamesExcludeFilter = default(IList<string>), IList<string> severitiesFilter = default(IList<string>), string alertRuleTemplateName = default(string), string description = default(string), System.DateTime? lastModifiedUtc = default(System.DateTime?))
-            : base(id, name, type, etag)
+        public MicrosoftSecurityIncidentCreationAlertRule(string productFilter, string displayName, bool enabled, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string etag = default(string), IList<string> displayNamesFilter = default(IList<string>), IList<string> displayNamesExcludeFilter = default(IList<string>), IList<string> severitiesFilter = default(IList<string>), string alertRuleTemplateName = default(string), string description = default(string), System.DateTime? lastModifiedUtc = default(System.DateTime?))
+            : base(id, name, type, systemData, etag)
         {
             DisplayNamesFilter = displayNamesFilter;
             DisplayNamesExcludeFilter = displayNamesExcludeFilter;
@@ -101,7 +107,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// generated. Possible values include: 'Microsoft Cloud App Security',
         /// 'Azure Security Center', 'Azure Advanced Threat Protection', 'Azure
         /// Active Directory Identity Protection', 'Azure Security Center for
-        /// IoT'
+        /// IoT', 'Office 365 Advanced Threat Protection', 'Microsoft Defender
+        /// Advanced Threat Protection'
         /// </summary>
         [JsonProperty(PropertyName = "properties.productFilter")]
         public string ProductFilter { get; set; }

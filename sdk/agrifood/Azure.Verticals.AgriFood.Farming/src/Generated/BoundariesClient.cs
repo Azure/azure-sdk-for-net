@@ -19,16 +19,15 @@ namespace Azure.Verticals.AgriFood.Farming
     /// <summary> The Boundaries service client. </summary>
     public partial class BoundariesClient
     {
-        private static readonly string[] AuthorizationScopes = { "https://farmbeats.azure.net/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
-
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of BoundariesClient for mocking. </summary>
         protected BoundariesClient()
@@ -50,19 +49,18 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 throw new ArgumentNullException(nameof(credential));
             }
-
             options ??= new FarmBeatsClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
 
         /// <summary> Get cascade delete job for specified boundary. </summary>
         /// <param name="jobId"> ID of the job. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -101,15 +99,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetCascadeDeleteJobDetailsAsync(string jobId, RequestOptions options)
+        public virtual async Task<Response> GetCascadeDeleteJobDetailsAsync(string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.GetCascadeDeleteJobDetails");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                using HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId, context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -120,7 +118,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Get cascade delete job for specified boundary. </summary>
         /// <param name="jobId"> ID of the job. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -159,15 +157,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetCascadeDeleteJobDetails(string jobId, RequestOptions options)
+        public virtual Response GetCascadeDeleteJobDetails(string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.GetCascadeDeleteJobDetails");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                using HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId, context);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -179,7 +177,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Gets a specified boundary resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="boundaryId"> ID of the boundary. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -220,15 +218,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetAsync(string farmerId, string boundaryId, RequestOptions options)
+        public virtual async Task<Response> GetBoundaryAsync(string farmerId, string boundaryId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("BoundariesClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("BoundariesClient.GetBoundary");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRequest(farmerId, boundaryId);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                using HttpMessage message = CreateGetBoundaryRequest(farmerId, boundaryId, context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -240,7 +238,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Gets a specified boundary resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="boundaryId"> ID of the boundary. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -281,15 +279,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response Get(string farmerId, string boundaryId, RequestOptions options)
+        public virtual Response GetBoundary(string farmerId, string boundaryId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("BoundariesClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("BoundariesClient.GetBoundary");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRequest(farmerId, boundaryId);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                using HttpMessage message = CreateGetBoundaryRequest(farmerId, boundaryId, context);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -302,7 +300,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="farmerId"> ID of the farmer resource. </param>
         /// <param name="boundaryId"> ID of the boundary resource. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -363,15 +361,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string boundaryId, RequestContent content, RequestOptions options = null)
+        public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string boundaryId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.CreateOrUpdate");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, boundaryId, content);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, boundaryId, content, context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -384,7 +382,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="farmerId"> ID of the farmer resource. </param>
         /// <param name="boundaryId"> ID of the boundary resource. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -445,15 +443,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response CreateOrUpdate(string farmerId, string boundaryId, RequestContent content, RequestOptions options = null)
+        public virtual Response CreateOrUpdate(string farmerId, string boundaryId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.CreateOrUpdate");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, boundaryId, content);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, boundaryId, content, context);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -465,7 +463,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Deletes a specified boundary resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the farmer. </param>
         /// <param name="boundaryId"> ID of the boundary. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
@@ -486,15 +484,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteAsync(string farmerId, string boundaryId, RequestOptions options = null)
+        public virtual async Task<Response> DeleteAsync(string farmerId, string boundaryId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(farmerId, boundaryId);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                using HttpMessage message = CreateDeleteRequest(farmerId, boundaryId, context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -506,7 +504,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Deletes a specified boundary resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the farmer. </param>
         /// <param name="boundaryId"> ID of the boundary. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
@@ -527,15 +525,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response Delete(string farmerId, string boundaryId, RequestOptions options = null)
+        public virtual Response Delete(string farmerId, string boundaryId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(farmerId, boundaryId);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                using HttpMessage message = CreateDeleteRequest(farmerId, boundaryId, context);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -549,7 +547,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="boundaryId"> ID of the boundary. </param>
         /// <param name="otherFarmerId"> FarmerId of the other field. </param>
         /// <param name="otherBoundaryId"> ID of the other boundary. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="boundaryId"/>, <paramref name="otherFarmerId"/>, or <paramref name="otherBoundaryId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -577,15 +575,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetOverlapAsync(string farmerId, string boundaryId, string otherFarmerId, string otherBoundaryId, RequestOptions options)
+        public virtual async Task<Response> GetOverlapAsync(string farmerId, string boundaryId, string otherFarmerId, string otherBoundaryId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.GetOverlap");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetOverlapRequest(farmerId, boundaryId, otherFarmerId, otherBoundaryId);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                using HttpMessage message = CreateGetOverlapRequest(farmerId, boundaryId, otherFarmerId, otherBoundaryId, context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -599,7 +597,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="boundaryId"> ID of the boundary. </param>
         /// <param name="otherFarmerId"> FarmerId of the other field. </param>
         /// <param name="otherBoundaryId"> ID of the other boundary. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="boundaryId"/>, <paramref name="otherFarmerId"/>, or <paramref name="otherBoundaryId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -627,15 +625,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetOverlap(string farmerId, string boundaryId, string otherFarmerId, string otherBoundaryId, RequestOptions options)
+        public virtual Response GetOverlap(string farmerId, string boundaryId, string otherFarmerId, string otherBoundaryId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.GetOverlap");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetOverlapRequest(farmerId, boundaryId, otherFarmerId, otherBoundaryId);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                using HttpMessage message = CreateGetOverlapRequest(farmerId, boundaryId, otherFarmerId, otherBoundaryId, context);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -646,7 +644,6 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Returns a paginated list of boundary resources under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="isPrimary"> Is the boundary primary. </param>
         /// <param name="parentType"> Type of the parent it belongs to. </param>
         /// <param name="parentIds"> Parent Ids of the resource. </param>
@@ -668,6 +665,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -714,7 +712,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual AsyncPageable<BinaryData> ListByFarmerIdAsync(string farmerId, RequestOptions options, bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null)
+        public virtual AsyncPageable<BinaryData> GetBoundariesByFarmerIdAsync(string farmerId, bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             if (farmerId == null)
@@ -722,15 +720,15 @@ namespace Azure.Verticals.AgriFood.Farming
                 throw new ArgumentNullException(nameof(farmerId));
             }
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "BoundariesClient.ListByFarmerId");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "BoundariesClient.GetBoundariesByFarmerId");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateListByFarmerIdRequest(farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken)
-                        : CreateListByFarmerIdNextPageRequest(nextLink, farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, options, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                        ? CreateGetBoundariesByFarmerIdRequest(farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetBoundariesByFarmerIdNextPageRequest(nextLink, farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -739,7 +737,6 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Returns a paginated list of boundary resources under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="isPrimary"> Is the boundary primary. </param>
         /// <param name="parentType"> Type of the parent it belongs to. </param>
         /// <param name="parentIds"> Parent Ids of the resource. </param>
@@ -761,6 +758,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -807,7 +805,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Pageable<BinaryData> ListByFarmerId(string farmerId, RequestOptions options, bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null)
+        public virtual Pageable<BinaryData> GetBoundariesByFarmerId(string farmerId, bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             if (farmerId == null)
@@ -815,15 +813,15 @@ namespace Azure.Verticals.AgriFood.Farming
                 throw new ArgumentNullException(nameof(farmerId));
             }
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "BoundariesClient.ListByFarmerId");
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "BoundariesClient.GetBoundariesByFarmerId");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateListByFarmerIdRequest(farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken)
-                        : CreateListByFarmerIdNextPageRequest(nextLink, farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, options, "value", "nextLink");
+                        ? CreateGetBoundariesByFarmerIdRequest(farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetBoundariesByFarmerIdNextPageRequest(nextLink, farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -833,7 +831,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Search for boundaries by fields and intersecting geometry. </summary>
         /// <param name="farmerId"> ID of the farmer. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -902,7 +900,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual AsyncPageable<BinaryData> SearchByFarmerIdAsync(string farmerId, RequestContent content, RequestOptions options = null)
+        public virtual AsyncPageable<BinaryData> SearchByFarmerIdAsync(string farmerId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             if (farmerId == null)
@@ -916,9 +914,9 @@ namespace Azure.Verticals.AgriFood.Farming
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateSearchByFarmerIdRequest(farmerId, content)
-                        : CreateSearchByFarmerIdNextPageRequest(nextLink, farmerId, content);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, options, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                        ? CreateSearchByFarmerIdRequest(farmerId, content, context)
+                        : CreateSearchByFarmerIdNextPageRequest(nextLink, farmerId, content, context);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -928,7 +926,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Search for boundaries by fields and intersecting geometry. </summary>
         /// <param name="farmerId"> ID of the farmer. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -997,7 +995,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Pageable<BinaryData> SearchByFarmerId(string farmerId, RequestContent content, RequestOptions options = null)
+        public virtual Pageable<BinaryData> SearchByFarmerId(string farmerId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             if (farmerId == null)
@@ -1011,9 +1009,9 @@ namespace Azure.Verticals.AgriFood.Farming
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateSearchByFarmerIdRequest(farmerId, content)
-                        : CreateSearchByFarmerIdNextPageRequest(nextLink, farmerId, content);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, options, "value", "nextLink");
+                        ? CreateSearchByFarmerIdRequest(farmerId, content, context)
+                        : CreateSearchByFarmerIdNextPageRequest(nextLink, farmerId, content, context);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1021,7 +1019,6 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of boundary resources across all farmers. </summary>
-        /// <param name="options"> The request options. </param>
         /// <param name="isPrimary"> Is the boundary primary. </param>
         /// <param name="parentType"> Type of the parent it belongs to. </param>
         /// <param name="parentIds"> Parent Ids of the resource. </param>
@@ -1043,6 +1040,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1088,18 +1086,18 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual AsyncPageable<BinaryData> ListAsync(RequestOptions options, bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null)
+        public virtual AsyncPageable<BinaryData> GetBoundariesAsync(bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "BoundariesClient.List");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "BoundariesClient.GetBoundaries");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateListRequest(isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken)
-                        : CreateListNextPageRequest(nextLink, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, options, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                        ? CreateGetBoundariesRequest(isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetBoundariesNextPageRequest(nextLink, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1107,7 +1105,6 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of boundary resources across all farmers. </summary>
-        /// <param name="options"> The request options. </param>
         /// <param name="isPrimary"> Is the boundary primary. </param>
         /// <param name="parentType"> Type of the parent it belongs to. </param>
         /// <param name="parentIds"> Parent Ids of the resource. </param>
@@ -1129,6 +1126,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1174,18 +1172,18 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Pageable<BinaryData> List(RequestOptions options, bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null)
+        public virtual Pageable<BinaryData> GetBoundaries(bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "BoundariesClient.List");
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "BoundariesClient.GetBoundaries");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateListRequest(isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken)
-                        : CreateListNextPageRequest(nextLink, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, options, "value", "nextLink");
+                        ? CreateGetBoundariesRequest(isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetBoundariesNextPageRequest(nextLink, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1194,7 +1192,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Search for boundaries across all farmers by fields and intersecting geometry. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1262,7 +1260,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual AsyncPageable<BinaryData> SearchAsync(RequestContent content, RequestOptions options = null)
+        public virtual AsyncPageable<BinaryData> SearchAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "BoundariesClient.Search");
@@ -1271,9 +1269,9 @@ namespace Azure.Verticals.AgriFood.Farming
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateSearchRequest(content)
-                        : CreateSearchNextPageRequest(nextLink, content);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, options, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                        ? CreateSearchRequest(content, context)
+                        : CreateSearchNextPageRequest(nextLink, content, context);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1282,7 +1280,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Search for boundaries across all farmers by fields and intersecting geometry. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1350,7 +1348,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Pageable<BinaryData> Search(RequestContent content, RequestOptions options = null)
+        public virtual Pageable<BinaryData> Search(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "BoundariesClient.Search");
@@ -1359,9 +1357,9 @@ namespace Azure.Verticals.AgriFood.Farming
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateSearchRequest(content)
-                        : CreateSearchNextPageRequest(nextLink, content);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, options, "value", "nextLink");
+                        ? CreateSearchRequest(content, context)
+                        : CreateSearchNextPageRequest(nextLink, content, context);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1369,10 +1367,11 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Create a cascade delete job for specified boundary. </summary>
+        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> Job ID supplied by end user. </param>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="boundaryId"> ID of the boundary to be deleted. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/>, or <paramref name="boundaryId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1411,15 +1410,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(string jobId, string farmerId, string boundaryId, RequestOptions options = null)
+        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(bool waitForCompletion, string jobId, string farmerId, string boundaryId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.CreateCascadeDeleteJob");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, boundaryId);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "BoundariesClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, options).ConfigureAwait(false);
+                using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, boundaryId, context);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "BoundariesClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1429,10 +1428,11 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Create a cascade delete job for specified boundary. </summary>
+        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> Job ID supplied by end user. </param>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="boundaryId"> ID of the boundary to be deleted. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/>, or <paramref name="boundaryId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1471,15 +1471,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Operation<BinaryData> CreateCascadeDeleteJob(string jobId, string farmerId, string boundaryId, RequestOptions options = null)
+        public virtual Operation<BinaryData> CreateCascadeDeleteJob(bool waitForCompletion, string jobId, string farmerId, string boundaryId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.CreateCascadeDeleteJob");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, boundaryId);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "BoundariesClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, options);
+                using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, boundaryId, context);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "BoundariesClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitForCompletion);
             }
             catch (Exception e)
             {
@@ -1488,9 +1488,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        internal HttpMessage CreateListByFarmerIdRequest(string farmerId, bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
+        internal HttpMessage CreateGetBoundariesByFarmerIdRequest(string farmerId, bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1580,9 +1580,9 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateSearchByFarmerIdRequest(string farmerId, RequestContent content)
+        internal HttpMessage CreateSearchByFarmerIdRequest(string farmerId, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -1599,9 +1599,9 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateListRequest(bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
+        internal HttpMessage CreateGetBoundariesRequest(bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1689,9 +1689,9 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateSearchRequest(RequestContent content)
+        internal HttpMessage CreateSearchRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -1706,9 +1706,9 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetCascadeDeleteJobDetailsRequest(string jobId)
+        internal HttpMessage CreateGetCascadeDeleteJobDetailsRequest(string jobId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1722,9 +1722,9 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateCreateCascadeDeleteJobRequest(string jobId, string farmerId, string boundaryId)
+        internal HttpMessage CreateCreateCascadeDeleteJobRequest(string jobId, string farmerId, string boundaryId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -1740,9 +1740,9 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetRequest(string farmerId, string boundaryId)
+        internal HttpMessage CreateGetBoundaryRequest(string farmerId, string boundaryId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1758,9 +1758,9 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string farmerId, string boundaryId, RequestContent content)
+        internal HttpMessage CreateCreateOrUpdateRequest(string farmerId, string boundaryId, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
@@ -1778,9 +1778,9 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string farmerId, string boundaryId)
+        internal HttpMessage CreateDeleteRequest(string farmerId, string boundaryId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -1796,9 +1796,9 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetOverlapRequest(string farmerId, string boundaryId, string otherFarmerId, string otherBoundaryId)
+        internal HttpMessage CreateGetOverlapRequest(string farmerId, string boundaryId, string otherFarmerId, string otherBoundaryId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1817,9 +1817,9 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateListByFarmerIdNextPageRequest(string nextLink, string farmerId, bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
+        internal HttpMessage CreateGetBoundariesByFarmerIdNextPageRequest(string nextLink, string farmerId, bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1831,9 +1831,9 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateSearchByFarmerIdNextPageRequest(string nextLink, string farmerId, RequestContent content)
+        internal HttpMessage CreateSearchByFarmerIdNextPageRequest(string nextLink, string farmerId, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1845,9 +1845,9 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
+        internal HttpMessage CreateGetBoundariesNextPageRequest(string nextLink, bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1859,9 +1859,9 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateSearchNextPageRequest(string nextLink, RequestContent content)
+        internal HttpMessage CreateSearchNextPageRequest(string nextLink, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();

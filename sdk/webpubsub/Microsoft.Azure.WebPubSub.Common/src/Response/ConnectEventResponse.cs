@@ -1,8 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
 namespace Microsoft.Azure.WebPubSub.Common
@@ -10,31 +13,65 @@ namespace Microsoft.Azure.WebPubSub.Common
     /// <summary>
     /// Response for connect event.
     /// </summary>
+    [DataContract]
     public class ConnectEventResponse : WebPubSubEventResponse
     {
-        internal Dictionary<string, object> States = new();
+        private Dictionary<string, BinaryData> _states;
+
+        [DataMember(Name = "code")]
+        internal override WebPubSubStatusCode StatusCode
+        {
+            get
+            {
+                return WebPubSubStatusCode.Success;
+            }
+            set
+            {
+                if (value != WebPubSubStatusCode.Success)
+                {
+                    throw new ArgumentException("StatusCode shouldn't be set to errors in a normal connect event.");
+                }
+            }
+        }
+
+        /// <summary>
+        /// The connection states.
+        /// </summary>
+        [IgnoreDataMember]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public IReadOnlyDictionary<string, object> States { get; private set; }
+
+        /// <summary>
+        /// The connection states.
+        /// </summary>
+        [IgnoreDataMember]
+        public IReadOnlyDictionary<string, BinaryData> ConnectionStates => _states;
 
         /// <summary>
         /// UserId.
         /// </summary>
+        [DataMember(Name = "userId")]
         [JsonPropertyName("userId")]
         public string UserId { get; set; }
 
         /// <summary>
         /// Groups.
         /// </summary>
+        [DataMember(Name = "groups")]
         [JsonPropertyName("groups")]
         public string[] Groups { get; set; }
 
         /// <summary>
         /// Subprotocol.
         /// </summary>
+        [DataMember(Name = "subprotocol")]
         [JsonPropertyName("subprotocol")]
         public string Subprotocol { get; set; }
 
         /// <summary>
         /// User roles.
         /// </summary>
+        [DataMember(Name = "roles")]
         [JsonPropertyName("roles")]
         public string[] Roles { get; set; }
 
@@ -50,6 +87,7 @@ namespace Microsoft.Azure.WebPubSub.Common
             IEnumerable<string> groups,
             string subprotocol,
             IEnumerable<string> roles)
+            : this()
         {
             UserId = userId;
             Groups = groups?.ToArray();
@@ -60,30 +98,46 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// <summary>
         /// Default constructor for JsonSerialize.
         /// </summary>
-        public ConnectEventResponse()
-        { }
+        public ConnectEventResponse() =>
+            SetStatesDictionary(new Dictionary<string, BinaryData>());
 
         /// <summary>
         /// Set connection states.
         /// </summary>
         /// <param name="key">State key.</param>
         /// <param name="value">State value.</param>
-        public void SetState(string key, object value)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public void SetState(string key, object value) =>
+            SetState(key, BinaryData.FromObjectAsJson(value));
+
+        /// <summary>
+        /// Set connection states.
+        /// </summary>
+        /// <param name="key">State key.</param>
+        /// <param name="value">State value.</param>
+        public void SetState(string key, BinaryData value)
         {
             // In case user cleared states.
-            if (States == null)
+            if (_states == null)
             {
-                States = new Dictionary<string, object>();
+                SetStatesDictionary(new Dictionary<string, BinaryData>());
             }
-            States[key] = value;
+            _states[key] = value;
         }
 
         /// <summary>
         /// Clear all states.
         /// </summary>
-        public void ClearStates()
+        public void ClearStates() => SetStatesDictionary(null);
+
+        /// <summary>
+        /// Update the dictionary backing both States and ConnectionStates.
+        /// </summary>
+        /// <param name="states">The new dictionary or null.</param>
+        private void SetStatesDictionary(Dictionary<string, BinaryData> states)
         {
-            States = null;
+            _states = states;
+            States = states != null ? new StringifiedDictionary(states) : null;
         }
     }
 }

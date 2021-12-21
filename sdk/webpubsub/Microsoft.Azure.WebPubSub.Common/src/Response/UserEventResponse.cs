@@ -3,7 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
+using System.ComponentModel;
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
 namespace Microsoft.Azure.WebPubSub.Common
@@ -11,69 +12,118 @@ namespace Microsoft.Azure.WebPubSub.Common
     /// <summary>
     /// Response for message events.
     /// </summary>
+    [DataContract]
     public class UserEventResponse : WebPubSubEventResponse
     {
-        internal Dictionary<string, object> States = new();
+        private Dictionary<string, BinaryData> _states;
+
+        [DataMember(Name = "code")]
+        internal override WebPubSubStatusCode StatusCode
+        {
+            get
+            {
+                return WebPubSubStatusCode.Success;
+            }
+            set
+            {
+                if (value != WebPubSubStatusCode.Success)
+                {
+                    throw new ArgumentException("StatusCode shouldn't be set to errors in a normal user event.");
+                }
+            }
+        }
+
+        /// <summary>
+        /// The connection states.
+        /// </summary>
+        [IgnoreDataMember]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public IReadOnlyDictionary<string, object> States { get; private set; }
+
+        /// <summary>
+        /// The connection states.
+        /// </summary>
+        [IgnoreDataMember]
+        public IReadOnlyDictionary<string, BinaryData> ConnectionStates => _states;
 
         /// <summary>
         /// Message.
         /// </summary>
-        [JsonPropertyName("message"), JsonConverter(typeof(BinaryDataJsonConverter))]
-        public BinaryData Message { get; set; }
+        [DataMember(Name = "data")]
+        [JsonPropertyName("data"), JsonConverter(typeof(BinaryDataJsonConverter))]
+        public BinaryData Data { get; set; }
 
         /// <summary>
         /// Message data type.
         /// </summary>
+        [DataMember(Name = "dataType")]
         [JsonPropertyName("dataType"), JsonConverter(typeof(JsonStringEnumConverter))]
-        public MessageDataType DataType { get; set; }
+        public WebPubSubDataType DataType { get; set; }
 
         /// <summary>
         /// Initialize an instance of MessageResponse.
         /// </summary>
-        /// <param name="message">BinaryData type message.</param>
+        /// <param name="data">BinaryData type message.</param>
         /// <param name="dataType">Message data type.</param>
-        public UserEventResponse(BinaryData message, MessageDataType dataType)
+        public UserEventResponse(BinaryData data, WebPubSubDataType dataType)
+            : this()
         {
-            Message = message;
+            Data = data;
             DataType = dataType;
         }
 
         /// <summary>
         /// Initialize an instance of MessageResponse.
         /// </summary>
-        /// <param name="message">String type message.</param>
+        /// <param name="data">String type message.</param>
         /// <param name="dataType">Message data type. Default set to text.</param>
-        public UserEventResponse(string message, MessageDataType dataType = MessageDataType.Text)
-            : this(BinaryData.FromString(message), dataType)
+        public UserEventResponse(string data, WebPubSubDataType dataType = WebPubSubDataType.Text)
+            : this(BinaryData.FromString(data), dataType)
         { }
 
         /// <summary>
         /// Default constructor for JsonSerialize
         /// </summary>
-        public UserEventResponse()
-        { }
+        public UserEventResponse() =>
+            SetStatesDictionary(new Dictionary<string, BinaryData>());
 
         /// <summary>
         /// Set connection states.
         /// </summary>
         /// <param name="key">State key.</param>
         /// <param name="value">State value.</param>
-        public void SetState(string key, object value)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public void SetState(string key, object value) =>
+            SetState(key, BinaryData.FromObjectAsJson(value));
+
+        /// <summary>
+        /// Set connection states.
+        /// </summary>
+        /// <param name="key">State key.</param>
+        /// <param name="value">State value.</param>
+        public void SetState(string key, BinaryData value)
         {
             // In case user cleared states.
-            if (States == null)
+            if (_states == null)
             {
-                States = new Dictionary<string, object>();
+                SetStatesDictionary(new Dictionary<string, BinaryData>());
             }
-            States[key] = value;
+            _states[key] = value;
         }
 
         /// <summary>
         /// Clear all states.
         /// </summary>
-        public void ClearStates()
+        public void ClearStates() => SetStatesDictionary(null);
+
+        /// <summary>
+        /// Update the dictionary backing both States and ConnectionStates.
+        /// </summary>
+        /// <param name="states">The new dictionary or null.</param>
+        private void SetStatesDictionary(Dictionary<string, BinaryData> states)
         {
-            States = null;
+            _states = states;
+            States = states != null ? new StringifiedDictionary(states) : null;
         }
     }
 }

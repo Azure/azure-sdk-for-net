@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -184,8 +185,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         async ValueTask<OperationState<AnalyzeResult>> IOperation<AnalyzeResult>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response<AnalyzeResultOperation> response = async
-                ? await _serviceClient.DocumentAnalysisGetAnalyzeDocumentResultAsync(_modelId, _resultId, cancellationToken).ConfigureAwait(false)
-                : _serviceClient.DocumentAnalysisGetAnalyzeDocumentResult(_modelId, _resultId, cancellationToken);
+                ? await _serviceClient.GetAnalyzeDocumentResultAsync(_modelId, _resultId, cancellationToken).ConfigureAwait(false)
+                : _serviceClient.GetAnalyzeDocumentResult(_modelId, _resultId, cancellationToken);
 
             AnalyzeResultOperationStatus status = response.Value.Status;
             Response rawResponse = response.GetRawResponse();
@@ -197,10 +198,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
             else if (status == AnalyzeResultOperationStatus.Failed)
             {
-                DocumentAnalysisError error = response.Value.Error;
-                RequestFailedException requestFailedException = async
-                    ? await _diagnostics.CreateRequestFailedExceptionAsync(rawResponse, error.Message, error.Code, error.ToAdditionalInfo()).ConfigureAwait(false)
-                    : _diagnostics.CreateRequestFailedException(rawResponse, error.Message, error.Code, error.ToAdditionalInfo());
+                RequestFailedException requestFailedException = await ClientCommon
+                    .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.Error)
+                    .ConfigureAwait(false);
 
                 return OperationState<AnalyzeResult>.Failure(rawResponse, requestFailedException);
             }

@@ -245,7 +245,7 @@ namespace Azure.Security.Attestation.Tests.Samples
                 BinaryData.FromObjectAsJson(new StoredAttestationPolicy { AttestationPolicy = attestationPolicy }),
                 signingKey);
 
-            using var shaHasher = SHA256Managed.Create();
+            using var shaHasher = SHA256.Create();
             byte[] attestationPolicyHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.Serialize()));
 
             Debug.Assert(attestationPolicyHash.SequenceEqual(setResult.Value.PolicyTokenHash.ToArray()));

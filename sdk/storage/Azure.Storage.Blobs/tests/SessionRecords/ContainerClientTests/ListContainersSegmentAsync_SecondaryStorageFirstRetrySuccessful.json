@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "58666ca3-1dfe-4ed9-9daf-bc4a06db2bd9",
         "x-ms-date": "Wed, 17 Feb 2021 20:04:55 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "58666ca3-1dfe-4ed9-9daf-bc4a06db2bd9",
         "x-ms-request-id": "0caf78e1-701e-0002-2d68-05345b000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -47,7 +47,7 @@
         "x-ms-client-request-id": "92529d5a-4a7f-6877-32a2-143621352c3f",
         "x-ms-date": "Wed, 17 Feb 2021 20:04:56 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -62,7 +62,7 @@
         "x-ms-client-request-id": "92529d5a-4a7f-6877-32a2-143621352c3f",
         "x-ms-error-code": "ContainerNotFound",
         "x-ms-request-id": "6b499b81-901e-002b-2768-05912f000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ContainerNotFound</Code><Message>The specified container does not exist.\n",
@@ -84,7 +84,7 @@
         "x-ms-client-request-id": "92529d5a-4a7f-6877-32a2-143621352c3f",
         "x-ms-date": "Wed, 17 Feb 2021 20:04:58 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -105,7 +105,7 @@
         "x-ms-lease-state": "available",
         "x-ms-lease-status": "unlocked",
         "x-ms-request-id": "0caf7f0d-701e-0002-0668-05345b000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -123,7 +123,7 @@
         "x-ms-client-request-id": "69f0a61f-9889-fe59-5975-61abb58d1ae7",
         "x-ms-date": "Wed, 17 Feb 2021 20:04:58 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -136,7 +136,7 @@
         ],
         "x-ms-client-request-id": "69f0a61f-9889-fe59-5975-61abb58d1ae7",
         "x-ms-request-id": "0caf7f41-701e-0002-3568-05345b000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

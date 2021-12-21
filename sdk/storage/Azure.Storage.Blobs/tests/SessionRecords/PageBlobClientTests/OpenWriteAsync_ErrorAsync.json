@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "95ee2145-c639-2bab-b003-9d35aa600cfb",
         "x-ms-date": "Wed, 17 Feb 2021 19:03:29 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -28,7 +28,7 @@
         "x-ms-client-request-id": "95ee2145-c639-2bab-b003-9d35aa600cfb",
         "x-ms-error-code": "ContainerNotFound",
         "x-ms-request-id": "8b9ac810-f01e-0030-6b5f-05640d000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

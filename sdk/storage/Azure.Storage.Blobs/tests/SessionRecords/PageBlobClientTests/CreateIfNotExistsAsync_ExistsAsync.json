@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "ffe05389-e3b0-4cd7-88cb-f740768814a1",
         "x-ms-date": "Wed, 17 Feb 2021 19:03:07 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "ffe05389-e3b0-4cd7-88cb-f740768814a1",
         "x-ms-request-id": "0edb4a9b-e01e-005e-185f-053122000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -50,7 +50,7 @@
         "x-ms-client-request-id": "b36808a4-de53-0a86-9423-9837949bcd63",
         "x-ms-date": "Wed, 17 Feb 2021 19:03:07 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -66,7 +66,7 @@
         "x-ms-client-request-id": "b36808a4-de53-0a86-9423-9837949bcd63",
         "x-ms-request-id": "0edb4aa6-e01e-005e-205f-053122000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "x-ms-version-id": "2021-02-17T19:03:07.6787452Z"
       },
       "ResponseBody": []
@@ -88,7 +88,7 @@
         "x-ms-client-request-id": "7597b704-9ebb-3998-d9a9-d72c137ade56",
         "x-ms-date": "Wed, 17 Feb 2021 19:03:07 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 409,
@@ -103,7 +103,7 @@
         "x-ms-client-request-id": "7597b704-9ebb-3998-d9a9-d72c137ade56",
         "x-ms-error-code": "BlobAlreadyExists",
         "x-ms-request-id": "0edb4aaf-e01e-005e-285f-053122000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>BlobAlreadyExists</Code><Message>The specified blob already exists.\n",
@@ -125,7 +125,7 @@
         "x-ms-client-request-id": "dc32834b-5803-daa7-73ee-3d2bd124c13f",
         "x-ms-date": "Wed, 17 Feb 2021 19:03:07 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -138,7 +138,7 @@
         ],
         "x-ms-client-request-id": "dc32834b-5803-daa7-73ee-3d2bd124c13f",
         "x-ms-request-id": "0edb4abd-e01e-005e-355f-053122000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

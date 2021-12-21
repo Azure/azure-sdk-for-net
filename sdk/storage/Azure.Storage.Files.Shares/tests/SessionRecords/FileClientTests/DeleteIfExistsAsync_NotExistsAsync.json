@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "4fd4acec-2254-8d1b-a154-0af3b1d59812",
         "x-ms-date": "Tue, 26 Jan 2021 19:32:56 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "4fd4acec-2254-8d1b-a154-0af3b1d59812",
         "x-ms-request-id": "91046e32-901a-0036-761a-f457b2000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -47,7 +47,7 @@
         "x-ms-client-request-id": "1ef87304-3362-bc2f-e54b-e7b682ede47d",
         "x-ms-date": "Tue, 26 Jan 2021 19:32:56 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -62,7 +62,7 @@
         "x-ms-client-request-id": "1ef87304-3362-bc2f-e54b-e7b682ede47d",
         "x-ms-error-code": "ResourceNotFound",
         "x-ms-request-id": "91046e35-901a-0036-771a-f457b2000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ResourceNotFound</Code><Message>The specified resource does not exist.\n",
@@ -85,7 +85,7 @@
         "x-ms-date": "Tue, 26 Jan 2021 19:32:56 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -98,7 +98,7 @@
         ],
         "x-ms-client-request-id": "34295202-812b-5f0c-bc6e-03eaab976f65",
         "x-ms-request-id": "91046e36-901a-0036-781a-f457b2000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

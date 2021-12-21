@@ -1,53 +1,47 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/feedback/metric",
+      "RequestUri": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/feedback/metric",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "207",
+        "Content-Length": "228",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-f275fc8e3d0da645910572c64a4e83cf-6df52cd615df944b-00",
-        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201214.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-213298de27f21648ada1d703e4ff10a0-efedca5b984e5b49-00",
+        "User-Agent": [
+          "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20211118.1",
+          "(.NET 5.0.12; Microsoft Windows 10.0.22000)"
+        ],
         "x-api-key": "Sanitized",
         "x-ms-client-request-id": "caa5d2d5d739444ef901f8a19c0e752f",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": {
-        "value": {
-          "commentValue": "Feedback created in a .NET test."
-        },
-        "feedbackType": "Comment",
-        "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
-        "dimensionFilter": {
-          "dimension": {
-            "city": "Delhi",
-            "category": "Handmade"
-          }
-        }
-      },
+      "RequestBody": "{\u0022value\u0022:{\u0022commentValue\u0022:\u0022Feedback created in a .NET test.\u0022},\u0022feedbackType\u0022:\u0022Comment\u0022,\u0022metricId\u0022:\u0022390d1139-98fb-45af-b831-8d5ad61b150a\u0022,\u0022dimensionFilter\u0022:{\u0022dimension\u0022:{\u0022region\u0022:\u0022Cairo\u0022,\u0022category\u0022:\u0022Shoes Handbags \u0026 Sunglasses\u0022}}}",
       "StatusCode": 201,
       "ResponseHeaders": {
-        "apim-request-id": "1356f450-dab6-4955-b42e-0d290312ae4b",
+        "apim-request-id": "506fbe56-c40d-43b3-90c6-acb0b092e877",
         "Content-Length": "0",
-        "Date": "Tue, 15 Dec 2020 01:34:47 GMT",
-        "Location": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/feedback/metric/7c875492-e765-4f42-8392-16b882233975",
+        "Date": "Thu, 18 Nov 2021 17:48:47 GMT",
+        "Location": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/feedback/metric/320d750d-e0a0-4881-8427-0d9fcf3e0631",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "248",
-        "x-request-id": "1356f450-dab6-4955-b42e-0d290312ae4b"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "348",
+        "X-Request-ID": "506fbe56-c40d-43b3-90c6-acb0b092e877"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/feedback/metric/7c875492-e765-4f42-8392-16b882233975",
+      "RequestUri": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/feedback/metric/320d750d-e0a0-4881-8427-0d9fcf3e0631",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-2750a2f37171b840ba913a15849c8332-1e9c2481812b5249-00",
-        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201214.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-213298de27f21648ada1d703e4ff10a0-0587ebdb6885b142-00",
+        "User-Agent": [
+          "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20211118.1",
+          "(.NET 5.0.12; Microsoft Windows 10.0.22000)"
+        ],
         "x-api-key": "Sanitized",
         "x-ms-client-request-id": "d1cd5be8654931dd3ed930226411e309",
         "x-ms-return-client-request-id": "true"
@@ -55,29 +49,27 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "be69b8ba-d2cb-4f98-b3ee-4deec2952719",
-        "Content-Length": "366",
+        "apim-request-id": "97eb6d81-5fa3-4d09-9001-648c43462310",
+        "Content-Length": "355",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 15 Dec 2020 01:34:47 GMT",
+        "Date": "Thu, 18 Nov 2021 17:48:47 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
+        "X-Content-Type-Options": "nosniff",
         "x-envoy-upstream-service-time": "108",
-        "x-request-id": "be69b8ba-d2cb-4f98-b3ee-4deec2952719"
+        "X-Request-ID": "97eb6d81-5fa3-4d09-9001-648c43462310"
       },
       "ResponseBody": {
-        "feedbackId": "7c875492-e765-4f42-8392-16b882233975",
-        "createdTime": "2020-12-15T01:34:47.682Z",
+        "feedbackId": "320d750d-e0a0-4881-8427-0d9fcf3e0631",
+        "createdTime": "2021-11-18T17:48:47.887Z",
         "userPrincipal": "foo@contoso.com",
-        "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+        "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
         "dimensionFilter": {
           "dimension": {
-            "city": "Delhi",
-            "category": "Handmade"
+            "region": "Cairo",
+            "category": "Shoes Handbags \u0026 Sunglasses"
           }
         },
         "feedbackType": "Comment",
-        "startTime": null,
-        "endTime": null,
         "value": {
           "commentValue": "Feedback created in a .NET test."
         }
@@ -85,8 +77,8 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2020-12-14T17:34:47.8587637-08:00",
-    "METRICSADVISOR_ACCOUNT_NAME": "js-metrics-advisor",
+    "DateTimeOffsetNow": "2021-11-18T09:48:48.1387855-08:00",
+    "METRICSADVISOR_ACCOUNT_NAME": "ga-metrics-advisor",
     "METRICSADVISOR_ENDPOINT_SUFFIX": null,
     "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
     "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",

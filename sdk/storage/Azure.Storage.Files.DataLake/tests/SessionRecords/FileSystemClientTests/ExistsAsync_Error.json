@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "3716bca3-5f1d-9445-0a5e-826bbd17d605",
         "x-ms-date": "Wed, 17 Feb 2021 22:21:30 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "3716bca3-5f1d-9445-0a5e-826bbd17d605",
         "x-ms-request-id": "56705851-b01e-0020-547b-0504f8000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -45,7 +45,7 @@
         ],
         "x-ms-client-request-id": "91aaca9f-56d8-fed8-0cb3-14f348af9eb4",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 401,
@@ -61,7 +61,7 @@
         "x-ms-client-request-id": "91aaca9f-56d8-fed8-0cb3-14f348af9eb4",
         "x-ms-error-code": "NoAuthenticationInformation",
         "x-ms-request-id": "8987ad94-e01e-0070-7c7b-05c6a8000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>NoAuthenticationInformation</Code><Message>Server failed to authenticate the request. Please refer to the information in the www-authenticate header.\n",
@@ -83,7 +83,7 @@
         "x-ms-client-request-id": "f3cb86c1-446c-442c-5a6d-34a0eda9822c",
         "x-ms-date": "Wed, 17 Feb 2021 22:21:31 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -96,7 +96,7 @@
         ],
         "x-ms-client-request-id": "f3cb86c1-446c-442c-5a6d-34a0eda9822c",
         "x-ms-request-id": "567059f5-b01e-0020-547b-0504f8000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

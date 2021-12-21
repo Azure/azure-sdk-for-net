@@ -1,10 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Files.Shares client library</AssemblyTitle>
-    <Version>12.9.0-beta.1</Version>
+    <Version>12.9.0-beta.3</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>12.8.0</ApiCompatVersion>
     <DefineConstants>FileSDK;$(DefineConstants)</DefineConstants>
@@ -40,6 +40,9 @@
     <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageSharedSources)AggregatingProgressIncrementer.cs" LinkBase="Shared" />
@@ -54,6 +57,7 @@
     <Compile Include="$(AzureStorageSharedSources)IHasher.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)NonCryptographicHashAlgorithmHasher.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)NonDisposingStream.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)PartitionedUploader.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)PooledMemoryStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ProgressIncrementingStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)SasExtensions.cs" LinkBase="Shared" />
@@ -78,6 +82,7 @@
     <Compile Include="$(AzureStorageSharedSources)StreamPartition.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)UriExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)UriQueryParamsCollection.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)WindowStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageWriteStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)LazyLoadingReadOnlyStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)\StorageBearerTokenChallengeAuthorizationPolicy.cs" LinkBase="Shared" />

@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "8a59d6c7-f2f0-57af-357b-0bf41c96a720",
         "x-ms-date": "Tue, 13 Oct 2020 15:22:42 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "8a59d6c7-f2f0-57af-357b-0bf41c96a720",
         "x-ms-request-id": "72b5f3c6-801a-0077-5774-a10f56000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -49,7 +49,7 @@
         "x-ms-lease-duration": "-1",
         "x-ms-proposed-lease-id": "343714c9-e5a3-330f-f6ff-e13091e3aa54",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -66,7 +66,7 @@
         "x-ms-client-request-id": "1eecf453-51e2-e1e8-c625-93f1107fc551",
         "x-ms-lease-id": "343714c9-e5a3-330f-f6ff-e13091e3aa54",
         "x-ms-request-id": "72b5f3ca-801a-0077-5874-a10f56000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -84,7 +84,7 @@
         "x-ms-date": "Tue, 13 Oct 2020 15:22:43 GMT",
         "x-ms-lease-id": "343714c9-e5a3-330f-f6ff-e13091e3aa54",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -100,7 +100,7 @@
         "Vary": "Origin",
         "x-ms-client-request-id": "9cdcc15b-8cf6-6672-2e3f-4eeea0fc65e7",
         "x-ms-request-id": "72b5f3cc-801a-0077-5a74-a10f56000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><ShareStats><ShareUsageBytes>0</ShareUsageBytes></ShareStats>"
     },
@@ -119,7 +119,7 @@
         "x-ms-delete-snapshots": "include",
         "x-ms-lease-id": "343714c9-e5a3-330f-f6ff-e13091e3aa54",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -133,7 +133,7 @@
         ],
         "x-ms-client-request-id": "4f952483-29a2-455b-45d6-d736441df529",
         "x-ms-request-id": "72b5f3ce-801a-0077-5c74-a10f56000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

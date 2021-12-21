@@ -10,6 +10,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using System.Linq;
+using System.Text;
 
 namespace Azure.ResourceManager.Core
 {
@@ -18,7 +19,6 @@ namespace Azure.ResourceManager.Core
     /// </summary>
     public abstract class ArmResource
     {
-        private TagResourceContainer _tagContainer;
         private TagResource _tagResource;
         private Tenant _tenant;
 
@@ -107,11 +107,6 @@ namespace Azure.ResourceManager.Core
         protected internal TagResource TagResource => _tagResource ??= new TagResource(this, Id);
 
         /// <summary>
-        /// Gets the TagsOperations.
-        /// </summary>
-        protected internal TagResourceContainer TagContainer => _tagContainer ??= new TagResourceContainer(this);
-
-        /// <summary>
         /// Validate the resource identifier against current operations.
         /// </summary>
         /// <param name="identifier"> The resource identifier. </param>
@@ -135,7 +130,7 @@ namespace Azure.ResourceManager.Core
             var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType));
             if (theResource is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Type}");
-            return theResource.Locations.Select(l => (Location)l);
+            return theResource.Locations.Select(l => new Location(l));
         }
 
         /// <summary>
@@ -152,7 +147,7 @@ namespace Azure.ResourceManager.Core
             var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType));
             if (theResource is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Type}");
-            return theResource.Locations.Select(l => (Location)l);
+            return theResource.Locations.Select(l => new Location(l));
         }
     }
 }

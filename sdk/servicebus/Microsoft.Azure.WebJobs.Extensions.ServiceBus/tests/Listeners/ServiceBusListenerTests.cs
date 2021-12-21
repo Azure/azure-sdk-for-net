@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -49,7 +50,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
 
             ServiceBusOptions config = new ServiceBusOptions
             {
-                ExceptionHandler = ExceptionReceivedHandler
+                ProcessErrorAsync = ExceptionReceivedHandler
             };
             _mockMessageProcessor = new Mock<MessageProcessor>(MockBehavior.Strict, processor);
 
@@ -204,6 +205,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             var scaleMonitor2 = _listener.GetMonitor();
 
             Assert.AreSame(scaleMonitor, scaleMonitor2);
+        }
+
+        [Test]
+        public void StopAsync_LogListenerDetails()
+        {
+            Assert.ThrowsAsync<InvalidOperationException>(() => _listener.StopAsync(CancellationToken.None));
+            Assert.NotNull(_loggerProvider.GetAllLogMessages().SingleOrDefault(x => x.FormattedMessage.StartsWith("ServiceBus listener stopped")));
         }
 
         private Task ExceptionReceivedHandler(ProcessErrorEventArgs eventArgs)

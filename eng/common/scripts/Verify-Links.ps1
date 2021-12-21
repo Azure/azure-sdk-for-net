@@ -244,10 +244,10 @@ function CheckLink ([System.Uri]$linkUri, $allowRetry=$true)
 
       if ($statusCode -in $errorStatusCodes) {
         if ($originalLinkUri -ne $linkUri) {
-          LogWarning "[$statusCode] broken link $originalLinkUri (resolved to $linkUri)"
+          LogError "[$statusCode] broken link $originalLinkUri (resolved to $linkUri)"
         }
         else {
-          LogWarning "[$statusCode] broken link $linkUri"
+          LogError "[$statusCode] broken link $linkUri"
         }
 
         $linkValid = $false
@@ -423,6 +423,9 @@ foreach ($url in $urls) {
   $pageUrisToCheck.Enqueue($uri);
 }
 
+if ($devOpsLogging) {
+  Write-Host "##[group]Link checking details"
+}
 while ($pageUrisToCheck.Count -ne 0)
 {
   $pageUri = $pageUrisToCheck.Dequeue();
@@ -430,7 +433,7 @@ while ($pageUrisToCheck.Count -ne 0)
   $checkedPages[$pageUri] = $true;
 
   $linkUris = GetLinks $pageUri
-  Write-Host "Found $($linkUris.Count) links on page $pageUri";
+  Write-Host "Checking $($linkUris.Count) links found on page $pageUri";
   $badLinksPerPage = @();
   foreach ($linkUri in $linkUris) {
     $isLinkValid = CheckLink $linkUri
@@ -450,6 +453,9 @@ while ($pageUrisToCheck.Count -ne 0)
     $badLinks[$pageUri] = $badLinksPerPage
   }
 }
+if ($devOpsLogging) {
+  Write-Host "##[endgroup]"
+}
 
 if ($badLinks.Count -gt 0) {
   Write-Host "Summary of broken links:"
@@ -464,7 +470,7 @@ foreach ($pageLink in $badLinks.Keys) {
 $linksChecked = $checkedLinks.Count - $cachedLinksCount
 
 if ($badLinks.Count -gt 0) {
-  LogError "Checked $linksChecked links with $($badLinks.Count) page(s) broken."
+  Write-Host "Checked $linksChecked links with $($badLinks.Count) broken link(s) found."
 }
 else {
   Write-Host "Checked $linksChecked links. No broken links found."

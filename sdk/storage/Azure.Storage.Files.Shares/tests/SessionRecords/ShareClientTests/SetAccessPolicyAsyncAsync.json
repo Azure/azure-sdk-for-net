@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "19146f05-ef99-0e85-90ac-25a651b45b57",
         "x-ms-date": "Tue, 26 Jan 2021 19:25:43 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "19146f05-ef99-0e85-90ac-25a651b45b57",
         "x-ms-request-id": "4f1fc94b-701a-003e-4619-f44dbd000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -49,7 +49,7 @@
         "x-ms-client-request-id": "bae3c6f9-88e2-b011-153d-759b74388d01",
         "x-ms-date": "Tue, 26 Jan 2021 19:25:43 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": "﻿<SignedIdentifiers><SignedIdentifier><Id>ddiitbwvrcqhnghuacdu</Id><AccessPolicy><Start>2021-01-26T18:25:43.9420243Z</Start><Expiry>2021-01-26T20:25:43.9420243Z</Expiry><Permission>rw</Permission></AccessPolicy></SignedIdentifier></SignedIdentifiers>",
       "StatusCode": 200,
@@ -64,7 +64,7 @@
         ],
         "x-ms-client-request-id": "bae3c6f9-88e2-b011-153d-759b74388d01",
         "x-ms-request-id": "4f1fc94e-701a-003e-4719-f44dbd000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -83,7 +83,7 @@
         "x-ms-date": "Tue, 26 Jan 2021 19:25:44 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -96,7 +96,7 @@
         ],
         "x-ms-client-request-id": "52f295d5-3a6c-c3ec-9eed-0c46ef35e9ad",
         "x-ms-request-id": "4f1fc951-701a-003e-4919-f44dbd000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

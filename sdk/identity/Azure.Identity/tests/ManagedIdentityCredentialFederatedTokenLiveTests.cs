@@ -18,7 +18,7 @@ namespace Azure.Identity.Tests
 {
     public class ManagedIdentityCredentialFederatedTokenLiveTests : IdentityRecordedTestBase
     {
-        public ManagedIdentityCredentialFederatedTokenLiveTests(bool isAsync) : base(isAsync)
+        public ManagedIdentityCredentialFederatedTokenLiveTests(bool isAsync) : base(isAsync, useLegacyTransport: true)
         {
         }
 
@@ -26,7 +26,6 @@ namespace Azure.Identity.Tests
         public void ClearDiscoveryCache()
         {
             StaticCachesUtilities.ClearStaticMetadataProviderCache();
-            StaticCachesUtilities.ClearAuthorityEndpointResolutionManagerCache();
         }
 
         [NonParallelizable]

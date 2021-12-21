@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Live pipeline resource representation. </summary>
+    /// <summary> Live Pipeline represents an unique instance of a pipeline topology which is used for real-time content ingestion and analysis. </summary>
     internal partial class LivePipelineSetRequestBody : MethodRequest
     {
         /// <summary> Initializes a new instance of LivePipelineSetRequestBody. </summary>

@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "c67fc66c-ab8f-1773-11c2-815845d6a8a3",
         "x-ms-date": "Fri, 19 Feb 2021 19:03:59 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "c67fc66c-ab8f-1773-11c2-815845d6a8a3",
         "x-ms-request-id": "cb12a46d-b01e-006d-04f1-06cb14000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -48,7 +48,7 @@
         "x-ms-client-request-id": "bd9f557a-b4b3-371e-a930-53a5056b69ec",
         "x-ms-date": "Fri, 19 Feb 2021 19:03:59 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -63,7 +63,7 @@
         ],
         "x-ms-client-request-id": "bd9f557a-b4b3-371e-a930-53a5056b69ec",
         "x-ms-request-id": "da842685-a01f-0061-6bf1-065c1c000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -84,7 +84,7 @@
         "x-ms-lease-duration": "10",
         "x-ms-proposed-lease-id": "ff8ed8fb-89b1-c594-54d4-1c870d36aacb",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 400,
@@ -99,7 +99,7 @@
         "x-ms-client-request-id": "cbea3a45-0218-f1a6-c1d9-68de98962a72",
         "x-ms-error-code": "InvalidHeaderValue",
         "x-ms-request-id": "cb12a4b6-b01e-006d-49f1-06cb14000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>InvalidHeaderValue</Code><Message>The value for one of the HTTP headers is not in the correct format.\n",
@@ -121,7 +121,7 @@
         "x-ms-client-request-id": "d342ee2c-df4c-e4b3-a79c-96aba1177c91",
         "x-ms-date": "Fri, 19 Feb 2021 19:03:59 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -134,7 +134,7 @@
         ],
         "x-ms-client-request-id": "d342ee2c-df4c-e4b3-a79c-96aba1177c91",
         "x-ms-request-id": "cb12a4ea-b01e-006d-7af1-06cb14000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

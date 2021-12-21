@@ -143,6 +143,7 @@ namespace Azure.Search.Documents
         public System.Collections.Generic.IList<string> SearchFields { get { throw null; } }
         public Azure.Search.Documents.Models.SearchMode? SearchMode { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Select { get { throw null; } }
+        public string SemanticConfigurationName { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SemanticFields { get { throw null; } }
         public string SessionId { get { throw null; } set { } }
         public int? Size { get { throw null; } set { } }
@@ -819,6 +820,14 @@ namespace Azure.Search.Documents.Indexes.Models
         public static bool operator !=(Azure.Search.Documents.Indexes.Models.ImageDetail left, Azure.Search.Documents.Indexes.Models.ImageDetail right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class IndexerChangeTrackingState
+    {
+        internal IndexerChangeTrackingState() { }
+        public string AllDocumentsFinalState { get { throw null; } }
+        public string AllDocumentsInitialState { get { throw null; } }
+        public string ResetDocumentsFinalState { get { throw null; } }
+        public string ResetDocumentsInitialState { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IndexerExecutionEnvironment : System.IEquatable<Azure.Search.Documents.Indexes.Models.IndexerExecutionEnvironment>
     {
@@ -880,18 +889,10 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class IndexerState
     {
         internal IndexerState() { }
-        public Azure.Search.Documents.Indexes.Models.IndexerStateHighWaterMark HighWaterMark { get { throw null; } }
+        public Azure.Search.Documents.Indexes.Models.IndexerChangeTrackingState ChangeTrackingState { get { throw null; } }
         public Azure.Search.Documents.Indexes.Models.IndexingMode? Mode { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ResetDataSourceDocumentIds { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ResetDocumentKeys { get { throw null; } }
-    }
-    public partial class IndexerStateHighWaterMark
-    {
-        internal IndexerStateHighWaterMark() { }
-        public string AllDocumentsFinalHighWaterMark { get { throw null; } }
-        public string AllDocumentsInitialHighWaterMark { get { throw null; } }
-        public string ResetDocumentsFinalHighWaterMark { get { throw null; } }
-        public string ResetDocumentsInitialHighWaterMark { get { throw null; } }
     }
     public enum IndexerStatus
     {
@@ -1571,6 +1572,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage SrLatn { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Sv { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Tr { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Unk { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage ZhHans { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage ZhHant { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.OcrSkillLanguage other) { throw null; }
@@ -1679,6 +1681,13 @@ namespace Azure.Search.Documents.Indexes.Models
         public static implicit operator Azure.Search.Documents.Indexes.Models.PiiDetectionSkillMaskingMode (string value) { throw null; }
         public static bool operator !=(Azure.Search.Documents.Indexes.Models.PiiDetectionSkillMaskingMode left, Azure.Search.Documents.Indexes.Models.PiiDetectionSkillMaskingMode right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class PrioritizedFields
+    {
+        public PrioritizedFields() { }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SemanticField> ContentFields { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SemanticField> KeywordFields { get { throw null; } }
+        public Azure.Search.Documents.Indexes.Models.SemanticField TitleField { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RegexFlag : System.IEquatable<Azure.Search.Documents.Indexes.Models.RegexFlag>
@@ -1808,6 +1817,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public string Name { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.LexicalNormalizer> Normalizers { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.ScoringProfile> ScoringProfiles { get { throw null; } }
+        public Azure.Search.Documents.Indexes.Models.SemanticSettings SemanticSettings { get { throw null; } set { } }
         public Azure.Search.Documents.Indexes.Models.SimilarityAlgorithm Similarity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchSuggester> Suggesters { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.TokenFilter> TokenFilters { get { throw null; } }
@@ -1998,6 +2008,22 @@ namespace Azure.Search.Documents.Indexes.Models
         public SearchSuggester(string name, params string[] sourceFields) { }
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SourceFields { get { throw null; } }
+    }
+    public partial class SemanticConfiguration
+    {
+        public SemanticConfiguration(string name, Azure.Search.Documents.Indexes.Models.PrioritizedFields prioritizedFields) { }
+        public string Name { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.PrioritizedFields PrioritizedFields { get { throw null; } set { } }
+    }
+    public partial class SemanticField
+    {
+        public SemanticField() { }
+        public string FieldName { get { throw null; } set { } }
+    }
+    public partial class SemanticSettings
+    {
+        public SemanticSettings() { }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SemanticConfiguration> Configurations { get { throw null; } }
     }
     public partial class SentimentSkill : Azure.Search.Documents.Indexes.Models.SearchIndexerSkill
     {
@@ -2709,8 +2735,78 @@ namespace Azure.Search.Documents.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public QueryLanguage(string value) { throw null; }
+        public static Azure.Search.Documents.Models.QueryLanguage ArEg { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage ArJo { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage ArKw { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage ArMa { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage ArSa { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage BgBg { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage BnIn { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage CaEs { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage CsCz { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage DaDk { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage DeDe { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage ElGr { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage EnAu { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage EnCa { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage EnGb { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage EnIn { get { throw null; } }
         public static Azure.Search.Documents.Models.QueryLanguage EnUs { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage EsEs { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage EsMx { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage EtEe { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage EuEs { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage FaAe { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage FiFi { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage FrCa { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage FrFr { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage GaIe { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage GlEs { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage GuIn { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage HeIl { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage HiIn { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage HrBa { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage HrHr { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage HuHu { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage HyAm { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage IdId { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage IsIs { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage ItIt { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage JaJp { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage KnIn { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage KoKr { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage LtLt { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage LvLv { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage MlIn { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage MrIn { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage MsBn { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage MsMy { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage NbNo { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage NlBe { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage NlNl { get { throw null; } }
         public static Azure.Search.Documents.Models.QueryLanguage None { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage NoNo { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage PaIn { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage PlPl { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage PtBr { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage PtPt { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage RoRo { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage RuRu { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage SkSk { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage SlSl { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage SrBa { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage SrMe { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage SrRs { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage SvSe { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage TaIn { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage TeIn { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage ThTh { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage TrTr { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage UkUa { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage UrPk { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage ViVn { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage ZhCn { get { throw null; } }
+        public static Azure.Search.Documents.Models.QueryLanguage ZhTw { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Models.QueryLanguage other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -2820,11 +2916,11 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Indexes.Models.DataDeletionDetectionPolicy DataDeletionDetectionPolicy(string oDataType) { throw null; }
         public static Azure.Search.Documents.Models.FacetResult FacetResult(long? count, System.Collections.Generic.IReadOnlyDictionary<string, object> additionalProperties) { throw null; }
         public static Azure.Search.Documents.Models.IndexDocumentsResult IndexDocumentsResult(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.IndexingResult> results) { throw null; }
+        public static Azure.Search.Documents.Indexes.Models.IndexerChangeTrackingState IndexerChangeTrackingState(string allDocumentsInitialState, string allDocumentsFinalState, string resetDocumentsInitialState, string resetDocumentsFinalState) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.IndexerExecutionResult IndexerExecutionResult(Azure.Search.Documents.Indexes.Models.IndexerExecutionStatus status = Azure.Search.Documents.Indexes.Models.IndexerExecutionStatus.TransientFailure, Azure.Search.Documents.Indexes.Models.IndexerExecutionStatusDetail? statusDetail = default(Azure.Search.Documents.Indexes.Models.IndexerExecutionStatusDetail?), Azure.Search.Documents.Indexes.Models.IndexerState currentState = null, string errorMessage = null, System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.SearchIndexerError> errors = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.SearchIndexerWarning> warnings = null, int itemCount = 0, int failedItemCount = 0, string initialTrackingState = null, string finalTrackingState = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Indexes.Models.IndexerExecutionResult IndexerExecutionResult(Azure.Search.Documents.Indexes.Models.IndexerExecutionStatus status, string errorMessage, System.DateTimeOffset? startTime, System.DateTimeOffset? endTime, System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Indexes.Models.SearchIndexerError> errors, System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Indexes.Models.SearchIndexerWarning> warnings, int itemCount, int failedItemCount, string initialTrackingState, string finalTrackingState) { throw null; }
-        public static Azure.Search.Documents.Indexes.Models.IndexerState IndexerState(Azure.Search.Documents.Indexes.Models.IndexingMode? mode = default(Azure.Search.Documents.Indexes.Models.IndexingMode?), string allDocumentsInitialHighWaterMark = null, string allDocumentsFinalHighWaterMark = null, string resetDocumentsInitialHighWaterMark = null, string resetDocumentsFinalHighWaterMark = null, System.Collections.Generic.IEnumerable<string> resetDocumentKeys = null, System.Collections.Generic.IEnumerable<string> resetDataSourceDocumentIds = null) { throw null; }
-        public static Azure.Search.Documents.Indexes.Models.IndexerStateHighWaterMark IndexerStateHighWaterMark(string allDocumentsInitialHighWaterMark, string allDocumentsFinalHighWaterMark, string resetDocumentsInitialHighWaterMark, string resetDocumentsFinalHighWaterMark) { throw null; }
+        public static Azure.Search.Documents.Indexes.Models.IndexerState IndexerState(Azure.Search.Documents.Indexes.Models.IndexingMode? mode = default(Azure.Search.Documents.Indexes.Models.IndexingMode?), string allDocumentsInitialChangeTrackingState = null, string allDocumentsFinalChangeTrackingState = null, string resetDocumentsInitialChangeTrackingState = null, string resetDocumentsFinalChangeTrackingState = null, System.Collections.Generic.IEnumerable<string> resetDocumentKeys = null, System.Collections.Generic.IEnumerable<string> resetDataSourceDocumentIds = null) { throw null; }
         public static Azure.Search.Documents.Models.IndexingResult IndexingResult(string key, string errorMessage, bool succeeded, int status) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.LexicalAnalyzer LexicalAnalyzer(string oDataType, string name) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.LexicalTokenizer LexicalTokenizer(string oDataType, string name) { throw null; }

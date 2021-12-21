@@ -167,6 +167,7 @@ namespace Azure.Storage.Sas
             Constants.Sas.Permissions.Write,
             Constants.Sas.Permissions.Delete,
             Constants.Sas.Permissions.DeleteBlobVersion,
+            Constants.Sas.Permissions.PermanentDelete,
             Constants.Sas.Permissions.List,
             Constants.Sas.Permissions.Add,
             Constants.Sas.Permissions.Create,
@@ -174,6 +175,7 @@ namespace Azure.Storage.Sas
             Constants.Sas.Permissions.Process,
             Constants.Sas.Permissions.Tag,
             Constants.Sas.Permissions.FilterByTags,
+            Constants.Sas.Permissions.SetImmutabilityPolicy,
         };
 
         /// <summary>
@@ -204,12 +206,7 @@ namespace Azure.Storage.Sas
             string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
 
             // String to sign: http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
-            string stringToSign;
-
-            // TODO https://github.com/Azure/azure-sdk-for-net/issues/23369
-            if (SasQueryParametersInternals.DefaultSasVersionInternal == "2020-12-06")
-            {
-                stringToSign = string.Join("\n",
+            string stringToSign = string.Join("\n",
                 sharedKeyCredential.AccountName,
                 Permissions,
                 Services.ToPermissionsString(),
@@ -221,21 +218,6 @@ namespace Azure.Storage.Sas
                 Version,
                 EncryptionScope,
                 string.Empty);  // That's right, the account SAS requires a terminating extra newline
-            }
-            else
-            {
-                stringToSign = string.Join("\n",
-                sharedKeyCredential.AccountName,
-                Permissions,
-                Services.ToPermissionsString(),
-                ResourceTypes.ToPermissionsString(),
-                startTime,
-                expiryTime,
-                IPRange.ToString(),
-                Protocol.ToProtocolString(),
-                Version,
-                string.Empty);  // That's right, the account SAS requires a terminating extra newline
-            }
 
             string signature = sharedKeyCredential.ComputeHMACSHA256(stringToSign);
             SasQueryParameters p = SasQueryParametersInternals.Create(

@@ -77,22 +77,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             return new WebPubSubTriggerEvent
             {
                 ConnectionContext = TestContext,
-                Message = TestMessage,
-                DataType = MessageDataType.Text,
+                Data = TestMessage,
+                DataType = WebPubSubDataType.Text,
                 TaskCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously)
             };
         }
 
         private static WebPubSubConnectionContext CreateConnectionContext()
         {
-            return new WebPubSubConnectionContext
-            {
-                ConnectionId = "000000",
-                EventName = "message",
-                EventType = WebPubSubEventType.User,
-                Hub = "testhub",
-                UserId = "user1"
-            };
+            return new WebPubSubConnectionContext(WebPubSubEventType.User, "message", "testhub", "000000", "user1");
         }
 
         private sealed class WebPubSubFuncs
@@ -114,26 +107,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                 [WebPubSubConnection(Hub = "chat", UserId = "aaa")] WebPubSubConnection connection)
             {
                 // Valid case use default url for verification.
-                Assert.AreEqual("wss://abc/client/hubs/chat", connection.BaseUrl);
+                Assert.AreEqual("wss://abc/client/hubs/chat", connection.BaseUri.AbsoluteUri);
             }
 
             public static async Task TestWebPubSubOutput(
-                [WebPubSub(Hub = "chat")] IAsyncCollector<WebPubSubOperation> operation)
+                [WebPubSub(Hub = "chat")] IAsyncCollector<WebPubSubAction> operation)
             {
-                await operation.AddAsync(new SendToAll
+                await operation.AddAsync(new SendToAllAction
                 {
-                    Message = TestMessage,
-                    DataType = MessageDataType.Text
+                    Data = TestMessage,
+                    DataType = WebPubSubDataType.Text
                 });
             }
 
             public static async Task TestWebPubSubOutputMissingHub(
-                [WebPubSub] IAsyncCollector<WebPubSubOperation> operation)
+                [WebPubSub] IAsyncCollector<WebPubSubAction> operation)
             {
-                await operation.AddAsync(new SendToAll
+                await operation.AddAsync(new SendToAllAction
                 {
-                    Message = TestMessage,
-                    DataType = MessageDataType.Text
+                    Data = TestMessage,
+                    DataType = WebPubSubDataType.Text
                 });
             }
 

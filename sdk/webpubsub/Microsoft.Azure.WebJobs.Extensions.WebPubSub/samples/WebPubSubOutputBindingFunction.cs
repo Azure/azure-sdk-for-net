@@ -16,13 +16,9 @@ namespace Microsoft.Azure.WebJobs.Samples
         [FunctionName("WebPubSubOutputBindingFunction")]
         public static async Task RunAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req,
-            [WebPubSub(Hub = "hub", Connection = "<connection-string>")] IAsyncCollector<WebPubSubOperation> operation)
+            [WebPubSub(Hub = "hub", Connection = "<connection-string>")] IAsyncCollector<WebPubSubAction> action)
         {
-            await operation.AddAsync(new SendToAll
-            {
-                Message = BinaryData.FromString("Hello Web PubSub"),
-                DataType = MessageDataType.Text
-            });
+            await action.AddAsync(WebPubSubAction.CreateSendToAllAction("Hello Web PubSub!", WebPubSubDataType.Text));
         }
     }
     #endregion

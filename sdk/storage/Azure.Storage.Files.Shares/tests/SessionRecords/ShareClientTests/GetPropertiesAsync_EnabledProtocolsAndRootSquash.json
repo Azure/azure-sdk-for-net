@@ -15,7 +15,7 @@
         "x-ms-enabled-protocols": "NFS",
         "x-ms-return-client-request-id": "true",
         "x-ms-root-squash": "AllSquash",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -31,7 +31,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "ebcb4831-9496-9370-f9ff-9188a3fc59e7",
         "x-ms-request-id": "15b12132-a01a-0073-3e13-a76edf000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -48,7 +48,7 @@
         "x-ms-client-request-id": "7368d4b8-cda6-8ef7-4eeb-ea3f1f2b5e08",
         "x-ms-date": "Tue, 20 Oct 2020 19:02:58 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -74,7 +74,7 @@
         "x-ms-share-provisioned-ingress-mbps": "44",
         "x-ms-share-provisioned-iops": "500",
         "x-ms-share-quota": "100",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -20,6 +21,8 @@ namespace Azure.Security.ConfidentialLedger.Tests
         private ConfidentialLedgerClientOptions Options;
         private ConfidentialLedgerClient Client;
         private ConfidentialLedgerIdentityServiceClient IdentityClient;
+        private string transactionId;
+        private HashSet<string> TestsNotRequiringLedgerEntry = new() { "GetEnclaveQuotes", "GetConsortiumMembers", "GetConstitution" };
 
         public ConfidentialLedgerClientLiveTests(bool isAsync) : base(isAsync)
         {
@@ -37,6 +40,10 @@ namespace Azure.Security.ConfidentialLedger.Tests
                 return true;
             };
             Options = new ConfidentialLedgerClientOptions { Transport = new HttpClientTransport(httpHandler) };
+            if (TestEnvironment.Mode == RecordedTestMode.Playback)
+            {
+                Options.OperationPollingInterval = TimeSpan.Zero;
+            }
             Client = InstrumentClient(
                 new ConfidentialLedgerClient(
                     TestEnvironment.ConfidentialLedgerUrl,
@@ -47,6 +54,14 @@ namespace Azure.Security.ConfidentialLedger.Tests
                 new ConfidentialLedgerIdentityServiceClient(
                     TestEnvironment.ConfidentialLedgerIdentityUrl,
                     InstrumentClientOptions(Options)));
+
+            if (!TestsNotRequiringLedgerEntry.Contains(TestContext.CurrentContext.Test.MethodName))
+            {
+                var operation = Client.PostLedgerEntryAsync(RequestContent.Create(new { contents = Recording.GenerateAssetName("test") }), waitForCompletion: true)
+                    .GetAwaiter()
+                    .GetResult();
+                transactionId = operation.Id;
+            }
         }
 
         public async Task GetUser(string objId)
@@ -58,83 +73,59 @@ namespace Azure.Security.ConfidentialLedger.Tests
             Assert.That(stringResult, Does.Contain(objId));
         }
 
-        //[RecordedTest]
-        //public async Task GetLedgerEntries()
-        //{
-        //    await PostLedgerEntry();
+        [RecordedTest]
+        public async Task GetLedgerEntries()
+        {
+            await PostLedgerEntry();
 
-        //    var result = await Client.GetLedgerEntriesAsync();
+            await foreach (var entry in Client.GetLedgerEntriesAsync())
+            {
+                Assert.NotNull(entry);
+            }
+        }
 
-        //    var nextLinkDetails = GetNextLinkDetails(result);
-        //    while (nextLinkDetails != null)
-        //    {
-        //        var fromId = nextLinkDetails["fromTransactionId"];
-        //        var subId = nextLinkDetails["subLedgerId"];
-        //        result = await Client.GetLedgerEntriesAsync(subId, fromId).ConfigureAwait(false);
-        //        Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
-        //        nextLinkDetails = GetNextLinkDetails(result);
-        //    }
-        //}
+        [RecordedTest]
+        public async Task GetLedgerEntry()
+        {
+            await PostLedgerEntry();
+            var tuple = await GetFirstTransactionIdFromGetEntries();
+            string transactionId = tuple.TransactionId;
+            string stringResult = tuple.StringResult;
+            Response response = await Client.GetLedgerEntryAsync(transactionId);
 
-        //[RecordedTest]
-        //public async Task GetLedgerEntry()
-        //{
-        //    await PostLedgerEntry();
+            Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
+            Assert.That(stringResult, Does.Contain(transactionId));
+        }
 
-        //    var result = await Client.GetLedgerEntriesAsync();
-        //    var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
+        [RecordedTest]
+        public async Task GetReceipt()
+        {
+            await PostLedgerEntry();
 
-        //    while (stringResult.Contains("Loading"))
-        //    {
-        //        result = await Client.GetLedgerEntriesAsync().ConfigureAwait(false);
-        //        stringResult = new StreamReader(result.ContentStream).ReadToEnd();
-        //    }
-        //    var transactionId = GetFirstTransactionId(result);
-        //    result = await Client.GetLedgerEntryAsync(transactionId).ConfigureAwait(false);
+            var tuple = await GetFirstTransactionIdFromGetEntries();
+            string transactionId = tuple.TransactionId;
+            string stringResult = tuple.StringResult;
 
-        //    Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
-        //    Assert.That(stringResult, Does.Contain(transactionId));
-        //}
+            var result = await Client.GetReceiptAsync(transactionId, new RequestContext()).ConfigureAwait(false);
 
-        //[RecordedTest]
-        //public async Task GetReceipt()
-        //{
-        //    await PostLedgerEntry();
+            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+            Assert.That(stringResult, Does.Contain(transactionId));
+        }
 
-        //    var result = await Client.GetLedgerEntriesAsync();
-        //    var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
+        [RecordedTest]
+        public async Task GetTransactionStatus()
+        {
+            await PostLedgerEntry();
 
-        //    while (stringResult.Contains("Loading"))
-        //    {
-        //        result = await Client.GetLedgerEntriesAsync().ConfigureAwait(false);
-        //        stringResult = new StreamReader(result.ContentStream).ReadToEnd();
-        //    }
-        //    var transactionId = GetFirstTransactionId(result);
-        //    result = await Client.GetReceiptAsync(transactionId).ConfigureAwait(false);
+            var tuple = await GetFirstTransactionIdFromGetEntries();
+            string transactionId = tuple.TransactionId;
+            string stringResult = tuple.StringResult;
 
-        //    Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
-        //    Assert.That(stringResult, Does.Contain(transactionId));
-        //}
+            var result = await Client.GetTransactionStatusAsync(transactionId, new RequestContext()).ConfigureAwait(false);
 
-        //[RecordedTest]
-        //public async Task GetTransactionStatus()
-        //{
-        //    await PostLedgerEntry();
-
-        //    var result = await Client.GetLedgerEntriesAsync();
-        //    var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
-
-        //    while (stringResult.Contains("Loading"))
-        //    {
-        //        result = await Client.GetLedgerEntriesAsync().ConfigureAwait(false);
-        //        stringResult = new StreamReader(result.ContentStream).ReadToEnd();
-        //    }
-        //    var transactionId = GetFirstTransactionId(result);
-        //    result = await Client.GetTransactionStatusAsync(transactionId).ConfigureAwait(false);
-
-        //    Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
-        //    Assert.That(stringResult, Does.Contain(transactionId));
-        //}
+            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+            Assert.That(stringResult, Does.Contain(transactionId));
+        }
 
         [RecordedTest]
         public async Task GetConstitution()
@@ -169,21 +160,22 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task PostLedgerEntry()
         {
-            var result = await Client.PostLedgerEntryAsync(
-                RequestContent.Create(
-                    new { contents = Recording.GenerateAssetName("test") }));
+            var operation = await Client.PostLedgerEntryAsync(
+                RequestContent.Create(new { contents = Recording.GenerateAssetName("test") }),
+                waitForCompletion: true);
+            var result = operation.GetRawResponse();
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
-            Assert.That(stringResult, Does.Contain("subLedgerId"));
+            Assert.NotNull(operation.Id);
+            Assert.That(stringResult, Does.Contain("Committed"));
+            Assert.That(stringResult, Does.Contain(operation.Id));
         }
 
         [RecordedTest]
         public async Task GetCurrentLedgerEntry()
         {
-            await PostLedgerEntry();
-
-            var result = await Client.GetCurrentLedgerEntryAsync(new());
+            var result = await Client.GetCurrentLedgerEntryAsync();
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
@@ -231,33 +223,56 @@ namespace Azure.Security.ConfidentialLedger.Tests
             return result;
         }
 
-        private string GetFirstTransactionId(Response response)
+        private async Task<(string TransactionId, string StringResult)> GetFirstTransactionIdFromGetEntries()
         {
-            response.ContentStream.Position = 0;
-            var stringResult = new StreamReader(response.ContentStream).ReadToEnd();
-            var doc = JsonDocument.Parse(stringResult);
-            if (doc.RootElement.TryGetProperty("entries", out var prop))
+            string stringResult = "Loading";
+            var result = Client.GetLedgerEntriesAsync();
+            bool first = true;
+            Response response = null;
+
+            await foreach (var page in result.AsPages())
             {
-                foreach (JsonElement entry in prop.EnumerateArray())
+                if (first)
                 {
-                    if (entry.TryGetProperty("transactionId", out var tid))
+                    response = page.GetRawResponse();
+                }
+                foreach (var entry in page.Values)
+                {
+                    stringResult = new StreamReader(entry.ToStream()).ReadToEnd();
+                    break;
+                }
+                first = false;
+            }
+
+            while (stringResult.Contains("Loading"))
+            {
+                first = true;
+                result = Client.GetLedgerEntriesAsync();
+                await foreach (var page in result.AsPages())
+                {
+                    if (first)
                     {
-                        return tid.GetString();
+                        response = page.GetRawResponse();
                     }
+                    foreach (var entry in page.Values)
+                    {
+                        stringResult = new StreamReader(entry.ToStream()).ReadToEnd();
+                        break;
+                    }
+                    first = false;
                 }
             }
-            return default;
+            return (GetFirstTransactionId(stringResult), stringResult);
         }
 
-        private Dictionary<string, string> GetNextLinkDetails(Response response)
+        private string GetFirstTransactionId(string stringResult)
         {
-            var stringResult = new StreamReader(response.ContentStream).ReadToEnd();
             var doc = JsonDocument.Parse(stringResult);
-            if (doc.RootElement.TryGetProperty("@nextLink", out var prop))
+            if (doc.RootElement.TryGetProperty("transactionId", out var tid))
             {
-                return GetQueryStringKvps(prop.GetString());
+                return tid.GetString();
             }
-            return default;
+            throw new Exception($"Could not parse transationId from response:\n{stringResult}");
         }
     }
 }

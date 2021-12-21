@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.Network
     public partial class ApplicationGateway : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ApplicationGatewaysRestOperations _restClient;
+        private readonly ApplicationGatewaysRestOperations _applicationGatewaysRestClient;
+        private readonly ApplicationGatewayPrivateLinkResourcesRestOperations _applicationGatewayPrivateLinkResourcesRestClient;
         private readonly ApplicationGatewayData _data;
-        private ApplicationGatewayPrivateLinkResourcesRestOperations _applicationGatewayPrivateLinkResourcesRestClient { get; }
 
         /// <summary> Initializes a new instance of the <see cref="ApplicationGateway"/> class for mocking. </summary>
         protected ApplicationGateway()
@@ -35,13 +35,13 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "ApplicationGateway"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal ApplicationGateway(ArmResource options, ApplicationGatewayData resource) : base(options, resource.Id)
+        internal ApplicationGateway(ArmResource options, ApplicationGatewayData resource) : base(options, new ResourceIdentifier(resource.Id))
         {
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ApplicationGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _applicationGatewayPrivateLinkResourcesRestClient = new ApplicationGatewayPrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _applicationGatewaysRestClient = new ApplicationGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _applicationGatewayPrivateLinkResourcesRestClient = new ApplicationGatewayPrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ApplicationGateway"/> class. </summary>
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Network
         internal ApplicationGateway(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ApplicationGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _applicationGatewayPrivateLinkResourcesRestClient = new ApplicationGatewayPrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _applicationGatewaysRestClient = new ApplicationGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _applicationGatewayPrivateLinkResourcesRestClient = new ApplicationGatewayPrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ApplicationGateway"/> class. </summary>
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.Network
         internal ApplicationGateway(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ApplicationGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _applicationGatewayPrivateLinkResourcesRestClient = new ApplicationGatewayPrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _applicationGatewaysRestClient = new ApplicationGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _applicationGatewayPrivateLinkResourcesRestClient = new ApplicationGatewayPrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _applicationGatewaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ApplicationGateway(this, response.Value), response.GetRawResponse());
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _applicationGatewaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ApplicationGateway(this, response.Value), response.GetRawResponse());
@@ -153,8 +153,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ApplicationGatewayDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _applicationGatewaysRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ApplicationGatewayDeleteOperation(_clientDiagnostics, Pipeline, _applicationGatewaysRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -175,8 +175,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ApplicationGatewayDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _applicationGatewaysRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ApplicationGatewayDeleteOperation(_clientDiagnostics, Pipeline, _applicationGatewaysRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -187,22 +187,23 @@ namespace Azure.ResourceManager.Network
                 throw;
             }
         }
+
         /// <summary> Updates the specified application gateway tags. </summary>
         /// <param name="parameters"> Parameters supplied to update application gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response<ApplicationGateway>> UpdateTagsAsync(TagsObject parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ApplicationGateway>> UpdateAsync(TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ApplicationGateway.UpdateTags");
+            using var scope = _clientDiagnostics.CreateScope("ApplicationGateway.Update");
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _applicationGatewaysRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ApplicationGateway(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -216,18 +217,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters supplied to update application gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<ApplicationGateway> UpdateTags(TagsObject parameters, CancellationToken cancellationToken = default)
+        public virtual Response<ApplicationGateway> Update(TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ApplicationGateway.UpdateTags");
+            using var scope = _clientDiagnostics.CreateScope("ApplicationGateway.Update");
             scope.Start();
             try
             {
-                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var response = _applicationGatewaysRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
                 return Response.FromValue(new ApplicationGateway(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -235,82 +236,6 @@ namespace Azure.ResourceManager.Network
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Lists all private link resources on an application gateway. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationGatewayPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationGatewayPrivateLinkResource> GetApplicationGatewayPrivateLinkResources(CancellationToken cancellationToken = default)
-        {
-            Page<ApplicationGatewayPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ApplicationGateway.GetApplicationGatewayPrivateLinkResources");
-                scope.Start();
-                try
-                {
-                    var response = _applicationGatewayPrivateLinkResourcesRestClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ApplicationGatewayPrivateLinkResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ApplicationGateway.GetApplicationGatewayPrivateLinkResources");
-                scope.Start();
-                try
-                {
-                    var response = _applicationGatewayPrivateLinkResourcesRestClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Lists all private link resources on an application gateway. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationGatewayPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationGatewayPrivateLinkResource> GetApplicationGatewayPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ApplicationGatewayPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ApplicationGateway.GetApplicationGatewayPrivateLinkResources");
-                scope.Start();
-                try
-                {
-                    var response = await _applicationGatewayPrivateLinkResourcesRestClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ApplicationGatewayPrivateLinkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ApplicationGateway.GetApplicationGatewayPrivateLinkResources");
-                scope.Start();
-                try
-                {
-                    var response = await _applicationGatewayPrivateLinkResourcesRestClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Starts the specified application gateway. </summary>
@@ -322,8 +247,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.StartAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ApplicationGatewayStartOperation(_clientDiagnostics, Pipeline, _restClient.CreateStartRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _applicationGatewaysRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ApplicationGatewayStartOperation(_clientDiagnostics, Pipeline, _applicationGatewaysRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -344,8 +269,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.Start(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ApplicationGatewayStartOperation(_clientDiagnostics, Pipeline, _restClient.CreateStartRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _applicationGatewaysRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ApplicationGatewayStartOperation(_clientDiagnostics, Pipeline, _applicationGatewaysRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -366,8 +291,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.StopAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ApplicationGatewayStopOperation(_clientDiagnostics, Pipeline, _restClient.CreateStopRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _applicationGatewaysRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ApplicationGatewayStopOperation(_clientDiagnostics, Pipeline, _applicationGatewaysRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -388,8 +313,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.Stop(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ApplicationGatewayStopOperation(_clientDiagnostics, Pipeline, _restClient.CreateStopRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _applicationGatewaysRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ApplicationGatewayStopOperation(_clientDiagnostics, Pipeline, _applicationGatewaysRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -411,8 +336,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.BackendHealthAsync(Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
-                var operation = new ApplicationGatewayBackendHealthOperation(_clientDiagnostics, Pipeline, _restClient.CreateBackendHealthRequest(Id.ResourceGroupName, Id.Name, expand).Request, response);
+                var response = await _applicationGatewaysRestClient.BackendHealthAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                var operation = new ApplicationGatewayBackendHealthOperation(_clientDiagnostics, Pipeline, _applicationGatewaysRestClient.CreateBackendHealthRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -434,8 +359,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.BackendHealth(Id.ResourceGroupName, Id.Name, expand, cancellationToken);
-                var operation = new ApplicationGatewayBackendHealthOperation(_clientDiagnostics, Pipeline, _restClient.CreateBackendHealthRequest(Id.ResourceGroupName, Id.Name, expand).Request, response);
+                var response = _applicationGatewaysRestClient.BackendHealth(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
+                var operation = new ApplicationGatewayBackendHealthOperation(_clientDiagnostics, Pipeline, _applicationGatewaysRestClient.CreateBackendHealthRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -464,8 +389,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.BackendHealthOnDemandAsync(Id.ResourceGroupName, Id.Name, probeRequest, expand, cancellationToken).ConfigureAwait(false);
-                var operation = new ApplicationGatewayBackendHealthOnDemandOperation(_clientDiagnostics, Pipeline, _restClient.CreateBackendHealthOnDemandRequest(Id.ResourceGroupName, Id.Name, probeRequest, expand).Request, response);
+                var response = await _applicationGatewaysRestClient.BackendHealthOnDemandAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, probeRequest, expand, cancellationToken).ConfigureAwait(false);
+                var operation = new ApplicationGatewayBackendHealthOnDemandOperation(_clientDiagnostics, Pipeline, _applicationGatewaysRestClient.CreateBackendHealthOnDemandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, probeRequest, expand).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -494,8 +419,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.BackendHealthOnDemand(Id.ResourceGroupName, Id.Name, probeRequest, expand, cancellationToken);
-                var operation = new ApplicationGatewayBackendHealthOnDemandOperation(_clientDiagnostics, Pipeline, _restClient.CreateBackendHealthOnDemandRequest(Id.ResourceGroupName, Id.Name, probeRequest, expand).Request, response);
+                var response = _applicationGatewaysRestClient.BackendHealthOnDemand(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, probeRequest, expand, cancellationToken);
+                var operation = new ApplicationGatewayBackendHealthOnDemandOperation(_clientDiagnostics, Pipeline, _applicationGatewaysRestClient.CreateBackendHealthOnDemandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, probeRequest, expand).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -507,11 +432,90 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets a list of ApplicationGatewayPrivateEndpointConnections in the ApplicationGateway. </summary>
-        /// <returns> An object representing collection of ApplicationGatewayPrivateEndpointConnections and their operations over a ApplicationGateway. </returns>
-        public ApplicationGatewayPrivateEndpointConnectionContainer GetApplicationGatewayPrivateEndpointConnections()
+        /// <summary> Lists all private link resources on an application gateway. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ApplicationGatewayPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApplicationGatewayPrivateLinkResource> GetApplicationGatewayPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            return new ApplicationGatewayPrivateEndpointConnectionContainer(this);
+            async Task<Page<ApplicationGatewayPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ApplicationGateway.GetApplicationGatewayPrivateLinkResources");
+                scope.Start();
+                try
+                {
+                    var response = await _applicationGatewayPrivateLinkResourcesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<ApplicationGatewayPrivateLinkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ApplicationGateway.GetApplicationGatewayPrivateLinkResources");
+                scope.Start();
+                try
+                {
+                    var response = await _applicationGatewayPrivateLinkResourcesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
+
+        /// <summary> Lists all private link resources on an application gateway. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ApplicationGatewayPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApplicationGatewayPrivateLinkResource> GetApplicationGatewayPrivateLinkResources(CancellationToken cancellationToken = default)
+        {
+            Page<ApplicationGatewayPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ApplicationGateway.GetApplicationGatewayPrivateLinkResources");
+                scope.Start();
+                try
+                {
+                    var response = _applicationGatewayPrivateLinkResourcesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<ApplicationGatewayPrivateLinkResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ApplicationGateway.GetApplicationGatewayPrivateLinkResources");
+                scope.Start();
+                try
+                {
+                    var response = _applicationGatewayPrivateLinkResourcesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        #region ApplicationGatewayPrivateEndpointConnection
+
+        /// <summary> Gets a collection of ApplicationGatewayPrivateEndpointConnections in the ApplicationGateway. </summary>
+        /// <returns> An object representing collection of ApplicationGatewayPrivateEndpointConnections and their operations over a ApplicationGateway. </returns>
+        public ApplicationGatewayPrivateEndpointConnectionCollection GetApplicationGatewayPrivateEndpointConnections()
+        {
+            return new ApplicationGatewayPrivateEndpointConnectionCollection(this);
+        }
+        #endregion
     }
 }

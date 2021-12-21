@@ -36,9 +36,9 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="roles">Roles that the connection with the generated token will have.</param>
         /// <returns></returns>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual Uri GenerateClientAccessUri(DateTimeOffset expiresAt, string userId = default, IEnumerable<string> roles = default, CancellationToken cancellationToken = default)
+        public virtual Uri GetClientAccessUri(DateTimeOffset expiresAt, string userId = default, IEnumerable<string> roles = default, CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
-            => GenerateClientAccessUriInternal(expiresAt, userId, roles, async: false, cancellationToken).EnsureCompleted();
+            => GetClientAccessUriInternal(expiresAt, userId, roles, async: false, cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// Creates a URI with authentication token.
@@ -49,8 +49,8 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="roles">Roles that the connection with the generated token will have.</param>
         /// <returns></returns>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual async Task<Uri> GenerateClientAccessUriAsync(DateTimeOffset expiresAt, string userId = default, IEnumerable<string> roles = default, CancellationToken cancellationToken = default)
-            => await GenerateClientAccessUriInternal(expiresAt, userId, roles, async: true, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<Uri> GetClientAccessUriAsync(DateTimeOffset expiresAt, string userId = default, IEnumerable<string> roles = default, CancellationToken cancellationToken = default)
+            => await GetClientAccessUriInternal(expiresAt, userId, roles, async: true, cancellationToken).ConfigureAwait(false);
 #pragma warning restore AZC0015 // Unexpected client method return type.
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns></returns>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual Uri GenerateClientAccessUri(
+        public virtual Uri GetClientAccessUri(
             TimeSpan expiresAfter = default,
             string userId = default,
             IEnumerable<string> roles = default,
@@ -71,7 +71,7 @@ namespace Azure.Messaging.WebPubSub
         {
             DateTimeOffset expiresAt = GetExpiryTimeFromTimeSpan(expiresAfter);
 
-            return GenerateClientAccessUri(expiresAt, userId, roles, cancellationToken);
+            return GetClientAccessUri(expiresAt, userId, roles, cancellationToken);
         }
 
         /// <summary>
@@ -83,15 +83,15 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns></returns>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual async Task<Uri> GenerateClientAccessUriAsync(TimeSpan expiresAfter = default, string userId = default, IEnumerable<string> roles = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Uri> GetClientAccessUriAsync(TimeSpan expiresAfter = default, string userId = default, IEnumerable<string> roles = default, CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
         {
             DateTimeOffset expiresAt = GetExpiryTimeFromTimeSpan(expiresAfter);
 
-            return await GenerateClientAccessUriAsync(expiresAt, userId, roles, cancellationToken).ConfigureAwait(false);
+            return await GetClientAccessUriAsync(expiresAt, userId, roles, cancellationToken).ConfigureAwait(false);
         }
 
-        private async Task<Uri> GenerateClientAccessUriInternal(
+        private async Task<Uri> GetClientAccessUriInternal(
             DateTimeOffset expiresAt,
             string userId = default,
             IEnumerable<string> roles = default,
@@ -102,11 +102,11 @@ namespace Azure.Messaging.WebPubSub
 
             if (_tokenCredential != null)
             {
-                RequestOptions options = new() { CancellationToken = cancellationToken };
+                RequestContext context = new() { CancellationToken = cancellationToken };
 
                 Response clientTokenResponse = async ?
-                    await GenerateClientTokenImplAsync(options, userId, roles, expiresAt.Minute).ConfigureAwait(false) :
-                    GenerateClientTokenImpl(options, userId, roles, expiresAt.Minute);
+                    await GenerateClientTokenImplAsync(userId, roles, expiresAt.Minute, context).ConfigureAwait(false) :
+                    GenerateClientTokenImpl(userId, roles, expiresAt.Minute, context);
                 token = JsonDocument.Parse(clientTokenResponse.Content).RootElement.GetProperty(ClientTokenResponseTokenPropertyName).GetString();
             }
             else if (_credential != null)
@@ -118,9 +118,9 @@ namespace Azure.Messaging.WebPubSub
                 throw new InvalidOperationException($"{nameof(WebPubSubServiceClient)} must be constructed with either a {typeof(TokenCredential)} or {typeof(AzureKeyCredential)} to generate client access URIs.");
             }
 
-            UriBuilder clientEndpoint = new(_endpoint)
+            UriBuilder clientEndpoint = new(Endpoint)
             {
-                Scheme = _endpoint.Scheme == "http" ? "ws" : "wss"
+                Scheme = Endpoint.Scheme == "http" ? "ws" : "wss"
             };
 
             return new Uri($"{clientEndpoint}client/hubs/{_hub}?access_token={token}");
@@ -231,7 +231,7 @@ namespace Azure.Messaging.WebPubSub
             var jwt = new JwtBuilder(keyBytes);
             var now = DateTimeOffset.UtcNow;
 
-            string endpoint = _endpoint.AbsoluteUri;
+            string endpoint = Endpoint.AbsoluteUri;
             if (!endpoint.EndsWith("/", StringComparison.Ordinal))
             {
                 endpoint += "/";

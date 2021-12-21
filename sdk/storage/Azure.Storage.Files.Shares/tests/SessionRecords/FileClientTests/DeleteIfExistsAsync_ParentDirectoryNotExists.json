@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "86fa99cb-58e5-25ce-db7c-c807ff3a3d18",
         "x-ms-date": "Tue, 26 Jan 2021 19:29:43 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "86fa99cb-58e5-25ce-db7c-c807ff3a3d18",
         "x-ms-request-id": "57a00024-401a-0047-4a19-f4b199000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -47,7 +47,7 @@
         "x-ms-client-request-id": "1e612c0d-e329-cf0d-ef9f-5475fb9b401e",
         "x-ms-date": "Tue, 26 Jan 2021 19:29:44 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -62,7 +62,7 @@
         "x-ms-client-request-id": "1e612c0d-e329-cf0d-ef9f-5475fb9b401e",
         "x-ms-error-code": "ParentNotFound",
         "x-ms-request-id": "57a00026-401a-0047-4b19-f4b199000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ParentNotFound</Code><Message>The specified parent path does not exist.\n",
@@ -85,7 +85,7 @@
         "x-ms-date": "Tue, 26 Jan 2021 19:29:44 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -98,7 +98,7 @@
         ],
         "x-ms-client-request-id": "5f32ed67-41b2-e2df-8fe9-e1636a638020",
         "x-ms-request-id": "57a00027-401a-0047-4c19-f4b199000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

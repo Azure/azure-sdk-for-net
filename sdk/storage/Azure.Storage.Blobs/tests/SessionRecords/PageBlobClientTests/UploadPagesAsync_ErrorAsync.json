@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "08bafc45-35ce-1238-96a7-65a4fcb7dac2",
         "x-ms-date": "Wed, 17 Feb 2021 19:04:17 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "08bafc45-35ce-1238-96a7-65a4fcb7dac2",
         "x-ms-request-id": "e325e937-c01e-002b-405f-055a0e000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -52,7 +52,7 @@
         "x-ms-client-request-id": "9caecace-4394-6071-300c-ab44b85146e5",
         "x-ms-date": "Wed, 17 Feb 2021 19:04:18 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -68,7 +68,7 @@
         "x-ms-client-request-id": "9caecace-4394-6071-300c-ab44b85146e5",
         "x-ms-request-id": "e325e956-c01e-002b-5d5f-055a0e000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "x-ms-version-id": "2021-02-17T19:04:18.0491261Z"
       },
       "ResponseBody": []
@@ -91,7 +91,7 @@
         "x-ms-page-write": "update",
         "x-ms-range": "bytes=5120-6143",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": "1k/T38xvnhTGdfmv+u7HB5+SGAIDM4GNqok6F8nVuLfGBQeXgQseXyya1h9JwmZCRaOkJThE4aPNRjVCNIZK8LxC6fTmL4aUdLnVaVxiQ+cj+NIlMJN+giRkyjvV2yqmT+ViB9lxWxUdD7F/bndGagJNHzuzJb8pxGfQgmVLv5iOLxp3/zsOsZy8ByDi/hOsHV84h7zu8iklOUJyodmw0VAY8D9dz2vGP22f9h2eR8VTJGQGEzfcnzzwUcb5nBDCDDbQyQ7TTk70cUhOT/sMhvF8Hnx1qr4ZPFADbX2kzaJd3Ornzn23f9UVEaHvjVBA48rVfH2TTWJ3t4290ODQUKOl8XMRJbh0xZ6mX5gdKa4AwoqzzlElyY6HcBfv+q/1RcH+SZvcLr4SYbbf7e7KWo3evA5WHYFRgCjkirSghMvvsRrWHuATI5PLoG2aRdyfvBWKET2gnidArMly+KQJcd3r7zvU9Duty5l6i30TtzpMRM2fFnKOThLylXIWoCvvwS6Qr1agy8ja3EWjJROqLfWOJrPWaltqXaAo4V7Ilipui8lOggfkrHkFxDkt6ij/SGh9iHp3GFfTJlG1d+lpEUYbNZpJW6vtqno50aUhPHJ4KZn2Sw6w9nNyelu1LjSPm7PzEbSOtey9j90APkaxsunePU5Pc8Y4az8m1+FPN3tFqTbyLSu+6XOtObswr7gswMhy1/HmQCftu6Z1Z94LbVhiupQQvoS+IFPaojoKCLuH+hYY3WCKX2kOBXKESIGVoctjzvQkHAFEs7adC53t4rLq7m3H85D311sqArkROdjRRQBupzrGY94U0ymq7FTMISK/mVoUza46a/aZ+RpIMnney8Wcfjt4JIqPsh9mTeoHXeCWUqB9vXhSMztDLWnEzKGwzCGOMKLnRnXQhBqP0x4Lkpw5seDZYA1NSkoANfchy+Z+toHJeC0+rwsqrTldwl8dN5vNixrA12sTQOVX5xF+rrgzEB2cQhlu+gLVrrPU8Ifq4/1bU0DMvd8WtjdH58j6rP6AKbJCgPWBX5AX6yi3PlBebAMTIlt4Z1I+hovhJhM62wG0VMbVqGMH2fSvtdK2Xnjn6XrE5oqjB8JfBPlqoDh93BAmAuqKicSgC0hnyLKAhygT+j2YdvR3EUwDdaRpnTm8MdjCj1uNXF+2I9pBOz4Q33zQVqb65WYbr/CdhhMgN24PqpbZvffNhZ3e4VMaNdUN85YnmEaSwUxyp+Bq8NVLluxsMpCoNiGFA9EIHAMTAHkaj5N9+J4nfOlKZxUXYpXHkktmrgNEZb10oZR1iaRJXqZnT2BCzp1NRLWnXc4MbqE8QIq3rFJ11irVCFYJsfJFAAhvrxM0hcOuGA==",
       "StatusCode": 416,
@@ -106,7 +106,7 @@
         "x-ms-client-request-id": "46c66c36-9344-62c3-5dc6-9cbe8d07bbc7",
         "x-ms-error-code": "InvalidPageRange",
         "x-ms-request-id": "e325e9a3-c01e-002b-1f5f-055a0e000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>InvalidPageRange</Code><Message>The page range specified is invalid.\n",
@@ -128,7 +128,7 @@
         "x-ms-client-request-id": "18fe99be-67fc-d6d4-8a3b-aa28cb756531",
         "x-ms-date": "Wed, 17 Feb 2021 19:04:18 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -141,7 +141,7 @@
         ],
         "x-ms-client-request-id": "18fe99be-67fc-d6d4-8a3b-aa28cb756531",
         "x-ms-request-id": "e325e9c5-c01e-002b-3c5f-055a0e000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

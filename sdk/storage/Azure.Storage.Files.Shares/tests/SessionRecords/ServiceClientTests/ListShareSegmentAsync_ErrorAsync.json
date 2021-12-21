@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "8cab8b1b-a330-7e28-4e28-f6689407885a",
         "x-ms-date": "Thu, 21 Jan 2021 20:43:41 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 403,

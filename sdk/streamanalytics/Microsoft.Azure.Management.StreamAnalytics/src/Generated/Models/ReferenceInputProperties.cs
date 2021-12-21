@@ -42,6 +42,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// changed between requests. You can also use it in the If-Match or
         /// If-None-Match headers for write operations for optimistic
         /// concurrency.</param>
+        /// <param name="compression">Describes how input data is
+        /// compressed</param>
         /// <param name="partitionKey">partitionKey Describes a key in the
         /// input data which is used for partitioning the input data</param>
         /// <param name="datasource">Describes an input data source that

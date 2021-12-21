@@ -318,6 +318,7 @@ namespace Azure.Storage.Blobs.Test
         {
             return await uploader.UploadInternal(
                 content,
+                expectedContentLength: default,
                 new BlobUploadOptions
                 {
                     HttpHeaders = s_blobHttpHeaders,

@@ -30,7 +30,7 @@
             "metricName": "cost"
           }
         ],
-        "dataStartFrom": "2020-08-01T00:00:00Z",
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z",
         "authenticationType": "Basic"
       },
       "StatusCode": 201,
@@ -82,7 +82,7 @@
           }
         ],
         "dimension": [],
-        "dataStartFrom": "2020-08-01T00:00:00Z",
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z",
         "dataSourceType": "AzureDataLakeStorageGen2",
         "timestampColumn": "",
         "startOffsetInSeconds": 0,
@@ -151,7 +151,7 @@
           }
         ],
         "dimension": [],
-        "dataStartFrom": "2020-08-01T00:00:00Z",
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z",
         "dataSourceType": "AzureDataLakeStorageGen2",
         "timestampColumn": "",
         "startOffsetInSeconds": 0,

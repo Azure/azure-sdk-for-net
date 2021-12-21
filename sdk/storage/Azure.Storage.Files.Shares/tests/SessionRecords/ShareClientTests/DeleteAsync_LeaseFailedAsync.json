@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "641ff660-d192-0c28-fd0d-44882dd5e1f2",
         "x-ms-date": "Tue, 13 Oct 2020 15:22:49 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "641ff660-d192-0c28-fd0d-44882dd5e1f2",
         "x-ms-request-id": "c3b30332-201a-007e-7e74-a14a85000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -48,7 +48,7 @@
         "x-ms-delete-snapshots": "include",
         "x-ms-lease-id": "bb7195f2-dafc-84cf-d475-f2cfc84ce683",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -64,7 +64,7 @@
         "x-ms-client-request-id": "295ac73e-7c00-86c2-279b-901dde5943b1",
         "x-ms-error-code": "LeaseNotPresentWithContainerOperation",
         "x-ms-request-id": "c3b3033a-201a-007e-0374-a14a85000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>LeaseNotPresentWithContainerOperation</Code><Message>There is currently no lease on the file share.\n",
@@ -86,7 +86,7 @@
         "x-ms-date": "Tue, 13 Oct 2020 15:22:51 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -100,7 +100,7 @@
         ],
         "x-ms-client-request-id": "01917405-bcf2-5f83-2380-df961ba19a94",
         "x-ms-request-id": "c3b3033b-201a-007e-0474-a14a85000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

@@ -1,5 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
+#if false
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.CosmosDB.Models;
 using NUnit.Framework;
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             if ((Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback) && !setupRun)
             {
-                InitializeClients();
+                await InitializeClients();
                 this.resourceGroupName = Recording.GenerateAssetName(CosmosDBTestUtilities.ResourceGroupPrefix);
                 await CosmosDBTestUtilities.TryRegisterResourceGroupAsync(ResourceGroupsOperations,
                     CosmosDBTestUtilities.Location,
@@ -44,7 +46,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             }
             else if (setupRun)
             {
-                initNewRecord();
+                await initNewRecord();
             }
         }
 
@@ -57,95 +59,95 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TestCase, Order(1)]
         public async Task MongoDBDatabaseCreateAndUpdateTest()
         {
-            MongoDBDatabaseGetResults mongoDBDatabaseGetResults1 = await WaitForCompletionAsync(
+            MongoDBDatabase mongoDBDatabase1 = await WaitForCompletionAsync(
                 await CosmosDBManagementClient.MongoDBResources.StartCreateUpdateMongoDBDatabaseAsync(
                     resourceGroupName,
                     databaseAccountName,
                     databaseName,
                     new MongoDBDatabaseCreateUpdateParameters(
                         new MongoDBDatabaseResource(databaseName), new CreateUpdateOptions(sampleThroughput1, new AutoscaleSettings()))));
-            Assert.IsNotNull(mongoDBDatabaseGetResults1);
-            Assert.AreEqual(databaseName, mongoDBDatabaseGetResults1.Resource.Id);
-            ThroughputSettingsGetResults throughputSettingsGetResults1 =
+            Assert.IsNotNull(mongoDBDatabase1);
+            Assert.AreEqual(databaseName, mongoDBDatabase1.Resource.Id);
+            ThroughputSettingsData throughputSettings1 =
                 await CosmosDBManagementClient.MongoDBResources.GetMongoDBDatabaseThroughputAsync(resourceGroupName, databaseAccountName, databaseName);
-            Assert.IsNotNull(throughputSettingsGetResults1);
-            Assert.AreEqual(sampleThroughput1, throughputSettingsGetResults1.Resource.Throughput);
-            Assert.AreEqual(mongoDBDatabasesThroughputType, throughputSettingsGetResults1.Type);
-            MongoDBDatabaseGetResults mongoDBDatabaseGetResults =
+            Assert.IsNotNull(throughputSettings1);
+            Assert.AreEqual(sampleThroughput1, throughputSettings1.Resource.Throughput);
+            Assert.AreEqual(mongoDBDatabasesThroughputType, throughputSettings1.Type);
+            MongoDBDatabase mongoDBDatabase =
                 await CosmosDBManagementClient.MongoDBResources.GetMongoDBDatabaseAsync(resourceGroupName, databaseAccountName, databaseName);
-            Assert.IsNotNull(mongoDBDatabaseGetResults);
-            VerifyMongoDBDatases(mongoDBDatabaseGetResults1, mongoDBDatabaseGetResults);
+            Assert.IsNotNull(mongoDBDatabase);
+            VerifyMongoDBDatases(mongoDBDatabase1, mongoDBDatabase);
 
-            MongoDBDatabaseGetResults mongoDBDatabaseGetResults2 = await WaitForCompletionAsync(
+            MongoDBDatabase mongoDBDatabase2 = await WaitForCompletionAsync(
                 await CosmosDBManagementClient.MongoDBResources.StartCreateUpdateMongoDBDatabaseAsync(
                     resourceGroupName,
                     databaseAccountName,
                     databaseName,
                     new MongoDBDatabaseCreateUpdateParameters(
                         new MongoDBDatabaseResource(databaseName), new CreateUpdateOptions(sampleThroughput2, new AutoscaleSettings()))));
-            Assert.IsNotNull(mongoDBDatabaseGetResults2);
-            Assert.AreEqual(databaseName, mongoDBDatabaseGetResults2.Resource.Id);
-            ThroughputSettingsGetResults throughputSettingsGetResults2 =
+            Assert.IsNotNull(mongoDBDatabase2);
+            Assert.AreEqual(databaseName, mongoDBDatabase2.Resource.Id);
+            ThroughputSettingsData throughputSettings2 =
                 await CosmosDBManagementClient.MongoDBResources.GetMongoDBDatabaseThroughputAsync(resourceGroupName, databaseAccountName, databaseName);
-            Assert.IsNotNull(throughputSettingsGetResults2);
-            Assert.AreEqual(sampleThroughput2, throughputSettingsGetResults2.Resource.Throughput);
-            Assert.AreEqual(mongoDBDatabasesThroughputType, throughputSettingsGetResults2.Type);
-            mongoDBDatabaseGetResults = await CosmosDBManagementClient.MongoDBResources.GetMongoDBDatabaseAsync(resourceGroupName, databaseAccountName, databaseName);
-            Assert.IsNotNull(mongoDBDatabaseGetResults);
-            VerifyMongoDBDatases(mongoDBDatabaseGetResults2, mongoDBDatabaseGetResults);
+            Assert.IsNotNull(throughputSettings2);
+            Assert.AreEqual(sampleThroughput2, throughputSettings2.Resource.Throughput);
+            Assert.AreEqual(mongoDBDatabasesThroughputType, throughputSettings2.Type);
+            mongoDBDatabase = await CosmosDBManagementClient.MongoDBResources.GetMongoDBDatabaseAsync(resourceGroupName, databaseAccountName, databaseName);
+            Assert.IsNotNull(mongoDBDatabase);
+            VerifyMongoDBDatases(mongoDBDatabase2, mongoDBDatabase);
         }
 
         [TestCase, Order(2)]
         public async Task MongoDBDatabaseListTest()
         {
-            List<MongoDBDatabaseGetResults> mongoDBDatabases =
+            List<MongoDBDatabase> mongoDBDatabases =
                 await CosmosDBManagementClient.MongoDBResources.ListMongoDBDatabasesAsync(resourceGroupName, databaseAccountName).ToEnumerableAsync();
             Assert.IsNotNull(mongoDBDatabases);
             Assert.AreEqual(1, mongoDBDatabases.Count);
-            MongoDBDatabaseGetResults mongoDBDatabaseGetResults =
+            MongoDBDatabase mongoDBDatabase =
                 await CosmosDBManagementClient.MongoDBResources.GetMongoDBDatabaseAsync(resourceGroupName, databaseAccountName, databaseName);
-            Assert.IsNotNull(mongoDBDatabaseGetResults);
-            VerifyMongoDBDatases(mongoDBDatabaseGetResults, mongoDBDatabases[0]);
+            Assert.IsNotNull(mongoDBDatabase);
+            VerifyMongoDBDatases(mongoDBDatabase, mongoDBDatabases[0]);
         }
 
         [TestCase, Order(2)]
         public async Task MongoDBDatabaseUpdateThroughputTest()
         {
-            ThroughputSettingsGetResults throughputSettingsGetResults = (await WaitForCompletionAsync(
+            ThroughputSettingsData ThroughputSettingsData = (await WaitForCompletionAsync(
                 await CosmosDBManagementClient.MongoDBResources.StartUpdateMongoDBDatabaseThroughputAsync(
                     resourceGroupName,
                     databaseAccountName,
                     databaseName,
                     new ThroughputSettingsUpdateParameters(new ThroughputSettingsResource(sampleThroughput1, null, null, null))))).Value;
-            Assert.IsNotNull(throughputSettingsGetResults);
-            Assert.AreEqual(sampleThroughput1, throughputSettingsGetResults.Resource.Throughput);
+            Assert.IsNotNull(throughputSettings);
+            Assert.AreEqual(sampleThroughput1, throughputSettings.Resource.Throughput);
         }
 
         [TestCase, Order(3)]
         public async Task MongoDBDatabaseMigrateToAutoscaleTest()
         {
-            ThroughputSettingsGetResults throughputSettingsGetResults = await WaitForCompletionAsync(
+            ThroughputSettingsData ThroughputSettingsData = await WaitForCompletionAsync(
                 await CosmosDBManagementClient.MongoDBResources.StartMigrateMongoDBDatabaseToAutoscaleAsync(resourceGroupName, databaseAccountName, databaseName));
-            Assert.IsNotNull(throughputSettingsGetResults);
-            Assert.IsNotNull(throughputSettingsGetResults.Resource.AutoscaleSettings);
-            Assert.AreEqual(defaultMaxThroughput, throughputSettingsGetResults.Resource.AutoscaleSettings.MaxThroughput);
-            Assert.AreEqual(defaultThroughput, throughputSettingsGetResults.Resource.Throughput);
+            Assert.IsNotNull(throughputSettings);
+            Assert.IsNotNull(throughputSettings.Resource.AutoscaleSettings);
+            Assert.AreEqual(defaultMaxThroughput, throughputSettings.Resource.AutoscaleSettings.MaxThroughput);
+            Assert.AreEqual(defaultThroughput, throughputSettings.Resource.Throughput);
         }
 
         [TestCase, Order(4)]
         public async Task MongoDBDatabaseMigrateToManualThroughputTest()
         {
-            ThroughputSettingsGetResults throughputSettingsGetResults = await WaitForCompletionAsync(
+            ThroughputSettingsData ThroughputSettingsData = await WaitForCompletionAsync(
                 await CosmosDBManagementClient.MongoDBResources.StartMigrateMongoDBDatabaseToManualThroughputAsync(resourceGroupName, databaseAccountName, databaseName));
-            Assert.IsNotNull(throughputSettingsGetResults);
-            Assert.IsNull(throughputSettingsGetResults.Resource.AutoscaleSettings);
-            Assert.AreEqual(defaultMaxThroughput, throughputSettingsGetResults.Resource.Throughput);
+            Assert.IsNotNull(throughputSettings);
+            Assert.IsNull(throughputSettings.Resource.AutoscaleSettings);
+            Assert.AreEqual(defaultMaxThroughput, throughputSettings.Resource.Throughput);
         }
 
         [TestCase, Order(5)]
         public async Task MongoDBCollectionCreateAndUpdateTest()
         {
-            MongoDBCollectionGetResults mongoDBCollectionGetResults1 = await WaitForCompletionAsync(
+            MongoDBCollection mongoDBCollection1 = await WaitForCompletionAsync(
                 await CosmosDBManagementClient.MongoDBResources.StartCreateUpdateMongoDBCollectionAsync(
                     resourceGroupName,
                     databaseAccountName,
@@ -153,20 +155,20 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                     collectionName,
                     new MongoDBCollectionCreateUpdateParameters(
                         new MongoDBCollectionResource(collectionName), new CreateUpdateOptions(sampleThroughput1, new AutoscaleSettings()))));
-            Assert.IsNotNull(mongoDBCollectionGetResults1);
-            Assert.AreEqual(collectionName, mongoDBCollectionGetResults1.Resource.Id);
-            ThroughputSettingsGetResults throughputSettingsGetResults1 =
+            Assert.IsNotNull(mongoDBCollection1);
+            Assert.AreEqual(collectionName, mongoDBCollection1.Resource.Id);
+            ThroughputSettingsData throughputSettings1 =
                 await CosmosDBManagementClient.MongoDBResources.GetMongoDBCollectionThroughputAsync(resourceGroupName, databaseAccountName, databaseName, collectionName);
-            Assert.IsNotNull(throughputSettingsGetResults1);
-            Assert.AreEqual(sampleThroughput1, throughputSettingsGetResults1.Resource.Throughput);
-            Assert.AreEqual(mongoDBCollectionsThroughputType, throughputSettingsGetResults1.Type);
+            Assert.IsNotNull(throughputSettings1);
+            Assert.AreEqual(sampleThroughput1, throughputSettings1.Resource.Throughput);
+            Assert.AreEqual(mongoDBCollectionsThroughputType, throughputSettings1.Type);
 
-            MongoDBCollectionGetResults mongoDBCollectionGetResults =
+            MongoDBCollection mongoDBCollection =
                 await CosmosDBManagementClient.MongoDBResources.GetMongoDBCollectionAsync(resourceGroupName, databaseAccountName, databaseName, collectionName);
-            Assert.IsNotNull(mongoDBCollectionGetResults);
-            VerifyMongoDBCollections(mongoDBCollectionGetResults1, mongoDBCollectionGetResults);
+            Assert.IsNotNull(mongoDBCollection);
+            VerifyMongoDBCollections(mongoDBCollection1, mongoDBCollection);
 
-            MongoDBCollectionGetResults mongoDBCollectionGetResults2 = await WaitForCompletionAsync(
+            MongoDBCollection mongoDBCollection2 = await WaitForCompletionAsync(
                 await CosmosDBManagementClient.MongoDBResources.StartCreateUpdateMongoDBCollectionAsync(
                     resourceGroupName,
                     databaseAccountName,
@@ -174,37 +176,37 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                     collectionName,
                     new MongoDBCollectionCreateUpdateParameters(
                         new MongoDBCollectionResource(collectionName), new CreateUpdateOptions(sampleThroughput2, new AutoscaleSettings()))));
-            Assert.IsNotNull(mongoDBCollectionGetResults2);
-            Assert.AreEqual(collectionName, mongoDBCollectionGetResults2.Resource.Id);
-            ThroughputSettingsGetResults throughputSettingsGetResults2 =
+            Assert.IsNotNull(mongoDBCollection2);
+            Assert.AreEqual(collectionName, mongoDBCollection2.Resource.Id);
+            ThroughputSettingsData throughputSettings2 =
                 await CosmosDBManagementClient.MongoDBResources.GetMongoDBCollectionThroughputAsync(resourceGroupName, databaseAccountName, databaseName, collectionName);
-            Assert.IsNotNull(throughputSettingsGetResults2);
-            Assert.AreEqual(sampleThroughput2, throughputSettingsGetResults2.Resource.Throughput);
-            Assert.AreEqual(mongoDBCollectionsThroughputType, throughputSettingsGetResults2.Type);
+            Assert.IsNotNull(throughputSettings2);
+            Assert.AreEqual(sampleThroughput2, throughputSettings2.Resource.Throughput);
+            Assert.AreEqual(mongoDBCollectionsThroughputType, throughputSettings2.Type);
 
-            mongoDBCollectionGetResults =
+            mongoDBCollection =
                 await CosmosDBManagementClient.MongoDBResources.GetMongoDBCollectionAsync(resourceGroupName, databaseAccountName, databaseName, collectionName);
-            Assert.IsNotNull(mongoDBCollectionGetResults);
-            VerifyMongoDBCollections(mongoDBCollectionGetResults2, mongoDBCollectionGetResults);
+            Assert.IsNotNull(mongoDBCollection);
+            VerifyMongoDBCollections(mongoDBCollection2, mongoDBCollection);
         }
 
         [TestCase, Order(6)]
         public async Task MongoDBCollectionListTest()
         {
-            List<MongoDBCollectionGetResults> mongoDBCollections =
+            List<MongoDBCollection> mongoDBCollections =
                 await CosmosDBManagementClient.MongoDBResources.ListMongoDBCollectionsAsync(resourceGroupName, databaseAccountName, databaseName).ToEnumerableAsync();
             Assert.IsNotNull(mongoDBCollections);
             Assert.AreEqual(1, mongoDBCollections.Count);
-            MongoDBCollectionGetResults mongoDBCollectionGetResults =
+            MongoDBCollection mongoDBCollection =
                 await CosmosDBManagementClient.MongoDBResources.GetMongoDBCollectionAsync(resourceGroupName, databaseAccountName, databaseName, collectionName);
-            Assert.IsNotNull(mongoDBCollectionGetResults);
-            VerifyMongoDBCollections(mongoDBCollectionGetResults, mongoDBCollections[0]);
+            Assert.IsNotNull(mongoDBCollection);
+            VerifyMongoDBCollections(mongoDBCollection, mongoDBCollections[0]);
         }
 
         [TestCase, Order(6)]
         public async Task MongoDBCollectionUpdateThroughputTest()
         {
-            ThroughputSettingsGetResults throughputSettingsGetResults = (
+            ThroughputSettingsData ThroughputSettingsData = (
                 await WaitForCompletionAsync(
                     await CosmosDBManagementClient.MongoDBResources.StartUpdateMongoDBCollectionThroughputAsync(
                         resourceGroupName,
@@ -212,31 +214,31 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                         databaseName,
                         collectionName,
                         new ThroughputSettingsUpdateParameters(new ThroughputSettingsResource(sampleThroughput1, null, null, null))))).Value;
-            Assert.IsNotNull(throughputSettingsGetResults);
-            Assert.AreEqual(sampleThroughput1, throughputSettingsGetResults.Resource.Throughput);
+            Assert.IsNotNull(throughputSettings);
+            Assert.AreEqual(sampleThroughput1, throughputSettings.Resource.Throughput);
         }
 
         [TestCase, Order(7)]
         public async Task MongoDBCollectionMigrateToAutoscaleTest()
         {
-            ThroughputSettingsGetResults throughputSettingsGetResults = await WaitForCompletionAsync(
+            ThroughputSettingsData ThroughputSettingsData = await WaitForCompletionAsync(
                 await CosmosDBManagementClient.MongoDBResources.StartMigrateMongoDBCollectionToAutoscaleAsync(
                     resourceGroupName, databaseAccountName, databaseName, collectionName));
-            Assert.IsNotNull(throughputSettingsGetResults);
-            Assert.IsNotNull(throughputSettingsGetResults.Resource.AutoscaleSettings);
-            Assert.AreEqual(defaultMaxThroughput, throughputSettingsGetResults.Resource.AutoscaleSettings.MaxThroughput);
-            Assert.AreEqual(defaultThroughput, throughputSettingsGetResults.Resource.Throughput);
+            Assert.IsNotNull(throughputSettings);
+            Assert.IsNotNull(throughputSettings.Resource.AutoscaleSettings);
+            Assert.AreEqual(defaultMaxThroughput, throughputSettings.Resource.AutoscaleSettings.MaxThroughput);
+            Assert.AreEqual(defaultThroughput, throughputSettings.Resource.Throughput);
         }
 
         [TestCase, Order(8)]
         public async Task MongoDBCollectionMigrateToManualThroughputTest()
         {
-            ThroughputSettingsGetResults throughputSettingsGetResults = await WaitForCompletionAsync(
+            ThroughputSettingsData ThroughputSettingsData = await WaitForCompletionAsync(
                 await CosmosDBManagementClient.MongoDBResources.StartMigrateMongoDBCollectionToManualThroughputAsync(
                     resourceGroupName, databaseAccountName, databaseName, collectionName));
-            Assert.IsNotNull(throughputSettingsGetResults);
-            Assert.IsNull(throughputSettingsGetResults.Resource.AutoscaleSettings);
-            Assert.AreEqual(defaultMaxThroughput, throughputSettingsGetResults.Resource.Throughput);
+            Assert.IsNotNull(throughputSettings);
+            Assert.IsNull(throughputSettings.Resource.AutoscaleSettings);
+            Assert.AreEqual(defaultMaxThroughput, throughputSettings.Resource.Throughput);
         }
 
         [TestCase, Order(9)]
@@ -244,7 +246,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             await WaitForCompletionAsync(
                 await CosmosDBManagementClient.MongoDBResources.StartDeleteMongoDBCollectionAsync(resourceGroupName, databaseAccountName, databaseName, collectionName));
-            List<MongoDBCollectionGetResults> mongoDBCollections =
+            List<MongoDBCollection> mongoDBCollections =
                 await CosmosDBManagementClient.MongoDBResources.ListMongoDBCollectionsAsync(resourceGroupName, databaseAccountName, collectionName).ToEnumerableAsync();
             Assert.IsNotNull(mongoDBCollections);
             Assert.AreEqual(0, mongoDBCollections.Count);
@@ -255,7 +257,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             await WaitForCompletionAsync(
                 await CosmosDBManagementClient.MongoDBResources.StartDeleteMongoDBDatabaseAsync(resourceGroupName, databaseAccountName, databaseName));
-            List<MongoDBDatabaseGetResults> mongoDBDatabases =
+            List<MongoDBDatabase> mongoDBDatabases =
                 await CosmosDBManagementClient.MongoDBResources.ListMongoDBDatabasesAsync(resourceGroupName, databaseAccountName).ToEnumerableAsync();
             Assert.IsNotNull(mongoDBDatabases);
             Assert.AreEqual(0, mongoDBDatabases.Count);
@@ -276,7 +278,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(200, response.GetRawResponse().Status);
         }
 
-        private void VerifyMongoDBDatases(MongoDBDatabaseGetResults expectedValue, MongoDBDatabaseGetResults actualValue)
+        private void VerifyMongoDBDatases(MongoDBDatabase expectedValue, MongoDBDatabase actualValue)
         {
             Assert.AreEqual(expectedValue.Id, actualValue.Id);
             Assert.AreEqual(expectedValue.Name, actualValue.Name);
@@ -286,7 +288,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedValue.Resource.Etag, actualValue.Resource.Etag);
         }
 
-        private void VerifyMongoDBCollections(MongoDBCollectionGetResults expectedValue, MongoDBCollectionGetResults actualValue)
+        private void VerifyMongoDBCollections(MongoDBCollection expectedValue, MongoDBCollection actualValue)
         {
             Assert.AreEqual(expectedValue.Id, actualValue.Id);
             Assert.AreEqual(expectedValue.Name, actualValue.Name);
@@ -297,3 +299,4 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
     }
 }
+#endif

@@ -32,21 +32,17 @@
     // Spelling issues must be addressed before adding these back in.
     "sdk/agrifood/*/api/*.cs",
     "sdk/communication/*/api/*.cs",
-    "sdk/compute/*/api/*.cs",
     "sdk/cosmosdb/*/api/*.cs",
     "sdk/digitaltwins/*/api/*.cs",
     "sdk/dns/*/api/*.cs",
     "sdk/eventgrid/*/api/*.cs",
     "sdk/insights/*/api/*.cs",
-    "sdk/keyvault/*/api/*.cs",
     "sdk/machinelearningservices/*/api/*.cs",
     "sdk/modelsrepository/*/api/*.cs",
     "sdk/monitor/*/api/*.cs",
     "sdk/objectanchors/*/api/*.cs",
     "sdk/purview/*/api/*.cs",
     "sdk/remoterendering/*/api/*.cs",
-    "sdk/sqlmanagement/*/api/*.cs",
-    "sdk/synapse/*/api/*.cs",
     "sdk/videoanalyzer/*/api/*.cs"
   ],
   // cspell is not case sensitive
@@ -60,6 +56,7 @@
     "deserializable",
     "deserializes",
     "diagnoser",
+    "dotnetcli",
     "dont",
     "dtmf",
     "epsg",
@@ -98,11 +95,44 @@
       "words": ["warnaserror"]
     },
     {
+      "filename": "**/sdk/compute/**/*.cs",
+      "words": [
+        "reimage",
+        "skus",
+        "vmss",
+        "unattend",
+        "ssdlrs",
+        "vcpus",
+        "vmos",
+        "uefi",
+        "vhds",
+        "swappable",
+        "ssdzrs",
+        "dscp"
+      ]
+    },
+    {
       "filename": "**/sdk/cognitivelanguage/**/*",
       "words": [
         "apim",
         "nigiri"
       ]
+    },
+    {
+      "filename": "**/sdk/connectedvmware/**/*",
+      "words": [
+        "Ctlr",
+        "Lsilogic",
+        "Lsilogicsas",
+        "Pcnet",
+        "Pmem",
+        "Pvscsi",
+        "Sesparse"
+      ]
+    },
+    {
+      "filename": "**/sdk/deviceupdate/**/*.cs",
+      "words": ["Fqdns"]
     },
     {
       "filename": "**/sdk/formrecognizer/**/*.cs",
@@ -111,29 +141,34 @@
     {
       "filename": "**/sdk/network/**/*.cs",
       "words": [
+        "Azfw",
+        "Conditon",
         "Ddos",
         "ddos",
+        "Dnat",
         "Dscp",
         "dscp",
-        "Mbps",
-        "Snat",
-        "Nics",
-        "Fqdns",
-        "Unprepare",
-        "Skus",
-        "WAFV",
         "Eapmscha",
         "Eaptls",
-        "TLSDHEDSS", 
-        "TLSDHERSA",
-        "Dnat",
-        "Azfw",
-        "Vxlan",
+        "Fqdns",
+        "Gcmaes",
         "Ipconfiguration",
+        "Mbps",
+        "Nics",
         "Owasp",
-        "Conditon",
         "Pfsmm",
-        "Sstp"
+        "Snat",
+        "Skus",
+        "Sstp",
+        "TLSDHEDSS",
+        "TLSDHERSA",
+        "Unprepare",
+        "Vmss",
+        "vmssip",
+        "Vnets",
+        "Vxlan",
+        "WAFV",
+        "Wans"
       ]
     },
     {
@@ -143,7 +178,15 @@
         "getsas",
         "listsas",
         "oaep",
-        "setsas"
+        "setsas",
+        "mhsm",
+        "mhsmip"
+      ]
+    },
+    {
+      "filename": "**/sdk/webpubsub/**/*.cs",
+      "words": [
+        "skus"
       ]
     },
     {
@@ -151,10 +194,24 @@
       "words": ["Puid"]
     },
     {
+      "filename": "**/sdk/sqlmanagement/**/*.cs",
+      "words": [
+        "Droppeded",
+        "CIAS",
+        "Vcores",
+        "Unrestorable",
+        "Stdev",
+        "Ntext",
+        "Nvarchar",
+        "Stdev"
+      ]
+    },
+    {
       "filename": "**/sdk/search/**/*.cs",
       "words": [
         "Adls",
         "Bangla",
+        "Beider",
         "Bokmaal",
         "Cyrl",
         "Decompounder",
@@ -170,7 +227,8 @@
         "Rslp",
         "Soundex",
         "Sorani",
-        "Unprocessable"
+        "Unprocessable",
+        "Beider"
       ]
     },
     {
@@ -189,6 +247,41 @@
       ]
     },
     {
+      "filename": "**/sdk/synapse/**/*.cs",
+      "words": [
+        "adla",
+        "adls",
+        "byoa",
+        "distcp",
+        "eloqua",
+        "exfiltration",
+        "fqdns",
+        "hana",
+        "hcatalog",
+        "hdfs",
+        "informix",
+        "magento",
+        "netezza",
+        "oozie",
+        "responsys",
+        "sasl",
+        "ssis",
+        "ssisdb",
+        "sybase",
+        "sybase",
+        "teradata",
+        "usql",
+        "vertica",
+        "xero"
+      ]
+    },
+    {
+      "filename": "**/sdk/synapse/**/*.md",
+      "words": [
+        "abfss"
+      ]
+    },
+    {
       "filename": "**/sdk/textanalytics/**/*.cs",
       "words": [
         "Brcpf",
@@ -197,6 +290,21 @@
         "Eugps",
         "Plregon",
         "Usuk"
+      ]
+    },
+    {
+      "filename": "**/sdk/websites/**/*.cs",
+      "words": [
+        "Ipssl",
+        "Skus",
+        "Kube",
+        "Metadatas",
+        "Unparked",
+        "Proto",
+        "Zilla",
+        "Guage",
+        "Plex",
+        "Vstsrm"
       ]
     }
   ],

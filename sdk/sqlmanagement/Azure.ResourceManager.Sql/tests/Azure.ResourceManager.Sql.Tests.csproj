@@ -1,24 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <UseNewMgmtFramework>false</UseNewMgmtFramework>
-    <IsMgmtSubLibrary>false</IsMgmtSubLibrary>
-  </PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="ServerCrudScenarioTests.cs" />
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Sql.csproj" />
   </ItemGroup>
+  
   <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager.Resources"/>
-    <PackageReference Include="Azure.ResourceManager.Network"/>
-    <PackageReference Include="Azure.ResourceManager.Storage"/>
+    <PackageReference Include="Azure.Identity" />
+    <PackageReference Include="Azure.ResourceManager.Network" />
     <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="$(MgmtAutorestVersion)" PrivateAssets="All" />
   </ItemGroup>
+  
   <ItemGroup>
-    <Folder Include="Utilities\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ServerCrudScenarioTests.cs" />
+    <Folder Include="SessionRecords\ServerTrustGroupTests\" />
   </ItemGroup>
 </Project>

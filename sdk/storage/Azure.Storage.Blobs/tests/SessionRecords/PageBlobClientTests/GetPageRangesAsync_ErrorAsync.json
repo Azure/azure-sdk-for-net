@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "cef6bfe2-ac28-0ffb-e1e8-b8eb59d2d278",
         "x-ms-date": "Wed, 17 Feb 2021 19:03:16 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "cef6bfe2-ac28-0ffb-e1e8-b8eb59d2d278",
         "x-ms-request-id": "25f380ad-401e-0047-525f-05b199000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -52,7 +52,7 @@
         "x-ms-client-request-id": "454bca72-aa58-e46a-48ad-013c8ebb09dc",
         "x-ms-date": "Wed, 17 Feb 2021 19:03:16 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -68,7 +68,7 @@
         "x-ms-client-request-id": "454bca72-aa58-e46a-48ad-013c8ebb09dc",
         "x-ms-request-id": "25f380da-401e-0047-7b5f-05b199000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "x-ms-version-id": "2021-02-17T19:03:16.4139959Z"
       },
       "ResponseBody": []
@@ -88,7 +88,7 @@
         "x-ms-date": "Wed, 17 Feb 2021 19:03:16 GMT",
         "x-ms-range": "bytes=5120-9215",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 416,
@@ -103,7 +103,7 @@
         "x-ms-client-request-id": "3bcdd2e0-84ba-60b1-46f3-1f378cb95234",
         "x-ms-error-code": "InvalidRange",
         "x-ms-request-id": "25f3810e-401e-0047-2b5f-05b199000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>InvalidRange</Code><Message>The range specified is invalid for the current size of the resource.\n",
@@ -125,7 +125,7 @@
         "x-ms-client-request-id": "bc5c0804-ceee-9922-fe80-61064b5b1365",
         "x-ms-date": "Wed, 17 Feb 2021 19:03:16 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -138,7 +138,7 @@
         ],
         "x-ms-client-request-id": "bc5c0804-ceee-9922-fe80-61064b5b1365",
         "x-ms-request-id": "25f38138-401e-0047-535f-05b199000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

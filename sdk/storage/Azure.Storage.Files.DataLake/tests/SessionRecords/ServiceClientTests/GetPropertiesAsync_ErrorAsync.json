@@ -12,7 +12,7 @@
         ],
         "x-ms-client-request-id": "3f6432c0-1ff3-598a-96f5-55b401726b29",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 400,

@@ -47,7 +47,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             dataFeed.Schema.MetricColumns.Add(new DataFeedMetric("cost"));
             dataFeed.Schema.MetricColumns.Add(new DataFeedMetric("revenue"));
             dataFeed.Schema.DimensionColumns.Add(new DataFeedDimension("category"));
-            dataFeed.Schema.DimensionColumns.Add(new DataFeedDimension("city"));
+            dataFeed.Schema.DimensionColumns.Add(new DataFeedDimension("region"));
 
             dataFeed.IngestionSettings = new DataFeedIngestionSettings(DateTimeOffset.Parse("2020-01-01T00:00:00Z"));
 

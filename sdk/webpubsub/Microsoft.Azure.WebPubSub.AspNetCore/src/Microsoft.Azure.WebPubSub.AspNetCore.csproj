@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Azure SDK client library for the WebPubSub service</Description>
+    <AssemblyTitle>Azure SDK for WebPubSub</AssemblyTitle>
+    <Version>1.0.0-beta.3</Version>
+    <PackageTags>Azure, WebPubSub</PackageTags>
+    <RequiredTargetFrameworks>netcoreapp3.1</RequiredTargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <NoWarn>$(NoWarn);419;AZC0001</NoWarn>
+    <GenerateAPIListing>true</GenerateAPIListing>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="System.Text.Encodings.Web" />
+    <PackageReference Include="System.Memory.Data" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Microsoft.Azure.WebPubSub.Common.csproj" />
+	<Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\ConnectionStatesConverter.cs" LinkBase="Shared" />
+  </ItemGroup>
+
+</Project>

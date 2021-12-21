@@ -18,7 +18,7 @@ namespace Azure.Core.Tests
 
         protected async Task<Response> ExecuteRequest(Request request, HttpPipelineTransport transport, CancellationToken cancellationToken = default)
         {
-            var message = new HttpMessage(request, new ResponseClassifier());
+            var message = new HttpMessage(request, ResponseClassifier.Shared);
             message.CancellationToken = cancellationToken;
             if (_isAsync)
             {
@@ -33,7 +33,7 @@ namespace Azure.Core.Tests
 
         protected async Task<Response> ExecuteRequest(Request request, HttpPipeline pipeline, CancellationToken cancellationToken = default)
         {
-            var message = new HttpMessage(request, new ResponseClassifier());
+            var message = new HttpMessage(request, ResponseClassifier.Shared);
             return await ExecuteRequest(message, pipeline, cancellationToken);
         }
 

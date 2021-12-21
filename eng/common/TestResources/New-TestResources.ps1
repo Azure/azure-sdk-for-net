@@ -76,19 +76,37 @@ param (
     [switch] $Force,
 
     [Parameter()]
-    [switch] $OutFile
+    [switch] $OutFile,
+
+    [Parameter()]
+    [switch] $SuppressVsoCommands = ($null -eq $env:SYSTEM_TEAMPROJECTID)
 )
+
+. $PSScriptRoot/SubConfig-Helpers.ps1
 
 # By default stop for any error.
 if (!$PSBoundParameters.ContainsKey('ErrorAction')) {
     $ErrorActionPreference = 'Stop'
 }
 
-function Log($Message) {
+function Log($Message)
+{
     Write-Host ('{0} - {1}' -f [DateTime]::Now.ToLongTimeString(), $Message)
 }
 
-function Retry([scriptblock] $Action, [int] $Attempts = 5) {
+# vso commands are specially formatted log lines that are parsed by Azure Pipelines
+# to perform additional actions, most commonly marking values as secrets.
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/scripts/logging-commands
+function LogVsoCommand([string]$message)
+{
+    if (!$CI -or $SuppressVsoCommands) {
+        return
+    }
+    Write-Host $message
+}
+
+function Retry([scriptblock] $Action, [int] $Attempts = 5)
+{
     $attempt = 0
     $sleep = 5
 
@@ -109,9 +127,22 @@ function Retry([scriptblock] $Action, [int] $Attempts = 5) {
     }
 }
 
-function MergeHashes([hashtable] $source, [psvariable] $dest) {
+function LoadCloudConfig([string] $env)
+{
+    $configPath = "$PSScriptRoot/clouds/$env.json"
+    if (!(Test-Path $configPath)) {
+        Write-Warning "Could not find cloud configuration for environment '$env'"
+        return @{}
+    }
+
+    $config = Get-Content $configPath | ConvertFrom-Json -AsHashtable
+    return $config
+}
+
+function MergeHashes([hashtable] $source, [psvariable] $dest)
+{
     foreach ($key in $source.Keys) {
-        if ($dest.Value.ContainsKey($key) -and $dest.Value[$key] -ne $source[$key]) {
+        if ($dest.Value.Contains($key) -and $dest.Value[$key] -ne $source[$key]) {
             Write-Warning ("Overwriting '$($dest.Name).$($key)' with value '$($dest.Value[$key])' " +
                           "to new value '$($source[$key])'")
         }
@@ -119,7 +150,8 @@ function MergeHashes([hashtable] $source, [psvariable] $dest) {
     }
 }
 
-function BuildBicepFile([System.IO.FileSystemInfo] $file) {
+function BuildBicepFile([System.IO.FileSystemInfo] $file)
+{
     if (!(Get-Command bicep -ErrorAction Ignore)) {
         Write-Error "A bicep file was found at '$($file.FullName)' but the Azure Bicep CLI is not installed. See https://aka.ms/install-bicep-pwsh"
         throw
@@ -137,6 +169,95 @@ function BuildBicepFile([System.IO.FileSystemInfo] $file) {
     }
 
     return $templateFilePath
+}
+
+function BuildDeploymentOutputs([string]$serviceDirectoryPrefix, [object]$azContext, [object]$deployment) {
+    # Add default values
+    $deploymentOutputs = [Ordered]@{
+        "${serviceDirectoryPrefix}CLIENT_ID" = $TestApplicationId;
+        "${serviceDirectoryPrefix}CLIENT_SECRET" = $TestApplicationSecret;
+        "${serviceDirectoryPrefix}TENANT_ID" = $azContext.Tenant.Id;
+        "${serviceDirectoryPrefix}SUBSCRIPTION_ID" =  $azContext.Subscription.Id;
+        "${serviceDirectoryPrefix}RESOURCE_GROUP" = $resourceGroup.ResourceGroupName;
+        "${serviceDirectoryPrefix}LOCATION" = $resourceGroup.Location;
+        "${serviceDirectoryPrefix}ENVIRONMENT" = $azContext.Environment.Name;
+        "${serviceDirectoryPrefix}AZURE_AUTHORITY_HOST" = $azContext.Environment.ActiveDirectoryAuthority;
+        "${serviceDirectoryPrefix}RESOURCE_MANAGER_URL" = $azContext.Environment.ResourceManagerUrl;
+        "${serviceDirectoryPrefix}SERVICE_MANAGEMENT_URL" = $azContext.Environment.ServiceManagementUrl;
+    }
+
+    MergeHashes $EnvironmentVariables $(Get-Variable deploymentOutputs)
+
+    foreach ($key in $deployment.Outputs.Keys) {
+        $variable = $deployment.Outputs[$key]
+
+        # Work around bug that makes the first few characters of environment variables be lowercase.
+        $key = $key.ToUpperInvariant()
+
+        if ($variable.Type -eq 'String' -or $variable.Type -eq 'SecureString') {
+            $deploymentOutputs[$key] = $variable.Value
+        }
+    }
+
+    return $deploymentOutputs
+}
+
+function SetDeploymentOutputs([string]$serviceName, [object]$azContext, [object]$deployment, [object]$templateFile) {
+    $serviceDirectoryPrefix = $serviceName.ToUpperInvariant() + "_"
+    $deploymentOutputs = BuildDeploymentOutputs $serviceDirectoryPrefix $azContext $deployment
+
+    if ($OutFile) {
+        if (!$IsWindows) {
+            Write-Host 'File option is supported only on Windows'
+        }
+
+        $outputFile = "$($templateFile.originalFilePath).env"
+
+        $environmentText = $deploymentOutputs | ConvertTo-Json;
+        $bytes = [System.Text.Encoding]::UTF8.GetBytes($environmentText)
+        $protectedBytes = [Security.Cryptography.ProtectedData]::Protect($bytes, $null, [Security.Cryptography.DataProtectionScope]::CurrentUser)
+
+        Set-Content $outputFile -Value $protectedBytes -AsByteStream -Force
+
+        Write-Host "Test environment settings`n $environmentText`nstored into encrypted $outputFile"
+    } else {
+        if (!$CI) {
+            # Write an extra new line to isolate the environment variables for easy reading.
+            Log "Persist the following environment variables based on your detected shell ($shell):`n"
+        }
+
+        # Marking values as secret by allowed keys below is not sufficient, as there may be outputs set in the ARM/bicep
+        # file that re-mark those values as secret (since all user-provided deployment outputs are treated as secret by default).
+        # This variable supports a second check on not marking previously allowed keys/values as secret.
+        $notSecretValues = @()
+        foreach ($key in $deploymentOutputs.Keys) {
+            $value = $deploymentOutputs[$key]
+            $EnvironmentVariables[$key] = $value
+
+            if ($CI) {
+                if (ShouldMarkValueAsSecret $serviceDirectoryPrefix $key $value $notSecretValues) {
+                    # Treat all ARM template output variables as secrets since "SecureString" variables do not set values.
+                    # In order to mask secrets but set environment variables for any given ARM template, we set variables twice as shown below.
+                    LogVsoCommand "##vso[task.setvariable variable=_$key;issecret=true;]$value"
+                    Write-Host "Setting variable as secret '$key'"
+                } else {
+                    Write-Host "Setting variable '$key': $value"
+                    $notSecretValues += $value
+                }
+                LogVsoCommand "##vso[task.setvariable variable=$key;]$value"
+            } else {
+                Write-Host ($shellExportFormat -f $key, $value)
+            }
+        }
+
+        if ($key) {
+            # Isolate the environment variables for easy reading.
+            Write-Host "`n"
+            $key = $null
+        }
+    }
+
+    return $deploymentOutputs
 }
 
 # Support actions to invoke on exit.
@@ -334,7 +455,7 @@ try {
     $serviceName = if (Split-Path $ServiceDirectory) {
         Split-Path -Leaf $ServiceDirectory
     } else {
-        $ServiceDirectory
+        $ServiceDirectory.Trim('/')
     }
 
     $ResourceGroupName = if ($ResourceGroupName) {
@@ -367,7 +488,7 @@ try {
 
         # Set the resource group name variable.
         Write-Host "Setting variable 'AZURE_RESOURCEGROUP_NAME': $ResourceGroupName"
-        Write-Host "##vso[task.setvariable variable=AZURE_RESOURCEGROUP_NAME;]$ResourceGroupName"
+        LogVsoCommand "##vso[task.setvariable variable=AZURE_RESOURCEGROUP_NAME;]$ResourceGroupName"
         if ($EnvironmentVariables.ContainsKey('AZURE_RESOURCEGROUP_NAME') -and `
             $EnvironmentVariables['AZURE_RESOURCEGROUP_NAME'] -ne $ResourceGroupName)
         {
@@ -459,14 +580,18 @@ try {
     $PSBoundParameters['TestApplicationOid'] = $TestApplicationOid
     $PSBoundParameters['TestApplicationSecret'] = $TestApplicationSecret
 
-    # Grant the test service principal ownership over the resource group. This may fail if the provisioner is a
-    # service principal without permissions to grant RBAC roles to other service principals. That should not be
-    # considered a critical failure, as the test application may have subscription-level permissions and not require
-    # the explicit grant.
-    #
-    # Ignore this check if $AzureTestPrincipal is specified as role assignment will already have been attempted on a
-    # previous run, and these error messages can be misleading for local runs.
-    if (!$resourceGroupRoleAssigned -and !$AzureTestPrincipal) {
+    # If the role hasn't been explicitly assigned to the resource group and a cached service principal is in use,
+    # query to see if the grant is needed.
+    if (!$resourceGroupRoleAssigned -and $AzureTestPrincipal) {
+        $roleAssignment = Get-AzRoleAssignment -ObjectId $AzureTestPrincipal.Id -RoleDefinitionName 'Owner' -ResourceGroupName "$ResourceGroupName" -ErrorAction SilentlyContinue
+        $resourceGroupRoleAssigned = ($roleAssignment.RoleDefinitionName -eq 'Owner')
+    }
+
+   # If needed, grant the test service principal ownership over the resource group. This may fail if the provisioner
+   # is a service principal without permissions to grant RBAC roles to other service principals. That should not be
+   # considered a critical failure, as the test application may have subscription-level permissions and not require
+   # the explicit grant.
+   if (!$resourceGroupRoleAssigned) {
         Log "Attempting to assigning the 'Owner' role for '$ResourceGroupName' to the Test Application '$TestApplicationId'"
         $principalOwnerAssignment = New-AzRoleAssignment -RoleDefinitionName "Owner" -ApplicationId "$TestApplicationId" -ResourceGroupName "$ResourceGroupName" -ErrorAction SilentlyContinue
 
@@ -492,6 +617,8 @@ try {
         $templateParameters.Add('testApplicationSecret', $TestApplicationSecret)
     }
 
+    $defaultCloudParameters = LoadCloudConfig $Environment
+    MergeHashes $defaultCloudParameters $(Get-Variable templateParameters)
     MergeHashes $ArmTemplateParameters $(Get-Variable templateParameters)
     MergeHashes $AdditionalParameters $(Get-Variable templateParameters)
 
@@ -562,78 +689,7 @@ try {
             Write-Verbose "Successfully deployed template '$($templateFile.jsonFilePath)' to resource group '$($resourceGroup.ResourceGroupName)'"
         }
 
-        $serviceDirectoryPrefix = $serviceName.ToUpperInvariant() + "_"
-
-        # Add default values
-        $deploymentOutputs = @{
-            "$($serviceDirectoryPrefix)CLIENT_ID" = $TestApplicationId;
-            "$($serviceDirectoryPrefix)CLIENT_SECRET" = $TestApplicationSecret;
-            "$($serviceDirectoryPrefix)TENANT_ID" = $context.Tenant.Id;
-            "$($serviceDirectoryPrefix)SUBSCRIPTION_ID" =  $context.Subscription.Id;
-            "$($serviceDirectoryPrefix)RESOURCE_GROUP" = $resourceGroup.ResourceGroupName;
-            "$($serviceDirectoryPrefix)LOCATION" = $resourceGroup.Location;
-            "$($serviceDirectoryPrefix)ENVIRONMENT" = $context.Environment.Name;
-            "$($serviceDirectoryPrefix)AZURE_AUTHORITY_HOST" = $context.Environment.ActiveDirectoryAuthority;
-            "$($serviceDirectoryPrefix)RESOURCE_MANAGER_URL" = $context.Environment.ResourceManagerUrl;
-            "$($serviceDirectoryPrefix)SERVICE_MANAGEMENT_URL" = $context.Environment.ServiceManagementUrl;
-            "$($serviceDirectoryPrefix)STORAGE_ENDPOINT_SUFFIX" = $context.Environment.StorageEndpointSuffix;
-        }
-
-        MergeHashes $EnvironmentVariables $(Get-Variable deploymentOutputs)
-
-        foreach ($key in $deployment.Outputs.Keys) {
-            $variable = $deployment.Outputs[$key]
-
-            # Work around bug that makes the first few characters of environment variables be lowercase.
-            $key = $key.ToUpperInvariant()
-
-            if ($variable.Type -eq 'String' -or $variable.Type -eq 'SecureString') {
-                $deploymentOutputs[$key] = $variable.Value
-            }
-        }
-
-        if ($OutFile) {
-            if (!$IsWindows) {
-                Write-Host 'File option is supported only on Windows'
-            }
-
-            $outputFile = "$($templateFile.originalFilePath).env"
-
-            $environmentText = $deploymentOutputs | ConvertTo-Json;
-            $bytes = ([System.Text.Encoding]::UTF8).GetBytes($environmentText)
-            $protectedBytes = [Security.Cryptography.ProtectedData]::Protect($bytes, $null, [Security.Cryptography.DataProtectionScope]::CurrentUser)
-
-            Set-Content $outputFile -Value $protectedBytes -AsByteStream -Force
-
-            Write-Host "Test environment settings`n $environmentText`nstored into encrypted $outputFile"
-        } else {
-
-            if (!$CI) {
-                # Write an extra new line to isolate the environment variables for easy reading.
-                Log "Persist the following environment variables based on your detected shell ($shell):`n"
-            }
-
-            foreach ($key in $deploymentOutputs.Keys) {
-                $value = $deploymentOutputs[$key]
-                $EnvironmentVariables[$key] = $value
-
-                if ($CI) {
-                    # Treat all ARM template output variables as secrets since "SecureString" variables do not set values.
-                    # In order to mask secrets but set environment variables for any given ARM template, we set variables twice as shown below.
-                    Write-Host "Setting variable '$key': ***"
-                    Write-Host "##vso[task.setvariable variable=_$key;issecret=true;]$($value)"
-                    Write-Host "##vso[task.setvariable variable=$key;]$($value)"
-                } else {
-                    Write-Host ($shellExportFormat -f $key, $value)
-                }
-            }
-
-            if ($key) {
-                # Isolate the environment variables for easy reading.
-                Write-Host "`n"
-                $key = $null
-            }
-        }
+        $deploymentOutputs = SetDeploymentOutputs $serviceName $context $deployment $templateFile
 
         $postDeploymentScript = $templateFile.originalFilePath | Split-Path | Join-Path -ChildPath 'test-resources-post.ps1'
         if (Test-Path $postDeploymentScript) {
@@ -827,6 +883,11 @@ service directory.
 The environment file will be named for the test resources template that it was
 generated for. For ARM templates, it will be test-resources.json.env. For
 Bicep templates, test-resources.bicep.env.
+
+.PARAMETER SuppressVsoCommands
+By default, the -CI parameter will print out secrets to logs with Azure Pipelines log
+commands that cause them to be redacted. For CI environments that don't support this (like 
+stress test clusters), this flag can be set to $false to avoid printing out these secrets to the logs.
 
 .EXAMPLE
 Connect-AzAccount -Subscription 'REPLACE_WITH_SUBSCRIPTION_ID'

@@ -2,13 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Data.SchemaRegistry.Models;
 
 namespace Azure.Data.SchemaRegistry
 {
@@ -69,18 +67,18 @@ namespace Azure.Data.SchemaRegistry
         /// Registers a schema with the SchemaRegistry service.
         /// </summary>
         /// <param name="groupName">The name of the SchemaRegistry group.</param>
-        /// <param name="name">The name of the schema.</param>
+        /// <param name="schemaName">The name of the schema.</param>
         /// <param name="schemaDefinition">The string representation of the schema's content.</param>
         /// <param name="format">The serialization format of the schema.</param>
         /// <param name="cancellationToken">The cancellation token for the operation.</param>
         /// <returns>The properties of the schema.</returns>
         public virtual async Task<Response<SchemaProperties>> RegisterSchemaAsync(
             string groupName,
-            string name,
+            string schemaName,
             string schemaDefinition,
             SchemaFormat format,
             CancellationToken cancellationToken = default) =>
-            await RegisterSchemaInternalAsync(groupName, name, schemaDefinition, format, true, cancellationToken)
+            await RegisterSchemaInternalAsync(groupName, schemaName, schemaDefinition, format, true, cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
@@ -89,23 +87,23 @@ namespace Azure.Data.SchemaRegistry
         /// If the schema did previous exist in the Schema Registry instance, a new version of the schema is added to the instance and assigned a new schema ID.
         /// </summary>
         /// <param name="groupName">The name of the SchemaRegistry group.</param>
-        /// <param name="name">The name of the schema.</param>
+        /// <param name="schemaName">The name of the schema.</param>
         /// <param name="schemaDefinition">The string representation of the schema's content.</param>
         /// <param name="format">The serialization format of the schema.</param>
         /// <param name="cancellationToken">The cancellation token for the operation.</param>
         /// <returns>The properties of the schema.</returns>
         public virtual Response<SchemaProperties> RegisterSchema(
             string groupName,
-            string name,
+            string schemaName,
             string schemaDefinition,
             SchemaFormat format,
             CancellationToken cancellationToken = default) =>
-                RegisterSchemaInternalAsync(groupName, name, schemaDefinition, format, false, cancellationToken)
+                RegisterSchemaInternalAsync(groupName, schemaName, schemaDefinition, format, false, cancellationToken)
                     .EnsureCompleted();
 
         private async Task<Response<SchemaProperties>> RegisterSchemaInternalAsync(
             string groupName,
-            string name,
+            string schemaName,
             string schemaDefinition,
             SchemaFormat format,
             bool async,
@@ -115,17 +113,17 @@ namespace Azure.Data.SchemaRegistry
             scope.Start();
             try
             {
-                ResponseWithHeaders<SchemaId, SchemaRegisterHeaders> response;
+                ResponseWithHeaders<SchemaRegisterHeaders> response;
                 if (async)
                 {
-                    response = await RestClient.RegisterAsync(groupName, name, format, schemaDefinition, cancellationToken).ConfigureAwait(false);
+                    response = await RestClient.RegisterAsync(groupName, schemaName, format.ContentType, new BinaryData(schemaDefinition).ToStream(), cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = RestClient.Register(groupName, name, format, schemaDefinition, cancellationToken);
+                    response = RestClient.Register(groupName, schemaName,format.ContentType, new BinaryData(schemaDefinition).ToStream(), cancellationToken);
                 }
 
-                var properties = new SchemaProperties(response.Headers.Location, response.Headers.SerializationType, response.Headers.SchemaId, response.Headers.SchemaVersion);
+                var properties = new SchemaProperties(format, response.Headers.SchemaId);
 
                 return Response.FromValue(properties, response);
             }
@@ -140,7 +138,7 @@ namespace Azure.Data.SchemaRegistry
         /// Gets the schema ID associated with the schema from the SchemaRegistry service.
         /// </summary>
         /// <param name="groupName">The name of the SchemaRegistry group.</param>
-        /// <param name="name">The name of the schema.</param>
+        /// <param name="schemaName">The name of the schema.</param>
         /// <param name="schemaDefinition">The string representation of the schema's content.</param>
         /// <param name="format">The serialization format of the schema.</param>
         /// <param name="cancellationToken">The cancellation token for the operation.</param>
@@ -148,19 +146,19 @@ namespace Azure.Data.SchemaRegistry
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Response<SchemaProperties>> GetSchemaPropertiesAsync(
             string groupName,
-            string name,
+            string schemaName,
             string schemaDefinition,
             SchemaFormat format,
             CancellationToken cancellationToken = default) =>
 #pragma warning restore AZC0015 // Unexpected client method return type.
-                await GetSchemaPropertiesInternalAsync(groupName, name, schemaDefinition, format, true, cancellationToken)
+                await GetSchemaPropertiesInternalAsync(groupName, schemaName, schemaDefinition, format, true, cancellationToken)
                     .ConfigureAwait(false);
 
         /// <summary>
         /// Gets the schema ID associated with the schema from the SchemaRegistry service.
         /// </summary>
         /// <param name="groupName">The name of the SchemaRegistry group.</param>
-        /// <param name="name">The name of the schema.</param>
+        /// <param name="schemaName">The name of the schema.</param>
         /// <param name="schemaDefinition">The string representation of the schema's content.</param>
         /// <param name="format">The serialization format of the schema.</param>
         /// <param name="cancellationToken">The cancellation token for the operation.</param>
@@ -168,16 +166,16 @@ namespace Azure.Data.SchemaRegistry
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Response<SchemaProperties> GetSchemaProperties(
             string groupName,
-            string name,
+            string schemaName,
             string schemaDefinition,
             SchemaFormat format,
             CancellationToken cancellationToken = default) =>
 #pragma warning restore AZC0015 // Unexpected client method return type.
-                GetSchemaPropertiesInternalAsync(groupName, name, schemaDefinition, format, false, cancellationToken).EnsureCompleted();
+                GetSchemaPropertiesInternalAsync(groupName, schemaName, schemaDefinition, format, false, cancellationToken).EnsureCompleted();
 
         private async Task<Response<SchemaProperties>> GetSchemaPropertiesInternalAsync(
             string groupName,
-            string name,
+            string schemaName,
             string schemaDefinition,
             SchemaFormat format,
             bool async,
@@ -187,17 +185,17 @@ namespace Azure.Data.SchemaRegistry
             scope.Start();
             try
             {
-                ResponseWithHeaders<SchemaId, SchemaQueryIdByContentHeaders> response;
+                ResponseWithHeaders<SchemaQueryIdByContentHeaders> response;
                 if (async)
                 {
-                    response = await RestClient.QueryIdByContentAsync(groupName, name, format, schemaDefinition, cancellationToken).ConfigureAwait(false);
+                    response = await RestClient.QueryIdByContentAsync(groupName, schemaName, format.ContentType, new BinaryData(schemaDefinition).ToStream(), cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = RestClient.QueryIdByContent(groupName, name, format, schemaDefinition, cancellationToken);
+                    response = RestClient.QueryIdByContent(groupName, schemaName, format.ContentType, new BinaryData(schemaDefinition).ToStream(), cancellationToken);
                 }
 
-                var properties = new SchemaProperties(response.Headers.Location, response.Headers.SerializationType, response.Headers.SchemaId, response.Headers.SchemaVersion);
+                var properties = new SchemaProperties(format, response.Headers.SchemaId);
 
                 return Response.FromValue(properties, response);
             }
@@ -236,7 +234,7 @@ namespace Azure.Data.SchemaRegistry
             scope.Start();
             try
             {
-                ResponseWithHeaders<string, SchemaGetByIdHeaders> response;
+                ResponseWithHeaders<Stream, SchemaGetByIdHeaders> response;
                 if (async)
                 {
                     response = await RestClient.GetByIdAsync(schemaId, cancellationToken).ConfigureAwait(false);
@@ -246,8 +244,9 @@ namespace Azure.Data.SchemaRegistry
                     response = RestClient.GetById(schemaId, cancellationToken);
                 }
 
-                var properties = new SchemaProperties(response.Headers.Location, response.Headers.SerializationType, response.Headers.SchemaId, response.Headers.SchemaVersion);
-                var schema = new SchemaRegistrySchema(properties, response.Value);
+                SchemaFormat format = new SchemaFormat(response.Headers.ContentType.Split('=')[1]);
+                var properties = new SchemaProperties(format, response.Headers.SchemaId);
+                var schema = new SchemaRegistrySchema(properties, BinaryData.FromStream(response.Value).ToString());
 
                 return Response.FromValue(schema, response);
             }

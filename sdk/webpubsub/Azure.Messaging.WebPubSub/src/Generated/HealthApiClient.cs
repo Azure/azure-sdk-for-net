@@ -18,11 +18,11 @@ namespace Azure.Messaging.WebPubSub
     {
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly Uri _endpoint;
+        private readonly string _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of HealthApiClient for mocking. </summary>
         protected HealthApiClient()
@@ -30,32 +30,35 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary> Initializes a new instance of HealthApiClient. </summary>
-        /// <param name="endpoint"> server parameter. </param>
+        /// <param name="endpoint"> HTTP or HTTPS endpoint for the Web PubSub service instance. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public HealthApiClient(Uri endpoint = null, WebPubSubServiceClientOptions options = null)
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public HealthApiClient(string endpoint, WebPubSubServiceClientOptions options = null)
         {
-            endpoint ??= new Uri("");
-
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
             options ??= new WebPubSubServiceClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
 
         /// <summary> Get service health status. </summary>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetServiceStatusAsync(RequestOptions options = null)
+        public virtual async Task<Response> GetServiceStatusAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("HealthApiClient.GetServiceStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetServiceStatusRequest();
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                using HttpMessage message = CreateGetServiceStatusRequest(context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -65,17 +68,17 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary> Get service health status. </summary>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetServiceStatus(RequestOptions options = null)
+        public virtual Response GetServiceStatus(RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("HealthApiClient.GetServiceStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetServiceStatusRequest();
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                using HttpMessage message = CreateGetServiceStatusRequest(context);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -84,18 +87,15 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
-        internal HttpMessage CreateGetServiceStatusRequest()
+        internal HttpMessage CreateGetServiceStatusRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/health", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;

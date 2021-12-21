@@ -10,16 +10,16 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.8.4300.0",
+          "FxVersion/5.0.1121.47308",
           "OSName/Windows",
-          "OSVersion/10.0.19042.0",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.1.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "152"
+          "150"
         ]
       },
       "ResponseHeaders": {
@@ -27,19 +27,19 @@
           "CognitiveServices.ComputerVision.Objects=1,CognitiveServices.ComputerVision.Transaction=1"
         ],
         "x-envoy-upstream-service-time": [
-          "603"
+          "224"
         ],
         "apim-request-id": [
-          "b4333548-c1aa-4ee7-9d54-16afe87adcaf"
+          "afebf948-7c8b-47d8-9b6c-392fe485a3a4"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
-        "x-content-type-options": [
+        "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 24 Mar 2021 06:44:17 GMT"
+          "Thu, 04 Nov 2021 04:51:42 GMT"
         ],
         "Content-Length": [
           "230"
@@ -48,7 +48,7 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"objects\": [\r\n    {\r\n      \"rectangle\": {\r\n        \"x\": 151,\r\n        \"y\": 24,\r\n        \"w\": 228,\r\n        \"h\": 260\r\n      },\r\n      \"object\": \"person\",\r\n      \"confidence\": 0.956\r\n    }\r\n  ],\r\n  \"requestId\": \"b4333548-c1aa-4ee7-9d54-16afe87adcaf\",\r\n  \"metadata\": {\r\n    \"height\": 288,\r\n    \"width\": 512,\r\n    \"format\": \"Jpeg\"\r\n  },\r\n  \"modelVersion\": \"2021-04-01\"\r\n}",
+      "ResponseBody": "{\r\n  \"objects\": [\r\n    {\r\n      \"rectangle\": {\r\n        \"x\": 151,\r\n        \"y\": 24,\r\n        \"w\": 228,\r\n        \"h\": 260\r\n      },\r\n      \"object\": \"person\",\r\n      \"confidence\": 0.956\r\n    }\r\n  ],\r\n  \"requestId\": \"afebf948-7c8b-47d8-9b6c-392fe485a3a4\",\r\n  \"metadata\": {\r\n    \"height\": 288,\r\n    \"width\": 512,\r\n    \"format\": \"Jpeg\"\r\n  },\r\n  \"modelVersion\": \"2021-04-01\"\r\n}",
       "StatusCode": 200
     }
   ],

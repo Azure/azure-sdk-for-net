@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "4976bf8d-d886-1003-c176-2b2c7cb06118",
         "x-ms-date": "Wed, 17 Feb 2021 18:48:12 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "4976bf8d-d886-1003-c176-2b2c7cb06118",
         "x-ms-request-id": "ff7a4a26-c01e-0092-245d-055e14000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -51,7 +51,7 @@
         "x-ms-client-request-id": "a15de9cc-7846-8c4c-41c9-a01a6e67e4f5",
         "x-ms-date": "Wed, 17 Feb 2021 18:48:12 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": "mZ7AZhnE28b4HxKrpKmLtipn14VvZoI0oZXVWZc6JOLVfpLe8Pr+2lfbD1VGcTzKoYqegwccPjMbjMWD7oIuvfov1iYWrcUvafwtk1Yt7S9ZC7gMnKDbuT9fwmQ1e+zUrFFaFpsWtPPEbhoK7qrc7Z6WKuPKIiFZVBzmtuph+u0QWOcE0taTQ1bESC6G0cuUgtTFnlAJCoowAcJ/L/4JYnQs+ZXD2BvIA+eMBdrz04JRUjMVnFudBk5d09ETExNXu+W5Wdc10aq5/ZtpfASvPS1ALt3K88YYj/NGZQRJtO/TNUr0OXqqG4CIXJ+/NIlJrZWk0+U1jMgfocrk72ymcEislUe5ugSzlRNdQpcmWFtp/LdupeAJnqiC1ZivxisU4utWE55CkPKR8D7S2Eow+Ehue/K0N8too/efN+RsA8/nSV+r0EW8JmzE3LSiN8VdUd1QQUo5X6og7nCnolkNJexv64/rhSgCslSF8FoWxmsxQuUHHMKErem0iuLVFIQTtrfHMkw1csy1TY72tG5PCScEdWBzBgkq6j2lNvpFLZ3QcTmjTpMf/NAZUc4zjvh6ZYC60Z8joK+unUgOjzvRbyDxJkM1rLqU5HmQWrQ69lxEK9B5i1z+rNGK9LFLEWyUSOGuQme1RbnFJuwlk0b6dKbryWRqV+TE8nlxq7cJSdMM/BHTi7P0j+UXs2Vv2BmLj4AKX0cIKfD96lDuRJoBvNwZGZc0J+jz9zp/U6N+VBlg5hs3/umLBNIg1aFjBktKFveIVb+CV2eXF2gNidZNfpU2jl1+yb3zjhTEE1JGj/DvNDyr9v9a3o60n+eBfnv801YMLXjtzEw5lceqvUQUUYd3HVSZoYiV26/OySrVcRCZxz/7OWJ4AmjvcWE4ryBKn01gCWAmYzHOdlHIHgIiZCO2EfYEGRck/hvsqS8mXSyPhCrcdWiwcmQNLMIRsORlzQ09gZ0qRoY2OwpEObkCpxkkOJrYRe67Bp+R9uxUE043h9wh6dyOZT2kpjpdazirC4Sp7HdKjYcfgnr+mFCZ4Se7DbLc4L49ltNcM5+0XZtm5upoqyfW7flUAmZhkMztCsQSoV6FzivGbFak7VnnayXfl7JlMDYA5B+5h95Y2wUGbynbobs84Be/oj/RMv+fbZZBgfgaiNmOErw+zEZMbpBQnX4wC8ppo7abpY73L7IfGhpHFloN7OZPTY7+/RTQcjSugJSBbmHM195Bf+NLluMKHrIsBVc2Q7GX4b47aqWiyjJaSK4dnqu4ej97y20DBLaq9N9ipG3ceDzi6Y2ikWw5n7Sw8E417IAGc4sYunhElN0IkHbGPybFfc9xO7QdFunSQSy4UhNndQdeWzDixA==",
       "StatusCode": 201,
@@ -69,7 +69,7 @@
         "x-ms-content-crc64": "Z2AsPoj9efg=",
         "x-ms-request-id": "ff7a4a46-c01e-0092-415d-055e14000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "x-ms-version-id": "2021-02-17T18:48:12.5115422Z"
       },
       "ResponseBody": []
@@ -89,7 +89,7 @@
         "x-ms-client-request-id": "729256b2-40d3-447e-7811-14e6fae5870c",
         "x-ms-date": "Wed, 17 Feb 2021 18:48:12 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -104,7 +104,7 @@
         "x-ms-client-request-id": "729256b2-40d3-447e-7811-14e6fae5870c",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "ff7a4a76-c01e-0092-695d-055e14000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>BlobNotFound</Code><Message>The specified blob does not exist.\n",
@@ -126,7 +126,7 @@
         "x-ms-client-request-id": "1868b729-72d4-a322-3acc-338b49868002",
         "x-ms-date": "Wed, 17 Feb 2021 18:48:12 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -139,7 +139,7 @@
         ],
         "x-ms-client-request-id": "1868b729-72d4-a322-3acc-338b49868002",
         "x-ms-request-id": "ff7a4a90-c01e-0092-025d-055e14000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

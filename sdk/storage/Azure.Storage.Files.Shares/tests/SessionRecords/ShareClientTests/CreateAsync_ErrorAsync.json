@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "308ab3ab-c338-4e03-2095-293b4132fe4a",
         "x-ms-date": "Thu, 05 Mar 2020 21:48:44 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "308ab3ab-c338-4e03-2095-293b4132fe4a",
         "x-ms-request-id": "c9ef6e27-f01a-0012-6e37-f3e9eb000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -46,7 +46,7 @@
         "x-ms-client-request-id": "1fef0a17-c6fc-8734-0395-519af94a6274",
         "x-ms-date": "Thu, 05 Mar 2020 21:48:44 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -62,7 +62,7 @@
         "x-ms-client-request-id": "1fef0a17-c6fc-8734-0395-519af94a6274",
         "x-ms-error-code": "ShareAlreadyExists",
         "x-ms-request-id": "c9ef6e29-f01a-0012-6f37-f3e9eb000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ShareAlreadyExists</Code><Message>The specified share already exists.\n",
@@ -83,7 +83,7 @@
         "x-ms-client-request-id": "37236b5c-df42-444e-12d3-fa4e89cb4580",
         "x-ms-date": "Thu, 05 Mar 2020 21:48:44 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -97,7 +97,7 @@
         ],
         "x-ms-client-request-id": "37236b5c-df42-444e-12d3-fa4e89cb4580",
         "x-ms-request-id": "c9ef6e2a-f01a-0012-7037-f3e9eb000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

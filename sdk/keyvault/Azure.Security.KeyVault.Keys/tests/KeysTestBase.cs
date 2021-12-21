@@ -41,10 +41,29 @@ namespace Azure.Security.KeyVault.Keys.Tests
             _serviceVersion = serviceVersion;
         }
 
+        [SetUp]
+        public void ClearChallengeCacheforRecord()
+        {
+            // in record mode we reset the challenge cache before each test so that the challenge call
+            // is always made.  This allows tests to be replayed independently and in any order
+            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
+            {
+                ChallengeBasedAuthenticationPolicy.ClearCache();
+            }
+        }
+
         /// <summary>
         /// Gets whether the current text fixture is running against Managed HSM.
         /// </summary>
         protected internal virtual bool IsManagedHSM => false;
+
+        internal static void IgnoreIfNotSupported(RequestFailedException ex)
+        {
+            if (ex.Status == 400 && ex.ErrorCode == "NotSupported")
+            {
+                throw new IgnoreException(ex.Message ?? "The feature under test is not supported");
+            }
+        }
 
         internal KeyClient GetClient()
         {
@@ -73,20 +92,20 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 interceptors);
         }
 
-        public override void StartTestRecording()
+        public override async Task StartTestRecordingAsync()
         {
-            base.StartTestRecording();
+            await base.StartTestRecordingAsync();
 
             _listener = new KeyVaultTestEventListener();
 
             Client = GetClient();
         }
 
-        public override void StopTestRecording()
+        public override async Task StopTestRecordingAsync()
         {
             _listener?.Dispose();
 
-            base.StopTestRecording();
+            await base.StopTestRecordingAsync();
         }
 
         [TearDown]

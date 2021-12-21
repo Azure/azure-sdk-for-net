@@ -3,6 +3,7 @@
 
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
@@ -11,7 +12,6 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
 {
-    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24577")]
     public class FirewallPolicyTests : NetworkServiceClientTestBase
     {
         private ResourceGroup _resourceGroup;
@@ -31,7 +31,8 @@ namespace Azure.ResourceManager.Network.Tests
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("FirewallPolicyRG-"), new ResourceGroupData(Location.WestUS2));
+            Subscription subscription = await GlobalClient.GetDefaultSubscriptionAsync();
+            var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("FirewallPolicyRG-"), new ResourceGroupData(Location.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
 
@@ -67,13 +68,13 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Name = "fwpip",
                 PublicIPAddress = new WritableSubResource() { Id = _publicIPAddressIdentifier },
-                Subnet = new WritableSubResource() { Id = _networkIdentifier.ToString() + "/subnets/AzureFirewallSubnet" },
+                Subnet = new WritableSubResource() { Id = _networkIdentifier.AppendChildResource("subnets", "AzureFirewallSubnet") },
             });
             var firewallLro = await rg.GetAzureFirewalls().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("firewall-"), firewallData);
             _firewall = firewallLro.Value;
             _firewallIdentifier = _firewall.Id;
 
-            StopSessionRecording();
+            await StopSessionRecordingAsync();
         }
 
         [SetUp]

@@ -87,8 +87,9 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [TestCase("FTPUCALXDWR")]
-        [TestCase("rwdxlacuptf")]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_10_02)]
+        [TestCase("IFTPUCALYXDWR")]
+        [TestCase("rwdxylacuptfi")]
         public async Task AccountPermissionsRawPermissions(string permissionsString)
         {
             // Arrange
@@ -103,6 +104,8 @@ namespace Azure.Storage.Files.Shares.Tests
             };
 
             accountSasBuilder.SetPermissions(permissionsString);
+
+            Assert.AreEqual("rwdxylacuptfi", accountSasBuilder.Permissions);
 
             StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
 

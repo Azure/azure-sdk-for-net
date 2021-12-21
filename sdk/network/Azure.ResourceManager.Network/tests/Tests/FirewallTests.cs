@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
@@ -13,7 +14,6 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
 {
-    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24577")]
     public class FirewallTests : NetworkServiceClientTestBase
     {
         private ResourceGroup _resourceGroup;
@@ -32,7 +32,8 @@ namespace Azure.ResourceManager.Network.Tests
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("FirewallRG-"), new ResourceGroupData(Location.WestUS2));
+            Subscription subscription = await GlobalClient.GetDefaultSubscriptionAsync();
+            var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("FirewallRG-"), new ResourceGroupData(Location.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
 
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.Network.Tests
             _publicIPAddressIdentifier = _publicIPAddress.Id;
 
             _firewallName = SessionRecording.GenerateAssetName("firewall-");
-            StopSessionRecording();
+            await StopSessionRecordingAsync();
         }
 
         [OneTimeTearDown]
@@ -84,14 +85,14 @@ namespace Azure.ResourceManager.Network.Tests
         [TearDown]
         public async Task Teardown()
         {
-            if (_resourceGroup.GetAzureFirewalls().CheckIfExists(_firewallName))
+            if (await _resourceGroup.GetAzureFirewalls().CheckIfExistsAsync(_firewallName))
             {
                 AzureFirewall firewall = await _resourceGroup.GetAzureFirewalls().GetAsync(_firewallName);
                 await firewall.DeleteAsync();
             }
         }
 
-        public async Task<AzureFirewall> CreateFirewall()
+        public async Task<AzureFirewall> CreateFirewallAsync()
         {
             AzureFirewallData firewallData = new AzureFirewallData();
             firewallData.Location = Location.WestUS2;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Name = "fwpip",
                 PublicIPAddress = new WritableSubResource() { Id = _publicIPAddressIdentifier },
-                Subnet = new WritableSubResource() { Id = _networkIdentifier.ToString() + "/subnets/AzureFirewallSubnet" },
+                Subnet = new WritableSubResource() { Id = _networkIdentifier.AppendChildResource("subnets", "AzureFirewallSubnet") },
             });
             var firewallLro = await (await _resourceGroup.GetAzureFirewalls().CreateOrUpdateAsync(_firewallName, firewallData)).WaitForCompletionAsync();
             return firewallLro.Value;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            AzureFirewall firewall = await CreateFirewall();
+            AzureFirewall firewall = await CreateFirewallAsync();
             Assert.IsNotNull(firewall.Data);
             Assert.AreEqual(_firewallName, firewall.Data.Name);
         }
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task Get()
         {
-            await CreateFirewall();
+            await CreateFirewallAsync();
             var firewall = await _resourceGroup.GetAzureFirewalls().GetAsync(_firewallName);
             Assert.IsNotNull(firewall.Value.Data);
             Assert.AreEqual(_firewallName, firewall.Value.Data.Name);
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task GetAll()
         {
-            await CreateFirewall();
+            await CreateFirewallAsync();
             List<AzureFirewall> firewallList = await _resourceGroup.GetAzureFirewalls().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(1, firewallList.Count);
         }
@@ -137,16 +138,16 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task CheckIfExists()
         {
-            await CreateFirewall();
-            Assert.True(_resourceGroup.GetAzureFirewalls().CheckIfExists(_firewallName));
-            Assert.False(_resourceGroup.GetAzureFirewalls().CheckIfExists(_firewallName + "0"));
+            await CreateFirewallAsync();
+            Assert.True(await _resourceGroup.GetAzureFirewalls().CheckIfExistsAsync(_firewallName));
+            Assert.False(await _resourceGroup.GetAzureFirewalls().CheckIfExistsAsync(_firewallName + "0"));
         }
 
         [Test]
         [RecordedTest]
         public async Task Delete()
         {
-            AzureFirewall firewall = await CreateFirewall();
+            AzureFirewall firewall = await CreateFirewallAsync();
             List<AzureFirewall> firewallList = await _resourceGroup.GetAzureFirewalls().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(1, firewallList.Count);
 

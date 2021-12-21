@@ -6,175 +6,63 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A Class representing a RestorePointCollection along with the instance operations that can be performed on it. </summary>
-    public partial class RestorePointCollection : ArmResource
+    /// <summary> A class representing collection of RestorePoint and their operations over its parent. </summary>
+    public partial class RestorePointCollection : ArmCollection
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly RestorePointCollectionsRestOperations _restClient;
-        private readonly RestorePointCollectionData _data;
+        private readonly RestorePointsRestOperations _restorePointsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="RestorePointCollection"/> class for mocking. </summary>
         protected RestorePointCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RestorePointCollection"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal RestorePointCollection(ArmResource options, RestorePointCollectionData resource) : base(options, resource.Id)
-        {
-            HasData = true;
-            _data = resource;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new RestorePointCollectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="RestorePointCollection"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal RestorePointCollection(ArmResource options, ResourceIdentifier id) : base(options, id)
+        /// <summary> Initializes a new instance of RestorePointCollection class. </summary>
+        /// <param name="parent"> The resource representing the parent resource. </param>
+        internal RestorePointCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new RestorePointCollectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _restorePointsRestClient = new RestorePointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RestorePointCollection"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal RestorePointCollection(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new RestorePointCollectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
+        /// <summary> Gets the valid resource type for this object. </summary>
+        protected override ResourceType ValidResourceType => RestorePointGroup.ResourceType;
 
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/restorePointCollections";
+        // Collection level operations.
 
-        /// <summary> Gets the valid resource type for the operations. </summary>
-        protected override ResourceType ValidResourceType => ResourceType;
-
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual RestorePointCollectionData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
-        /// <summary> The operation to get the restore point collection. </summary>
-        /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<RestorePointCollection>> GetAsync(RestorePointCollectionExpandOptions? expand = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.Get");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new RestorePointCollection(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> The operation to get the restore point collection. </summary>
-        /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RestorePointCollection> Get(RestorePointCollectionExpandOptions? expand = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.Get");
-            scope.Start();
-            try
-            {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, expand, cancellationToken);
-                if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RestorePointCollection(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            return ListAvailableLocations(ResourceType, cancellationToken);
-        }
-
-        /// <summary> The operation to delete the restore point collection. This operation will also delete all the contained restore points. </summary>
+        /// <summary> The operation to create the restore point. Updating properties of an existing restore point is not allowed. </summary>
+        /// <param name="restorePointName"> The name of the restore point. </param>
+        /// <param name="parameters"> Parameters supplied to the Create restore point operation. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<RestorePointCollectionDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual RestorePointCreateOperation CreateOrUpdate(string restorePointName, RestorePointData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.Delete");
-            scope.Start();
-            try
+            if (restorePointName == null)
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new RestorePointCollectionDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
+                throw new ArgumentNullException(nameof(restorePointName));
             }
-            catch (Exception e)
+            if (parameters == null)
             {
-                scope.Failed(e);
-                throw;
+                throw new ArgumentNullException(nameof(parameters));
             }
-        }
 
-        /// <summary> The operation to delete the restore point collection. This operation will also delete all the contained restore points. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual RestorePointCollectionDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.Delete");
+            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new RestorePointCollectionDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _restorePointsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, parameters, cancellationToken);
+                var operation = new RestorePointCreateOperation(Parent, _clientDiagnostics, Pipeline, _restorePointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -186,194 +74,32 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        public async virtual Task<Response<RestorePointCollection>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.AddTag");
-            scope.Start();
-            try
-            {
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new RestorePointCollection(this, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Add a tag to the current resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        public virtual Response<RestorePointCollection> AddTag(string key, string value, CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.AddTag");
-            scope.Start();
-            try
-            {
-                var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                return Response.FromValue(new RestorePointCollection(this, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tags replaced. </returns>
-        public async virtual Task<Response<RestorePointCollection>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            if (tags == null)
-            {
-                throw new ArgumentNullException($"{nameof(tags)} provided cannot be null.", nameof(tags));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.SetTags");
-            scope.Start();
-            try
-            {
-                await TagResource.DeleteAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new RestorePointCollection(this, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tags replaced. </returns>
-        public virtual Response<RestorePointCollection> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            if (tags == null)
-            {
-                throw new ArgumentNullException($"{nameof(tags)} provided cannot be null.", nameof(tags));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.SetTags");
-            scope.Start();
-            try
-            {
-                TagResource.Delete(cancellationToken: cancellationToken);
-                var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                return Response.FromValue(new RestorePointCollection(this, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Removes a tag by key from the resource. </summary>
-        /// <param name="key"> The key of the tag to remove. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag removed. </returns>
-        public async virtual Task<Response<RestorePointCollection>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.RemoveTag");
-            scope.Start();
-            try
-            {
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new RestorePointCollection(this, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Removes a tag by key from the resource. </summary>
-        /// <param name="key"> The key of the tag to remove. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag removed. </returns>
-        public virtual Response<RestorePointCollection> RemoveTag(string key, CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.RemoveTag");
-            scope.Start();
-            try
-            {
-                var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                return Response.FromValue(new RestorePointCollection(this, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-        /// <summary> The operation to update the restore point collection. </summary>
-        /// <param name="parameters"> Parameters supplied to the Update restore point collection operation. </param>
+        /// <summary> The operation to create the restore point. Updating properties of an existing restore point is not allowed. </summary>
+        /// <param name="restorePointName"> The name of the restore point. </param>
+        /// <param name="parameters"> Parameters supplied to the Create restore point operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response<RestorePointCollection>> UpdateAsync(RestorePointCollectionUpdate parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> or <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<RestorePointCreateOperation> CreateOrUpdateAsync(string restorePointName, RestorePointData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
+            if (restorePointName == null)
+            {
+                throw new ArgumentNullException(nameof(restorePointName));
+            }
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.Update");
+            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new RestorePointCollection(this, response.Value), response.GetRawResponse());
+                var response = await _restorePointsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new RestorePointCreateOperation(Parent, _clientDiagnostics, Pipeline, _restorePointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, parameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -382,23 +108,25 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to update the restore point collection. </summary>
-        /// <param name="parameters"> Parameters supplied to the Update restore point collection operation. </param>
+        /// <summary> The operation to get the restore point. </summary>
+        /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<RestorePointCollection> Update(RestorePointCollectionUpdate parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
+        public virtual Response<RestorePoint> Get(string restorePointName, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
+            if (restorePointName == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(restorePointName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.Update");
+            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.Get");
             scope.Start();
             try
             {
-                var response = _restClient.Update(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                return Response.FromValue(new RestorePointCollection(this, response.Value), response.GetRawResponse());
+                var response = _restorePointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new RestorePoint(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -407,11 +135,138 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets a list of RestorePoints in the RestorePointCollection. </summary>
-        /// <returns> An object representing collection of RestorePoints and their operations over a RestorePointCollection. </returns>
-        public RestorePointContainer GetRestorePoints()
+        /// <summary> The operation to get the restore point. </summary>
+        /// <param name="restorePointName"> The name of the restore point. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
+        public async virtual Task<Response<RestorePoint>> GetAsync(string restorePointName, CancellationToken cancellationToken = default)
         {
-            return new RestorePointContainer(this);
+            if (restorePointName == null)
+            {
+                throw new ArgumentNullException(nameof(restorePointName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = await _restorePointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new RestorePoint(Parent, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="restorePointName"> The name of the restore point. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
+        public virtual Response<RestorePoint> GetIfExists(string restorePointName, CancellationToken cancellationToken = default)
+        {
+            if (restorePointName == null)
+            {
+                throw new ArgumentNullException(nameof(restorePointName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _restorePointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken: cancellationToken);
+                return response.Value == null
+                    ? Response.FromValue<RestorePoint>(null, response.GetRawResponse())
+                    : Response.FromValue(new RestorePoint(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="restorePointName"> The name of the restore point. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
+        public async virtual Task<Response<RestorePoint>> GetIfExistsAsync(string restorePointName, CancellationToken cancellationToken = default)
+        {
+            if (restorePointName == null)
+            {
+                throw new ArgumentNullException(nameof(restorePointName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.GetIfExistsAsync");
+            scope.Start();
+            try
+            {
+                var response = await _restorePointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return response.Value == null
+                    ? Response.FromValue<RestorePoint>(null, response.GetRawResponse())
+                    : Response.FromValue(new RestorePoint(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="restorePointName"> The name of the restore point. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
+        public virtual Response<bool> CheckIfExists(string restorePointName, CancellationToken cancellationToken = default)
+        {
+            if (restorePointName == null)
+            {
+                throw new ArgumentNullException(nameof(restorePointName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.CheckIfExists");
+            scope.Start();
+            try
+            {
+                var response = GetIfExists(restorePointName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="restorePointName"> The name of the restore point. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
+        public async virtual Task<Response<bool>> CheckIfExistsAsync(string restorePointName, CancellationToken cancellationToken = default)
+        {
+            if (restorePointName == null)
+            {
+                throw new ArgumentNullException(nameof(restorePointName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.CheckIfExistsAsync");
+            scope.Start();
+            try
+            {
+                var response = await GetIfExistsAsync(restorePointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // Builders.
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, RestorePoint, RestorePointData> Construct() { }
     }
 }

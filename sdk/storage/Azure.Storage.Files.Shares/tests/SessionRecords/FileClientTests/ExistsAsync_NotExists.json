@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "ca8a0d63-191f-8ee4-b281-09b0878a422f",
         "x-ms-date": "Tue, 26 Jan 2021 19:29:49 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "ca8a0d63-191f-8ee4-b281-09b0878a422f",
         "x-ms-request-id": "5c9bde31-f01a-0030-0719-f4640d000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -47,7 +47,7 @@
         "x-ms-client-request-id": "0c50b58a-8ca9-a3df-de0a-bf588c3da911",
         "x-ms-date": "Tue, 26 Jan 2021 19:29:50 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -62,7 +62,7 @@
         "x-ms-client-request-id": "0c50b58a-8ca9-a3df-de0a-bf588c3da911",
         "x-ms-error-code": "ResourceNotFound",
         "x-ms-request-id": "5c9bde34-f01a-0030-0819-f4640d000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -81,7 +81,7 @@
         "x-ms-date": "Tue, 26 Jan 2021 19:29:50 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -94,7 +94,7 @@
         ],
         "x-ms-client-request-id": "301d37bc-814f-a4b2-c11a-9f6ba89e1ece",
         "x-ms-request-id": "5c9bde35-f01a-0030-0919-f4640d000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

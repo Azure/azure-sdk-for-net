@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.Primitives;
+using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
@@ -21,12 +22,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     /// </summary>
     internal static class WebPubSubRequestExtensions
     {
-        /// <summary>
-        /// Parse request to system/user type ServiceRequest.
-        /// </summary>
-        /// <param name="request">Upstream HttpRequest.</param>
-        /// <param name="options"></param>
-        /// <returns>Deserialize <see cref="WebPubSubEventRequest"/></returns>
         public static async Task<WebPubSubEventRequest> ReadWebPubSubRequestAsync(this HttpRequest request, WebPubSubValidationOptions options)
         {
             if (request == null)
@@ -71,19 +66,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                     {
                         var content = await new StreamReader(request.Body).ReadToEndAsync().ConfigureAwait(false);
                         var eventRequest = JsonSerializer.Deserialize<ConnectEventRequest>(content);
-                        eventRequest.ConnectionContext = context;
-                        return eventRequest;
+                        return new ConnectEventRequest(context, eventRequest.Claims, eventRequest.Query, eventRequest.Subprotocols, eventRequest.ClientCertificates);
                     }
                 case RequestType.User:
                     {
                         using var ms = new MemoryStream();
                         await request.Body.CopyToAsync(ms).ConfigureAwait(false);
-                        var message = BinaryData.FromBytes(ms.ToArray());
+                        var data = BinaryData.FromBytes(ms.ToArray());
                         if (!MediaTypeHeaderValue.Parse(request.ContentType).MediaType.IsValidMediaType(out var dataType))
                         {
                             throw new ArgumentException($"ContentType is not supported: {request.ContentType}");
                         }
-                        return new UserEventRequest(context, message, dataType);
+                        return new UserEventRequest(context, data, dataType);
                     }
                 case RequestType.Connected:
                     {
@@ -93,8 +87,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                     {
                         var content = await new StreamReader(request.Body).ReadToEndAsync().ConfigureAwait(false);
                         var eventRequest = JsonSerializer.Deserialize<DisconnectedEventRequest>(content);
-                        eventRequest.ConnectionContext = context;
-                        return eventRequest;
+                        return new DisconnectedEventRequest(context, eventRequest.Reason);
                     }
                 default:
                     return null;
@@ -126,6 +119,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
             if (options.TryGetKey(connectionContext.Origin, out var accessKey))
             {
+                // server side disable signature checks.
+                if (string.IsNullOrEmpty(accessKey))
+                {
+                    return true;
+                }
+
                 var signatures = connectionContext.Signature.ToHeaderList();
                 if (signatures == null)
                 {
@@ -142,24 +141,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return false;
         }
 
-        internal static Dictionary<string, object> DecodeConnectionStates(this string connectionStates)
+        internal static Dictionary<string, BinaryData> DecodeConnectionStates(this string connectionStates)
         {
             if (!string.IsNullOrEmpty(connectionStates))
             {
                 var states = new Dictionary<string, object>();
-                var parsedStates = Encoding.UTF8.GetString(Convert.FromBase64String(connectionStates));
-                var statesObj = JsonDocument.Parse(parsedStates);
-                foreach (var item in statesObj.RootElement.EnumerateObject())
-                {
-                    // Use ToString() to set pure value without ValueKind.
-                    states.Add(item.Name, item.Value.ToString());
-                }
-                return states;
+                return JsonSerializer.Deserialize<IReadOnlyDictionary<string, BinaryData>>(Convert.FromBase64String(connectionStates), ConnectionStatesConverter.Options)
+                    .ToDictionary(k => k.Key, v => v.Value);
             }
             return null;
         }
 
-        internal static Dictionary<string,object> UpdateStates(this WebPubSubConnectionContext connectionContext, Dictionary<string, object> newStates)
+        internal static Dictionary<string, object> UpdateStates(this WebPubSubConnectionContext connectionContext, IReadOnlyDictionary<string, BinaryData> newStates)
         {
             // states cleared.
             if (newStates == null)
@@ -167,12 +160,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 return null;
             }
 
-            if (connectionContext.States?.Count > 0 || newStates.Count > 0)
+            if (connectionContext.ConnectionStates?.Count > 0 || newStates.Count > 0)
             {
                 var states = new Dictionary<string, object>();
-                if (connectionContext.States?.Count > 0)
+                if (connectionContext.ConnectionStates?.Count > 0)
                 {
-                    states = connectionContext.States.ToDictionary(x => x.Key, y => y.Value);
+                    foreach (var state in connectionContext.ConnectionStates)
+                    {
+                        states.Add(state.Key, state.Value);
+                    }
                 }
 
                 // response states keep empty is no change.
@@ -190,74 +186,46 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return null;
         }
 
-        internal static Dictionary<string, object> UpdateStates(this WebPubSubConnectionContext connectionContext, UserEventResponse response)
-        {
-            // states cleared.
-            if (response.States == null)
-            {
-                return null;
-            }
-
-            if (connectionContext.States?.Count > 0 || response.States.Count > 0)
-            {
-                var states = new Dictionary<string, object>();
-                if (connectionContext.States?.Count > 0)
-                {
-                    states = connectionContext.States.ToDictionary(x => x.Key, v => v.Value);
-                }
-
-                // response states keep empty is no change.
-                if (response.States.Count == 0)
-                {
-                    return states;
-                }
-                foreach (var item in response.States)
-                {
-                    states[item.Key] = item.Value;
-                }
-                return states;
-            }
-
-            return null;
-        }
-
         internal static string EncodeConnectionStates(this Dictionary<string, object> value)
         {
-            return Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(value)));
+            IReadOnlyDictionary<string, BinaryData> readOnlyDict = value.ToDictionary(x => x.Key, y => y.Value is BinaryData data ? data : FromObjectAsJsonExtended(y.Value));
+            return Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(readOnlyDict, ConnectionStatesConverter.Options)));
         }
 
         private static bool TryParseCloudEvents(this HttpRequest request, out WebPubSubConnectionContext connectionContext)
         {
             try
             {
-                connectionContext = new();
-                connectionContext.ConnectionId = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.ConnectionId);
-                connectionContext.Hub = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.Hub);
-                connectionContext.EventType = GetEventType(request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.Type));
-                connectionContext.EventName = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.EventName);
-                connectionContext.Signature = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.Signature);
-                connectionContext.Origin = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.WebHookRequestOrigin);
-                connectionContext.InitHeaders(request.Headers.ToDictionary(x => x.Key, v => v.Value.ToArray(), StringComparer.OrdinalIgnoreCase));
+                var connectionId = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.ConnectionId);
+                var hub = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.Hub);
+                var eventType = GetEventType(request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.Type));
+                var eventName = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.EventName);
+                var signature = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.Signature);
+                var origin = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.WebHookRequestOrigin);
+                var headers = request.Headers.ToDictionary(x => x.Key, v => v.Value.ToArray(), StringComparer.OrdinalIgnoreCase);
 
+                string userId = null;
                 // UserId is optional, e.g. connect
                 if (request.Headers.ContainsKey(Constants.Headers.CloudEvents.UserId))
                 {
-                    connectionContext.UserId = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.UserId);
+                    userId = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.UserId);
                 }
 
+                Dictionary<string, BinaryData> states = null;
                 // connection states.
                 if (request.Headers.ContainsKey(Constants.Headers.CloudEvents.State))
                 {
-                    connectionContext.InitStates(request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.State).DecodeConnectionStates());
+                    states = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.State).DecodeConnectionStates();
                 }
+
+                connectionContext = new WebPubSubConnectionContext(eventType, eventName, hub, connectionId, userId, signature, origin, states, headers);
+                return true;
             }
-            catch (Exception)
+            catch
             {
                 connectionContext = null;
                 return false;
             }
-
-            return true;
         }
 
         private static RequestType GetRequestType(this WebPubSubConnectionContext context)
@@ -286,16 +254,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return header.TryGetValue(key, out StringValues values) && values.Count > 0 ? values[0] : null;
         }
 
-        private static bool IsValidMediaType(this string mediaType, out MessageDataType dataType)
+        private static bool IsValidMediaType(this string mediaType, out WebPubSubDataType dataType)
         {
             try
             {
-                dataType = mediaType.GetMessageDataType();
+                dataType = mediaType.GetDataType();
                 return true;
             }
-            catch (Exception)
+            catch
             {
-                dataType = MessageDataType.Binary;
+                dataType = WebPubSubDataType.Binary;
                 return false;
             }
         }
@@ -317,13 +285,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 WebPubSubEventType.User;
         }
 
-        private static MessageDataType GetMessageDataType(this string mediaType) =>
+        private static WebPubSubDataType GetDataType(this string mediaType) =>
             mediaType.ToLowerInvariant() switch
             {
-                Constants.ContentTypes.PlainTextContentType => MessageDataType.Text,
-                Constants.ContentTypes.BinaryContentType => MessageDataType.Binary,
-                Constants.ContentTypes.JsonContentType => MessageDataType.Json,
+                Constants.ContentTypes.PlainTextContentType => WebPubSubDataType.Text,
+                Constants.ContentTypes.BinaryContentType => WebPubSubDataType.Binary,
+                Constants.ContentTypes.JsonContentType => WebPubSubDataType.Json,
                 _ => throw new ArgumentException($"Invalid content type: {mediaType}")
             };
+
+        // support JToken for backward compatiblity.
+        private static BinaryData FromObjectAsJsonExtended<T>(T item, JsonSerializerOptions? options = null)
+        {
+            if (item is JToken)
+            {
+                return BinaryData.FromString(Newtonsoft.Json.JsonConvert.SerializeObject(item));
+            }
+            else
+            {
+                return BinaryData.FromObjectAsJson(item, options);
+            }
+        }
     }
 }

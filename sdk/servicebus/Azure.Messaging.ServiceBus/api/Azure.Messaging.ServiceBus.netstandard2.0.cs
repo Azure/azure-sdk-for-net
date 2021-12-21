@@ -152,7 +152,7 @@ namespace Azure.Messaging.ServiceBus
         SessionLockLost = 11,
         MessagingEntityAlreadyExists = 12,
     }
-    public partial class ServiceBusMessage
+    public partial class ServiceBusMessage : Azure.Messaging.MessageWithMetadata
     {
         public ServiceBusMessage() { }
         public ServiceBusMessage(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage receivedMessage) { }
@@ -161,8 +161,12 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusMessage(string body) { }
         public System.Collections.Generic.IDictionary<string, object> ApplicationProperties { get { throw null; } }
         public System.BinaryData Body { get { throw null; } set { } }
-        public string ContentType { get { throw null; } set { } }
+        public override string ContentType { get { throw null; } set { } }
         public string CorrelationId { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override System.BinaryData Data { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool IsReadOnly { get { throw null; } }
         public string MessageId { get { throw null; } set { } }
         public string PartitionKey { get { throw null; } set { } }
         public string ReplyTo { get { throw null; } set { } }
@@ -185,6 +189,12 @@ namespace Azure.Messaging.ServiceBus
         public void Dispose() { }
         public bool TryAddMessage(Azure.Messaging.ServiceBus.ServiceBusMessage message) { throw null; }
     }
+    public enum ServiceBusMessageState
+    {
+        Active = 0,
+        Deferred = 1,
+        Scheduled = 2,
+    }
     public static partial class ServiceBusModelFactory
     {
         public static Azure.Messaging.ServiceBus.Administration.QueueProperties QueueProperties(string name, System.TimeSpan lockDuration, long maxSizeInMegabytes, bool requiresDuplicateDetection, bool requiresSession, System.TimeSpan defaultMessageTimeToLive, System.TimeSpan autoDeleteOnIdle, bool deadLetteringOnMessageExpiration, System.TimeSpan duplicateDetectionHistoryTimeWindow, int maxDeliveryCount, bool enableBatchedOperations, Azure.Messaging.ServiceBus.Administration.EntityStatus status, string forwardTo, string forwardDeadLetteredMessagesTo, string userMetadata, bool enablePartitioning) { throw null; }
@@ -193,7 +203,9 @@ namespace Azure.Messaging.ServiceBus
         public static Azure.Messaging.ServiceBus.Administration.QueueRuntimeProperties QueueRuntimeProperties(string name, long activeMessageCount = (long)0, long scheduledMessageCount = (long)0, long deadLetterMessageCount = (long)0, long transferDeadLetterMessageCount = (long)0, long transferMessageCount = (long)0, long totalMessageCount = (long)0, long sizeInBytes = (long)0, System.DateTimeOffset createdAt = default(System.DateTimeOffset), System.DateTimeOffset updatedAt = default(System.DateTimeOffset), System.DateTimeOffset accessedAt = default(System.DateTimeOffset)) { throw null; }
         public static Azure.Messaging.ServiceBus.Administration.RuleProperties RuleProperties(string name, Azure.Messaging.ServiceBus.Administration.RuleFilter filter = null, Azure.Messaging.ServiceBus.Administration.RuleAction action = null) { throw null; }
         public static Azure.Messaging.ServiceBus.ServiceBusMessageBatch ServiceBusMessageBatch(long batchSizeBytes, System.Collections.Generic.IList<Azure.Messaging.ServiceBus.ServiceBusMessage> batchMessageStore, Azure.Messaging.ServiceBus.CreateMessageBatchOptions batchOptions = null, System.Func<Azure.Messaging.ServiceBus.ServiceBusMessage, bool> tryAddCallback = null) { throw null; }
-        public static Azure.Messaging.ServiceBus.ServiceBusReceivedMessage ServiceBusReceivedMessage(System.BinaryData body = null, string messageId = null, string partitionKey = null, string viaPartitionKey = null, string sessionId = null, string replyToSessionId = null, System.TimeSpan timeToLive = default(System.TimeSpan), string correlationId = null, string subject = null, string to = null, string contentType = null, string replyTo = null, System.DateTimeOffset scheduledEnqueueTime = default(System.DateTimeOffset), System.Collections.Generic.IDictionary<string, object> properties = null, System.Guid lockTokenGuid = default(System.Guid), int deliveryCount = 0, System.DateTimeOffset lockedUntil = default(System.DateTimeOffset), long sequenceNumber = (long)-1, string deadLetterSource = null, long enqueuedSequenceNumber = (long)0, System.DateTimeOffset enqueuedTime = default(System.DateTimeOffset)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.Messaging.ServiceBus.ServiceBusReceivedMessage ServiceBusReceivedMessage(System.BinaryData body, string messageId, string partitionKey, string viaPartitionKey, string sessionId, string replyToSessionId, System.TimeSpan timeToLive, string correlationId, string subject, string to, string contentType, string replyTo, System.DateTimeOffset scheduledEnqueueTime, System.Collections.Generic.IDictionary<string, object> properties, System.Guid lockTokenGuid, int deliveryCount, System.DateTimeOffset lockedUntil, long sequenceNumber, string deadLetterSource, long enqueuedSequenceNumber, System.DateTimeOffset enqueuedTime) { throw null; }
+        public static Azure.Messaging.ServiceBus.ServiceBusReceivedMessage ServiceBusReceivedMessage(System.BinaryData body = null, string messageId = null, string partitionKey = null, string viaPartitionKey = null, string sessionId = null, string replyToSessionId = null, System.TimeSpan timeToLive = default(System.TimeSpan), string correlationId = null, string subject = null, string to = null, string contentType = null, string replyTo = null, System.DateTimeOffset scheduledEnqueueTime = default(System.DateTimeOffset), System.Collections.Generic.IDictionary<string, object> properties = null, System.Guid lockTokenGuid = default(System.Guid), int deliveryCount = 0, System.DateTimeOffset lockedUntil = default(System.DateTimeOffset), long sequenceNumber = (long)-1, string deadLetterSource = null, long enqueuedSequenceNumber = (long)0, System.DateTimeOffset enqueuedTime = default(System.DateTimeOffset), Azure.Messaging.ServiceBus.ServiceBusMessageState serviceBusMessageState = Azure.Messaging.ServiceBus.ServiceBusMessageState.Active) { throw null; }
         public static Azure.Messaging.ServiceBus.Administration.SubscriptionProperties SubscriptionProperties(string topicName, string subscriptionName, System.TimeSpan lockDuration = default(System.TimeSpan), bool requiresSession = false, System.TimeSpan defaultMessageTimeToLive = default(System.TimeSpan), System.TimeSpan autoDeleteOnIdle = default(System.TimeSpan), bool deadLetteringOnMessageExpiration = false, int maxDeliveryCount = 0, bool enableBatchedOperations = false, Azure.Messaging.ServiceBus.Administration.EntityStatus status = default(Azure.Messaging.ServiceBus.Administration.EntityStatus), string forwardTo = null, string forwardDeadLetteredMessagesTo = null, string userMetadata = null) { throw null; }
         public static Azure.Messaging.ServiceBus.Administration.SubscriptionRuntimeProperties SubscriptionRuntimeProperties(string topicName, string subscriptionName, long activeMessageCount = (long)0, long deadLetterMessageCount = (long)0, long transferDeadLetterMessageCount = (long)0, long transferMessageCount = (long)0, long totalMessageCount = (long)0, System.DateTimeOffset createdAt = default(System.DateTimeOffset), System.DateTimeOffset updatedAt = default(System.DateTimeOffset), System.DateTimeOffset accessedAt = default(System.DateTimeOffset)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -247,13 +259,15 @@ namespace Azure.Messaging.ServiceBus
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
-    public partial class ServiceBusReceivedMessage
+    public partial class ServiceBusReceivedMessage : Azure.Messaging.MessageWithMetadata
     {
         internal ServiceBusReceivedMessage() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, object> ApplicationProperties { get { throw null; } }
         public System.BinaryData Body { get { throw null; } }
-        public string ContentType { get { throw null; } }
+        public override string ContentType { get { throw null; } [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)] set { } }
         public string CorrelationId { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override System.BinaryData Data { get { throw null; } set { } }
         public string DeadLetterErrorDescription { get { throw null; } }
         public string DeadLetterReason { get { throw null; } }
         public string DeadLetterSource { get { throw null; } }
@@ -261,6 +275,8 @@ namespace Azure.Messaging.ServiceBus
         public long EnqueuedSequenceNumber { get { throw null; } }
         public System.DateTimeOffset EnqueuedTime { get { throw null; } }
         public System.DateTimeOffset ExpiresAt { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool IsReadOnly { get { throw null; } }
         public System.DateTimeOffset LockedUntil { get { throw null; } }
         public string LockToken { get { throw null; } }
         public string MessageId { get { throw null; } }
@@ -270,6 +286,7 @@ namespace Azure.Messaging.ServiceBus
         public System.DateTimeOffset ScheduledEnqueueTime { get { throw null; } }
         public long SequenceNumber { get { throw null; } }
         public string SessionId { get { throw null; } }
+        public Azure.Messaging.ServiceBus.ServiceBusMessageState State { get { throw null; } }
         public string Subject { get { throw null; } }
         public System.TimeSpan TimeToLive { get { throw null; } }
         public string To { get { throw null; } }
@@ -680,7 +697,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         public string ForwardTo { get { throw null; } set { } }
         public System.TimeSpan LockDuration { get { throw null; } set { } }
         public int MaxDeliveryCount { get { throw null; } set { } }
-        public long MaxMessageSizeInKilobytes { get { throw null; } set { } }
+        public long? MaxMessageSizeInKilobytes { get { throw null; } set { } }
         public long MaxSizeInMegabytes { get { throw null; } set { } }
         public string Name { get { throw null; } }
         public bool RequiresDuplicateDetection { get { throw null; } }
@@ -882,7 +899,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         public System.TimeSpan DuplicateDetectionHistoryTimeWindow { get { throw null; } set { } }
         public bool EnableBatchedOperations { get { throw null; } set { } }
         public bool EnablePartitioning { get { throw null; } set { } }
-        public long MaxMessageSizeInKilobytes { get { throw null; } set { } }
+        public long? MaxMessageSizeInKilobytes { get { throw null; } set { } }
         public long MaxSizeInMegabytes { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public bool RequiresDuplicateDetection { get { throw null; } set { } }

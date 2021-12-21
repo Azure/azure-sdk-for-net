@@ -27,15 +27,17 @@ namespace Azure.ResourceManager.Tests
         {
             _rgName = SessionRecording.GenerateAssetName("testRg-");
             Subscription subscription = await GlobalClient.GetSubscriptions().GetIfExistsAsync(SessionEnvironment.SubscriptionId);
-            _ = subscription.GetResourceGroups().Construct(_location).CreateOrUpdateAsync(_rgName).ConfigureAwait(false).GetAwaiter().GetResult().Value;
-            StopSessionRecording();
+            var op = InstrumentOperation(subscription.GetResourceGroups().Construct(_location).CreateOrUpdate(_rgName, waitForCompletion: false));
+            op.WaitForCompletion();
+            await StopSessionRecordingAsync();
         }
 
         [RecordedTest]
         [SyncOnly]
         public void ConstructWithInvalidSubscription()
         {
-            var ex = Assert.Throws<RequestFailedException>(() => new ArmClient(Guid.NewGuid().ToString(), TestEnvironment.Credential));
+            var client = new ArmClient(Guid.NewGuid().ToString(), TestEnvironment.Credential);
+            var ex = Assert.Throws<RequestFailedException>(() => client.GetDefaultSubscription());
             Assert.AreEqual(404, ex.Status);
         }
 
@@ -88,14 +90,14 @@ namespace Azure.ResourceManager.Tests
         public void GetGenericResourceOperationsSingleIDTests()
         {
             string id = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-1";
-            Assert.AreEqual(id, Client.GetGenericResource(id).Id.StringValue);
+            Assert.AreEqual(id, Client.GetGenericResource(new ResourceIdentifier(id)).Id.StringValue);
         }
 
         [RecordedTest]
         public async Task GetGenericResourceOperationsWithSingleValidResource()
         {
             string id = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{_rgName}";
-            var genericResourceOperations = Client.GetGenericResource(id);
+            var genericResourceOperations = Client.GetGenericResource(new ResourceIdentifier(id));
             var genericResource = await genericResourceOperations.GetAsync();
             Assert.AreEqual(200, genericResource.GetRawResponse().Status);
         }
@@ -104,7 +106,7 @@ namespace Azure.ResourceManager.Tests
         public void GetGenericResourceOperationsWithSingleInvalidResource()
         {
             string id = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-1";
-            var genericResourceOperations = Client.GetGenericResource(id);
+            var genericResourceOperations = Client.GetGenericResource(new ResourceIdentifier(id));
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => await genericResourceOperations.GetAsync());
             Assert.AreEqual(404, exception.Status);
         }
@@ -153,7 +155,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public void GetGenericResourceOperationWithNullId()
         {
-            string x = null;
+            ResourceIdentifier x = null;
             Assert.Throws<ArgumentNullException>(() => { Client.GetGenericResource(x); });
         }
 
@@ -215,6 +217,7 @@ namespace Azure.ResourceManager.Tests
         private static ReadOnlyMemory<HttpPipelinePolicy> GetPoliciesFromPipeline(HttpPipeline pipeline)
         {
             var policyField = pipeline.GetType().GetField("_pipeline", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField);
+            policyField ??= pipeline.GetType().BaseType.GetField("_pipeline", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField);
             return (ReadOnlyMemory<HttpPipelinePolicy>)policyField.GetValue(pipeline);
         }
     }

@@ -13,7 +13,6 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
 {
-    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24577")]
     public class IpGroupTests : NetworkServiceClientTestBase
     {
         private ResourceGroup _resourceGroup;
@@ -29,11 +28,12 @@ namespace Azure.ResourceManager.Network.Tests
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("IpGroupRG-"), new ResourceGroupData(Location.WestUS2));
+            Subscription subscription = await GlobalClient.GetDefaultSubscriptionAsync();
+            var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("IpGroupRG-"), new ResourceGroupData(Location.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             _ipGroupName = SessionRecording.GenerateAssetName("IpGroupRG-");
-            StopSessionRecording();
+            await StopSessionRecordingAsync();
         }
 
         [OneTimeTearDown]

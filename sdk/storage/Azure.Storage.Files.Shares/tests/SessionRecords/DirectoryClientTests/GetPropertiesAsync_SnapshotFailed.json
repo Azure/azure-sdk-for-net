@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "48cd7516-3a6b-5651-fbe4-b3dd5381a80e",
         "x-ms-date": "Tue, 26 Jan 2021 19:47:54 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "48cd7516-3a6b-5651-fbe4-b3dd5381a80e",
         "x-ms-request-id": "a2cb51fb-601a-008b-1f1c-f4deaf000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -51,7 +51,7 @@
         "x-ms-file-last-write-time": "Now",
         "x-ms-file-permission": "Inherit",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -74,7 +74,7 @@
         "x-ms-file-permission-key": "17860367565182308406*11459378189709739967",
         "x-ms-request-id": "a2cb5201-601a-008b-211c-f4deaf000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -92,7 +92,7 @@
         "x-ms-client-request-id": "04699a40-6891-b520-eafb-976b72cade87",
         "x-ms-date": "Tue, 26 Jan 2021 19:47:54 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -108,7 +108,7 @@
         "x-ms-client-request-id": "04699a40-6891-b520-eafb-976b72cade87",
         "x-ms-error-code": "ShareNotFound",
         "x-ms-request-id": "a2cb5202-601a-008b-221c-f4deaf000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ShareNotFound</Code><Message>The specified share does not exist.\n",
@@ -131,7 +131,7 @@
         "x-ms-date": "Tue, 26 Jan 2021 19:47:54 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -144,7 +144,7 @@
         ],
         "x-ms-client-request-id": "4c82c922-7e7d-03c1-1428-8b7f08342edd",
         "x-ms-request-id": "a2cb5204-601a-008b-231c-f4deaf000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

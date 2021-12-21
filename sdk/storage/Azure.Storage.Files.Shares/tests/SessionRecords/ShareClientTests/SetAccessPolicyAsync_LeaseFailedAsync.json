@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "74b297c2-3bed-c216-5b7a-15e8f36b3408",
         "x-ms-date": "Tue, 26 Jan 2021 19:25:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "74b297c2-3bed-c216-5b7a-15e8f36b3408",
         "x-ms-request-id": "48625c25-301a-002f-3519-f4d709000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -50,7 +50,7 @@
         "x-ms-date": "Tue, 26 Jan 2021 19:25:45 GMT",
         "x-ms-lease-id": "251614de-4ac9-4dda-d710-f8bb03687d0b",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": "﻿<SignedIdentifiers><SignedIdentifier><Id>jkrldhluosffgujdanmg</Id><AccessPolicy><Start>2021-01-26T18:25:45.3840965Z</Start><Expiry>2021-01-26T20:25:45.3840965Z</Expiry><Permission>rw</Permission></AccessPolicy></SignedIdentifier></SignedIdentifiers>",
       "StatusCode": 412,
@@ -65,7 +65,7 @@
         "x-ms-client-request-id": "e7674b8e-fa63-27eb-de1c-d611aea40104",
         "x-ms-error-code": "LeaseNotPresentWithContainerOperation",
         "x-ms-request-id": "48625c28-301a-002f-3619-f4d709000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>LeaseNotPresentWithContainerOperation</Code><Message>There is currently no lease on the file share.\n",
@@ -88,7 +88,7 @@
         "x-ms-date": "Tue, 26 Jan 2021 19:25:45 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -101,7 +101,7 @@
         ],
         "x-ms-client-request-id": "6ec552bb-d298-8fcb-efc1-99a08f8a2f9e",
         "x-ms-request-id": "48625c29-301a-002f-3719-f4d709000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

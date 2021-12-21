@@ -10,7 +10,7 @@
         "x-ms-client-request-id": "6bc8e9a9-98f7-a783-9cf2-b060c297f421",
         "x-ms-range": "bytes=136368357376-136368361471",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 416,
@@ -22,7 +22,7 @@
         "x-ms-client-request-id": "6bc8e9a9-98f7-a783-9cf2-b060c297f421",
         "x-ms-error-code": "InvalidRange",
         "x-ms-request-id": "601a3ee1-601e-0008-2436-8ac09a000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\n",

@@ -37,11 +37,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// message are deserialized this collection</param>
         /// <param name="datasetParameters">Reference data flow parameters from
         /// dataset.</param>
-        public DataFlowReference(string referenceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object datasetParameters = default(object))
+        /// <param name="parameters">Data flow parameters</param>
+        public DataFlowReference(string referenceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object datasetParameters = default(object), IDictionary<string, object> parameters = default(IDictionary<string, object>))
         {
             AdditionalProperties = additionalProperties;
             ReferenceName = referenceName;
             DatasetParameters = datasetParameters;
+            Parameters = parameters;
             CustomInit();
         }
         /// <summary>
@@ -75,6 +77,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "datasetParameters")]
         public object DatasetParameters { get; set; }
+
+        /// <summary>
+        /// Gets or sets data flow parameters
+        /// </summary>
+        [JsonProperty(PropertyName = "parameters")]
+        public IDictionary<string, object> Parameters { get; set; }
 
         /// <summary>
         /// Data flow reference type.

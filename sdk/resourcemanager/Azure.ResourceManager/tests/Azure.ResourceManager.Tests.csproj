@@ -7,12 +7,12 @@
   
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
-    <PackageReference Include="Azure.ResourceManager.Compute"/>
-    <PackageReference Include="Azure.ResourceManager.Network"/>
   </ItemGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.csproj" />
+    <ProjectReference Include="..\..\..\compute\Azure.ResourceManager.Compute\src\Azure.ResourceManager.Compute.csproj" />
+    <ProjectReference Include="..\..\..\network\Azure.ResourceManager.Network\src\Azure.ResourceManager.Network.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Unit\TestAssets\Identity\*.json">
@@ -29,12 +29,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="SessionRecords\ContainerTryGetTest\" />
-    <Folder Include="SessionRecords\FeatureContainerTests\" />
+    <Folder Include="SessionRecords\CollectionTryGetTest\" />
+    <Folder Include="SessionRecords\FeatureCollectionTests\" />
     <Folder Include="SessionRecords\LocationExpandedTests\" />
-    <Folder Include="SessionRecords\ManagementGroupContainerTests\" />
     <Folder Include="SessionRecords\ResourceGroupOperationsTests\" />
-    <Folder Include="SessionRecords\RestApiContainerTests\" />
+    <Folder Include="SessionRecords\RestApiCollectionTests\" />
     <Folder Include="SessionRecords\SubscriptionOperationsTests\" />
   </ItemGroup>
 
