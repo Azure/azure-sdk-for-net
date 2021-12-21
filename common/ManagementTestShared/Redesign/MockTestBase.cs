@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.TestFramework
                 }
                 catch (SocketException)
                 {
-                    throw new InvalidOperationException("The mock server is not running, please start the mock server following this guide `https://devdiv.visualstudio.com/DevDiv/_git/avs?path=%2FREADME.md` in order to record the test");
+                    throw new InvalidOperationException("The mock server is not running, please start the mock server following this guide `https://github.com/Azure/azure-sdk-tools/tree/main/tools/mock-service-host` in order to record the test");
                 }
             }
         }
