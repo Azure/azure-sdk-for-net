@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.Communication
 {
     internal partial class CommunicationServiceRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
@@ -30,13 +29,11 @@ namespace Azure.ResourceManager.Communication
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CommunicationServiceRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2020-08-20")
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public CommunicationServiceRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null, string apiVersion = "2020-08-20")
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.Communication
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(NameAvailabilityParameters nameAvailabilityParameters)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, NameAvailabilityParameters nameAvailabilityParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -69,11 +66,18 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Checks that the CommunicationService name is valid and is not already in use. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="nameAvailabilityParameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<NameAvailability>> CheckNameAvailabilityAsync(NameAvailabilityParameters nameAvailabilityParameters = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public async Task<Response<NameAvailability>> CheckNameAvailabilityAsync(string subscriptionId, NameAvailabilityParameters nameAvailabilityParameters = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCheckNameAvailabilityRequest(nameAvailabilityParameters);
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, nameAvailabilityParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -90,11 +94,18 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Checks that the CommunicationService name is valid and is not already in use. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="nameAvailabilityParameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<NameAvailability> CheckNameAvailability(NameAvailabilityParameters nameAvailabilityParameters = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public Response<NameAvailability> CheckNameAvailability(string subscriptionId, NameAvailabilityParameters nameAvailabilityParameters = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCheckNameAvailabilityRequest(nameAvailabilityParameters);
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, nameAvailabilityParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -110,7 +121,7 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        internal HttpMessage CreateLinkNotificationHubRequest(string resourceGroupName, string communicationServiceName, LinkNotificationHubParameters linkNotificationHubParameters)
+        internal HttpMessage CreateLinkNotificationHubRequest(string subscriptionId, string resourceGroupName, string communicationServiceName, LinkNotificationHubParameters linkNotificationHubParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -139,13 +150,18 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Links an Azure Notification Hub to this communication service. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="linkNotificationHubParameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is null. </exception>
-        public async Task<Response<LinkedNotificationHub>> LinkNotificationHubAsync(string resourceGroupName, string communicationServiceName, LinkNotificationHubParameters linkNotificationHubParameters = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="communicationServiceName"/> is null. </exception>
+        public async Task<Response<LinkedNotificationHub>> LinkNotificationHubAsync(string subscriptionId, string resourceGroupName, string communicationServiceName, LinkNotificationHubParameters linkNotificationHubParameters = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -155,7 +171,7 @@ namespace Azure.ResourceManager.Communication
                 throw new ArgumentNullException(nameof(communicationServiceName));
             }
 
-            using var message = CreateLinkNotificationHubRequest(resourceGroupName, communicationServiceName, linkNotificationHubParameters);
+            using var message = CreateLinkNotificationHubRequest(subscriptionId, resourceGroupName, communicationServiceName, linkNotificationHubParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -172,13 +188,18 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Links an Azure Notification Hub to this communication service. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="linkNotificationHubParameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is null. </exception>
-        public Response<LinkedNotificationHub> LinkNotificationHub(string resourceGroupName, string communicationServiceName, LinkNotificationHubParameters linkNotificationHubParameters = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="communicationServiceName"/> is null. </exception>
+        public Response<LinkedNotificationHub> LinkNotificationHub(string subscriptionId, string resourceGroupName, string communicationServiceName, LinkNotificationHubParameters linkNotificationHubParameters = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -188,7 +209,7 @@ namespace Azure.ResourceManager.Communication
                 throw new ArgumentNullException(nameof(communicationServiceName));
             }
 
-            using var message = CreateLinkNotificationHubRequest(resourceGroupName, communicationServiceName, linkNotificationHubParameters);
+            using var message = CreateLinkNotificationHubRequest(subscriptionId, resourceGroupName, communicationServiceName, linkNotificationHubParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -204,7 +225,7 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        internal HttpMessage CreateGetAllBySubscriptionRequest()
+        internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -222,10 +243,17 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Handles requests to list all resources in a subscription. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CommunicationServiceResourceList>> GetAllBySubscriptionAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public async Task<Response<CommunicationServiceResourceList>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllBySubscriptionRequest();
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateListBySubscriptionRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -242,10 +270,17 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Handles requests to list all resources in a subscription. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CommunicationServiceResourceList> GetAllBySubscription(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public Response<CommunicationServiceResourceList> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllBySubscriptionRequest();
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateListBySubscriptionRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -261,7 +296,7 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        internal HttpMessage CreateGetAllByResourceGroupRequest(string resourceGroupName)
+        internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -281,17 +316,22 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Handles requests to list all resources in a resource group. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<CommunicationServiceResourceList>> GetAllByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        public async Task<Response<CommunicationServiceResourceList>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllByResourceGroupRequest(resourceGroupName);
+            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -308,17 +348,22 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Handles requests to list all resources in a resource group. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<CommunicationServiceResourceList> GetAllByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        public Response<CommunicationServiceResourceList> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllByResourceGroupRequest(resourceGroupName);
+            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -334,7 +379,7 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string communicationServiceName, CommunicationServiceData parameters)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string communicationServiceName, CommunicationServiceData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -362,13 +407,18 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Operation to update an existing CommunicationService. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="parameters"> Parameters for the update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is null. </exception>
-        public async Task<Response<CommunicationServiceData>> UpdateAsync(string resourceGroupName, string communicationServiceName, CommunicationServiceData parameters = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="communicationServiceName"/> is null. </exception>
+        public async Task<Response<CommunicationServiceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string communicationServiceName, CommunicationServiceData parameters = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -378,7 +428,7 @@ namespace Azure.ResourceManager.Communication
                 throw new ArgumentNullException(nameof(communicationServiceName));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, communicationServiceName, parameters);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, communicationServiceName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -395,13 +445,18 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Operation to update an existing CommunicationService. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="parameters"> Parameters for the update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is null. </exception>
-        public Response<CommunicationServiceData> Update(string resourceGroupName, string communicationServiceName, CommunicationServiceData parameters = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="communicationServiceName"/> is null. </exception>
+        public Response<CommunicationServiceData> Update(string subscriptionId, string resourceGroupName, string communicationServiceName, CommunicationServiceData parameters = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -411,7 +466,7 @@ namespace Azure.ResourceManager.Communication
                 throw new ArgumentNullException(nameof(communicationServiceName));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, communicationServiceName, parameters);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, communicationServiceName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -427,7 +482,7 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string communicationServiceName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string communicationServiceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -448,12 +503,17 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Get the CommunicationService and its properties. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is null. </exception>
-        public async Task<Response<CommunicationServiceData>> GetAsync(string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="communicationServiceName"/> is null. </exception>
+        public async Task<Response<CommunicationServiceData>> GetAsync(string subscriptionId, string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -463,7 +523,7 @@ namespace Azure.ResourceManager.Communication
                 throw new ArgumentNullException(nameof(communicationServiceName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, communicationServiceName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, communicationServiceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -482,12 +542,17 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Get the CommunicationService and its properties. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is null. </exception>
-        public Response<CommunicationServiceData> Get(string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="communicationServiceName"/> is null. </exception>
+        public Response<CommunicationServiceData> Get(string subscriptionId, string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -497,7 +562,7 @@ namespace Azure.ResourceManager.Communication
                 throw new ArgumentNullException(nameof(communicationServiceName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, communicationServiceName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, communicationServiceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -515,7 +580,7 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string communicationServiceName, CommunicationServiceData parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string communicationServiceName, CommunicationServiceData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -543,13 +608,18 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Create a new CommunicationService or update an existing CommunicationService. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="parameters"> Parameters for the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string communicationServiceName, CommunicationServiceData parameters = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="communicationServiceName"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string communicationServiceName, CommunicationServiceData parameters = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -559,7 +629,7 @@ namespace Azure.ResourceManager.Communication
                 throw new ArgumentNullException(nameof(communicationServiceName));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, communicationServiceName, parameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, communicationServiceName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -572,13 +642,18 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Create a new CommunicationService or update an existing CommunicationService. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="parameters"> Parameters for the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string communicationServiceName, CommunicationServiceData parameters = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="communicationServiceName"/> is null. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string communicationServiceName, CommunicationServiceData parameters = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -588,7 +663,7 @@ namespace Azure.ResourceManager.Communication
                 throw new ArgumentNullException(nameof(communicationServiceName));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, communicationServiceName, parameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, communicationServiceName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -600,7 +675,7 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string communicationServiceName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string communicationServiceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -621,12 +696,17 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Operation to delete a CommunicationService. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="communicationServiceName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -636,7 +716,7 @@ namespace Azure.ResourceManager.Communication
                 throw new ArgumentNullException(nameof(communicationServiceName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, communicationServiceName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, communicationServiceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -650,12 +730,17 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Operation to delete a CommunicationService. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="communicationServiceName"/> is null. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -665,7 +750,7 @@ namespace Azure.ResourceManager.Communication
                 throw new ArgumentNullException(nameof(communicationServiceName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, communicationServiceName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, communicationServiceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -678,7 +763,7 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        internal HttpMessage CreateGetKeysRequest(string resourceGroupName, string communicationServiceName)
+        internal HttpMessage CreateListKeysRequest(string subscriptionId, string resourceGroupName, string communicationServiceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -700,12 +785,17 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Get the access keys of the CommunicationService resource. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is null. </exception>
-        public async Task<Response<CommunicationServiceKeys>> GetKeysAsync(string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="communicationServiceName"/> is null. </exception>
+        public async Task<Response<CommunicationServiceKeys>> ListKeysAsync(string subscriptionId, string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -715,7 +805,7 @@ namespace Azure.ResourceManager.Communication
                 throw new ArgumentNullException(nameof(communicationServiceName));
             }
 
-            using var message = CreateGetKeysRequest(resourceGroupName, communicationServiceName);
+            using var message = CreateListKeysRequest(subscriptionId, resourceGroupName, communicationServiceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -732,12 +822,17 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Get the access keys of the CommunicationService resource. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is null. </exception>
-        public Response<CommunicationServiceKeys> GetKeys(string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="communicationServiceName"/> is null. </exception>
+        public Response<CommunicationServiceKeys> ListKeys(string subscriptionId, string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -747,7 +842,7 @@ namespace Azure.ResourceManager.Communication
                 throw new ArgumentNullException(nameof(communicationServiceName));
             }
 
-            using var message = CreateGetKeysRequest(resourceGroupName, communicationServiceName);
+            using var message = CreateListKeysRequest(subscriptionId, resourceGroupName, communicationServiceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -763,7 +858,7 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        internal HttpMessage CreateRegenerateKeyRequest(string resourceGroupName, string communicationServiceName, RegenerateKeyParameters parameters)
+        internal HttpMessage CreateRegenerateKeyRequest(string subscriptionId, string resourceGroupName, string communicationServiceName, RegenerateKeyParameters parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -789,13 +884,18 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Regenerate CommunicationService access key. PrimaryKey and SecondaryKey cannot be regenerated at the same time. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="parameters"> Parameter that describes the Regenerate Key Operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="communicationServiceName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<CommunicationServiceKeys>> RegenerateKeyAsync(string resourceGroupName, string communicationServiceName, RegenerateKeyParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="communicationServiceName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response<CommunicationServiceKeys>> RegenerateKeyAsync(string subscriptionId, string resourceGroupName, string communicationServiceName, RegenerateKeyParameters parameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -809,7 +909,7 @@ namespace Azure.ResourceManager.Communication
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateRegenerateKeyRequest(resourceGroupName, communicationServiceName, parameters);
+            using var message = CreateRegenerateKeyRequest(subscriptionId, resourceGroupName, communicationServiceName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -826,13 +926,18 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Regenerate CommunicationService access key. PrimaryKey and SecondaryKey cannot be regenerated at the same time. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="parameters"> Parameter that describes the Regenerate Key Operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="communicationServiceName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<CommunicationServiceKeys> RegenerateKey(string resourceGroupName, string communicationServiceName, RegenerateKeyParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="communicationServiceName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response<CommunicationServiceKeys> RegenerateKey(string subscriptionId, string resourceGroupName, string communicationServiceName, RegenerateKeyParameters parameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -846,7 +951,7 @@ namespace Azure.ResourceManager.Communication
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateRegenerateKeyRequest(resourceGroupName, communicationServiceName, parameters);
+            using var message = CreateRegenerateKeyRequest(subscriptionId, resourceGroupName, communicationServiceName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -862,7 +967,7 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        internal HttpMessage CreateGetAllBySubscriptionNextPageRequest(string nextLink)
+        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -878,16 +983,21 @@ namespace Azure.ResourceManager.Communication
 
         /// <summary> Handles requests to list all resources in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<CommunicationServiceResourceList>> GetAllBySubscriptionNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        public async Task<Response<CommunicationServiceResourceList>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
 
-            using var message = CreateGetAllBySubscriptionNextPageRequest(nextLink);
+            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -905,16 +1015,21 @@ namespace Azure.ResourceManager.Communication
 
         /// <summary> Handles requests to list all resources in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<CommunicationServiceResourceList> GetAllBySubscriptionNextPage(string nextLink, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        public Response<CommunicationServiceResourceList> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
 
-            using var message = CreateGetAllBySubscriptionNextPageRequest(nextLink);
+            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -930,7 +1045,7 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        internal HttpMessage CreateGetAllByResourceGroupNextPageRequest(string nextLink, string resourceGroupName)
+        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -946,21 +1061,26 @@ namespace Azure.ResourceManager.Communication
 
         /// <summary> Handles requests to list all resources in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<CommunicationServiceResourceList>> GetAllByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        public async Task<Response<CommunicationServiceResourceList>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllByResourceGroupNextPageRequest(nextLink, resourceGroupName);
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -978,21 +1098,26 @@ namespace Azure.ResourceManager.Communication
 
         /// <summary> Handles requests to list all resources in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<CommunicationServiceResourceList> GetAllByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        public Response<CommunicationServiceResourceList> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllByResourceGroupNextPageRequest(nextLink, resourceGroupName);
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

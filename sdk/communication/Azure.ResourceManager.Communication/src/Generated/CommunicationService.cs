@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Communication
     public partial class CommunicationService : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly CommunicationServiceRestOperations _restClient;
+        private readonly CommunicationServiceRestOperations _communicationServiceRestClient;
         private readonly CommunicationServiceData _data;
 
         /// <summary> Initializes a new instance of the <see cref="CommunicationService"/> class for mocking. </summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Communication
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new CommunicationServiceRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _communicationServiceRestClient = new CommunicationServiceRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="CommunicationService"/> class. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Communication
         internal CommunicationService(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new CommunicationServiceRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _communicationServiceRestClient = new CommunicationServiceRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="CommunicationService"/> class. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Communication
         internal CommunicationService(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new CommunicationServiceRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _communicationServiceRestClient = new CommunicationServiceRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Communication
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _communicationServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new CommunicationService(this, response.Value), response.GetRawResponse());
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Communication
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _communicationServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CommunicationService(this, response.Value), response.GetRawResponse());
@@ -149,8 +149,8 @@ namespace Azure.ResourceManager.Communication
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CommunicationServiceDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _communicationServiceRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CommunicationServiceDeleteOperation(_clientDiagnostics, Pipeline, _communicationServiceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -171,86 +171,11 @@ namespace Azure.ResourceManager.Communication
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new CommunicationServiceDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _communicationServiceRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new CommunicationServiceDeleteOperation(_clientDiagnostics, Pipeline, _communicationServiceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-        /// <summary> Checks that the CommunicationService name is valid and is not already in use. </summary>
-        /// <param name="nameAvailabilityParameters"> Parameters supplied to the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NameAvailability>> CheckNameAvailabilityAsync(NameAvailabilityParameters nameAvailabilityParameters = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("CommunicationService.CheckNameAvailability");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.CheckNameAvailabilityAsync(nameAvailabilityParameters, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Checks that the CommunicationService name is valid and is not already in use. </summary>
-        /// <param name="nameAvailabilityParameters"> Parameters supplied to the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NameAvailability> CheckNameAvailability(NameAvailabilityParameters nameAvailabilityParameters = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("CommunicationService.CheckNameAvailability");
-            scope.Start();
-            try
-            {
-                var response = _restClient.CheckNameAvailability(nameAvailabilityParameters, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Links an Azure Notification Hub to this communication service. </summary>
-        /// <param name="linkNotificationHubParameters"> Parameters supplied to the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LinkedNotificationHub>> LinkNotificationHubAsync(LinkNotificationHubParameters linkNotificationHubParameters = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("CommunicationService.LinkNotificationHub");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.LinkNotificationHubAsync(Id.ResourceGroupName, Id.Name, linkNotificationHubParameters, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Links an Azure Notification Hub to this communication service. </summary>
-        /// <param name="linkNotificationHubParameters"> Parameters supplied to the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LinkedNotificationHub> LinkNotificationHub(LinkNotificationHubParameters linkNotificationHubParameters = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("CommunicationService.LinkNotificationHub");
-            scope.Start();
-            try
-            {
-                var response = _restClient.LinkNotificationHub(Id.ResourceGroupName, Id.Name, linkNotificationHubParameters, cancellationToken);
-                return response;
             }
             catch (Exception e)
             {
@@ -262,13 +187,13 @@ namespace Azure.ResourceManager.Communication
         /// <summary> Operation to update an existing CommunicationService. </summary>
         /// <param name="parameters"> Parameters for the update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CommunicationService>> UpdateAsync(CommunicationServiceData parameters = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<CommunicationService>> UpdateAsync(CommunicationServiceData parameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CommunicationService.Update");
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _communicationServiceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CommunicationService(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -287,8 +212,46 @@ namespace Azure.ResourceManager.Communication
             scope.Start();
             try
             {
-                var response = _restClient.Update(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var response = _communicationServiceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
                 return Response.FromValue(new CommunicationService(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Links an Azure Notification Hub to this communication service. </summary>
+        /// <param name="linkNotificationHubParameters"> Parameters supplied to the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<LinkedNotificationHub>> LinkNotificationHubAsync(LinkNotificationHubParameters linkNotificationHubParameters = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("CommunicationService.LinkNotificationHub");
+            scope.Start();
+            try
+            {
+                var response = await _communicationServiceRestClient.LinkNotificationHubAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkNotificationHubParameters, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Links an Azure Notification Hub to this communication service. </summary>
+        /// <param name="linkNotificationHubParameters"> Parameters supplied to the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<LinkedNotificationHub> LinkNotificationHub(LinkNotificationHubParameters linkNotificationHubParameters = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("CommunicationService.LinkNotificationHub");
+            scope.Start();
+            try
+            {
+                var response = _communicationServiceRestClient.LinkNotificationHub(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkNotificationHubParameters, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -299,13 +262,13 @@ namespace Azure.ResourceManager.Communication
 
         /// <summary> Get the access keys of the CommunicationService resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CommunicationServiceKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<CommunicationServiceKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CommunicationService.GetKeys");
             scope.Start();
             try
             {
-                var response = await _restClient.GetKeysAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _communicationServiceRestClient.ListKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -323,7 +286,7 @@ namespace Azure.ResourceManager.Communication
             scope.Start();
             try
             {
-                var response = _restClient.GetKeys(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _communicationServiceRestClient.ListKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -337,7 +300,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="parameters"> Parameter that describes the Regenerate Key Operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response<CommunicationServiceKeys>> RegenerateKeyAsync(RegenerateKeyParameters parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<CommunicationServiceKeys>> RegenerateKeyAsync(RegenerateKeyParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -348,7 +311,7 @@ namespace Azure.ResourceManager.Communication
             scope.Start();
             try
             {
-                var response = await _restClient.RegenerateKeyAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _communicationServiceRestClient.RegenerateKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -373,7 +336,7 @@ namespace Azure.ResourceManager.Communication
             scope.Start();
             try
             {
-                var response = _restClient.RegenerateKey(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var response = _communicationServiceRestClient.RegenerateKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
                 return response;
             }
             catch (Exception e)
