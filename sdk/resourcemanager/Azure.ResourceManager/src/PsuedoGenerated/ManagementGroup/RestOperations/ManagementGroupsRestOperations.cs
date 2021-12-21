@@ -30,7 +30,8 @@ namespace Azure.ResourceManager.Management
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
         /// <param name="endpoint"> server parameter. </param>
-        public ManagementGroupsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions options, Uri endpoint = null)
+        /// <param name="apiVersion"> Api Version. </param>
+        public ManagementGroupsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions options, string apiVersion, Uri endpoint = null)
         {
             endpoint ??= new Uri("https://management.azure.com");
 
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Management
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
-            _apiVersion = options.ResourceApiVersionOverrides.TryGetValue(ManagementGroup.ResourceType, out var version) ? version : ManagementGroupVersion.Default.ToString();
+            _apiVersion = apiVersion;
         }
 
         internal HttpMessage CreateListRequest(string cacheControl, string skiptoken)

@@ -47,7 +47,12 @@ namespace Azure.ResourceManager.Management
         /// <inheritdoc/>
         protected override ResourceType ValidResourceType => Tenant.ResourceType;
 
-        private ManagementGroupsRestOperations RestClient => _restClient ??= new ManagementGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+        private ManagementGroupsRestOperations RestClient => _restClient ??= new ManagementGroupsRestOperations(
+            _clientDiagnostics,
+            Pipeline,
+            ClientOptions,
+            ClientOptions.ResourceApiVersionOverrides.TryGetValue(ManagementGroup.ResourceType, out var version) ? version : ManagementGroupVersion.Default.ToString(),
+            BaseUri);
 
         private ClientDiagnostics Diagnostics => _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
 

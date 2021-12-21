@@ -48,7 +48,13 @@ namespace Azure.ResourceManager.Resources
         /// <inheritdoc/>
         protected override ResourceType ValidResourceType => Subscription.ResourceType;
 
-        private ProviderRestOperations RestClient => _restClient ??= new ProviderRestOperations(Diagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+        private ProviderRestOperations RestClient => _restClient ??= new ProviderRestOperations(
+            Diagnostics,
+            Pipeline,
+            ClientOptions,
+            Id.SubscriptionId,
+            ClientOptions.ResourceApiVersionOverrides.TryGetValue(Provider.ResourceType, out var version) ? version : ProviderVersion.Default.ToString(),
+            BaseUri);
 
         private ClientDiagnostics Diagnostics => _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
 

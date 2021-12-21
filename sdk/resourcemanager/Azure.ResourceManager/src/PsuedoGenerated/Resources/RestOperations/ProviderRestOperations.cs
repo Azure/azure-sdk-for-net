@@ -32,8 +32,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="options"> The client options used to construct the current client. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
+        /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public ProviderRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions options, string subscriptionId, Uri endpoint = null)
+        public ProviderRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions options, string subscriptionId, string apiVersion, Uri endpoint = null)
         {
             if (subscriptionId == null)
             {
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Resources
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
-            _apiVersion = options.ResourceApiVersionOverrides.TryGetValue(Provider.ResourceType, out var version) ? version : ProviderVersion.Default.ToString();
+            _apiVersion = apiVersion;
         }
 
         internal Azure.Core.HttpMessage CreateUnregisterRequest(string resourceProviderNamespace)

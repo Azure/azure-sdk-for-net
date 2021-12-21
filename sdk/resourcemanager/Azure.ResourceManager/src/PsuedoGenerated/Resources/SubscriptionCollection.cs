@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.Resources
             : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            RestClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            var apiVersion = ClientOptions.ResourceApiVersionOverrides.TryGetValue(Subscription.ResourceType, out var version) ? version : SubscriptionVersion.Default.ToString();
+            RestClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, apiVersion, BaseUri);
         }
 
         /// <summary>

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -39,7 +40,12 @@ namespace Azure.ResourceManager.Resources
         /// <inheritdoc/>
         protected override ResourceType ValidResourceType => ResourceIdentifier.Root.ResourceType;
 
-        private TenantsRestOperations RestClient => new TenantsRestOperations(Diagnostics, Pipeline, ClientOptions, BaseUri);
+        private TenantsRestOperations RestClient => new TenantsRestOperations(
+            Diagnostics,
+            Pipeline,
+            ClientOptions,
+            ClientOptions.ResourceApiVersionOverrides.TryGetValue(Tenant.ResourceType, out var version) ? version : TenantVersion.Default.ToString(),
+            BaseUri);
 
         private ClientDiagnostics Diagnostics => _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
 

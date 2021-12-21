@@ -45,8 +45,10 @@ namespace Azure.ResourceManager.Resources
             : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _genericRestClient ??= new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            var rgVersion = ClientOptions.ResourceApiVersionOverrides.TryGetValue(ResourceType, out var version) ? version : ResourceGroupVersion.Default.ToString();
+            _restClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, rgVersion, BaseUri);
+            var genericVersion = ClientOptions.ResourceApiVersionOverrides.TryGetValue(GenericResource.ResourceType, out version) ? version : GenericResourceVersion.Default.ToString();
+            _genericRestClient ??= new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, genericVersion, BaseUri);
         }
 
         /// <summary>
@@ -58,8 +60,10 @@ namespace Azure.ResourceManager.Resources
             : base(operations, resource.Id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _genericRestClient ??= new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            var rgVersion = ClientOptions.ResourceApiVersionOverrides.TryGetValue(ResourceType, out var version) ? version : ResourceGroupVersion.Default.ToString();
+            _restClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, rgVersion, BaseUri);
+            var genericVersion = ClientOptions.ResourceApiVersionOverrides.TryGetValue(GenericResource.ResourceType, out version) ? version : GenericResourceVersion.Default.ToString();
+            _genericRestClient ??= new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, genericVersion, BaseUri);
             _data = resource;
             HasData = true;
         }

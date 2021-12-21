@@ -45,8 +45,10 @@ namespace Azure.ResourceManager.Resources
             : base(clientContext,  id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            var subVersion = ClientOptions.ResourceApiVersionOverrides.TryGetValue(ResourceType, out var version) ? version : SubscriptionVersion.Default.ToString();
+            _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, subVersion, BaseUri);
+            var featureVersion = ClientOptions.ResourceApiVersionOverrides.TryGetValue(Feature.ResourceType, out version) ? version : FeatureVersion.Default.ToString();
+            _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, featureVersion, BaseUri);
         }
 
         /// <summary>
@@ -60,8 +62,10 @@ namespace Azure.ResourceManager.Resources
             _data = subscriptionData;
             HasData = true;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            var subVersion = ClientOptions.ResourceApiVersionOverrides.TryGetValue(ResourceType, out var version) ? version : SubscriptionVersion.Default.ToString();
+            _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, subVersion, BaseUri);
+            var featureVersion = ClientOptions.ResourceApiVersionOverrides.TryGetValue(Feature.ResourceType, out version) ? version : FeatureVersion.Default.ToString();
+            _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, featureVersion, BaseUri);
         }
 
         /// <summary>

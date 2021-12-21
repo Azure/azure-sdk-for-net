@@ -4,7 +4,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Management.Models
 {
     /// <summary>
     /// A class representing Azure resource API versions base.

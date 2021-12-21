@@ -46,7 +46,13 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         protected new Subscription Parent { get {return base.Parent as Subscription;} }
 
-        private ResourceGroupsRestOperations RestClient => _restClient ??= new ResourceGroupsRestOperations(Diagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+        private ResourceGroupsRestOperations RestClient => _restClient ??= new ResourceGroupsRestOperations(
+            Diagnostics,
+            Pipeline,
+            ClientOptions,
+            Id.SubscriptionId,
+            ClientOptions.ResourceApiVersionOverrides.TryGetValue(ResourceGroup.ResourceType, out var version) ? version : ResourceGroupVersion.Default.ToString(),
+            BaseUri);
 
         private ClientDiagnostics Diagnostics => _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
 

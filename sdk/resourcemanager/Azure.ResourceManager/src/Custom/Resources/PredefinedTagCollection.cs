@@ -47,7 +47,13 @@ namespace Azure.ResourceManager.Resources
         /// <summary>
         /// Gets the operations that can be performed on the collection.
         /// </summary>
-        private TagRestOperations RestClient => _restClient ??= new TagRestOperations(Diagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+        private TagRestOperations RestClient => _restClient ??= new TagRestOperations(
+            Diagnostics,
+            Pipeline,
+            ClientOptions,
+            Id.SubscriptionId,
+            ClientOptions.ResourceApiVersionOverrides.TryGetValue(TagResource.ResourceType, out var version) ? version : TagResourceVersion.Default.ToString(),
+            BaseUri);
 
         private ClientDiagnostics Diagnostics => _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
 
