@@ -81,6 +81,15 @@
       "description": "The optional parameter specifies whether generate related pipline ci.yml and test-resources.json in parent folder.",
       "defaultValue": "false"
     },
+    "ServiceName": {
+      "type": "derived",
+      "datatype": "text",
+      "description": "Renames files containing 'ServiceName'",
+      "valueSource": "provider",
+      "valueTransform": "ProviderShortNameForm",
+      "fileRename": "Template",
+      "replaces": "Template"
+    },
     "productName": {
       "type": "derived",
       "datatype": "text",

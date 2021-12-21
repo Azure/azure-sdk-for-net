@@ -10,7 +10,7 @@ input-file:
 - SwaggerFileLink
 namespace: Azure.ServiceTemplate.Template
 public-clients: true
-low-level-client: true
+data-plane: true
 security: AADToken
 security-scopes: SecurityScopes
 ```
