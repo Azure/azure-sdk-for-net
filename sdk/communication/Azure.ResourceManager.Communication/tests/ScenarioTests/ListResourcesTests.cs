@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task ListBySubscription()
         {
             // Setup resource group for the test. This resource group is deleted by CleanupResourceGroupsAsync after the test ends
-            var lro = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+            var lro = await ArmClient.GetDefaultSubscription().GetResourceGroups().CreateOrUpdateAsync(
                 Recording.GenerateAssetName(ResourceGroupPrefix),
                 new ResourceGroupData(Location));
             ResourceGroup rg = lro.Value;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Communication.Tests
             Assert.IsTrue(result.HasValue);
 
             // Verify that the resource we just created is in the list
-            var resources = ArmClient.DefaultSubscription.GetCommunicationServicesAsync();
+            var resources = ArmClient.GetDefaultSubscription().GetCommunicationServicesAsync();
             bool resourceFound = false;
             await foreach (var resource in resources)
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task ListByRg()
         {
             // Setup resource group for the test. This resource group is deleted by CleanupResourceGroupsAsync after the test ends
-            var lro = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+            var lro = await ArmClient.GetDefaultSubscription().GetResourceGroups().CreateOrUpdateAsync(
                 Recording.GenerateAssetName(ResourceGroupPrefix),
                 new ResourceGroupData(Location));
             ResourceGroup rg = lro.Value;

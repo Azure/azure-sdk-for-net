@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task CrudSimpleResource()
         {
             // Setup resource group for the test. This resource group is deleted by CleanupResourceGroupsAsync after the test ends
-            var lro = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+            var lro = await ArmClient.GetDefaultSubscription().GetResourceGroups().CreateOrUpdateAsync(
                 Recording.GenerateAssetName(ResourceGroupPrefix),
                 new ResourceGroupData(Location));
             ResourceGroup rg = lro.Value;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task CrudResourceWithTags()
         {
             // Setup resource group for the test. This resource group is deleted by CleanupResourceGroupsAsync after the test ends
-            var lro = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+            var lro = await ArmClient.GetDefaultSubscription().GetResourceGroups().CreateOrUpdateAsync(
                 Recording.GenerateAssetName(ResourceGroupPrefix),
                 new ResourceGroupData(Location));
             ResourceGroup rg = lro.Value;

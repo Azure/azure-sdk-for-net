@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task LinkNotificationHub()
         {
             // Setup resource group for the test. This resource group is deleted by CleanupResourceGroupsAsync after the test ends
-            var lro = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+            var lro = await ArmClient.GetDefaultSubscription().GetResourceGroups().CreateOrUpdateAsync(
                 NotificationHubsResourceGroupName,
                 new ResourceGroupData(Location));
             ResourceGroup rg = lro.Value;
