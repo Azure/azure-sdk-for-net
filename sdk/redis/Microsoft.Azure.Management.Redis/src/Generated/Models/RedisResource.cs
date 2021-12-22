@@ -72,8 +72,9 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// <param name="subnetId">The full resource ID of a subnet in a
         /// virtual network to deploy the Redis cache in. Example format:
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/Microsoft.{Network|ClassicNetwork}/VirtualNetworks/vnet1/subnets/subnet1</param>
-        /// <param name="staticIP">Static IP address. Required when deploying a
-        /// Redis cache inside an existing Azure Virtual Network.</param>
+        /// <param name="staticIP">Static IP address. Optionally, may be
+        /// specified when deploying a Redis cache inside an existing Azure
+        /// Virtual Network; auto assigned by default.</param>
         /// <param name="provisioningState">Redis instance provisioning status.
         /// Possible values include: 'Creating', 'Deleting', 'Disabled',
         /// 'Failed', 'Linking', 'Provisioning', 'RecoveringScaleFailure',
@@ -93,7 +94,8 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// connection associated with the specified redis cache</param>
         /// <param name="zones">A list of availability zones denoting where the
         /// resource needs to come from.</param>
-        public RedisResource(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IDictionary<string, string> redisConfiguration = default(IDictionary<string, string>), string redisVersion = default(string), bool? enableNonSslPort = default(bool?), int? replicasPerMaster = default(int?), int? replicasPerPrimary = default(int?), IDictionary<string, string> tenantSettings = default(IDictionary<string, string>), int? shardCount = default(int?), string minimumTlsVersion = default(string), string publicNetworkAccess = default(string), string subnetId = default(string), string staticIP = default(string), string provisioningState = default(string), string hostName = default(string), int? port = default(int?), int? sslPort = default(int?), RedisAccessKeys accessKeys = default(RedisAccessKeys), IList<RedisLinkedServer> linkedServers = default(IList<RedisLinkedServer>), IList<RedisInstanceDetails> instances = default(IList<RedisInstanceDetails>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), IList<string> zones = default(IList<string>))
+        /// <param name="identity">The identity of the resource.</param>
+        public RedisResource(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), RedisCommonPropertiesRedisConfiguration redisConfiguration = default(RedisCommonPropertiesRedisConfiguration), string redisVersion = default(string), bool? enableNonSslPort = default(bool?), int? replicasPerMaster = default(int?), int? replicasPerPrimary = default(int?), IDictionary<string, string> tenantSettings = default(IDictionary<string, string>), int? shardCount = default(int?), string minimumTlsVersion = default(string), string publicNetworkAccess = default(string), string subnetId = default(string), string staticIP = default(string), string provisioningState = default(string), string hostName = default(string), int? port = default(int?), int? sslPort = default(int?), RedisAccessKeys accessKeys = default(RedisAccessKeys), IList<RedisLinkedServer> linkedServers = default(IList<RedisLinkedServer>), IList<RedisInstanceDetails> instances = default(IList<RedisInstanceDetails>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), IList<string> zones = default(IList<string>), ManagedServiceIdentity identity = default(ManagedServiceIdentity))
             : base(location, id, name, type, tags)
         {
             RedisConfiguration = redisConfiguration;
@@ -117,6 +119,7 @@ namespace Microsoft.Azure.Management.Redis.Models
             Instances = instances;
             PrivateEndpointConnections = privateEndpointConnections;
             Zones = zones;
+            Identity = identity;
             CustomInit();
         }
 
@@ -131,7 +134,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// etc.
         /// </summary>
         [JsonProperty(PropertyName = "properties.redisConfiguration")]
-        public IDictionary<string, string> RedisConfiguration { get; set; }
+        public RedisCommonPropertiesRedisConfiguration RedisConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets redis version. Only major version will be used in
@@ -205,8 +208,9 @@ namespace Microsoft.Azure.Management.Redis.Models
         public string SubnetId { get; set; }
 
         /// <summary>
-        /// Gets or sets static IP address. Required when deploying a Redis
-        /// cache inside an existing Azure Virtual Network.
+        /// Gets or sets static IP address. Optionally, may be specified when
+        /// deploying a Redis cache inside an existing Azure Virtual Network;
+        /// auto assigned by default.
         /// </summary>
         [JsonProperty(PropertyName = "properties.staticIP")]
         public string StaticIP { get; set; }
@@ -272,6 +276,12 @@ namespace Microsoft.Azure.Management.Redis.Models
         public IList<string> Zones { get; set; }
 
         /// <summary>
+        /// Gets or sets the identity of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -311,6 +321,10 @@ namespace Microsoft.Azure.Management.Redis.Models
                         element.Validate();
                     }
                 }
+            }
+            if (Identity != null)
+            {
+                Identity.Validate();
             }
         }
     }

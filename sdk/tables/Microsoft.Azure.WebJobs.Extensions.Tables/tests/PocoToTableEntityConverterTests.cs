@@ -25,67 +25,72 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         public void Create_IfPartitionKeyIsNonString_Throws()
         {
             // Act & Assert
-            ExceptionAssert.ThrowsInvalidOperation(
-                () => new PocoToTableEntityConverter<PocoWithNonStringPartitionKey>(),
-                "If the PartitionKey property is present, it must be a String.");
+            var exception = Assert.Throws<InvalidOperationException>(() => new PocoToTableEntityConverter<PocoWithNonStringPartitionKey>());
+
+            Assert.AreEqual("If the PartitionKey property is present, it must be a String.", exception.Message);
         }
 
         [Test]
         public void Create_IfPartitionKeyHasIndexParameters_Throws()
         {
             // Act & Assert
-            ExceptionAssert.ThrowsInvalidOperation(
-                () => new PocoToTableEntityConverter<PocoWithIndexerPartitionKey>(),
-                "If the PartitionKey property is present, it must not be an indexer.");
+            var exception = Assert.Throws<InvalidOperationException>(() => new PocoToTableEntityConverter<PocoWithIndexerPartitionKey>());
+
+            Assert.AreEqual(exception.Message, "If the PartitionKey property is present, it must not be an indexer.");
         }
 
         [Test]
         public void Create_IfRowKeyIsNonString_Throws()
         {
             // Act & Assert
-            ExceptionAssert.ThrowsInvalidOperation(() => new PocoToTableEntityConverter<PocoWithNonStringRowKey>(),
-                "If the RowKey property is present, it must be a String.");
+            var exception = Assert.Throws<InvalidOperationException>(() => new PocoToTableEntityConverter<PocoWithNonStringRowKey>());
+
+            Assert.AreEqual("If the RowKey property is present, it must be a String.", exception.Message);
         }
 
         [Test]
         public void Create_IfRowKeyHasIndexParameters_Throws()
         {
             // Act & Assert
-            ExceptionAssert.ThrowsInvalidOperation(() => new PocoToTableEntityConverter<PocoWithIndexerRowKey>(),
-                "If the RowKey property is present, it must not be an indexer.");
+            var exception = Assert.Throws<InvalidOperationException>(() => new PocoToTableEntityConverter<PocoWithIndexerRowKey>());
+
+            Assert.AreEqual("If the RowKey property is present, it must not be an indexer.", exception.Message);
         }
 
         [Test]
         public void Create_IfTimestampIsNonDateTimeOffset_Throws()
         {
             // Act & Assert
-            ExceptionAssert.ThrowsInvalidOperation(
-                () => new PocoToTableEntityConverter<PocoWithNonDateTimeOffsetTimestamp>(),
-                "If the Timestamp property is present, it must be a DateTimeOffset.");
+            var exception = Assert.Throws<InvalidOperationException>(() => new PocoToTableEntityConverter<PocoWithNonDateTimeOffsetTimestamp>());
+
+            Assert.AreEqual("If the Timestamp property is present, it must be a DateTimeOffset.", exception.Message);
         }
 
         [Test]
         public void Create_IfTimestampHasIndexParameters_Throws()
         {
             // Act & Assert
-            ExceptionAssert.ThrowsInvalidOperation(() => new PocoToTableEntityConverter<PocoWithIndexerTimestamp>(),
-                "If the Timestamp property is present, it must not be an indexer.");
+            var exception = Assert.Throws<InvalidOperationException>(() => new PocoToTableEntityConverter<PocoWithIndexerTimestamp>());
+
+            Assert.AreEqual("If the Timestamp property is present, it must not be an indexer.", exception.Message);
         }
 
         [Test]
         public void Create_IfETagIsNonString_Throws()
         {
             // Act & Assert
-            ExceptionAssert.ThrowsInvalidOperation(() => new PocoToTableEntityConverter<PocoWithNonStringETag>(),
-                "If the ETag property is present, it must be a String.");
+            var exception = Assert.Throws<InvalidOperationException>(() => new PocoToTableEntityConverter<PocoWithNonStringETag>());
+
+            Assert.AreEqual("If the ETag property is present, it must be a String.", exception.Message);
         }
 
         [Test]
         public void Create_IfETagHasIndexParameters_Throws()
         {
             // Act & Assert
-            ExceptionAssert.ThrowsInvalidOperation(() => new PocoToTableEntityConverter<PocoWithIndexerETag>(),
-                "If the ETag property is present, it must not be an indexer.");
+            var exception = Assert.Throws<InvalidOperationException>(() => new PocoToTableEntityConverter<PocoWithIndexerETag>());
+
+            Assert.AreEqual("If the ETag property is present, it must not be an indexer.", exception.Message);
         }
 
         [Test]
