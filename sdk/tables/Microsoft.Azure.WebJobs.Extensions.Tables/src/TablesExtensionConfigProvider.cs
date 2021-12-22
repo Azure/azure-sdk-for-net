@@ -117,9 +117,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             JObject jsonObject = new JObject();
             foreach (var entityProperty in tableEntity)
             {
-                JToken value = JToken.FromObject(entityProperty.Value);
+                // V4 compatibility
+                if (string.Compare(entityProperty.Key, "odata.etag", StringComparison.OrdinalIgnoreCase) == 0 ||
+                    string.Compare(entityProperty.Key, "timestamp", StringComparison.OrdinalIgnoreCase) == 0)
+                {
+                    continue;
+                }
 
-                jsonObject.Add(entityProperty.Key, value);
+                jsonObject.Add(entityProperty.Key, new JValue(entityProperty.Value));
             }
             return jsonObject;
         }

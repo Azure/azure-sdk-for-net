@@ -5,6 +5,7 @@ extern alias T1;
 
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,6 +13,8 @@ using Azure;
 using Azure.Core.TestFramework;
 using Azure.Data.Tables;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
@@ -27,7 +30,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
         [RecordedTest]
         [TestCaseSource(nameof(SdkExtensionPermutations))]
-        public async Task CanSaveAndLoadITableEntityNullsAndDefaults(IWriter writer, IReader reader)
+        public async Task CanSaveAndLoadITableEntityWithNullables(ITablesClient writer, ITablesClient reader)
         {
             var testEntity = new TestITableEntity()
             {
@@ -42,8 +45,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         [RecordedTest]
+        [TestCaseSource(nameof(SdkExtensionPermutations))]
+        public async Task CanSaveAndLoadITableEntityWithNullablesSet(ITablesClient writer, ITablesClient reader)
+        {
+            var testEntity = new TestITableEntity(true)
+            {
+                PartitionKey = PartitionKey,
+                RowKey = RowKey
+            };
+
+            await writer.Write(this, testEntity);
+            var output = await reader.Read<TestITableEntity>(this);
+
+            AssertAreEqual(testEntity, output);
+        }
+
+        [RecordedTest]
         [TestCaseSource(nameof(T1T2ExtensionPermutations))]
-        public async Task CanSaveAndLoadPoco(IWriter writer, IReader reader)
+        public async Task CanSaveAndLoadPoco(ITablesClient writer, ITablesClient reader)
         {
             var testEntity = new TestEntity()
             {
@@ -55,6 +74,109 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             var output = await reader.Read<TestEntity>(this);
 
             AssertAreEqual(testEntity, output);
+        }
+
+        [RecordedTest]
+        [TestCaseSource(nameof(T1T2ExtensionPermutations))]
+        public async Task CanSaveAndLoadPocoWithNullablesSet(ITablesClient writer, ITablesClient reader)
+        {
+            var testEntity = new TestEntity(true)
+            {
+                PartitionKey = PartitionKey,
+                RowKey = RowKey
+            };
+
+            await writer.Write(this, testEntity);
+            var output = await reader.Read<TestEntity>(this);
+
+            AssertAreEqual(testEntity, output);
+        }
+
+        [RecordedTest]
+        [TestCaseSource(nameof(T1T2ExtensionPermutations))]
+        public async Task CanSaveAndLoadPocoWithInnerPoco(ITablesClient writer, ITablesClient reader)
+        {
+            var testEntity = new TestEntity(true)
+            {
+                PartitionKey = PartitionKey,
+                RowKey = RowKey,
+                NestedEntity = new TestEntity(true)
+            };
+
+            await writer.Write(this, testEntity);
+            var output = await reader.Read<TestEntity>(this);
+
+            AssertAreEqual(testEntity, output);
+            AssertAreEqual(testEntity.NestedEntity, output.NestedEntity);
+        }
+
+        [RecordedTest]
+        [TestCaseSource(nameof(T1T2ExtensionPermutations))]
+        public async Task CanSaveAndLoadJObject(ITablesClient writer, ITablesClient reader)
+        {
+            var testEntity = new TestEntity()
+            {
+                PartitionKey = PartitionKey,
+                RowKey = RowKey,
+                // T1 can't handle longs in JObject
+                UInt64TypeProperty = int.MaxValue,
+                Int64TypeProperty = int.MaxValue,
+                NullableUInt64TypeProperty = int.MaxValue,
+                NullableInt64TypeProperty = int.MaxValue,
+            };
+
+            await writer.Write(this, testEntity);
+
+            var outputA = await writer.Read<JObject>(this);
+            var outputB = await reader.Read<JObject>(this);
+
+            AssertAreEqual(outputA, outputB);
+        }
+
+        [RecordedTest]
+        [TestCaseSource(nameof(T1T2ExtensionPermutations))]
+        public async Task CanSaveAndLoadJObjectWithNullablesSet(ITablesClient writer, ITablesClient reader)
+        {
+            var testEntity = new TestEntity(true)
+            {
+                PartitionKey = PartitionKey,
+                RowKey = RowKey,
+                // T1 can't handle longs in JObject
+                UInt64TypeProperty = int.MaxValue,
+                Int64TypeProperty = int.MaxValue,
+                NullableUInt64TypeProperty = int.MaxValue,
+                NullableInt64TypeProperty = int.MaxValue,
+            };
+
+            await writer.Write(this, testEntity);
+
+            var outputA = await writer.Read<JObject>(this);
+            var outputB = await reader.Read<JObject>(this);
+
+            AssertAreEqual(outputA, outputB);
+        }
+
+        [RecordedTest]
+        [TestCaseSource(nameof(T1T2ExtensionPermutations))]
+        public async Task CanSaveAndLoadJObjectWithInnerPoco(ITablesClient writer, ITablesClient reader)
+        {
+            var testEntity = new TestEntity(true)
+            {
+                PartitionKey = PartitionKey,
+                RowKey = RowKey,
+                NestedEntity = new TestEntity(true),
+                // T1 can't handle longs in JObject
+                UInt64TypeProperty = int.MaxValue,
+                Int64TypeProperty = int.MaxValue,
+                NullableUInt64TypeProperty = int.MaxValue,
+                NullableInt64TypeProperty = int.MaxValue,
+            };
+
+            await writer.Write(this, testEntity);
+            var outputA = await writer.Read<JObject>(this);
+            var outputB = await reader.Read<JObject>(this);
+
+            AssertAreEqual(outputA, outputB);
         }
 
         public static object[] SdkExtensionPermutations { get; } = {
@@ -71,12 +193,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             new object[] { Extension.Instance, Extension.Instance }
         };
 
+        private void AssertAreEqual(JObject a, JObject b)
+        {
+            JObject Sort(JObject o)
+            {
+                return new JObject(o.Properties().OrderByDescending(p => p.Name));
+            }
+
+            string NormalizeDates(string s)
+            {
+                return s.Replace("+00:00", "Z");
+            }
+
+            Assert.AreEqual(
+                NormalizeDates(Sort(a).ToString()),
+                NormalizeDates(Sort(b).ToString()));
+        }
         private void AssertAreEqual(object a, object b)
         {
             Assert.AreEqual(a.GetType(), b.GetType());
             foreach (var property in a.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
-                if (property.Name is nameof(ITableEntity.Timestamp) or nameof(ITableEntity.ETag)) continue;
+                if (property.Name is nameof(ITableEntity.Timestamp) or nameof(ITableEntity.ETag) or nameof(TestEntity.NestedEntity)) continue;
 
                 var av = property.GetValue(a);
                 var bv = property.GetValue(b);
@@ -86,10 +224,36 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
         public class TestITableEntity : ITableEntity
         {
-            public TestITableEntity()
+            public TestITableEntity() : this(false)
+            {
+            }
+
+            public TestITableEntity(bool setNullables)
             {
                 DatetimeOffsetTypeProperty = DateTimeOffsetValue;
                 DatetimeTypeProperty = DateTimeValue;
+
+                StringTypeProperty = "hello";
+                GuidTypeProperty = Guid.Parse("ca761232-ed42-11ce-bacd-00aa0057b223");
+                BinaryTypeProperty = new byte[] {1, 2, 3};
+
+                Int64TypeProperty = long.MaxValue;
+                UInt64TypeProperty = ulong.MaxValue;
+                DoubleTypeProperty = double.MaxValue;
+                IntTypeProperty = int.MaxValue;
+                EnumProperty = ConsoleColor.Blue;
+
+                if (setNullables)
+                {
+                    NullableDatetimeTypeProperty = DateTimeValue;
+                    NullableDatetimeOffsetTypeProperty = DateTimeOffsetValue;
+                    NullableGuidTypeProperty = Guid.Parse("ca761232-ed42-11ce-bacd-00aa0057b223");
+                    NullableInt64TypeProperty = long.MaxValue;
+                    NullableUInt64TypeProperty = ulong.MaxValue;
+                    NullableDoubleTypeProperty = double.MaxValue;
+                    NullableIntTypeProperty = int.MaxValue;
+                    NullableEnumProperty = ConsoleColor.Blue;
+                }
             }
 
             public string StringTypeProperty { get; set; }
@@ -101,6 +265,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             public ulong UInt64TypeProperty { get; set; }
             public double DoubleTypeProperty { get; set; }
             public int IntTypeProperty { get; set; }
+            public ConsoleColor EnumProperty { get; set; }
 
             public DateTime? NullableDatetimeTypeProperty { get; set; }
             public DateTimeOffset? NullableDatetimeOffsetTypeProperty { get; set; }
@@ -109,18 +274,46 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             public ulong? NullableUInt64TypeProperty { get; set; }
             public double? NullableDoubleTypeProperty { get; set; }
             public int? NullableIntTypeProperty { get; set; }
+            public ConsoleColor? NullableEnumProperty { get; set; }
 
             public string PartitionKey { get; set; }
             public string RowKey { get; set; }
             public DateTimeOffset? Timestamp { get; set; }
             public ETag ETag { get; set; }
         }
+
         public class TestEntity
         {
-            public TestEntity()
+            public TestEntity() : this(false)
+            {
+            }
+
+            public TestEntity(bool setNullables)
             {
                 DatetimeOffsetTypeProperty = DateTimeOffsetValue;
                 DatetimeTypeProperty = DateTimeValue;
+
+                StringTypeProperty = "hello";
+                GuidTypeProperty = Guid.Parse("ca761232-ed42-11ce-bacd-00aa0057b223");
+                BinaryTypeProperty = new byte[] {1, 2, 3};
+
+                Int64TypeProperty = long.MaxValue;
+                UInt64TypeProperty = ulong.MaxValue;
+                DoubleTypeProperty = double.MaxValue;
+                IntTypeProperty = int.MaxValue;
+                EnumProperty = ConsoleColor.Blue;
+
+                if (setNullables)
+                {
+                    NullableDatetimeTypeProperty = DateTimeValue;
+                    NullableDatetimeOffsetTypeProperty = DateTimeOffsetValue;
+                    NullableGuidTypeProperty = Guid.Parse("ca761232-ed42-11ce-bacd-00aa0057b223");
+                    NullableInt64TypeProperty = long.MaxValue;
+                    NullableUInt64TypeProperty = ulong.MaxValue;
+                    NullableDoubleTypeProperty = double.MaxValue;
+                    NullableIntTypeProperty = int.MaxValue;
+                    NullableEnumProperty = ConsoleColor.Blue;
+                }
             }
 
             public string StringTypeProperty { get; set; }
@@ -132,6 +325,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             public ulong UInt64TypeProperty { get; set; }
             public double DoubleTypeProperty { get; set; }
             public int IntTypeProperty { get; set; }
+            public ConsoleColor EnumProperty { get; set; }
 
             public DateTime? NullableDatetimeTypeProperty { get; set; }
             public DateTimeOffset? NullableDatetimeOffsetTypeProperty { get; set; }
@@ -140,6 +334,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             public ulong? NullableUInt64TypeProperty { get; set; }
             public double? NullableDoubleTypeProperty { get; set; }
             public int? NullableIntTypeProperty { get; set; }
+            public ConsoleColor NullableEnumProperty { get; set; }
 
             public string PartitionKey { get; set; }
             public string RowKey { get; set; }
@@ -148,17 +343,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             public TestEntity NestedEntity { get; set; }
         }
 
-        public interface IReader
+        public interface ITablesClient
         {
             ValueTask<T> Read<T>(CompatibilityTests test);
-        }
-
-        public interface IWriter
-        {
             ValueTask Write<T>(CompatibilityTests test, T entity);
         }
 
-        private class Sdk: IReader, IWriter
+        private class Sdk: ITablesClient
         {
             public static Sdk Instance = new();
             public async ValueTask<T> Read<T>(CompatibilityTests test)
@@ -180,7 +371,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             public override string ToString() => "SDK";
         }
 
-        private class Extension : IReader, IWriter
+        private class Extension : ITablesClient
         {
             public static Extension Instance = new();
             public async ValueTask<T> Read<T>(CompatibilityTests test)
@@ -213,7 +404,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }
         }
 
-        private class ExtensionT1 : IReader, IWriter
+        private class ExtensionT1 : ITablesClient
         {
             public static ExtensionT1 Instance = new();
             public async ValueTask<T> Read<T>(CompatibilityTests test)
