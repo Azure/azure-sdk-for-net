@@ -180,29 +180,29 @@ namespace Azure.Core.TestFramework
             Logger = null;
 
             // Clean up unused test files
-            var knownMethods = new HashSet<string>();
-
-            // Management tests record in ctor
-            knownMethods.Add(GetType().Name);
-
-            // Collect all method names
-            foreach (var method in GetType()
-                         .GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance))
+            if (Mode == RecordedTestMode.Record)
             {
-                // TestCase attribute allows specifying a test name
-                foreach (var attribute in method.GetCustomAttributes(true))
+                var knownMethods = new HashSet<string>();
+
+                // Management tests record in ctor
+                knownMethods.Add(GetType().Name);
+
+                // Collect all method names
+                foreach (var method in GetType()
+                             .GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance))
                 {
-                    if (attribute is ITestData { TestName: { } name})
+                    // TestCase attribute allows specifying a test name
+                    foreach (var attribute in method.GetCustomAttributes(true))
                     {
-                        knownMethods.Add(name);
+                        if (attribute is ITestData { TestName: { } name})
+                        {
+                            knownMethods.Add(name);
+                        }
                     }
+
+                    knownMethods.Add(method.Name);
                 }
 
-                knownMethods.Add(method.Name);
-            }
-
-            if (Mode != RecordedTestMode.Live)
-            {
                 foreach (var fileInfo in new DirectoryInfo(GetSessionFileDirectory()).EnumerateFiles())
                 {
                     bool used = knownMethods.Any(knownMethod => fileInfo.Name.StartsWith(knownMethod, StringComparison.CurrentCulture));
