@@ -628,7 +628,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_AddParticipant))]
-        public async Task AddParticipantsAsync_Passes(CommunicationIdentifier participant, string alternateCallerId, string operationContext)
+        public async Task AddParticipantsAsync_Passes(CommunicationIdentifier participant, PhoneNumberIdentifier alternateCallerId, string operationContext)
         {
             var callConnection = CreateMockCallConnection(202, AddParticipantResultPayload);
 
@@ -638,7 +638,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_AddParticipant))]
-        public void AddParticipants_Passes(CommunicationIdentifier participant, string alternateCallerId, string operationContext)
+        public void AddParticipants_Passes(CommunicationIdentifier participant, PhoneNumberIdentifier alternateCallerId, string operationContext)
         {
             var callConnection = CreateMockCallConnection(202, AddParticipantResultPayload);
 
@@ -648,7 +648,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_AddParticipant))]
-        public void AddParticipantsAsync_Failed(CommunicationIdentifier participant, string alternateCallerId, string operationContext)
+        public void AddParticipantsAsync_Failed(CommunicationIdentifier participant, PhoneNumberIdentifier alternateCallerId, string operationContext)
         {
             var callConnection = CreateMockCallConnection(404);
 
@@ -658,7 +658,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_AddParticipant))]
-        public void AddParticipants_Failed(CommunicationIdentifier participant, string alternateCallerId, string operationContext)
+        public void AddParticipants_Failed(CommunicationIdentifier participant, PhoneNumberIdentifier alternateCallerId, string operationContext)
         {
             var callConnection = CreateMockCallConnection(404);
 
@@ -668,39 +668,39 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_TransferToParticipant))]
-        public async Task TransferToParticipantAsync_Passes(CommunicationIdentifier participant, string userToUserInformation)
+        public async Task TransferToParticipantAsync_Passes(CommunicationIdentifier participant, PhoneNumberIdentifier alternateCallerId, string userToUserInformation)
         {
             var callConnection = CreateMockCallConnection(202, TransferCallResultPayload);
 
-            var result = await callConnection.TransferToParticipantAsync(participant, userToUserInformation).ConfigureAwait(false);
+            var result = await callConnection.TransferToParticipantAsync(participant, alternateCallerId, userToUserInformation).ConfigureAwait(false);
             VerifyTransferCallResult(result);
         }
 
         [TestCaseSource(nameof(TestData_TransferToParticipant))]
-        public void TransferToParticipant_Passes(CommunicationIdentifier participant, string userToUserInformation)
+        public void TransferToParticipant_Passes(CommunicationIdentifier participant, PhoneNumberIdentifier alternateCallerId, string userToUserInformation)
         {
             var callConnection = CreateMockCallConnection(202, TransferCallResultPayload);
 
-            var result = callConnection.TransferToParticipant(participant, userToUserInformation);
+            var result = callConnection.TransferToParticipant(participant, alternateCallerId, userToUserInformation);
             VerifyTransferCallResult(result);
         }
 
         [TestCaseSource(nameof(TestData_TransferToParticipant))]
-        public void TransferToParticipantAsync_Failed(CommunicationIdentifier participant, string userToUserInformation)
+        public void TransferToParticipantAsync_Failed(CommunicationIdentifier participant, PhoneNumberIdentifier alternateCallerId, string userToUserInformation)
         {
             var callConnection = CreateMockCallConnection(404);
 
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.TransferToParticipantAsync(participant, userToUserInformation).ConfigureAwait(false));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.TransferToParticipantAsync(participant, alternateCallerId, userToUserInformation).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_TransferToParticipant))]
-        public void TransferToParticipant_Failed(CommunicationIdentifier participant, string userToUserInformation)
+        public void TransferToParticipant_Failed(CommunicationIdentifier participant, PhoneNumberIdentifier alternateCallerId, string userToUserInformation)
         {
             var callConnection = CreateMockCallConnection(404);
 
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.TransferToParticipant(participant, userToUserInformation));
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.TransferToParticipant(participant, alternateCallerId, userToUserInformation));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -1172,19 +1172,19 @@ namespace Azure.Communication.CallingServer.Tests
         [TestCaseSource(nameof(TestData_DeleteAudioRoutingGroup))]
         public async Task DeleteAudioRoutingGroupAsync_Passes(string callConnectionId, string audioRoutingGroupId)
         {
-            var callConnection = CreateMockCallConnection(202, callConnectionId: callConnectionId);
+            var callConnection = CreateMockCallConnection(200, callConnectionId: callConnectionId);
 
             var response = await callConnection.DeleteAudioRoutingGroupAsync(audioRoutingGroupId).ConfigureAwait(false);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
+            Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
         }
 
         [TestCaseSource(nameof(TestData_DeleteAudioRoutingGroup))]
         public void DeleteAudioRoutingGroup_Passes(string callConnectionId, string audioRoutingGroupId)
         {
-            var callConnection = CreateMockCallConnection(202, callConnectionId: callConnectionId);
+            var callConnection = CreateMockCallConnection(200, callConnectionId: callConnectionId);
 
             var response = callConnection.DeleteAudioRoutingGroup(audioRoutingGroupId);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
+            Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
         }
 
         [TestCaseSource(nameof(TestData_DeleteAudioRoutingGroup))]
@@ -1323,7 +1323,7 @@ namespace Azure.Communication.CallingServer.Tests
                 new object?[]
                 {
                     new CommunicationUserIdentifier("8:acs:acsuserid"),
-                    "+14250000000",
+                    new PhoneNumberIdentifier("+14255550123"),
                     "dummycontext"
                 },
             };
@@ -1336,6 +1336,7 @@ namespace Azure.Communication.CallingServer.Tests
                 new object?[]
                 {
                     new CommunicationUserIdentifier("8:acs:acsuserid"),
+                    new PhoneNumberIdentifier("+14255550123"),
                     "dummyUserToUserInformation"
                 },
             };
