@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Castle.DynamicProxy;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+using NUnit.Framework.Internal;
 
 namespace Azure.Core.TestFramework
 {
@@ -179,10 +180,27 @@ namespace Azure.Core.TestFramework
             Logger = null;
 
             // Clean up unused test files
-            var knownMethods = GetType()
-                .GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance)
-                .Select(m=>m.Name)
-                .ToList();
+            var knownMethods = new HashSet<string>();
+
+            // Management tests record in ctor
+            knownMethods.Add(GetType().Name);
+
+            // Collect all method names
+            foreach (var method in GetType()
+                         .GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance))
+            {
+                // TestCase attribute allows specifying a test name
+                foreach (var attribute in method.GetCustomAttributes(true))
+                {
+                    if (attribute is ITestData { TestName: { } name})
+                    {
+                        knownMethods.Add(name);
+                    }
+                }
+
+                knownMethods.Add(method.Name);
+            }
+
             if (Mode != RecordedTestMode.Live)
             {
                 foreach (var fileInfo in new DirectoryInfo(GetSessionFileDirectory()).EnumerateFiles())
