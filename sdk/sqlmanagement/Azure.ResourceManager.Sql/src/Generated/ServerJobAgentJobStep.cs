@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a ServerJobAgentJobStep along with the instance operations that can be performed on it. </summary>
     public partial class ServerJobAgentJobStep : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ServerJobAgentJobStep"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, string stepName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/steps/{stepName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly JobStepsRestOperations _jobStepsRestClient;
         private readonly JobStepData _data;

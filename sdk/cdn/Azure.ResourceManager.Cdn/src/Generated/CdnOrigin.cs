@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> A Class representing a CdnOrigin along with the instance operations that can be performed on it. </summary>
     public partial class CdnOrigin : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="CdnOrigin"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string originName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/origins/{originName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly CdnOriginsRestOperations _cdnOriginsRestClient;
         private readonly CdnOriginData _data;

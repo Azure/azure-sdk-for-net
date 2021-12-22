@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A Class representing a SubscriptionPolicySetDefinition along with the instance operations that can be performed on it. </summary>
     public partial class SubscriptionPolicySetDefinition : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="SubscriptionPolicySetDefinition"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string policySetDefinitionName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly PolicySetDefinitionsRestOperations _policySetDefinitionsRestClient;
         private readonly PolicySetDefinitionData _data;

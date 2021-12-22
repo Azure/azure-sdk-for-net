@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ServiceBus
     /// <summary> A Class representing a NamespaceQueueAuthorizationRule along with the instance operations that can be performed on it. </summary>
     public partial class NamespaceQueueAuthorizationRule : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="NamespaceQueueAuthorizationRule"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string queueName, string authorizationRuleName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules/{authorizationRuleName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly QueueAuthorizationRulesRestOperations _queueAuthorizationRulesRestClient;
         private readonly ServiceBusAuthorizationRuleData _data;

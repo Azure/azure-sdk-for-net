@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> A Class representing a AfdCustomDomain along with the instance operations that can be performed on it. </summary>
     public partial class AfdCustomDomain : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="AfdCustomDomain"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string customDomainName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AfdCustomDomainsRestOperations _afdCustomDomainsRestClient;
         private readonly AfdCustomDomainData _data;

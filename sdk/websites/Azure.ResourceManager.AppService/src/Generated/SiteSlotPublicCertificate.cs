@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A Class representing a SiteSlotPublicCertificate along with the instance operations that can be performed on it. </summary>
     public partial class SiteSlotPublicCertificate : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="SiteSlotPublicCertificate"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot, string publicCertificateName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/publicCertificates/{publicCertificateName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly WebAppsRestOperations _webAppsRestClient;
         private readonly PublicCertificateData _data;

@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a AzureFirewall along with the instance operations that can be performed on it. </summary>
     public partial class AzureFirewall : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="AzureFirewall"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string azureFirewallName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/azureFirewalls/{azureFirewallName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AzureFirewallsRestOperations _azureFirewallsRestClient;
         private readonly AzureFirewallData _data;

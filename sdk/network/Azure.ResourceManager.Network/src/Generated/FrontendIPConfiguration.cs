@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a FrontendIPConfiguration along with the instance operations that can be performed on it. </summary>
     public partial class FrontendIPConfiguration : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="FrontendIPConfiguration"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string loadBalancerName, string frontendIPConfigurationName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/frontendIPConfigurations/{frontendIPConfigurationName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly LoadBalancerFrontendIPConfigurationsRestOperations _loadBalancerFrontendIPConfigurationsRestClient;
         private readonly FrontendIPConfigurationData _data;

@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A Class representing a PolicyExemption along with the instance operations that can be performed on it. </summary>
     public partial class PolicyExemption : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="PolicyExemption"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string scope, string policyExemptionName)
+        {
+            var resourceId = $"/{scope}/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly PolicyExemptionsRestOperations _policyExemptionsRestClient;
         private readonly PolicyExemptionData _data;

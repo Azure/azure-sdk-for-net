@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ConnectedVmware
     /// <summary> A Class representing a VmwareHost along with the instance operations that can be performed on it. </summary>
     public partial class VmwareHost : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="VmwareHost"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string hostName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HostsRestOperations _hostsRestClient;
         private readonly VmwareHostData _data;

@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a VirtualNetworkGateway along with the instance operations that can be performed on it. </summary>
     public partial class VirtualNetworkGateway : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="VirtualNetworkGateway"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VirtualNetworkGatewaysRestOperations _virtualNetworkGatewaysRestClient;
         private readonly VirtualNetworkGatewayData _data;

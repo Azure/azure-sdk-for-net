@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A Class representing a VirtualMachineScaleSetVirtualMachineRunCommand along with the instance operations that can be performed on it. </summary>
     public partial class VirtualMachineScaleSetVirtualMachineRunCommand : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="VirtualMachineScaleSetVirtualMachineRunCommand"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, string runCommandName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/runCommands/{runCommandName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VirtualMachineScaleSetVMRunCommandsRestOperations _virtualMachineScaleSetVMRunCommandsRestClient;
         private readonly VirtualMachineRunCommandData _data;

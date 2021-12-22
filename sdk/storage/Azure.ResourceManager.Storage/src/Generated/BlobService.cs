@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Storage
     /// <summary> A Class representing a BlobService along with the instance operations that can be performed on it. </summary>
     public partial class BlobService : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="BlobService"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly BlobServicesRestOperations _blobServicesRestClient;
         private readonly BlobServiceData _data;

@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a LoadBalancer along with the instance operations that can be performed on it. </summary>
     public partial class LoadBalancer : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="LoadBalancer"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string loadBalancerName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly LoadBalancersRestOperations _loadBalancersRestClient;
         private readonly LoadBalancerNetworkInterfacesRestOperations _loadBalancerNetworkInterfacesRestClient;

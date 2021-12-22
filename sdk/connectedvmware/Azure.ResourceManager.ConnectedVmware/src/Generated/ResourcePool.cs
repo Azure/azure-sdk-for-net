@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ConnectedVmware
     /// <summary> A Class representing a ResourcePool along with the instance operations that can be performed on it. </summary>
     public partial class ResourcePool : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ResourcePool"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourcePoolName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools/{resourcePoolName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ResourcePoolsRestOperations _resourcePoolsRestClient;
         private readonly ResourcePoolData _data;

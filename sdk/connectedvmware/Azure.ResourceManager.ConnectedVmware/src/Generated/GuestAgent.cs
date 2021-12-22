@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ConnectedVmware
     /// <summary> A Class representing a GuestAgent along with the instance operations that can be performed on it. </summary>
     public partial class GuestAgent : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="GuestAgent"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualMachineName, string name)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/guestAgents/{name}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly GuestAgentsRestOperations _guestAgentsRestClient;
         private readonly GuestAgentData _data;

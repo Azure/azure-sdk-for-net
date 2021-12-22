@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a RecoverableManagedDatabase along with the instance operations that can be performed on it. </summary>
     public partial class RecoverableManagedDatabase : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="RecoverableManagedDatabase"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string recoverableDatabaseName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/recoverableDatabases/{recoverableDatabaseName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly RecoverableManagedDatabasesRestOperations _recoverableManagedDatabasesRestClient;
         private readonly RecoverableManagedDatabaseData _data;
