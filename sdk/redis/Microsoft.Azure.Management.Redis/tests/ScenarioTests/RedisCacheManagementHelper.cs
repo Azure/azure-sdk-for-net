@@ -13,7 +13,7 @@ namespace AzureRedisCache.Tests
 {
     public class RedisCacheManagementHelper
     {
-        public static string Location = "West Central US";
+        public static string Location = "West US";
         public static string SecondaryLocation = "East US";
 
         private ResourceManagementClient _client;
