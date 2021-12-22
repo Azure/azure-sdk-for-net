@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A Class representing a PolicyAssignment along with the instance operations that can be performed on it. </summary>
     public partial class PolicyAssignment : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="PolicyAssignment"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string scope, string policyAssignmentName)
+        {
+            var resourceId = $"/{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly PolicyAssignmentsRestOperations _policyAssignmentsRestClient;
         private readonly PolicyAssignmentData _data;

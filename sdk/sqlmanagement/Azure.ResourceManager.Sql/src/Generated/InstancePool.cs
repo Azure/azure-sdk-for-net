@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a InstancePool along with the instance operations that can be performed on it. </summary>
     public partial class InstancePool : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="InstancePool"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string instancePoolName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly InstancePoolsRestOperations _instancePoolsRestClient;
         private readonly ManagedInstancesRestOperations _managedInstancesRestClient;

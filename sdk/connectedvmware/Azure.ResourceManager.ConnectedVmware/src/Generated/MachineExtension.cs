@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ConnectedVmware
     /// <summary> A Class representing a MachineExtension along with the instance operations that can be performed on it. </summary>
     public partial class MachineExtension : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="MachineExtension"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string extensionName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{name}/extensions/{extensionName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly MachineExtensionsRestOperations _machineExtensionsRestClient;
         private readonly MachineExtensionData _data;

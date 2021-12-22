@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A Class representing a GalleryApplication along with the instance operations that can be performed on it. </summary>
     public partial class GalleryApplication : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="GalleryApplication"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{galleryApplicationName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly GalleryApplicationsRestOperations _galleryApplicationsRestClient;
         private readonly GalleryApplicationData _data;
