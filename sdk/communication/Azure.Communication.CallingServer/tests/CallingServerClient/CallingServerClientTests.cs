@@ -498,7 +498,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_AddParticipant))]
-        public async Task AddParticipantsAsync_Return202Accepted(CommunicationIdentifier participant, Uri callBack, string alternateCallerId, string operationContext)
+        public async Task AddParticipantsAsync_Return202Accepted(CommunicationIdentifier participant, Uri callBack, PhoneNumberIdentifier alternateCallerId, string operationContext)
         {
             CallingServerClient serverCallRestClient = CreateMockCallingServerClient(202, AddParticipantResultPayload);
 
@@ -508,7 +508,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_AddParticipant))]
-        public void AddParticipants_Return202Accepted(CommunicationIdentifier participant, Uri callBack, string alternateCallerId, string operationContext)
+        public void AddParticipants_Return202Accepted(CommunicationIdentifier participant, Uri callBack, PhoneNumberIdentifier alternateCallerId, string operationContext)
         {
             CallingServerClient serverCallRestClient = CreateMockCallingServerClient(202, AddParticipantResultPayload);
 
@@ -518,7 +518,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_AddParticipant))]
-        public void AddParticipantsAsync_Returns404NotFound(CommunicationIdentifier participant, Uri callBack, string alternateCallerId, string operationContext)
+        public void AddParticipantsAsync_Returns404NotFound(CommunicationIdentifier participant, Uri callBack, PhoneNumberIdentifier alternateCallerId, string operationContext)
         {
             CallingServerClient serverCallRestClient = CreateMockCallingServerClient(404);
 
@@ -528,7 +528,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_AddParticipant))]
-        public void AddParticipants_Returns404NotFound(CommunicationIdentifier participant, Uri callBack, string alternateCallerId, string operationContext)
+        public void AddParticipants_Returns404NotFound(CommunicationIdentifier participant, Uri callBack, PhoneNumberIdentifier alternateCallerId, string operationContext)
         {
             CallingServerClient serverCallRestClient = CreateMockCallingServerClient(404);
 
@@ -1158,7 +1158,7 @@ namespace Azure.Communication.CallingServer.Tests
                 {
                     new CommunicationUserIdentifier("8:acs:acsuserid"),
                     new Uri("https://bot.contoso.com/callback"),
-                    "+14250000000",
+                    new PhoneNumberIdentifier("+14255550123"),
                     "dummycontext"
                 },
             };

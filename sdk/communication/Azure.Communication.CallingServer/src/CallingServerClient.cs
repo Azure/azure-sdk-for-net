@@ -833,13 +833,13 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// Add participant to the call.
         /// </summary>
-        /// <param name="callLocator">The call locator.</param>
+        /// <param name="callLocator"> The call locator. </param>
         /// <param name="participant"> The identity of participant to be added to the call. </param>
-        /// <param name="callbackUri">The callback uri to receive the notification.</param>
-        /// <param name="alternateCallerId">The phone number to use when adding a pstn participant.</param>
-        /// <param name="operationContext">The operation context.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual Response<AddParticipantResult> AddParticipant(CallLocator callLocator, CommunicationIdentifier participant, Uri callbackUri, string alternateCallerId = default, string operationContext = default, CancellationToken cancellationToken = default)
+        /// <param name="callbackUri"> The callback uri to receive the notification. </param>
+        /// <param name="alternateCallerId"> The phone number identifier to use when adding a pstn participant. </param>
+        /// <param name="operationContext"> The operation context. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        public virtual Response<AddParticipantResult> AddParticipant(CallLocator callLocator, CommunicationIdentifier participant, Uri callbackUri, PhoneNumberIdentifier alternateCallerId = default, string operationContext = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(AddParticipant)}");
             scope.Start();
@@ -849,7 +849,7 @@ namespace Azure.Communication.CallingServer
                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
                     participant: CommunicationIdentifierSerializer.Serialize(participant),
                     callbackUri: callbackUri?.AbsoluteUri,
-                    alternateCallerId: string.IsNullOrEmpty(alternateCallerId) ? null : new PhoneNumberIdentifierModel(alternateCallerId),
+                    alternateCallerId: alternateCallerId == null ? null : new PhoneNumberIdentifierModel(alternateCallerId.PhoneNumber),
                     operationContext: operationContext,
                     cancellationToken: cancellationToken
                     );
@@ -864,13 +864,13 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// Add participant to the call.
         /// </summary>
-        /// <param name="callLocator">The call locator.</param>
+        /// <param name="callLocator"> The call locator. </param>
         /// <param name="participant"> The identity of participant to be added to the call. </param>
-        /// <param name="callbackUri"></param>
-        /// <param name="alternateCallerId">The phone number to use when adding a pstn participant.</param>
-        /// <param name="operationContext">The operation context.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual async Task<Response<AddParticipantResult>> AddParticipantAsync(CallLocator callLocator, CommunicationIdentifier participant, Uri callbackUri, string alternateCallerId = default, string operationContext = default, CancellationToken cancellationToken = default)
+        /// <param name="callbackUri"> The callback uri to receive the notification. </param>
+        /// <param name="alternateCallerId"> The phone number identifier to use when adding a pstn participant. </param>
+        /// <param name="operationContext"> The operation context. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        public virtual async Task<Response<AddParticipantResult>> AddParticipantAsync(CallLocator callLocator, CommunicationIdentifier participant, Uri callbackUri, PhoneNumberIdentifier alternateCallerId = default, string operationContext = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(AddParticipant)}");
             scope.Start();
@@ -880,7 +880,7 @@ namespace Azure.Communication.CallingServer
                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
                     participant: CommunicationIdentifierSerializer.Serialize(participant),
                     callbackUri: callbackUri?.AbsoluteUri,
-                    alternateCallerId: string.IsNullOrEmpty(alternateCallerId) ? null : new PhoneNumberIdentifierModel(alternateCallerId),
+                    alternateCallerId: alternateCallerId == null ? null : new PhoneNumberIdentifierModel(alternateCallerId.PhoneNumber),
                     operationContext: operationContext,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
