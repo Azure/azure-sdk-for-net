@@ -9,35 +9,35 @@
         "Content-Length": "33",
         "Content-Type": "application/json;odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-fe3b0b86716d6745b5286b2a1b7d4830-4e782cee52810041-00",
+        "traceparent": "00-54fc273122213b459859b13e1498ac03-25742dd05a24374c-00",
         "User-Agent": "azsdk-net-Data.Tables/12.4.0-alpha.20211221.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "3a975178e76fcf8a364e5a0dbd8de6b6",
-        "x-ms-date": "Tue, 21 Dec 2021 23:20:53 GMT",
+        "x-ms-client-request-id": "1ac887c0a9c591e02d3942429e81dec0",
+        "x-ms-date": "Tue, 21 Dec 2021 23:33:35 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
       "RequestBody": {
-        "TableName": "testtablexrI6jupL"
+        "TableName": "testtableqC3xz1cc"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=minimalmetadata; streaming=true; charset=utf-8",
-        "Date": "Tue, 21 Dec 2021 23:20:52 GMT",
-        "Location": "https://pakrymtables3prim.table.core.windows.net/Tables(\u0027testtablexrI6jupL\u0027)",
+        "Date": "Tue, 21 Dec 2021 23:33:35 GMT",
+        "Location": "https://pakrymtables3prim.table.core.windows.net/Tables(\u0027testtableqC3xz1cc\u0027)",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "3a975178e76fcf8a364e5a0dbd8de6b6",
-        "x-ms-request-id": "e5df8511-8002-0078-3bc1-f60e63000000",
+        "x-ms-client-request-id": "1ac887c0a9c591e02d3942429e81dec0",
+        "x-ms-request-id": "2be759a6-0002-002b-12c3-f62d57000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
         "odata.metadata": "https://pakrymtables3prim.table.core.windows.net/$metadata#Tables/@Element",
-        "TableName": "testtablexrI6jupL"
+        "TableName": "testtableqC3xz1cc"
       }
     },
     {
@@ -47,42 +47,42 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "1115",
-        "Content-Type": "multipart/mixed; boundary=batch_03e243d7-3c9f-45cd-8aa3-34bcf53c711e",
+        "Content-Type": "multipart/mixed; boundary=batch_ee0a3fd3-f3ce-400e-a7cb-c4794967a525",
         "DataServiceVersion": "3.0",
         "User-Agent": "azsdk-net-Data.Tables/12.4.0-alpha.20211221.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "ed3dad69782438d05bc33e7d87616745",
-        "x-ms-date": "Tue, 21 Dec 2021 23:20:53 GMT",
+        "x-ms-client-request-id": "aedd85e53b7efcb1adc63368e7cc9fe2",
+        "x-ms-date": "Tue, 21 Dec 2021 23:33:35 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
-      "RequestBody": "LS1tdWx0aXBhcnRfYm91bmRhcnkNCkNvbnRlbnQtVHlwZTogbXVsdGlwYXJ0L21peGVkOyBib3VuZGFyeT1tdWx0aXBhcnRfYm91bmRhcnkNCg0KLS1tdWx0aXBhcnRfYm91bmRhcnkNCkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vaHR0cA0KQ29udGVudC1UcmFuc2Zlci1FbmNvZGluZzogYmluYXJ5DQoNClBPU1QgaHR0cHM6Ly9wYWtyeW10YWJsZXMzcHJpbS50YWJsZS5jb3JlLndpbmRvd3MubmV0L3Rlc3R0YWJsZXhySTZqdXBMPyRmb3JtYXQ9YXBwbGljYXRpb24lMkZqc29uJTNCb2RhdGElM0RtaW5pbWFsbWV0YWRhdGEgSFRUUC8xLjENCkhvc3Q6IHBha3J5bXRhYmxlczNwcmltLnRhYmxlLmNvcmUud2luZG93cy5uZXQNCngtbXMtdmVyc2lvbjogMjAxOS0wMi0wMg0KRGF0YVNlcnZpY2VWZXJzaW9uOiAzLjANClByZWZlcjogcmV0dXJuLW5vLWNvbnRlbnQNCkFjY2VwdDogYXBwbGljYXRpb24vanNvbjtvZGF0YT1taW5pbWFsbWV0YWRhdGENCkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vanNvbjtvZGF0YT1ub21ldGFkYXRhDQoNCnsiUm93S2V5IjoiUksiLCJQYXJ0aXRpb25LZXkiOiJQSyIsIlN0cmluZ1R5cGVQcm9wZXJ0eSI6bnVsbCwiR3VpZFR5cGVQcm9wZXJ0eSI6IjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCIsIkd1aWRUeXBlUHJvcGVydHlAb2RhdGEudHlwZSI6IkVkbS5HdWlkIiwiQmluYXJ5VHlwZVByb3BlcnR5IjpudWxsLCJJbnQ2NFR5cGVQcm9wZXJ0eSI6IjAiLCJJbnQ2NFR5cGVQcm9wZXJ0eUBvZGF0YS50eXBlIjoiRWRtLkludDY0IiwiVUludDY0VHlwZVByb3BlcnR5IjoiMCIsIkRvdWJsZVR5cGVQcm9wZXJ0eSI6MCwiRG91YmxlVHlwZVByb3BlcnR5QG9kYXRhLnR5cGUiOiJFZG0uRG91YmxlIiwiSW50VHlwZVByb3BlcnR5IjowLCJOdWxsYWJsZUd1aWRUeXBlUHJvcGVydHkiOm51bGwsIk51bGxhYmxlSW50NjRUeXBlUHJvcGVydHkiOm51bGwsIk51bGxhYmxlVUludDY0VHlwZVByb3BlcnR5IjoibnVsbCIsIk51bGxhYmxlRG91YmxlVHlwZVByb3BlcnR5IjpudWxsLCJOdWxsYWJsZUludFR5cGVQcm9wZXJ0eSI6bnVsbH0NCi0tbXVsdGlwYXJ0X2JvdW5kYXJ5DQoNCi0tbXVsdGlwYXJ0X2JvdW5kYXJ5DQo=",
+      "RequestBody": "LS1tdWx0aXBhcnRfYm91bmRhcnkNCkNvbnRlbnQtVHlwZTogbXVsdGlwYXJ0L21peGVkOyBib3VuZGFyeT1tdWx0aXBhcnRfYm91bmRhcnkNCg0KLS1tdWx0aXBhcnRfYm91bmRhcnkNCkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vaHR0cA0KQ29udGVudC1UcmFuc2Zlci1FbmNvZGluZzogYmluYXJ5DQoNClBPU1QgaHR0cHM6Ly9wYWtyeW10YWJsZXMzcHJpbS50YWJsZS5jb3JlLndpbmRvd3MubmV0L3Rlc3R0YWJsZXFDM3h6MWNjPyRmb3JtYXQ9YXBwbGljYXRpb24lMkZqc29uJTNCb2RhdGElM0RtaW5pbWFsbWV0YWRhdGEgSFRUUC8xLjENCkhvc3Q6IHBha3J5bXRhYmxlczNwcmltLnRhYmxlLmNvcmUud2luZG93cy5uZXQNCngtbXMtdmVyc2lvbjogMjAxOS0wMi0wMg0KRGF0YVNlcnZpY2VWZXJzaW9uOiAzLjANClByZWZlcjogcmV0dXJuLW5vLWNvbnRlbnQNCkFjY2VwdDogYXBwbGljYXRpb24vanNvbjtvZGF0YT1taW5pbWFsbWV0YWRhdGENCkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vanNvbjtvZGF0YT1ub21ldGFkYXRhDQoNCnsiUm93S2V5IjoiUksiLCJQYXJ0aXRpb25LZXkiOiJQSyIsIlN0cmluZ1R5cGVQcm9wZXJ0eSI6bnVsbCwiR3VpZFR5cGVQcm9wZXJ0eSI6IjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCIsIkd1aWRUeXBlUHJvcGVydHlAb2RhdGEudHlwZSI6IkVkbS5HdWlkIiwiQmluYXJ5VHlwZVByb3BlcnR5IjpudWxsLCJJbnQ2NFR5cGVQcm9wZXJ0eSI6IjAiLCJJbnQ2NFR5cGVQcm9wZXJ0eUBvZGF0YS50eXBlIjoiRWRtLkludDY0IiwiVUludDY0VHlwZVByb3BlcnR5IjoiMCIsIkRvdWJsZVR5cGVQcm9wZXJ0eSI6MCwiRG91YmxlVHlwZVByb3BlcnR5QG9kYXRhLnR5cGUiOiJFZG0uRG91YmxlIiwiSW50VHlwZVByb3BlcnR5IjowLCJOdWxsYWJsZUd1aWRUeXBlUHJvcGVydHkiOm51bGwsIk51bGxhYmxlSW50NjRUeXBlUHJvcGVydHkiOm51bGwsIk51bGxhYmxlVUludDY0VHlwZVByb3BlcnR5IjoibnVsbCIsIk51bGxhYmxlRG91YmxlVHlwZVByb3BlcnR5IjpudWxsLCJOdWxsYWJsZUludFR5cGVQcm9wZXJ0eSI6bnVsbH0NCi0tbXVsdGlwYXJ0X2JvdW5kYXJ5DQoNCi0tbXVsdGlwYXJ0X2JvdW5kYXJ5DQo=",
       "StatusCode": 202,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Type": "multipart/mixed; boundary=batchresponse_d6a329be-5d07-494f-988a-dc15ba1d1834",
-        "Date": "Tue, 21 Dec 2021 23:20:52 GMT",
+        "Content-Type": "multipart/mixed; boundary=batchresponse_0db16d3c-fd50-439a-b5f8-51531641ba41",
+        "Date": "Tue, 21 Dec 2021 23:33:35 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "ed3dad69782438d05bc33e7d87616745",
-        "x-ms-request-id": "e5df8513-8002-0078-3cc1-f60e63000000",
+        "x-ms-client-request-id": "aedd85e53b7efcb1adc63368e7cc9fe2",
+        "x-ms-request-id": "2be759a8-0002-002b-13c3-f62d57000000",
         "x-ms-version": "2019-02-02"
       },
-      "ResponseBody": "LS1iYXRjaHJlc3BvbnNlX2Q2YTMyOWJlLTVkMDctNDk0Zi05ODhhLWRjMTViYTFkMTgzNA0KQ29udGVudC1UeXBlOiBtdWx0aXBhcnQvbWl4ZWQ7IGJvdW5kYXJ5PWNoYW5nZXNldHJlc3BvbnNlXzU5YTJhNjJiLTI0MTUtNDhmYy1hMGM4LTRhZjhkY2U5ZWVjZQ0KDQotLWNoYW5nZXNldHJlc3BvbnNlXzU5YTJhNjJiLTI0MTUtNDhmYy1hMGM4LTRhZjhkY2U5ZWVjZQ0KQ29udGVudC1UeXBlOiBhcHBsaWNhdGlvbi9odHRwDQpDb250ZW50LVRyYW5zZmVyLUVuY29kaW5nOiBiaW5hcnkNCg0KSFRUUC8xLjEgMjA0IE5vIENvbnRlbnQNClgtQ29udGVudC1UeXBlLU9wdGlvbnM6IG5vc25pZmYNCkNhY2hlLUNvbnRyb2w6IG5vLWNhY2hlDQpQcmVmZXJlbmNlLUFwcGxpZWQ6IHJldHVybi1uby1jb250ZW50DQpEYXRhU2VydmljZVZlcnNpb246IDMuMDsNCkxvY2F0aW9uOiBodHRwczovL3Bha3J5bXRhYmxlczNwcmltLnRhYmxlLmNvcmUud2luZG93cy5uZXQvdGVzdHRhYmxleHJJNmp1cEwoUGFydGl0aW9uS2V5PSdQSycsUm93S2V5PSdSSycpDQpEYXRhU2VydmljZUlkOiBodHRwczovL3Bha3J5bXRhYmxlczNwcmltLnRhYmxlLmNvcmUud2luZG93cy5uZXQvdGVzdHRhYmxleHJJNmp1cEwoUGFydGl0aW9uS2V5PSdQSycsUm93S2V5PSdSSycpDQpFVGFnOiBXLyJkYXRldGltZScyMDIxLTEyLTIxVDIzJTNBMjAlM0E1My44ODYyNzU1WiciDQoNCg0KLS1jaGFuZ2VzZXRyZXNwb25zZV81OWEyYTYyYi0yNDE1LTQ4ZmMtYTBjOC00YWY4ZGNlOWVlY2UtLQ0KLS1iYXRjaHJlc3BvbnNlX2Q2YTMyOWJlLTVkMDctNDk0Zi05ODhhLWRjMTViYTFkMTgzNC0tDQo="
+      "ResponseBody": "LS1iYXRjaHJlc3BvbnNlXzBkYjE2ZDNjLWZkNTAtNDM5YS1iNWY4LTUxNTMxNjQxYmE0MQ0KQ29udGVudC1UeXBlOiBtdWx0aXBhcnQvbWl4ZWQ7IGJvdW5kYXJ5PWNoYW5nZXNldHJlc3BvbnNlX2RjYTdlMjcwLTdiODItNDhmNC1hYjg2LTg4Mjc1MTI0ZjJiMw0KDQotLWNoYW5nZXNldHJlc3BvbnNlX2RjYTdlMjcwLTdiODItNDhmNC1hYjg2LTg4Mjc1MTI0ZjJiMw0KQ29udGVudC1UeXBlOiBhcHBsaWNhdGlvbi9odHRwDQpDb250ZW50LVRyYW5zZmVyLUVuY29kaW5nOiBiaW5hcnkNCg0KSFRUUC8xLjEgMjA0IE5vIENvbnRlbnQNClgtQ29udGVudC1UeXBlLU9wdGlvbnM6IG5vc25pZmYNCkNhY2hlLUNvbnRyb2w6IG5vLWNhY2hlDQpQcmVmZXJlbmNlLUFwcGxpZWQ6IHJldHVybi1uby1jb250ZW50DQpEYXRhU2VydmljZVZlcnNpb246IDMuMDsNCkxvY2F0aW9uOiBodHRwczovL3Bha3J5bXRhYmxlczNwcmltLnRhYmxlLmNvcmUud2luZG93cy5uZXQvdGVzdHRhYmxlcUMzeHoxY2MoUGFydGl0aW9uS2V5PSdQSycsUm93S2V5PSdSSycpDQpEYXRhU2VydmljZUlkOiBodHRwczovL3Bha3J5bXRhYmxlczNwcmltLnRhYmxlLmNvcmUud2luZG93cy5uZXQvdGVzdHRhYmxlcUMzeHoxY2MoUGFydGl0aW9uS2V5PSdQSycsUm93S2V5PSdSSycpDQpFVGFnOiBXLyJkYXRldGltZScyMDIxLTEyLTIxVDIzJTNBMzMlM0EzNi4wNTA1NlonIg0KDQoNCi0tY2hhbmdlc2V0cmVzcG9uc2VfZGNhN2UyNzAtN2I4Mi00OGY0LWFiODYtODgyNzUxMjRmMmIzLS0NCi0tYmF0Y2hyZXNwb25zZV8wZGIxNmQzYy1mZDUwLTQzOWEtYjVmOC01MTUzMTY0MWJhNDEtLQ0K"
     },
     {
-      "RequestUri": "https://pakrymtables3prim.table.core.windows.net/Tables(\u0027testtablexrI6jupL\u0027)",
+      "RequestUri": "https://pakrymtables3prim.table.core.windows.net/Tables(\u0027testtableqC3xz1cc\u0027)",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-c8801a454e08af458dddc608f881668f-eae296f0164ea842-00",
+        "traceparent": "00-6b9e08efdbda1f4eabc008080809793f-c1432c68bf272748-00",
         "User-Agent": "azsdk-net-Data.Tables/12.4.0-alpha.20211221.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "a70246a2e1900e7b0c7999d15e73d8c2",
-        "x-ms-date": "Tue, 21 Dec 2021 23:20:54 GMT",
+        "x-ms-client-request-id": "709d3920c825258ad5eae5bb184a6455",
+        "x-ms-date": "Tue, 21 Dec 2021 23:33:36 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -91,21 +91,21 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Tue, 21 Dec 2021 23:20:53 GMT",
+        "Date": "Tue, 21 Dec 2021 23:33:35 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "a70246a2e1900e7b0c7999d15e73d8c2",
-        "x-ms-request-id": "e5df8518-8002-0078-41c1-f60e63000000",
+        "x-ms-client-request-id": "709d3920c825258ad5eae5bb184a6455",
+        "x-ms-request-id": "2be759ae-0002-002b-17c3-f62d57000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": null
     }
   ],
   "Variables": {
-    "RandomSeed": "1302051816",
+    "RandomSeed": "648659873",
     "STORAGE_ENDPOINT_SUFFIX": "core.windows.net",
     "TABLES_PRIMARY_STORAGE_ACCOUNT_KEY": "Kg==",
     "TABLES_STORAGE_ACCOUNT_NAME": "pakrymtables3prim"
