@@ -17,50 +17,6 @@ namespace Azure.Communication.CallingServer.Tests
 
         public const string ResourceId = "COMMUNICATION_LIVETEST_STATIC_RESOURCE_IDENTIFIER";
 
-        public const string DownloadUrl = "DOWNLOAD_ENDPOINT";
-
-        public const string UserId = "USER_IDENTIFIER";
-
-        public const string AnotherUserId = "ANOTHER_USER_IDENTIFIER";
-
-        public const string TargetCallConnectionId = "TARGET_CALL_CONNECTION_ID";
-
-        public const string AudioUrl = "AUDIO_FILE_URL";
-
-        public const string DeleteUrl = "DELETE_ENDPOINT";
-
-        public const string AsyncDeleteUrl = "ASYNC_DELETE_ENDPOINT";
-
-        /// <summary>
-        /// The delete url required to delete the file.
-        /// </summary>
-        public string DeleteEndPoint => GetRecordedVariable(DeleteUrl, options => options.IsSecret());
-
-        /// <summary>
-        /// The async delete url required to delete the file.
-        /// </summary>
-        public string AsyncDeleteEndPoint => GetRecordedVariable(AsyncDeleteUrl, options => options.IsSecret());
-
-        /// <summary>
-        /// The download url required to download the file.
-        /// </summary>
-        public string DownloadEndPoint => GetRecordedVariable(DownloadUrl, options => options.IsSecret());
-
-        /// <summary>
-        /// The user id required to add the paticipant in a call.
-        /// </summary>
-        public string UserIdentifier => GetRecordedVariable(UserId, options => options.IsSecret());
-
-        /// <summary>
-        /// The another user id required to add another paticipant in a call.
-        /// </summary>
-        public string AnotherUserIdentifier => GetRecordedVariable(AnotherUserId, options => options.IsSecret());
-
-        /// <summary>
-        /// The target call connection id required to transfer the call to another call.
-        /// </summary>
-        public string TargetCallConnectionIdentifier => GetRecordedVariable(TargetCallConnectionId, options => options.IsSecret());
-
         /// <summary>
         /// The phone number required to make a pstn call.
         /// </summary>
@@ -100,10 +56,5 @@ namespace Azure.Communication.CallingServer.Tests
         /// The publicly available url of the audio file which would be played as a prompt.
         /// </summary>
         public string AudioFileUrl => $"{AppBaseUrl}/audio/{AudioFileName}";
-
-        /// <summary>
-        /// The url of the audio file which would be played as a prompt.
-        /// </summary>
-        public string AudioFileUri => GetRecordedVariable(AudioUrl, options => options.IsSecret());
     }
 }

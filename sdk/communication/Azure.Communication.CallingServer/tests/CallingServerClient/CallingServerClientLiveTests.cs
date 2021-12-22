@@ -67,13 +67,12 @@ namespace Azure.Communication.CallingServer.Tests
                 Assert.ThrowsAsync<RequestFailedException>(async () => await callingServerClient.GetRecordingStateAsync(recordingId).ConfigureAwait(false));
 
                 // Hang up the Call, there is one call leg in this test case, hangup the call will also delete the call as the result.
-                await WaitForOperationCompletion().ConfigureAwait(false);
                 await CleanUpConnectionsAsync(callConnections).ConfigureAwait(false);
             }
             catch (RequestFailedException ex)
             {
                 Console.WriteLine(ex.Message);
-                Assert.Fail($"Unexpected error: {ex}");
+                Assert.Fail($"Request failed error: {ex}");
             }
             catch (Exception ex)
             {
@@ -89,15 +88,14 @@ namespace Azure.Communication.CallingServer.Tests
 
             // Establish a Call
             var callConnections = await CreateGroupCallOperation(callingServerClient, groupId, GetFromUserId(), GetToUserId(), TestEnvironment.AppCallbackUrl).ConfigureAwait(false);
+            await WaitForOperationCompletion().ConfigureAwait(false);
 
             try
             {
                 var callLocator = new GroupCallLocator(groupId);
-                await WaitForOperationCompletion().ConfigureAwait(false);
 
                 // Play Prompt Audio
                 await PlayAudioOperation(callingServerClient, callLocator).ConfigureAwait(false);
-
                 await WaitForOperationCompletion().ConfigureAwait(false);
 
                 // Cancel Prompt Audio
@@ -106,7 +104,7 @@ namespace Azure.Communication.CallingServer.Tests
             catch (RequestFailedException ex)
             {
                 Console.WriteLine(ex.Message);
-                Assert.Fail($"Unexpected error: {ex}");
+                Assert.Fail($"Request failed error: {ex}");
             }
             catch (Exception ex)
             {
@@ -115,7 +113,6 @@ namespace Azure.Communication.CallingServer.Tests
             finally
             {
                 // Hang up the Call, there is one call leg in this test case, hangup the call will also delete the call as the result.
-                await WaitForOperationCompletion().ConfigureAwait(false);
                 await CleanUpConnectionsAsync(callConnections).ConfigureAwait(false);
             }
         }
@@ -131,17 +128,16 @@ namespace Azure.Communication.CallingServer.Tests
 
             // Establish a Call
             var callConnections = await CreateGroupCallOperation(callingServerClient, groupId, GetFromUserId(), GetToUserId(), TestEnvironment.AppCallbackUrl).ConfigureAwait(false);
-            var callLocator = new GroupCallLocator(groupId);
+            await WaitForOperationCompletion().ConfigureAwait(false);
 
             try
             {
-                string userId = GetFixedUserId(TestEnvironment.UserIdentifier);
-                await WaitForOperationCompletion().ConfigureAwait(false);
+                var callLocator = new GroupCallLocator(groupId);
+                string userId = GetUserId(USER_IDENTIFIER);
 
                 // Add Participant
                 AddParticipantResult addParticipantResult = await AddParticipantOperation(callingServerClient, callLocator, userId).ConfigureAwait(false);
                 Assert.NotNull(addParticipantResult);
-
                 await WaitForOperationCompletion().ConfigureAwait(false);
 
                 // Remove Participant
@@ -150,7 +146,7 @@ namespace Azure.Communication.CallingServer.Tests
             catch (RequestFailedException ex)
             {
                 Console.WriteLine(ex.Message);
-                Assert.Fail($"Unexpected error: {ex}");
+                Assert.Fail($"Request failed error: {ex}");
             }
             catch (Exception ex)
             {
@@ -159,7 +155,6 @@ namespace Azure.Communication.CallingServer.Tests
             finally
             {
                 // Hang up the Call, there is one call leg in this test case, hangup the call will also delete the call as the result.
-                await WaitForOperationCompletion().ConfigureAwait(false);
                 await CleanUpConnectionsAsync(callConnections).ConfigureAwait(false);
             }
         }
@@ -193,7 +188,7 @@ namespace Azure.Communication.CallingServer.Tests
             catch (RequestFailedException ex)
             {
                 Console.WriteLine(ex.Message);
-                Assert.Fail($"Unexpected error: {ex}");
+                Assert.Fail($"Request failed error: {ex}");
             }
             catch (Exception ex)
             {
@@ -216,7 +211,14 @@ namespace Azure.Communication.CallingServer.Tests
             catch (RequestFailedException ex)
             {
                 Console.WriteLine(ex.Message);
-                Assert.Pass($"Unexpected error: {ex}");
+                if (ex.Status == 404)
+                {
+                    Assert.Pass($"Request failed error: {ex}");
+                }
+                else
+                {
+                    Assert.Fail($"Request failed error with unmatched status code: {ex}");
+                }
             }
             catch (Exception ex)
             {
@@ -235,29 +237,31 @@ namespace Azure.Communication.CallingServer.Tests
 
             // Establish a Call
             var callConnections = await CreateGroupCallOperation(callingServerClient, groupId, GetFromUserId(), GetToUserId(), TestEnvironment.AppCallbackUrl).ConfigureAwait(false);
-            var callLocator = new GroupCallLocator(groupId);
+            await WaitForOperationCompletion().ConfigureAwait(false);
 
             try
             {
+                var callLocator = new GroupCallLocator(groupId);
+
                 foreach (var callConnection in callConnections)
                 {
                     var getCallConnection = callingServerClient.GetCallConnection(callConnection.CallConnectionId);
                     Assert.IsFalse(string.IsNullOrWhiteSpace(getCallConnection.CallConnectionId));
                 }
 
-                string userId = GetFixedUserId(TestEnvironment.UserIdentifier);
-                await WaitForOperationCompletion().ConfigureAwait(false);
+                string userId = GetUserId(USER_IDENTIFIER);
 
                 // Add Participant
                 AddParticipantResult addParticipantResult = await AddParticipantOperation(callingServerClient, callLocator, userId).ConfigureAwait(false);
                 Assert.NotNull(addParticipantResult);
+                await WaitForOperationCompletion().ConfigureAwait(false);
 
                 // Get Participant
-                var getParticipant = await GetParticipantOperation(callingServerClient, callLocator, userId).ConfigureAwait(false);
+                var getParticipant = await GetParticipant(callingServerClient, callLocator, userId).ConfigureAwait(false);
                 Assert.NotNull(getParticipant);
 
                 // Get Participants
-                var getParticipants = await GetParticipantsOperation(callingServerClient, callLocator).ConfigureAwait(false);
+                var getParticipants = await GetParticipants(callingServerClient, callLocator).ConfigureAwait(false);
                 Assert.IsTrue(getParticipants.Count() > 2);
 
                 // Remove Participant
@@ -266,7 +270,7 @@ namespace Azure.Communication.CallingServer.Tests
             catch (RequestFailedException ex)
             {
                 Console.WriteLine(ex.Message);
-                Assert.Fail($"Unexpected error: {ex}");
+                Assert.Fail($"Request failed error: {ex}");
             }
             catch (Exception ex)
             {
@@ -275,7 +279,6 @@ namespace Azure.Communication.CallingServer.Tests
             finally
             {
                 // Hang up the Call, there is one call leg in this test case, hangup the call will also delete the call as the result.
-                await WaitForOperationCompletion().ConfigureAwait(false);
                 await CleanUpConnectionsAsync(callConnections).ConfigureAwait(false);
             }
         }
@@ -291,24 +294,24 @@ namespace Azure.Communication.CallingServer.Tests
 
             // Establish a Call
             var callConnections = await CreateGroupCallOperation(callingServerClient, groupId, GetFromUserId(), GetToUserId(), TestEnvironment.AppCallbackUrl).ConfigureAwait(false);
-            var callLocator = new GroupCallLocator(groupId);
+            await WaitForOperationCompletion().ConfigureAwait(false);
 
             try
             {
-                string userId = GetFixedUserId(TestEnvironment.UserIdentifier);
-                await WaitForOperationCompletion().ConfigureAwait(false);
+                var callLocator = new GroupCallLocator(groupId);
+                string userId = GetUserId(USER_IDENTIFIER);
 
                 // Add Participant
                 AddParticipantResult addParticipantResult = await AddParticipantOperation(callingServerClient, callLocator, userId).ConfigureAwait(false);
                 Assert.NotNull(addParticipantResult);
+                await WaitForOperationCompletion().ConfigureAwait(false);
 
                 // Play Audio To Participant
                 var playAudioResult = await PlayAudioToParticipantOperation(callingServerClient, callLocator, userId).ConfigureAwait(false);
-
+                string mediaOperationId = playAudioResult.OperationId;
                 await WaitForOperationCompletion().ConfigureAwait(false);
 
                 // Cancel Participant Media Operation
-                string mediaOperationId = playAudioResult.OperationId;
                 await CancelParticipantMediaOperation(callingServerClient, callLocator, userId, mediaOperationId).ConfigureAwait(false);
 
                 // Remove Participant
@@ -317,7 +320,7 @@ namespace Azure.Communication.CallingServer.Tests
             catch (RequestFailedException ex)
             {
                 Console.WriteLine(ex.Message);
-                Assert.Fail($"Unexpected error: {ex}");
+                Assert.Fail($"Request failed error: {ex}");
             }
             catch (Exception ex)
             {
@@ -326,7 +329,6 @@ namespace Azure.Communication.CallingServer.Tests
             finally
             {
                 // Hang up the Call, there is one call leg in this test case, hangup the call will also delete the call as the result.
-                await WaitForOperationCompletion().ConfigureAwait(false);
                 await CleanUpConnectionsAsync(callConnections).ConfigureAwait(false);
             }
         }
@@ -339,16 +341,15 @@ namespace Azure.Communication.CallingServer.Tests
 
             //Establish a Call
             var callConnections = await CreateGroupCallOperation(callingServerClient, groupId, GetFromUserId(), GetToUserId(), TestEnvironment.AppCallbackUrl).ConfigureAwait(false);
-            var callLocator = new GroupCallLocator(groupId);
-
             await WaitForOperationCompletion().ConfigureAwait(false);
 
             try
             {
+                var callLocator = new GroupCallLocator(groupId);
+
                 // Play Prompt Audio
                 var playAudioResult = await PlayAudioOperation(callingServerClient, callLocator).ConfigureAwait(false);
                 string mediaOperatioId = playAudioResult.OperationId;
-
                 await WaitForOperationCompletion().ConfigureAwait(false);
 
                 // Cancel Prompt Audio
@@ -357,7 +358,7 @@ namespace Azure.Communication.CallingServer.Tests
             catch (RequestFailedException ex)
             {
                 Console.WriteLine(ex.Message);
-                Assert.Fail($"Unexpected error: {ex}");
+                Assert.Fail($"Request failed error: {ex}");
             }
             catch (Exception ex)
             {
@@ -366,7 +367,6 @@ namespace Azure.Communication.CallingServer.Tests
             finally
             {
                 // Hang up the Call, there is one call leg in this test case, hangup the call will also delete the call as the result.
-                await WaitForOperationCompletion().ConfigureAwait(false);
                 await CleanUpConnectionsAsync(callConnections).ConfigureAwait(false);
             }
         }
@@ -383,17 +383,16 @@ namespace Azure.Communication.CallingServer.Tests
 
             // Establish a Call
             var callConnections = await CreateGroupCallOperation(callingServerClient, groupId, GetFromUserId(), GetToUserId(), TestEnvironment.AppCallbackUrl).ConfigureAwait(false);
-            var callLocator = new GroupCallLocator(groupId);
+            await WaitForOperationCompletion().ConfigureAwait(false);
 
             try
             {
-                string userId = GetFixedUserId(TestEnvironment.UserIdentifier);
-                await WaitForOperationCompletion().ConfigureAwait(false);
+                var callLocator = new GroupCallLocator(groupId);
+                string userId = GetUserId(USER_IDENTIFIER);
 
                 // Add Participant
                 AddParticipantResult addParticipantResult = await AddParticipantOperation(callingServerClient, callLocator, userId).ConfigureAwait(false);
                 Assert.NotNull(addParticipantResult);
-
                 await WaitForOperationCompletion().ConfigureAwait(false);
 
                 // Answer Call
@@ -410,7 +409,7 @@ namespace Azure.Communication.CallingServer.Tests
             catch (RequestFailedException ex)
             {
                 Console.WriteLine(ex.Message);
-                Assert.Fail($"Unexpected error: {ex}");
+                Assert.Fail($"Request failed error: {ex}");
             }
             catch (Exception ex)
             {
@@ -419,7 +418,6 @@ namespace Azure.Communication.CallingServer.Tests
             finally
             {
                 // Hang up the Call, there is one call leg in this test case, hangup the call will also delete the call as the result.
-                await WaitForOperationCompletion().ConfigureAwait(false);
                 await CleanUpConnectionsAsync(callConnections).ConfigureAwait(false);
             }
         }
@@ -436,17 +434,16 @@ namespace Azure.Communication.CallingServer.Tests
 
             // Establish a Call
             var callConnections = await CreateGroupCallOperation(callingServerClient, groupId, GetFromUserId(), GetToUserId(), TestEnvironment.AppCallbackUrl).ConfigureAwait(false);
-            var callLocator = new GroupCallLocator(groupId);
+            await WaitForOperationCompletion().ConfigureAwait(false);
 
             try
             {
-                string userId = GetFixedUserId(TestEnvironment.UserIdentifier);
-                await WaitForOperationCompletion().ConfigureAwait(false);
+                var callLocator = new GroupCallLocator(groupId);
+                string userId = GetUserId(USER_IDENTIFIER);
 
                 // Add Participant
                 AddParticipantResult addParticipantResult = await AddParticipantOperation(callingServerClient, callLocator, userId).ConfigureAwait(false);
                 Assert.NotNull(addParticipantResult);
-
                 await WaitForOperationCompletion().ConfigureAwait(false);
 
                 // Reject Call
@@ -455,7 +452,7 @@ namespace Azure.Communication.CallingServer.Tests
             catch (RequestFailedException ex)
             {
                 Console.WriteLine(ex.Message);
-                Assert.Fail($"Unexpected error: {ex}");
+                Assert.Fail($"Request failed error: {ex}");
             }
             catch (Exception ex)
             {
@@ -464,7 +461,6 @@ namespace Azure.Communication.CallingServer.Tests
             finally
             {
                 // Hang up the Call, there is one call leg in this test case, hangup the call will also delete the call as the result.
-                await WaitForOperationCompletion().ConfigureAwait(false);
                 await CleanUpConnectionsAsync(callConnections).ConfigureAwait(false);
             }
         }
@@ -481,19 +477,20 @@ namespace Azure.Communication.CallingServer.Tests
 
             // Establish a Call
             await CreateGroupCallOperation(callingServerClient, groupId, GetFromUserId(), GetToUserId(), TestEnvironment.AppCallbackUrl).ConfigureAwait(false);
+            await WaitForOperationCompletion().ConfigureAwait(false);
 
             try
             {
-                string userId = GetFixedUserId(TestEnvironment.UserIdentifier);
-                await WaitForOperationCompletion().ConfigureAwait(false);
+                string userId = GetUserId(USER_IDENTIFIER);
 
                 // Redirect Call
                 await RedirectCallOperation(callingServerClient, userId).ConfigureAwait(false);
+                await WaitForOperationCompletion().ConfigureAwait(false);
             }
             catch (RequestFailedException ex)
             {
                 Console.WriteLine(ex.Message);
-                Assert.Fail($"Unexpected error: {ex}");
+                Assert.Fail($"Request failed error: {ex}");
             }
             catch (Exception ex)
             {
@@ -517,7 +514,7 @@ namespace Azure.Communication.CallingServer.Tests
             catch (RequestFailedException ex)
             {
                 Console.WriteLine(ex.Message);
-                Assert.Fail($"Unexpected error: {ex}");
+                Assert.Fail($"Request failed error: {ex}");
             }
             catch (Exception ex)
             {
@@ -559,7 +556,7 @@ namespace Azure.Communication.CallingServer.Tests
             catch (RequestFailedException ex)
             {
                 Console.WriteLine(ex.Message);
-                Assert.Fail($"Unexpected error: {ex}");
+                Assert.Fail($"Request failed error: {ex}");
             }
             catch (Exception ex)
             {
@@ -590,7 +587,7 @@ namespace Azure.Communication.CallingServer.Tests
             catch (RequestFailedException ex)
             {
                 Console.WriteLine(ex.Message);
-                Assert.Fail($"Unexpected error: {ex}");
+                Assert.Fail($"Request failed error: {ex}");
             }
             catch (Exception ex)
             {

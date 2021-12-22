@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://us-storage.asm.skype.com/v1/objects/Sanitized/content/acsmetadata",
+      "RequestUri": "https://us-storage.asm.skype.com/v1/objects/0-wus-d8-99b867bd0c3f48c32fe2ddc8aa2e4125/content/acsmetadata",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Range": "bytes=0-268435455",
-        "traceparent": "00-c1ab817a1223924f9e0628801282099e-be364469ffb80a4f-00",
-        "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20211208.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "traceparent": "00-c976b78f98287d44b98303befa9b6b8e-1ad5e5d27eb28e4e-00",
+        "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20211216.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-request-id": "f83f2a3361239b4fee64470383d9bf04",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Wed, 08 Dec 2021 07:51:17 GMT",
-        "x-ms-host": "acstelephonyportaltesting.communication.azure.com",
+        "x-ms-date": "Thu, 16 Dec 2021 12:27:43 GMT",
+        "x-ms-host": "acs-app-validations.communication.azure.com",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -23,19 +23,18 @@
           "s-maxage=0",
           "private"
         ],
-        "Content-Length": "838",
-        "Content-Range": "bytes 0-837/838",
+        "Content-Length": "837",
+        "Content-Range": "bytes 0-836/837",
         "Content-Type": "application/octet-stream",
-        "Date": "Wed, 08 Dec 2021 07:51:18 GMT",
+        "Date": "Thu, 16 Dec 2021 12:27:43 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains"
       },
-      "ResponseBody": "ew0KICAicmVzb3VyY2VJZCI6ICJhYjEyYjBlYS04NWVhLTRmODMtYjBiNi04NGQ5MDIwOWM3YzQiLA0KICAiY2FsbElkIjogIjMxOGYxYjgzLTVmMTUtNDgzZS1iZjdhLTBiMDgwYjU4OWFmYyIsDQogICJjaHVua0RvY3VtZW50SWQiOiAiMC13dXMtZDItMTZkMGEyYTk3ZTk0MzIxMGI4Zjg3ODkzNzQ2OTIzMzgiLA0KICAiY2h1bmtJbmRleCI6IDAsDQogICJjaHVua1N0YXJ0VGltZSI6ICIyMDIxLTEyLTAzVDExOjQyOjI2LjQ5OTc3MzNaIiwNCiAgImNodW5rRHVyYXRpb24iOiAzMDA2MC4wLA0KICAicGF1c2VSZXN1bWVJbnRlcnZhbHMiOiBbXSwNCiAgInJlY29yZGluZ0luZm8iOiB7DQogICAgImNvbnRlbnRUeXBlIjogImF1ZGlvVmlkZW8iLA0KICAgICJjaGFubmVsVHlwZSI6ICJtaXhlZCIsDQogICAgImZvcm1hdCI6ICJtcDQiLA0KICAgICJhdWRpb0NvbmZpZ3VyYXRpb24iOiB7DQogICAgICAic2FtcGxlUmF0ZSI6IDE2MDAwLA0KICAgICAgImJpdFJhdGUiOiAxMjgwMDAsDQogICAgICAiY2hhbm5lbHMiOiAxDQogICAgfSwNCiAgICAidmlkZW9Db25maWd1cmF0aW9uIjogew0KICAgICAgImxvbmdlclNpZGVMZW5ndGgiOiAxOTIwLA0KICAgICAgInNob3J0ZXJTaWRlTGVuZ3RoIjogMTA4MCwNCiAgICAgICJmcmFtZXJhdGUiOiAxNSwNCiAgICAgICJiaXRSYXRlIjogMTAwMDAwMA0KICAgIH0NCiAgfSwNCiAgInBhcnRpY2lwYW50cyI6IFsNCiAgICB7DQogICAgICAicGFydGljaXBhbnRJZCI6ICI4OmFjczphYjEyYjBlYS04NWVhLTRmODMtYjBiNi04NGQ5MDIwOWM3YzRfMDAwMDAwMGUtMWZmYi00OGJiLTdmMDctMTEzYTBkMDAyMzY2Ig0KICAgIH0NCiAgXQ0KfQ=="
+      "ResponseBody": "ew0KICAicmVzb3VyY2VJZCI6ICJlMzMzYTViNS1jMWU0LTQ5ODQtYjc1Mi00NDdiZjkyZDEwYjciLA0KICAiY2FsbElkIjogImJmNDUwYTIzLTc4Y2UtNDExNi04NzhkLTYzNDI1MzFmNWQzMiIsDQogICJjaHVua0RvY3VtZW50SWQiOiAiMC13dXMtZDgtOTliODY3YmQwYzNmNDhjMzJmZTJkZGM4YWEyZTQxMjUiLA0KICAiY2h1bmtJbmRleCI6IDAsDQogICJjaHVua1N0YXJ0VGltZSI6ICIyMDIxLTEyLTE2VDEyOjA2OjQ2LjkxMzU3MTRaIiwNCiAgImNodW5rRHVyYXRpb24iOiA4MDYwLjAsDQogICJwYXVzZVJlc3VtZUludGVydmFscyI6IFtdLA0KICAicmVjb3JkaW5nSW5mbyI6IHsNCiAgICAiY29udGVudFR5cGUiOiAiYXVkaW9WaWRlbyIsDQogICAgImNoYW5uZWxUeXBlIjogIm1peGVkIiwNCiAgICAiZm9ybWF0IjogIm1wNCIsDQogICAgImF1ZGlvQ29uZmlndXJhdGlvbiI6IHsNCiAgICAgICJzYW1wbGVSYXRlIjogMTYwMDAsDQogICAgICAiYml0UmF0ZSI6IDEyODAwMCwNCiAgICAgICJjaGFubmVscyI6IDENCiAgICB9LA0KICAgICJ2aWRlb0NvbmZpZ3VyYXRpb24iOiB7DQogICAgICAibG9uZ2VyU2lkZUxlbmd0aCI6IDE5MjAsDQogICAgICAic2hvcnRlclNpZGVMZW5ndGgiOiAxMDgwLA0KICAgICAgImZyYW1lcmF0ZSI6IDE1LA0KICAgICAgImJpdFJhdGUiOiAxMDAwMDAwDQogICAgfQ0KICB9LA0KICAicGFydGljaXBhbnRzIjogWw0KICAgIHsNCiAgICAgICJwYXJ0aWNpcGFudElkIjogIjg6YWNzOmUzMzNhNWI1LWMxZTQtNDk4NC1iNzUyLTQ0N2JmOTJkMTBiN18wMDAwMDAwZS02MzAwLTlkMzMtMzVmMy0zNDNhMGQwMGE4NjgiDQogICAgfQ0KICBdDQp9"
     }
   ],
   "Variables": {
-    "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://acstelephonyportaltesting.communication.azure.com/;accesskey=Kg==",
-    "DOWNLOAD_ENDPOINT": "Sanitized",
+    "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://acs-app-validations.communication.azure.com/;accesskey=Kg==",
     "RandomSeed": "792149808"
   }
 }
