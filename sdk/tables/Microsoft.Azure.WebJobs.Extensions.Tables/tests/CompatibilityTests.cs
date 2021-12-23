@@ -134,7 +134,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             {
                 PartitionKey = PartitionKey,
                 RowKey = RowKey,
-                // T1 can't handle longs in JObject
+                // V4 can't handle longs in JObject
                 UInt64TypeProperty = int.MaxValue,
                 Int64TypeProperty = int.MaxValue,
                 NullableUInt64TypeProperty = int.MaxValue,
@@ -161,7 +161,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             {
                 PartitionKey = PartitionKey,
                 RowKey = RowKey,
-                // T1 can't handle longs in JObject
+                // V4 can't handle longs in JObject
                 UInt64TypeProperty = int.MaxValue,
                 Int64TypeProperty = int.MaxValue,
                 NullableUInt64TypeProperty = int.MaxValue,
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 PartitionKey = PartitionKey,
                 RowKey = RowKey,
                 NestedEntity = new TestEntity(true),
-                // T1 can't handle longs in JObject
+                // V4 can't handle longs in JObject
                 UInt64TypeProperty = int.MaxValue,
                 Int64TypeProperty = int.MaxValue,
                 NullableUInt64TypeProperty = int.MaxValue,
@@ -215,7 +215,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             {
                 PartitionKey = PartitionKey,
                 RowKey = RowKey,
-                // T1 can't handle longs in JObject
+                // V4 can't handle longs in JObject
                 UInt64TypeProperty = int.MaxValue,
                 Int64TypeProperty = int.MaxValue,
                 NullableUInt64TypeProperty = int.MaxValue,
@@ -242,7 +242,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             {
                 PartitionKey = PartitionKey,
                 RowKey = RowKey,
-                // T1 can't handle longs in JObject
+                // V4 can't handle longs in JObject
                 UInt64TypeProperty = int.MaxValue,
                 Int64TypeProperty = int.MaxValue,
                 NullableUInt64TypeProperty = int.MaxValue,
@@ -270,7 +270,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 PartitionKey = PartitionKey,
                 RowKey = RowKey,
                 NestedEntity = new TestEntity(true),
-                // T1 can't handle longs in JObject
+                // V4 can't handle longs in JObject
                 UInt64TypeProperty = int.MaxValue,
                 Int64TypeProperty = int.MaxValue,
                 NullableUInt64TypeProperty = int.MaxValue,
@@ -417,6 +417,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 DoubleTypeProperty = double.MaxValue;
                 IntTypeProperty = int.MaxValue;
                 EnumProperty = ConsoleColor.Blue;
+                ArrayProperty = new[] { "this", "works" };
 
                 if (setNullables)
                 {
@@ -441,6 +442,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             public double DoubleTypeProperty { get; set; }
             public int IntTypeProperty { get; set; }
             public ConsoleColor EnumProperty { get; set; }
+            public string[] ArrayProperty { get; set; }
 
             public DateTime? NullableDatetimeTypeProperty { get; set; }
             public DateTimeOffset? NullableDatetimeOffsetTypeProperty { get; set; }
