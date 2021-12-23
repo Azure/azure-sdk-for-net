@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a ManagedDatabaseSecurityAlertPolicy along with the instance operations that can be performed on it. </summary>
     public partial class ManagedDatabaseSecurityAlertPolicy : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ManagedDatabaseSecurityAlertPolicy"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string securityAlertPolicyName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ManagedDatabaseSecurityAlertPoliciesRestOperations _managedDatabaseSecurityAlertPoliciesRestClient;
         private readonly ManagedDatabaseSecurityAlertPolicyData _data;

@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A Class representing a JitRequestDefinition along with the instance operations that can be performed on it. </summary>
     public partial class JitRequestDefinition : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="JitRequestDefinition"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string jitRequestName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/jitRequests/{jitRequestName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly JitRequestsRestOperations _jitRequestsRestClient;
         private readonly JitRequestDefinitionData _data;

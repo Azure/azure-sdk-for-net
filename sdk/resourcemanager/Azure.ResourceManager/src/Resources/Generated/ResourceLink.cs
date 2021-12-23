@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A Class representing a ResourceLink along with the instance operations that can be performed on it. </summary>
     public partial class ResourceLink : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ResourceLink"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string linkId)
+        {
+            var resourceId = $"/{linkId}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ResourceLinksRestOperations _resourceLinksRestClient;
         private readonly ResourceLinkData _data;

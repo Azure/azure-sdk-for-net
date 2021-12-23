@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.WebPubSub
     /// <summary> A Class representing a PrivateEndpointConnection along with the instance operations that can be performed on it. </summary>
     public partial class PrivateEndpointConnection : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="PrivateEndpointConnection"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string privateEndpointConnectionName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly WebPubSubPrivateEndpointConnectionsRestOperations _webPubSubPrivateEndpointConnectionsRestClient;
         private readonly PrivateEndpointConnectionData _data;

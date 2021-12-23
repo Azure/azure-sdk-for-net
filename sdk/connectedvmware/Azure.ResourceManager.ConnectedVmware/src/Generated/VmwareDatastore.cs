@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ConnectedVmware
     /// <summary> A Class representing a VmwareDatastore along with the instance operations that can be performed on it. </summary>
     public partial class VmwareDatastore : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="VmwareDatastore"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string datastoreName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/datastores/{datastoreName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DatastoresRestOperations _datastoresRestClient;
         private readonly VmwareDatastoreData _data;

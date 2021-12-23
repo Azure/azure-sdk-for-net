@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> A Class representing a AfdSecurityPolicy along with the instance operations that can be performed on it. </summary>
     public partial class AfdSecurityPolicy : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="AfdSecurityPolicy"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string securityPolicyName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AfdSecurityPoliciesRestOperations _afdSecurityPoliciesRestClient;
         private readonly AfdSecurityPolicyData _data;

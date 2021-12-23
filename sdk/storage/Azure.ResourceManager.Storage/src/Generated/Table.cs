@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Storage
     /// <summary> A Class representing a Table along with the instance operations that can be performed on it. </summary>
     public partial class Table : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="Table"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string tableName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/tableServices/default/tables/{tableName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly TableRestOperations _tableRestClient;
         private readonly TableData _data;

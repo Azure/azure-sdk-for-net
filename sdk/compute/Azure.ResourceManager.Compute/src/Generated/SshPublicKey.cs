@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A Class representing a SshPublicKey along with the instance operations that can be performed on it. </summary>
     public partial class SshPublicKey : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="SshPublicKey"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string sshPublicKeyName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{sshPublicKeyName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SshPublicKeysRestOperations _sshPublicKeysRestClient;
         private readonly SshPublicKeyData _data;

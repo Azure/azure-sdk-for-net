@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a ApplicationSecurityGroup along with the instance operations that can be performed on it. </summary>
     public partial class ApplicationSecurityGroup : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ApplicationSecurityGroup"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string applicationSecurityGroupName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ApplicationSecurityGroupsRestOperations _applicationSecurityGroupsRestClient;
         private readonly ApplicationSecurityGroupData _data;
