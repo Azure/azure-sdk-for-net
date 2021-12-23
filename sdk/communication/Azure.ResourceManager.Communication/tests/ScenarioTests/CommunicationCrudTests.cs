@@ -66,7 +66,6 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task CreateOrUpdate()
         {
             string communicationServiceName = Recording.GenerateAssetName("communication-service-");
-            var collection = _resourceGroup.GetCommunicationServices();
             var communicationService = await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
             Assert.IsNotNull(communicationService);
             Assert.AreEqual(communicationServiceName, communicationService.Data.Name);
@@ -101,7 +100,6 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task GetAll()
         {
             string communicationServiceName = Recording.GenerateAssetName("communication-service-");
-            var collection = _resourceGroup.GetCommunicationServices();
             await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
             var list = await _resourceGroup.GetCommunicationServices().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
