@@ -401,6 +401,23 @@ namespace Azure.ResourceManager.Management.Models
         public string DisplayName { get { throw null; } }
         public string Name { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ManagementGroupVersion : System.IEquatable<Azure.ResourceManager.Management.Models.ManagementGroupVersion>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public static Azure.ResourceManager.Management.Models.ManagementGroupVersion Default { get { throw null; } }
+        public static Azure.ResourceManager.Management.Models.ManagementGroupVersion V2021_04_01 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Management.Models.ManagementGroupVersion other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Management.Models.ManagementGroupVersion left, Azure.ResourceManager.Management.Models.ManagementGroupVersion right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Management.Models.ManagementGroupVersion (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Management.Models.ManagementGroupVersion left, Azure.ResourceManager.Management.Models.ManagementGroupVersion right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ParentGroupInfo
     {
         internal ParentGroupInfo() { }
@@ -1709,22 +1726,40 @@ namespace Azure.ResourceManager.Resources.Models
         internal ManagedByTenant() { }
         public string TenantId { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ManagementGroupVersion : System.IEquatable<Azure.ResourceManager.Resources.Models.ManagementGroupVersion>
+    public partial class ManagementLockCreateOrUpdateByScopeOperation : Azure.Operation<Azure.ResourceManager.Resources.ManagementLockObject>
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public static Azure.ResourceManager.Resources.Models.ManagementGroupVersion Default { get { throw null; } }
-        public static Azure.ResourceManager.Resources.Models.ManagementGroupVersion V2021_04_01 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Resources.Models.ManagementGroupVersion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Resources.Models.ManagementGroupVersion left, Azure.ResourceManager.Resources.Models.ManagementGroupVersion right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Resources.Models.ManagementGroupVersion (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Resources.Models.ManagementGroupVersion left, Azure.ResourceManager.Resources.Models.ManagementGroupVersion right) { throw null; }
-        public override string ToString() { throw null; }
+        protected ManagementLockCreateOrUpdateByScopeOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.ResourceManager.Resources.ManagementLockObject Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.Resources.ManagementLockObject>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.Resources.ManagementLockObject>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ManagementLockDeleteByScopeOperation : Azure.Operation
+    {
+        protected ManagementLockDeleteByScopeOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ManagementLockOwner
+    {
+        public ManagementLockOwner() { }
+        public string ApplicationId { get { throw null; } set { } }
+    }
+    public partial class NonComplianceMessage
+    {
+        public NonComplianceMessage(string message) { }
+        public string Message { get { throw null; } set { } }
+        public string PolicyDefinitionReferenceId { get { throw null; } set { } }
     }
     public partial class PairedRegion
     {
