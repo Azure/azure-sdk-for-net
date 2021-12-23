@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             Assert.IsTrue(await container.ExistsAsync(staticSiteName));
             Assert.IsFalse(await container.ExistsAsync(staticSiteName + "1"));
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.CheckIfExistsAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.ExistsAsync(null));
         }
     }
 }
