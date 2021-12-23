@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             var adoAuth = await collection.CreateOrUpdateAsync(AuthenticationName.Default, data);
 
             // 2.CheckIfExist
-            Assert.IsTrue(collection.CheckIfExists(adoAuthName));
+            Assert.IsTrue(collection.Exists(adoAuthName));
 
             // 3.Get
             var getadoAuth = await collection.GetAsync(adoAuthName);

@@ -243,14 +243,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string orderItemName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (orderItemName == null)
             {
                 throw new ArgumentNullException(nameof(orderItemName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OrderItemResourceCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("OrderItemResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -269,14 +269,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string orderItemName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (orderItemName == null)
             {
                 throw new ArgumentNullException(nameof(orderItemName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OrderItemResourceCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("OrderItemResourceCollection.ExistsAsync");
             scope.Start();
             try
             {

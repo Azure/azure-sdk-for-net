@@ -138,9 +138,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="dataWarehouseUserActivityName"> The activity name of the data warehouse. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> CheckIfExists(DataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(DataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DataWarehouseUserActivitiesCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("DataWarehouseUserActivitiesCollection.Exists");
             scope.Start();
             try
             {
@@ -157,9 +157,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="dataWarehouseUserActivityName"> The activity name of the data warehouse. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(DataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(DataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DataWarehouseUserActivitiesCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DataWarehouseUserActivitiesCollection.ExistsAsync");
             scope.Start();
             try
             {

@@ -226,14 +226,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="policyName"> The name of the policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string policyName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string policyName, CancellationToken cancellationToken = default)
         {
             if (policyName == null)
             {
                 throw new ArgumentNullException(nameof(policyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicyCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicyCollection.Exists");
             scope.Start();
             try
             {
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="policyName"> The name of the policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string policyName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string policyName, CancellationToken cancellationToken = default)
         {
             if (policyName == null)
             {
                 throw new ArgumentNullException(nameof(policyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicyCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicyCollection.ExistsAsync");
             scope.Start();
             try
             {

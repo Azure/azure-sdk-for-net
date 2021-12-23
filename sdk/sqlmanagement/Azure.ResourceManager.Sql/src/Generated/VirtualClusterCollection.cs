@@ -163,14 +163,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualClusterName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string virtualClusterName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string virtualClusterName, CancellationToken cancellationToken = default)
         {
             if (virtualClusterName == null)
             {
                 throw new ArgumentNullException(nameof(virtualClusterName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualClusterCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("VirtualClusterCollection.Exists");
             scope.Start();
             try
             {
@@ -188,14 +188,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualClusterName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string virtualClusterName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string virtualClusterName, CancellationToken cancellationToken = default)
         {
             if (virtualClusterName == null)
             {
                 throw new ArgumentNullException(nameof(virtualClusterName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualClusterCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualClusterCollection.ExistsAsync");
             scope.Start();
             try
             {

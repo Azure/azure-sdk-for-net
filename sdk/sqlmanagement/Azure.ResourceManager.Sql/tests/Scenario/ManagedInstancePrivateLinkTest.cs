@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             string privateLinkName = list.FirstOrDefault().Data.Name;
 
             // 2.CheckIfExist
-            Assert.IsTrue(collection.CheckIfExists(privateLinkName));
+            Assert.IsTrue(collection.Exists(privateLinkName));
 
             // 3.Get
             var getPrivateLink = await collection.GetAsync(privateLinkName);

@@ -226,14 +226,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string profileName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string profileName, CancellationToken cancellationToken = default)
         {
             if (profileName == null)
             {
                 throw new ArgumentNullException(nameof(profileName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ProfileCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ProfileCollection.Exists");
             scope.Start();
             try
             {
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string profileName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string profileName, CancellationToken cancellationToken = default)
         {
             if (profileName == null)
             {
                 throw new ArgumentNullException(nameof(profileName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ProfileCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ProfileCollection.ExistsAsync");
             scope.Start();
             try
             {

@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             // Seems bug in swagger definition
             //Assert.AreEqual(TestThroughput1, container.Data.Options.Throughput);
 
-            bool ifExists = await SqlTriggerCollection.CheckIfExistsAsync(_triggerName);
+            bool ifExists = await SqlTriggerCollection.ExistsAsync(_triggerName);
             Assert.True(ifExists);
 
             SqlTrigger trigger2 = await SqlTriggerCollection.GetAsync(_triggerName);

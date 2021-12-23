@@ -237,14 +237,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="keyName"> The name of the server key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string keyName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string keyName, CancellationToken cancellationToken = default)
         {
             if (keyName == null)
             {
                 throw new ArgumentNullException(nameof(keyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerKeyCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ServerKeyCollection.Exists");
             scope.Start();
             try
             {
@@ -262,14 +262,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="keyName"> The name of the server key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string keyName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string keyName, CancellationToken cancellationToken = default)
         {
             if (keyName == null)
             {
                 throw new ArgumentNullException(nameof(keyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerKeyCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerKeyCollection.ExistsAsync");
             scope.Start();
             try
             {

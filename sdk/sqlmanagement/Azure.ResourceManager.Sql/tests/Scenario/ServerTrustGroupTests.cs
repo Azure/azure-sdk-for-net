@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Assert.AreEqual(serverTrustGroupName, serverTrustGroup.Data.Name);
 
             // 2.CheckIfExist
-            Assert.IsTrue(_resourceGroup.GetServerTrustGroups().CheckIfExists(locationName, serverTrustGroupName));
+            Assert.IsTrue(_resourceGroup.GetServerTrustGroups().Exists(locationName, serverTrustGroupName));
 
             // 3.Get
             var getServerTrustGroup = await _resourceGroup.GetServerTrustGroups().GetAsync(locationName, serverTrustGroupName);

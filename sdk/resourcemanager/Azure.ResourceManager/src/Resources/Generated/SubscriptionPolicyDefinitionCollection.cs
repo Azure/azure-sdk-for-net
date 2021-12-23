@@ -237,14 +237,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyDefinitionName"> The name of the policy definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string policyDefinitionName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
             if (policyDefinitionName == null)
             {
                 throw new ArgumentNullException(nameof(policyDefinitionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionPolicyDefinitionCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SubscriptionPolicyDefinitionCollection.Exists");
             scope.Start();
             try
             {
@@ -262,14 +262,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyDefinitionName"> The name of the policy definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
             if (policyDefinitionName == null)
             {
                 throw new ArgumentNullException(nameof(policyDefinitionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionPolicyDefinitionCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SubscriptionPolicyDefinitionCollection.ExistsAsync");
             scope.Start();
             try
             {

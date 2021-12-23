@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="usageName"> Name of usage metric to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="usageName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string locationName, string usageName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string locationName, string usageName, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(usageName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionUsageCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SubscriptionUsageCollection.Exists");
             scope.Start();
             try
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="usageName"> Name of usage metric to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="usageName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string locationName, string usageName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string locationName, string usageName, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(usageName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionUsageCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SubscriptionUsageCollection.ExistsAsync");
             scope.Start();
             try
             {

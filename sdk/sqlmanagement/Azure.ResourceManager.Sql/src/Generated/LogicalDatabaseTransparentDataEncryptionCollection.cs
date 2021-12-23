@@ -204,9 +204,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> CheckIfExists(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LogicalDatabaseTransparentDataEncryptionCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("LogicalDatabaseTransparentDataEncryptionCollection.Exists");
             scope.Start();
             try
             {
@@ -223,9 +223,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LogicalDatabaseTransparentDataEncryptionCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("LogicalDatabaseTransparentDataEncryptionCollection.ExistsAsync");
             scope.Start();
             try
             {

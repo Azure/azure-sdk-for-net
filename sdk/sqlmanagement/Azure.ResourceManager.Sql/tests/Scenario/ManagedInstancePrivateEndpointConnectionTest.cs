@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             string privateEndpointName = list.FirstOrDefault().Data.Name;
 
             // 2.CheckIfExist
-            Assert.IsTrue(collection.CheckIfExists(privateEndpointName));
+            Assert.IsTrue(collection.Exists(privateEndpointName));
 
             // 3.Get
             var getprivateEndpoint= await collection.GetAsync(privateEndpointName);

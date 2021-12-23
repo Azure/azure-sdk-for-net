@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceEndpointPolicyDefinitionName"> The name of the service endpoint policy definition name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyDefinitionName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string serviceEndpointPolicyDefinitionName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string serviceEndpointPolicyDefinitionName, CancellationToken cancellationToken = default)
         {
             if (serviceEndpointPolicyDefinitionName == null)
             {
                 throw new ArgumentNullException(nameof(serviceEndpointPolicyDefinitionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceEndpointPolicyDefinitionName"> The name of the service endpoint policy definition name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyDefinitionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string serviceEndpointPolicyDefinitionName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string serviceEndpointPolicyDefinitionName, CancellationToken cancellationToken = default)
         {
             if (serviceEndpointPolicyDefinitionName == null)
             {
                 throw new ArgumentNullException(nameof(serviceEndpointPolicyDefinitionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.ExistsAsync");
             scope.Start();
             try
             {

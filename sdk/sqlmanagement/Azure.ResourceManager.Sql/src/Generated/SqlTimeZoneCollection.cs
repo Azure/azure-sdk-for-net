@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="timeZoneId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="timeZoneId"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string locationName, string timeZoneId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string locationName, string timeZoneId, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(timeZoneId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlTimeZoneCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SqlTimeZoneCollection.Exists");
             scope.Start();
             try
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="timeZoneId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="timeZoneId"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string locationName, string timeZoneId, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string locationName, string timeZoneId, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(timeZoneId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlTimeZoneCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SqlTimeZoneCollection.ExistsAsync");
             scope.Start();
             try
             {

@@ -230,14 +230,14 @@ namespace Azure.ResourceManager.ConnectedVmware
         /// <param name="virtualMachineName"> Name of the virtual machine resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string virtualMachineName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string virtualMachineName, CancellationToken cancellationToken = default)
         {
             if (virtualMachineName == null)
             {
                 throw new ArgumentNullException(nameof(virtualMachineName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineCollection.Exists");
             scope.Start();
             try
             {
@@ -255,14 +255,14 @@ namespace Azure.ResourceManager.ConnectedVmware
         /// <param name="virtualMachineName"> Name of the virtual machine resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string virtualMachineName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string virtualMachineName, CancellationToken cancellationToken = default)
         {
             if (virtualMachineName == null)
             {
                 throw new ArgumentNullException(nameof(virtualMachineName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineCollection.ExistsAsync");
             scope.Start();
             try
             {

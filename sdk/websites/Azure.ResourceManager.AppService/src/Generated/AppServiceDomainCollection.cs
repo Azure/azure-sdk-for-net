@@ -238,14 +238,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="domainName"> Name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string domainName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string domainName, CancellationToken cancellationToken = default)
         {
             if (domainName == null)
             {
                 throw new ArgumentNullException(nameof(domainName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AppServiceDomainCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("AppServiceDomainCollection.Exists");
             scope.Start();
             try
             {
@@ -263,14 +263,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="domainName"> Name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string domainName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string domainName, CancellationToken cancellationToken = default)
         {
             if (domainName == null)
             {
                 throw new ArgumentNullException(nameof(domainName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AppServiceDomainCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AppServiceDomainCollection.ExistsAsync");
             scope.Start();
             try
             {
