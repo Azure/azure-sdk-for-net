@@ -59,14 +59,14 @@ namespace Azure.ResourceManager.Storage.Tests
             //validate if created successfully
             Table table2 = await _tableCollection.GetAsync(tableName);
             AssertTableEqual(table1, table2);
-            Assert.IsTrue(await _tableCollection.CheckIfExistsAsync(tableName));
-            Assert.IsFalse(await _tableCollection.CheckIfExistsAsync(tableName + "1"));
+            Assert.IsTrue(await _tableCollection.ExistsAsync(tableName));
+            Assert.IsFalse(await _tableCollection.ExistsAsync(tableName + "1"));
 
             //delete table
             await table1.DeleteAsync();
 
             //validate if deleted successfully
-            Assert.IsFalse(await _tableCollection.CheckIfExistsAsync(tableName));
+            Assert.IsFalse(await _tableCollection.ExistsAsync(tableName));
             Table table3 = await _tableCollection.GetIfExistsAsync(tableName);
             Assert.IsNull(table3);
         }
