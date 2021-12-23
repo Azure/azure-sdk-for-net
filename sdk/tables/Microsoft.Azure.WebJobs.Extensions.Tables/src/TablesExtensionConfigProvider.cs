@@ -150,8 +150,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             TableEntity tableEntity = new TableEntity(partitionKey, rowKey);
             foreach (JProperty property in entity.Properties())
             {
-                // TODO: validation?
-                tableEntity[property.Name] = ((JValue)property.Value).Value;
+                if (property.Value is JValue value)
+                {
+                    tableEntity[property.Name] = value.Value;
+                }
+                else
+                {
+                    tableEntity[property.Name] = property.Value.ToString();
+                }
             }
 
             return tableEntity;

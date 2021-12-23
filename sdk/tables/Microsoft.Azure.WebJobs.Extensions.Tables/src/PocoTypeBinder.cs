@@ -63,8 +63,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             }
             else
             {
-                // TODO: this is new. Who handled this before?
-                // TODO: indented?
                 destination[memberInfo.Name] = JsonConvert.SerializeObject(value, Formatting.Indented);
             }
         }
@@ -181,7 +179,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             }
             else
             {
-                // TODO: this is new. Who handled this before?
                 value = JsonConvert.DeserializeObject<T>(source.GetString(key));
             }
 

@@ -13,12 +13,13 @@ using Azure;
 using Azure.Core.TestFramework;
 using Azure.Data.Tables;
 using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 {
+    // Can't record V4
+    [LiveOnly]
     public class CompatibilityTests: TablesLiveTestBase
     {
         private static DateTimeOffset DateTimeOffsetValue = DateTimeOffset.Parse("07-08-1997", null,  DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal);
@@ -28,14 +29,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
         }
 
-        [RecordedTest]
+        [Test]
         [TestCaseSource(nameof(SdkExtensionPermutations))]
-        public async Task CanSaveAndLoadITableEntityWithNullables(ITablesClient writer, ITablesClient reader)
+        public async Task CanSavePocoAndLoadITableEntityWithNullables(ITablesClient writer, ITablesClient reader)
         {
             var testEntity = new TestITableEntity()
             {
                 PartitionKey = PartitionKey,
-                RowKey = RowKey
+                RowKey = RowKey,
+                // SDK can't handle overflow in longs
+                UInt64TypeProperty = long.MaxValue,
+                Int64TypeProperty = long.MaxValue,
             };
 
             await writer.Write(this, testEntity);
@@ -44,14 +48,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             AssertAreEqual(testEntity, output);
         }
 
-        [RecordedTest]
+        [Test]
         [TestCaseSource(nameof(SdkExtensionPermutations))]
-        public async Task CanSaveAndLoadITableEntityWithNullablesSet(ITablesClient writer, ITablesClient reader)
+        public async Task CanSavePocoAndLoadITableEntityWithNullablesSet(ITablesClient writer, ITablesClient reader)
         {
             var testEntity = new TestITableEntity(true)
             {
                 PartitionKey = PartitionKey,
-                RowKey = RowKey
+                RowKey = RowKey,
+                // SDK can't handle overflow in longs
+                UInt64TypeProperty = long.MaxValue,
+                Int64TypeProperty = long.MaxValue,
+                NullableUInt64TypeProperty = long.MaxValue,
+                NullableInt64TypeProperty = long.MaxValue,
             };
 
             await writer.Write(this, testEntity);
@@ -60,14 +69,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             AssertAreEqual(testEntity, output);
         }
 
-        [RecordedTest]
+        [Test]
         [TestCaseSource(nameof(T1T2ExtensionPermutations))]
-        public async Task CanSaveAndLoadPoco(ITablesClient writer, ITablesClient reader)
+        public async Task CanSavePocoAndLoadPoco(ITablesClient writer, ITablesClient reader)
         {
             var testEntity = new TestEntity()
             {
                 PartitionKey = PartitionKey,
-                RowKey = RowKey
+                RowKey = RowKey,
+                // SDK can't handle overflow in longs
+                UInt64TypeProperty = long.MaxValue,
+                Int64TypeProperty = long.MaxValue,
             };
 
             await writer.Write(this, testEntity);
@@ -76,9 +88,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             AssertAreEqual(testEntity, output);
         }
 
-        [RecordedTest]
+        [Test]
         [TestCaseSource(nameof(T1T2ExtensionPermutations))]
-        public async Task CanSaveAndLoadPocoWithNullablesSet(ITablesClient writer, ITablesClient reader)
+        public async Task CanSavePocoAndLoadPocoWithNullablesSet(ITablesClient writer, ITablesClient reader)
         {
             var testEntity = new TestEntity(true)
             {
@@ -92,9 +104,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             AssertAreEqual(testEntity, output);
         }
 
-        [RecordedTest]
+        [Test]
         [TestCaseSource(nameof(T1T2ExtensionPermutations))]
-        public async Task CanSaveAndLoadPocoWithInnerPoco(ITablesClient writer, ITablesClient reader)
+        public async Task CanSavePocoAndLoadPocoWithInnerPoco(ITablesClient writer, ITablesClient reader)
         {
             var testEntity = new TestEntity(true)
             {
@@ -110,10 +122,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             AssertAreEqual(testEntity.NestedEntity, output.NestedEntity);
         }
 
-        [RecordedTest]
+        [Test]
         [TestCaseSource(nameof(T1T2ExtensionPermutations))]
-        public async Task CanSaveAndLoadJObject(ITablesClient writer, ITablesClient reader)
+        public async Task CanSavePocoAndLoadJObject(ITablesClient writer, ITablesClient reader)
         {
+            if (UseCosmos && writer is Extension && reader is ExtensionT1)
+            {
+                Assert.Ignore("https://github.com/Azure/azure-webjobs-sdk/issues/2813");
+            }
             var testEntity = new TestEntity()
             {
                 PartitionKey = PartitionKey,
@@ -133,10 +149,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             AssertAreEqual(outputA, outputB);
         }
 
-        [RecordedTest]
+        [Test]
         [TestCaseSource(nameof(T1T2ExtensionPermutations))]
-        public async Task CanSaveAndLoadJObjectWithNullablesSet(ITablesClient writer, ITablesClient reader)
+        public async Task CanSavePocoAndLoadJObjectWithNullablesSet(ITablesClient writer, ITablesClient reader)
         {
+            if (UseCosmos && writer is Extension && reader is ExtensionT1)
+            {
+                Assert.Ignore("https://github.com/Azure/azure-webjobs-sdk/issues/2813");
+            }
             var testEntity = new TestEntity(true)
             {
                 PartitionKey = PartitionKey,
@@ -156,10 +176,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             AssertAreEqual(outputA, outputB);
         }
 
-        [RecordedTest]
+        [Test]
         [TestCaseSource(nameof(T1T2ExtensionPermutations))]
-        public async Task CanSaveAndLoadJObjectWithInnerPoco(ITablesClient writer, ITablesClient reader)
+        public async Task CanSavePocoAndLoadJObjectWithInnerPoco(ITablesClient writer, ITablesClient reader)
         {
+            if (UseCosmos && writer is Extension && reader is ExtensionT1)
+            {
+                Assert.Ignore("https://github.com/Azure/azure-webjobs-sdk/issues/2813");
+            }
             var testEntity = new TestEntity(true)
             {
                 PartitionKey = PartitionKey,
@@ -171,6 +195,87 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 NullableUInt64TypeProperty = int.MaxValue,
                 NullableInt64TypeProperty = int.MaxValue,
             };
+
+            await writer.Write(this, testEntity);
+            var outputA = await writer.Read<JObject>(this);
+            var outputB = await reader.Read<JObject>(this);
+
+            AssertAreEqual(outputA, outputB);
+        }
+
+        [Test]
+        [TestCaseSource(nameof(T1T2ExtensionPermutations))]
+        public async Task CanSaveJObjectAndLoadJObject(ITablesClient writer, ITablesClient reader)
+        {
+            if (UseCosmos && writer is Extension && reader is ExtensionT1)
+            {
+                Assert.Ignore("https://github.com/Azure/azure-webjobs-sdk/issues/2813");
+            }
+            var testEntity = FormatJObject(new TestEntity()
+            {
+                PartitionKey = PartitionKey,
+                RowKey = RowKey,
+                // T1 can't handle longs in JObject
+                UInt64TypeProperty = int.MaxValue,
+                Int64TypeProperty = int.MaxValue,
+                NullableUInt64TypeProperty = int.MaxValue,
+                NullableInt64TypeProperty = int.MaxValue,
+            });
+
+            await writer.Write(this, testEntity);
+
+            var outputA = await writer.Read<JObject>(this);
+            var outputB = await reader.Read<JObject>(this);
+
+            AssertAreEqual(outputA, outputB);
+        }
+
+        [Test]
+        [TestCaseSource(nameof(T1T2ExtensionPermutations))]
+        public async Task CanSaveJObjectAndLoadJObjectWithNullablesSet(ITablesClient writer, ITablesClient reader)
+        {
+            if (UseCosmos && writer is Extension && reader is ExtensionT1)
+            {
+                Assert.Ignore("https://github.com/Azure/azure-webjobs-sdk/issues/2813");
+            }
+            var testEntity = FormatJObject(new TestEntity(true)
+            {
+                PartitionKey = PartitionKey,
+                RowKey = RowKey,
+                // T1 can't handle longs in JObject
+                UInt64TypeProperty = int.MaxValue,
+                Int64TypeProperty = int.MaxValue,
+                NullableUInt64TypeProperty = int.MaxValue,
+                NullableInt64TypeProperty = int.MaxValue,
+            });
+
+            await writer.Write(this, testEntity);
+
+            var outputA = await writer.Read<JObject>(this);
+            var outputB = await reader.Read<JObject>(this);
+
+            AssertAreEqual(outputA, outputB);
+        }
+
+        [Test]
+        [TestCaseSource(nameof(T1T2ExtensionPermutations))]
+        public async Task CanSaveJObjectAndLoadJObjectWithInnerPoco(ITablesClient writer, ITablesClient reader)
+        {
+            if (UseCosmos && writer is Extension && reader is ExtensionT1)
+            {
+                Assert.Ignore("https://github.com/Azure/azure-webjobs-sdk/issues/2813");
+            }
+            var testEntity = FormatJObject(new TestEntity(true)
+            {
+                PartitionKey = PartitionKey,
+                RowKey = RowKey,
+                NestedEntity = new TestEntity(true),
+                // T1 can't handle longs in JObject
+                UInt64TypeProperty = int.MaxValue,
+                Int64TypeProperty = int.MaxValue,
+                NullableUInt64TypeProperty = int.MaxValue,
+                NullableInt64TypeProperty = int.MaxValue,
+            });
 
             await writer.Write(this, testEntity);
             var outputA = await writer.Read<JObject>(this);
@@ -193,6 +298,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             new object[] { Extension.Instance, Extension.Instance }
         };
 
+        private JObject FormatJObject(object o)
+        {
+            var jo = JObject.FromObject(o);
+            // remove readonly properties
+            jo.Remove("Timestamp");
+            jo.Remove("ETag");
+            return jo;
+        }
+
         private void AssertAreEqual(JObject a, JObject b)
         {
             JObject Sort(JObject o)
@@ -209,6 +323,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 NormalizeDates(Sort(a).ToString()),
                 NormalizeDates(Sort(b).ToString()));
         }
+
         private void AssertAreEqual(object a, object b)
         {
             Assert.AreEqual(a.GetType(), b.GetType());
