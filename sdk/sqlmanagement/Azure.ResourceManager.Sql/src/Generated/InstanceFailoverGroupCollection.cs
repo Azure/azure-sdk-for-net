@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="failoverGroupName"> The name of the failover group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="failoverGroupName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string locationName, string failoverGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string locationName, string failoverGroupName, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(failoverGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("InstanceFailoverGroupCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("InstanceFailoverGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="failoverGroupName"> The name of the failover group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="failoverGroupName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string locationName, string failoverGroupName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string locationName, string failoverGroupName, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(failoverGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("InstanceFailoverGroupCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("InstanceFailoverGroupCollection.ExistsAsync");
             scope.Start();
             try
             {

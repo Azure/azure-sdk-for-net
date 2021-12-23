@@ -226,14 +226,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayConnectionName"> The name of the virtual network gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGatewayConnectionName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
         {
             if (virtualNetworkGatewayConnectionName == null)
             {
                 throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayConnectionCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayConnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayConnectionName"> The name of the virtual network gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGatewayConnectionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
         {
             if (virtualNetworkGatewayConnectionName == null)
             {
                 throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayConnectionCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayConnectionCollection.ExistsAsync");
             scope.Start();
             try
             {

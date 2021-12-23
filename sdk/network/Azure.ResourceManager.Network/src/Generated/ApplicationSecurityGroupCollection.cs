@@ -226,14 +226,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationSecurityGroupName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string applicationSecurityGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
             if (applicationSecurityGroupName == null)
             {
                 throw new ArgumentNullException(nameof(applicationSecurityGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ApplicationSecurityGroupCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ApplicationSecurityGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationSecurityGroupName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string applicationSecurityGroupName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
             if (applicationSecurityGroupName == null)
             {
                 throw new ArgumentNullException(nameof(applicationSecurityGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ApplicationSecurityGroupCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ApplicationSecurityGroupCollection.ExistsAsync");
             scope.Start();
             try
             {

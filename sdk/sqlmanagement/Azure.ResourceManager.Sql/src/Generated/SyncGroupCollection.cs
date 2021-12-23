@@ -237,14 +237,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string syncGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string syncGroupName, CancellationToken cancellationToken = default)
         {
             if (syncGroupName == null)
             {
                 throw new ArgumentNullException(nameof(syncGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SyncGroupCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SyncGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -262,14 +262,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string syncGroupName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string syncGroupName, CancellationToken cancellationToken = default)
         {
             if (syncGroupName == null)
             {
                 throw new ArgumentNullException(nameof(syncGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SyncGroupCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SyncGroupCollection.ExistsAsync");
             scope.Start();
             try
             {

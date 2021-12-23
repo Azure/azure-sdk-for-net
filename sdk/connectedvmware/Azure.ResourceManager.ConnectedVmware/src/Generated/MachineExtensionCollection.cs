@@ -237,14 +237,14 @@ namespace Azure.ResourceManager.ConnectedVmware
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string extensionName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string extensionName, CancellationToken cancellationToken = default)
         {
             if (extensionName == null)
             {
                 throw new ArgumentNullException(nameof(extensionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("MachineExtensionCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("MachineExtensionCollection.Exists");
             scope.Start();
             try
             {
@@ -262,14 +262,14 @@ namespace Azure.ResourceManager.ConnectedVmware
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string extensionName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string extensionName, CancellationToken cancellationToken = default)
         {
             if (extensionName == null)
             {
                 throw new ArgumentNullException(nameof(extensionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("MachineExtensionCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("MachineExtensionCollection.ExistsAsync");
             scope.Start();
             try
             {

@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnSiteLinkName"> The name of the VpnSiteLink being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteLinkName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string vpnSiteLinkName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string vpnSiteLinkName, CancellationToken cancellationToken = default)
         {
             if (vpnSiteLinkName == null)
             {
                 throw new ArgumentNullException(nameof(vpnSiteLinkName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkCollection.Exists");
             scope.Start();
             try
             {
@@ -181,14 +181,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnSiteLinkName"> The name of the VpnSiteLink being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteLinkName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string vpnSiteLinkName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string vpnSiteLinkName, CancellationToken cancellationToken = default)
         {
             if (vpnSiteLinkName == null)
             {
                 throw new ArgumentNullException(nameof(vpnSiteLinkName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkCollection.ExistsAsync");
             scope.Start();
             try
             {

@@ -238,14 +238,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string addressName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string addressName, CancellationToken cancellationToken = default)
         {
             if (addressName == null)
             {
                 throw new ArgumentNullException(nameof(addressName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AddressResourceCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("AddressResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -263,14 +263,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string addressName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string addressName, CancellationToken cancellationToken = default)
         {
             if (addressName == null)
             {
                 throw new ArgumentNullException(nameof(addressName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AddressResourceCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AddressResourceCollection.ExistsAsync");
             scope.Start();
             try
             {

@@ -230,14 +230,14 @@ namespace Azure.ResourceManager.ConnectedVmware
         /// <param name="virtualMachineTemplateName"> Name of the virtual machine template resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string virtualMachineTemplateName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
             if (virtualMachineTemplateName == null)
             {
                 throw new ArgumentNullException(nameof(virtualMachineTemplateName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineTemplateCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineTemplateCollection.Exists");
             scope.Start();
             try
             {
@@ -255,14 +255,14 @@ namespace Azure.ResourceManager.ConnectedVmware
         /// <param name="virtualMachineTemplateName"> Name of the virtual machine template resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string virtualMachineTemplateName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
             if (virtualMachineTemplateName == null)
             {
                 throw new ArgumentNullException(nameof(virtualMachineTemplateName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineTemplateCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineTemplateCollection.ExistsAsync");
             scope.Start();
             try
             {

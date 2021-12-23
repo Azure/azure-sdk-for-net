@@ -237,14 +237,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
             if (domainOwnershipIdentifierName == null)
             {
                 throw new ArgumentNullException(nameof(domainOwnershipIdentifierName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteDomainOwnershipIdentifierCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SiteDomainOwnershipIdentifierCollection.Exists");
             scope.Start();
             try
             {
@@ -262,14 +262,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
             if (domainOwnershipIdentifierName == null)
             {
                 throw new ArgumentNullException(nameof(domainOwnershipIdentifierName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteDomainOwnershipIdentifierCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteDomainOwnershipIdentifierCollection.ExistsAsync");
             scope.Start();
             try
             {

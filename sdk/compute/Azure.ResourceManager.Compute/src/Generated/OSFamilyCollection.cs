@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="osFamilyName"> Name of the OS family. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="osFamilyName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string location, string osFamilyName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string location, string osFamilyName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(osFamilyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OSFamilyCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("OSFamilyCollection.Exists");
             scope.Start();
             try
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="osFamilyName"> Name of the OS family. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="osFamilyName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string location, string osFamilyName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string location, string osFamilyName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(osFamilyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OSFamilyCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("OSFamilyCollection.ExistsAsync");
             scope.Start();
             try
             {

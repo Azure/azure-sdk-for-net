@@ -228,14 +228,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string clusterName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string clusterName, CancellationToken cancellationToken = default)
         {
             if (clusterName == null)
             {
                 throw new ArgumentNullException(nameof(clusterName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("EventHubClusterCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("EventHubClusterCollection.Exists");
             scope.Start();
             try
             {
@@ -253,14 +253,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string clusterName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
             if (clusterName == null)
             {
                 throw new ArgumentNullException(nameof(clusterName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("EventHubClusterCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("EventHubClusterCollection.ExistsAsync");
             scope.Start();
             try
             {

@@ -162,14 +162,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string policyMode, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string policyMode, CancellationToken cancellationToken = default)
         {
             if (policyMode == null)
             {
                 throw new ArgumentNullException(nameof(policyMode));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestCollection.Exists");
             scope.Start();
             try
             {
@@ -187,14 +187,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string policyMode, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string policyMode, CancellationToken cancellationToken = default)
         {
             if (policyMode == null)
             {
                 throw new ArgumentNullException(nameof(policyMode));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestCollection.ExistsAsync");
             scope.Start();
             try
             {
