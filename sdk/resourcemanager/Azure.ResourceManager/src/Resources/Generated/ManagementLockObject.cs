@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A Class representing a ManagementLockObject along with the instance operations that can be performed on it. </summary>
     public partial class ManagementLockObject : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ManagementLockObject"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string scope, string lockName)
+        {
+            var resourceId = $"/{scope}/providers/Microsoft.Authorization/locks/{lockName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ManagementLocksRestOperations _managementLocksRestClient;
         private readonly ManagementLockObjectData _data;

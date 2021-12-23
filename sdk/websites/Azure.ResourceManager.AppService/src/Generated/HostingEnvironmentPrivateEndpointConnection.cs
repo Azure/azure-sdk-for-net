@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A Class representing a HostingEnvironmentPrivateEndpointConnection along with the instance operations that can be performed on it. </summary>
     public partial class HostingEnvironmentPrivateEndpointConnection : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="HostingEnvironmentPrivateEndpointConnection"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/privateEndpointConnections/{privateEndpointConnectionName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AppServiceEnvironmentsRestOperations _appServiceEnvironmentsRestClient;
         private readonly RemotePrivateEndpointConnectionARMResourceData _data;

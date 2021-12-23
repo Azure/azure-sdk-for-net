@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.KeyVault
     /// <summary> A Class representing a Vault along with the instance operations that can be performed on it. </summary>
     public partial class Vault : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="Vault"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VaultsRestOperations _vaultsRestClient;
         private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;

@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a ExpressRouteCircuit along with the instance operations that can be performed on it. </summary>
     public partial class ExpressRouteCircuit : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ExpressRouteCircuit"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string circuitName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ExpressRouteCircuitsRestOperations _expressRouteCircuitsRestClient;
         private readonly ExpressRouteCircuitData _data;

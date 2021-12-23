@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A Class representing a ManagementGroupPolicySetDefinition along with the instance operations that can be performed on it. </summary>
     public partial class ManagementGroupPolicySetDefinition : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ManagementGroupPolicySetDefinition"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string managementGroupId, string policySetDefinitionName)
+        {
+            var resourceId = $"/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly PolicySetDefinitionsRestOperations _policySetDefinitionsRestClient;
         private readonly PolicySetDefinitionData _data;

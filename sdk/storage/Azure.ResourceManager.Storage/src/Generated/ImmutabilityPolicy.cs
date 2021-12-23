@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Storage
     /// <summary> A Class representing a ImmutabilityPolicy along with the instance operations that can be performed on it. </summary>
     public partial class ImmutabilityPolicy : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ImmutabilityPolicy"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string containerName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}/immutabilityPolicies/default";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly BlobContainersRestOperations _blobContainersRestClient;
         private readonly ImmutabilityPolicyData _data;

@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> A Class representing a AfdOriginGroup along with the instance operations that can be performed on it. </summary>
     public partial class AfdOriginGroup : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="AfdOriginGroup"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string originGroupName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/originGroups/{originGroupName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AfdOriginGroupsRestOperations _afdOriginGroupsRestClient;
         private readonly AfdOriginGroupData _data;

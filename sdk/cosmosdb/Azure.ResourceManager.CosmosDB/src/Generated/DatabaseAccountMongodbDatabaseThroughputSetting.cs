@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.CosmosDB
     /// <summary> A Class representing a DatabaseAccountMongodbDatabaseThroughputSetting along with the instance operations that can be performed on it. </summary>
     public partial class DatabaseAccountMongodbDatabaseThroughputSetting : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="DatabaseAccountMongodbDatabaseThroughputSetting"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}/throughputSettings/default";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly MongoDBResourcesRestOperations _mongoDBResourcesRestClient;
         private readonly ThroughputSettingsData _data;

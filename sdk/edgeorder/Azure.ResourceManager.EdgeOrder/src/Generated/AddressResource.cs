@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.EdgeOrder
     /// <summary> A Class representing a AddressResource along with the instance operations that can be performed on it. </summary>
     public partial class AddressResource : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="AddressResource"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string addressName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses/{addressName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly EdgeOrderManagementRestOperations _restClient;
         private readonly AddressResourceData _data;

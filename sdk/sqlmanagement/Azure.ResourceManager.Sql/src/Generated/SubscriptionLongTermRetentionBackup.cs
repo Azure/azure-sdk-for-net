@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a SubscriptionLongTermRetentionBackup along with the instance operations that can be performed on it. </summary>
     public partial class SubscriptionLongTermRetentionBackup : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="SubscriptionLongTermRetentionBackup"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly LongTermRetentionBackupsRestOperations _longTermRetentionBackupsRestClient;
         private readonly LongTermRetentionBackupData _data;

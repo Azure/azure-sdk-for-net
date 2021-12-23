@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a RecommendedAction along with the instance operations that can be performed on it. </summary>
     public partial class RecommendedAction : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="RecommendedAction"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string advisorName, string recommendedActionName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}/recommendedActions/{recommendedActionName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DatabaseRecommendedActionsRestOperations _databaseRecommendedActionsRestClient;
         private readonly RecommendedActionData _data;
