@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "kubernetesconfiguration/resource-manager" -AutoRestVersion "v2" -ConfigFileTag package-2021-09 -Namespace "Microsoft.Azure.Management.KubernetesConfiguration.Extensions"
