@@ -8,11 +8,16 @@ using NUnit.Framework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Communication.Models;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Communication.Tests
 {
     public class NotificationHubTests : CommunicationManagementClientLiveTestBase
     {
+        private ResourceGroup _resourceGroup;
+        private ResourceIdentifier _resourceGroupIdentifier;
+        private string _notificationHubsResourceId;
+        private string _notificationHubsConnectionString;
         /// <summary>
         /// Initializes a new instance of the <see cref="NotificationHubTests"/> class.
         /// </summary>
@@ -22,55 +27,46 @@ namespace Azure.ResourceManager.Communication.Tests
         {
         }
 
-        [SetUp]
-        public void Setup()
+        [OneTimeSetUp]
+        public async Task OneTimeSetup()
         {
-            InitializeClients();
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName(ResourceGroupPrefix), new ResourceGroupData(new Location("westus2")));
+            ResourceGroup rg = rgLro.Value;
+            _resourceGroupIdentifier = rg.Id;
+
+            await StopSessionRecordingAsync();
+        }
+
+        [SetUp]
+        public async Task Setup()
+        {
+            ArmClient = GetArmClient();
+            _notificationHubsResourceId = TestEnvironment.NotificationHubsResourceId;
+            _notificationHubsConnectionString = TestEnvironment.NotificationHubsConnectionString;
+            _resourceGroup = await ArmClient.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+        }
+
+        [TearDown]
+        public async Task TearDown()
+        {
+            var list = await _resourceGroup.GetCommunicationServices().GetAllAsync().ToEnumerableAsync();
+            foreach (var communicationService in list)
+            {
+                await communicationService.DeleteAsync();
+            }
         }
 
         [Test]
         public async Task LinkNotificationHub()
         {
-            // Setup resource group for the test. This resource group is deleted by CleanupResourceGroupsAsync after the test ends
-            var lro = await ArmClient.GetDefaultSubscription().GetResourceGroups().CreateOrUpdateAsync(
-                NotificationHubsResourceGroupName,
-                new ResourceGroupData(Location));
-            ResourceGroup rg = lro.Value;
-
-            var resourceName = Recording.GenerateAssetName("sdk-test-link-notif-hub-");
-
-            // Create a new resource with a our test parameters
-            CommunicationServiceCreateOrUpdateOperation result = await rg.GetCommunicationServices().CreateOrUpdateAsync(
-                resourceName,
-                new CommunicationServiceData { Location = ResourceLocation, DataLocation = ResourceDataLocation });
-            await result.WaitForCompletionAsync();
-
-            // Check that our resource has been created successfully
-            Assert.IsTrue(result.HasCompleted);
-            Assert.IsTrue(result.HasValue);
-            CommunicationService resource = result.Value;
-
-            // Retrieve
-            CommunicationService resourceRetrieved = await resource.GetAsync();
-
-            Assert.AreEqual(
-                resourceName,
-                resourceRetrieved.Data.Name);
-            Assert.AreEqual(
-                "Succeeded",
-                resourceRetrieved.Data.ProvisioningState.ToString());
+            // Create communication service
+            string communicationServiceName = Recording.GenerateAssetName("communication-service-");
+            CommunicationService resource = await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
 
             // Link NotificationHub
             var linkNotificationHubResponse = await resource.LinkNotificationHubAsync(
-                new LinkNotificationHubParameters(NotificationHubsResourceId, NotificationHubsConnectionString));
-            Assert.AreEqual(NotificationHubsResourceId, linkNotificationHubResponse.Value.ResourceId);
-
-            // Delete
-            CommunicationServiceDeleteOperation deleteResult = await resource.DeleteAsync();
-            await deleteResult.WaitForCompletionResponseAsync();
-
-            // Check that our resource has been deleted successfully
-            Assert.IsTrue(deleteResult.HasCompleted);
+                new LinkNotificationHubParameters(_notificationHubsResourceId, _notificationHubsConnectionString));
+            Assert.AreEqual(_notificationHubsResourceId, linkNotificationHubResponse.Value.ResourceId);
         }
     }
 }

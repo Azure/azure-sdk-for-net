@@ -16,11 +16,7 @@ namespace Azure.ResourceManager.Communication.Tests
         public string ResourceGroupPrefix { get; private set; }
         public string ResourceLocation { get; private set; }
         public string ResourceDataLocation { get; private set; }
-        public string SubscriptionId { get; set; }
-        public string Location { get; set; }
-        public string NotificationHubsResourceGroupName { get; set; }
-        public string NotificationHubsResourceId { get; set; }
-        public string NotificationHubsConnectionString { get; set; }
+
         public ArmClient ArmClient { get; set; }
 
         protected CommunicationManagementClientLiveTestBase(bool isAsync)
@@ -31,12 +27,10 @@ namespace Azure.ResourceManager.Communication.Tests
 
         private void Init()
         {
-            ResourceGroupPrefix = "rg-sdk-test-net-";
+            ResourceGroupPrefix = "Communication-RG-";
             ResourceLocation = "global";
             ResourceDataLocation = "UnitedStates";
-            SubscriptionId = "";
-            Location = "";
-            Sanitizer = new CommunicationManagementRecordedTestSanitizer();
+            //Sanitizer = new CommunicationManagementRecordedTestSanitizer();
         }
 
         protected CommunicationManagementClientLiveTestBase(bool isAsync, RecordedTestMode mode)
@@ -45,15 +39,15 @@ namespace Azure.ResourceManager.Communication.Tests
             Init();
         }
 
-        protected void InitializeClients()
+        internal async Task<CommunicationService> CreateDefaultCommunicationServices(string communicationServiceName, ResourceGroup _resourceGroup)
         {
-            SubscriptionId = TestEnvironment.SubscriptionId;
-            Location = TestEnvironment.Location;
-            NotificationHubsResourceGroupName = TestEnvironment.NotificationHubsResourceGroupName;
-            NotificationHubsResourceId = TestEnvironment.NotificationHubsResourceId;
-            NotificationHubsConnectionString = TestEnvironment.NotificationHubsConnectionString;
-
-            ArmClient = GetArmClient();
+            CommunicationServiceData data = new CommunicationServiceData()
+            {
+                Location = ResourceLocation,
+                DataLocation = ResourceDataLocation,
+            };
+            var communicationServiceLro = await _resourceGroup.GetCommunicationServices().CreateOrUpdateAsync(communicationServiceName, data);
+            return communicationServiceLro.Value;
         }
     }
 }
