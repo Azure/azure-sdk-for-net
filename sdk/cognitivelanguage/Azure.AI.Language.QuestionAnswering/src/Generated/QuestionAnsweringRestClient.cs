@@ -57,7 +57,7 @@ namespace Azure.AI.Language.QuestionAnswering
             return message;
         }
 
-        /// <summary> Answers the specified question using your knowledge base. </summary>
+        /// <summary> Answers the specified question using your knowledge base. It is the runtime API for Custom Question Answering. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="knowledgeBaseQueryOptions"> Post body of the request. </param>
@@ -94,7 +94,7 @@ namespace Azure.AI.Language.QuestionAnswering
             }
         }
 
-        /// <summary> Answers the specified question using your knowledge base. </summary>
+        /// <summary> Answers the specified question using your knowledge base. It is the runtime API for Custom Question Answering. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="knowledgeBaseQueryOptions"> Post body of the request. </param>
@@ -150,7 +150,7 @@ namespace Azure.AI.Language.QuestionAnswering
             return message;
         }
 
-        /// <summary> Answers the specified question using the provided text in the body. </summary>
+        /// <summary> Answers the specified question using the provided text in the body. It is the runtime API for Prebuilt Question Answering. </summary>
         /// <param name="textQueryOptions"> Post body of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="textQueryOptions"/> is null. </exception>
@@ -177,7 +177,7 @@ namespace Azure.AI.Language.QuestionAnswering
             }
         }
 
-        /// <summary> Answers the specified question using the provided text in the body. </summary>
+        /// <summary> Answers the specified question using the provided text in the body. It is the runtime API for Prebuilt Question Answering. </summary>
         /// <param name="textQueryOptions"> Post body of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="textQueryOptions"/> is null. </exception>

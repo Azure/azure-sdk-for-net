@@ -1217,7 +1217,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             }
         }
 
-        /// <summary> Update Active Learning feedback. </summary>
+        /// <summary> Add Active Learning feedback. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
@@ -1271,7 +1271,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             }
         }
 
-        /// <summary> Update Active Learning feedback. </summary>
+        /// <summary> Add Active Learning feedback. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
