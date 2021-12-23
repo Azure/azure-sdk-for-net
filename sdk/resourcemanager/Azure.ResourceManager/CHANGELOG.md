@@ -2,6 +2,11 @@
 
 ## 1.0.0-beta.7 (2021-12-23)
 
+### Breaking Changes
+
+- Renamed method name from CheckIfExists to Exists.
+- Renamed method name from Get[Resource]ByName to Get[Resources]AsGenericResources.
+
 ### Features Added
 
 - Added resources and operations for PolicyAssignment, PolicyDefinition, PolicySetDefinition, DataPolicyManifest, PolicyExemption, ManagementLock and ResourceLink.
