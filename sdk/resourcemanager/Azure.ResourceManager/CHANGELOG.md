@@ -1,5 +1,16 @@
 # Release History
 
+## 1.0.0-beta.7 (2021-12-23)
+
+### Features Added
+
+- Added resources and operations for PolicyAssignment, PolicyDefinition, PolicySetDefinition, DataPolicyManifest, PolicyExemption, ManagementLock and ResourceLink.
+
+### Bugs Fixed
+
+- Fixed the bug in SubscriptionData that the values for SubscriptionGuid and DisplayName are switched.
+- Fixed the bug of unknown SkuTier value when exporting resource template by making GenericResourceData use a Sku model with string type Tier.
+
 ## 1.0.0-beta.6 (2021-11-30)
 
 ### Bugs Fixed
