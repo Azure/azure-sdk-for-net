@@ -7,6 +7,7 @@ Namespaces for this example:
 using System;
 using System.Threading.Tasks;
 using Azure.Identity;
+using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
@@ -35,21 +36,21 @@ Now that we have the resource group created, we can manage the Communication Ser
 ***Create a Communication Service***
 
 ```C# Snippet:Managing_CommunicationService_CreateAnApplicationDefinition
-var collection = resourceGroup.GetCommunicationServices();
+CommunicationServiceCollection collection = resourceGroup.GetCommunicationServices();
 string communicationServiceName = "myCommunicationService";
 CommunicationServiceData data = new CommunicationServiceData()
 {
     Location = "global",
     DataLocation = "UnitedStates",
 };
-var communicationServiceLro = await collection.CreateOrUpdateAsync(communicationServiceName, data);
+CommunicationServiceCreateOrUpdateOperation communicationServiceLro = await collection.CreateOrUpdateAsync(communicationServiceName, data);
 CommunicationService communicationService = communicationServiceLro.Value;
 ```
 
 ***List all Communication Service***
 
 ```C# Snippet:Managing_CommunicationService_ListAllCommunicationService
-var collection = resourceGroup.GetCommunicationServices();
+CommunicationServiceCollection collection = resourceGroup.GetCommunicationServices();
 
 AsyncPageable<CommunicationService> list = collection.GetAllAsync();
 await foreach (CommunicationService communicationService  in list)
@@ -61,7 +62,7 @@ await foreach (CommunicationService communicationService  in list)
 ***Delete a Communication Service***
 
 ```C# Snippet:Managing_CommunicationService_DeleteAnApplicationDefinition
-var collection = resourceGroup.GetCommunicationServices();
+CommunicationServiceCollection collection = resourceGroup.GetCommunicationServices();
 
 CommunicationService communicationService = await collection.GetAsync("myCommunicationService");
 await communicationService.DeleteAsync();

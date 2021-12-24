@@ -5,6 +5,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Identity;
+using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
@@ -41,14 +42,14 @@ namespace Azure.ResourceManager.Communication.Tests.Samples
         public async Task CreateCommunicationService()
         {
             #region Snippet:Managing_CommunicationService_CreateAnApplicationDefinition
-            var collection = resourceGroup.GetCommunicationServices();
+            CommunicationServiceCollection collection = resourceGroup.GetCommunicationServices();
             string communicationServiceName = "myCommunicationService";
             CommunicationServiceData data = new CommunicationServiceData()
             {
                 Location = "global",
                 DataLocation = "UnitedStates",
             };
-            var communicationServiceLro = await collection.CreateOrUpdateAsync(communicationServiceName, data);
+            CommunicationServiceCreateOrUpdateOperation communicationServiceLro = await collection.CreateOrUpdateAsync(communicationServiceName, data);
             CommunicationService communicationService = communicationServiceLro.Value;
             #endregion Snippet:Managing_CommunicationService_CreateAnApplicationDefinition
         }
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.Communication.Tests.Samples
         public async Task ListCommunicationService()
         {
             #region Snippet:Managing_CommunicationService_ListAllCommunicationService
-            var collection = resourceGroup.GetCommunicationServices();
+            CommunicationServiceCollection collection = resourceGroup.GetCommunicationServices();
 
             AsyncPageable<CommunicationService> list = collection.GetAllAsync();
             await foreach (CommunicationService communicationService  in list)
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.Communication.Tests.Samples
         public async Task DeleteCommunicationService()
         {
             #region Snippet:Managing_CommunicationService_DeleteAnApplicationDefinition
-            var collection = resourceGroup.GetCommunicationServices();
+            CommunicationServiceCollection collection = resourceGroup.GetCommunicationServices();
 
             CommunicationService communicationService = await collection.GetAsync("myCommunicationService");
             await communicationService.DeleteAsync();
