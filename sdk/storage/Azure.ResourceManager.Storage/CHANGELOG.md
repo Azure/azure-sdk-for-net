@@ -4,9 +4,16 @@
 
 ### Features Added
 
+- Added `CreateResourceIdenifier` for each resource class
+
 ### Breaking Changes
 
+- Renamed `CheckIfExists` to `Exists` for each resource class
+
 ### Bugs Fixed
+
+- Fixed commments for `FirstPageFunc` of each pagable resource class
+- Fixed `DateTimeOffset` being serialized to local timezone format
 
 ### Other Changes
 
