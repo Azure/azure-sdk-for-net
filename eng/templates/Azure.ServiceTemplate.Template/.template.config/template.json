@@ -38,11 +38,11 @@
     }
   ],
   "symbols": {
-    "provider": {
+    "libraryName": {
       "type": "parameter",
       "datatype":"text",
       "isRequired": true,
-      "description": "The Azure provider name. ie. Microsoft.Network or Microsoft.Compute",
+      "description": "The Azure client library name. ie. PurviewAccount. It equals to the client title",
       "replaces": "ProviderFullName"
     },
     "swagger": {
@@ -58,13 +58,6 @@
       "isRequired": true,
       "description": "The Azure security scopes. ie. https://api.adu.microsoft.com/.default",
       "replaces": "SecurityScopes"
-    },
-    "clientName": {
-      "type": "parameter",
-      "datatype":"text",
-      "isRequired": true,
-      "description": "The client name. ie. Management",
-      "replaces": "TemplateService"
     },
     "tagVersion": {
       "type": "parameter",
@@ -84,46 +77,11 @@
     "ServiceName": {
       "type": "derived",
       "datatype": "text",
-      "description": "Renames files containing 'ServiceName'",
-      "valueSource": "provider",
+      "description": "Renames files containing 'Template'",
+      "valueSource": "libraryName",
       "valueTransform": "ProviderShortNameForm",
       "fileRename": "Template",
       "replaces": "Template"
-    },
-    "productName": {
-      "type": "derived",
-      "datatype": "text",
-      "valueSource": "provider",
-      "valueTransform": "ProviderShortNameLowerForm",
-      "replaces": "[Product Name]"
-    },
-    "ProviderShortNameLowercase": {
-      "type": "derived",
-      "datatype": "text",
-      "valueSource": "provider",
-      "valueTransform": "ProviderShortNameLowerForm",
-      "replaces": "ProviderNameLowercase"
-    },
-    "ProviderShortName": {
-      "type": "derived",
-      "datatype": "text",
-      "valueSource": "provider",
-      "valueTransform": "ProviderShortNameForm",
-      "replaces": "ProviderShortName",
-      "fileRename": "ProviderShortName"
-    },
-    "TemplateSafeName": {
-      "type": "generated",
-      "generator": "regex",
-      "datatype": "text",
-      "replaces": "AzureManagementTemplateSafeName",
-      "parameters": {
-        "action": "replace",
-        "source": "name",
-        "steps": [
-          { "regex": "\\.", "replacement": "" }
-        ]
-      }
     },
     "tagPrefix": {
       "type": "generated",
