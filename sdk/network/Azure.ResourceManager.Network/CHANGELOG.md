@@ -4,9 +4,15 @@
 
 ### Features Added
 
+- Add `CreateResourceIdenifier` for each resource class
+
 ### Breaking Changes
 
+- Rename `CheckIfExists` to `Exists` for each resource class
+
 ### Bugs Fixed
+
+- Fix commments for `FirstPageFunc` of each pagable resource class
 
 ### Other Changes
 
