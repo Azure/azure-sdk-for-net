@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        internal WebAppUpdateConfigurationSlotOperation(ArmResource operationsBase, Response<SiteConfigResourceData> response)
+        internal WebAppUpdateConfigurationSlotOperation(ArmResource operationsBase, Response<SiteConfigData> response)
         {
             _operation = new OperationOrResponseInternals<SiteSlotConfigWeb>(Response.FromValue(new SiteSlotConfigWeb(operationsBase, response.Value), response.GetRawResponse()));
         }

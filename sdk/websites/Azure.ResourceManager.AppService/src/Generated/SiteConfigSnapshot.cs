@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService
         }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly WebAppsRestOperations _webAppsRestClient;
-        private readonly SiteConfigResourceData _data;
+        private readonly SiteConfigData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SiteConfigSnapshot"/> class for mocking. </summary>
         protected SiteConfigSnapshot()
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "SiteConfigSnapshot"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal SiteConfigSnapshot(ArmResource options, SiteConfigResourceData resource) : base(options, resource.Id)
+        internal SiteConfigSnapshot(ArmResource options, SiteConfigData resource) : base(options, resource.Id)
         {
             HasData = true;
             _data = resource;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual SiteConfigResourceData Data
+        public virtual SiteConfigData Data
         {
             get
             {

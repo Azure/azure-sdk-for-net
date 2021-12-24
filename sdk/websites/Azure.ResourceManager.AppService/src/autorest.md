@@ -199,6 +199,14 @@ directive:
     transform: >
         $["x-nullable"] = true;
   - from: swagger-document
+    where: $.definitions.SiteConfig
+    transform: >
+        $["x-ms-client-name"] = "SiteConfigProperties"
+  - from: swagger-document
+    where: $.definitions.SiteConfigResource
+    transform: >
+        $["x-ms-client-name"] = "SiteConfig"
+  - from: swagger-document
     where: $.definitions.ApiManagementConfig.properties.*
     transform: >
         $["x-nullable"] = true;

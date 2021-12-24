@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static SiteConfigResourceCollection DeserializeSiteConfigResourceCollection(JsonElement element)
         {
-            IReadOnlyList<SiteConfigResourceData> value = default;
+            IReadOnlyList<SiteConfigData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<SiteConfigResourceData> array = new List<SiteConfigResourceData>();
+                    List<SiteConfigData> array = new List<SiteConfigData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteConfigResourceData.DeserializeSiteConfigResourceData(item));
+                        array.Add(SiteConfigData.DeserializeSiteConfigData(item));
                     }
                     value = array;
                     continue;

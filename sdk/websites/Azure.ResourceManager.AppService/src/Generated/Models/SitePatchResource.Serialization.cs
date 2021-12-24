@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<bool> isXenon = default;
             Optional<bool> hyperV = default;
             Optional<DateTimeOffset> lastModifiedTimeUtc = default;
-            Optional<SiteConfig> siteConfig = default;
+            Optional<SiteConfigProperties> siteConfig = default;
             Optional<IReadOnlyList<string>> trafficManagerHostNames = default;
             Optional<bool> scmSiteAlsoStopped = default;
             Optional<string> targetSwapSlot = default;
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            siteConfig = SiteConfig.DeserializeSiteConfig(property0.Value);
+                            siteConfig = SiteConfigProperties.DeserializeSiteConfigProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("trafficManagerHostNames"))

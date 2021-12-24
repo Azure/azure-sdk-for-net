@@ -424,10 +424,10 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: WebApps_ListConfigurationsSlot
         /// <summary> Description for List the configurations of an app. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteConfigResourceData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteConfigResourceData> GetConfigurationsSlotAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SiteConfigData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SiteConfigData> GetConfigurationsSlotAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SiteConfigResourceData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SiteConfigData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("SiteSlot.GetConfigurationsSlot");
                 scope.Start();
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<SiteConfigResourceData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SiteConfigData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("SiteSlot.GetConfigurationsSlot");
                 scope.Start();
@@ -465,10 +465,10 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: WebApps_ListConfigurationsSlot
         /// <summary> Description for List the configurations of an app. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteConfigResourceData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteConfigResourceData> GetConfigurationsSlot(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SiteConfigData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SiteConfigData> GetConfigurationsSlot(CancellationToken cancellationToken = default)
         {
-            Page<SiteConfigResourceData> FirstPageFunc(int? pageSizeHint)
+            Page<SiteConfigData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("SiteSlot.GetConfigurationsSlot");
                 scope.Start();
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<SiteConfigResourceData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SiteConfigData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("SiteSlot.GetConfigurationsSlot");
                 scope.Start();

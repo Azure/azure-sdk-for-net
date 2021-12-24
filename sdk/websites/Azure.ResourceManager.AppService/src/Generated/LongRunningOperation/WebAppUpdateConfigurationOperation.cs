@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        internal WebAppUpdateConfigurationOperation(ArmResource operationsBase, Response<SiteConfigResourceData> response)
+        internal WebAppUpdateConfigurationOperation(ArmResource operationsBase, Response<SiteConfigData> response)
         {
             _operation = new OperationOrResponseInternals<SiteConfigWeb>(Response.FromValue(new SiteConfigWeb(operationsBase, response.Value), response.GetRawResponse()));
         }
