@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <ProjectReference Include="..\src\Azure.ResourceManager.ConnectedVmware.csproj" />
+    <ProjectReference Include="..\src\Azure.ResourceManager.ConnectedVMware.csproj" />
   </ItemGroup>
 </Project>
