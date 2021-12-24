@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string backendAddressPoolName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string backendAddressPoolName, CancellationToken cancellationToken = default)
         {
             if (backendAddressPoolName == null)
             {
                 throw new ArgumentNullException(nameof(backendAddressPoolName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("BackendAddressPoolCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("BackendAddressPoolCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string backendAddressPoolName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string backendAddressPoolName, CancellationToken cancellationToken = default)
         {
             if (backendAddressPoolName == null)
             {
                 throw new ArgumentNullException(nameof(backendAddressPoolName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("BackendAddressPoolCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("BackendAddressPoolCollection.ExistsAsync");
             scope.Start();
             try
             {

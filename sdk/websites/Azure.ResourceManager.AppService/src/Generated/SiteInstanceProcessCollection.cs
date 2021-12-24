@@ -162,14 +162,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string processId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string processId, CancellationToken cancellationToken = default)
         {
             if (processId == null)
             {
                 throw new ArgumentNullException(nameof(processId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteInstanceProcessCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SiteInstanceProcessCollection.Exists");
             scope.Start();
             try
             {
@@ -187,14 +187,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string processId, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string processId, CancellationToken cancellationToken = default)
         {
             if (processId == null)
             {
                 throw new ArgumentNullException(nameof(processId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteInstanceProcessCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteInstanceProcessCollection.ExistsAsync");
             scope.Start();
             try
             {

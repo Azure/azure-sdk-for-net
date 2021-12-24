@@ -102,7 +102,7 @@ if (storageAccount != null)
 {
     Console.WriteLine(storageAccount.Id.Name);
 }
-if (await accountCollection.CheckIfExistsAsync("bar"))
+if (await accountCollection.ExistsAsync("bar"))
 {
     Console.WriteLine("storage account 'bar' exists");
 }

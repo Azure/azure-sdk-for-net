@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
                 Console.WriteLine(virtualNetwork.Data.Name);
             }
 
-            if (await virtualNetworkCollection.CheckIfExistsAsync("bar"))
+            if (await virtualNetworkCollection.ExistsAsync("bar"))
             {
                 Console.WriteLine("Virtual network 'bar' exists.");
             }

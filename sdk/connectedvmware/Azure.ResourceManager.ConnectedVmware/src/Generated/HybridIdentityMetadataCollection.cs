@@ -229,14 +229,14 @@ namespace Azure.ResourceManager.ConnectedVmware
         /// <param name="metadataName"> Name of the HybridIdentityMetadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string metadataName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string metadataName, CancellationToken cancellationToken = default)
         {
             if (metadataName == null)
             {
                 throw new ArgumentNullException(nameof(metadataName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("HybridIdentityMetadataCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("HybridIdentityMetadataCollection.Exists");
             scope.Start();
             try
             {
@@ -254,14 +254,14 @@ namespace Azure.ResourceManager.ConnectedVmware
         /// <param name="metadataName"> Name of the HybridIdentityMetadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string metadataName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string metadataName, CancellationToken cancellationToken = default)
         {
             if (metadataName == null)
             {
                 throw new ArgumentNullException(nameof(metadataName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("HybridIdentityMetadataCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("HybridIdentityMetadataCollection.ExistsAsync");
             scope.Start();
             try
             {

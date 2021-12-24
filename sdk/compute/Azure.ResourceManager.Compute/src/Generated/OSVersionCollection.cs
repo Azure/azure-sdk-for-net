@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="osVersionName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string location, string osVersionName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string location, string osVersionName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(osVersionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.Exists");
             scope.Start();
             try
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="osVersionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string location, string osVersionName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string location, string osVersionName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(osVersionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.ExistsAsync");
             scope.Start();
             try
             {

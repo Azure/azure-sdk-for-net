@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Assert.AreEqual(adminName, admin.Value.Data.Name);
 
             // 2.CheckIfExist
-            Assert.IsTrue(collection.CheckIfExists(adminName));
-            Assert.IsFalse(collection.CheckIfExists(adminName + "0"));
+            Assert.IsTrue(collection.Exists(adminName));
+            Assert.IsFalse(collection.Exists(adminName + "0"));
 
             // 3.Get
             var getAdmin = await collection.GetAsync(adminName);

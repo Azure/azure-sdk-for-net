@@ -231,14 +231,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkVirtualApplianceName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (networkVirtualApplianceName == null)
             {
                 throw new ArgumentNullException(nameof(networkVirtualApplianceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceCollection.Exists");
             scope.Start();
             try
             {
@@ -257,14 +257,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkVirtualApplianceName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (networkVirtualApplianceName == null)
             {
                 throw new ArgumentNullException(nameof(networkVirtualApplianceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceCollection.ExistsAsync");
             scope.Start();
             try
             {

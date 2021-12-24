@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="topicName"> The topic name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string topicName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string topicName, CancellationToken cancellationToken = default)
         {
             if (topicName == null)
             {
                 throw new ArgumentNullException(nameof(topicName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="topicName"> The topic name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string topicName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string topicName, CancellationToken cancellationToken = default)
         {
             if (topicName == null)
             {
                 throw new ArgumentNullException(nameof(topicName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.ExistsAsync");
             scope.Start();
             try
             {

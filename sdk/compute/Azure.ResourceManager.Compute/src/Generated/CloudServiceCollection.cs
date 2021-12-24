@@ -218,14 +218,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string cloudServiceName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string cloudServiceName, CancellationToken cancellationToken = default)
         {
             if (cloudServiceName == null)
             {
                 throw new ArgumentNullException(nameof(cloudServiceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CloudServiceCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("CloudServiceCollection.Exists");
             scope.Start();
             try
             {
@@ -243,14 +243,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string cloudServiceName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string cloudServiceName, CancellationToken cancellationToken = default)
         {
             if (cloudServiceName == null)
             {
                 throw new ArgumentNullException(nameof(cloudServiceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CloudServiceCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CloudServiceCollection.ExistsAsync");
             scope.Start();
             try
             {

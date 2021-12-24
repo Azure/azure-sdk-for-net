@@ -162,14 +162,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string policySetDefinitionName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
             if (policySetDefinitionName == null)
             {
                 throw new ArgumentNullException(nameof(policySetDefinitionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("TenantPolicySetDefinitionCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("TenantPolicySetDefinitionCollection.Exists");
             scope.Start();
             try
             {
@@ -187,14 +187,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
             if (policySetDefinitionName == null)
             {
                 throw new ArgumentNullException(nameof(policySetDefinitionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("TenantPolicySetDefinitionCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("TenantPolicySetDefinitionCollection.ExistsAsync");
             scope.Start();
             try
             {

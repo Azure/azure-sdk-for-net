@@ -230,14 +230,14 @@ namespace Azure.ResourceManager.ConnectedVmware
         /// <param name="datastoreName"> Name of the datastore. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string datastoreName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string datastoreName, CancellationToken cancellationToken = default)
         {
             if (datastoreName == null)
             {
                 throw new ArgumentNullException(nameof(datastoreName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VmwareDatastoreCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("VmwareDatastoreCollection.Exists");
             scope.Start();
             try
             {
@@ -255,14 +255,14 @@ namespace Azure.ResourceManager.ConnectedVmware
         /// <param name="datastoreName"> Name of the datastore. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string datastoreName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string datastoreName, CancellationToken cancellationToken = default)
         {
             if (datastoreName == null)
             {
                 throw new ArgumentNullException(nameof(datastoreName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VmwareDatastoreCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VmwareDatastoreCollection.ExistsAsync");
             scope.Start();
             try
             {

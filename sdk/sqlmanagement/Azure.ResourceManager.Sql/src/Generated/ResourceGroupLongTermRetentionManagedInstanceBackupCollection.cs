@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="backupName"> The backup name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, or <paramref name="backupName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string locationName, string managedInstanceName, string databaseName, string backupName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string locationName, string managedInstanceName, string databaseName, string backupName, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(backupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroupLongTermRetentionManagedInstanceBackupCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroupLongTermRetentionManagedInstanceBackupCollection.Exists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="backupName"> The backup name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, or <paramref name="backupName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string locationName, string managedInstanceName, string databaseName, string backupName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string locationName, string managedInstanceName, string databaseName, string backupName, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(backupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroupLongTermRetentionManagedInstanceBackupCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroupLongTermRetentionManagedInstanceBackupCollection.ExistsAsync");
             scope.Start();
             try
             {
