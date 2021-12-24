@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a VpnServerConfiguration along with the instance operations that can be performed on it. </summary>
     public partial class VpnServerConfiguration : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="VpnServerConfiguration"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vpnServerConfigurationName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VpnServerConfigurationsRestOperations _vpnServerConfigurationsRestClient;
         private readonly VpnServerConfigurationData _data;

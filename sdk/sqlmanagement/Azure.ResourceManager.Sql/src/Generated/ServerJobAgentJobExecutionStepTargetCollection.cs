@@ -137,9 +137,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="targetId"> The target id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> CheckIfExists(Guid targetId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(Guid targetId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionStepTargetCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionStepTargetCollection.Exists");
             scope.Start();
             try
             {
@@ -156,9 +156,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="targetId"> The target id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(Guid targetId, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(Guid targetId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionStepTargetCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionStepTargetCollection.ExistsAsync");
             scope.Start();
             try
             {

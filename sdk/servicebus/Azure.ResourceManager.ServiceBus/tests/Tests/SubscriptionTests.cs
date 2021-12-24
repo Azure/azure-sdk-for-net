@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             //delete subscription
             await serviceBusSubscription.DeleteAsync();
-            Assert.IsFalse(await serviceBusSubscriptionCollection.CheckIfExistsAsync(subscriptionName));
+            Assert.IsFalse(await serviceBusSubscriptionCollection.ExistsAsync(subscriptionName));
         }
     }
 }

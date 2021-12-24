@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Samples
             {
                 Console.WriteLine("namespace 'foo' exists");
             }
-            if (await namespaceCollection.CheckIfExistsAsync("bar"))
+            if (await namespaceCollection.ExistsAsync("bar"))
             {
                 Console.WriteLine("namespace 'bar' exists");
             }

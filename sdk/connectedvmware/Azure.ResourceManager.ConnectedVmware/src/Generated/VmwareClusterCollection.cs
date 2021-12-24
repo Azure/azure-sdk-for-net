@@ -230,14 +230,14 @@ namespace Azure.ResourceManager.ConnectedVmware
         /// <param name="clusterName"> Name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string clusterName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string clusterName, CancellationToken cancellationToken = default)
         {
             if (clusterName == null)
             {
                 throw new ArgumentNullException(nameof(clusterName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VmwareClusterCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("VmwareClusterCollection.Exists");
             scope.Start();
             try
             {
@@ -255,14 +255,14 @@ namespace Azure.ResourceManager.ConnectedVmware
         /// <param name="clusterName"> Name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string clusterName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
             if (clusterName == null)
             {
                 throw new ArgumentNullException(nameof(clusterName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VmwareClusterCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VmwareClusterCollection.ExistsAsync");
             scope.Start();
             try
             {

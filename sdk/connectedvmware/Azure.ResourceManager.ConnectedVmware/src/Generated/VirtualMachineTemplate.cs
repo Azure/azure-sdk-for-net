@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ConnectedVmware
     /// <summary> A Class representing a VirtualMachineTemplate along with the instance operations that can be performed on it. </summary>
     public partial class VirtualMachineTemplate : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="VirtualMachineTemplate"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualMachineTemplateName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineTemplates/{virtualMachineTemplateName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VirtualMachineTemplatesRestOperations _virtualMachineTemplatesRestClient;
         private readonly VirtualMachineTemplateData _data;

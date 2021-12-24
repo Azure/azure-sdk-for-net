@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a NetworkWatcher along with the instance operations that can be performed on it. </summary>
     public partial class NetworkWatcher : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="NetworkWatcher"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkWatcherName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly NetworkWatchersRestOperations _networkWatchersRestClient;
         private readonly NetworkWatcherData _data;

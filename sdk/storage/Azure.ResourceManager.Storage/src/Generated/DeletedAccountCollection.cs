@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="deletedAccountName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string location, string deletedAccountName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string location, string deletedAccountName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(deletedAccountName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedAccountCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("DeletedAccountCollection.Exists");
             scope.Start();
             try
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="deletedAccountName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string location, string deletedAccountName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string location, string deletedAccountName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(deletedAccountName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedAccountCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeletedAccountCollection.ExistsAsync");
             scope.Start();
             try
             {

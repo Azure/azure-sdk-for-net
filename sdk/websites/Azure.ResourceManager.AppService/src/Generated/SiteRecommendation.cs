@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A Class representing a SiteRecommendation along with the instance operations that can be performed on it. </summary>
     public partial class SiteRecommendation : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="SiteRecommendation"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string name)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/recommendations/{name}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly RecommendationsRestOperations _recommendationsRestClient;
         private readonly RecommendationRuleData _data;

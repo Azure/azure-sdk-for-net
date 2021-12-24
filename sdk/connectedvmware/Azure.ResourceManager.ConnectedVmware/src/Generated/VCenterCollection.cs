@@ -230,14 +230,14 @@ namespace Azure.ResourceManager.ConnectedVmware
         /// <param name="vcenterName"> Name of the vCenter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string vcenterName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string vcenterName, CancellationToken cancellationToken = default)
         {
             if (vcenterName == null)
             {
                 throw new ArgumentNullException(nameof(vcenterName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VCenterCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("VCenterCollection.Exists");
             scope.Start();
             try
             {
@@ -255,14 +255,14 @@ namespace Azure.ResourceManager.ConnectedVmware
         /// <param name="vcenterName"> Name of the vCenter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string vcenterName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string vcenterName, CancellationToken cancellationToken = default)
         {
             if (vcenterName == null)
             {
                 throw new ArgumentNullException(nameof(vcenterName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VCenterCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VCenterCollection.ExistsAsync");
             scope.Start();
             try
             {

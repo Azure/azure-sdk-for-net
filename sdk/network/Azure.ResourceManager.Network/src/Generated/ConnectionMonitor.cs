@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a ConnectionMonitor along with the instance operations that can be performed on it. </summary>
     public partial class ConnectionMonitor : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ConnectionMonitor"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ConnectionMonitorsRestOperations _connectionMonitorsRestClient;
         private readonly ConnectionMonitorData _data;

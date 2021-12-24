@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Storage
     /// <summary> A Class representing a EncryptionScope along with the instance operations that can be performed on it. </summary>
     public partial class EncryptionScope : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="EncryptionScope"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string encryptionScopeName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/encryptionScopes/{encryptionScopeName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly EncryptionScopesRestOperations _encryptionScopesRestClient;
         private readonly EncryptionScopeData _data;

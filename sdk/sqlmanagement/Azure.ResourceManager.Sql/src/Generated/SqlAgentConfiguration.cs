@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a SqlAgentConfiguration along with the instance operations that can be performed on it. </summary>
     public partial class SqlAgentConfiguration : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="SqlAgentConfiguration"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/sqlAgent/current";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SqlAgentRestOperations _sqlAgentRestClient;
         private readonly SqlAgentConfigurationData _data;

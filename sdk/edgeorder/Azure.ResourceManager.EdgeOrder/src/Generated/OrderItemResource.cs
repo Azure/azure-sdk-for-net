@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.EdgeOrder
     /// <summary> A Class representing a OrderItemResource along with the instance operations that can be performed on it. </summary>
     public partial class OrderItemResource : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="OrderItemResource"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string orderItemName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly EdgeOrderManagementRestOperations _restClient;
         private readonly OrderItemResourceData _data;

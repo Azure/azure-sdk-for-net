@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a ServerAzureADOnlyAuthentication along with the instance operations that can be performed on it. </summary>
     public partial class ServerAzureADOnlyAuthentication : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ServerAzureADOnlyAuthentication"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string authenticationName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications/{authenticationName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ServerAzureADOnlyAuthenticationsRestOperations _serverAzureADOnlyAuthenticationsRestClient;
         private readonly ServerAzureADOnlyAuthenticationData _data;

@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a GeoBackupPolicy along with the instance operations that can be performed on it. </summary>
     public partial class GeoBackupPolicy : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="GeoBackupPolicy"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string geoBackupPolicyName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/geoBackupPolicies/{geoBackupPolicyName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly GeoBackupPoliciesRestOperations _geoBackupPoliciesRestClient;
         private readonly GeoBackupPolicyData _data;

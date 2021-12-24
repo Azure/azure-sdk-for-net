@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
                 Console.WriteLine(webPubSub.Data.Name);
             }
 
-            if (await WebPubSubColletion.CheckIfExistsAsync("bar"))
+            if (await WebPubSubColletion.ExistsAsync("bar"))
             {
                 Console.WriteLine("WebPubSub 'bar' exists.");
             }

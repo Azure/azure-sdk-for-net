@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string peeringName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string peeringName, CancellationToken cancellationToken = default)
         {
             if (peeringName == null)
             {
                 throw new ArgumentNullException(nameof(peeringName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string peeringName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string peeringName, CancellationToken cancellationToken = default)
         {
             if (peeringName == null)
             {
                 throw new ArgumentNullException(nameof(peeringName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.ExistsAsync");
             scope.Start();
             try
             {

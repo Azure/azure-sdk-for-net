@@ -231,14 +231,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string deploymentName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string deploymentName, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
             {
                 throw new ArgumentNullException(nameof(deploymentName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.Exists");
             scope.Start();
             try
             {
@@ -256,14 +256,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string deploymentName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
             {
                 throw new ArgumentNullException(nameof(deploymentName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.ExistsAsync");
             scope.Start();
             try
             {

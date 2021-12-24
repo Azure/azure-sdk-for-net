@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             //validate if created successfully
             serviceBusNamespace = await namespaceCollection.GetAsync(namespaceName);
-            Assert.IsTrue(await namespaceCollection.CheckIfExistsAsync(namespaceName));
+            Assert.IsTrue(await namespaceCollection.ExistsAsync(namespaceName));
             VerifyNamespaceProperties(serviceBusNamespace, true);
 
             //delete namespace
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //validate if deleted successfully
             serviceBusNamespace = await namespaceCollection.GetIfExistsAsync(namespaceName);
             Assert.IsNull(serviceBusNamespace);
-            Assert.IsFalse(await namespaceCollection.CheckIfExistsAsync(namespaceName));
+            Assert.IsFalse(await namespaceCollection.ExistsAsync(namespaceName));
         }
 
         [Test]
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             //delete endpoint connection and validate
             await privateEndpointConnection.DeleteAsync();
-            Assert.IsFalse(await privateEndpointConnectionCollection.CheckIfExistsAsync(connectionName));
+            Assert.IsFalse(await privateEndpointConnectionCollection.ExistsAsync(connectionName));
         }
 
         [Test]
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             await authorizationRule.DeleteAsync();
 
             //validate if deleted
-            Assert.IsFalse(await ruleCollection.CheckIfExistsAsync(ruleName));
+            Assert.IsFalse(await ruleCollection.ExistsAsync(ruleName));
             rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
             Assert.True(rules.Count == 1);
             Assert.AreEqual(rules[0].Id.Name, DefaultNamespaceAuthorizationRule);

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             {
                 Console.WriteLine(fileShare.Id.Name);
             }
-            if (await fileShareCollection.CheckIfExistsAsync("bar"))
+            if (await fileShareCollection.ExistsAsync("bar"))
             {
                 Console.WriteLine("file share 'bar' exists");
             }

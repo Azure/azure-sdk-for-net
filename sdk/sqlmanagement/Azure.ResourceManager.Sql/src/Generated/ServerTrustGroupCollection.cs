@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="serverTrustGroupName"> The name of the server trust group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="serverTrustGroupName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string locationName, string serverTrustGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string locationName, string serverTrustGroupName, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(serverTrustGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerTrustGroupCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ServerTrustGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="serverTrustGroupName"> The name of the server trust group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="serverTrustGroupName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string locationName, string serverTrustGroupName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string locationName, string serverTrustGroupName, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(serverTrustGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerTrustGroupCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerTrustGroupCollection.ExistsAsync");
             scope.Start();
             try
             {

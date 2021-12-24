@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A Class representing a Disk along with the instance operations that can be performed on it. </summary>
     public partial class Disk : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="Disk"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string diskName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks/{diskName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DisksRestOperations _disksRestClient;
         private readonly DiskData _data;

@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="version"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, <paramref name="type"/>, or <paramref name="version"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string location, string publisherName, string type, string version, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string location, string publisherName, string type, string version, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(version));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.Exists");
             scope.Start();
             try
             {
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="version"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, <paramref name="type"/>, or <paramref name="version"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string location, string publisherName, string type, string version, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string location, string publisherName, string type, string version, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(version));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.ExistsAsync");
             scope.Start();
             try
             {

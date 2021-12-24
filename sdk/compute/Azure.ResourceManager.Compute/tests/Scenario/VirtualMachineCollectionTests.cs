@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task CheckIfExists()
+        public async Task Exists()
         {
             var collection = await GetVirtualMachineCollectionAsync();
             var vmName = Recording.GenerateAssetName("testVM-");
@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.Compute.Tests
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
             var lro = await collection.CreateOrUpdateAsync(vmName, input);
             VirtualMachine vm = lro.Value;
-            Assert.IsTrue(await collection.CheckIfExistsAsync(vmName));
-            Assert.IsFalse(await collection.CheckIfExistsAsync(vmName + "1"));
+            Assert.IsTrue(await collection.ExistsAsync(vmName));
+            Assert.IsFalse(await collection.ExistsAsync(vmName + "1"));
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.CheckIfExistsAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
 
         [TestCase]

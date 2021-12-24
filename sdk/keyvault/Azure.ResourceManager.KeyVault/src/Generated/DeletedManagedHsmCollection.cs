@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="name"> The name of the deleted managed HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="name"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string location, string name, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string location, string name, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedManagedHsmCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("DeletedManagedHsmCollection.Exists");
             scope.Start();
             try
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="name"> The name of the deleted managed HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string location, string name, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string location, string name, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedManagedHsmCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeletedManagedHsmCollection.ExistsAsync");
             scope.Start();
             try
             {
