@@ -3,9 +3,9 @@
 
 using Azure.Core.TestFramework;
 
-namespace Azure.ResourceManager.ConnectedVmware.Tests
+namespace Azure.ResourceManager.ConnectedVMware.Tests
 {
-    public class ConnectedVmwareManagementTestEnvironment : TestEnvironment
+    public class ConnectedVMwareManagementTestEnvironment : TestEnvironment
     {
     }
 }
