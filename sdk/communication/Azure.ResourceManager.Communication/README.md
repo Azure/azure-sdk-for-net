@@ -56,7 +56,7 @@ Code samples for using the management library for .NET can be found in the follo
 
 ### More sample code
 
-- [Managing Communication Service](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.ResourceManager.Communication/samples/Sample1_ManagingCommunicationService.cs.md)
+- [Managing Communication Service](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.ResourceManager.Communication/samples/Sample1_ManagingCommunicationService.md)
 
 ### Additional Documentation
 
