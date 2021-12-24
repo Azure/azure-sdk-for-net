@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.AppConfiguration
     /// <summary> A Class representing a ConfigurationStore along with the instance operations that can be performed on it. </summary>
     public partial class ConfigurationStore : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ConfigurationStore"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string configStoreName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ConfigurationStoresRestOperations _configurationStoresRestClient;
         private readonly ConfigurationStoreData _data;

@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a OutboundRule along with the instance operations that can be performed on it. </summary>
     public partial class OutboundRule : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="OutboundRule"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string loadBalancerName, string outboundRuleName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/outboundRules/{outboundRuleName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly LoadBalancerOutboundRulesRestOperations _loadBalancerOutboundRulesRestClient;
         private readonly OutboundRuleData _data;

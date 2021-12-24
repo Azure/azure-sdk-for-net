@@ -231,14 +231,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (networkInterfaceName == null)
             {
                 throw new ArgumentNullException(nameof(networkInterfaceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceCollection.Exists");
             scope.Start();
             try
             {
@@ -257,14 +257,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (networkInterfaceName == null)
             {
                 throw new ArgumentNullException(nameof(networkInterfaceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceCollection.ExistsAsync");
             scope.Start();
             try
             {

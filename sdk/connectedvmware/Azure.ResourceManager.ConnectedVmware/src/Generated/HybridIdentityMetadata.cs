@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ConnectedVmware
     /// <summary> A Class representing a HybridIdentityMetadata along with the instance operations that can be performed on it. </summary>
     public partial class HybridIdentityMetadata : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="HybridIdentityMetadata"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualMachineName, string metadataName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/hybridIdentityMetadata/{metadataName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HybridIdentityMetadataRestOperations _hybridIdentityMetadataRestClient;
         private readonly HybridIdentityMetadataData _data;

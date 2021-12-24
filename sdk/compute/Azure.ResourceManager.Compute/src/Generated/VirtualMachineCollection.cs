@@ -231,14 +231,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. &apos;UserData&apos; retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string vmName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string vmName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             if (vmName == null)
             {
                 throw new ArgumentNullException(nameof(vmName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineCollection.Exists");
             scope.Start();
             try
             {
@@ -257,14 +257,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. &apos;UserData&apos; retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string vmName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string vmName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             if (vmName == null)
             {
                 throw new ArgumentNullException(nameof(vmName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineCollection.ExistsAsync");
             scope.Start();
             try
             {

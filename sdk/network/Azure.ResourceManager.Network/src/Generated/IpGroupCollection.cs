@@ -231,14 +231,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (ipGroupsName == null)
             {
                 throw new ArgumentNullException(nameof(ipGroupsName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("IpGroupCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("IpGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -257,14 +257,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (ipGroupsName == null)
             {
                 throw new ArgumentNullException(nameof(ipGroupsName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("IpGroupCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("IpGroupCollection.ExistsAsync");
             scope.Start();
             try
             {

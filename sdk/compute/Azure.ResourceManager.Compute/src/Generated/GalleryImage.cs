@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A Class representing a GalleryImage along with the instance operations that can be performed on it. </summary>
     public partial class GalleryImage : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="GalleryImage"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string galleryName, string galleryImageName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly GalleryImagesRestOperations _galleryImagesRestClient;
         private readonly GalleryImageData _data;

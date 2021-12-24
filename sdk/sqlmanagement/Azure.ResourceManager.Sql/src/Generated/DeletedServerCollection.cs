@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="deletedServerName"> The name of the deleted server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="deletedServerName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string locationName, string deletedServerName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string locationName, string deletedServerName, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(deletedServerName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedServerCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("DeletedServerCollection.Exists");
             scope.Start();
             try
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="deletedServerName"> The name of the deleted server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="deletedServerName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string locationName, string deletedServerName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string locationName, string deletedServerName, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(deletedServerName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedServerCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeletedServerCollection.ExistsAsync");
             scope.Start();
             try
             {

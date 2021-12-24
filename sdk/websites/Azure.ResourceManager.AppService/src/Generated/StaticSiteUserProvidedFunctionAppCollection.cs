@@ -239,14 +239,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="functionAppName"> Name of the function app registered with the static site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string functionAppName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string functionAppName, CancellationToken cancellationToken = default)
         {
             if (functionAppName == null)
             {
                 throw new ArgumentNullException(nameof(functionAppName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("StaticSiteUserProvidedFunctionAppCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("StaticSiteUserProvidedFunctionAppCollection.Exists");
             scope.Start();
             try
             {
@@ -264,14 +264,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="functionAppName"> Name of the function app registered with the static site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string functionAppName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string functionAppName, CancellationToken cancellationToken = default)
         {
             if (functionAppName == null)
             {
                 throw new ArgumentNullException(nameof(functionAppName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("StaticSiteUserProvidedFunctionAppCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("StaticSiteUserProvidedFunctionAppCollection.ExistsAsync");
             scope.Start();
             try
             {

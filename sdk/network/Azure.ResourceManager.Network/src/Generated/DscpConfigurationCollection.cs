@@ -226,14 +226,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="dscpConfigurationName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dscpConfigurationName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string dscpConfigurationName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string dscpConfigurationName, CancellationToken cancellationToken = default)
         {
             if (dscpConfigurationName == null)
             {
                 throw new ArgumentNullException(nameof(dscpConfigurationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DscpConfigurationCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("DscpConfigurationCollection.Exists");
             scope.Start();
             try
             {
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="dscpConfigurationName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dscpConfigurationName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string dscpConfigurationName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string dscpConfigurationName, CancellationToken cancellationToken = default)
         {
             if (dscpConfigurationName == null)
             {
                 throw new ArgumentNullException(nameof(dscpConfigurationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DscpConfigurationCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DscpConfigurationCollection.ExistsAsync");
             scope.Start();
             try
             {

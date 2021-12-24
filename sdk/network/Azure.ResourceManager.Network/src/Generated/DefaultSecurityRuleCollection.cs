@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="defaultSecurityRuleName"> The name of the default security rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="defaultSecurityRuleName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string defaultSecurityRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string defaultSecurityRuleName, CancellationToken cancellationToken = default)
         {
             if (defaultSecurityRuleName == null)
             {
                 throw new ArgumentNullException(nameof(defaultSecurityRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DefaultSecurityRuleCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("DefaultSecurityRuleCollection.Exists");
             scope.Start();
             try
             {
@@ -181,14 +181,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="defaultSecurityRuleName"> The name of the default security rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="defaultSecurityRuleName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string defaultSecurityRuleName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string defaultSecurityRuleName, CancellationToken cancellationToken = default)
         {
             if (defaultSecurityRuleName == null)
             {
                 throw new ArgumentNullException(nameof(defaultSecurityRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DefaultSecurityRuleCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DefaultSecurityRuleCollection.ExistsAsync");
             scope.Start();
             try
             {

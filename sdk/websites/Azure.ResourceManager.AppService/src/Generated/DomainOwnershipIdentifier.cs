@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A Class representing a DomainOwnershipIdentifier along with the instance operations that can be performed on it. </summary>
     public partial class DomainOwnershipIdentifier : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="DomainOwnershipIdentifier"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string domainName, string name)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}/domainOwnershipIdentifiers/{name}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DomainsRestOperations _domainsRestClient;
         private readonly DomainOwnershipIdentifierData _data;

@@ -148,7 +148,7 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 string rgName = "myRgName";
 ResourceGroup resourceGroup = await rgCollection.GetAsync(rgName);
 string availabilitySetName = "myAvailabilitySet";
-bool exists = await resourceGroup.GetAvailabilitySets().CheckIfExistsAsync(availabilitySetName);
+bool exists = await resourceGroup.GetAvailabilitySets().ExistsAsync(availabilitySetName);
 
 if (exists)
 {

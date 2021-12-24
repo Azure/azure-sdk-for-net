@@ -229,14 +229,14 @@ namespace Azure.ResourceManager.ConnectedVmware
         /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string inventoryItemName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string inventoryItemName, CancellationToken cancellationToken = default)
         {
             if (inventoryItemName == null)
             {
                 throw new ArgumentNullException(nameof(inventoryItemName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("InventoryItemCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("InventoryItemCollection.Exists");
             scope.Start();
             try
             {
@@ -254,14 +254,14 @@ namespace Azure.ResourceManager.ConnectedVmware
         /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string inventoryItemName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string inventoryItemName, CancellationToken cancellationToken = default)
         {
             if (inventoryItemName == null)
             {
                 throw new ArgumentNullException(nameof(inventoryItemName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("InventoryItemCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("InventoryItemCollection.ExistsAsync");
             scope.Start();
             try
             {

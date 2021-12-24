@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a P2SVpnGateway along with the instance operations that can be performed on it. </summary>
     public partial class P2SVpnGateway : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="P2SVpnGateway"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string gatewayName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly P2SVpnGatewaysRestOperations _p2sVpnGatewaysRestClient;
         private readonly P2SVpnGatewayData _data;

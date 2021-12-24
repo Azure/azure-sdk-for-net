@@ -230,14 +230,14 @@ namespace Azure.ResourceManager.ConnectedVmware
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string resourcePoolName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string resourcePoolName, CancellationToken cancellationToken = default)
         {
             if (resourcePoolName == null)
             {
                 throw new ArgumentNullException(nameof(resourcePoolName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ResourcePoolCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ResourcePoolCollection.Exists");
             scope.Start();
             try
             {
@@ -255,14 +255,14 @@ namespace Azure.ResourceManager.ConnectedVmware
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string resourcePoolName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string resourcePoolName, CancellationToken cancellationToken = default)
         {
             if (resourcePoolName == null)
             {
                 throw new ArgumentNullException(nameof(resourcePoolName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ResourcePoolCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ResourcePoolCollection.ExistsAsync");
             scope.Start();
             try
             {

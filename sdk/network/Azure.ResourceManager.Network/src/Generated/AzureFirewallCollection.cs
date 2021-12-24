@@ -226,14 +226,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="azureFirewallName"> The name of the Azure Firewall. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string azureFirewallName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string azureFirewallName, CancellationToken cancellationToken = default)
         {
             if (azureFirewallName == null)
             {
                 throw new ArgumentNullException(nameof(azureFirewallName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AzureFirewallCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("AzureFirewallCollection.Exists");
             scope.Start();
             try
             {
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="azureFirewallName"> The name of the Azure Firewall. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string azureFirewallName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string azureFirewallName, CancellationToken cancellationToken = default)
         {
             if (azureFirewallName == null)
             {
                 throw new ArgumentNullException(nameof(azureFirewallName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AzureFirewallCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AzureFirewallCollection.ExistsAsync");
             scope.Start();
             try
             {

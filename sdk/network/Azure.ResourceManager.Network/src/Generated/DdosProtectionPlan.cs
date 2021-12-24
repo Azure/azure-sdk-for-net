@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a DdosProtectionPlan along with the instance operations that can be performed on it. </summary>
     public partial class DdosProtectionPlan : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="DdosProtectionPlan"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string ddosProtectionPlanName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans/{ddosProtectionPlanName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DdosProtectionPlansRestOperations _ddosProtectionPlansRestClient;
         private readonly DdosProtectionPlanData _data;

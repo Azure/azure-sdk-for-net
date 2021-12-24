@@ -226,14 +226,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="ddosProtectionPlanName"> The name of the DDoS protection plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ddosProtectionPlanName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string ddosProtectionPlanName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string ddosProtectionPlanName, CancellationToken cancellationToken = default)
         {
             if (ddosProtectionPlanName == null)
             {
                 throw new ArgumentNullException(nameof(ddosProtectionPlanName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlanCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlanCollection.Exists");
             scope.Start();
             try
             {
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="ddosProtectionPlanName"> The name of the DDoS protection plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ddosProtectionPlanName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string ddosProtectionPlanName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string ddosProtectionPlanName, CancellationToken cancellationToken = default)
         {
             if (ddosProtectionPlanName == null)
             {
                 throw new ArgumentNullException(nameof(ddosProtectionPlanName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlanCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlanCollection.ExistsAsync");
             scope.Start();
             try
             {

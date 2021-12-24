@@ -226,14 +226,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHubName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string virtualHubName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string virtualHubName, CancellationToken cancellationToken = default)
         {
             if (virtualHubName == null)
             {
                 throw new ArgumentNullException(nameof(virtualHubName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualHubCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("VirtualHubCollection.Exists");
             scope.Start();
             try
             {
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHubName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string virtualHubName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string virtualHubName, CancellationToken cancellationToken = default)
         {
             if (virtualHubName == null)
             {
                 throw new ArgumentNullException(nameof(virtualHubName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualHubCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualHubCollection.ExistsAsync");
             scope.Start();
             try
             {

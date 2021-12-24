@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a ApplicationGateway along with the instance operations that can be performed on it. </summary>
     public partial class ApplicationGateway : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ApplicationGateway"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string applicationGatewayName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ApplicationGatewaysRestOperations _applicationGatewaysRestClient;
         private readonly ApplicationGatewayPrivateLinkResourcesRestOperations _applicationGatewayPrivateLinkResourcesRestClient;

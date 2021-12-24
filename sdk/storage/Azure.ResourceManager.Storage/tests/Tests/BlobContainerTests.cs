@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.Storage.Tests
             //validate if created successfully
             BlobContainer container2 = await _blobContainerCollection.GetAsync(containerName);
             AssertBlobContainerEqual(container1, container2);
-            Assert.IsTrue(await _blobContainerCollection.CheckIfExistsAsync(containerName));
-            Assert.IsFalse(await _blobContainerCollection.CheckIfExistsAsync(containerName + "1"));
+            Assert.IsTrue(await _blobContainerCollection.ExistsAsync(containerName));
+            Assert.IsFalse(await _blobContainerCollection.ExistsAsync(containerName + "1"));
             BlobContainerData containerData = container1.Data;
             Assert.IsEmpty(containerData.Metadata);
             Assert.IsFalse(containerData.HasLegalHold);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Storage.Tests
             //validate if deleted successfully
             BlobContainer blobContainer3 = await _blobContainerCollection.GetIfExistsAsync(containerName);
             Assert.IsNull(blobContainer3);
-            Assert.IsFalse(await _blobContainerCollection.CheckIfExistsAsync(containerName));
+            Assert.IsFalse(await _blobContainerCollection.ExistsAsync(containerName));
         }
 
         [Test]

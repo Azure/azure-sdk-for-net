@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Assert.AreEqual(instanceFailoverGroupName, instanceFailoverGroup.Data.Name);
 
             // 2.CheckIfExist
-            Assert.IsTrue(_resourceGroup.GetInstanceFailoverGroups().CheckIfExists(locationName, instanceFailoverGroupName));
-            Assert.IsTrue(_resourceGroup.GetInstanceFailoverGroups().CheckIfExists(locationName, instanceFailoverGroupName + "0"));
+            Assert.IsTrue(_resourceGroup.GetInstanceFailoverGroups().Exists(locationName, instanceFailoverGroupName));
+            Assert.IsTrue(_resourceGroup.GetInstanceFailoverGroups().Exists(locationName, instanceFailoverGroupName + "0"));
 
             // 3.Get
             var getInstanceFailoverGroup = await _resourceGroup.GetInstanceFailoverGroups().GetAsync(locationName, instanceFailoverGroupName);
