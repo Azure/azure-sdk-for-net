@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetCommunicationServiceByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetCommunicationServicesAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(CommunicationService.ResourceType);
             filters.SubstringFilter = filter;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetCommunicationServiceByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetCommunicationServicesAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(CommunicationService.ResourceType);
             filters.SubstringFilter = filter;

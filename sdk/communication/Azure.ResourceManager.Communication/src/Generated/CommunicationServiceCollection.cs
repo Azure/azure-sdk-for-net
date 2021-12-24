@@ -218,14 +218,14 @@ namespace Azure.ResourceManager.Communication
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string communicationServiceName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string communicationServiceName, CancellationToken cancellationToken = default)
         {
             if (communicationServiceName == null)
             {
                 throw new ArgumentNullException(nameof(communicationServiceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CommunicationServiceCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("CommunicationServiceCollection.Exists");
             scope.Start();
             try
             {
@@ -243,14 +243,14 @@ namespace Azure.ResourceManager.Communication
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string communicationServiceName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string communicationServiceName, CancellationToken cancellationToken = default)
         {
             if (communicationServiceName == null)
             {
                 throw new ArgumentNullException(nameof(communicationServiceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CommunicationServiceCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CommunicationServiceCollection.ExistsAsync");
             scope.Start();
             try
             {
