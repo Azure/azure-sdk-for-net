@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Monitor
     /// <summary> A Class representing a DataCollectionEndpoint along with the instance operations that can be performed on it. </summary>
     public partial class DataCollectionEndpoint : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="DataCollectionEndpoint"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string dataCollectionEndpointName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionEndpoints/{dataCollectionEndpointName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DataCollectionEndpointsRestOperations _dataCollectionEndpointsRestClient;
         private readonly DataCollectionEndpointData _data;

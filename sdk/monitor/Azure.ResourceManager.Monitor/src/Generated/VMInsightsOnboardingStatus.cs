@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Monitor
     /// <summary> A Class representing a VmInsightsOnboardingStatus along with the instance operations that can be performed on it. </summary>
     public partial class VmInsightsOnboardingStatus : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="VmInsightsOnboardingStatus"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri)
+        {
+            var resourceId = $"/{resourceUri}/providers/Microsoft.Insights/vmInsightsOnboardingStatuses/default";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VMInsightsRestOperations _vMInsightsRestClient;
         private readonly VmInsightsOnboardingStatusData _data;

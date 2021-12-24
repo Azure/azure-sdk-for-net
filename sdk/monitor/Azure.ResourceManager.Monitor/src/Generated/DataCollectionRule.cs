@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Monitor
     /// <summary> A Class representing a DataCollectionRule along with the instance operations that can be performed on it. </summary>
     public partial class DataCollectionRule : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="DataCollectionRule"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string dataCollectionRuleName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DataCollectionRulesRestOperations _dataCollectionRulesRestClient;
         private readonly DataCollectionRuleAssociationsRestOperations _dataCollectionRuleAssociationsRestClient;

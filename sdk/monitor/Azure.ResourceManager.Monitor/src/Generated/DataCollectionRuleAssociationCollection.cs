@@ -235,14 +235,14 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="associationName"> The name of the association. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string associationName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string associationName, CancellationToken cancellationToken = default)
         {
             if (associationName == null)
             {
                 throw new ArgumentNullException(nameof(associationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.Exists");
             scope.Start();
             try
             {
@@ -260,14 +260,14 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="associationName"> The name of the association. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string associationName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string associationName, CancellationToken cancellationToken = default)
         {
             if (associationName == null)
             {
                 throw new ArgumentNullException(nameof(associationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.ExistsAsync");
             scope.Start();
             try
             {

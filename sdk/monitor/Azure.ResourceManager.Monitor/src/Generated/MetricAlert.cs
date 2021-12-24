@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Monitor
     /// <summary> A Class representing a MetricAlert along with the instance operations that can be performed on it. </summary>
     public partial class MetricAlert : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="MetricAlert"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string ruleName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts/{ruleName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly MetricAlertsRestOperations _metricAlertsRestClient;
         private readonly MetricAlertsStatusRestOperations _metricAlertsStatusRestClient;

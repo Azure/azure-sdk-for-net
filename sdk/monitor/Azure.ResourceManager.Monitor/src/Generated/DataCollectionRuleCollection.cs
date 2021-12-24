@@ -230,14 +230,14 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="dataCollectionRuleName"> The name of the data collection rule. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionRuleName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string dataCollectionRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string dataCollectionRuleName, CancellationToken cancellationToken = default)
         {
             if (dataCollectionRuleName == null)
             {
                 throw new ArgumentNullException(nameof(dataCollectionRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DataCollectionRuleCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("DataCollectionRuleCollection.Exists");
             scope.Start();
             try
             {
@@ -255,14 +255,14 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="dataCollectionRuleName"> The name of the data collection rule. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionRuleName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string dataCollectionRuleName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string dataCollectionRuleName, CancellationToken cancellationToken = default)
         {
             if (dataCollectionRuleName == null)
             {
                 throw new ArgumentNullException(nameof(dataCollectionRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DataCollectionRuleCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DataCollectionRuleCollection.ExistsAsync");
             scope.Start();
             try
             {

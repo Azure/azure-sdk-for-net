@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Monitor
     /// <summary> A Class representing a AutoscaleSetting along with the instance operations that can be performed on it. </summary>
     public partial class AutoscaleSetting : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="AutoscaleSetting"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string autoscaleSettingName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AutoscaleSettingsRestOperations _autoscaleSettingsRestClient;
         private readonly AutoscaleSettingData _data;

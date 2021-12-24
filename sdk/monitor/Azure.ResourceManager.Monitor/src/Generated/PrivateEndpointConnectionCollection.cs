@@ -237,14 +237,14 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             if (privateEndpointConnectionName == null)
             {
                 throw new ArgumentNullException(nameof(privateEndpointConnectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -262,14 +262,14 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             if (privateEndpointConnectionName == null)
             {
                 throw new ArgumentNullException(nameof(privateEndpointConnectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.ExistsAsync");
             scope.Start();
             try
             {

@@ -238,14 +238,14 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="logProfileName"> The name of the log profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string logProfileName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string logProfileName, CancellationToken cancellationToken = default)
         {
             if (logProfileName == null)
             {
                 throw new ArgumentNullException(nameof(logProfileName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("LogProfileCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("LogProfileCollection.Exists");
             scope.Start();
             try
             {
@@ -263,14 +263,14 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="logProfileName"> The name of the log profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string logProfileName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string logProfileName, CancellationToken cancellationToken = default)
         {
             if (logProfileName == null)
             {
                 throw new ArgumentNullException(nameof(logProfileName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("LogProfileCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("LogProfileCollection.ExistsAsync");
             scope.Start();
             try
             {

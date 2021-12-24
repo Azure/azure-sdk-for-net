@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Monitor
     /// <summary> A Class representing a LogSearchRule along with the instance operations that can be performed on it. </summary>
     public partial class LogSearchRule : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="LogSearchRule"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string ruleName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/scheduledQueryRules/{ruleName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ScheduledQueryRulesRestOperations _scheduledQueryRulesRestClient;
         private readonly LogSearchRuleData _data;

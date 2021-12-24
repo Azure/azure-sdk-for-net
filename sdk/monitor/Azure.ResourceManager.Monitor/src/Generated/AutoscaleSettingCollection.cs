@@ -238,14 +238,14 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string autoscaleSettingName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string autoscaleSettingName, CancellationToken cancellationToken = default)
         {
             if (autoscaleSettingName == null)
             {
                 throw new ArgumentNullException(nameof(autoscaleSettingName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AutoscaleSettingCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("AutoscaleSettingCollection.Exists");
             scope.Start();
             try
             {
@@ -263,14 +263,14 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string autoscaleSettingName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string autoscaleSettingName, CancellationToken cancellationToken = default)
         {
             if (autoscaleSettingName == null)
             {
                 throw new ArgumentNullException(nameof(autoscaleSettingName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AutoscaleSettingCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AutoscaleSettingCollection.ExistsAsync");
             scope.Start();
             try
             {

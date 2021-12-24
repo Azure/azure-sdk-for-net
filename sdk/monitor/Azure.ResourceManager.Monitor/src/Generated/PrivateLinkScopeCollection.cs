@@ -238,14 +238,14 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="scopeName"> The name of the Azure Monitor PrivateLinkScope resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string scopeName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string scopeName, CancellationToken cancellationToken = default)
         {
             if (scopeName == null)
             {
                 throw new ArgumentNullException(nameof(scopeName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkScopeCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("PrivateLinkScopeCollection.Exists");
             scope.Start();
             try
             {
@@ -263,14 +263,14 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="scopeName"> The name of the Azure Monitor PrivateLinkScope resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string scopeName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string scopeName, CancellationToken cancellationToken = default)
         {
             if (scopeName == null)
             {
                 throw new ArgumentNullException(nameof(scopeName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkScopeCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PrivateLinkScopeCollection.ExistsAsync");
             scope.Start();
             try
             {

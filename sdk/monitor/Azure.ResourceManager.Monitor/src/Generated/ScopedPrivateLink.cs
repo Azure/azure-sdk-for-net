@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Monitor
     /// <summary> A Class representing a ScopedPrivateLink along with the instance operations that can be performed on it. </summary>
     public partial class ScopedPrivateLink : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ScopedPrivateLink"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string scopeName, string name)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly PrivateLinkScopedResourcesRestOperations _privateLinkScopedResourcesRestClient;
         private readonly ScopedPrivateLinkData _data;

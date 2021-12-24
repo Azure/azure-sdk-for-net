@@ -238,14 +238,14 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="activityLogAlertName"> The name of the activity log alert. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string activityLogAlertName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string activityLogAlertName, CancellationToken cancellationToken = default)
         {
             if (activityLogAlertName == null)
             {
                 throw new ArgumentNullException(nameof(activityLogAlertName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ActivityLogAlertCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ActivityLogAlertCollection.Exists");
             scope.Start();
             try
             {
@@ -263,14 +263,14 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="activityLogAlertName"> The name of the activity log alert. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string activityLogAlertName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string activityLogAlertName, CancellationToken cancellationToken = default)
         {
             if (activityLogAlertName == null)
             {
                 throw new ArgumentNullException(nameof(activityLogAlertName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ActivityLogAlertCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ActivityLogAlertCollection.ExistsAsync");
             scope.Start();
             try
             {

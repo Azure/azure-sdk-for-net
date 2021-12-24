@@ -238,14 +238,14 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="actionGroupName"> The name of the action group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string actionGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string actionGroupName, CancellationToken cancellationToken = default)
         {
             if (actionGroupName == null)
             {
                 throw new ArgumentNullException(nameof(actionGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ActionGroupCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ActionGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -263,14 +263,14 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="actionGroupName"> The name of the action group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string actionGroupName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string actionGroupName, CancellationToken cancellationToken = default)
         {
             if (actionGroupName == null)
             {
                 throw new ArgumentNullException(nameof(actionGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ActionGroupCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ActionGroupCollection.ExistsAsync");
             scope.Start();
             try
             {

@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Monitor
     /// <summary> A Class representing a AlertRule along with the instance operations that can be performed on it. </summary>
     public partial class AlertRule : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="AlertRule"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string ruleName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/alertrules/{ruleName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AlertRulesRestOperations _alertRulesRestClient;
         private readonly AlertRuleIncidentsRestOperations _alertRuleIncidentsRestClient;

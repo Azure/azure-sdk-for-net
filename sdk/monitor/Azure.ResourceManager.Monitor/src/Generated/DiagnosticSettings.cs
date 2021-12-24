@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Monitor
     /// <summary> A Class representing a DiagnosticSettings along with the instance operations that can be performed on it. </summary>
     public partial class DiagnosticSettings : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="DiagnosticSettings"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string name)
+        {
+            var resourceId = $"/{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DiagnosticSettingsRestOperations _diagnosticSettingsRestClient;
         private readonly DiagnosticSettingsData _data;

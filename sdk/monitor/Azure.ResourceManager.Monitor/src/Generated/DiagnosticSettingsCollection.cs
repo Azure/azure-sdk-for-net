@@ -241,14 +241,14 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="name"> The name of the diagnostic setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string name, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DiagnosticSettingsCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("DiagnosticSettingsCollection.Exists");
             scope.Start();
             try
             {
@@ -266,14 +266,14 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="name"> The name of the diagnostic setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DiagnosticSettingsCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DiagnosticSettingsCollection.ExistsAsync");
             scope.Start();
             try
             {

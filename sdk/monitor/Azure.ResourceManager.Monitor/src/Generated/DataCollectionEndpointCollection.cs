@@ -230,14 +230,14 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="dataCollectionEndpointName"> The name of the data collection endpoint. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string dataCollectionEndpointName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string dataCollectionEndpointName, CancellationToken cancellationToken = default)
         {
             if (dataCollectionEndpointName == null)
             {
                 throw new ArgumentNullException(nameof(dataCollectionEndpointName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DataCollectionEndpointCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("DataCollectionEndpointCollection.Exists");
             scope.Start();
             try
             {
@@ -255,14 +255,14 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="dataCollectionEndpointName"> The name of the data collection endpoint. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string dataCollectionEndpointName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string dataCollectionEndpointName, CancellationToken cancellationToken = default)
         {
             if (dataCollectionEndpointName == null)
             {
                 throw new ArgumentNullException(nameof(dataCollectionEndpointName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DataCollectionEndpointCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DataCollectionEndpointCollection.ExistsAsync");
             scope.Start();
             try
             {

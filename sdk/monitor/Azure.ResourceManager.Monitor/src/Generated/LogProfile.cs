@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Monitor
     /// <summary> A Class representing a LogProfile along with the instance operations that can be performed on it. </summary>
     public partial class LogProfile : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="LogProfile"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string logProfileName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly LogProfilesRestOperations _logProfilesRestClient;
         private readonly LogProfileData _data;
