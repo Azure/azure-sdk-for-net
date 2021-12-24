@@ -8,5 +8,7 @@ namespace Azure.ServiceTemplate.Template.Tests
     public class TemplateClientTestEnvironment : TestEnvironment
     {
         public string Endpoint => GetRecordedVariable("Template_ENDPOINT");
+
+        // Add other client paramters here as above.
     }
 }

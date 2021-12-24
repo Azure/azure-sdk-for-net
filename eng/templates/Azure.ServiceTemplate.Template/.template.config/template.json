@@ -63,7 +63,7 @@
       "type": "parameter",
       "datatype":"text",
       "isRequired": true,
-      "description": "The Azure security scopes. ie. https://api.adu.microsoft.com/.default",
+      "description": "The client name. ie. Management",
       "replaces": "TemplateService"
     },
     "tagVersion": {
