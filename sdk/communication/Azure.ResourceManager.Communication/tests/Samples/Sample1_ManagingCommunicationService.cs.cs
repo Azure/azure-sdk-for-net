@@ -10,7 +10,7 @@ using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 #endregion Manage_CommunicationService_Namespaces
 
-namespace Azure.ResourceManager.Communication.Tests
+namespace Azure.ResourceManager.Communication.Tests.Samples
 {
     public class Sample1_ManagingCommunicationService
     {
@@ -49,6 +49,7 @@ namespace Azure.ResourceManager.Communication.Tests
                 DataLocation = "UnitedStates",
             };
             var communicationServiceLro = await collection.CreateOrUpdateAsync(communicationServiceName, data);
+            CommunicationService communicationService = communicationServiceLro.Value;
             #endregion Snippet:Managing_CommunicationService_CreateAnApplicationDefinition
         }
 

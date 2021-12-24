@@ -43,6 +43,7 @@ CommunicationServiceData data = new CommunicationServiceData()
     DataLocation = "UnitedStates",
 };
 var communicationServiceLro = await collection.CreateOrUpdateAsync(communicationServiceName, data);
+CommunicationService communicationService = communicationServiceLro.Value;
 ```
 
 ***List all Communication Service***
