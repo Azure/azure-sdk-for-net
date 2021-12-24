@@ -1,14 +1,19 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.5 (2021-12-24)
 
 ### Features Added
 
+- Added `CreateResourceIdentifier` for each resource class
+
 ### Breaking Changes
+
+- Renamed `CheckIfExists` to `Exists` for each resource class
+- Renamed `Get{Resource}ByName` to `Get{Resource}AsGenericResources` in SubscriptionExtension
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed commments for `FirstPageFunc` of each pagable resource class
 
 ## 1.0.0-beta.4 (2021-12-07)
 
