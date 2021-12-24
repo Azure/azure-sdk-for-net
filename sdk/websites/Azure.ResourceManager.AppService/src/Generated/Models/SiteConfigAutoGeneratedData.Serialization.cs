@@ -11,6 +11,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -593,15 +594,8 @@ namespace Azure.ResourceManager.AppService
             }
             if (Optional.IsDefined(ApiManagementConfig))
             {
-                if (ApiManagementConfig != null)
-                {
-                    writer.WritePropertyName("apiManagementConfig");
-                    writer.WriteObjectValue(ApiManagementConfig);
-                }
-                else
-                {
-                    writer.WriteNull("apiManagementConfig");
-                }
+                writer.WritePropertyName("apiManagementConfig");
+                JsonSerializer.Serialize(writer, ApiManagementConfig);
             }
             if (Optional.IsDefined(AutoSwapSlotName))
             {
@@ -719,6 +713,30 @@ namespace Azure.ResourceManager.AppService
                 else
                 {
                     writer.WriteNull("http20Enabled");
+                }
+            }
+            if (Optional.IsDefined(MinTlsVersion))
+            {
+                if (MinTlsVersion != null)
+                {
+                    writer.WritePropertyName("minTlsVersion");
+                    writer.WriteStringValue(MinTlsVersion.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("minTlsVersion");
+                }
+            }
+            if (Optional.IsDefined(ScmMinTlsVersion))
+            {
+                if (ScmMinTlsVersion != null)
+                {
+                    writer.WritePropertyName("scmMinTlsVersion");
+                    writer.WriteStringValue(ScmMinTlsVersion.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("scmMinTlsVersion");
                 }
             }
             if (Optional.IsDefined(FtpsState))
@@ -891,7 +909,7 @@ namespace Azure.ResourceManager.AppService
             Optional<CorsSettings> cors = default;
             Optional<PushSettings> push = default;
             Optional<ApiDefinitionInfo> apiDefinition = default;
-            Optional<ApiManagementConfig> apiManagementConfig = default;
+            Optional<WritableSubResource> apiManagementConfig = default;
             Optional<string> autoSwapSlotName = default;
             Optional<bool?> localMySqlEnabled = default;
             Optional<int?> managedServiceIdentityId = default;
@@ -901,6 +919,8 @@ namespace Azure.ResourceManager.AppService
             Optional<IList<IpSecurityRestriction>> scmIpSecurityRestrictions = default;
             Optional<bool?> scmIpSecurityRestrictionsUseMain = default;
             Optional<bool?> http20Enabled = default;
+            Optional<SupportedTlsVersions?> minTlsVersion = default;
+            Optional<SupportedTlsVersions?> scmMinTlsVersion = default;
             Optional<FtpsState?> ftpsState = default;
             Optional<int?> preWarmedInstanceCount = default;
             Optional<int?> functionAppScaleLimit = default;
@@ -1430,10 +1450,10 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                apiManagementConfig = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            apiManagementConfig = ApiManagementConfig.DeserializeApiManagementConfig(property0.Value);
+                            apiManagementConfig = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("autoSwapSlotName"))
@@ -1536,6 +1556,26 @@ namespace Azure.ResourceManager.AppService
                             http20Enabled = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("minTlsVersion"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                minTlsVersion = null;
+                                continue;
+                            }
+                            minTlsVersion = new SupportedTlsVersions(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("scmMinTlsVersion"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                scmMinTlsVersion = null;
+                                continue;
+                            }
+                            scmMinTlsVersion = new SupportedTlsVersions(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("ftpsState"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -1635,7 +1675,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new SiteConfigAutoGeneratedData(id, name, type, kind.Value, Optional.ToNullable(numberOfWorkers), Optional.ToList(defaultDocuments), netFrameworkVersion.Value, phpVersion.Value, pythonVersion.Value, nodeVersion.Value, powerShellVersion.Value, linuxFxVersion.Value, windowsFxVersion.Value, Optional.ToNullable(requestTracingEnabled), Optional.ToNullable(requestTracingExpirationTime), Optional.ToNullable(remoteDebuggingEnabled), remoteDebuggingVersion.Value, Optional.ToNullable(httpLoggingEnabled), Optional.ToNullable(acrUseManagedIdentityCreds), acrUserManagedIdentityID.Value, Optional.ToNullable(logsDirectorySizeLimit), Optional.ToNullable(detailedErrorLoggingEnabled), publishingUsername.Value, Optional.ToList(appSettings), Optional.ToList(connectionStrings), machineKey.Value, Optional.ToList(handlerMappings), documentRoot.Value, Optional.ToNullable(scmType), Optional.ToNullable(use32BitWorkerProcess), Optional.ToNullable(webSocketsEnabled), Optional.ToNullable(alwaysOn), javaVersion.Value, javaContainer.Value, javaContainerVersion.Value, appCommandLine.Value, Optional.ToNullable(managedPipelineMode), Optional.ToList(virtualApplications), Optional.ToNullable(loadBalancing), experiments.Value, limits.Value, Optional.ToNullable(autoHealEnabled), autoHealRules.Value, tracingOptions.Value, vnetName.Value, Optional.ToNullable(vnetRouteAllEnabled), Optional.ToNullable(vnetPrivatePortsCount), cors.Value, push.Value, apiDefinition.Value, apiManagementConfig.Value, autoSwapSlotName.Value, Optional.ToNullable(localMySqlEnabled), Optional.ToNullable(managedServiceIdentityId), Optional.ToNullable(xManagedServiceIdentityId), keyVaultReferenceIdentity.Value, Optional.ToList(ipSecurityRestrictions), Optional.ToList(scmIpSecurityRestrictions), Optional.ToNullable(scmIpSecurityRestrictionsUseMain), Optional.ToNullable(http20Enabled), Optional.ToNullable(ftpsState), Optional.ToNullable(preWarmedInstanceCount), Optional.ToNullable(functionAppScaleLimit), healthCheckPath.Value, Optional.ToNullable(functionsRuntimeScaleMonitoringEnabled), websiteTimeZone.Value, Optional.ToNullable(minimumElasticInstanceCount), Optional.ToDictionary(azureStorageAccounts), publicNetworkAccess.Value);
+            return new SiteConfigAutoGeneratedData(id, name, type, kind.Value, Optional.ToNullable(numberOfWorkers), Optional.ToList(defaultDocuments), netFrameworkVersion.Value, phpVersion.Value, pythonVersion.Value, nodeVersion.Value, powerShellVersion.Value, linuxFxVersion.Value, windowsFxVersion.Value, Optional.ToNullable(requestTracingEnabled), Optional.ToNullable(requestTracingExpirationTime), Optional.ToNullable(remoteDebuggingEnabled), remoteDebuggingVersion.Value, Optional.ToNullable(httpLoggingEnabled), Optional.ToNullable(acrUseManagedIdentityCreds), acrUserManagedIdentityID.Value, Optional.ToNullable(logsDirectorySizeLimit), Optional.ToNullable(detailedErrorLoggingEnabled), publishingUsername.Value, Optional.ToList(appSettings), Optional.ToList(connectionStrings), machineKey.Value, Optional.ToList(handlerMappings), documentRoot.Value, Optional.ToNullable(scmType), Optional.ToNullable(use32BitWorkerProcess), Optional.ToNullable(webSocketsEnabled), Optional.ToNullable(alwaysOn), javaVersion.Value, javaContainer.Value, javaContainerVersion.Value, appCommandLine.Value, Optional.ToNullable(managedPipelineMode), Optional.ToList(virtualApplications), Optional.ToNullable(loadBalancing), experiments.Value, limits.Value, Optional.ToNullable(autoHealEnabled), autoHealRules.Value, tracingOptions.Value, vnetName.Value, Optional.ToNullable(vnetRouteAllEnabled), Optional.ToNullable(vnetPrivatePortsCount), cors.Value, push.Value, apiDefinition.Value, apiManagementConfig, autoSwapSlotName.Value, Optional.ToNullable(localMySqlEnabled), Optional.ToNullable(managedServiceIdentityId), Optional.ToNullable(xManagedServiceIdentityId), keyVaultReferenceIdentity.Value, Optional.ToList(ipSecurityRestrictions), Optional.ToList(scmIpSecurityRestrictions), Optional.ToNullable(scmIpSecurityRestrictionsUseMain), Optional.ToNullable(http20Enabled), Optional.ToNullable(minTlsVersion), Optional.ToNullable(scmMinTlsVersion), Optional.ToNullable(ftpsState), Optional.ToNullable(preWarmedInstanceCount), Optional.ToNullable(functionAppScaleLimit), healthCheckPath.Value, Optional.ToNullable(functionsRuntimeScaleMonitoringEnabled), websiteTimeZone.Value, Optional.ToNullable(minimumElasticInstanceCount), Optional.ToDictionary(azureStorageAccounts), publicNetworkAccess.Value);
         }
     }
 }
