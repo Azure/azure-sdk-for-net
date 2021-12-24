@@ -103,6 +103,9 @@ override-operation-name:
 
 mgmt-debug:
   show-request-path: true
+
+no-property-type-replacement:
+- ApiManagementConfig
       
 directive:
 # rename model
@@ -128,9 +131,12 @@ directive:
   - rename-model:
       from: Domain
       to: AppServiceDomain
-  - rename-model:
-      from: SiteConfigResource
-      to: SiteConfig
+#   - rename-model:
+#       from: SiteConfig
+#       to: SiteConfigProperties
+#   - rename-model:
+#       from: SiteConfigResource
+#       to: SiteConfig
 
 # Enum rename
   - from: swagger-document
@@ -192,13 +198,10 @@ directive:
     where: $.definitions.SiteConfig.properties.*
     transform: >
         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.ApiManagementConfig.properties
-#     transform: >
-#         $["apiconfig111"] = {
-#           "description": "this is a fake",
-#           "type": "string"
-#         }
+  - from: swagger-document
+    where: $.definitions.ApiManagementConfig.properties.*
+    transform: >
+        $["x-nullable"] = true;
 #   - from: swagger-document
 #     where: $.definitions.SiteConfig.properties
 #     transform: >
