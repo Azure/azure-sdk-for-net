@@ -27,7 +27,7 @@ namespace Azure.AI.Personalizer
         /// should match the sequence your application would have used to display them.
         /// The first item in the array will be used as Baseline item in Offline Evaluations.
         /// </summary>
-        public IEnumerable<PersonalizerRankableAction> Actions { get; }
+        public IEnumerable<PersonalizerRankableAction> Actions { get; set; }
 
         /// <summary>
         /// The set of action ids to exclude from ranking.

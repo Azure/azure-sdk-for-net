@@ -4,6 +4,7 @@
 
     <!-- We don't care about XML doc comments on test methods -->
     <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <NoWarn>$(NoWarn);CS8032</NoWarn>
   </PropertyGroup>
 
 

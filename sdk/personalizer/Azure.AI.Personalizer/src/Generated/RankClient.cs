@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Rl.Net;
 
 namespace Azure.AI.Personalizer
 {
@@ -20,6 +21,7 @@ namespace Azure.AI.Personalizer
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         private readonly bool _isLocalInference;
+        private readonly RankProcessor _rankProcessor;
         internal RankRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of RankClient for mocking. </summary>
@@ -53,11 +55,15 @@ namespace Azure.AI.Personalizer
         /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="isLocalInference"> A flag to determine whether to use local inference. </param>
+        /// <param name="configuration"> A configuration to use local reference. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public RankClient(string endpoint, TokenCredential credential, bool isLocalInference, PersonalizerClientOptions options = null) :
+        public RankClient(string endpoint, TokenCredential credential, bool isLocalInference, Configuration configuration, PersonalizerClientOptions options = null) :
             this(endpoint, credential, options)
         {
             _isLocalInference = isLocalInference;
+            LiveModel liveModel = new LiveModel(configuration);
+            liveModel.Init();
+            _rankProcessor = new RankProcessor(liveModel);
         }
 
         /// <summary> Initializes a new instance of RankClient. </summary>
@@ -85,11 +91,16 @@ namespace Azure.AI.Personalizer
         /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="isLocalInference"> A flag to determine whether to use local reference. </param>
+        /// <param name="configuration"> A configuration to use local reference. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public RankClient(string endpoint, AzureKeyCredential credential, bool isLocalInference, PersonalizerClientOptions options = null) :
+        public RankClient(string endpoint, AzureKeyCredential credential, bool isLocalInference, Configuration configuration, PersonalizerClientOptions options = null) :
             this(endpoint, credential, options)
         {
             _isLocalInference = isLocalInference;
+            LiveModel liveModel = new LiveModel(configuration);
+            liveModel.Init();
+            _rankProcessor = new RankProcessor(liveModel);
+
         }
 
         /// <summary> Initializes a new instance of RankClient. </summary>
@@ -112,7 +123,14 @@ namespace Azure.AI.Personalizer
             scope.Start();
             try
             {
-                return await RestClient.RankAsync(rankRequest, cancellationToken).ConfigureAwait(false);
+                if (_isLocalInference)
+                {
+                    return _rankProcessor.Rank(rankRequest, cancellationToken);
+                }
+                else
+                {
+                    return await RestClient.RankAsync(rankRequest, cancellationToken).ConfigureAwait(false);
+                }
             }
             catch (Exception e)
             {

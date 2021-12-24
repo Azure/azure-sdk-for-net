@@ -1,6 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks);net47</TargetFrameworks>
+    <NoWarn>$(NoWarn);SYSLIB0023</NoWarn>
+    <NoWarn>$(NoWarn);CS8032</NoWarn>
     <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
   </PropertyGroup>
   <ItemGroup>

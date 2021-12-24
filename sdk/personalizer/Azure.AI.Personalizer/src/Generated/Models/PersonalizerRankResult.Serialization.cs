@@ -18,32 +18,62 @@ namespace Azure.AI.Personalizer
             Optional<IReadOnlyList<PersonalizerRankedAction>> ranking = default;
             Optional<string> eventId = default;
             Optional<string> rewardActionId = default;
-            foreach (var property in element.EnumerateObject())
+            if (element.ValueKind == JsonValueKind.Object)
             {
-                if (property.NameEquals("ranking"))
+                foreach (var property in element.EnumerateObject())
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.NameEquals("ranking"))
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        if (property.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            property.ThrowNonNullablePropertyIsNull();
+                            continue;
+                        }
+                        List<PersonalizerRankedAction> array = new List<PersonalizerRankedAction>();
+                        foreach (var item in property.Value.EnumerateArray())
+                        {
+                            array.Add(PersonalizerRankedAction.DeserializePersonalizerRankedAction(item));
+                        }
+                        ranking = array;
                         continue;
                     }
-                    List<PersonalizerRankedAction> array = new List<PersonalizerRankedAction>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    if (property.NameEquals("eventId"))
                     {
-                        array.Add(PersonalizerRankedAction.DeserializePersonalizerRankedAction(item));
+                        eventId = property.Value.GetString();
+                        continue;
                     }
-                    ranking = array;
-                    continue;
+                    if (property.NameEquals("rewardActionId"))
+                    {
+                        rewardActionId = property.Value.GetString();
+                        continue;
+                    }
                 }
-                if (property.NameEquals("eventId"))
+            }
+            else if (element.ValueKind == JsonValueKind.Array)
+            {
+                // TODO: This part is not verified!
+                foreach (var property in element.EnumerateArray())
                 {
-                    eventId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("rewardActionId"))
-                {
-                    rewardActionId = property.Value.GetString();
-                    continue;
+                    if (property.Equals("ranking"))
+                    {
+                        List<PersonalizerRankedAction> array = new List<PersonalizerRankedAction>();
+                        foreach (var item in property.EnumerateArray())
+                        {
+                            array.Add(PersonalizerRankedAction.DeserializePersonalizerRankedAction(item));
+                        }
+                        ranking = array;
+                        continue;
+                    }
+                    if (property.Equals("eventId"))
+                    {
+                        eventId = property.GetString();
+                        continue;
+                    }
+                    if (property.Equals("rewardActionId"))
+                    {
+                        rewardActionId = property.GetString();
+                        continue;
+                    }
                 }
             }
             return new PersonalizerRankResult(Optional.ToList(ranking), eventId.Value, rewardActionId.Value);
