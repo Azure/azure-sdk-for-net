@@ -1,6 +1,6 @@
 # Azure Communication Services Management client library for .NET
 
-This package follows the new Azure SDK guidelines which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
+This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html) which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
 
 Azure Communication Services enable developers to securely bring human connected experiences to their own
 applications and websites. This includes voice, video, calling and chat capabilities.
@@ -17,7 +17,7 @@ Use the management library for Azure Communication Services to:
 
 Install the Azure Communication management library for .NET with [NuGet](https://www.nuget.org/):
 
-```dotnetcli
+```PowerShell
 Install-Package Azure.ResourceManager.Communication --version 1.1.0-beta.1
 ``` 
 
