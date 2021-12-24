@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30309.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{498A2FD9-0BFB-4549-ADA8-6D0BB92C67E1}") = "Azure.ResourceManager.ConnectedVmware", "src\Azure.ResourceManager.ConnectedVmware.csproj", "{66A648D9-9109-403C-9492-0B9E97C97E91}"
+Project("{498A2FD9-0BFB-4549-ADA8-6D0BB92C67E1}") = "Azure.ResourceManager.ConnectedVMware", "src\Azure.ResourceManager.ConnectedVMware.csproj", "{66A648D9-9109-403C-9492-0B9E97C97E91}"
 EndProject
-Project("{498A2FD9-0BFB-4549-ADA8-6D0BB92C67E1}") = "Azure.ResourceManager.ConnectedVmware.Tests", "tests\Azure.ResourceManager.ConnectedVmware.Tests.csproj", "{51E0CDBD-919B-44A3-95D7-1237F4546F5F}"
+Project("{498A2FD9-0BFB-4549-ADA8-6D0BB92C67E1}") = "Azure.ResourceManager.ConnectedVMware.Tests", "tests\Azure.ResourceManager.ConnectedVMware.Tests.csproj", "{51E0CDBD-919B-44A3-95D7-1237F4546F5F}"
 EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
