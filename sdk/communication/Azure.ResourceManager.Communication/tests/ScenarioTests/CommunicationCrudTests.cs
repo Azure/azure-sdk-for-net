@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.Communication.Tests
         }
 
         [Test]
-        public async Task CheckIfExist()
+        public async Task Exists()
         {
             string communicationServiceName = Recording.GenerateAssetName("communication-service-");
             var collection = _resourceGroup.GetCommunicationServices();
             await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
-            Assert.IsTrue(collection.CheckIfExists(communicationServiceName));
+            Assert.IsTrue(collection.Exists(communicationServiceName));
         }
 
         [Test]
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Communication.Tests
             var collection = _resourceGroup.GetCommunicationServices();
             var communicationService = await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
             await communicationService.DeleteAsync();
-            Assert.IsFalse(collection.CheckIfExists(communicationServiceName));
+            Assert.IsFalse(collection.Exists(communicationServiceName));
         }
 
         [Test]

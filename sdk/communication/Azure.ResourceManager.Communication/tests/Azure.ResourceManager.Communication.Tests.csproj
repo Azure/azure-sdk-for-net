@@ -6,8 +6,4 @@
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="SessionRecords\CommunicationCrudTests\" />
-  </ItemGroup>
 </Project>
