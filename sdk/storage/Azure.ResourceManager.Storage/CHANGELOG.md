@@ -1,14 +1,20 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.5 (2021-12-27)
 
 ### Features Added
 
+- Added `CreateResourceIdentifier` for each resource class
+
 ### Breaking Changes
+
+- Renamed `CheckIfExists` to `Exists` for each resource class
+- Renamed `Get{Resource}ByName` to `Get{Resource}AsGenericResource`
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed comments for `FirstPageFunc` of each pageable resource class
+- Fixed `DateTimeOffset` being serialized to local timezone format
 
 ## 1.0.0-beta.4 (2021-12-07)
 
