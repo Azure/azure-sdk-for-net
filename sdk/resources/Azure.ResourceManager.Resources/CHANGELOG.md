@@ -8,8 +8,8 @@
 
 ### Breaking Changes
 
-- Renamed `CheckIfExists` to `Exists` for each resource class
-- Renamed `Get{Resource}ByName` to `Get{Resource}AsGenericResources` in SubscriptionExtensions
+- Renamed `CheckIfExists` to `Exists` for each resource collection class
+- Renamed `Get{Resource}ByName` to `Get{Resource}AsGenericResources` in `SubscriptionExtensions`
 
 ## 1.0.0-beta.4 (2021-12-07)
 
