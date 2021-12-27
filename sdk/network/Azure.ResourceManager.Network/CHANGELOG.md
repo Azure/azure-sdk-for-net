@@ -1,10 +1,10 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.5 (2021-12-27)
 
 ### Features Added
 
-- Added `CreateResourceIdenifier` for each resource class
+- Added `CreateResourceIdentifier` for each resource class
 
 ### Breaking Changes
 
@@ -13,9 +13,7 @@
 
 ### Bugs Fixed
 
-- Fixed commments for `FirstPageFunc` of each pagable resource class
-
-### Other Changes
+- Fixed comments for `FirstPageFunc` of each pageable resource class
 
 ## 1.0.0-beta.4 (2021-12-07)
 
