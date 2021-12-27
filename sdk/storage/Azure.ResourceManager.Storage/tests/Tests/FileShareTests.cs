@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.Storage.Tests
     {
         private ResourceGroup _resourceGroup;
         private StorageAccount _storageAccount;
-        private FileServiceCollection _fileServiceCollection;
         private FileService _fileService;
         private FileShareCollection _fileShareCollection;
 
@@ -30,8 +29,8 @@ namespace Azure.ResourceManager.Storage.Tests
             string accountName = await CreateValidAccountNameAsync("teststoragemgmt");
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             _storageAccount = (await storageAccountCollection.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters())).Value;
-            _fileServiceCollection = _storageAccount.GetFileServices();
-            _fileService = await _fileServiceCollection.GetAsync("default");
+            _fileService = _storageAccount.GetFileService();
+            _fileService = await _fileService.GetAsync();
             _fileShareCollection = _fileService.GetFileShares();
         }
 
@@ -64,8 +63,8 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.IsEmpty(shareData.Metadata);
             FileShare share2 = await _fileShareCollection.GetAsync(fileShareName);
             AssertFileShareEqual(share1, share2);
-            Assert.IsTrue(await _fileShareCollection.CheckIfExistsAsync(fileShareName));
-            Assert.IsFalse(await _fileShareCollection.CheckIfExistsAsync(fileShareName + "1"));
+            Assert.IsTrue(await _fileShareCollection.ExistsAsync(fileShareName));
+            Assert.IsFalse(await _fileShareCollection.ExistsAsync(fileShareName + "1"));
 
             //delete file share
             await share1.DeleteAsync();
@@ -73,7 +72,7 @@ namespace Azure.ResourceManager.Storage.Tests
             //validate if deleted successfully
             FileShare fileShare3 = await _fileShareCollection.GetIfExistsAsync(fileShareName);
             Assert.IsNull(fileShare3);
-            Assert.IsFalse(await _fileShareCollection.CheckIfExistsAsync(fileShareName));
+            Assert.IsFalse(await _fileShareCollection.ExistsAsync(fileShareName));
         }
 
         [Test]
@@ -97,7 +96,7 @@ namespace Azure.ResourceManager.Storage.Tests
                     Days = 5
                 }
             };
-            _fileService = await _fileService.SetServicePropertiesAsync(properties);
+            _fileService = (await _fileService.CreateOrUpdateAsync(properties)).Value;
 
             //create 2 file share and delete 1
             string fileShareName1 = Recording.GenerateAssetName("testfileshare1");
@@ -192,7 +191,7 @@ namespace Azure.ResourceManager.Storage.Tests
                     Days = 5
                 }
             };
-            _fileService = await _fileService.SetServicePropertiesAsync(parameter);
+            _fileService = (await _fileService.CreateOrUpdateAsync(parameter)).Value;
 
             //validate
             Assert.IsTrue(_fileService.Data.ShareDeleteRetentionPolicy.Enabled);
@@ -212,7 +211,7 @@ namespace Azure.ResourceManager.Storage.Tests
                     Days = 5
                 }
             };
-            _fileService = await _fileService.SetServicePropertiesAsync(parameter);
+            _fileService = (await _fileService.CreateOrUpdateAsync(parameter)).Value;
 
             //create file share
             string fileShareName = Recording.GenerateAssetName("testfileshare");
@@ -389,7 +388,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" }
                 ));
 
-            _fileService = await _fileService.SetServicePropertiesAsync(properties2);
+            _fileService = (await _fileService.CreateOrUpdateAsync(properties2)).Value;
             FileServiceData properties3 = _fileService.Data;
 
             //validate CORS rules

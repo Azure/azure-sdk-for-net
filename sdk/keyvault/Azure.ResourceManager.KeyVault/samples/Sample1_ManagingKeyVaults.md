@@ -50,7 +50,7 @@ Permissions permissions = new Permissions
 };
 AccessPolicyEntry AccessPolicy = new AccessPolicyEntry(tenantIdGuid, objectId, permissions);
 
-VaultProperties VaultProperties = new VaultProperties(tenantIdGuid, new Sku(SkuFamily.A, SkuName.Standard));
+VaultProperties VaultProperties = new VaultProperties(tenantIdGuid, new Models.Sku(SkuFamily.A, SkuName.Standard));
 VaultProperties.EnabledForDeployment = true;
 VaultProperties.EnabledForDiskEncryption = true;
 VaultProperties.EnabledForTemplateDeployment = true;
@@ -106,7 +106,7 @@ if (vault != null)
     Console.WriteLine(vault.Data.Name);
 }
 
-if (await vaultCollection.CheckIfExistsAsync("bar"))
+if (await vaultCollection.ExistsAsync("bar"))
 {
     Console.WriteLine("KeyVault 'bar' exists.");
 }

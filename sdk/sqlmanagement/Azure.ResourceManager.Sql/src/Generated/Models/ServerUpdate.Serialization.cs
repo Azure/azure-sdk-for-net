@@ -15,6 +15,11 @@ namespace Azure.ResourceManager.Sql.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity");
+                writer.WriteObjectValue(Identity);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
@@ -52,6 +57,31 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 writer.WritePropertyName("publicNetworkAccess");
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
+            if (Optional.IsDefined(PrimaryUserAssignedIdentityId))
+            {
+                writer.WritePropertyName("primaryUserAssignedIdentityId");
+                writer.WriteStringValue(PrimaryUserAssignedIdentityId);
+            }
+            if (Optional.IsDefined(FederatedClientId))
+            {
+                writer.WritePropertyName("federatedClientId");
+                writer.WriteStringValue(FederatedClientId.Value);
+            }
+            if (Optional.IsDefined(KeyId))
+            {
+                writer.WritePropertyName("keyId");
+                writer.WriteStringValue(KeyId);
+            }
+            if (Optional.IsDefined(Administrators))
+            {
+                writer.WritePropertyName("administrators");
+                writer.WriteObjectValue(Administrators);
+            }
+            if (Optional.IsDefined(RestrictOutboundNetworkAccess))
+            {
+                writer.WritePropertyName("restrictOutboundNetworkAccess");
+                writer.WriteStringValue(RestrictOutboundNetworkAccess.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

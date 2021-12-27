@@ -23,6 +23,17 @@ namespace Azure.ResourceManager.Storage
         }
         #endregion
 
+        #region DeletedAccount
+        /// <summary> Gets an object representing a DeletedAccount along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DeletedAccount" /> object. </returns>
+        public static DeletedAccount GetDeletedAccount(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DeletedAccount(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
         #region ManagementPolicy
         /// <summary> Gets an object representing a ManagementPolicy along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -97,6 +108,17 @@ namespace Azure.ResourceManager.Storage
         public static BlobContainer GetBlobContainer(this ArmClient armClient, ResourceIdentifier id)
         {
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new BlobContainer(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region ImmutabilityPolicy
+        /// <summary> Gets an object representing a ImmutabilityPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ImmutabilityPolicy" /> object. </returns>
+        public static ImmutabilityPolicy GetImmutabilityPolicy(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ImmutabilityPolicy(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 

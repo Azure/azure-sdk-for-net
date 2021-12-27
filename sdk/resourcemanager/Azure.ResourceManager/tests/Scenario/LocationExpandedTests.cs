@@ -20,7 +20,12 @@ namespace Azure.ResourceManager.Tests
             {
                 Assert.IsNotNull(loc.Metadata);
                 Assert.IsNotNull(loc.SubscriptionId);
-                Assert.IsNotNull(loc.CanonicalName);
+                Assert.IsNotNull(loc.RegionalDisplayName);
+
+                Location locStruct = loc;
+
+                Assert.AreEqual(loc.Name, locStruct.Name);
+                Assert.AreEqual(loc.DisplayName, locStruct.DisplayName);
             }
         }
     }

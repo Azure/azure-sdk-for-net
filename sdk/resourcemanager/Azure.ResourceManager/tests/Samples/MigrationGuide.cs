@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Tests.Samples
 
             #region Snippet:Create_NetworkInterface
             string nicName = vmName + "_nic";
-            NetworkInterfaceIPConfiguration nicIPConfig = new NetworkInterfaceIPConfiguration()
+            NetworkInterfaceIPConfigurationData nicIPConfig = new NetworkInterfaceIPConfigurationData()
             {
                 Name = "Primary",
                 Primary = true,
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Tests.Samples
             vmData.OsProfile.AdminUsername = "admin-username";
             vmData.OsProfile.AdminPassword = "admin-p4$$w0rd";
             vmData.OsProfile.ComputerName = "computer-name";
-            //vmData.AvailabilitySet = new WritableSubResource(); // Uncomment when package is updated
+            vmData.AvailabilitySet = new WritableSubResource();
             vmData.AvailabilitySet.Id = aset.Id;
             NetworkInterfaceReference nicReference = new NetworkInterfaceReference();
             nicReference.Id = nic.Id;

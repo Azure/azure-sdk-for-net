@@ -9,7 +9,7 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Azure Storage management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-Install-Package Azure.ResourceManager.Storage -Version 1.0.0-beta.3
+Install-Package Azure.ResourceManager.Storage -Version 1.0.0-beta.5
 ```
 
 ### Prerequisites
@@ -102,7 +102,7 @@ if (storageAccount != null)
 {
     Console.WriteLine(storageAccount.Id.Name);
 }
-if (await accountCollection.CheckIfExistsAsync("bar"))
+if (await accountCollection.ExistsAsync("bar"))
 {
     Console.WriteLine("storage account 'bar' exists");
 }

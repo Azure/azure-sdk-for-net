@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Tests
             var ipLro = await rg.GetPublicIPAddresses().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("ip-"), ipData);
             _publicIPAddressIdentifier = ipLro.Value.Id;
             _bastionName = SessionRecording.GenerateAssetName("bastion-");
-            StopSessionRecording();
+            await StopSessionRecordingAsync();
         }
 
         [SetUp]
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Tests
         [TearDown]
         public async Task TestTearDown()
         {
-            if (_resourceGroup.GetBastionHosts().CheckIfExists(_bastionName))
+            if (_resourceGroup.GetBastionHosts().Exists(_bastionName))
             {
                 BastionHost bastion = await _resourceGroup.GetBastionHosts().GetAsync(_bastionName);
                 await bastion.DeleteAsync();
@@ -127,11 +127,11 @@ namespace Azure.ResourceManager.Network.Tests
 
         [Test]
         [RecordedTest]
-        public async Task CheckIfExists()
+        public async Task Exists()
         {
             BastionHost bastionHost = await CreateBastionHost(_bastionName);
-            Assert.IsTrue(_resourceGroup.GetBastionHosts().CheckIfExists(_bastionName));
-            Assert.IsFalse(_resourceGroup.GetBastionHosts().CheckIfExists(_bastionName + "1"));
+            Assert.IsTrue(_resourceGroup.GetBastionHosts().Exists(_bastionName));
+            Assert.IsFalse(_resourceGroup.GetBastionHosts().Exists(_bastionName + "1"));
         }
 
         [Test]

@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -18,11 +16,11 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing collection of RestorePoint and their operations over a RestorePointGroup. </summary>
+    /// <summary> A class representing collection of RestorePoint and their operations over its parent. </summary>
     public partial class RestorePointCollection : ArmCollection
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly RestorePointsRestOperations _restClient;
+        private readonly RestorePointsRestOperations _restorePointsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="RestorePointCollection"/> class for mocking. </summary>
         protected RestorePointCollection()
@@ -34,7 +32,7 @@ namespace Azure.ResourceManager.Compute
         internal RestorePointCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new RestorePointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _restorePointsRestClient = new RestorePointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -63,8 +61,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.Create(Id.ResourceGroupName, Id.Name, restorePointName, parameters, cancellationToken);
-                var operation = new RestorePointCreateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateRequest(Id.ResourceGroupName, Id.Name, restorePointName, parameters).Request, response);
+                var response = _restorePointsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, parameters, cancellationToken);
+                var operation = new RestorePointCreateOperation(Parent, _clientDiagnostics, Pipeline, _restorePointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -97,8 +95,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.CreateAsync(Id.ResourceGroupName, Id.Name, restorePointName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new RestorePointCreateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateRequest(Id.ResourceGroupName, Id.Name, restorePointName, parameters).Request, response);
+                var response = await _restorePointsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new RestorePointCreateOperation(Parent, _clientDiagnostics, Pipeline, _restorePointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -110,21 +108,22 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> The operation to get the restore point. </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
         public virtual Response<RestorePoint> Get(string restorePointName, CancellationToken cancellationToken = default)
         {
+            if (restorePointName == null)
+            {
+                throw new ArgumentNullException(nameof(restorePointName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.Get");
             scope.Start();
             try
             {
-                if (restorePointName == null)
-                {
-                    throw new ArgumentNullException(nameof(restorePointName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken: cancellationToken);
+                var response = _restorePointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RestorePoint(Parent, response.Value), response.GetRawResponse());
@@ -136,21 +135,22 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> The operation to get the restore point. </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
         public async virtual Task<Response<RestorePoint>> GetAsync(string restorePointName, CancellationToken cancellationToken = default)
         {
+            if (restorePointName == null)
+            {
+                throw new ArgumentNullException(nameof(restorePointName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.Get");
             scope.Start();
             try
             {
-                if (restorePointName == null)
-                {
-                    throw new ArgumentNullException(nameof(restorePointName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _restorePointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new RestorePoint(Parent, response.Value), response.GetRawResponse());
@@ -164,19 +164,20 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
         public virtual Response<RestorePoint> GetIfExists(string restorePointName, CancellationToken cancellationToken = default)
         {
+            if (restorePointName == null)
+            {
+                throw new ArgumentNullException(nameof(restorePointName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (restorePointName == null)
-                {
-                    throw new ArgumentNullException(nameof(restorePointName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken: cancellationToken);
+                var response = _restorePointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<RestorePoint>(null, response.GetRawResponse())
                     : Response.FromValue(new RestorePoint(this, response.Value), response.GetRawResponse());
@@ -190,19 +191,20 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
         public async virtual Task<Response<RestorePoint>> GetIfExistsAsync(string restorePointName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.GetIfExists");
+            if (restorePointName == null)
+            {
+                throw new ArgumentNullException(nameof(restorePointName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (restorePointName == null)
-                {
-                    throw new ArgumentNullException(nameof(restorePointName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _restorePointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<RestorePoint>(null, response.GetRawResponse())
                     : Response.FromValue(new RestorePoint(this, response.Value), response.GetRawResponse());
@@ -216,18 +218,19 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<bool> CheckIfExists(string restorePointName, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
+        public virtual Response<bool> Exists(string restorePointName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.CheckIfExists");
+            if (restorePointName == null)
+            {
+                throw new ArgumentNullException(nameof(restorePointName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.Exists");
             scope.Start();
             try
             {
-                if (restorePointName == null)
-                {
-                    throw new ArgumentNullException(nameof(restorePointName));
-                }
-
                 var response = GetIfExists(restorePointName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -240,18 +243,19 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string restorePointName, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
+        public async virtual Task<Response<bool>> ExistsAsync(string restorePointName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.CheckIfExists");
+            if (restorePointName == null)
+            {
+                throw new ArgumentNullException(nameof(restorePointName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.ExistsAsync");
             scope.Start();
             try
             {
-                if (restorePointName == null)
-                {
-                    throw new ArgumentNullException(nameof(restorePointName));
-                }
-
                 var response = await GetIfExistsAsync(restorePointName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -263,6 +267,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, RestorePoint, RestorePointData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, RestorePoint, RestorePointData> Construct() { }
     }
 }

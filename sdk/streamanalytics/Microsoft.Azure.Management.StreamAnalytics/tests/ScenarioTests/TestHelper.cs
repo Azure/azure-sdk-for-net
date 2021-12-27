@@ -12,7 +12,7 @@ namespace StreamAnalytics.Tests
 {
     public static class TestHelper
     {
-        public const string DefaultLocation = "West US";
+        public const string DefaultLocation = "West Europe";
 
         public const string ResourceIdFormat =
             "/subscriptions/{0}/resourceGroups/{1}/providers/" + ResourceProviderNamespace + "/{2}/{3}";
@@ -127,9 +127,9 @@ namespace StreamAnalytics.Tests
                         { "key3", "value3" }
                     },
                 Location = TestHelper.DefaultLocation,
-                Sku = new StreamingJobSku()
+                Sku = new Sku()
                 {
-                    Name = StreamingJobSkuName.Standard
+                    Name = SkuName.Standard
                 }
             };
         }

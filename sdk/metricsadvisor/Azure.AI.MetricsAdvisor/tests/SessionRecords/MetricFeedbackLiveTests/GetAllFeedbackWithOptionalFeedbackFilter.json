@@ -25,8 +25,8 @@
           }
         },
         "feedbackType": "Anomaly",
-        "startTime": "2021-10-01T00:00:00Z",
-        "endTime": "2021-11-20T00:00:00Z",
+        "startTime": "2021-10-01T00:00:00.0000000Z",
+        "endTime": "2021-11-20T00:00:00.0000000Z",
         "timeMode": "FeedbackCreatedTime"
       },
       "StatusCode": 200,
@@ -53,8 +53,8 @@
               }
             },
             "feedbackType": "Anomaly",
-            "startTime": "2020-02-01T00:00:00Z",
-            "endTime": "2020-02-03T00:00:00Z",
+            "startTime": "2020-02-01T00:00:00.0000000Z",
+            "endTime": "2020-02-03T00:00:00.0000000Z",
             "value": {
               "anomalyValue": "NotAnomaly"
             }
@@ -70,8 +70,8 @@
               }
             },
             "feedbackType": "Anomaly",
-            "startTime": "2020-02-01T00:00:00Z",
-            "endTime": "2020-02-03T00:00:00Z",
+            "startTime": "2020-02-01T00:00:00.0000000Z",
+            "endTime": "2020-02-03T00:00:00.0000000Z",
             "value": {
               "anomalyValue": "NotAnomaly"
             }
@@ -87,8 +87,8 @@
               }
             },
             "feedbackType": "Anomaly",
-            "startTime": "2020-02-01T00:00:00Z",
-            "endTime": "2020-02-03T00:00:00Z",
+            "startTime": "2020-02-01T00:00:00.0000000Z",
+            "endTime": "2020-02-03T00:00:00.0000000Z",
             "value": {
               "anomalyValue": "NotAnomaly"
             }
@@ -104,8 +104,8 @@
               }
             },
             "feedbackType": "Anomaly",
-            "startTime": "2020-02-01T00:00:00Z",
-            "endTime": "2020-02-03T00:00:00Z",
+            "startTime": "2020-02-01T00:00:00.0000000Z",
+            "endTime": "2020-02-03T00:00:00.0000000Z",
             "value": {
               "anomalyValue": "NotAnomaly"
             }

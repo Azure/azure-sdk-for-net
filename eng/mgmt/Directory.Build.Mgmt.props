@@ -3,6 +3,7 @@
     <PkgVersion>0.12.0-dev.20210827.1</PkgVersion>
     <PkgLocalDir>$(NuGetPackageRoot)\microsoft.internal.netsdkbuild.mgmt.tools\$(PkgVersion)\Sdk</PkgLocalDir>
     <SymbolPackageFormat>symbols.nupkg</SymbolPackageFormat>
+    <NoWarn>$(NoWarn);NETSDK1138</NoWarn>
   </PropertyGroup>
 
   <!-- during execution of tasks tests, this conditional import will satisfy the import resolution. And you will have to manually execute a target to restore the package

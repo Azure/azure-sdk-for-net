@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Tests
             // create
             DdosProtectionPlan ddosProtectionPlan = await container.CreateOrUpdate(name, new DdosProtectionPlanData(TestEnvironment.Location)).WaitForCompletionAsync();
 
-            Assert.True(await container.CheckIfExistsAsync(name));
+            Assert.True(await container.ExistsAsync(name));
 
             var ddosProtectionPlanData = ddosProtectionPlan.Data;
             ValidateCommon(ddosProtectionPlanData, name);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Tests
             // patch
             var tags = new TagsObject();
             tags.Tags.Add("tag2", "value2");
-            ddosProtectionPlan = await ddosProtectionPlan.UpdateTagsAsync(tags);
+            ddosProtectionPlan = await ddosProtectionPlan.UpdateAsync(tags);
             ddosProtectionPlanData = ddosProtectionPlan.Data;
 
             ValidateCommon(ddosProtectionPlanData, name);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Tests
             // delete
             await ddosProtectionPlan.DeleteAsync();
 
-            Assert.False(await container.CheckIfExistsAsync(name));
+            Assert.False(await container.ExistsAsync(name));
 
             ddosProtectionPlans = await container.GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(ddosProtectionPlans);

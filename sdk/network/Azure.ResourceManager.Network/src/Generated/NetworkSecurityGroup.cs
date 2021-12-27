@@ -22,10 +22,15 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a NetworkSecurityGroup along with the instance operations that can be performed on it. </summary>
     public partial class NetworkSecurityGroup : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="NetworkSecurityGroup"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkSecurityGroupName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly NetworkSecurityGroupsRestOperations _restClient;
+        private readonly NetworkSecurityGroupsRestOperations _networkSecurityGroupsRestClient;
         private readonly NetworkSecurityGroupData _data;
-        private DefaultSecurityRulesRestOperations _defaultSecurityRulesRestClient { get; }
 
         /// <summary> Initializes a new instance of the <see cref="NetworkSecurityGroup"/> class for mocking. </summary>
         protected NetworkSecurityGroup()
@@ -35,13 +40,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "NetworkSecurityGroup"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal NetworkSecurityGroup(ArmResource options, NetworkSecurityGroupData resource) : base(options, resource.Id)
+        internal NetworkSecurityGroup(ArmResource options, NetworkSecurityGroupData resource) : base(options, new ResourceIdentifier(resource.Id))
         {
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new NetworkSecurityGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _defaultSecurityRulesRestClient = new DefaultSecurityRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _networkSecurityGroupsRestClient = new NetworkSecurityGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="NetworkSecurityGroup"/> class. </summary>
@@ -50,8 +54,7 @@ namespace Azure.ResourceManager.Network
         internal NetworkSecurityGroup(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new NetworkSecurityGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _defaultSecurityRulesRestClient = new DefaultSecurityRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _networkSecurityGroupsRestClient = new NetworkSecurityGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="NetworkSecurityGroup"/> class. </summary>
@@ -63,8 +66,7 @@ namespace Azure.ResourceManager.Network
         internal NetworkSecurityGroup(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new NetworkSecurityGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _defaultSecurityRulesRestClient = new DefaultSecurityRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _networkSecurityGroupsRestClient = new NetworkSecurityGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -97,7 +99,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _networkSecurityGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new NetworkSecurityGroup(this, response.Value), response.GetRawResponse());
@@ -118,7 +120,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, expand, cancellationToken);
+                var response = _networkSecurityGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkSecurityGroup(this, response.Value), response.GetRawResponse());
@@ -155,8 +157,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkSecurityGroupDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _networkSecurityGroupsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkSecurityGroupDeleteOperation(_clientDiagnostics, Pipeline, _networkSecurityGroupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -177,8 +179,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkSecurityGroupDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _networkSecurityGroupsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new NetworkSecurityGroupDeleteOperation(_clientDiagnostics, Pipeline, _networkSecurityGroupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -189,22 +191,23 @@ namespace Azure.ResourceManager.Network
                 throw;
             }
         }
+
         /// <summary> Updates a network security group tags. </summary>
         /// <param name="parameters"> Parameters supplied to update network security group tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response<NetworkSecurityGroup>> UpdateTagsAsync(TagsObject parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<NetworkSecurityGroup>> UpdateAsync(TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroup.UpdateTags");
+            using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroup.Update");
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _networkSecurityGroupsRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new NetworkSecurityGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -218,18 +221,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters supplied to update network security group tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<NetworkSecurityGroup> UpdateTags(TagsObject parameters, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkSecurityGroup> Update(TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroup.UpdateTags");
+            using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroup.Update");
             scope.Start();
             try
             {
-                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var response = _networkSecurityGroupsRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
                 return Response.FromValue(new NetworkSecurityGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -239,123 +242,24 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Get the specified default network security rule. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SecurityRuleData>> GetDefaultSecurityRuleAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroup.GetDefaultSecurityRule");
-            scope.Start();
-            try
-            {
-                var response = await _defaultSecurityRulesRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        #region SecurityRule
 
-        /// <summary> Get the specified default network security rule. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SecurityRuleData> GetDefaultSecurityRule(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroup.GetDefaultSecurityRule");
-            scope.Start();
-            try
-            {
-                var response = _defaultSecurityRulesRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets all default security rules in a network security group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityRuleData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecurityRuleData> GetDefaultSecurityRules(CancellationToken cancellationToken = default)
-        {
-            Page<SecurityRuleData> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroup.GetDefaultSecurityRules");
-                scope.Start();
-                try
-                {
-                    var response = _defaultSecurityRulesRestClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SecurityRuleData> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroup.GetDefaultSecurityRules");
-                scope.Start();
-                try
-                {
-                    var response = _defaultSecurityRulesRestClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets all default security rules in a network security group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityRuleData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecurityRuleData> GetDefaultSecurityRulesAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<SecurityRuleData>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroup.GetDefaultSecurityRules");
-                scope.Start();
-                try
-                {
-                    var response = await _defaultSecurityRulesRestClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SecurityRuleData>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroup.GetDefaultSecurityRules");
-                scope.Start();
-                try
-                {
-                    var response = await _defaultSecurityRulesRestClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets a list of SecurityRules in the NetworkSecurityGroup. </summary>
+        /// <summary> Gets a collection of SecurityRules in the NetworkSecurityGroup. </summary>
         /// <returns> An object representing collection of SecurityRules and their operations over a NetworkSecurityGroup. </returns>
         public SecurityRuleCollection GetSecurityRules()
         {
             return new SecurityRuleCollection(this);
         }
+        #endregion
+
+        #region DefaultSecurityRule
+
+        /// <summary> Gets a collection of DefaultSecurityRules in the NetworkSecurityGroup. </summary>
+        /// <returns> An object representing collection of DefaultSecurityRules and their operations over a NetworkSecurityGroup. </returns>
+        public DefaultSecurityRuleCollection GetDefaultSecurityRules()
+        {
+            return new DefaultSecurityRuleCollection(this);
+        }
+        #endregion
     }
 }

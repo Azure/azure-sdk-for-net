@@ -21,11 +21,12 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of BastionHost and their operations over a ResourceGroup. </summary>
+    /// <summary> A class representing collection of BastionHost and their operations over its parent. </summary>
     public partial class BastionHostCollection : ArmCollection, IEnumerable<BastionHost>, IAsyncEnumerable<BastionHost>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly BastionHostsRestOperations _restClient;
+        private readonly BastionHostsRestOperations _bastionHostsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="BastionHostCollection"/> class for mocking. </summary>
         protected BastionHostCollection()
@@ -37,22 +38,7 @@ namespace Azure.ResourceManager.Network
         internal BastionHostCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new BastionHostsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        IEnumerator<BastionHost> IEnumerable<BastionHost>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<BastionHost> IAsyncEnumerable<BastionHost>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            _bastionHostsRestClient = new BastionHostsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -81,8 +67,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, bastionHostName, parameters, cancellationToken);
-                var operation = new BastionHostCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, bastionHostName, parameters).Request, response);
+                var response = _bastionHostsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, bastionHostName, parameters, cancellationToken);
+                var operation = new BastionHostCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _bastionHostsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, bastionHostName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -115,8 +101,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, bastionHostName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new BastionHostCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, bastionHostName, parameters).Request, response);
+                var response = await _bastionHostsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, bastionHostName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new BastionHostCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _bastionHostsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, bastionHostName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -128,21 +114,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the specified Bastion Host. </summary>
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> is null. </exception>
         public virtual Response<BastionHost> Get(string bastionHostName, CancellationToken cancellationToken = default)
         {
+            if (bastionHostName == null)
+            {
+                throw new ArgumentNullException(nameof(bastionHostName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("BastionHostCollection.Get");
             scope.Start();
             try
             {
-                if (bastionHostName == null)
-                {
-                    throw new ArgumentNullException(nameof(bastionHostName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, bastionHostName, cancellationToken: cancellationToken);
+                var response = _bastionHostsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, bastionHostName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new BastionHost(Parent, response.Value), response.GetRawResponse());
@@ -154,21 +141,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the specified Bastion Host. </summary>
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> is null. </exception>
         public async virtual Task<Response<BastionHost>> GetAsync(string bastionHostName, CancellationToken cancellationToken = default)
         {
+            if (bastionHostName == null)
+            {
+                throw new ArgumentNullException(nameof(bastionHostName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("BastionHostCollection.Get");
             scope.Start();
             try
             {
-                if (bastionHostName == null)
-                {
-                    throw new ArgumentNullException(nameof(bastionHostName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, bastionHostName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _bastionHostsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, bastionHostName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new BastionHost(Parent, response.Value), response.GetRawResponse());
@@ -182,19 +170,20 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> is null. </exception>
         public virtual Response<BastionHost> GetIfExists(string bastionHostName, CancellationToken cancellationToken = default)
         {
+            if (bastionHostName == null)
+            {
+                throw new ArgumentNullException(nameof(bastionHostName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("BastionHostCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (bastionHostName == null)
-                {
-                    throw new ArgumentNullException(nameof(bastionHostName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, bastionHostName, cancellationToken: cancellationToken);
+                var response = _bastionHostsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, bastionHostName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<BastionHost>(null, response.GetRawResponse())
                     : Response.FromValue(new BastionHost(this, response.Value), response.GetRawResponse());
@@ -208,19 +197,20 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> is null. </exception>
         public async virtual Task<Response<BastionHost>> GetIfExistsAsync(string bastionHostName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("BastionHostCollection.GetIfExists");
+            if (bastionHostName == null)
+            {
+                throw new ArgumentNullException(nameof(bastionHostName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("BastionHostCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (bastionHostName == null)
-                {
-                    throw new ArgumentNullException(nameof(bastionHostName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, bastionHostName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _bastionHostsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, bastionHostName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<BastionHost>(null, response.GetRawResponse())
                     : Response.FromValue(new BastionHost(this, response.Value), response.GetRawResponse());
@@ -234,18 +224,19 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<bool> CheckIfExists(string bastionHostName, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> is null. </exception>
+        public virtual Response<bool> Exists(string bastionHostName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("BastionHostCollection.CheckIfExists");
+            if (bastionHostName == null)
+            {
+                throw new ArgumentNullException(nameof(bastionHostName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("BastionHostCollection.Exists");
             scope.Start();
             try
             {
-                if (bastionHostName == null)
-                {
-                    throw new ArgumentNullException(nameof(bastionHostName));
-                }
-
                 var response = GetIfExists(bastionHostName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -258,18 +249,19 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string bastionHostName, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> is null. </exception>
+        public async virtual Task<Response<bool>> ExistsAsync(string bastionHostName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("BastionHostCollection.CheckIfExists");
+            if (bastionHostName == null)
+            {
+                throw new ArgumentNullException(nameof(bastionHostName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("BastionHostCollection.ExistsAsync");
             scope.Start();
             try
             {
-                if (bastionHostName == null)
-                {
-                    throw new ArgumentNullException(nameof(bastionHostName));
-                }
-
                 var response = await GetIfExistsAsync(bastionHostName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -291,7 +283,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _bastionHostsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new BastionHost(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -306,7 +298,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _bastionHostsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new BastionHost(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -329,7 +321,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _bastionHostsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new BastionHost(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -344,7 +336,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _bastionHostsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new BastionHost(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -402,7 +394,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        IEnumerator<BastionHost> IEnumerable<BastionHost>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<BastionHost> IAsyncEnumerable<BastionHost>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, BastionHost, BastionHostData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, BastionHost, BastionHostData> Construct() { }
     }
 }

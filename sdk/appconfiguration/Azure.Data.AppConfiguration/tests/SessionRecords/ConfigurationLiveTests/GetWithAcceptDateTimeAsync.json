@@ -66,7 +66,6 @@
         "Accept": "application/vnd.microsoft.appconfig.kv\u002Bjson",
         "Accept-Datetime": "Fri, 31 Dec 9999 23:59:59 GMT",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "Date": "Mon, 08 Feb 2021 19:13:53 GMT",
         "Sync-Token": "zAJw6V16=MDozIzY4NzE0NTg=",
         "traceparent": "00-e87dc3f2e6cda44ea0d97bc80100e7ad-0a5fdaec9083be4f-00",
