@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.5 (2021-12-24)
+## 1.0.0-beta.5 (2021-12-27)
 
 ### Features Added
 
@@ -13,7 +13,7 @@
 
 ### Bugs Fixed
 
-- Fixed commments for `FirstPageFunc` of each pagable resource class
+- Fixed comments for `FirstPageFunc` of each pageable resource class
 
 ## 1.0.0-beta.4 (2021-12-07)
 

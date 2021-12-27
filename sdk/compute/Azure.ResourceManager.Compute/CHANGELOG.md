@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.5 (2021-12-24)
+## 1.0.0-beta.5 (2021-12-27)
 
 ### Features Added
 
@@ -10,10 +10,19 @@
 
 - Renamed `CheckIfExists` to `Exists` for each resource class
 - Renamed `Get{Resource}ByName` to `Get{Resource}AsGenericResources` in SubscriptionExtension
+- Constructor of `OSFamilyCollection`, `OSVersionCollection` no longer accept `location` as their first parameter
+- Constructor of `VirtualMachineExtensionImageCollection` no longer accepts `location` and `publisher` as its first two parameters
+- Method `GetOSFamilies` and `GetOSVersions` in SubscriptionExtensions now accept an extra parameter `location`
+- Method `GetVirtualMachineExtensionImages` in SubscriptionExtensions now accepts two extra parameters `location` and `publisher`
 
 ### Bugs Fixed
 
-- Fixed commments for `FirstPageFunc` of each pagable resource class
+- Fixed comments for `FirstPageFunc` of each pageable resource class
+
+### Features Added
+
+- Class `OSFamilyCollection` and `OSVersionCollection` now implement the `IEnumerable<T>` and `IAsyncEnumerable<T>`
+- Class `VirtualMachineExtensionImageCollection` now implements the `IEnumerable<T>`
 
 ## 1.0.0-beta.4 (2021-12-07)
 
