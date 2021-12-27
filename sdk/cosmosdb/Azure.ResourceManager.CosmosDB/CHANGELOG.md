@@ -4,9 +4,19 @@
 
 ### Features Added
 
+- Added `CreateResourceIdentifier` for each resource class
+
 ### Breaking Changes
 
+- Renamed `CheckIfExists` to `Exists` for each resource collection class
+- Renamed `Get{Resource}ByName` to `Get{Resource}AsGenericResources` in `SubscriptionExtensions`
+- Constructor of `RestorableDatabaseAccountCollection` no longer accepts `location` as its first parameter.
+- Method `GetRestorableDatabaseAccounts` in `SubscriptionExtensions` now accepts an extra parameter `location`.
+- Class `RestorableDatabaseAccountCollection` now implements `IEnumerable<T>` and `IAsyncEnumerable<T>`
+
 ### Bugs Fixed
+
+- Fixed comments for `FirstPageFunc` of each pageable resource class
 
 ### Other Changes
 
