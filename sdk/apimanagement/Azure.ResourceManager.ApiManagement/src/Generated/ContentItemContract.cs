@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary> A Class representing a ContentItemContract along with the instance operations that can be performed on it. </summary>
     public partial class ContentItemContract : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ContentItemContract"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ContentItemRestOperations _contentItemRestClient;
         private readonly ContentItemContractData _data;

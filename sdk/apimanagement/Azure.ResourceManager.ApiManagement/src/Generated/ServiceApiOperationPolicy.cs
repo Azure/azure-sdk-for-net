@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary> A Class representing a ServiceApiOperationPolicy along with the instance operations that can be performed on it. </summary>
     public partial class ServiceApiOperationPolicy : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ServiceApiOperationPolicy"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string operationId, string policyId)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/policies/{policyId}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ApiOperationPolicyRestOperations _apiOperationPolicyRestClient;
         private readonly PolicyContractData _data;

@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary> A Class representing a UserContract along with the instance operations that can be performed on it. </summary>
     public partial class UserContract : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="UserContract"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string userId)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly UserRestOperations _userRestClient;
         private readonly UserGroupRestOperations _userGroupRestClient;

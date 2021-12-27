@@ -227,14 +227,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="opid"> Identifier of the OpenID Connect Provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="opid"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string opid, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string opid, CancellationToken cancellationToken = default)
         {
             if (opid == null)
             {
                 throw new ArgumentNullException(nameof(opid));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OpenidConnectProviderContractCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("OpenidConnectProviderContractCollection.Exists");
             scope.Start();
             try
             {
@@ -252,14 +252,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="opid"> Identifier of the OpenID Connect Provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="opid"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string opid, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string opid, CancellationToken cancellationToken = default)
         {
             if (opid == null)
             {
                 throw new ArgumentNullException(nameof(opid));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OpenidConnectProviderContractCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("OpenidConnectProviderContractCollection.ExistsAsync");
             scope.Start();
             try
             {

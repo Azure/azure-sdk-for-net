@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="portalRevisionId"> Portal revision identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="portalRevisionId"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string portalRevisionId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string portalRevisionId, CancellationToken cancellationToken = default)
         {
             if (portalRevisionId == null)
             {
                 throw new ArgumentNullException(nameof(portalRevisionId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PortalRevisionContractCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("PortalRevisionContractCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="portalRevisionId"> Portal revision identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="portalRevisionId"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string portalRevisionId, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string portalRevisionId, CancellationToken cancellationToken = default)
         {
             if (portalRevisionId == null)
             {
                 throw new ArgumentNullException(nameof(portalRevisionId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PortalRevisionContractCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PortalRevisionContractCollection.ExistsAsync");
             scope.Start();
             try
             {

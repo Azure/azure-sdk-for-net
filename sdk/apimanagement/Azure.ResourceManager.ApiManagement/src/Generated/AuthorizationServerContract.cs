@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary> A Class representing a AuthorizationServerContract along with the instance operations that can be performed on it. </summary>
     public partial class AuthorizationServerContract : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="AuthorizationServerContract"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string authsid)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AuthorizationServerRestOperations _authorizationServerRestClient;
         private readonly AuthorizationServerContractData _data;

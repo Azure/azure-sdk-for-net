@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary> A Class representing a ServiceSubscription along with the instance operations that can be performed on it. </summary>
     public partial class ServiceSubscription : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ServiceSubscription"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string sid)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/subscriptions/{sid}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SubscriptionRestOperations _subscriptionRestClient;
         private readonly SubscriptionContractData _data;

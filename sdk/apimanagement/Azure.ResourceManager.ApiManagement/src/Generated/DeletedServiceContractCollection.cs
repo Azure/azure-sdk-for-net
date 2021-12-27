@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="serviceName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string location, string serviceName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string location, string serviceName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ApiManagement
                 throw new ArgumentNullException(nameof(serviceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedServiceContractCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("DeletedServiceContractCollection.Exists");
             scope.Start();
             try
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="serviceName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string location, string serviceName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string location, string serviceName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.ApiManagement
                 throw new ArgumentNullException(nameof(serviceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedServiceContractCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeletedServiceContractCollection.ExistsAsync");
             scope.Start();
             try
             {

@@ -202,9 +202,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> CheckIfExists(AccessIdName accessName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(AccessIdName accessName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AccessInformationContractCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("AccessInformationContractCollection.Exists");
             scope.Start();
             try
             {
@@ -221,9 +221,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(AccessIdName accessName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(AccessIdName accessName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AccessInformationContractCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AccessInformationContractCollection.ExistsAsync");
             scope.Start();
             try
             {

@@ -227,14 +227,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="hcId"> Gateway hostname configuration identifier. Must be unique in the scope of parent Gateway entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hcId"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string hcId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string hcId, CancellationToken cancellationToken = default)
         {
             if (hcId == null)
             {
                 throw new ArgumentNullException(nameof(hcId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GatewayHostnameConfigurationContractCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("GatewayHostnameConfigurationContractCollection.Exists");
             scope.Start();
             try
             {
@@ -252,14 +252,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="hcId"> Gateway hostname configuration identifier. Must be unique in the scope of parent Gateway entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hcId"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string hcId, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string hcId, CancellationToken cancellationToken = default)
         {
             if (hcId == null)
             {
                 throw new ArgumentNullException(nameof(hcId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GatewayHostnameConfigurationContractCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("GatewayHostnameConfigurationContractCollection.ExistsAsync");
             scope.Start();
             try
             {

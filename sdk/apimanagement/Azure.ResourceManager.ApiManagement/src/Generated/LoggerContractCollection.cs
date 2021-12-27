@@ -227,14 +227,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="loggerId"> Logger identifier. Must be unique in the API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string loggerId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string loggerId, CancellationToken cancellationToken = default)
         {
             if (loggerId == null)
             {
                 throw new ArgumentNullException(nameof(loggerId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("LoggerContractCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("LoggerContractCollection.Exists");
             scope.Start();
             try
             {
@@ -252,14 +252,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="loggerId"> Logger identifier. Must be unique in the API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string loggerId, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string loggerId, CancellationToken cancellationToken = default)
         {
             if (loggerId == null)
             {
                 throw new ArgumentNullException(nameof(loggerId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("LoggerContractCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("LoggerContractCollection.ExistsAsync");
             scope.Start();
             try
             {

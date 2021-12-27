@@ -227,14 +227,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="attachmentId"> Attachment identifier within an Issue. Must be unique in the current Issue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="attachmentId"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string attachmentId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string attachmentId, CancellationToken cancellationToken = default)
         {
             if (attachmentId == null)
             {
                 throw new ArgumentNullException(nameof(attachmentId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("IssueAttachmentContractCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("IssueAttachmentContractCollection.Exists");
             scope.Start();
             try
             {
@@ -252,14 +252,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="attachmentId"> Attachment identifier within an Issue. Must be unique in the current Issue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="attachmentId"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string attachmentId, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string attachmentId, CancellationToken cancellationToken = default)
         {
             if (attachmentId == null)
             {
                 throw new ArgumentNullException(nameof(attachmentId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("IssueAttachmentContractCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("IssueAttachmentContractCollection.ExistsAsync");
             scope.Start();
             try
             {

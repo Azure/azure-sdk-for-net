@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary> A Class representing a GroupContract along with the instance operations that can be performed on it. </summary>
     public partial class GroupContract : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="GroupContract"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string groupId)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups/{groupId}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly GroupRestOperations _groupRestClient;
         private readonly GroupUserRestOperations _groupUserRestClient;

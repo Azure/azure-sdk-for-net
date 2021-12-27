@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary> A Class representing a DeletedServiceContract along with the instance operations that can be performed on it. </summary>
     public partial class DeletedServiceContract : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="DeletedServiceContract"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string serviceName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/locations/{location}/deletedservices/{serviceName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DeletedServicesRestOperations _deletedServicesRestClient;
         private readonly DeletedServiceContractData _data;

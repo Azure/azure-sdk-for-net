@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary> A Class representing a IssueAttachmentContract along with the instance operations that can be performed on it. </summary>
     public partial class IssueAttachmentContract : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="IssueAttachmentContract"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string attachmentId)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/issues/{issueId}/attachments/{attachmentId}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ApiIssueAttachmentRestOperations _apiIssueAttachmentRestClient;
         private readonly IssueAttachmentContractData _data;

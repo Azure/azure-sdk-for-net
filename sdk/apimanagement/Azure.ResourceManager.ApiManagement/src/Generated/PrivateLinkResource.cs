@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary> A Class representing a PrivateLinkResource along with the instance operations that can be performed on it. </summary>
     public partial class PrivateLinkResource : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="PrivateLinkResource"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string privateLinkSubResourceName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateLinkResources/{privateLinkSubResourceName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly PrivateEndpointConnectionRestOperations _privateEndpointConnectionRestClient;
         private readonly PrivateLinkResourceData _data;

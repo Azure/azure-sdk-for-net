@@ -227,14 +227,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value &apos;managed&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string gatewayId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string gatewayId, CancellationToken cancellationToken = default)
         {
             if (gatewayId == null)
             {
                 throw new ArgumentNullException(nameof(gatewayId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GatewayContractCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("GatewayContractCollection.Exists");
             scope.Start();
             try
             {
@@ -252,14 +252,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value &apos;managed&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string gatewayId, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string gatewayId, CancellationToken cancellationToken = default)
         {
             if (gatewayId == null)
             {
                 throw new ArgumentNullException(nameof(gatewayId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GatewayContractCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("GatewayContractCollection.ExistsAsync");
             scope.Start();
             try
             {

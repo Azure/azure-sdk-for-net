@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary> A Class representing a GatewayCertificateAuthorityContract along with the instance operations that can be performed on it. </summary>
     public partial class GatewayCertificateAuthorityContract : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="GatewayCertificateAuthorityContract"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string gatewayId, string certificateId)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/certificateAuthorities/{certificateId}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly GatewayCertificateAuthorityRestOperations _gatewayCertificateAuthorityRestClient;
         private readonly GatewayCertificateAuthorityContractData _data;

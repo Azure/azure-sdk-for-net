@@ -197,9 +197,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="policyId"> The identifier of the Policy. </param>
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> CheckIfExists(PolicyIdName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(PolicyIdName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServiceApiPolicyCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ServiceApiPolicyCollection.Exists");
             scope.Start();
             try
             {
@@ -217,9 +217,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="policyId"> The identifier of the Policy. </param>
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(PolicyIdName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(PolicyIdName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServiceApiPolicyCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServiceApiPolicyCollection.ExistsAsync");
             scope.Start();
             try
             {

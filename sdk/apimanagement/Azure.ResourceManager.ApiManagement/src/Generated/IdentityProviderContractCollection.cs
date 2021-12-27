@@ -194,9 +194,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="identityProviderName"> Identity Provider Type identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> CheckIfExists(IdentityProviderType identityProviderName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(IdentityProviderType identityProviderName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("IdentityProviderContractCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("IdentityProviderContractCollection.Exists");
             scope.Start();
             try
             {
@@ -213,9 +213,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="identityProviderName"> Identity Provider Type identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(IdentityProviderType identityProviderName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(IdentityProviderType identityProviderName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("IdentityProviderContractCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("IdentityProviderContractCollection.ExistsAsync");
             scope.Start();
             try
             {

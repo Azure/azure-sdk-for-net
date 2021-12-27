@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary> A Class representing a PortalSigninSettings along with the instance operations that can be performed on it. </summary>
     public partial class PortalSigninSettings : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="PortalSigninSettings"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/signin";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SignInSettingsRestOperations _signInSettingsRestClient;
         private readonly PortalSigninSettingsData _data;

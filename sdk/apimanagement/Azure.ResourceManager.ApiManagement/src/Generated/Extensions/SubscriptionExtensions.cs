@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApiManagement
             return new ApiManagementSkusRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
 
-        /// <summary> Lists the DeletedServiceContractDatas for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the DeletedServiceContractData for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ApiManagement
             );
         }
 
-        /// <summary> Lists the DeletedServiceContractDatas for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the DeletedServiceContractData for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetDeletedServiceContractByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetDeletedServiceContractsAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(DeletedServiceContract.ResourceType);
             filters.SubstringFilter = filter;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetDeletedServiceContractByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetDeletedServiceContractsAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(DeletedServiceContract.ResourceType);
             filters.SubstringFilter = filter;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetApiManagementServiceResourceByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetApiManagementServiceResourcesAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(ApiManagementServiceResource.ResourceType);
             filters.SubstringFilter = filter;
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetApiManagementServiceResourceByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetApiManagementServiceResourcesAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(ApiManagementServiceResource.ResourceType);
             filters.SubstringFilter = filter;

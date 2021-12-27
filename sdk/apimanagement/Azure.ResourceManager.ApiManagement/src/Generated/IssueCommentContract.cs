@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary> A Class representing a IssueCommentContract along with the instance operations that can be performed on it. </summary>
     public partial class IssueCommentContract : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="IssueCommentContract"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string commentId)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/issues/{issueId}/comments/{commentId}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ApiIssueCommentRestOperations _apiIssueCommentRestClient;
         private readonly IssueCommentContractData _data;

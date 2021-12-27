@@ -132,9 +132,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="settingsType"> The identifier of the settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> CheckIfExists(SettingsTypeName settingsType, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(SettingsTypeName settingsType, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("TenantSettingsContractCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("TenantSettingsContractCollection.Exists");
             scope.Start();
             try
             {
@@ -151,9 +151,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="settingsType"> The identifier of the settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(SettingsTypeName settingsType, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(SettingsTypeName settingsType, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("TenantSettingsContractCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("TenantSettingsContractCollection.ExistsAsync");
             scope.Start();
             try
             {

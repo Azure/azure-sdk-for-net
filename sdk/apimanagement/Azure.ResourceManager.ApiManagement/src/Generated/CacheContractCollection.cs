@@ -227,14 +227,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cacheId"> Identifier of the Cache entity. Cache identifier (should be either &apos;default&apos; or valid Azure region identifier). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cacheId"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string cacheId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string cacheId, CancellationToken cancellationToken = default)
         {
             if (cacheId == null)
             {
                 throw new ArgumentNullException(nameof(cacheId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CacheContractCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("CacheContractCollection.Exists");
             scope.Start();
             try
             {
@@ -252,14 +252,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cacheId"> Identifier of the Cache entity. Cache identifier (should be either &apos;default&apos; or valid Azure region identifier). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cacheId"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string cacheId, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string cacheId, CancellationToken cancellationToken = default)
         {
             if (cacheId == null)
             {
                 throw new ArgumentNullException(nameof(cacheId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CacheContractCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CacheContractCollection.ExistsAsync");
             scope.Start();
             try
             {

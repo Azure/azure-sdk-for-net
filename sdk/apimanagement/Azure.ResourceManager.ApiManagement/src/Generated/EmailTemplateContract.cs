@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary> A Class representing a EmailTemplateContract along with the instance operations that can be performed on it. </summary>
     public partial class EmailTemplateContract : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="EmailTemplateContract"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string templateName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/templates/{templateName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly EmailTemplateRestOperations _emailTemplateRestClient;
         private readonly EmailTemplateContractData _data;

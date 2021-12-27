@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary> A Class representing a OpenidConnectProviderContract along with the instance operations that can be performed on it. </summary>
     public partial class OpenidConnectProviderContract : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="OpenidConnectProviderContract"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string opid)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/openidConnectProviders/{opid}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly OpenIdConnectProviderRestOperations _openIdConnectProviderRestClient;
         private readonly OpenidConnectProviderContractData _data;

@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary> A Class representing a ServiceApiOperationTag along with the instance operations that can be performed on it. </summary>
     public partial class ServiceApiOperationTag : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ServiceApiOperationTag"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string operationId, string tagId)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/tags/{tagId}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly TagRestOperations _tagRestClient;
         private readonly TagContractData _data;

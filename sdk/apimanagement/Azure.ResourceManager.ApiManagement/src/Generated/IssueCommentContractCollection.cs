@@ -227,14 +227,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="commentId"> Comment identifier within an Issue. Must be unique in the current Issue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="commentId"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string commentId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string commentId, CancellationToken cancellationToken = default)
         {
             if (commentId == null)
             {
                 throw new ArgumentNullException(nameof(commentId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("IssueCommentContractCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("IssueCommentContractCollection.Exists");
             scope.Start();
             try
             {
@@ -252,14 +252,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="commentId"> Comment identifier within an Issue. Must be unique in the current Issue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="commentId"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string commentId, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string commentId, CancellationToken cancellationToken = default)
         {
             if (commentId == null)
             {
                 throw new ArgumentNullException(nameof(commentId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("IssueCommentContractCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("IssueCommentContractCollection.ExistsAsync");
             scope.Start();
             try
             {

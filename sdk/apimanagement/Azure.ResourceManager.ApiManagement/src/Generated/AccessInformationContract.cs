@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary> A Class representing a AccessInformationContract along with the instance operations that can be performed on it. </summary>
     public partial class AccessInformationContract : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="AccessInformationContract"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string accessName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{accessName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly TenantAccessRestOperations _tenantAccessRestClient;
         private readonly TenantAccessGitRestOperations _tenantAccessGitRestClient;

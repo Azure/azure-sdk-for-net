@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary> A Class representing a ServiceApiIssue along with the instance operations that can be performed on it. </summary>
     public partial class ServiceApiIssue : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ServiceApiIssue"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/issues/{issueId}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ApiIssueRestOperations _apiIssueRestClient;
         private readonly IssueContractData _data;

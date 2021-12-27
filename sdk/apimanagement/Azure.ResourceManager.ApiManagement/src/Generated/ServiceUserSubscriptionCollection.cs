@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sid"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string sid, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string sid, CancellationToken cancellationToken = default)
         {
             if (sid == null)
             {
                 throw new ArgumentNullException(nameof(sid));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceUserSubscriptionCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ServiceUserSubscriptionCollection.Exists");
             scope.Start();
             try
             {
@@ -181,14 +181,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sid"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string sid, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string sid, CancellationToken cancellationToken = default)
         {
             if (sid == null)
             {
                 throw new ArgumentNullException(nameof(sid));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceUserSubscriptionCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServiceUserSubscriptionCollection.ExistsAsync");
             scope.Start();
             try
             {

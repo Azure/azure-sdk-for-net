@@ -227,14 +227,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="tagDescriptionId"> Tag description identifier. Used when creating tagDescription for API/Tag association. Based on API and Tag names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagDescriptionId"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string tagDescriptionId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string tagDescriptionId, CancellationToken cancellationToken = default)
         {
             if (tagDescriptionId == null)
             {
                 throw new ArgumentNullException(nameof(tagDescriptionId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("TagDescriptionContractCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("TagDescriptionContractCollection.Exists");
             scope.Start();
             try
             {
@@ -252,14 +252,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="tagDescriptionId"> Tag description identifier. Used when creating tagDescription for API/Tag association. Based on API and Tag names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagDescriptionId"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string tagDescriptionId, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string tagDescriptionId, CancellationToken cancellationToken = default)
         {
             if (tagDescriptionId == null)
             {
                 throw new ArgumentNullException(nameof(tagDescriptionId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("TagDescriptionContractCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("TagDescriptionContractCollection.ExistsAsync");
             scope.Start();
             try
             {

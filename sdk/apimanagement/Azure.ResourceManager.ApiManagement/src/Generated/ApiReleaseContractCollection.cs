@@ -227,14 +227,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="releaseId"> Release identifier within an API. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="releaseId"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string releaseId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string releaseId, CancellationToken cancellationToken = default)
         {
             if (releaseId == null)
             {
                 throw new ArgumentNullException(nameof(releaseId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ApiReleaseContractCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ApiReleaseContractCollection.Exists");
             scope.Start();
             try
             {
@@ -252,14 +252,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="releaseId"> Release identifier within an API. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="releaseId"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string releaseId, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string releaseId, CancellationToken cancellationToken = default)
         {
             if (releaseId == null)
             {
                 throw new ArgumentNullException(nameof(releaseId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ApiReleaseContractCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ApiReleaseContractCollection.ExistsAsync");
             scope.Start();
             try
             {

@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary> A Class representing a NamedValueContract along with the instance operations that can be performed on it. </summary>
     public partial class NamedValueContract : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="NamedValueContract"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string namedValueId)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/namedValues/{namedValueId}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly NamedValueRestOperations _namedValueRestClient;
         private readonly NamedValueContractData _data;

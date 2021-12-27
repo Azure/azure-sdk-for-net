@@ -217,14 +217,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="contentItemId"> Content item identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentItemId"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string contentItemId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string contentItemId, CancellationToken cancellationToken = default)
         {
             if (contentItemId == null)
             {
                 throw new ArgumentNullException(nameof(contentItemId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ContentItemContractCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ContentItemContractCollection.Exists");
             scope.Start();
             try
             {
@@ -242,14 +242,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="contentItemId"> Content item identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentItemId"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string contentItemId, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string contentItemId, CancellationToken cancellationToken = default)
         {
             if (contentItemId == null)
             {
                 throw new ArgumentNullException(nameof(contentItemId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ContentItemContractCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ContentItemContractCollection.ExistsAsync");
             scope.Start();
             try
             {

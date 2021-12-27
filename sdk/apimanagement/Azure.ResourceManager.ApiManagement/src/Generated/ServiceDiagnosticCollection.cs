@@ -227,14 +227,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="diagnosticId"> Diagnostic identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticId"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string diagnosticId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string diagnosticId, CancellationToken cancellationToken = default)
         {
             if (diagnosticId == null)
             {
                 throw new ArgumentNullException(nameof(diagnosticId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceDiagnosticCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ServiceDiagnosticCollection.Exists");
             scope.Start();
             try
             {
@@ -252,14 +252,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="diagnosticId"> Diagnostic identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticId"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string diagnosticId, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string diagnosticId, CancellationToken cancellationToken = default)
         {
             if (diagnosticId == null)
             {
                 throw new ArgumentNullException(nameof(diagnosticId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceDiagnosticCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServiceDiagnosticCollection.ExistsAsync");
             scope.Start();
             try
             {

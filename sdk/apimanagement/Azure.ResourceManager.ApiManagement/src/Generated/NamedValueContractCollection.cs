@@ -227,14 +227,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="namedValueId"> Identifier of the NamedValue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="namedValueId"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string namedValueId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string namedValueId, CancellationToken cancellationToken = default)
         {
             if (namedValueId == null)
             {
                 throw new ArgumentNullException(nameof(namedValueId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NamedValueContractCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("NamedValueContractCollection.Exists");
             scope.Start();
             try
             {
@@ -252,14 +252,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="namedValueId"> Identifier of the NamedValue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="namedValueId"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string namedValueId, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string namedValueId, CancellationToken cancellationToken = default)
         {
             if (namedValueId == null)
             {
                 throw new ArgumentNullException(nameof(namedValueId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NamedValueContractCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NamedValueContractCollection.ExistsAsync");
             scope.Start();
             try
             {

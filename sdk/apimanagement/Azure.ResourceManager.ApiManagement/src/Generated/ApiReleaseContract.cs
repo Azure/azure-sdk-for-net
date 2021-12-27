@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary> A Class representing a ApiReleaseContract along with the instance operations that can be performed on it. </summary>
     public partial class ApiReleaseContract : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ApiReleaseContract"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string releaseId)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/releases/{releaseId}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ApiReleaseRestOperations _apiReleaseRestClient;
         private readonly ApiReleaseContractData _data;

@@ -227,14 +227,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="operationId"> Operation identifier within an API. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string operationId, CancellationToken cancellationToken = default)
         {
             if (operationId == null)
             {
                 throw new ArgumentNullException(nameof(operationId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OperationContractCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("OperationContractCollection.Exists");
             scope.Start();
             try
             {
@@ -252,14 +252,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="operationId"> Operation identifier within an API. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string operationId, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string operationId, CancellationToken cancellationToken = default)
         {
             if (operationId == null)
             {
                 throw new ArgumentNullException(nameof(operationId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OperationContractCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("OperationContractCollection.ExistsAsync");
             scope.Start();
             try
             {

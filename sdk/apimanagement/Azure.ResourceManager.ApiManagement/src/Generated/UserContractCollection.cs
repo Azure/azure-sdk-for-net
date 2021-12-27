@@ -229,14 +229,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="userId"> User identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string userId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string userId, CancellationToken cancellationToken = default)
         {
             if (userId == null)
             {
                 throw new ArgumentNullException(nameof(userId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("UserContractCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("UserContractCollection.Exists");
             scope.Start();
             try
             {
@@ -254,14 +254,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="userId"> User identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string userId, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string userId, CancellationToken cancellationToken = default)
         {
             if (userId == null)
             {
                 throw new ArgumentNullException(nameof(userId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("UserContractCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("UserContractCollection.ExistsAsync");
             scope.Start();
             try
             {

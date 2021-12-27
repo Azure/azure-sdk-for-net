@@ -232,14 +232,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="expandCommentsAttachments"> Expand the comment attachments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="issueId"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string issueId, bool? expandCommentsAttachments = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string issueId, bool? expandCommentsAttachments = null, CancellationToken cancellationToken = default)
         {
             if (issueId == null)
             {
                 throw new ArgumentNullException(nameof(issueId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceApiIssueCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ServiceApiIssueCollection.Exists");
             scope.Start();
             try
             {
@@ -258,14 +258,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="expandCommentsAttachments"> Expand the comment attachments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="issueId"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string issueId, bool? expandCommentsAttachments = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string issueId, bool? expandCommentsAttachments = null, CancellationToken cancellationToken = default)
         {
             if (issueId == null)
             {
                 throw new ArgumentNullException(nameof(issueId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceApiIssueCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServiceApiIssueCollection.ExistsAsync");
             scope.Start();
             try
             {

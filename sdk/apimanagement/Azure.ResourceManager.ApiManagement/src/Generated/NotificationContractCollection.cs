@@ -180,9 +180,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="notificationName"> Notification Name Identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> CheckIfExists(NotificationName notificationName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(NotificationName notificationName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NotificationContractCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("NotificationContractCollection.Exists");
             scope.Start();
             try
             {
@@ -199,9 +199,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="notificationName"> Notification Name Identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(NotificationName notificationName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(NotificationName notificationName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NotificationContractCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NotificationContractCollection.ExistsAsync");
             scope.Start();
             try
             {

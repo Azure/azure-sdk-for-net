@@ -227,14 +227,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="certificateId"> Identifier of the certificate entity. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateId"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string certificateId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string certificateId, CancellationToken cancellationToken = default)
         {
             if (certificateId == null)
             {
                 throw new ArgumentNullException(nameof(certificateId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GatewayCertificateAuthorityContractCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("GatewayCertificateAuthorityContractCollection.Exists");
             scope.Start();
             try
             {
@@ -252,14 +252,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="certificateId"> Identifier of the certificate entity. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateId"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string certificateId, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string certificateId, CancellationToken cancellationToken = default)
         {
             if (certificateId == null)
             {
                 throw new ArgumentNullException(nameof(certificateId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GatewayCertificateAuthorityContractCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("GatewayCertificateAuthorityContractCollection.ExistsAsync");
             scope.Start();
             try
             {

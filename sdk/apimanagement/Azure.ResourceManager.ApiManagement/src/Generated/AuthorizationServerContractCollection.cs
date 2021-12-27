@@ -227,14 +227,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="authsid"> Identifier of the authorization server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authsid"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string authsid, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string authsid, CancellationToken cancellationToken = default)
         {
             if (authsid == null)
             {
                 throw new ArgumentNullException(nameof(authsid));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AuthorizationServerContractCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("AuthorizationServerContractCollection.Exists");
             scope.Start();
             try
             {
@@ -252,14 +252,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="authsid"> Identifier of the authorization server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authsid"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string authsid, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string authsid, CancellationToken cancellationToken = default)
         {
             if (authsid == null)
             {
                 throw new ArgumentNullException(nameof(authsid));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AuthorizationServerContractCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AuthorizationServerContractCollection.ExistsAsync");
             scope.Start();
             try
             {

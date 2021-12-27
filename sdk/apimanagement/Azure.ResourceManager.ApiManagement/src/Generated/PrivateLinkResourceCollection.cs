@@ -154,14 +154,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="privateLinkSubResourceName"> Name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkSubResourceName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string privateLinkSubResourceName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string privateLinkSubResourceName, CancellationToken cancellationToken = default)
         {
             if (privateLinkSubResourceName == null)
             {
                 throw new ArgumentNullException(nameof(privateLinkSubResourceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -179,14 +179,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="privateLinkSubResourceName"> Name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkSubResourceName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string privateLinkSubResourceName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string privateLinkSubResourceName, CancellationToken cancellationToken = default)
         {
             if (privateLinkSubResourceName == null)
             {
                 throw new ArgumentNullException(nameof(privateLinkSubResourceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.ExistsAsync");
             scope.Start();
             try
             {

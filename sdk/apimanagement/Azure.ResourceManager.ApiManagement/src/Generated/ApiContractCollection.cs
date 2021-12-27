@@ -229,14 +229,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string apiId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string apiId, CancellationToken cancellationToken = default)
         {
             if (apiId == null)
             {
                 throw new ArgumentNullException(nameof(apiId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ApiContractCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ApiContractCollection.Exists");
             scope.Start();
             try
             {
@@ -254,14 +254,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string apiId, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string apiId, CancellationToken cancellationToken = default)
         {
             if (apiId == null)
             {
                 throw new ArgumentNullException(nameof(apiId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ApiContractCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ApiContractCollection.ExistsAsync");
             scope.Start();
             try
             {

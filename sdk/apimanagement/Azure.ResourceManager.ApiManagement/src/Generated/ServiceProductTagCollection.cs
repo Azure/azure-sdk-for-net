@@ -215,14 +215,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string tagId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string tagId, CancellationToken cancellationToken = default)
         {
             if (tagId == null)
             {
                 throw new ArgumentNullException(nameof(tagId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceProductTagCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ServiceProductTagCollection.Exists");
             scope.Start();
             try
             {
@@ -240,14 +240,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string tagId, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string tagId, CancellationToken cancellationToken = default)
         {
             if (tagId == null)
             {
                 throw new ArgumentNullException(nameof(tagId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceProductTagCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServiceProductTagCollection.ExistsAsync");
             scope.Start();
             try
             {

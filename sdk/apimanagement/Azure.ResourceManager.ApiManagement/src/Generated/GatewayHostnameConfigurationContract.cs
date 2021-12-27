@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary> A Class representing a GatewayHostnameConfigurationContract along with the instance operations that can be performed on it. </summary>
     public partial class GatewayHostnameConfigurationContract : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="GatewayHostnameConfigurationContract"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string gatewayId, string hcId)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/hostnameConfigurations/{hcId}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly GatewayHostnameConfigurationRestOperations _gatewayHostnameConfigurationRestClient;
         private readonly GatewayHostnameConfigurationContractData _data;

@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary> A Class representing a ApiVersionSetContract along with the instance operations that can be performed on it. </summary>
     public partial class ApiVersionSetContract : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ApiVersionSetContract"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string versionSetId)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apiVersionSets/{versionSetId}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ApiVersionSetRestOperations _apiVersionSetRestClient;
         private readonly ApiVersionSetContractData _data;

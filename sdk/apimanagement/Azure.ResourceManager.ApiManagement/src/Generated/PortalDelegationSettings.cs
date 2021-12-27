@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary> A Class representing a PortalDelegationSettings along with the instance operations that can be performed on it. </summary>
     public partial class PortalDelegationSettings : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="PortalDelegationSettings"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/delegation";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DelegationSettingsRestOperations _delegationSettingsRestClient;
         private readonly PortalDelegationSettingsData _data;

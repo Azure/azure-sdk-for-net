@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="issueId"> Issue identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="issueId"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string issueId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string issueId, CancellationToken cancellationToken = default)
         {
             if (issueId == null)
             {
                 throw new ArgumentNullException(nameof(issueId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceIssueCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ServiceIssueCollection.Exists");
             scope.Start();
             try
             {
@@ -181,14 +181,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="issueId"> Issue identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="issueId"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string issueId, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string issueId, CancellationToken cancellationToken = default)
         {
             if (issueId == null)
             {
                 throw new ArgumentNullException(nameof(issueId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceIssueCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServiceIssueCollection.ExistsAsync");
             scope.Start();
             try
             {

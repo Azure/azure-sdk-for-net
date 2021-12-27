@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary> A Class representing a GlobalSchemaContract along with the instance operations that can be performed on it. </summary>
     public partial class GlobalSchemaContract : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="GlobalSchemaContract"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string schemaId)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/schemas/{schemaId}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly GlobalSchemaRestOperations _globalSchemaRestClient;
         private readonly GlobalSchemaContractData _data;

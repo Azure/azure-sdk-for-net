@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary> A Class representing a TagDescriptionContract along with the instance operations that can be performed on it. </summary>
     public partial class TagDescriptionContract : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="TagDescriptionContract"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string tagDescriptionId)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/tagDescriptions/{tagDescriptionId}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ApiTagDescriptionRestOperations _apiTagDescriptionRestClient;
         private readonly TagDescriptionContractData _data;
